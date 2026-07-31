@@ -7,6 +7,7 @@ subsidies**, and an open problem on **negative dichotomous valuations** (chores)
 
 | File | What it is |
 |---|---|
+| [`report/`](report/) | The LaTeX write-up. `latexmk -pdf main.tex`; see [`report/README.md`](report/README.md) for the layout and for how to add a section per approach. |
 | [`glossary_fair_division_subsidies.md`](glossary_fair_division_subsidies.md) | Project glossary, v1 — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
 | [`paper_map_R1_to_R9.md`](paper_map_R1_to_R9.md) | One entry per paper (R1–R9): what it does, what it improves on, what it leaves open. Includes the dependency DAG and the bound tables. |
 | [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The open problem being worked on. |
@@ -48,6 +49,19 @@ $v(S) - v(S \cup \{g\}) \in \{0, 1\}$, so every item is a **chore**.
 
 **Objective.** Either prove the analogues of R3's results in the chores setting, or
 find a counter-example showing the transfer fails.
+
+Two things fix the target, and both are argued in
+[`report/sections/introduction.tex`](report/sections/introduction.tex):
+
+- **A bounded subsidy already exists.** Negative dichotomous valuations are doubly
+  monotone under the two-sided normalisation, so R9's EF1 ⇒ EF-with-subsidy
+  reduction applies off the shelf and gives $n-1$ per agent, $n(n-1)/2$ total.
+  That is the baseline to beat, not the goal.
+- **The $n-1$ lower bound transfers.** With $n$ agents and $n-1$ unit chores,
+  every complete allocation forces a total subsidy of $n-1$.
+
+So the open question is exactly R3's guarantee — subsidy in $\{0,1\}$ per agent,
+$n-1$ total, in polynomial time — a factor of $n$ below the R9 baseline.
 
 ## Notation
 

@@ -1,0 +1,133 @@
+%% ==========================================================================
+%%  preamble.tex --- packages, theorem environments, macros.
+%%
+%%  Layout deliberately mirrors Reading_3 (Barman, Krishna, Narahari,
+%%  Sadhukhan, "Achieving Envy-Freeness with Limited Subsidies under
+%%  Dichotomous Valuations", arXiv:2201.07419): Palatino body text, a single
+%%  shared counter across all theorem-like environments, bold unpunctuated
+%%  "Proof" heads, and alpha-style citation keys ([HS19], [BDN+20], ...).
+%% ==========================================================================
+
+% ---------- page geometry & fonts ----------------------------------------
+\usepackage[letterpaper,margin=1.25in]{geometry}
+% Palatino text + matching math, as in R3.  newpx is built on TeX Gyre
+% Pagella, so it needs no URW base-35 fonts -- which a minimal TinyTeX
+% installation does not ship.  If newpx is unavailable, `mathpazo' is the
+% drop-in substitute wherever the URW fonts *are* present.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext}
+\usepackage{microtype}
+
+% ---------- mathematics ---------------------------------------------------
+% Order matters: amsmath must be loaded before newpxmath.
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{newpxmath}
+
+% ---------- floats, tables, algorithms ------------------------------------
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\floatname{algorithm}{Algorithm}
+
+% ---------- colour & links ------------------------------------------------
+\usepackage{xcolor}
+\definecolor{CiteGreen}{RGB}{0,120,60}
+\definecolor{LinkRed}{RGB}{160,20,20}
+\definecolor{UrlBlue}{RGB}{20,60,170}
+\definecolor{DraftOrange}{RGB}{200,90,0}
+\usepackage[
+  colorlinks=true,
+  citecolor=CiteGreen,
+  linkcolor=LinkRed,
+  urlcolor=UrlBlue,
+  bookmarksnumbered=true
+]{hyperref}
+\usepackage{cleveref}
+
+% ==========================================================================
+%  Theorem environments.
+%  R3 runs ONE counter through Definition/Theorem/Lemma/Proposition
+%  (Definition 1, Definition 2, Lemma 3, Theorem 4, Proposition 5, ...).
+%  Claims carry their own counter.  Keep it that way.
+% ==========================================================================
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{observation}[theorem]{Observation}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{claim}{Claim}             % separate counter, as in R3
+
+% Examples and remarks carry running argument rather than a statement, so
+% they are set upright.  They keep the shared counter.
+\theoremstyle{definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\theoremstyle{plain}
+
+% NOTE.  cleveref cannot tell these environments apart --- they share the
+% `theorem' counter, so \Cref would call every one of them "Theorem".  Refer
+% to them as `Example~\ref{...}', `Remark~\ref{...}' and so on, which is also
+% what R3 does.  \Cref is safe for sections.
+
+% Bold, unpunctuated "Proof" head (amsthm defaults to italic "Proof.").
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\bfseries #1\@addpunct{}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% ==========================================================================
+%  Draft notes.  Flip to \draftfalse to compile a clean copy with every
+%  note suppressed --- nothing else in the document changes.
+% ==========================================================================
+\newif\ifdraft
+\drafttrue
+
+\newcommand{\draftnote}[1]{%
+  \ifdraft{\color{DraftOrange}\sffamily\small[\,#1\,]}\fi}
+\newcommand{\todo}[1]{\draftnote{\textbf{TODO:} #1}}
+\newcommand{\verify}[1]{\draftnote{\textbf{VERIFY:} #1}}
+
+% ==========================================================================
+%  Project notation.  Fixed in glossary_fair_division_subsidies.md --- do
+%  not introduce a competing symbol here; extend the glossary instead.
+% ==========================================================================
+\newcommand{\agents}{N}                       % agent set [n]
+\newcommand{\items}{M}                        % item set, |M| = m
+\newcommand{\alloc}{\mathcal{A}}              % allocation (A_1,...,A_n)
+\newcommand{\allocB}{\mathcal{B}}
+\newcommand{\bundle}[1]{A_{#1}}
+\newcommand{\subsidy}{p}                      % subsidy vector
+\newcommand{\optsubsidy}{p^{*}}               % componentwise-minimum subsidy
+\newcommand{\envygraph}[1]{G_{#1}}            % envy graph
+\newcommand{\edgew}[1]{w_{#1}}                % envy-graph arc weight
+\newcommand{\pathw}[1]{\ell_{#1}}             % max-weight path out of a node
+\newcommand{\SW}{\mathrm{SW}}                 % utilitarian welfare
+\newcommand{\Mset}{\mathrm{M}}                % set of maximally subsidised agents
+
+% Marginals.  Delta^+ is the gain from adding g to S; Delta^- the loss from
+% removing g from S.  Distinct objects once v_i is not additive.
+\newcommand{\margplus}[3]{\Delta^{+}_{#1}(#2,#3)}
+\newcommand{\margminus}[3]{\Delta^{-}_{#1}(#2,#3)}
+
+% Cost (disutility) form of a negative dichotomous valuation: c_i := -v_i.
+\newcommand{\cost}{c}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}

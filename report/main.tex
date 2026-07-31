@@ -1,0 +1,63 @@
+%% ==========================================================================
+%%  Achieving Envy-Freeness with Limited Subsidies
+%%  under Negative Dichotomous Valuations
+%%
+%%  Build:   latexmk -pdf main.tex
+%%  or:      pdflatex main && bibtex main && pdflatex main && pdflatex main
+%%
+%%  STRUCTURE.  This file holds structure only --- no prose, no packages.
+%%    * packages, theorem environments and notation macros -> preamble.tex
+%%    * one section per file under sections/
+%%    * each new approach gets its own file sections/approach_<k>.tex and
+%%      one \input line below.  Do not merge two approaches into one file.
+%% ==========================================================================
+\documentclass[11pt]{article}
+\input{preamble}
+
+% --------------------------------------------------------------------------
+\begin{document}
+
+% Title block: footnote symbols rather than numbers for affiliations,
+% following R3.  \date{} suppresses the date, also as in R3.
+\makeatletter
+\renewcommand\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+\makeatother
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\title{\bfseries Achieving Envy-Freeness with Limited Subsidies\\
+       under Negative Dichotomous Valuations}
+
+\author{Mainak\thanks{Affiliation and contact details to be filled in.
+        \draftnote{author block: confirm co-authors before circulating}}}
+
+\date{}
+
+\maketitle
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+% --------------------------------------------------------------------------
+\input{sections/abstract}
+
+\input{sections/introduction}       % 1  Introduction
+\input{sections/preliminaries}      % 2  Notation and Preliminaries
+\input{sections/results}            % 3  Our Results          <- intentionally empty
+\input{sections/approach_1}         % 4  Approach 1           <- awaiting content
+
+% Further approaches: create sections/approach_2.tex etc. and uncomment.
+% \input{sections/approach_2}       % 5  Approach 2
+% \input{sections/approach_3}       % 6  Approach 3
+
+\input{sections/conclusion}         % Conclusion and Future Work
+
+% --------------------------------------------------------------------------
+\bibliographystyle{alpha}
+\bibliography{references}
+
+% --------------------------------------------------------------------------
+\appendix
+% Deferred proofs go here, one file per appendix, mirroring R3's
+% Appendix A / B / C layout.
+% \input{sections/appendix_a}
+
+\end{document}

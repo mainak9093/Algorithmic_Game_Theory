@@ -1,0 +1,37 @@
+%% ==========================================================================
+%%  Abstract
+%% ==========================================================================
+\begin{abstract}
+We study the problem of allocating indivisible \emph{chores} among agents in a
+fair manner, with subsidies. Envy-free allocations of indivisible items are not
+guaranteed to exist, but envy-freeness can be achieved by additionally providing
+some subsidy to the agents; in the chores setting this subsidy is naturally read
+as compensation paid to the agents who absorb the workload. We study the
+subsidy required under \emph{negative dichotomous} valuations, i.e., among
+agents whose marginal disutility for any chore is either zero or one:
+$v_i(S) - v_i(S \cup \set{g}) \in \set{0,1}$ for every agent $i$, every
+$S \subseteq \items$ and every $g \in \items \setminus S$. This is the exact
+mirror of the dichotomous goods model of Barman et al.~\cite{BKNS22}, in which
+every marginal is $0$ or $1$ and every item is a good.
+
+The mirror is not a relabelling. Subsidies are one-signed --- money is always a
+good --- so negating an instance negates the valuations but not the money, and
+the goods theory does not transfer by symmetry. We record what does survive:
+the Halpern--Shah characterisation of envy-freeable allocations~\cite{HS19}
+holds verbatim, since it assumes nothing about the sign or the structure of the
+valuations, and it delivers an \emph{integral} minimum subsidy vector in the
+negative dichotomous model. We also record what the existing literature already
+settles: negative dichotomous valuations are doubly monotone under the two-sided
+normalisation, so the reduction of Kawase et al.~\cite{KMSTY24} already yields a
+subsidy of at most $n-1$ per agent and $n(n-1)/2$ in total. The open question is
+therefore not whether a bounded subsidy exists, but whether the far stronger
+guarantee of~\cite{BKNS22} --- a subsidy of exactly $0$ or $1$ to each agent,
+hence $n-1$ in total --- survives the passage from goods to chores. We show that
+the matching lower bound of $n-1$ does survive.
+
+\todo{state the contribution once Approach~1 lands: either the
+$\subsidy \in \set{0,1}^n$ analogue of~\cite[Theorem~4]{BKNS22} together with a
+polynomial-time value-oracle algorithm, or the counterexample separating the
+two models. Then revise the two paragraphs above so that the abstract leads
+with the result rather than with the framing.}
+\end{abstract}
