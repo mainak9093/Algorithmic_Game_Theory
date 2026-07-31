@@ -1,0 +1,6 @@
+Problem Statement 1->
+
+In the paper R3 , we were discussing about dichotomous valuations , but now we want to research on something called negative dichotomous valuations , that is here v(S) - v(s U {g}) = 0 or 1,
+i,e here every item is chore instead of good unlike the context of Report_3 . Actually this work is building it on top of Report_3 . 
+
+Our objective -> Proving results equivalent to Report_3 for negative dichotomous valuations or proving or finding a counter-example showing that it is not possible
