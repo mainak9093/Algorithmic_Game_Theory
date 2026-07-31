@@ -1,0 +1,116 @@
+%% ==========================================================================
+%%  5  Solved Cases
+%%
+%%  Theorem C (binary additive) and Theorem D (identical costs) of the working
+%%  note.  Both proofs work by making the arc-weight bound telescope along
+%%  paths; that mechanism is the thing to generalise.
+%% ==========================================================================
+\section{Solved Cases}
+\label{sec:solved}
+
+Conjecture~\ref{conj:main} holds in two restrictions of the model, by explicit
+polynomial-time constructions. Both proofs run the same way: bound
+$\edgew{\alloc}(i,j)$ by a difference $\phi_i - \phi_j$ of a per-agent potential,
+so that the bound telescopes to $\phi_{i_1} - \phi_{i_r}$ along a path and to
+$0$ around a cycle. Envy-freeability and the $\set{0,1}$ bound then both follow
+from controlling the spread of $\phi$. Reproducing that mechanism in general is
+the open problem.
+
+% --------------------------------------------------------------------------
+\subsection{Binary additive costs}
+\label{sec:binadd}
+
+Let $\cost_i(S) = \abs{S \cap D_i}$ for a set $D_i \subseteq \items$ of chores
+that agent $i$ dislikes; every other chore is free for her. Call a chore
+\emph{universally bad} if it lies in $D_i$ for every $i$, write $U$ for the set
+of universally bad chores and $q := \abs{U}$.
+
+\begin{theorem}
+\label{thm:binadd}
+For binary additive costs, the following allocation is envy-freeable with
+minimum subsidy $\optsubsidy \in \set{0,1}^n$, hence total subsidy at most
+$n-1$, and it is computable in time $O(nm)$.
+\begin{quote}
+Give each chore $g \notin U$ to some agent $i$ with $g \notin D_i$; at least one
+exists, by definition of $U$. Distribute $U$ as evenly as possible, so that
+$u_i := \abs{\bundle{i} \cap U} \in \set{\lfloor q/n \rfloor, \lceil q/n \rceil}$
+for every $i$.
+\end{quote}
+The bound is tight, by Example~\ref{ex:lowerbound}.
+\end{theorem}
+
+\begin{proof}
+By construction every chore in $\bundle{i} \setminus U$ is free for $i$, so
+$\cost_i(\bundle{i}) = \abs{\bundle{i} \cap D_i} = u_i$. For any $j$ we have
+$\bundle{j} \cap U \subseteq \bundle{j} \cap D_i$, since $U \subseteq D_i$, and
+therefore $\cost_i(\bundle{j}) = \abs{\bundle{j} \cap D_i} \ge u_j$. Hence
+\[
+  \edgew{\alloc}(i,j) \;=\; \cost_i(\bundle{i}) - \cost_i(\bundle{j})
+  \;\le\; u_i - u_j .
+\]
+Summing along a path $P = (i_1, \dots, i_r)$ the right-hand side telescopes:
+\[
+  \edgew{\alloc}(P) \;\le\; u_{i_1} - u_{i_r}
+  \;\le\; \lceil q/n \rceil - \lfloor q/n \rfloor \;\le\; 1 .
+\]
+Around a cycle the same computation gives $\edgew{\alloc}(C) \le 0$, so
+$\envygraph{\alloc}$ has no positive-weight cycle and $\alloc$ is envy-freeable
+by Theorem~\ref{thm:hs-characterisation}. By Theorem~\ref{thm:hs-minsubsidy},
+$\optsubsidy_i = \pathw{\alloc}(i) \le 1$, and
+Observation~\ref{obs:integrality} forces $\optsubsidy \in \set{0,1}^n$. Since
+some agent receives $\lfloor q/n \rfloor$ universally bad chores and hence
+requires no subsidy, the total is at most $n-1$. Example~\ref{ex:lowerbound} is
+binary additive with $D_i = \items$ for every $i$, so the bound cannot be
+improved.
+\end{proof}
+
+The construction is a two-phase version of the shape the general case must
+reproduce: \emph{dump every chore on somebody who finds it free, then balance
+whatever nobody wants}. The obstruction to running the same argument for general
+negative dichotomous costs is that ``free for $i$'' becomes context dependent. A
+chore may be free on top of $\bundle{j}$ and cost a full unit on top of
+$\bundle{i}$, so there is no fixed set $D_i$ to compute with and no fixed
+potential $u_i$ to telescope against. Theorem~\ref{thm:obstruction} shows that
+this is a genuine obstacle rather than a bookkeeping nuisance.
+
+% --------------------------------------------------------------------------
+\subsection{Identical costs, and two agents}
+\label{sec:identical}
+
+\begin{theorem}
+\label{thm:identical}
+Suppose $\cost_1 = \dots = \cost_n = \cost$. Then every allocation is
+envy-freeable, and greedily adding each chore to a currently cheapest bundle
+yields $\optsubsidy \in \set{0,1}^n$ in time $O(m(n + \tau))$, where $\tau$ is
+the cost of one oracle call.
+\end{theorem}
+
+\begin{proof}
+For any permutation $\sigma$ we have $\sum_i \cost(A_{\sigma(i)}) =
+\sum_i \cost(\bundle{i})$, since both sides sum the same function over the same
+multiset of bundles. So condition~(ii) of Theorem~\ref{thm:hs-characterisation}
+holds with equality for every allocation, and every allocation is
+envy-freeable. Moreover $\edgew{\alloc}(i,j) = \cost(\bundle{i}) -
+\cost(\bundle{j})$ telescopes \emph{exactly} along a path
+$P = (i_1,\dots,i_r)$, giving $\edgew{\alloc}(P) = \cost(A_{i_1}) -
+\cost(A_{i_r})$ and hence
+\[
+  \pathw{\alloc}(u) \;=\; \cost(\bundle{u}) - \min_{j \in \agents}
+  \cost(\bundle{j}) .
+\]
+It therefore suffices to keep $\max_i \cost(\bundle{i}) - \min_i
+\cost(\bundle{i}) \le 1$. This is an invariant of the greedy rule. It holds
+vacuously at the empty allocation. Suppose it holds before a step, so that
+$\cost(\bundle{i}) \in \set{\mu, \mu+1}$ for every $i$, where $\mu$ is the
+current minimum, and let the next chore go to a bundle attaining $\mu$. Its cost
+becomes $\mu$ or $\mu + 1$, because marginals lie in $\set{0,1}$; every other
+bundle is unchanged. So all costs still lie in $\set{\mu,\mu+1}$ and the
+invariant survives. The bound $\optsubsidy \in \set{0,1}^n$ follows with
+Observation~\ref{obs:integrality}.
+\end{proof}
+
+For $n = 2$ the conjecture holds as well, with total subsidy at most $1$: by
+Remark~\ref{rem:complement}, two-agent chore division is two-agent goods
+division with the bundles swapped, and~\cite[Theorem~4]{BKNS22} applies. As
+noted there, the reduction consumes the identity $\items \setminus \bundle{j} =
+\bundle{i}$ and so says nothing for $n \ge 3$.

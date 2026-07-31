@@ -148,13 +148,35 @@ Our objective is to close it on the chores side or to exhibit an instance showin
 that it cannot be closed.
 
 \paragraph{Our Results.}
-\todo{write this paragraph once Approach~1 is settled. It should mirror the
-``Our Results'' paragraph of~\cite{BKNS22}: one sentence stating the theorem,
-one sentence on the algorithmic guarantee in the value-oracle model, one
-sentence on tightness pointing at Example~\ref{ex:lowerbound}, and one sentence saying
-which structural assumptions are \emph{not} needed. If the outcome is a
-separation instead, state the counterexample and the largest subsidy bound that
-does survive.}
+We conjecture that the $\set{0,1}$ guarantee survives
+(Conjecture~\ref{conj:main}) and prove it in three restrictions: binary additive
+costs, where an explicit $O(nm)$ construction gives $\optsubsidy \in \set{0,1}^n$
+and total subsidy at most $n-1$ (Theorem~\ref{thm:binadd}); identical costs,
+where greedily loading a cheapest bundle suffices
+(Theorem~\ref{thm:identical}); and $n = 2$, which reduces
+to~\cite{BKNS22} by Remark~\ref{rem:complement}. None of these needs additivity
+or submodularity beyond what the restriction itself imposes.
+
+Our main results are negative and concern the two strategies a reader would try
+first. The item-by-item insertion template of~\cite{BKNS22} cannot be completed:
+Theorem~\ref{thm:obstruction} gives a three-agent instance with a legal partial
+state and an unallocated chore such that every choice of receiving agent forces a
+subsidy of $2$, although the full instance is solvable with no subsidy at all. A
+correct proof must therefore be free to re-open already-allocated bundles. Nor
+can one recover by selecting a welfare-maximising allocation instead:
+Proposition~\ref{prop:msw-false} exhibits an instance whose \emph{unique}
+utilitarian-optimal allocation needs a subsidy of $2$ while an allocation of
+strictly higher total cost needs none, so a correct algorithm must also be free
+to give up total cost. Both instances are small, explicit and machine-checked.
+
+We also isolate three structural facts used throughout: an arc-update lemma
+(Lemma~\ref{lem:arcupdate}) that reduces the entire goods/chore asymmetry to two
+lines; a two-tier characterisation of $\set{0,1}$ solutions
+(Proposition~\ref{prop:twotier}); and a size-shift transform
+(Theorem~\ref{thm:sizeshift}) exhibiting the chore problem as exactly the goods
+problem of~\cite{BKNS22} plus a cardinality-balancing requirement, which is the
+precise sense in which Conjecture~\ref{conj:main} does not follow from that work
+as a black box.
 
 \paragraph{Related Work.}
 The subsidy line for goods is described above. Within it, the dichotomous

@@ -1,20 +1,212 @@
 %% ==========================================================================
-%%  4  Approach 1
+%%  6  Approach 1 --- item-by-item insertion
 %%
-%%  TEMPLATE for an approach section.  One approach = one file = one section.
-%%  Copy this file to approach_2.tex, approach_3.tex, ... as further
-%%  approaches arrive, and add the matching \input line in main.tex.
+%%  How far R3's template gets (Theorems A, B, Corollary B1), and the proof
+%%  that it cannot be completed (Theorem E, Lemma E1).
 %%
-%%  Suggested shape, following R3's Section 4:
-%%    - one paragraph saying what the approach does and why it should work
-%%    - the construction / algorithm
-%%    - the invariant it maintains
-%%    - the lemmas, then the proof of the main statement
-%%    - if the approach fails, say so and say exactly where it breaks --- a
-%%      recorded dead end is a result and belongs in the paper, not in a
-%%      deleted file.  Cross-reference it from Notes_and_Findings/.
+%%  READ THIS BEFORE TRYING TO PATCH THE INSERTION INVARIANT: the template is
+%%  dead.  Theorem~\ref{thm:obstruction} is a counterexample to the strategy,
+%%  not a gap in the write-up.  See sections/approach_2.tex for the next one.
 %% ==========================================================================
-\section{Approach 1}
+\section{Approach 1: Item-by-Item Insertion}
 \label{sec:approach1}
 
-\todo{awaiting content.}
+The algorithm of~\cite{BKNS22} maintains an envy-free solution
+$(\alloc^t, \subsidy^t)$ over a partial allocation with
+$\subsidy^t \in \set{0,1}^n$, and at each step allocates one further good,
+repairing the invariant by permuting whole bundles among the agents when
+necessary. Nothing already allocated is ever moved between bundles. This section
+follows that template on the chore side. Two of its steps come out
+\emph{easier} than in~\cite{BKNS22}; the template nevertheless cannot be
+completed, and \Cref{sec:obstruction} proves it.
+
+Throughout, $\alloc$ is a partial allocation, $g \notin \bigcup_i \bundle{i}$ is
+an unallocated chore, and $Z^x$, $\delta_x$, $\delta_{i,x}$ are as in
+\Cref{sec:arcupdate}.
+
+% --------------------------------------------------------------------------
+\subsection{The easy case is easier than for goods}
+
+\begin{theorem}[Free insertion]
+\label{thm:freeinsert}
+Let $\alloc$ be envy-freeable and suppose $\delta_x = 0$ for some agent $x$,
+that is, $\cost_x(\bundle{x} \cup \set{g}) = \cost_x(\bundle{x})$. Then $Z^x$ is
+envy-freeable and $\pathw{Z^x}(i) \le \pathw{\alloc}(i)$ for every $i$.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:arcupdate}, arcs between agents other than $x$ are unchanged;
+arcs out of $x$ satisfy $\edgew{Z^x}(x,j) = \edgew{\alloc}(x,j) + \delta_x =
+\edgew{\alloc}(x,j)$; and arcs into $x$ satisfy $\edgew{Z^x}(i,x) =
+\edgew{\alloc}(i,x) - \delta_{i,x} \le \edgew{\alloc}(i,x)$. So every arc weight
+weakly decreases. No positive-weight cycle can therefore appear, and no path
+weight can rise; the claims follow from
+Theorems~\ref{thm:hs-characterisation} and~\ref{thm:hs-minsubsidy}.
+\end{proof}
+
+It is worth recording what is \emph{absent} from that proof. There is no
+hypothesis that $x$ be maximally subsidised, no permutation of bundles, and no
+extendability machinery: the corresponding step of~\cite{BKNS22} needs all
+three, because for goods the insertion raises the arcs \emph{into} the receiver
+and those have to be controlled by placing her in $\Mset(\subsidy)$. Here the
+insertion lowers them for free. Consequently:
+
+\begin{observation}
+\label{obs:hardcase}
+The only case requiring work is a chore whose marginal cost is $1$ for every
+agent on her own current bundle: $\delta_x = 1$ for all $x \in \agents$. We call
+this the \emph{hard case}.
+\end{observation}
+
+% --------------------------------------------------------------------------
+\subsection{A cycle-closing bound}
+
+The following is the cheapest general handle on $\pathw{\alloc}$ available, and
+it is the chore form of the device~\cite{BDNSV20} uses in its Section~4, where a
+lower bound of $-1$ on every arc weight is shown to force a subsidy of at most
+one per agent.
+
+\begin{theorem}[Cycle-closing bound]
+\label{thm:cyclebound}
+For any envy-freeable allocation $\alloc$ and any agent $u$,
+\[
+  \pathw{\alloc}(u) \;\le\; \max\Big(0, \ \max_{v \ne u}
+  \big[\,\cost_v(\bundle{u}) - \cost_v(\bundle{v})\,\big]\Big).
+\]
+\end{theorem}
+
+\begin{proof}
+The empty path contributes $0$. Let $P$ be a nonempty path from $u$ to some
+$v \ne u$. Appending the arc $(v,u)$ closes $P$ into a directed cycle, whose
+weight is at most $0$ because $\alloc$ is envy-freeable
+(Theorem~\ref{thm:hs-characterisation}). Hence
+$\edgew{\alloc}(P) \le -\edgew{\alloc}(v,u) = \cost_v(\bundle{u}) -
+\cost_v(\bundle{v})$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:onestep}
+If $\cost_v(\bundle{u}) \le \cost_v(\bundle{v}) + 1$ for all $u,v \in \agents$
+--- no agent would suffer more than one extra unit by taking anybody else's
+bundle --- then $\optsubsidy \in \set{0,1}^n$.
+\end{corollary}
+
+The hypothesis is sufficient and far from necessary: an agent with
+$\cost_i \equiv 0$ can absorb everything, which breaks the hypothesis while the
+subsidy stays $0$. It is nevertheless what does the work in
+Theorem~\ref{thm:binadd}, where the telescoping bound $\edgew{\alloc}(i,j) \le
+u_i - u_j$ supplies exactly this.
+
+% --------------------------------------------------------------------------
+\subsection{The obstruction}
+\label{sec:obstruction}
+
+In the hard case, Lemma~\ref{lem:arcupdate} says every arc leaving the receiving
+agent $x$ rises by exactly $1$. Since a path starting at $x$ then rises by $1$,
+the condition $\subsidy_x = 0$ is \emph{necessary}. The following theorem shows
+that no condition of this kind can be sufficient.
+
+Say that $(\alloc, \subsidy)$ is \emph{extendable with $g$} if there is a
+permutation $\sigma$ such that $\alloc_\sigma$ is envy-freeable and some agent
+$\kappa$ has $\cost_\kappa(A_{\sigma(\kappa)} \cup \set{g}) =
+\cost_\kappa(A_{\sigma(\kappa)})$ --- that is, if after some welfare-preserving
+reassignment of the existing bundles, somebody can take $g$ for free and
+Theorem~\ref{thm:freeinsert} applies.
+
+\begin{theorem}[The insertion template cannot be completed]
+\label{thm:obstruction}
+There is a three-agent instance with negative dichotomous valuations, an
+envy-freeable partial allocation $\alloc$ with $\optsubsidy \in \set{0,1}^3$,
+and an unallocated chore $g$, such that for \emph{every} agent $x \in \agents$
+the allocation $Z^x$ requires a subsidy of $2$ --- even though the full instance
+admits an allocation with subsidy $0$.
+\end{theorem}
+
+\begin{proof}
+Take $\items = \set{a_1, a_2, g}$ and
+\[
+  \cost_1(S) = \max\big(0, \abs{S} - 1\big), \qquad
+  \cost_2(S) = \cost_3(S) = \abs{S} .
+\]
+Each is dichotomous: $\cost_1$ has marginals $0,1,1$ as $\abs{S}$ runs
+$0,1,2$, and $\cost_2, \cost_3$ are binary additive. Note that $\cost_1$ is
+\emph{supermodular}, which is legal --- neither~\cite{BKNS22} nor the present
+paper restricts to submodular valuations --- and the instance genuinely needs
+it.
+
+Consider the partial allocation $\alloc = (\set{a_1,a_2}, \emptyset, \emptyset)$.
+Its envy graph has weight matrix
+\[
+  \big(\edgew{\alloc}(i,j)\big)_{i,j} =
+  \begin{pmatrix} 0 & 1 & 1 \\ -2 & 0 & 0 \\ -2 & 0 & 0 \end{pmatrix},
+\]
+which has no positive-weight cycle, and $\optsubsidy = (1,0,0)$. So
+$(\alloc, \optsubsidy)$ is a legal state of the invariant.
+
+The marginal cost of $g$ is $1$ for every agent on her own bundle:
+$\cost_1(\set{a_1,a_2,g}) - \cost_1(\set{a_1,a_2}) = 2 - 1 = 1$ and
+$\cost_i(\set{g}) - \cost_i(\emptyset) = 1$ for $i = 2,3$. So we are in the hard
+case. Moreover $(\alloc,\optsubsidy)$ is not extendable with $g$: agent~1 must
+keep $\set{a_1,a_2}$ under any envy-freeable reassignment, since that bundle
+costs her $1$ but costs agents~2 and~3 two apiece, and no reassignment gives
+anybody a bundle on which $g$ is free.
+
+Inserting $g$ into each bundle in turn gives the minimum subsidy vectors
+\[
+  Z^1 \mapsto (2,0,0), \qquad Z^2 \mapsto (2,1,0), \qquad Z^3 \mapsto (2,0,1),
+\]
+each of which has an entry equal to $2$. Yet the complete allocation
+$(\set{a_1}, \set{a_2}, \set{g})$ has an identically zero envy matrix and
+subsidy $(0,0,0)$.
+\end{proof}
+
+The failure is not that envy-freeability breaks --- it does not.
+
+\begin{lemma}
+\label{lem:e1}
+In the hard case, if $(\alloc, \optsubsidy)$ is not extendable with $g$, then
+$Z^x$ is envy-freeable for \emph{every} $x \in \agents$.
+\end{lemma}
+
+\begin{proof}
+Cycles avoiding $x$ are unchanged by Lemma~\ref{lem:arcupdate}. Let $C$ be a
+cycle through $x$ and let $i$ be its predecessor of $x$. The only arcs of $C$
+that change are the one leaving $x$, which rises by $\delta_x = 1$, and the one
+entering $x$ from $i$, which falls by $\delta_{i,x}$; hence
+$\edgew{Z^x}(C) = \edgew{\alloc}(C) + 1 - \delta_{i,x}$.
+
+If $\edgew{\alloc}(C) \le -1$ then $\edgew{Z^x}(C) \le 0$ immediately. If
+$\edgew{\alloc}(C) = 0$, rotating the bundles along $C$ is a reassignment that
+preserves total cost, so by Theorem~\ref{thm:hs-characterisation}(ii) the
+rotated allocation is again envy-freeable, and in it agent $i$ receives
+$\bundle{x}$. Non-extendability therefore forces $\cost_i(\bundle{x} \cup
+\set{g}) \ne \cost_i(\bundle{x})$, i.e.\ $\delta_{i,x} = 1$, and again
+$\edgew{Z^x}(C) \le 0$. Since $\alloc$ is envy-freeable no cycle has
+$\edgew{\alloc}(C) \ge 1$, so these cases are exhaustive.
+\end{proof}
+
+So envy-freeability survives every insertion; it is only the $\set{0,1}$ bound
+on the subsidy that breaks. The reason is visible in \Cref{sec:arcupdate}. A
+path $u \rightsquigarrow i \to x \to y \rightsquigarrow$ of weight $1$ that
+merely \emph{passes through} $x$ has its outgoing arc raised by $\delta_x = 1$
+and its incoming arc lowered by $\delta_{i,x}$, so it becomes a path of weight
+$2$ whenever $\delta_{i,x} = 0$. No condition on $\subsidy_x$ prevents this. In
+the instance above both $x = 2$ and $x = 3$ are hit this way by $i = 1$.
+
+Nor can the repair subroutine of~\cite{BKNS22} be mirrored. Its navigation rule
+walks to an agent that has just required a subsidy of at least $2$; in the goods
+world such an agent is automatically maximally subsidised, which is the property
+the argument needs. In the chore world the same agent automatically has
+$\subsidy_u = 1$, and is therefore precisely the kind of agent to whom the chore
+must \emph{not} be given.
+
+\begin{remark}[What this rules out]
+\label{rem:deadend}
+Any proof of Conjecture~\ref{conj:main} must be allowed to \textbf{re-open
+already-allocated bundles}. The template of~\cite{BKNS22} --- allocate one item
+at a time, never move an item that has been allocated, and repair only by
+permuting whole bundles --- is provably insufficient, by
+Theorem~\ref{thm:obstruction}. This is a genuine asymmetry between the goods and
+chore problems and not a gap in the present analysis, so effort spent
+strengthening the insertion invariant is effort wasted.
+\end{remark}

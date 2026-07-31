@@ -1,0 +1,128 @@
+%% ==========================================================================
+%%  8  Computational Evidence
+%%
+%%  Includes an explicit statement of why the randomised evidence is weaker
+%%  than its raw counts suggest.  Do not delete that subsection: the sampler
+%%  bias is the reason the search has found nothing, and building adversarial
+%%  generators is the highest-value experiment outstanding.
+%% ==========================================================================
+\section{Computational Evidence}
+\label{sec:experiments}
+
+All searches operate directly on the graph-theoretic form of
+Conjecture~\ref{conj:main}: enumerate allocations, build the envy graph, detect
+positive-weight cycles and compute $\pathw{\alloc}$ by a Bellman--Ford
+iteration on maximum-weight walks, and record
+$\min_{\alloc} \max_i \pathw{\alloc}(i)$.
+
+\begin{center}
+\begin{tabular}{@{}p{0.46\textwidth}lp{0.30\textwidth}@{}}
+\toprule
+Experiment & Script & Result \\
+\midrule
+Exhaustive: $n = m = 3$, all $9{,}880$ instances up to agent symmetry
+  & \texttt{search.py} & worst-case minimum per-agent subsidy $= 1$ \\
+Randomised: $n \in \set{3,4,5}$, $m \in \set{4,5,6}$, ${\approx}\,3.5\times10^4$
+instances
+  & \texttt{fast.py} & no counterexample \\
+Binary additive construction of Theorem~\ref{thm:binadd}, $2\times10^5$
+instances, $n \le 5$, $m \le 7$
+  & \texttt{binadd.py} & maximum per-agent subsidy ever observed $= 1$ \\
+The obstruction of Theorem~\ref{thm:obstruction}
+  & \texttt{deadend.py} & all three insertions require subsidy $2$; full
+    instance solvable with $0$ \\
+Does \emph{some} utilitarian-optimal allocation attain ${\le}\,1$?
+  & \texttt{msw.py} & yes, in all but one of ${\approx}\,2.6\times10^4$
+    instances \\
+Does \emph{every} utilitarian-optimal allocation attain ${\le}\,1$?
+  & \texttt{msw.py} & no --- fails in ${\approx}\,2.5\%$ of instances at
+    $n=3, m=4$, rising to ${\approx}\,5\%$ at $m = 5$ \\
+The single exception
+  & \texttt{mswcex.py} & refutes Conjecture~\ref{conj:msw}
+    (Proposition~\ref{prop:msw-false}) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The exhaustive row is the only unconditional evidence for
+Conjecture~\ref{conj:main}. The dichotomous functions on $m$ items number
+$2, 6, 38, 990$ for $m = 1,2,3,4$. Agents are interchangeable, so an instance is
+a multiset of three of them, and at $m = 3$ there are
+$\binom{38 + 3 - 1}{3} = \binom{40}{3} = 9{,}880$ of these --- feasible to
+enumerate, and already out of reach at $m = 4$.
+
+The last three rows are the ones that changed the shape of the problem. The
+utilitarian-optimal set almost always contains a witness, but not always, and
+one exception is enough: Proposition~\ref{prop:msw-false} is built from the
+single instance in which it did not.
+
+% --------------------------------------------------------------------------
+\subsection{Why the randomised evidence is weak}
+\label{sec:samplerbias}
+
+The count of ${\approx}\,3.5 \times 10^4$ instances without a counterexample
+overstates the support for Conjecture~\ref{conj:main}, and the reason is
+structural rather than a matter of sample size.
+
+The generator builds a dichotomous function by visiting subsets in order of
+increasing size and, at each subset $S$, computing the interval
+$[\ell, h]$ of values consistent with what has already been fixed --- namely
+$\ell = \max_{g \in S} \cost(S \setminus \set{g})$ and
+$h = \min_{g \in S} \cost(S \setminus \set{g}) + 1$ --- then choosing an
+endpoint by an unbiased coin whenever $\ell \ne h$. Independent fair coins put
+almost all of the mass on functions that wander in the middle of the feasible
+region. Structured extremal functions, which take the same endpoint at every
+subset, are exponentially unlikely: on $m$ items there are $2^m - 1$ nonempty
+subsets and a function that requires a prescribed endpoint at each of them is
+sampled with probability $2^{-(2^m-1)}$, which is $1/128$ at $m = 3$ and about
+$3 \times 10^{-5}$ at $m = 4$, per agent.
+
+This matters because the two instances that carry the results of this paper are
+of exactly that kind. The obstruction of Theorem~\ref{thm:obstruction} uses
+$\cost_1(S) = \max(0, \abs{S}-1)$ alongside $\cost_2 = \cost_3 = \abs{S}$, all
+three of which are endpoint-constant; drawing that triple at $m = 3$ has
+probability $2^{-21} \approx 5 \times 10^{-7}$, so a run of $3.5 \times 10^4$
+samples would be expected to produce it about once in every sixty runs. Both
+instances were found by hand or by a targeted search, not by the sampler. The
+sampler has, in effect, never looked in the region where the interesting
+behaviour lives.
+
+\begin{remark}[The experiment worth running]
+\label{rem:adversarial}
+If Conjecture~\ref{conj:main} is false, the counterexample is in the corner the
+current generator cannot reach, and no amount of additional uniform sampling
+will find it. An adversarial generator --- biased towards endpoint-constant
+functions, towards supermodular costs, towards agents whose free chores overlap
+heavily, and towards instances in which the utilitarian optimum is unique --- is
+the single highest-value experiment outstanding. It should be built before any
+further effort is spent on proof attempts, because it is the only cheap way to
+learn whether there is a theorem to prove.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{Reproducing the results}
+\label{sec:repro}
+
+\begin{center}
+\begin{tabular}{@{}ll@{}}
+\toprule
+Script & Purpose \\
+\midrule
+\texttt{gen.py}        & enumerate all dichotomous functions on $m$ items \\
+\texttt{search.py}     & exhaustive search, arguments \texttt{m n} \\
+\texttt{fast.py}       & randomised counterexample hunt, \texttt{m n T seed} \\
+\texttt{msw.py}        & utilitarian-optimal test, \texttt{m n T seed} \\
+\texttt{tiebreak.py}   & selection rules of \Cref{sec:tiebreaks} \\
+\texttt{localsearch.py}& local minima of single-transfer search \\
+\texttt{deadend.py}    & Theorem~\ref{thm:obstruction} \\
+\texttt{binadd.py}     & Theorem~\ref{thm:binadd} \\
+\texttt{mswcex.py}     & Proposition~\ref{prop:msw-false} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The instance of Proposition~\ref{prop:msw-false} was produced by
+\texttt{msw.py 4 3 3000 11} at trial $2460$ and is re-derived independently by
+\texttt{mswcex.py}, which re-checks that all three cost functions are negative
+dichotomous, that the utilitarian optimum is unique, and that a zero-subsidy
+allocation exists outside it.

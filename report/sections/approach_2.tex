@@ -1,0 +1,146 @@
+%% ==========================================================================
+%%  7  Approach 2 --- select a globally good allocation
+%%
+%%  The natural repair after Theorem~\ref{thm:obstruction} kills incremental
+%%  construction.  It fails too: Proposition~\ref{prop:msw-false} refutes
+%%  Conjecture~\ref{conj:msw}.  The instance is transcribed from the run
+%%  `python msw.py 4 3 3000 11' (trial 2460) and re-checked by `mswcex.py'.
+%% ==========================================================================
+\section{Approach 2: Selecting a Utilitarian-Optimal Allocation}
+\label{sec:approach2}
+
+Theorem~\ref{thm:obstruction} rules out building the allocation one chore at a
+time. The natural response is to stop building it at all and instead
+\emph{select} a good allocation globally, from a set small enough to reason
+about and rich enough to contain a witness. Utilitarian optimality is the
+obvious candidate for two reasons. First, by
+Theorem~\ref{thm:hs-characterisation} an allocation minimising $\sum_i
+\cost_i(\bundle{i})$ over \emph{all} allocations, and not merely over
+reassignments of its own bundles, is automatically envy-freeable, so half of
+what we need is free. Second, it carries a strong exchange property: if
+$g \in \bundle{i}$ is \emph{active} for $i$, meaning
+$\cost_i(\bundle{i}) - \cost_i(\bundle{i} \setminus \set{g}) = 1$, then
+$\cost_j(\bundle{j} \cup \set{g}) = \cost_j(\bundle{j}) + 1$ for every $j$ ---
+nobody can absorb it for free, or the allocation would not have been optimal.
+Combined with Theorem~\ref{thm:cyclebound}, a path of weight at least $2$ from
+$u$ to $v$ forces $\cost_v(\bundle{u}) \ge \cost_v(\bundle{v}) + 2$, so
+$\bundle{u}$ carries at least two units that are live for $v$, and one would
+like to transfer one of them along the path and show a potential drops.
+
+This is what Conjecture~\ref{conj:msw} proposes. It is false.
+
+% --------------------------------------------------------------------------
+\subsection{Utilitarian optimality is the wrong restriction}
+
+\begin{proposition}
+\label{prop:msw-false}
+Conjecture~\ref{conj:msw} is false. There is an instance with $n = 3$ agents and
+$m = 4$ chores whose \emph{unique} utilitarian-optimal allocation requires a
+subsidy of $2$, although another allocation --- of strictly greater total cost
+--- admits a subsidy of $0$.
+\end{proposition}
+
+\begin{proof}
+Take $\items = \set{g_1,g_2,g_3,g_4}$ and the costs tabulated below.
+
+\begin{center}
+\begin{tabular}{@{}lccc@{\hspace{2.5em}}lccc@{}}
+\toprule
+$S$ & $\cost_1$ & $\cost_2$ & $\cost_3$ &
+$S$ & $\cost_1$ & $\cost_2$ & $\cost_3$ \\
+\midrule
+$\emptyset$      & 0 & 0 & 0 & $g_3g_4$       & 2 & 1 & 1 \\
+$g_1$            & 1 & 1 & 1 & $g_1g_2g_3$    & 2 & 3 & 2 \\
+$g_2$            & 1 & 1 & 1 & $g_1g_2g_4$    & 3 & 2 & 2 \\
+$g_3$            & 1 & 1 & 0 & $g_1g_3g_4$    & 2 & 2 & 2 \\
+$g_4$            & 1 & 1 & 1 & $g_2g_3g_4$    & 2 & 2 & 2 \\
+$g_1g_2$         & 2 & 2 & 2 & $g_1g_2g_3g_4$ & 3 & 3 & 3 \\
+$g_1g_3$         & 1 & 2 & 1 & & & & \\
+$g_1g_4$         & 2 & 2 & 2 & & & & \\
+$g_2g_3$         & 1 & 2 & 1 & & & & \\
+$g_2g_4$         & 2 & 2 & 2 & & & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Each column is $0$ at $\emptyset$ and has every marginal in $\set{0,1}$, so all
+three are negative dichotomous in cost form.
+
+\emph{The utilitarian optimum.} Agent~1 pays $1$ for every singleton, so
+$\cost_1(\bundle{1}) = 0$ only if $\bundle{1} = \emptyset$; agent~3 pays $0$ for
+$\set{g_3}$ but $1$ for every superset, so $\cost_3(\bundle{3}) = 0$ only if
+$\bundle{3} \subseteq \set{g_3}$. Any allocation of total cost below $2$ would
+need at least two agents at cost $0$, forcing $\bundle{1} = \emptyset$ and
+$\bundle{3} \subseteq \set{g_3}$ and hence $\bundle{2} \supseteq
+\set{g_1,g_2,g_4}$, which costs agent~2 at least $2$. So the minimum total cost
+is $2$, attained only by
+\[
+  \alloc^{\star} \;=\; \big(\emptyset,\ \set{g_1,g_2,g_4},\ \set{g_3}\big),
+  \qquad 0 + 2 + 0 = 2 .
+\]
+Its envy graph has $\edgew{\alloc^\star}(2,1) = 2 - 0 = 2$, so
+$\pathw{\alloc^\star}(2) \ge 2$; in fact the minimum subsidy is
+$\optsubsidy = (0,2,0)$.
+
+\emph{A zero-subsidy allocation.} Take
+$\allocB = (\set{g_1,g_3},\ \set{g_2},\ \set{g_4})$, of total cost
+$1 + 1 + 1 = 3$. Its envy graph has weights
+\[
+  \big(\edgew{\allocB}(i,j)\big)_{i,j} =
+  \begin{pmatrix} 0 & 0 & 0 \\ -1 & 0 & 0 \\ 0 & 0 & 0 \end{pmatrix},
+\]
+every entry of which is at most $0$. Hence there is no positive-weight cycle,
+every directed path has weight at most $0$, and $\optsubsidy = (0,0,0)$.
+\end{proof}
+
+Two features make this sharper than a bare counterexample. The
+utilitarian-optimal allocation is \emph{unique}, so there is no tie to break and
+no selection rule inside the optimal set can rescue the conjecture. And the gap
+is the largest possible in one step: subsidy $2$ against subsidy $0$, at a cost
+of one extra unit of total burden. Restricting attention to utilitarian-optimal
+allocations is therefore not a neutral simplification but an actively wrong one.
+
+\begin{remark}[What this rules out]
+\label{rem:msw-deadend}
+Conjecture~\ref{conj:main}, if true, is \emph{not} witnessed by
+welfare-maximising allocations, and the programme of finding a tie-breaking rule
+inside the utilitarian-optimal set is unsound as posed --- on this instance the
+set is a singleton and the witness lies outside it. The exchange property quoted
+at the head of this section remains true and remains usable; what fails is the
+assumption that a witness may be sought among cost-minimising allocations at
+all. Any search procedure must be free to give up total cost.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{Selection rules that fail}
+\label{sec:tiebreaks}
+
+Before Proposition~\ref{prop:msw-false} was found, three selection rules inside
+the utilitarian-optimal set were tested, and all three fail on instances where
+some optimal allocation \emph{does} work. They are recorded because each is a
+natural first guess.
+
+\begin{itemize}
+  \item \textbf{Minimising total perceived load} $\Psi(\alloc) := \sum_{i}
+    \sum_{j} \cost_j(\bundle{i})$, which prefers bundles that are cheap in
+    everybody's opinion rather than only in their holder's.
+  \item \textbf{Leximin on the perceived-load vector} $\big(\max_j
+    \cost_j(\bundle{i})\big)_{i \in \agents}$, which tries to prevent any single
+    bundle from looking heavy to anyone.
+  \item \textbf{Local search by single chore transfers} on the objective
+    $\big(\max_i \pathw{\alloc}(i), \sum_i \pathw{\alloc}(i)\big)$ restricted to
+    the utilitarian-optimal set. This has bad local minima: there are optimal
+    allocations with subsidy $2$ from which no single transfer that stays
+    optimal improves the objective.
+\end{itemize}
+
+The local-search failure is the informative one. Single transfers are too coarse
+a move set, because the utilitarian-optimal allocations of a dichotomous
+instance are the bases of a structure whose natural moves are exchange
+\emph{paths and cycles}, not single steps --- the same phenomenon that makes
+Yankee Swap and matroid union the right tools in the matroid-rank
+literature~\cite{BEF21}. A move set matched to that structure is the obvious
+thing to try next, and remains untried.
+\todo{implement exchange-path local search over the full allocation lattice ---
+not restricted to the utilitarian-optimal set, per
+Remark~\ref{rem:msw-deadend} --- and re-run the counterexample hunt with it.}

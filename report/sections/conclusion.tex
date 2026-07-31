@@ -1,19 +1,68 @@
 %% ==========================================================================
-%%  Conclusion and Future Work
+%%  9  Conclusion and Future Work
 %%
-%%  Mirrors R3's Section 5: restate the guarantee, note that the proof is
-%%  constructive, distinguish the method from the nearest neighbouring one,
-%%  then name the open directions.
+%%  Mirrors R3's Section 5.  The two "don't go here" results are the reason
+%%  this section is worth reading before starting work.
 %% ==========================================================================
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-\todo{write last. Directions that are already visible, independent of how
-Approach~1 turns out:
-(i) the mixed model, in which some items are goods and others chores for the
-same agent, with all marginals in $\set{-1,0,1\,}$ --- the dichotomous
-restriction of the doubly monotone setting of~\cite{KMSTY24};
-(ii) whether an EF1 guarantee can be obtained simultaneously, which
-\cite[Appendix~C]{BKNS22} shows their goods algorithm does \emph{not} provide;
-(iii) the weighted version, where~\cite{HS19}'s characterisation fails outright
-and the envy graph must be rebuilt.}
+We have not settled Conjecture~\ref{conj:main}, and the honest summary of this
+paper is that it makes the conjecture harder to prove than it looked. Two
+strategies that a reader would reasonably try first are ruled out:
+item-by-item insertion, which is the strategy that works
+in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}), and restriction to
+utilitarian-optimal allocations (Proposition~\ref{prop:msw-false}). What remains
+is a small set of positive results --- binary additive costs
+(Theorem~\ref{thm:binadd}), identical costs (Theorem~\ref{thm:identical}), two
+agents --- and three structural tools that between them say precisely how the
+chore problem differs from its goods mirror.
+
+The single most useful thing to keep in mind is the constraint the two negative
+results jointly impose: \emph{a correct algorithm must be free to move
+already-allocated chores between bundles, and free to give up total cost while
+doing so}. Every construction in this paper that succeeds does so by exhibiting
+a per-agent potential $\phi$ with $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$,
+which telescopes along paths. Finding such a potential for general negative
+dichotomous costs, or proving none exists, is the problem.
+
+\paragraph{Directions.}
+\begin{enumerate}
+  \item \textbf{Adversarial instance generation} (\Cref{sec:samplerbias}). The
+    randomised evidence is drawn from a distribution that essentially never
+    produces the structured extremal functions from which both negative results
+    are built. This is cheap, and it is the only inexpensive way to find out
+    whether Conjecture~\ref{conj:main} is true before investing in a proof.
+  \item \textbf{Exchange paths rather than single transfers}
+    (\Cref{sec:tiebreaks}). Single-chore local search has bad local minima. The
+    move set should match the exchange structure of dichotomous costs, as
+    Yankee Swap and matroid union do in the matroid-rank
+    literature~\cite{BEF21}; and by Remark~\ref{rem:msw-deadend} the search must
+    range over all allocations, not the utilitarian-optimal ones.
+  \item \textbf{Build the two tiers first} (Proposition~\ref{prop:twotier}).
+    Choose the partition into paid and unpaid agents and only then allocate.
+    This is the one natural approach that Theorem~\ref{thm:obstruction} does not
+    obviously kill, since it is not incremental in the chores. In the proof of
+    Theorem~\ref{thm:binadd} the paid set is exactly the agents holding a
+    $\lceil q/n \rceil$-share of the universally disliked chores; identifying
+    what plays that role in general is the first question.
+  \item \textbf{Climb the milestone ladder.} Binary additive is done
+    (Theorem~\ref{thm:binadd}). Binary submodular is the next rung: for
+    matroid-rank costs, matroid union should supply the cardinality balancing
+    that Theorem~\ref{thm:sizeshift} identifies as the missing ingredient.
+    General dichotomous is the summit.
+  \item \textbf{The mixed model.} Allow each item to be a good or a chore for
+    each agent, with all marginals in $\set{-1,0,1}$: the dichotomous
+    restriction of the doubly monotone setting of~\cite{KMSTY24}. This is the
+    natural common generalisation of~\cite{BKNS22} and of the present paper.
+\end{enumerate}
+
+\paragraph{Before investing further.}
+The best published bound covering negative dichotomous valuations is
+that of~\cite{KMSTY24}: $n-1$ per agent and $n(n-1)/2$ in total, from any EF1
+allocation. Conjecture~\ref{conj:main} would improve the total by a factor of
+$n$ on this subclass --- the same factor~\cite{BKNS22} gains
+over~\cite{BDNSV20} on the goods side.
+\todo{confirm that nobody has published ``dichotomous chores with subsidy''
+already. This is the one check that could make the whole programme redundant and
+it has not been done.}

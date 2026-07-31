@@ -1,0 +1,191 @@
+%% ==========================================================================
+%%  4  Structure of the Chore Problem
+%%
+%%  The three reusable tools: the arc-update table (the whole goods/chore
+%%  asymmetry), the two-tier characterisation of {0,1} solutions, and the
+%%  size-shift transform relating the chore problem to R3's goods problem.
+%% ==========================================================================
+\section{Structure of the Chore Problem}
+\label{sec:structure}
+
+Throughout this section we work in cost form, so
+$\edgew{\alloc}(i,j) = \cost_i(\bundle{i}) - \cost_i(\bundle{j})$.
+
+% --------------------------------------------------------------------------
+\subsection{The arc-update table, and the whole of the asymmetry}
+\label{sec:arcupdate}
+
+Every incremental algorithm in this literature adds one item to one bundle and
+then asks what happened to the envy graph. The answer is two lines long, and
+comparing those two lines against their goods counterparts accounts for the
+entire difference between the present problem and that of~\cite{BKNS22}.
+
+For an allocation $\alloc$, an agent $x$ and an unallocated chore
+$g \notin \bigcup_i \bundle{i}$, write
+\[
+  Z^x \;:=\; (\bundle{1}, \dots, \bundle{x} \cup \set{g}, \dots, \bundle{n})
+\]
+for the allocation obtained by giving $g$ to $x$, and put
+\[
+  \delta_x \;:=\; \cost_x(\bundle{x} \cup \set{g}) - \cost_x(\bundle{x}),
+  \qquad
+  \delta_{i,x} \;:=\; \cost_i(\bundle{x} \cup \set{g}) - \cost_i(\bundle{x}),
+\]
+both of which lie in $\set{0,1}$. So $\delta_x$ is what the chore costs $x$
+herself, and $\delta_{i,x}$ is what it costs in $i$'s opinion.
+
+\begin{lemma}[Arc update]
+\label{lem:arcupdate}
+For all $i,j \in \agents$,
+\[
+  \edgew{Z^x}(i,j) = \edgew{\alloc}(i,j) \quad (i,j \ne x),
+  \qquad
+  \edgew{Z^x}(x,j) = \edgew{\alloc}(x,j) + \delta_x,
+  \qquad
+  \edgew{Z^x}(i,x) = \edgew{\alloc}(i,x) - \delta_{i,x}.
+\]
+\end{lemma}
+
+\begin{proof}
+Only $\bundle{x}$ changes, so an arc between two agents other than $x$ has both
+endpoints untouched. For an arc leaving $x$,
+$\edgew{Z^x}(x,j) = \cost_x(\bundle{x} \cup \set{g}) - \cost_x(\bundle{j})
+= \edgew{\alloc}(x,j) + \delta_x$. For an arc entering $x$,
+$\edgew{Z^x}(i,x) = \cost_i(\bundle{i}) - \cost_i(\bundle{x} \cup \set{g})
+= \edgew{\alloc}(i,x) - \delta_{i,x}$.
+\end{proof}
+
+The mirror statement for goods is obtained by replacing costs with values: there
+the arcs \emph{out of} the receiving agent fall and the arcs \emph{into} her
+rise. The consequences are opposite in a way that matters.
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & goods~\cite{BKNS22} & chores (here) \\
+\midrule
+arcs out of the receiver & fall & \textbf{rise by $\delta_x$} \\
+arcs into the receiver   & \textbf{rise} & fall by $\delta_{i,x}$ \\
+so the receiver must be  & \emph{maximally} subsidised & \emph{minimally} subsidised \\
+which is guaranteed by   & $\Mset(\subsidy) \ne \emptyset$ & $\subsidy_x = 0$ for some $x$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Both guarantees hold trivially --- some agent is always maximally subsidised,
+and some agent always has $\subsidy_x = 0$ under the minimum subsidy vector. The
+asymmetry is subtler than the table suggests, and it is what
+Theorem~\ref{thm:obstruction} exploits. Under goods, the harm done by an
+insertion is confined to paths \emph{ending} at the receiver, and requiring
+$x \in \Mset(\subsidy)$ caps every such path at $\subsidy_u - \subsidy_x \le 0$
+in one stroke. Under chores, the harm is done to paths \emph{leaving} the
+receiver, and $\subsidy_x = 0$ caps only the paths that \emph{start} at $x$. A
+path that merely passes through $x$ --- entering along an arc from some $i$ with
+$\delta_{i,x} = 0$ and leaving along an arc that has just risen by $\delta_x = 1$
+--- is not controlled by any condition on $\subsidy_x$. That gap is not a defect
+of the analysis; \Cref{sec:approach1} shows it is realised.
+
+% --------------------------------------------------------------------------
+\subsection{The shape of a $\set{0,1}$ solution}
+\label{sec:twotier}
+
+\begin{proposition}[Two-tier characterisation]
+\label{prop:twotier}
+Let $\subsidy \in \set{0,1}^n$ and put $S := \set{i \in \agents \mid \subsidy_i = 1}$.
+Then $(\alloc,\subsidy)$ is an envy-free solution if and only if
+\begin{enumerate}
+  \item[(a)] $\cost_i(\bundle{i}) \le \cost_i(\bundle{j})$ whenever $i,j$ lie
+    both in $S$ or both in $\agents \setminus S$;
+  \item[(b)] $\cost_i(\bundle{i}) \le \cost_i(\bundle{j}) + 1$ for $i \in S$ and
+    $j \in \agents \setminus S$;
+  \item[(c)] $\cost_i(\bundle{i}) + 1 \le \cost_i(\bundle{j})$ for
+    $i \in \agents \setminus S$ and $j \in S$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+In cost form Definition~\ref{def:efsolution} reads
+$\cost_i(\bundle{i}) \le \cost_i(\bundle{j}) + \subsidy_i - \subsidy_j$ for all
+$i,j$. Substituting the three possible values $0, 1, -1$ of
+$\subsidy_i - \subsidy_j$ gives (a), (b) and (c) respectively.
+\end{proof}
+
+The reading is worth keeping in mind when designing an algorithm. The unpaid
+agents are exactly envy-free among themselves and \emph{strictly} prefer their
+own bundle to that of every paid agent, by a full unit; the paid agents are
+exactly envy-free among themselves and envy-free up to one unit towards the
+unpaid. This is a certificate format, and it also suggests choosing the
+partition $S \mid \agents \setminus S$ \emph{first} and allocating afterwards ---
+an approach not attempted here, and the one place where the incremental template
+killed in \Cref{sec:approach1} is not obviously an obstacle. In the proof of
+Theorem~\ref{thm:binadd} the set $S$ turns out to be exactly the agents holding
+a $\lceil q/n \rceil$-share of the universally disliked chores.
+
+% --------------------------------------------------------------------------
+\subsection{The size-shift transform}
+\label{sec:sizeshift}
+
+Remark~\ref{rem:complement} showed that complementation relates the chore and
+goods models only for $n = 2$. There is a second transform, available for every
+$n$, which does not solve the problem but says precisely how far it is from
+being a corollary of~\cite{BKNS22}.
+
+\begin{theorem}[Size shift]
+\label{thm:sizeshift}
+For a negative dichotomous instance with cost functions $\cost_i$, define
+$\tilde{v}_i(S) := \abs{S} - \cost_i(S)$. Then each $\tilde{v}_i$ is a
+dichotomous \emph{goods} valuation in the sense of~\cite{BKNS22}, and for every
+allocation $\alloc$ and all $i,j$,
+\[
+  \edgew{\alloc}(i,j) \;=\; \tilde{\edgew{}}_{\alloc}(i,j) \;+\;
+  \abs{\bundle{i}} - \abs{\bundle{j}},
+\]
+where $\tilde{\edgew{}}_{\alloc}$ denotes the envy graph of the goods instance
+$\set{\tilde{v}_i}$. Consequently every \emph{cycle} has the same weight in both
+graphs --- so $\alloc$ is envy-freeable for the chores $\set{\cost_i}$ if and
+only if it is envy-freeable for the goods $\set{\tilde{v}_i}$ --- while for a
+path $P$ from $u$ to $v$,
+\[
+  \edgew{\alloc}(P) \;=\; \tilde{\edgew{}}_{\alloc}(P) + \abs{\bundle{u}} -
+  \abs{\bundle{v}},
+  \qquad\text{hence}\qquad
+  \pathw{\alloc}(u) \;=\; \max_{v \in \agents}\Big[\,\tilde{d}_{\alloc}(u,v) +
+  \abs{\bundle{u}} - \abs{\bundle{v}}\,\Big],
+\]
+with $\tilde{d}_{\alloc}(u,v)$ the maximum weight of a path from $u$ to $v$ in
+the goods graph and $\tilde{d}_{\alloc}(u,u) = 0$.
+\end{theorem}
+
+\begin{proof}
+$\tilde{v}_i(\emptyset) = 0$, and for $g \notin S$,
+$\tilde{v}_i(S \cup \set{g}) - \tilde{v}_i(S) = 1 - (\cost_i(S \cup \set{g}) -
+\cost_i(S)) \in \set{0,1}$, so $\tilde{v}_i$ is dichotomous. For the identity,
+\[
+  \tilde{\edgew{}}_{\alloc}(i,j) = \tilde{v}_i(\bundle{j}) - \tilde{v}_i(\bundle{i})
+  = \big(\abs{\bundle{j}} - \cost_i(\bundle{j})\big) -
+    \big(\abs{\bundle{i}} - \cost_i(\bundle{i})\big)
+  = \edgew{\alloc}(i,j) - \abs{\bundle{i}} + \abs{\bundle{j}} .
+\]
+Summing along a path $(i_1,\dots,i_r)$, the terms
+$\abs{A_{i_t}} - \abs{A_{i_{t+1}}}$ telescope to
+$\abs{A_{i_1}} - \abs{A_{i_r}}$; along a cycle they telescope to $0$. The
+characterisation of envy-freeability by the absence of positive cycles
+(Theorem~\ref{thm:hs-characterisation}) then transfers, and the formula for
+$\pathw{\alloc}(u)$ follows from Theorem~\ref{thm:hs-minsubsidy}.
+\end{proof}
+
+\begin{remark}[Why Conjecture~\ref{conj:main} is not a corollary of~\cite{BKNS22}]
+\label{rem:notcorollary}
+Theorem~\ref{thm:sizeshift} says the chore problem is the goods problem of
+\cite{BKNS22} \emph{plus a cardinality-balancing requirement}. A sufficient
+condition falls straight out: since $\tilde{d}_{\alloc}(u,v) \le \tilde{p}_u -
+\tilde{p}_v$ for any envy-eliminating $\tilde{p}$, an allocation solving the
+goods instance in which the quantity $\abs{\bundle{i}} + \tilde{p}_i$ has spread
+at most $1$ across agents satisfies $\pathw{\alloc} \le 1$. But~\cite{BKNS22}
+offers no control whatever on bundle cardinalities --- its output need not even
+be EF1, by its own Appendix~C --- so the requirement is not met by invoking it
+as a black box. Nor can its algorithm simply be re-run with a balancing
+tie-break, because Theorem~\ref{thm:obstruction} rules out the entire
+item-by-item template on which it is built. The transform also shows the chore
+problem is at least as expressive as the goods problem, so no easier.
+\end{remark}
