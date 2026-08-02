@@ -96,15 +96,46 @@
   note    = {Preliminary version in AAAI 2024}
 }
 
-% R9 [FROM PAPER MAP] -- pages not yet verified.  This is the baseline the
-% present paper is measured against; check its normalisation and its EF1
-% convention against the PDF before relying on the stated bound.
+% R9 [VERIFIED against the PDF, 2026-08-02]: title page, arXiv stamp
+% 2308.11230v1 (22 Aug 2023); the two-sided normalisation, the doubly monotone
+% and two-sided EF1 definitions are Section 2; the n-1 per agent / n(n-1)/2
+% total bound is Theorem 1.
 @inproceedings{KMSTY24,
   author    = {Yasushi Kawase and Kazuhisa Makino and Hanna Sumita and
                Akihisa Tamura and Makoto Yokoo},
   title     = {Towards Optimal Subsidy Bounds for Envy-freeable Allocations},
   booktitle = {Proceedings of the AAAI Conference on Artificial Intelligence},
-  year      = {2024}
+  year      = {2024},
+  eprint    = {2308.11230},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.GT}
+}
+
+%% ================== Chores-side literature [VERIFIED] ====================
+%% Located by literature search 2026-08-02.  Neither is in References/;
+%% add the PDFs and extend paper_map_R1_to_R9.md if they become load-bearing.
+
+% The direct chores analogue of R5: binary marginals, no money, EFX.
+@misc{TWYZ23,
+  author        = {Biaoshuai Tao and Xiaowei Wu and Ziqi Yu and Shengwei Zhou},
+  title         = {On the Existence of {EFX} (and Pareto-Optimal) Allocations
+                   for Binary Chores},
+  year          = {2023},
+  eprint        = {2308.12177},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.GT},
+  note          = {Journal version in Theoretical Computer Science, 2025}
+}
+
+% Chores with subsidy, but for PROPORTIONALITY rather than envy-freeness.
+@misc{GSW25,
+  author        = {Jugal Garg and Eklavya Sharma and Xiaowei Wu},
+  title         = {Proportional and {P}areto-Optimal Allocation of Chores with
+                   Subsidy},
+  year          = {2025},
+  eprint        = {2510.10335},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.GT}
 }
 
 %% ============ Foundations and neighbouring work [ALL VERIFIED] ============

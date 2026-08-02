@@ -112,14 +112,17 @@ explicitly so that the contribution can be measured against them.
 On the one hand, existence of a bounded subsidy is not in question. Negative
 dichotomous valuations are doubly monotone --- every item is a chore for every
 agent, which is a special case of every item being a good or a chore for each
-agent --- and they satisfy the two-sided normalisation
-$\abs{v_i(S \cup \set{e}) - v_i(S)} \le 1$. The reduction of Kawase et
-al.~\cite{KMSTY24}, which converts any EF1 allocation into an envy-free
+agent --- and they satisfy the normalisation
+$\abs{v_i(S \cup \set{e}) - v_i(S)} \le 1$ that~\cite[\S2]{KMSTY24} imposes. The
+reduction of Kawase et al., which converts any EF1 allocation into an envy-free
 one, therefore applies off the shelf and yields a subsidy of at most $n-1$ per
-agent and $n(n-1)/2$ in total.
-\verify{this containment and the resulting bound against Reading\_9 directly;
-confirm in particular which EF1 convention~\cite{KMSTY24} requires, since the
-goods-only and two-sided forms of EF1 differ once chores are present}
+agent and $n(n-1)/2$ in total~\cite[Theorem~1]{KMSTY24}. Two details make the
+containment work and are easy to get wrong. Their normalisation is two-sided, so
+it bounds chore disutility as well as value; and the EF1 they require is the
+two-sided form of \Cref{def:ef1}, not the goods-only form
+of~\cite{HS19} --- the two differ precisely when chores are present. An EF1
+allocation is guaranteed to exist and to be computable in polynomial time for
+doubly monotone valuations~\cite[\S2]{KMSTY24}, so the reduction has an input.
 
 On the other hand, the lower bound of the goods model survives intact.
 
@@ -190,8 +193,8 @@ Narayan et al.~\cite{NSV21} study the welfare cost of achieving envy-freeness
 with transfers.
 
 The paper closest to the present setting is that of Kawase et
-al.~\cite{KMSTY24}, which is the only work in this line that admits chores at
-all. Working with doubly monotone valuations under the two-sided normalisation,
+al.~\cite{KMSTY24}, the only work in the envy-freeness-with-subsidy line that
+admits chores at all. Working with doubly monotone valuations under the two-sided normalisation,
 it decouples the two jobs that~\cite{BDNSV20} performed together: rather than
 constructing a specific allocation and showing that it is cheap to subsidise, it
 takes \emph{any} EF1 allocation as input and bounds the subsidy needed to
@@ -209,10 +212,28 @@ $0$ or $1$ per agent and obtain exact envy-freeness~\cite{BKNS22}, or pay
 nothing and obtain EFX~\cite{BSY23}. Whether either branch survives the passage
 to chores is open; this paper addresses the first.
 
-\todo{a literature sweep of the chores-side fair division literature is still
-outstanding. Nothing in the corpus $R1$--$R9$ covers indivisible chores except
-\cite{KMSTY24}, and the related-work paragraph above therefore says nothing
-about EF1/EFX for chores, about the goods-and-chores literature, or about prior
-uses of subsidies for task assignment. Add those readings to
-\texttt{References/}, extend \texttt{paper\_map\_R1\_to\_R9.md}, and rewrite this
-paragraph before circulating.}
+\paragraph{The chores side.}
+Work on indivisible chores has largely developed alongside rather than inside
+the subsidy line, and the two have met less often than one might expect. Where
+money has been brought to chores, it has been in the service of
+\emph{proportionality} rather than envy-freeness: the question studied is the
+total subsidy needed to bring every agent down to her proportional share of the
+burden, for which the best bounds under additive disutilities normalised to at
+most $1$ per chore are $n/4$ and then $n/3 - 1/6$, recently obtained together
+with Pareto optimality by Garg et al.~\cite{GSW25}. That is a different
+fairness notion and a different accounting; it does not bound the subsidy needed
+for envy-freeness.
+
+The no-money branch, by contrast, has a direct chore analogue of~\cite{BSY23}.
+Tao et al.~\cite{TWYZ23} study chores with binary marginals and show that for
+binary \emph{additive} costs an allocation that is simultaneously EFX and Pareto
+optimal always exists and is computable in polynomial time. So on the chores
+side the second half of the binary dichotomy --- pay nothing, obtain EFX --- is
+established at least for additive costs, while the first half, pay $0$ or $1$
+per agent and obtain exact envy-freeness, is what Conjecture~\ref{conj:main}
+asks for.
+
+We are not aware of any treatment of envy-freeness with subsidy for chores under
+dichotomous costs; the closest published coverage remains~\cite{KMSTY24}. This
+is the outcome of a literature search rather than a proof of novelty, and it
+should be repeated before the paper is circulated.
