@@ -8,13 +8,35 @@
 \section{Solved Cases}
 \label{sec:solved}
 
-Conjecture~\ref{conj:main} holds in two restrictions of the model, by explicit
-polynomial-time constructions. Both proofs run the same way: bound
+Conjecture~\ref{conj:main} holds in three restrictions of the model, by explicit
+polynomial-time constructions. Each proof runs the same way: bound
 $\edgew{\alloc}(i,j)$ by a difference $\phi_i - \phi_j$ of a per-agent potential,
 so that the bound telescopes to $\phi_{i_1} - \phi_{i_r}$ along a path and to
 $0$ around a cycle. Envy-freeability and the $\set{0,1}$ bound then both follow
 from controlling the spread of $\phi$. Reproducing that mechanism in general is
 the open problem.
+
+\paragraph{What is and is not new here.}
+This section should be read with its overlap against the literature stated
+plainly, because two of the three cases are largely or wholly not ours.
+
+\begin{itemize}
+  \item \textbf{Binary additive costs} (Theorem~\ref{thm:binadd}) are
+    \emph{subsumed} by~\cite{LMS26}, which settles all additive goods-and-chores
+    instances. See Remark~\ref{rem:binadd-superseded}. The statement is not new;
+    only the potential-and-telescoping mechanism is retained, because that is
+    what the general case has to reproduce.
+  \item \textbf{Identical costs} (Theorem~\ref{thm:identical}) are \emph{not}
+    subsumed, for the reason given in Remark~\ref{rem:identical-new} --- but the
+    result is elementary and is best read as a warm-up.
+  \item \textbf{Two agents} is~\cite[Theorem~4]{BKNS22}. Only the reduction
+    carrying it to chores (Remark~\ref{rem:complement}) is ours.
+\end{itemize}
+
+\noindent
+Nothing in this section, in other words, is load-bearing. The substance of the
+paper is in \Cref{sec:approach1,sec:approach2}, which are negative, and in
+\Cref{sec:structure,sec:approach3}, which are structural.
 
 % --------------------------------------------------------------------------
 \subsection{Binary additive costs}
@@ -122,8 +144,27 @@ invariant survives. The bound $\optsubsidy \in \set{0,1}^n$ follows with
 Observation~\ref{obs:integrality}.
 \end{proof}
 
-For $n = 2$ the conjecture holds as well, with total subsidy at most $1$: by
-Remark~\ref{rem:complement}, two-agent chore division is two-agent goods
-division with the bundles swapped, and~\cite[Theorem~4]{BKNS22} applies. As
-noted there, the reduction consumes the identity $\items \setminus \bundle{j} =
+\begin{remark}[Why this one survives the literature]
+\label{rem:identical-new}
+Theorem~\ref{thm:identical} is not covered by~\cite{LMS26}, because identical
+dichotomous costs need not be additive. The instance $\cost_i(S) =
+\max(0,\abs{S}-1)$ for every $i$ is identical and dichotomous, with marginals
+$0,1,1,\dots$, and is supermodular rather than additive --- it is the very cost
+function that drives the obstruction of Theorem~\ref{thm:obstruction}. Nor
+does~\cite{BKNS22} cover it, that being a goods result, and~\cite{KMSTY24} gives
+only $n-1$ per agent on this class. So the statement is new, in the narrow sense
+that no cited paper implies it.
+
+It is also easy, and should not be oversold. With identical costs every agent
+agrees on the cost of every bundle, the problem degenerates to load balancing,
+and the potential $\phi_i = \cost(\bundle{i})$ telescopes \emph{exactly} rather
+than merely bounding the arcs. That exactness is what makes the proof three
+lines long, and it is precisely what fails as soon as two agents disagree.
+\end{remark}
+
+For $n = 2$ the conjecture holds as well, with total subsidy at most $1$, but
+here the theorem is somebody else's: by Remark~\ref{rem:complement} two-agent
+chore division \emph{is} two-agent goods division with the bundles swapped, so
+the content is~\cite[Theorem~4]{BKNS22} and ours is only the reduction. As noted
+there, that reduction consumes the identity $\items \setminus \bundle{j} =
 \bundle{i}$ and so says nothing for $n \ge 3$.
