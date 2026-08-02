@@ -40,6 +40,14 @@ Does \emph{every} utilitarian-optimal allocation attain ${\le}\,1$?
 The single exception
   & \texttt{mswcex.py} & refutes Conjecture~\ref{conj:msw}
     (Proposition~\ref{prop:msw-false}) \\
+\midrule
+Peel schedule and trap-state refusal on the witness of
+Theorem~\ref{thm:obstruction}
+  & \texttt{peel.py} & six legal peels reach the zero-subsidy allocation; the
+    trap state has $\pathw{}(1) = 2$ \\
+Full peel state space of that witness, $7^3 = 343$ states, both move types
+  & \texttt{peel3.py} & 175 legal, 166 good, \textbf{9 dead ends}, root good,
+    all six reachable terminals are perfect matchings \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -94,10 +102,38 @@ current generator cannot reach, and no amount of additional uniform sampling
 will find it. An adversarial generator --- biased towards endpoint-constant
 functions, towards supermodular costs, towards agents whose free chores overlap
 heavily, and towards instances in which the utilitarian optimum is unique --- is
-the single highest-value experiment outstanding. It should be built before any
-further effort is spent on proof attempts, because it is the only cheap way to
-learn whether there is a theorem to prove.
+the single highest-value experiment outstanding against the \emph{conjecture}.
+It should be built before much further effort is spent on proof attempts,
+because it is the only cheap way to learn whether there is a theorem to prove.
 \end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{The peel-frame search}
+\label{sec:peelsearch}
+
+The highest-value experiment against the \emph{approach} of
+\Cref{sec:approach3} is different, and it is cheap. Reuse the
+\texttt{gen.py}/\texttt{search.py} harness over the full $n = 3$, $m = 3$
+dichotomous family --- all $9{,}880$ instances up to agent symmetry --- and for
+each instance run the fixed-point computation of \texttt{peel3.py}: is the root
+good, and how many dead ends are there? An instance with a bad root refutes
+Conjecture~\ref{conj:h1prime} and kills the peel approach.
+
+It would \emph{not}, by Remark~\ref{rem:converse}, refute
+Conjecture~\ref{conj:main}: a good terminal state can in principle exist while
+every schedule reaching it passes through an illegal intermediate state. The two
+searches therefore test different things and both are worth running --- the
+allocation-space search above tests the conjecture, and the peel-frame search
+tests whether this route to it survives.
+
+Two follow-ups, in order. First, test the hypothesis of
+Remark~\ref{rem:balance} across that family: is every dead end a state already
+committed to an unbalanced terminal? If so, formulate the balance rule precisely
+and check whether greedy-under-that-rule reaches a terminal without
+backtracking. Second, try candidate rules in the order (a) balance-first, peel
+so that a balanced terminal remains reachable; (b) spectator-free peels first by
+Lemma~\ref{lem:specfree}, ties broken by balance; (c) $\argmax_i \pathw{}(i)$
+with a balance tie-break --- noting that (c) alone already fails on the witness.
 
 % --------------------------------------------------------------------------
 \subsection{Reproducing the results}
@@ -117,6 +153,9 @@ Script & Purpose \\
 \texttt{deadend.py}    & Theorem~\ref{thm:obstruction} \\
 \texttt{binadd.py}     & Theorem~\ref{thm:binadd} \\
 \texttt{mswcex.py}     & Proposition~\ref{prop:msw-false} \\
+\texttt{peel.py}       & the schedule and trap-state refusal of
+                         \Cref{sec:dissolve} \\
+\texttt{peel3.py}      & the state-space table of Proposition~\ref{prop:deadends} \\
 \bottomrule
 \end{tabular}
 \end{center}

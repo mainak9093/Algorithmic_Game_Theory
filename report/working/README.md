@@ -25,7 +25,8 @@ builds of one.
 | `solved_cases.tex` | Binary additive costs; identical costs; $n=2$ | Proved, tight |
 | `approach_1.tex` | Item-by-item insertion: free-insertion theorem, cycle-closing bound, **and the obstruction killing the template** | Proved |
 | `approach_2.tex` | Utilitarian-optimal selection, **refuted**; failed tie-break rules | Proved |
-| `experiments.tex` | Evidence table, the sampler-bias analysis, reproduction instructions | Current |
+| `approach_3.tex` | Replica transform, coverage reduction, the peel process, dead ends | **Open — the live approach.** Less polished than the rest. |
+| `experiments.tex` | Evidence table, the sampler-bias analysis, the peel-frame search plan, reproduction | Current |
 | `ideas.tex` | **Running log of new thinking.** Newest entry last. | Inbox |
 | `conclusion.tex` | Open directions ranked | Current |
 
@@ -39,6 +40,22 @@ The two results worth not re-deriving:
   instance whose *unique* cost-minimising allocation needs subsidy 2 while a
   costlier one needs 0. A correct algorithm must be free to give up total cost.
   (`approach_2.tex`, verified by `update_1/mswcex.py`.)
+
+And the one worth building on:
+
+- **The replica transform.** A chore instance is a goods instance on $n-1$ copies
+  of each chore, with an *identical* envy graph, so the whole conjecture reduces
+  to one constraint: no agent may be relieved of the same chore twice. Read
+  dynamically this defers every ownership decision to the last move touching a
+  chore, which is exactly what the two negative results demand. Not known to
+  work — the state space has dead ends, and the reduction is sufficient but not
+  known to be complete. (`approach_3.tex`, verified by `update_2/peel3.py`.)
+
+**Pending:** the terms introduced in `approach_3.tex` — replica instance, type
+map, coverage allocation, peel process, workload profile, owner-candidate set,
+survivor, spectator-free peel, conditioned-remainder principle, deadlock — are
+flagged for promotion into `../../glossary_fair_division_subsidies.md`, which has
+not been updated. Do that before this notation leaves `working/`.
 
 ## Adding a new idea
 

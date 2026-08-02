@@ -122,7 +122,10 @@ it bounds chore disutility as well as value; and the EF1 they require is the
 two-sided form of \Cref{def:ef1}, not the goods-only form
 of~\cite{HS19} --- the two differ precisely when chores are present. An EF1
 allocation is guaranteed to exist and to be computable in polynomial time for
-doubly monotone valuations~\cite[\S2]{KMSTY24}, so the reduction has an input.
+doubly monotone valuations, so the reduction has an input; for that
+step~\cite[\S2]{KMSTY24} cites~\cite{LMMS04} and~\cite{BSV21}, and the citation
+matters, because the envy-cycle argument of~\cite{LMMS04} does \emph{not} port
+to chores unaltered and it is~\cite{BSV21} that supplies the repair.
 
 On the other hand, the lower bound of the goods model survives intact.
 
@@ -231,9 +234,45 @@ optimal always exists and is computable in polynomial time. So on the chores
 side the second half of the binary dichotomy --- pay nothing, obtain EFX --- is
 established at least for additive costs, while the first half, pay $0$ or $1$
 per agent and obtain exact envy-freeness, is what Conjecture~\ref{conj:main}
-asks for.
+asks for. That money is genuinely needed here is not obvious a priori but is
+known: Bhaskar et al.~\cite{BSV21} show that deciding whether an exactly
+envy-free allocation of chores exists is NP-complete already for binary additive
+costs, and give a polynomial-time EF1 algorithm for chores and for doubly
+monotone instances.
+
+Where the two lines have met is on the \emph{additive} side, and recently. Lu et
+al.~\cite{LMS26} prove the goods-and-chores analogue of~\cite{BDNSV20}: for
+additive utilities in which each item is a good for some agents and a chore for
+others, with every $\abs{v_i(g)} \le 1$, a subsidy of one dollar per agent
+suffices, the bound is tight, and the allocation is computable in polynomial
+time --- hence $n-1$ in total. This settles the additive chore problem
+completely.
+
+It does not settle ours, and the reason is exactly the reason~\cite{BKNS22} was
+not a corollary of~\cite{BDNSV20}. Dichotomous valuations are not additive and
+additive valuations are not dichotomous; the two classes are incomparable. The
+four corners are
+
+\begin{center}
+\begin{tabular}{@{}lll@{}}
+\toprule
+ & goods & chores \\
+\midrule
+additive     & \cite{BDNSV20} & \cite{LMS26} \\
+dichotomous  & \cite{BKNS22}  & \textbf{Conjecture~\ref{conj:main}} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+each of the three settled corners giving one dollar per agent and $n-1$ in
+total. The present question is the fourth. Note also that~\cite{LMS26} does not
+displace~\cite{KMSTY24} as the baseline of \Cref{sec:intro}: for valuations that
+are dichotomous but not additive, $n-1$ per agent from~\cite{KMSTY24} remains the
+best published bound.
 
 We are not aware of any treatment of envy-freeness with subsidy for chores under
-dichotomous costs; the closest published coverage remains~\cite{KMSTY24}. This
-is the outcome of a literature search rather than a proof of novelty, and it
-should be repeated before the paper is circulated.
+dichotomous costs. This is the outcome of a literature search rather than a
+proof of novelty --- \cite{LMS26} appeared in July 2026, which is a reminder of
+how quickly the surrounding corners are being filled in --- and it should be
+repeated before the paper is circulated.

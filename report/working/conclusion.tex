@@ -7,38 +7,66 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-We have not settled Conjecture~\ref{conj:main}, and the honest summary of this
-paper is that it makes the conjecture harder to prove than it looked. Two
-strategies that a reader would reasonably try first are ruled out:
-item-by-item insertion, which is the strategy that works
-in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}), and restriction to
-utilitarian-optimal allocations (Proposition~\ref{prop:msw-false}). What remains
-is a small set of positive results --- binary additive costs
-(Theorem~\ref{thm:binadd}), identical costs (Theorem~\ref{thm:identical}), two
-agents --- and three structural tools that between them say precisely how the
-chore problem differs from its goods mirror.
+We have not settled Conjecture~\ref{conj:main}. Two strategies that a reader
+would reasonably try first are ruled out: item-by-item insertion, which is the
+strategy that works in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}), and
+restriction to utilitarian-optimal allocations
+(Proposition~\ref{prop:msw-false}). Alongside those sit a small set of positive
+results --- binary additive costs (Theorem~\ref{thm:binadd}), identical costs
+(Theorem~\ref{thm:identical}), two agents --- and structural tools that say
+precisely how the chore problem differs from its goods mirror.
 
-The single most useful thing to keep in mind is the constraint the two negative
-results jointly impose: \emph{a correct algorithm must be free to move
+Both negative results are failures of \emph{timing}, and the constraint they
+jointly impose is that \emph{a correct algorithm must be free to move
 already-allocated chores between bundles, and free to give up total cost while
-doing so}. Every construction in this paper that succeeds does so by exhibiting
-a per-agent potential $\phi$ with $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$,
-which telescopes along paths. Finding such a potential for general negative
-dichotomous costs, or proving none exists, is the problem.
+doing so}. The replica transform of \Cref{sec:approach3} is the response:
+Theorem~\ref{thm:replica} turns the instance into a goods instance with an
+identical envy graph, Corollary~\ref{cor:coverage} reduces the conjecture to the
+single constraint that no agent be relieved of a chore twice, and reading that
+dynamically defers every ownership decision to the last move touching a chore,
+so there is nothing to re-open. This is currently the most promising route.
+It is not known to work --- Proposition~\ref{prop:deadends} shows the state
+space has genuine dead ends, and Remark~\ref{rem:converse} notes that the
+reduction is sufficient but not known to be complete --- and what is missing is
+a peel rule that provably never enters a deadlock.
+
+Every construction here that succeeds does so by exhibiting a per-agent
+potential $\phi$ with $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$, which
+telescopes along paths. Finding such a potential for general negative
+dichotomous costs, or proving none exists, remains the problem; the balance
+signal of Remark~\ref{rem:balance} is the current best guess at its shape.
 
 \paragraph{Directions.}
 \begin{enumerate}
+  \item \textbf{The peel-frame search} (\Cref{sec:peelsearch}). Run the
+    fixed-point computation of \texttt{peel3.py} over the full $n = m = 3$
+    dichotomous family. A bad root anywhere kills the approach of
+    \Cref{sec:approach3}; a clean sweep is strong evidence for
+    Conjecture~\ref{conj:h1prime}. Cheapest decisive experiment available.
+  \item \textbf{Characterise the dead ends} (Remark~\ref{rem:balance}). Test
+    across that family whether every dead end is a state already committed to an
+    unbalanced terminal. If so, the balance rule is the missing ingredient and
+    can be stated precisely.
+  \item \textbf{Settle the converse} (Remark~\ref{rem:converse}). Is a good
+    terminal state, when one exists, always reachable by a legal schedule? A
+    positive answer upgrades the peel frame from a sufficient reformulation to a
+    complete one, and makes the search of item~1 a direct test of
+    Conjecture~\ref{conj:main}.
   \item \textbf{Adversarial instance generation} (\Cref{sec:samplerbias}). The
     randomised evidence is drawn from a distribution that essentially never
     produces the structured extremal functions from which both negative results
-    are built. This is cheap, and it is the only inexpensive way to find out
-    whether Conjecture~\ref{conj:main} is true before investing in a proof.
+    are built. This is the cheapest way to find out whether
+    Conjecture~\ref{conj:main} is true at all.
   \item \textbf{Exchange paths rather than single transfers}
     (\Cref{sec:tiebreaks}). Single-chore local search has bad local minima. The
     move set should match the exchange structure of dichotomous costs, as
     Yankee Swap and matroid union do in the matroid-rank
     literature~\cite{BEF21}; and by Remark~\ref{rem:msw-deadend} the search must
     range over all allocations, not the utilitarian-optimal ones.
+  \item \textbf{The matroid-rank subclass} (\Cref{sec:mrf}). Write out the
+    supermodular-to-matroid reduction properly, in particular the
+    parallel-extension step, then attempt basis exchange in the parallel-copy
+    matroid. This is where the surrounding literature's machinery is strongest.
   \item \textbf{Build the two tiers first} (Proposition~\ref{prop:twotier}).
     Choose the partition into paid and unpaid agents and only then allocate.
     This is the one natural approach that Theorem~\ref{thm:obstruction} does not
@@ -47,10 +75,11 @@ dichotomous costs, or proving none exists, is the problem.
     $\lceil q/n \rceil$-share of the universally disliked chores; identifying
     what plays that role in general is the first question.
   \item \textbf{Climb the milestone ladder.} Binary additive is done
-    (Theorem~\ref{thm:binadd}). Binary submodular is the next rung: for
-    matroid-rank costs, matroid union should supply the cardinality balancing
-    that Theorem~\ref{thm:sizeshift} identifies as the missing ingredient.
-    General dichotomous is the summit.
+    (Theorem~\ref{thm:binadd}); binary submodular is the next rung, by item~6
+    above; general dichotomous is the summit. Note that
+    Theorem~\ref{thm:sizeshift} and Remark~\ref{rem:balance} agree on what the
+    middle rung needs --- cardinality balancing --- which is what matroid union
+    would supply.
   \item \textbf{The mixed model.} Allow each item to be a good or a chore for
     each agent, with all marginals in $\set{-1,0,1}$: the dichotomous
     restriction of the doubly monotone setting of~\cite{KMSTY24}. This is the
@@ -58,13 +87,18 @@ dichotomous costs, or proving none exists, is the problem.
 \end{enumerate}
 
 \paragraph{Where this would sit.}
-The best published bound covering negative dichotomous valuations is
-that of~\cite{KMSTY24}: $n-1$ per agent and $n(n-1)/2$ in total, from any EF1
-allocation. Conjecture~\ref{conj:main} would improve the total by a factor of
-$n$ on this subclass --- the same factor~\cite{BKNS22} gains
-over~\cite{BDNSV20} on the goods side. A literature search has not turned up an
-envy-freeness-with-subsidy result for chores under dichotomous costs: the
-chores-and-money literature has concentrated on proportionality~\cite{GSW25},
-and the binary-chores work that does exist is on the no-money
-branch~\cite{TWYZ23}. That is a search rather than a proof of novelty and should
-be repeated before circulation, but it is no longer a reason to hold off.
+Conjecture~\ref{conj:main} is the fourth corner of the square in
+\Cref{sec:intro}: additive goods~\cite{BDNSV20}, dichotomous
+goods~\cite{BKNS22} and additive chores~\cite{LMS26} all give one dollar per
+agent and $n-1$ in total, and dichotomous chores is what remains. For valuations
+that are dichotomous but not additive the best published bound is still that
+of~\cite{KMSTY24}, $n-1$ per agent and $n(n-1)/2$ in total from any EF1
+allocation, so the conjecture would improve the total by a factor of $n$ ---
+the same factor~\cite{BKNS22} gains over~\cite{BDNSV20} on the goods side.
+
+Two cautions follow from the literature check. First,
+Theorem~\ref{thm:binadd} is already subsumed by~\cite{LMS26}
+(Remark~\ref{rem:binadd-superseded}); what survives of it is the mechanism, not
+the statement. Second, \cite{LMS26} appeared in July 2026, which is a reminder
+that the surrounding corners are being filled in quickly and that the search
+should be repeated before circulation rather than treated as done.

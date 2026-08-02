@@ -1,0 +1,515 @@
+%% ==========================================================================
+%%  Approach 3 --- the replica transform and the peel reformulation
+%%
+%%  Source: update_2/PS1_note_replica_peel_transform.md (v1, 2026-08-02).
+%%  The replica construction is the author's; the downstream development was
+%%  worked out in the session of that date.
+%%
+%%  STATUS.  Theorem H and its corollaries are proved.  The peel dead-end
+%%  computation is machine-verified (update_2/peel3.py reproduces every number
+%%  in this section exactly).  Conjecture H1 is REFUTED; Conjecture H1' is
+%%  OPEN and is the statement that would imply Conjecture 2.
+%%
+%%  This section is deliberately less polished than the rest of the parked
+%%  material.  Sub-sections marked [Conjecture] or [Observation] are not
+%%  proved and must be labelled as such in anything shown to a reader.
+%%
+%%  Terms defined here are flagged for promotion into
+%%  ../glossary_fair_division_subsidies.md, which has NOT yet been updated:
+%%  replica instance, type map, dual valuation, coverage allocation,
+%%  duplicate copy, peel process, workload profile, owner-candidate set,
+%%  survivor, spectator-free peel, conditioned-remainder principle, deadlock.
+%% ==========================================================================
+\section{Approach 3: The Replica Transform and the Peel Reformulation}
+\label{sec:approach3}
+
+Both preceding approaches fail because of \emph{when} decisions are made.
+Item-by-item insertion (\Cref{sec:approach1}) commits a chore to an owner and
+cannot take it back; selecting a utilitarian optimum (\Cref{sec:approach2})
+commits to the wrong allocation outright. This section changes coordinates so
+that the commitment is deferred. The chore problem is re-expressed as a
+\emph{goods} problem on a replicated item set, and then read dynamically as a
+process that relieves agents of chores one at a time. Ownership of a chore is
+decided only by the last move that touches it.
+
+The payoff is that the proof orientation of~\cite{BKNS22} becomes correct again
+and the obstruction of Theorem~\ref{thm:obstruction} ceases to bind. The price
+is a new constraint --- coverage --- which is then shown to be non-vacuous.
+
+% --------------------------------------------------------------------------
+\subsection{The replica instance}
+\label{sec:replica}
+
+Fix a negative dichotomous instance with cost functions $\cost_i$ on chores
+$\items = \set{a_1,\dots,a_m}$. Build a \emph{replica instance} $\hat{I}$ whose
+item set carries $n-1$ copies of a good $b_j$ for each chore $a_j$:
+\[
+  \hat{\items} \;:=\; \set{\, b_j^{(1)}, \dots, b_j^{(n-1)} \;:\; j \in \items \,}.
+\]
+For $S \subseteq \hat{\items}$ let $\tau(S) \subseteq \items$ be the set of
+\emph{types} occurring in $S$, and define
+\[
+  \hat{v}_i(S) \;:=\; \cost_i(\items) \;-\; \cost_i\big(\items \setminus \tau(S)\big).
+\]
+
+The reading is that \emph{handing agent $i$ a copy of $b_j$ relieves $i$ of
+chore $a_j$}. Each chore ends with exactly one owner, so exactly $n-1$ agents
+must be relieved of it --- hence $n-1$ copies --- and no agent may be relieved
+of the same chore twice, so no agent may hold two copies of one type. That last
+clause is load-bearing rather than cosmetic: it is what makes $\hat{v}_i$
+well defined as a dual, since a second copy of a type has marginal $0$ and never
+$+1$ again.
+
+\begin{remark}[The naive reading is false]
+\label{rem:naive}
+If one instead declares a copy of $b_j$ to be worth $+1$ to whoever receives it,
+the construction collapses. An agent indifferent to $a_j$ would gain from
+$b_j$, every $\hat{v}_i$ would reduce to $\abs{\tau(S)}$, and the induced envy
+graph would be $\hat{\edgew{}}(i,k) = \abs{B_i} - \abs{B_k}$ --- the pure
+cardinality term already isolated in Theorem~\ref{thm:sizeshift}, carrying none
+of the cost information. The correct reading is \emph{marginal}: a copy of $b_j$
+is worth to agent $i$ exactly $i$'s marginal cost of $a_j$ on what remains of
+$i$'s workload.
+\end{remark}
+
+This also completes Remark~\ref{rem:complement}. There the dual
+$\tilde{v}_i(S) = \cost_i(\items) - \cost_i(\items \setminus S)$ settled $n = 2$
+and broke at $n \ge 3$ because $\items \setminus \bundle{i}$ stops being a
+bundle of the partition. Replication is precisely the repair: with $n-1$ copies
+of every type, the $n$ complements $\items \setminus \bundle{1}, \dots,
+\items \setminus \bundle{n}$ become \emph{simultaneously} realisable as disjoint
+bundles.
+
+% --------------------------------------------------------------------------
+\subsection{The transform}
+\label{sec:thmH}
+
+Call an allocation $B = (B_1,\dots,B_n)$ of all of $\hat{\items}$ a
+\emph{coverage allocation} if no $B_i$ contains two copies of the same type.
+
+\begin{theorem}[Replica transform]
+\label{thm:replica}
+Let $\cost_1,\dots,\cost_n$ be monotone with $\cost_i(\emptyset) = 0$ and all
+marginals in $\set{0,1}$. Then
+\begin{enumerate}
+  \item[(i)] each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in
+    the sense of~\cite{BKNS22};
+  \item[(ii)] $\Phi : \alloc \mapsto B$, where $B_i$ receives one copy of each
+    type in $\items \setminus \bundle{i}$, is a bijection between partitions of
+    $\items$ and coverage allocations of $\hat{\items}$, up to relabelling
+    copies of a type;
+  \item[(iii)] for corresponding $\alloc$ and $B$ the envy graphs agree arc for
+    arc: $\hat{\edgew{}}_B(i,k) = \edgew{\alloc}(i,k)$ for all $i,k$.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} Normalisation: $\hat{v}_i(\emptyset) = \cost_i(\items) -
+\cost_i(\items) = 0$. Monotonicity: $S \subseteq S'$ gives $\tau(S) \subseteq
+\tau(S')$, hence $\items \setminus \tau(S) \supseteq \items \setminus \tau(S')$,
+and $\cost_i$ is monotone, so $\hat{v}_i(S) \le \hat{v}_i(S')$. Marginals: take
+$b \notin S$ of type $j$. If $j \in \tau(S)$ then $\tau(S \cup \set{b}) =
+\tau(S)$ and the marginal is $0$. Otherwise, writing $T := \items \setminus
+\tau(S)$, we have $\items \setminus \tau(S \cup \set{b}) = T \setminus \set{j}$
+with $j \in T$, so
+\[
+  \hat{v}_i(S \cup \set{b}) - \hat{v}_i(S)
+  \;=\; \cost_i(T) - \cost_i(T \setminus \set{j}) \;\in\; \set{0,1},
+\]
+because $\cost_i$ has marginals in $\set{0,1}$.
+
+\emph{(ii)} Forward: type $j$ is absent from exactly one bundle of $\alloc$, its
+owner's, so exactly $n-1$ agents require a copy of $b_j$ and the $n-1$ available
+copies are routed injectively. Which physical copy goes where is immaterial,
+since $\hat{v}_i$ depends on $S$ only through $\tau(S)$. By construction no
+$B_i$ holds a duplicate and $\bigcup_i B_i = \hat{\items}$. Backward: in a
+coverage allocation the $n-1$ copies of type $j$ lie in $n-1$ \emph{distinct}
+bundles, so exactly one agent's bundle contains no copy of $j$; setting
+$\Psi(B)_i := \items \setminus \tau(B_i)$ therefore puts $j$ in exactly one
+$\Psi(B)_i$, making $\Psi(B)$ a partition. Finally $\Psi(\Phi(\alloc))_i =
+\items \setminus (\items \setminus \bundle{i}) = \bundle{i}$, and
+$\Phi(\Psi(B))$ agrees with $B$ up to which copy of a type sits where.
+
+\emph{(iii)} For corresponding $\alloc, B$ we have $\tau(B_k) = \items \setminus
+\bundle{k}$, so $\hat{v}_i(B_k) = \cost_i(\items) - \cost_i(\bundle{k})$ and
+\[
+  \hat{\edgew{}}_B(i,k) = \hat{v}_i(B_k) - \hat{v}_i(B_i)
+  = \big(\cost_i(\items) - \cost_i(\bundle{k})\big)
+  - \big(\cost_i(\items) - \cost_i(\bundle{i})\big)
+  = \cost_i(\bundle{i}) - \cost_i(\bundle{k}) = \edgew{\alloc}(i,k). \qedhere
+\]
+\end{proof}
+
+Part~(i) is worth stating on its own: \emph{the dual of a dichotomous cost
+function is a dichotomous value function}, so the class is closed under this
+duality and the hypotheses of~\cite{BKNS22} apply to $\hat{I}$ verbatim, with no
+additivity, submodularity or subadditivity assumed anywhere. Because the graphs
+of part~(iii) are equal, envy-freeability, every $\pathw{}(i)$, the whole set of
+feasible subsidy vectors and the $\set{0,1}$ target all transfer in both
+directions without loss.
+
+\begin{corollary}[Coverage is the entire gap]
+\label{cor:coverage}
+Conjecture~\ref{conj:main} holds if and only if every replica instance
+$\hat{I}$ admits a \emph{coverage} allocation $B$ with
+$\pathw{B}(i) \le 1$ for all $i$.
+\end{corollary}
+
+Applying~\cite{BKNS22} to $\hat{I}$ as a black box is legal by
+Theorem~\ref{thm:replica}(i) and returns some $B$ with $\hat{\subsidy} \in
+\set{0,1}^n$ and total at most $n-1$. But it is free to place two copies of one
+type in one bundle. If it does, that type is absent from at least two bundles,
+the chore has at least two owners, and $\Psi(B)$ is not a partition. Coverage is
+the sole residual difficulty --- and, by \Cref{sec:deadends}, a real one.
+
+\begin{lemma}[Duplicate extraction is envy-neutral]
+\label{lem:dupfree}
+Removing from $B_x$ a copy whose type occurs at least twice in $B_x$ leaves
+$\tau(B_x)$ unchanged, hence leaves every $\hat{v}_k(B_x)$ unchanged, hence
+leaves the entire envy graph unchanged.
+\end{lemma}
+
+\begin{proof}
+Immediate, since $\hat{v}_k(S)$ depends on $S$ only through $\tau(S)$.
+\end{proof}
+
+So any output of~\cite{BKNS22} may be stripped to a duplicate-free partial
+allocation for free. The difficulty is never in removing duplicates; it is in
+\emph{re-inserting} the stripped copies into agents that do not already hold
+that type.
+
+% --------------------------------------------------------------------------
+\subsection{The peel process}
+\label{sec:peel}
+
+Read a coverage allocation as being built one copy at a time and translate back
+into chores.
+
+\begin{definition}[Peel process]
+\label{def:peel}
+A \emph{state} is a \emph{workload profile} $\workprofile = (\workprofile_1,
+\dots, \workprofile_n)$ with $\workprofile_i \subseteq \items$, such that the
+\emph{owner-candidate set} $S_j := \set{i : j \in \workprofile_i}$ is nonempty
+for every $j \in \items$. Read $\workprofile_i$ as ``agent $i$ is still on the
+hook for $\workprofile_i$''.
+\begin{itemize}
+  \item \textbf{Root:} $\workprofile_i = \items$ for every $i$.
+  \item \textbf{Peel} $\mathrm{peel}(x,j)$: legal iff $j \in \workprofile_x$ and
+    $\abs{S_j} \ge 2$; it sets $\workprofile_x \leftarrow \workprofile_x
+    \setminus \set{j}$.
+  \item \textbf{Permutation:} replace $\workprofile$ by $(\workprofile_{\sigma(1)},
+    \dots, \workprofile_{\sigma(n)})$.
+  \item \textbf{Terminal:} $\abs{S_j} = 1$ for every $j$; the unique element of
+    $S_j$ is the \emph{survivor}, i.e.\ the owner of $j$, and the induced
+    allocation is $\bundle{i} = \set{j : S_j = \set{i}}$.
+  \item \textbf{Graph:} $\edgew{\workprofile}(i,k) = \cost_i(\workprofile_i) -
+    \cost_i(\workprofile_k)$. The root graph is identically zero.
+\end{itemize}
+A state is \emph{legal} if its graph has no positive-weight cycle and
+$\pathw{\workprofile}(i) \le 1$ for every $i$.
+\end{definition}
+
+By Theorem~\ref{thm:replica} a peel state is exactly a duplicate-free partial
+allocation of $\hat{\items}$, a peel is exactly the insertion of one good into
+one bundle, a permutation is exactly a bundle reassignment, and terminal states
+are exactly coverage allocations. Nothing is added or lost in the translation.
+
+\begin{lemma}[Peel dynamics]
+\label{lem:peel}
+Write $\mu_k := \cost_k(\workprofile_x) - \cost_k(\workprofile_x \setminus
+\set{j})$ for $k$'s marginal cost of $j$ on $x$'s residual workload. Then
+$\mathrm{peel}(x,j)$ changes only the arcs incident to $x$, by
+\[
+  \Delta \edgew{}(k,x) \;=\; +\mu_k \;\in\; \set{0,1}
+  \qquad\text{and}\qquad
+  \Delta \edgew{}(x,k) \;=\; -\mu_x \;\in\; \set{-1,0}
+  \qquad (k \ne x).
+\]
+\end{lemma}
+
+\begin{proof}
+Only $\workprofile_x$ changes. For $k \ne x$, $\edgew{}(k,x) =
+\cost_k(\workprofile_k) - \cost_k(\workprofile_x)$ and $\cost_k(\workprofile_x)$
+drops by $\mu_k$, so the arc rises by $\mu_k$. For arcs out of $x$,
+$\edgew{}(x,k) = \cost_x(\workprofile_x) - \cost_x(\workprofile_k)$ and
+$\cost_x(\workprofile_x)$ drops by $\mu_x$. Arcs between two agents other than
+$x$ involve neither $\workprofile_x$ nor $\cost_x$.
+\end{proof}
+
+\paragraph{The orientation reversal.}
+This is the point of the whole construction. Compare
+Lemma~\ref{lem:peel} against Lemma~\ref{lem:arcupdate}:
+
+\begin{center}
+\begin{tabular}{@{}llll@{}}
+\toprule
+frame & move & in-arcs at $x$ & $x$ should be \\
+\midrule
+goods~\cite{BKNS22}      & insert a good   & rise          & maximally subsidised \\
+chores, insertion (\S\ref{sec:approach1}) & insert a chore  & fall          & unsubsidised, $\subsidy_x = 0$ \\
+chores, \textbf{peel}    & relieve of a chore & \textbf{rise} & maximally subsidised \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The obstruction of Theorem~\ref{thm:obstruction} was exactly this sign clash.
+The repair subroutine of~\cite{BKNS22} navigates to an agent whose tentative
+subsidy reached $2$; in the goods world that agent is automatically maximally
+subsidised, which is the set the argument needs, whereas in the chore-insertion
+world she automatically has $\subsidy_u = 1$ and is precisely the agent who must
+\emph{not} receive the chore. In the peel frame the quantity handed out is
+\emph{relief}, relief correctly flows to the most envious agents, and the
+orientation points the right way again.
+
+\begin{lemma}[Spectator-free peels are safe]
+\label{lem:specfree}
+If $\mu_k = 0$ for every $k \ne x$, then $\mathrm{peel}(x,j)$ weakly decreases
+every arc weight, hence $\pathw{}$ pointwise, and preserves envy-freeability ---
+whatever $\mu_x$ may be.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:peel} the arcs into $x$ are unchanged, the arcs out of $x$
+change by $-\mu_x \le 0$, and all other arcs are untouched. Path and cycle
+weights are sums of arc weights.
+\end{proof}
+
+Lemma~\ref{lem:specfree} is the peel-frame replacement for
+Theorem~\ref{thm:freeinsert}, and note where the safety condition has moved. In
+the insertion frame a chore that was free \emph{for the receiver} was
+unconditionally safe; here what matters is that the chore be free \emph{for
+everyone else}. That is the goods-side safety structure of~\cite{BKNS22}, as the
+identification predicts. The hard case is now a pair $(x,j)$ for which some
+other agent $k$ has $\mu_k = 1$.
+
+What does \emph{not} transfer is the coverage constraint, which has no analogue
+in~\cite{BKNS22}: any good may go in any bundle there, whereas a peel demands
+$x \in S_j$ and a type is peelable only while $\abs{S_j} \ge 2$.
+
+% --------------------------------------------------------------------------
+\subsection{The insertion obstruction dissolves}
+\label{sec:dissolve}
+
+Theorem~\ref{thm:obstruction} remains true --- it is a theorem about the
+insertion template, and the peel frame is a different template, not a repair of
+that one. What follows is that its witness no longer obstructs.
+
+Recall the witness: $\items = \set{a_1,a_2,g}$ with $\cost_1(S) =
+\max(0,\abs{S}-1)$ and $\cost_2 = \cost_3 = \abs{S}$.
+
+\paragraph{The trap state is refused before it can form.}
+The peel-frame counterpart of the trap is $\workprofile =
+(\set{a_1,a_2,g}, \set{g}, \set{g})$, and
+\[
+  \edgew{\workprofile}(1,2) \;=\; \cost_1(\set{a_1,a_2,g}) - \cost_1(\set{g})
+  \;=\; 2 - 0 \;=\; 2 ,
+\]
+so $\pathw{\workprofile}(1) = 2$ and the state is already illegal. No legal peel
+schedule passes through it.
+
+\begin{remark}[The conditioned-remainder principle]
+\label{rem:conditioned}
+The two frames disagree because they compare different things. At a stage where
+the finished types form a partial assignment $\alloc^{(t)}$ and the untouched
+types form $R$, every agent is still on the hook for $R$, so the peel-frame arc
+is
+\[
+  \cost_i\big(\alloc^{(t)}_i \cup R\big) - \cost_i\big(\alloc^{(t)}_k \cup R\big),
+  \qquad\text{not}\qquad
+  \cost_i\big(\alloc^{(t)}_i\big) - \cost_i\big(\alloc^{(t)}_k\big).
+\]
+Every comparison is conditioned on the common unfinished remainder. For additive
+costs the $R$ terms cancel and the two frames coincide --- consistent with the
+additive case already being closed by Theorem~\ref{thm:binadd}. For non-additive
+costs they differ, and on the witness it is exactly the supermodularity of
+$\cost_1$ that the conditioning catches: with $g$ still pending, loading agent~1
+with both of $a_1,a_2$ already costs $2$, and the peel invariant sees it. \emph{The
+insertion invariant was blind to pending load; the peel invariant has hindsight
+built in.} This is the substantive content of the change of coordinates.
+\end{remark}
+
+\paragraph{A legal schedule reaches the zero-subsidy allocation.}
+Six peels, every one of them the hard case ($\mu_k = 1$ for all $k$ --- this
+instance never offers a spectator-free move), with the invariant holding
+throughout. Verified by \texttt{peel.py}.
+
+\begin{center}
+\begin{tabular}{@{}clccc@{}}
+\toprule
+step & move & resulting $\workprofile$ & $\pathw{}$ & $\sum_i \pathw{}(i)$ \\
+\midrule
+0 & root & $(a_1a_2g,\; a_1a_2g,\; a_1a_2g)$ & $(0,0,0)$ & 0 \\
+1 & relieve 1 of $g$ & $(a_1a_2,\; a_1a_2g,\; a_1a_2g)$ & $(0,1,1)$ & 2 \\
+2 & relieve 2 of $g$ \; [owner$(g) = 3$] & $(a_1a_2,\; a_1a_2,\; a_1a_2g)$ & $(0,0,1)$ & 1 \\
+3 & relieve 3 of $a_1$ & $(a_1a_2,\; a_1a_2,\; a_2g)$ & $(0,0,0)$ & 0 \\
+4 & relieve 1 of $a_2$ & $(a_1,\; a_1a_2,\; a_2g)$ & $(0,1,1)$ & 2 \\
+5 & relieve 2 of $a_1$ \; [owner$(a_1) = 1$] & $(a_1,\; a_2,\; a_2g)$ & $(0,0,1)$ & 1 \\
+6 & relieve 3 of $a_2$ \; [owner$(a_2) = 2$] & $(a_1,\; a_2,\; g)$ & $(0,0,0)$ & 0 \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The terminal allocation is $(\set{a_1},\set{a_2},\set{g})$, the known
+zero-subsidy solution. This establishes that the peel template is not killed by
+the existing obstruction; it does not establish that the template always works,
+which is \Cref{sec:deadends}. Note also how it meets the requirement of
+Remark~\ref{rem:deadend} that a correct proof be free to re-open allocated
+bundles: \emph{peeling never commits a chore's owner until the last peel of that
+type, so ownership is a deferred decision and there is nothing to re-open.}
+
+% --------------------------------------------------------------------------
+\subsection{The new obstruction: peel dead ends}
+\label{sec:deadends}
+
+The natural conjecture is local.
+
+\begin{conjecture}[Local extendability --- \textbf{refuted}]
+\label{conj:h1}
+From every legal non-terminal state, some legal move exists.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:deadends}
+Conjecture~\ref{conj:h1} is false. There are legal, non-terminal peel states
+from which no sequence of peels and permutations reaches a terminal state
+without violating the invariant.
+\end{proposition}
+
+\begin{proof}
+A complete backward fixed-point computation over the entire state space of the
+witness, with both move types and no heuristics, is carried out by
+\texttt{peel3.py}; it reports the following.
+
+\begin{center}
+\begin{tabular}{@{}lr@{}}
+\toprule
+quantity & value \\
+\midrule
+states in total ($7^3$) & 343 \\
+legal states & 175 \\
+terminal (partition) states that are legal & 6 of 27 \\
+legal states from which a terminal is reachable within the invariant & 166 \\
+\textbf{legal dead ends} & \textbf{9} \\
+root is good & yes \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The smallest dead end is $\workprofile = (\set{a_1,a_2},\set{g},\set{g})$, which
+is legal with $\pathw{} = (1,0,0)$. The only peelable type is $g$, and both
+continuations fail: relieving agent~2 or agent~3 of $g$ creates a weight-$2$
+path out of agent~1. Permutations do not help --- the profile
+$(\set{g},\set{a_1,a_2},\set{g})$ is legal but its two continuations fail
+identically.
+\end{proof}
+
+\paragraph{What the dead ends are, in the language of~\cite{BKNS22}.}
+This is the sharpest statement available. At
+$\workprofile = (\set{a_1,a_2},\set{g},\set{g})$ the remaining unallocated copy
+is a copy of $b_g$, and it has three possible recipients. Giving it to agent~2
+or~3 is a genuine peel and violates the invariant. Giving it to agent~1 --- who
+already holds a copy of $b_g$ --- creates a \emph{duplicate}, which is perfectly
+legal in $\hat{I}$ and, by Lemma~\ref{lem:dupfree}, changes nothing whatever in
+the graph. So the algorithm of~\cite{BKNS22} never gets stuck on $\hat{I}$: it
+gets stuck only in the sense that its one legal move is to spend a copy on a
+duplicate, and spending a copy on a duplicate is exactly the loss of coverage.
+If agent~1 takes the second $b_g$ then $g$ ends with owner-candidate set
+$\set{2,3}$ --- two owners, not a partition. Corollary~\ref{cor:coverage} is
+therefore not a formal restatement; the gap it names is realised.
+
+\begin{remark}[The balance signal --- \textbf{observation only}]
+\label{rem:balance}
+All nine dead ends of the witness have the same shape: \emph{one agent is
+already committed to a two-element terminal bundle}. They are exactly the three
+choices of which pair times the three choices of which agent. Correspondingly
+all six reachable terminals are the six perfect matchings, so on this instance
+the only legal partitions are the matchings. This is the same signal as
+Theorem~\ref{thm:sizeshift} --- chores are goods plus cardinality balancing ---
+and as the balancedness guarantee of~\cite{BDNSV20}, arriving from a third
+direction, and it suggests the missing ingredient is a \emph{balance}
+discipline rather than a subsidy-based one. Consistent with that, restricting
+recipients to $\argmax_i \pathw{}(i)$, the direct mirror of $\Mset(\subsidy)$,
+shrinks the reachable state space but does \emph{not} avoid the dead ends: a
+subsidy-based rule alone is not enough. This is a single instance and should not
+be generalised without more data.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{The reduced open problem}
+\label{sec:h1prime}
+
+\begin{conjecture}[Reachability --- \textbf{open}]
+\label{conj:h1prime}
+From the root, some sequence of peels and permutations reaches a terminal state
+with the invariant holding at every intermediate state.
+\end{conjecture}
+
+Conjecture~\ref{conj:h1prime} implies Conjecture~\ref{conj:main}. The root graph
+is identically zero, so the invariant holds there; if a legal schedule reaches a
+terminal state $\workprofile^{\mathrm{end}}$ then the induced allocation
+$\alloc$ has $\envygraph{\alloc} = \envygraph{\workprofile^{\mathrm{end}}}$,
+with no positive cycle and $\pathw{\alloc}(i) \le 1$ for all $i$;
+Observation~\ref{obs:integrality} then forces $\optsubsidy \in \set{0,1}^n$, and
+the endpoint of a maximum-weight path has $\pathw{} = 0$, giving a total of at
+most $n-1$.
+
+\begin{remark}[The converse is open, and it matters for what the experiments test]
+\label{rem:converse}
+Conjecture~\ref{conj:h1prime} implies Conjecture~\ref{conj:main}, but the
+implication has not been established in the other direction and should not be
+assumed. Conjecture~\ref{conj:main} asserts that a good terminal state
+\emph{exists}; Conjecture~\ref{conj:h1prime} asserts that one is \emph{reachable
+along a path every state of which is legal}. These can come apart: a good
+terminal state may exist while every schedule leading to it passes through an
+illegal intermediate state, and Proposition~\ref{prop:deadends} shows that
+illegal-looking intermediate states are not hypothetical. The practical
+consequence is that an instance with a \emph{bad root} would refute
+Conjecture~\ref{conj:h1prime}, and hence kill this approach, but would say
+nothing directly about Conjecture~\ref{conj:main}, which would have to be
+attacked by exhaustive search over allocations as in \Cref{sec:experiments}.
+Establishing the converse --- that a good terminal state, when one exists, is
+always reachable legally --- would make the peel frame a complete
+reformulation rather than a sufficient one, and is worth attempting on its own.
+\end{remark}
+
+It is not automatic. Conjecture~\ref{conj:h1prime} is a reachability statement
+about a state space with genuine dead ends, so a proof must supply a \emph{rule}
+for choosing the next peel that provably never enters the bad region, or else
+avoid the state space altogether by a potential or exchange argument. Two
+resources are available that~\cite{BKNS22} never had:
+\begin{enumerate}
+  \item \textbf{Scheduling freedom.} Many types are unfinished at once, and we
+    need only \emph{some} type to admit a legal peel, not a prescribed one.
+  \item \textbf{$\abs{S_j} \ge 2$.} A peelable type always has at least two
+    candidate recipients, so the forbidden recipient set is never all of
+    $\agents$.
+\end{enumerate}
+
+Call a legal non-terminal state a \emph{deadlock} if for every unfinished type
+$j$ and every permutation, no recipient in $S_j$ preserves the invariant.
+Proposition~\ref{prop:deadends} shows deadlocks exist;
+Conjecture~\ref{conj:h1prime} asks only that the \emph{root} avoid them. So the
+target theorem has the shape \emph{there is a peel rule under which no deadlock
+is ever entered}, and Remark~\ref{rem:balance} is the first candidate for what
+that rule must enforce.
+
+% --------------------------------------------------------------------------
+\subsection{A subclass that may fall first --- conjectural}
+\label{sec:mrf}
+
+On type space the dual of a \emph{supermodular} dichotomous cost is submodular
+with binary marginals, that is, a matroid rank function; lifting through $\tau$
+to the copies is the parallel extension of that matroid, still a matroid rank
+function. Additive costs dualise to partition-matroid ranks. If that is right
+--- and the parallel-extension step in particular deserves a full proof before
+being relied on --- then supermodular dichotomous chores are exactly
+matroid-rank goods coverage problems, and the witness of
+Theorem~\ref{thm:obstruction} lies entirely inside this class, since $\cost_1$
+dualises to the rank of $U_{2,3}$, parallel extended.
+
+Matroid rank is where the machinery of the surrounding literature is strongest,
+through the exchange properties used in~\cite{BSY23,BEF21}. That makes
+Conjecture~\ref{conj:main} restricted to supermodular dichotomous costs, attacked
+by basis exchange in the parallel-copy matroid, the natural intermediate target
+--- sitting between Theorem~\ref{thm:binadd}, which is closed, and the full
+conjecture.

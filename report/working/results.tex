@@ -75,6 +75,24 @@ optimality is therefore not merely an unhelpful restriction but an actively
 wrong one, and the programme of searching for a tie-breaking rule inside the
 utilitarian-optimal set is unsound as posed.
 
+\paragraph{A third approach, still open} (\Cref{sec:approach3}).
+Both failures above are failures of \emph{timing}: insertion commits a chore to
+an owner and cannot take it back, and utilitarian optimality commits to the
+wrong allocation outright. \Cref{sec:approach3} changes coordinates so that
+ownership is decided only by the last move that touches a chore.
+Theorem~\ref{thm:replica} re-expresses the chore instance as a \emph{goods}
+instance on an item set carrying $n-1$ copies of each chore, with identical envy
+graphs, so the dichotomous class is closed under the duality and~\cite{BKNS22}
+applies to the replica verbatim. Corollary~\ref{cor:coverage} then reduces
+Conjecture~\ref{conj:main} to a single residual constraint --- \emph{coverage},
+that no agent receive two copies of one type. Read dynamically this is the
+\emph{peel} process, in which the orientation of~\cite{BKNS22} is restored
+because the quantity handed out is relief rather than burden, and the witness of
+Theorem~\ref{thm:obstruction} is handled with the invariant intact. The approach
+is not known to work: Proposition~\ref{prop:deadends} exhibits legal states from
+which no legal continuation exists, so what remains is to find a peel rule that
+never enters one.
+
 \paragraph{Evidence} (\Cref{sec:experiments}).
 Conjecture~\ref{conj:main} survives exhaustive verification for $n = m = 3$ over
 all $9{,}880$ instances up to agent symmetry, and randomised search over some
