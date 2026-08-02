@@ -2,17 +2,23 @@
 %%  Achieving Envy-Freeness with Limited Subsidies
 %%  under Negative Dichotomous Valuations
 %%
-%%  Build:   latexmk -pdf main.tex
-%%  or:      pdflatex main && bibtex main && pdflatex main && pdflatex main
+%%  THE REPORT.  Deliberately short: it sets up the problem and stops.
+%%  Introduction, notation and preliminaries, and the structure of the problem
+%%  we are solving.  Nothing else goes in until it is worth writing down.
 %%
-%%  STRUCTURE.  This file holds structure only --- no prose, no packages.
-%%    * packages, theorem environments and notation macros -> preamble.tex
-%%    * one section per file under sections/
-%%    * each new approach gets its own file sections/approach_<k>.tex and
-%%      one \input line below.  Do not merge two approaches into one file.
+%%  Everything proved so far but not yet report-worthy is PARKED, not deleted,
+%%  under working/ and is compiled by working.tex into working.pdf.  Nothing
+%%  has been lost; see working/README.md for the inventory.  To promote a
+%%  parked section into the report, move its file back to sections/ and
+%%  uncomment the corresponding line below.
+%%
+%%  Build:   latexmk -pdf main.tex        (the report)
+%%           latexmk -pdf working.tex     (the full draft, everything)
 %% ==========================================================================
 \documentclass[11pt]{article}
 \input{preamble}
+% \workingfalse is the default set in preamble.tex; the report omits the
+% parked sections and suppresses the sentences that point at them.
 
 % --------------------------------------------------------------------------
 \begin{document}
@@ -41,17 +47,21 @@
 
 \input{sections/introduction}       % 1  Introduction
 \input{sections/preliminaries}      % 2  Notation and Preliminaries
-\input{sections/results}            % 3  Our Results (overview + the conjectures)
-\input{sections/structure}          % 4  Structure of the Chore Problem
-\input{sections/solved_cases}       % 5  Solved Cases
-\input{sections/approach_1}         % 6  Approach 1: insertion   -- NEGATIVE
-\input{sections/approach_2}         % 7  Approach 2: utilitarian -- NEGATIVE
-\input{sections/experiments}        % 8  Computational Evidence
+\input{sections/structure}          % 3  Structure of the Problem
 
-% Further approaches: create sections/approach_3.tex and uncomment.
-% \input{sections/approach_3}       %    Approach 3
-
-\input{sections/conclusion}         % 9  Conclusion and Future Work
+% --------------------------------------------------------------------------
+% PARKED.  These files live under working/ and are compiled by working.tex.
+% They are not deleted and not stale --- every result in them is proved and
+% machine-checked.  Move a file back to sections/ and uncomment its line here
+% when it has earned a place in the report.
+%
+% \input{working/results}           %    Our Results (overview + conjectures)
+% \input{working/solved_cases}      %    Binary additive, identical costs, n=2
+% \input{working/approach_1}        %    Item-by-item insertion  -- NEGATIVE
+% \input{working/approach_2}        %    Utilitarian-optimal     -- NEGATIVE
+% \input{working/experiments}       %    Computational evidence
+% \input{working/conclusion}        %    Conclusion and future work
+% --------------------------------------------------------------------------
 
 % --------------------------------------------------------------------------
 \bibliographystyle{alpha}

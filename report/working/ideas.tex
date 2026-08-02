@@ -1,0 +1,57 @@
+%% ==========================================================================
+%%  Ideas and Open Threads --- running log
+%%
+%%  THIS IS THE INBOX.  New thinking about the problem lands here first: half
+%%  -formed arguments, things to check, reasons to believe or disbelieve the
+%%  conjecture, failed attempts worth remembering.
+%%
+%%  CONVENTION.  One \subsection per idea, newest at the bottom, each headed
+%%  with the date it was recorded.  Say what the idea is, why it might work,
+%%  and what would kill it.  Nothing here is claimed to be true.
+%%
+%%  PROMOTION PATH.  idea -> proved and machine-checked -> its own section
+%%  under working/ -> a section under sections/ in the report itself.  When an
+%%  idea graduates, replace its entry here with a one-line pointer rather than
+%%  deleting it, so the record of how the argument was found survives.
+%% ==========================================================================
+\section{Ideas and Open Threads}
+\label{sec:ideas}
+
+A running log, newest last. Nothing in this section is claimed to be true.
+
+% --------------------------------------------------------------------------
+\subsection*{2026-08-01 --- What the two negative results jointly require}
+
+Taking Theorem~\ref{thm:obstruction} and Proposition~\ref{prop:msw-false}
+together, any correct algorithm must be free to (i) move already-allocated
+chores between bundles and (ii) give up total cost while doing so. Every
+construction that currently works does so by exhibiting a per-agent potential
+$\phi$ with $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$, which telescopes along
+paths and vanishes around cycles. \emph{Finding such a potential for general
+negative dichotomous costs, or proving that none exists, is the problem.} In
+Theorem~\ref{thm:binadd} the potential is $\phi_i = u_i$, the count of
+universally disliked chores held; in Theorem~\ref{thm:identical} it is
+$\phi_i = \cost(\bundle{i})$. What is the right $\phi$ in general?
+
+Worth noting that the existence of such a $\phi$ is not merely sufficient but
+close to necessary: if $\optsubsidy \in \set{0,1}^n$ then $\phi_i :=
+\optsubsidy_i$ satisfies $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$ by definition
+of an envy-free solution. So the search for a potential and the search for a
+proof are the same search, and the content is in constructing $\phi$ and the
+allocation \emph{together}.
+
+% --------------------------------------------------------------------------
+\subsection*{Template for the next entry}
+
+\todo{replace this with the next idea. Keep the three-part shape: what the idea
+is, why it might work, what would kill it.}
+
+%% \subsection*{YYYY-MM-DD --- short title}
+%%
+%% \textbf{The idea.} ...
+%%
+%% \textbf{Why it might work.} ...
+%%
+%% \textbf{What would kill it.} ...
+%%
+%% \textbf{Status.} untested / partially checked / refuted by <script or instance>

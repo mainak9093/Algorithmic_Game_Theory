@@ -137,46 +137,43 @@ bundle of size $k \ge 1$ while some other agent is empty, and that agent's
 heaviest outgoing path already has weight $k$.
 \end{example}
 
-So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}:
-that under negative dichotomous valuations there is an allocation admitting a
-subsidy vector $\subsidy \in \set{0,1}^n$, hence a total subsidy of at most
-$n-1$, computable in polynomial time with value-oracle access. Example~\ref{ex:lowerbound}
-shows this would be tight. Between the $n-1$ per agent that~\cite{KMSTY24}
-already gives and the $\set{0,1}$ per agent that we are asking for lies a factor
-of $n$ in the total, exactly the gap that~\cite{BKNS22} closed on the goods side.
-Our objective is to close it on the chores side or to exhibit an instance showing
-that it cannot be closed.
+So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}.
 
-\paragraph{Our Results.}
-We conjecture that the $\set{0,1}$ guarantee survives
-(Conjecture~\ref{conj:main}) and prove it in three restrictions: binary additive
-costs, where an explicit $O(nm)$ construction gives $\optsubsidy \in \set{0,1}^n$
-and total subsidy at most $n-1$ (Theorem~\ref{thm:binadd}); identical costs,
-where greedily loading a cheapest bundle suffices
-(Theorem~\ref{thm:identical}); and $n = 2$, which reduces
-to~\cite{BKNS22} by Remark~\ref{rem:complement}. None of these needs additivity
-or submodularity beyond what the restriction itself imposes.
+\begin{conjecture}
+\label{conj:main}
+For every instance with negative dichotomous valuations there is an envy-free
+solution $(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$, hence with total
+subsidy at most $n-1$; and it can be computed in polynomial time given
+value-oracle access.
+\end{conjecture}
 
-Our main results are negative and concern the two strategies a reader would try
-first. The item-by-item insertion template of~\cite{BKNS22} cannot be completed:
-Theorem~\ref{thm:obstruction} gives a three-agent instance with a legal partial
-state and an unallocated chore such that every choice of receiving agent forces a
-subsidy of $2$, although the full instance is solvable with no subsidy at all. A
-correct proof must therefore be free to re-open already-allocated bundles. Nor
-can one recover by selecting a welfare-maximising allocation instead:
-Proposition~\ref{prop:msw-false} exhibits an instance whose \emph{unique}
-utilitarian-optimal allocation needs a subsidy of $2$ while an allocation of
-strictly higher total cost needs none, so a correct algorithm must also be free
-to give up total cost. Both instances are small, explicit and machine-checked.
+Example~\ref{ex:lowerbound} shows Conjecture~\ref{conj:main} would be tight.
+Between the $n-1$ per agent that~\cite{KMSTY24} already gives and the
+$\set{0,1}$ per agent being asked for lies a factor of $n$ in the total, exactly
+the gap that~\cite{BKNS22} closed on the goods side. Our objective is to close it
+on the chores side or to exhibit an instance showing that it cannot be closed.
 
-We also isolate three structural facts used throughout: an arc-update lemma
-(Lemma~\ref{lem:arcupdate}) that reduces the entire goods/chore asymmetry to two
-lines; a two-tier characterisation of $\set{0,1}$ solutions
-(Proposition~\ref{prop:twotier}); and a size-shift transform
+\paragraph{Scope of this report.}
+Conjecture~\ref{conj:main} is open. This report sets up the problem and stops
+there: \Cref{sec:prelim} fixes the model and notation and records what transfers
+from the goods theory unchanged, and \Cref{sec:structure} isolates three
+structural facts about the chore problem --- an arc-update lemma
+(Lemma~\ref{lem:arcupdate}) reducing the entire goods/chore asymmetry to two
+lines, a two-tier characterisation of $\set{0,1}$ solutions
+(Proposition~\ref{prop:twotier}), and a size-shift transform
 (Theorem~\ref{thm:sizeshift}) exhibiting the chore problem as exactly the goods
-problem of~\cite{BKNS22} plus a cardinality-balancing requirement, which is the
-precise sense in which Conjecture~\ref{conj:main} does not follow from that work
-as a black box.
+problem of~\cite{BKNS22} together with a cardinality-balancing requirement. The
+last of these is the precise sense in which Conjecture~\ref{conj:main} does not
+follow from~\cite{BKNS22} as a black box.
+
+Work towards the conjecture is in progress and is deliberately not reported
+here. Several special cases are settled and two natural proof strategies have
+been ruled out by explicit machine-checked instances; none of it is stated below
+until it is worth stating.
+\ifworking
+The remainder of this working draft, from \Cref{sec:results} onwards, carries
+that material.
+\fi
 
 \paragraph{Related Work.}
 The subsidy line for goods is described above. Within it, the dichotomous

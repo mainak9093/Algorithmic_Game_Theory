@@ -1,0 +1,72 @@
+%% ==========================================================================
+%%  WORKING DRAFT --- everything, including what the report is not yet ready
+%%  to carry.
+%%
+%%  This is not the report.  main.tex is the report.  This document exists so
+%%  that parked material stays typeset, cross-referenced and readable while it
+%%  waits, instead of rotting in a directory nobody opens.
+%%
+%%  It shares preamble.tex and references.bib with the report, and it includes
+%%  the report's own sections first so that every \ref resolves.  Section and
+%%  theorem numbers therefore differ from main.pdf; that is expected --- these
+%%  are two different documents, not two builds of one.
+%%
+%%  Build:  latexmk -pdf working.tex
+%% ==========================================================================
+\documentclass[11pt]{article}
+\input{preamble}
+\workingtrue     % include parked material and the sentences pointing at it
+
+\begin{document}
+
+\makeatletter
+\renewcommand\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+\makeatother
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\title{\bfseries Envy-Freeness with Limited Subsidies under Negative
+       Dichotomous Valuations\\[0.35em]
+       \large\normalfont\itshape Working draft --- not for circulation}
+
+\author{Mainak}
+\date{}
+
+\maketitle
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+\begin{center}
+\fbox{\begin{minipage}{0.87\textwidth}
+\small
+\textbf{What this document is.} The complete state of the work, including
+results that are proved and machine-checked but not yet worth putting in the
+report. \Cref{sec:intro,sec:prelim,sec:structure} are shared verbatim with
+\texttt{main.tex}; everything after them is parked material. When a parked
+section earns its place, move its file from \texttt{working/} back to
+\texttt{sections/} and uncomment the matching line in \texttt{main.tex}.
+Nothing here is stale: every claim was re-verified against the scripts on the
+date of its section.
+\end{minipage}}
+\end{center}
+
+\medskip
+
+% -------- shared with the report ------------------------------------------
+\input{sections/introduction}
+\input{sections/preliminaries}
+\input{sections/structure}
+
+% -------- parked ----------------------------------------------------------
+\input{working/results}
+\input{working/solved_cases}
+\input{working/approach_1}
+\input{working/approach_2}
+\input{working/experiments}
+\input{working/ideas}
+\input{working/conclusion}
+
+% --------------------------------------------------------------------------
+\bibliographystyle{alpha}
+\bibliography{references}
+
+\end{document}

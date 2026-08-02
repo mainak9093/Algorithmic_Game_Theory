@@ -74,16 +74,22 @@ which is guaranteed by   & $\Mset(\subsidy) \ne \emptyset$ & $\subsidy_x = 0$ fo
 
 Both guarantees hold trivially --- some agent is always maximally subsidised,
 and some agent always has $\subsidy_x = 0$ under the minimum subsidy vector. The
-asymmetry is subtler than the table suggests, and it is what
-Theorem~\ref{thm:obstruction} exploits. Under goods, the harm done by an
+asymmetry is subtler than the table suggests\ifworking, and it is what
+Theorem~\ref{thm:obstruction} exploits\fi. Under goods, the harm done by an
 insertion is confined to paths \emph{ending} at the receiver, and requiring
 $x \in \Mset(\subsidy)$ caps every such path at $\subsidy_u - \subsidy_x \le 0$
 in one stroke. Under chores, the harm is done to paths \emph{leaving} the
 receiver, and $\subsidy_x = 0$ caps only the paths that \emph{start} at $x$. A
 path that merely passes through $x$ --- entering along an arc from some $i$ with
 $\delta_{i,x} = 0$ and leaving along an arc that has just risen by $\delta_x = 1$
---- is not controlled by any condition on $\subsidy_x$. That gap is not a defect
-of the analysis; \Cref{sec:approach1} shows it is realised.
+--- is not controlled by any condition on $\subsidy_x$.
+\ifworking
+That gap is not a defect of the analysis; \Cref{sec:approach1} shows it is
+realised.
+\else
+Whether that gap can actually be realised is the question an incremental
+algorithm has to answer.
+\fi
 
 % --------------------------------------------------------------------------
 \subsection{The shape of a $\set{0,1}$ solution}
@@ -115,11 +121,14 @@ agents are exactly envy-free among themselves and \emph{strictly} prefer their
 own bundle to that of every paid agent, by a full unit; the paid agents are
 exactly envy-free among themselves and envy-free up to one unit towards the
 unpaid. This is a certificate format, and it also suggests choosing the
-partition $S \mid \agents \setminus S$ \emph{first} and allocating afterwards ---
-an approach not attempted here, and the one place where the incremental template
-killed in \Cref{sec:approach1} is not obviously an obstacle. In the proof of
+partition $S \mid \agents \setminus S$ \emph{first} and allocating afterwards,
+rather than building the allocation up one chore at a time.
+\ifworking
+That is the one place where the incremental template killed in
+\Cref{sec:approach1} is not obviously an obstacle. In the proof of
 Theorem~\ref{thm:binadd} the set $S$ turns out to be exactly the agents holding
 a $\lceil q/n \rceil$-share of the universally disliked chores.
+\fi
 
 % --------------------------------------------------------------------------
 \subsection{The size-shift transform}
@@ -184,8 +193,12 @@ goods instance in which the quantity $\abs{\bundle{i}} + \tilde{p}_i$ has spread
 at most $1$ across agents satisfies $\pathw{\alloc} \le 1$. But~\cite{BKNS22}
 offers no control whatever on bundle cardinalities --- its output need not even
 be EF1, by its own Appendix~C --- so the requirement is not met by invoking it
-as a black box. Nor can its algorithm simply be re-run with a balancing
-tie-break, because Theorem~\ref{thm:obstruction} rules out the entire
-item-by-item template on which it is built. The transform also shows the chore
-problem is at least as expressive as the goods problem, so no easier.
+as a black box.
+\ifworking
+Nor can its algorithm simply be re-run with a balancing tie-break, because
+Theorem~\ref{thm:obstruction} rules out the entire item-by-item template on
+which it is built.
+\fi
+The transform also shows the chore problem is at least as expressive as the
+goods problem, so no easier.
 \end{remark}

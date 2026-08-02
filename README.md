@@ -7,7 +7,8 @@ subsidies**, and an open problem on **negative dichotomous valuations** (chores)
 
 | File | What it is |
 |---|---|
-| [`report/`](report/) | The LaTeX write-up. `latexmk -pdf main.tex`; see [`report/README.md`](report/README.md) for the layout and for how to add a section per approach. |
+| [`report/`](report/) | The LaTeX write-up. Two documents: `main.tex` → the report (problem setup only), `working.tex` → the full draft including everything proved so far. See [`report/README.md`](report/README.md). |
+| [`update_1/`](update_1/) | Working note and the verification scripts behind it. Every claim in `report/working/` is machine-checked here. |
 | [`glossary_fair_division_subsidies.md`](glossary_fair_division_subsidies.md) | Project glossary, v1 — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
 | [`paper_map_R1_to_R9.md`](paper_map_R1_to_R9.md) | One entry per paper (R1–R9): what it does, what it improves on, what it leaves open. Includes the dependency DAG and the bound tables. |
 | [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The open problem being worked on. |

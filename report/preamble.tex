@@ -94,6 +94,21 @@
 \newif\ifdraft
 \drafttrue
 
+% ==========================================================================
+%  Working-notes switch.
+%
+%  Two documents share this preamble:
+%    main.tex     the report      -> \workingfalse (the default set here)
+%    working.tex  the full draft  -> \workingtrue
+%
+%  Wrap in \ifworking ... \fi any sentence in a REPORT section that points at
+%  material currently parked under working/.  Such a sentence then appears in
+%  working.pdf, where its target exists, and vanishes from main.pdf, where it
+%  would be a dangling reference.  Never put a \label inside such a guard.
+% ==========================================================================
+\newif\ifworking
+\workingfalse
+
 \newcommand{\draftnote}[1]{%
   \ifdraft{\color{DraftOrange}\sffamily\small[\,#1\,]}\fi}
 \newcommand{\todo}[1]{\draftnote{\textbf{TODO:} #1}}
