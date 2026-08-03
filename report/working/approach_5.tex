@@ -169,10 +169,44 @@ composed.
 So the target is exactly: \emph{find an envy-freeable allocation together with a
 bipartition of the agents such that all strict envy runs from one side to the
 other}. This is Proposition~\ref{prop:twotier} again, now as a criterion rather
-than a certificate format, and it is the one direction in
-\Cref{sec:conclusion} still untried --- choose the paid set first, then
-allocate. It is not assignment-invariant, consistent with
+than a certificate format. It is not assignment-invariant, consistent with
 Remark~\ref{rem:arc-vs-path}, but it is a condition on a bipartition rather than
-on a schedule, so it inherits none of the dead ends of
-\Cref{sec:approach3} and none of the ex-ante failures of
-\Cref{sec:approach4}.
+on a schedule, so it inherits none of the dead ends of \Cref{sec:approach3} and
+none of the ex-ante failures of \Cref{sec:approach4}.
+
+Two facts about the paid set are worth recording before that route is attempted.
+The first is a theorem and constrains what the set can be; the second is an
+observation from \Cref{sec:experiments} and suggests where to look.
+
+\begin{proposition}[Paid agents are those somebody finds expensive]
+\label{prop:paid-characterisation}
+Let $\alloc$ be envy-freeable. If $\optsubsidy_i \ge 1$ then there is an agent
+$v \ne i$ with $\cost_v(\bundle{i}) \ge \cost_v(\bundle{v}) + 1$.
+\end{proposition}
+
+\begin{proof}
+Immediate from Theorem~\ref{thm:cyclebound}: $\pathw{\alloc}(i) \le
+\max(0, \max_{v \ne i}[\cost_v(\bundle{i}) - \cost_v(\bundle{v})])$, so
+$\pathw{\alloc}(i) \ge 1$ forces the inner maximum to be at least $1$.
+\end{proof}
+
+So the paid set is contained in the set of agents whose bundle looks strictly
+more expensive to somebody than that somebody's own --- which is exactly
+condition~(c) of Proposition~\ref{prop:twotier} read backwards. An agent cannot
+be paid merely for holding a bundle she herself dislikes; somebody else has to
+corroborate.
+
+\begin{remark}[Where the paid set sits, empirically]
+\label{rem:paid-empirics}
+Across the $164$ adversarial instances of Remark~\ref{rem:exactEF} that
+genuinely require a subsidy, the minimum-size paid set of the witness found is
+in every case contained in $\argmax_i \cost_i(\bundle{i})$ --- the paid agents
+are among those carrying the largest own cost. That is $164$ of $164$, but it is
+a property of a witness selected by enumeration order rather than a proved rule,
+and own costs of different agents are measured by different functions, so it is
+a lead and not a theorem. Combined with
+Proposition~\ref{prop:paid-characterisation}, the natural rule to test first is:
+\emph{pay exactly the agents whose bundle some other agent finds at least one
+unit more expensive than her own, and check whether the resulting bipartition
+admits an allocation satisfying the three two-tier conditions.}
+\end{remark}

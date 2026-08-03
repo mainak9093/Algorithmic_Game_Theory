@@ -89,6 +89,18 @@ The same, hunted adversarially over structured families
 Arc weights of the good allocations on that counterexample
   & \texttt{routeA\_cex.py} & all $19$ have an arc ${\le}\,{-2}$; minimum $-3$
     (Proposition~\ref{prop:arc-bound-blind}) \\
+\midrule
+\textbf{Conjecture~\ref{conj:main} itself}, hunted adversarially over
+non-additive instances: exhaustive structured triples at $m = 3,4$ plus
+${\approx}\,8.4 \times 10^{3}$ endpoint-constant instances to $n=5$
+  & \texttt{twotier.py} & \textbf{no counterexample}
+    (Remark~\ref{rem:adversarial}) \\
+How often a subsidy is needed at all
+  & \texttt{twotier.py} & exactly envy-free in $98.6\%$ of $11{,}884$ instances
+    (Remark~\ref{rem:exactEF}) \\
+Structure of the paid set on the $164$ instances that need one
+  & \texttt{hardcases.py} & min $\abs{S} \le 3$, always inside
+    $\argmax_i \cost_i(\bundle{i})$ (Remark~\ref{rem:paid-empirics}) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -144,8 +156,37 @@ will find it. An adversarial generator --- biased towards endpoint-constant
 functions, towards supermodular costs, towards agents whose free chores overlap
 heavily, and towards instances in which the utilitarian optimum is unique --- is
 the single highest-value experiment outstanding against the \emph{conjecture}.
-It should be built before much further effort is spent on proof attempts,
-because it is the only cheap way to learn whether there is a theorem to prove.
+
+It has now been built (\texttt{routeA\_adv.py}, \texttt{twotier.py}) and it
+works: it refuted the invariant of \Cref{sec:approach5} in a single run, on an
+instance that ${\approx}\,1.2 \times 10^{4}$ uniformly sampled instances had
+missed. Pointed at Conjecture~\ref{conj:main} itself it finds nothing. Since
+binary additive instances are settled by~\cite{LMS26}, a counterexample must be
+non-additive and the search was restricted accordingly: exhaustive over all
+structured non-additive triples at $m = 3$ ($120$ instances) and $m = 4$
+($5{,}984$), then ${\approx}\,8.4 \times 10^{3}$ endpoint-constant instances up
+to $n = 5$, $m = 6$. \textbf{No instance without a good allocation was found.}
+This is the first evidence for the conjecture produced by a method demonstrated
+to find counterexamples on this problem, and it is a genuine update: the
+accumulating failures of
+\Cref{sec:approach1,sec:approach2,sec:approach4,sec:approach5} are evidence
+about the \emph{methods}, not about the statement.
+\end{remark}
+
+\begin{remark}[Where the difficulty is concentrated]
+\label{rem:exactEF}
+The same sweep records how often a subsidy is needed at all. Across $11{,}884$
+adversarial non-additive instances an \emph{exactly} envy-free allocation ---
+zero subsidy --- exists in $98.6\%$ of them; only $164$ require any subsidy, and
+among those the minimum number of paid agents is $1$ or $2$ at $n=3$ and never
+exceeds $3$ at $n=4$.
+
+Two cautions. The pool is adversarially structured rather than representative,
+so the percentage describes that pool and is not a claim about the model. And
+the residual $1.4\%$ is not negligible in the way the number suggests: deciding
+whether an exactly envy-free allocation exists is NP-complete already for binary
+additive chores~\cite{BSV21}, so those instances are hard for a reason and they
+are precisely the ones any construction must handle.
 \end{remark}
 
 % --------------------------------------------------------------------------
@@ -209,6 +250,8 @@ Script & Purpose \\
                          Proposition~\ref{prop:no-balance} \\
 \texttt{routeA\_cex.py} & Propositions~\ref{prop:no-balance}
                          and~\ref{prop:arc-bound-blind} \\
+\texttt{twotier.py}    & Remarks~\ref{rem:adversarial} and~\ref{rem:exactEF} \\
+\texttt{hardcases.py}  & Remark~\ref{rem:paid-empirics} \\
 \bottomrule
 \end{tabular}
 \end{center}
