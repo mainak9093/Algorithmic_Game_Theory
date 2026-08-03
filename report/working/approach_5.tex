@@ -1,0 +1,178 @@
+%% ==========================================================================
+%%  Approach 5 --- agent induction, and the balance invariant it would need.
+%%
+%%  Source: attempted 2026-08-03 at the author's request, starting from Route A
+%%  of update_4/PS1_note_next_routes.md.  Scripts: update_5/routeA.py,
+%%  routeA_adv.py, routeA_cex.py.
+%%
+%%  STATUS.  The natural invariant is REFUTED at n=3, m=4 with binary additive
+%%  costs.  Agent induction itself is not refuted; what is refuted is the only
+%%  assignment-invariant invariant available to it, which is what made the
+%%  induction attractive in the first place.
+%%
+%%  READ THIS BEFORE PROPOSING ANY ARC-LOCAL SUFFICIENT CONDITION.  On the
+%%  counterexample every good allocation has an arc at -3 or -2, so no bound of
+%%  the form "all arcs >= -1" can certify any of them.
+%% ==========================================================================
+\section{Approach 5: Agent Induction and the Balance Invariant}
+\label{sec:approach5}
+
+Every approach so far inducts on \emph{items}. Inducting on \emph{agents}
+instead is attractive for chores because a newcomer starts with an empty bundle,
+which is the cheapest bundle there is, so the newcomer is the natural sink and
+the orientation problem of \Cref{sec:approach1} does not arise. This section
+sets up what such an induction would have to carry, and shows that the natural
+candidate fails.
+
+% --------------------------------------------------------------------------
+\subsection{What the induction would have to carry}
+
+Corollary~\ref{cor:onestep} says that if $\alloc$ is envy-freeable and every arc
+satisfies $\edgew{\alloc}(i,j) \ge -1$ --- equivalently
+$\cost_i(\bundle{j}) \le \cost_i(\bundle{i}) + 1$ --- then
+$\optsubsidy \in \set{0,1}^n$. The useful feature of that condition for an
+induction on agents is that it is \emph{assignment-invariant}: it constrains
+only the family of bundles, not which agent holds which. That suggests carrying
+the family rather than the allocation.
+
+\begin{definition}[Uniformly balanced family]
+\label{def:unifbal}
+A family of $n$ disjoint bundles covering $\items$ is \emph{uniformly balanced}
+if every agent values all $n$ bundles within one unit of each other:
+$\max_t \cost_i(B_t) - \min_t \cost_i(B_t) \le 1$ for every $i \in \agents$.
+\end{definition}
+
+\begin{proposition}
+\label{prop:balance-suffices}
+If an instance admits a uniformly balanced family, then
+Conjecture~\ref{conj:main} holds for it.
+\end{proposition}
+
+\begin{proof}
+Assign the bundles to agents by a maximum-weight matching. By
+Theorem~\ref{thm:hs-characterisation} the resulting allocation is
+envy-freeable, and by uniform balance every arc satisfies
+$\edgew{\alloc}(i,j) = \cost_i(\bundle{i}) - \cost_i(\bundle{j}) \ge -1$
+--- the bound holds for \emph{any} assignment, so in particular for this one.
+Corollary~\ref{cor:onestep} then gives $\optsubsidy \in \set{0,1}^n$, and
+Observation~\ref{obs:integrality} plus the vanishing of $\pathw{}$ at the
+endpoint of a heaviest path give a total of at most $n-1$.
+\end{proof}
+
+This is exactly the shape an agent induction wants: a purely combinatorial,
+schedule-free, coverage-free statement, with the step from $n$ to $n+1$ agents
+being a refinement of the family. It also holds on every hard instance the
+project has accumulated, and on the full exhaustive family at $n = m = 3$ ---
+all $9{,}880$ instances, with the implication chain of
+Proposition~\ref{prop:balance-suffices} verified end to end on each
+(\texttt{routeA.py}). It is nevertheless false.
+
+% --------------------------------------------------------------------------
+\subsection{The invariant is unreachable}
+
+\begin{proposition}
+\label{prop:no-balance}
+There is a negative dichotomous instance with $n = 3$ and $m = 4$, with binary
+additive costs, admitting no uniformly balanced family.
+\end{proposition}
+
+\begin{proof}
+Take $\cost_i(S) = \abs{S \cap D_i}$ with
+\[
+  D_1 = \set{g_1,g_2}, \qquad D_2 = \set{g_1,g_3,g_4}, \qquad
+  D_3 = \set{g_2,g_3,g_4}.
+\]
+Uniform balance for agent $i$ means the elements of $D_i$ are spread across the
+three bundles with counts of range at most $1$. Three elements over three
+bundles have range at most $1$ only in the pattern $(1,1,1)$, so $D_2$ forces
+$g_1,g_3,g_4$ into three \emph{different} bundles, one each, and $D_3$ likewise
+forces $g_2,g_3,g_4$ into three different bundles. Hence $g_2$ must lie in the
+one bundle containing neither $g_3$ nor $g_4$, which is the bundle containing
+$g_1$. But two elements over three bundles have range at most $1$ only in the
+pattern $(1,1,0)$, so $D_1$ forces $g_1$ and $g_2$ into \emph{different}
+bundles. Contradiction.
+\end{proof}
+
+The instance is binary additive and therefore already settled
+by~\cite{LMS26}; what it refutes is the method, on a class the literature
+closes. Indeed $19$ of its $81$ allocations are good, several with
+$\pathw{} = (0,0,0)$ --- it is an easy instance for the conjecture and an
+impossible one for the invariant.
+
+The failure is sharper than mere unreachability.
+
+\begin{proposition}
+\label{prop:arc-bound-blind}
+On the instance of Proposition~\ref{prop:no-balance}, \emph{every} good
+allocation has an arc of weight $-2$ or less. Hence no sufficient condition of
+the form ``all arcs $\ge -1$'' can certify any of them.
+\end{proposition}
+
+\begin{proof}
+Exhaustive over all $3^4 = 81$ allocations (\texttt{routeA\_cex.py}): $19$ are
+good, and the minimum arc weight over them is $-3$, attained at
+$(\set{g_1,g_3,g_4},\set{g_2},\emptyset)$, with every other good allocation
+reaching $-2$.
+\end{proof}
+
+\begin{remark}[What this rules out]
+\label{rem:arc-vs-path}
+Corollary~\ref{cor:onestep} is a bound on \emph{arcs}; the target is a bound on
+\emph{paths}. Propositions~\ref{prop:no-balance} and~\ref{prop:arc-bound-blind}
+show the gap between the two is not slack that a cleverer construction can close
+--- it is where all the surviving witnesses live. \textbf{Any correct invariant
+must be path-based.} That is precisely what makes agent induction hard, because
+path weights depend on which agent holds which bundle, so the invariant cannot
+be assignment-invariant and the newcomer's arrival re-opens the whole graph.
+Agent induction is not refuted here; the only invariant that would have made it
+easy is.
+\end{remark}
+
+\begin{remark}[The obstruction is hypergraph discrepancy]
+\label{rem:discrepancy}
+For binary additive costs, uniform balance says every $D_i$ is split evenly
+across the $n$ bundles, which is a discrepancy condition on the set system
+$\set{D_1,\dots,D_n}$. Proposition~\ref{prop:no-balance} is a small
+discrepancy obstruction, and it is the same combinatorial phenomenon that drives
+the reduction by which~\cite{BSV21} proves deciding exact envy-freeness for
+binary additive chores NP-complete. The certified-hard set-splitting instance
+recorded from that reduction also admits no uniformly balanced family, checked
+by \texttt{routeA\_adv.py}. So the balance signal of Remark~\ref{rem:balance},
+which three independent routes had pointed at, cannot be imposed exactly ---
+only approximately, and the approximation is exactly the path slack.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{What survives: the two-tier restatement}
+
+One reformulation does survive, and it is worth recording because it is
+equivalent rather than merely sufficient.
+
+\begin{proposition}
+\label{prop:twotier-equiv}
+Let $\alloc$ be envy-freeable with every arc at most $1$. Then $\alloc$ is good
+if and only if the digraph of weight-$1$ arcs contains no directed path of
+length two.
+\end{proposition}
+
+\begin{proof}
+If no such path exists then every directed path carries at most one positive
+arc, so has weight at most $1$, and $\pathw{\alloc} \le 1$. Conversely if
+$\pathw{\alloc} \le 1$ then $\optsubsidy \in \set{0,1}^n$ by
+Observation~\ref{obs:integrality}; writing $S = \set{i : \optsubsidy_i = 1}$,
+Proposition~\ref{prop:twotier} puts every arc within $S$, within
+$\agents \setminus S$, or from $\agents \setminus S$ into $S$ at weight at most
+$0$, so weight-$1$ arcs run only from $S$ to $\agents \setminus S$ and cannot be
+composed.
+\end{proof}
+
+So the target is exactly: \emph{find an envy-freeable allocation together with a
+bipartition of the agents such that all strict envy runs from one side to the
+other}. This is Proposition~\ref{prop:twotier} again, now as a criterion rather
+than a certificate format, and it is the one direction in
+\Cref{sec:conclusion} still untried --- choose the paid set first, then
+allocate. It is not assignment-invariant, consistent with
+Remark~\ref{rem:arc-vs-path}, but it is a condition on a bipartition rather than
+on a schedule, so it inherits none of the dead ends of
+\Cref{sec:approach3} and none of the ex-ante failures of
+\Cref{sec:approach4}.

@@ -48,6 +48,17 @@ Theorem~\ref{thm:obstruction}
 Full peel state space of that witness, $7^3 = 343$ states, both move types
   & \texttt{peel3.py} & 175 legal, 166 good, \textbf{9 dead ends}, root good,
     all six reachable terminals are perfect matchings \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\noindent
+and, for the approaches attempted after the replica transform,
+
+\begin{center}
+\begin{tabular}{@{}p{0.40\textwidth}p{0.19\textwidth}p{0.32\textwidth}@{}}
+\toprule
+Experiment & Script & Result \\
 \midrule
 No dichotomous reweighting separates: all $990^3$ triples on the instance of
 Theorem~\ref{thm:w4}, plus the separable $P$-family on three instances
@@ -66,6 +77,18 @@ The same rule on the instance of Proposition~\ref{prop:msw-false}
 Iterated minimum-marginal perfect matching, non-additive costs
   & \texttt{rules.py} & fails on $13/250$ at $n=3,m=4$ and $10/120$ at
     $n=3,m=5$ \\
+\midrule
+Uniformly balanced families: exhaustive $n=m=3$, then ${\approx}\,1900$ random
+instances up to $n=5$
+  & \texttt{routeA.py} & no failure, and the implication chain verified on every
+    instance \\
+The same, hunted adversarially over structured families
+  & \texttt{routeA\_adv.py} & \textbf{$10$ failures} at $n=3,m=4$, plus the
+    certified-hard set-splitting instance
+    (Proposition~\ref{prop:no-balance}) \\
+Arc weights of the good allocations on that counterexample
+  & \texttt{routeA\_cex.py} & all $19$ have an arc ${\le}\,{-2}$; minimum $-3$
+    (Proposition~\ref{prop:arc-bound-blind}) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -180,6 +203,12 @@ Script & Purpose \\
 \texttt{stress.py}     & randomised type-ordering sweep, seeded \\
 \texttt{rules.py}      & the refinement rules and the matching lift \\
 \texttt{checkD.py}     & Remark~\ref{rem:double-refinement} \\
+\texttt{routeA.py}     & Proposition~\ref{prop:balance-suffices}; exhaustive
+                         $n=m=3$ and randomised sweeps \\
+\texttt{routeA\_adv.py} & adversarial hunt; finds
+                         Proposition~\ref{prop:no-balance} \\
+\texttt{routeA\_cex.py} & Propositions~\ref{prop:no-balance}
+                         and~\ref{prop:arc-bound-blind} \\
 \bottomrule
 \end{tabular}
 \end{center}

@@ -60,14 +60,19 @@ signal of Remark~\ref{rem:balance} is the current best guess at its shape.
     by Theorem~\ref{thm:f2} the recipient in the hard case has zero marginal, and
     by Proposition~\ref{prop:f4} $\argmax_i \pathw{}(i)$ is insufficient even
     under the type-ordering, so the rule has to read the residual workload.
-  \item \textbf{Induct on agents rather than items.} Every approach here inducts
-    on items; \cite[\S4.3.1]{LMS26} adds agents one at a time, maintaining an
-    equality graph rather than a subsidy scalar. For chores a newcomer starts
-    with the cheapest possible bundle and is the natural sink, so the
-    orientation problem of \Cref{sec:approach1} does not arise, and the
-    equality graph is precisely the extra information the previous item says a
-    recipient rule needs. Untried, and currently the most promising untouched
-    route.
+  \item \textbf{Choose the paid set first} (Proposition~\ref{prop:twotier},
+    Proposition~\ref{prop:twotier-equiv}). The target is exactly: an
+    envy-freeable allocation together with a bipartition of the agents such that
+    all strict envy runs from one side to the other. This is a condition on a
+    bipartition rather than on a schedule, so it inherits none of the dead ends
+    of \Cref{sec:approach3} and none of the ex-ante failures of
+    \Cref{sec:approach4}. It is the one direction that four separate lines of
+    attack have now pointed at and nobody has tried.
+  \item \textbf{Agent induction with a path-based invariant}
+    (\Cref{sec:approach5}). The arc-based invariant is refuted, so any revival
+    must carry path weights, which are not assignment-invariant. The equality
+    graph of~\cite[\S4.3.1]{LMS26} is the natural candidate for what to carry.
+    Harder than it looked a session ago, but not closed.
   \item \textbf{Characterise the dead ends} (Remark~\ref{rem:balance}). Test
     across that family whether every dead end is a state already committed to an
     unbalanced terminal. If so, the balance rule is the missing ingredient and
