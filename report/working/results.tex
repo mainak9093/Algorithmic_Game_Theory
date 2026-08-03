@@ -93,6 +93,21 @@ is not known to work: Proposition~\ref{prop:deadends} exhibits legal states from
 which no legal continuation exists, so what remains is to find a peel rule that
 never enters one.
 
+\paragraph{A third negative result} (\Cref{sec:approach4}).
+Given Corollary~\ref{cor:coverage}, the natural move is to change the numbers so
+that a coverage violation becomes unattractive, and thereby reuse~\cite{BKNS22}
+as a black box. \Cref{sec:approach4} closes that at both levels. No dichotomous
+reweighting of the replica instance separates coverage from non-coverage
+(Theorems~\ref{thm:w4} and~\ref{thm:w4prime}, the latter exhaustive over all
+$990^3$ candidate triples), and no inflation of item weights can steer the
+algorithm of~\cite{BKNS22}, because its repair subroutine provably runs where
+every candidate's marginal is $0$ and a duplicate moves no arc at all
+(Theorem~\ref{thm:f2}, Corollary~\ref{cor:f3}). Both failures have one cause,
+named in \Cref{sec:holderblind}: a rule fixed before the allocation is chosen
+cannot act on a quantity the allocation determines. Coverage must be enforced by
+the procedure that builds the allocation, not by the objective it is scored
+against.
+
 \paragraph{Evidence} (\Cref{sec:experiments}).
 Conjecture~\ref{conj:main} survives exhaustive verification for $n = m = 3$ over
 all $9{,}880$ instances up to agent symmetry, and randomised search over some

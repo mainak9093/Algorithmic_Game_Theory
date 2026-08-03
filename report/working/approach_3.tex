@@ -494,6 +494,73 @@ is ever entered}, and Remark~\ref{rem:balance} is the first candidate for what
 that rule must enforce.
 
 % --------------------------------------------------------------------------
+\subsection{The type-ordered restriction}
+\label{sec:typeorder}
+
+One restriction of the peel process survives every test so far and shrinks the
+search substantially. Present the chores in \emph{blocks}: decide the owner of
+$a_1$ completely, then $a_2$, and so on. Coverage is automatic in the peel frame
+--- a peel deletes $j$ from $\workprofile_x$, so the same pair $(x,j)$ cannot be
+peeled twice --- and after $r$ complete blocks the state is
+$\workprofile_i = \alloc^{(r)}_i \cup R$ with $R$ the undecided chores, which is
+literally the conditioned-remainder principle of Remark~\ref{rem:conditioned}.
+A state is then just a triple (partial allocation, current chore, set of agents
+already relieved of it), which is a far smaller space than the general peel
+process.
+
+\begin{conjecture}[Type-ordered reachability --- \textbf{open}]
+\label{conj:h1pp}
+From the root, some chore order $\pi$, together with some choice of owner and
+within-block sequence for each chore, reaches a terminal state with the
+invariant holding at every intermediate state.
+\end{conjecture}
+
+Conjecture~\ref{conj:h1pp} implies Conjecture~\ref{conj:h1prime} implies
+Conjecture~\ref{conj:main}, and it is a strictly smaller search problem than
+either. The evidence, from \texttt{typeorder.py} and \texttt{stress.py}, is that
+the restriction costs nothing: across the witness of
+Theorem~\ref{thm:obstruction} and $890$ random dichotomous instances at
+$n \in \set{3,4}$, $m \le 4$, \emph{every} instance that admits a legal schedule
+at all admits a type-ordered one. The chore \emph{order} is not free --- in
+$8/120$ instances at $n = m = 3$, $16/60$ at $n=3,m=4$ and $8/60$ at $n=4,m=3$
+only some orders work --- but in every instance tested some order does. Note
+that the schedule exhibited in \Cref{sec:dissolve} is \emph{not} type-ordered,
+since it interleaves $a_1$ and $a_2$; the table says a type-ordered one exists
+for that instance anyway, which was not obvious.
+
+What does not survive is the natural recipient rule to pair with it.
+
+\begin{proposition}[$\argmax$ recipient selection is insufficient --- \textbf{refuted}]
+\label{prop:f4}
+Giving each copy to an agent of maximum current subsidy does not suffice, even
+under the type-ordering.
+\end{proposition}
+
+\begin{proof}
+Take $n = 3$, $m = 2$ with the costs
+\[
+  \cost_1(\emptyset) = 0,\; \cost_1(\set{a_1}) = \cost_1(\set{a_2}) = 0,\;
+  \cost_1(\items) = 1; \qquad
+  \cost_2(S) = \min(\abs{S},1); \qquad \cost_3 = \cost_1 .
+\]
+All three are monotone with marginals in $\set{0,1}$. Exhaustive search over
+both chore orders, both roles and all within-block sequences finds no legal
+type-ordered schedule in which every recipient lies in
+$\argmax_i \pathw{\workprofile}(i)$. Dropping only the $\argmax$ restriction,
+the schedule that relieves agent $1$ of $a_1$, then agent $3$ of $a_1$, then
+agent $1$ of $a_2$, then agent $3$ of $a_2$ is legal and terminates at
+$\alloc = (\emptyset, \set{a_1,a_2}, \emptyset)$ with $\pathw{} = (0,1,0)$.
+\end{proof}
+
+This is the signal of Remark~\ref{rem:balance} again --- a subsidy-based
+recipient rule alone is not enough --- now confirmed \emph{inside} the
+type-ordered restriction, which is the sharper statement. Combined with
+Theorem~\ref{thm:f2}, which says the recipient in the hard case has zero
+marginal, the rule provably cannot be read off the subsidy vector: it must see
+the residual workload, which is exactly what the conditioned-remainder arcs
+already encode.
+
+% --------------------------------------------------------------------------
 \subsection{A subclass that may fall first --- conjectural}
 \label{sec:mrf}
 

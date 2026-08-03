@@ -41,6 +41,62 @@ proof are the same search, and the content is in constructing $\phi$ and the
 allocation \emph{together}.
 
 % --------------------------------------------------------------------------
+\subsection*{2026-08-03 --- routes surviving the two no-go results}
+
+\Cref{sec:approach4} closes valuation-level encoding and algorithm-level weight
+forcing, and Corollary~\ref{cor:no-refinement} closes every rule that selects
+inside the utilitarian-optimal set. What remains splits by which of those
+failures it avoids.
+
+\textbf{Route M --- iterated matching.} \cite[\S3]{LMS26} develops the
+objective-chores analogue of iterated maximum-weight \emph{perfect} matching,
+padding with zero-valued dummies so every agent takes one object per round,
+which makes the output balanced. The obvious lift to our setting --- each round
+assign every agent one remaining chore minimising the total marginal
+$\sum_i [\cost_i(\bundle{i} \cup \set{g_i}) - \cost_i(\bundle{i})]$ --- does
+\emph{not} give $\pathw{} \le 1$ for non-additive dichotomous costs: it fails on
+$13/250$ instances at $n=3,m=4$ and $10/120$ at $n=3,m=5$ (\texttt{rules.py}).
+That is diagnostic rather than discouraging, and \cite{LMS26} flags the obstacle
+itself: the telescoping needs additivity, because an additive round-$t$ cost is
+independent of what came before whereas a dichotomous marginal depends on the
+bundle already held. The repair to attempt is a round invariant replacing the
+additive domination --- each round's matching minimum-cost \emph{conditioned on
+the current bundles}, with marginals non-increasing across rounds, a ``peel the
+free chores first'' discipline. \textbf{Status:} the naive lift is refuted; the
+conditioned version is untested.
+
+\textbf{Route A --- induct on agents, not items.} Every approach so far inducts
+on items. \cite[\S4.3.1]{LMS26} instead maintains a set of active agents, adds
+one at a time, and restores two invariants: compensated utility at least
+$\lambda$ with $\lambda \le \subsidy_i \le 1$, and an equality path from every
+active agent to the set of minimum compensated utility. For chores this is
+attractive because a newcomer starts with an empty bundle, which is the
+\emph{cheapest} bundle, so the newcomer is the natural sink and the orientation
+problem of \Cref{sec:approach1} does not arise. The invariant carried is the
+equality graph rather than a subsidy scalar --- which is precisely the extra
+information Theorem~\ref{thm:f2} and Proposition~\ref{prop:f4} say a recipient
+rule needs. \textbf{Status:} untried, and the most promising of these.
+
+\textbf{Route N --- non-redundancy instead of coverage.} Theorem~\ref{thm:f2}
+says the failing placements are exactly the zero-marginal ones, and the
+literature already forbids those under the name non-wastefulness. A duplicate is
+redundant for its holder by construction, so ask for a \emph{non-redundant}
+allocation of the replica set --- which General Yankee Swap is built to maintain
+--- and measure how far non-redundancy falls short of coverage. The two are not
+equivalent: a duplicate can be redundant for everyone when every other agent
+already holds the type or has zero marginal for it. But the residual gap is
+narrower than coverage itself and is exactly characterisable. \textbf{Status:}
+cheap to test, untested.
+
+\textbf{Route X --- matroid exchange.} As in \Cref{sec:mrf}. Highest ceiling,
+highest cost; the parallel-extension step needs a full proof before anything is
+built on it.
+
+\textbf{Ranking.} Route A, then Route M's conditioned repair, then Route N,
+then Route X. Conjecture~\ref{conj:h1pp} --- the type-ordered peel --- stays
+live alongside them and has the best evidence of anything currently open.
+
+% --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
 % it in.  Keep the three-part shape: what the idea is, why it might work, what
 % would kill it.  Newest entry goes at the bottom.

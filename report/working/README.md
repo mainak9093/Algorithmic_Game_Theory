@@ -25,7 +25,8 @@ builds of one.
 | `solved_cases.tex` | Binary additive costs; identical costs; $n=2$ | Proved, tight |
 | `approach_1.tex` | Item-by-item insertion: free-insertion theorem, cycle-closing bound, **and the obstruction killing the template** | Proved |
 | `approach_2.tex` | Utilitarian-optimal selection, **refuted**; failed tie-break rules | Proved |
-| `approach_3.tex` | Replica transform, coverage reduction, the peel process, dead ends | **Open — the live approach.** Less polished than the rest. |
+| `approach_3.tex` | Replica transform, coverage reduction, the peel process, dead ends, the type-ordered restriction | **Open — the live approach.** Less polished than the rest. |
+| `approach_4.tex` | Encoding coverage into the numbers, at valuation and algorithm level | **Both closed.** Proved + machine-verified. |
 | `experiments.tex` | Evidence table, the sampler-bias analysis, the peel-frame search plan, reproduction | Current |
 | `ideas.tex` | **Running log of new thinking.** Newest entry last. | Inbox |
 | `conclusion.tex` | Open directions ranked | Current |
@@ -40,6 +41,20 @@ The two results worth not re-deriving:
   instance whose *unique* cost-minimising allocation needs subsidy 2 while a
   costlier one needs 0. A correct algorithm must be free to give up total cost.
   (`approach_2.tex`, verified by `update_1/mswcex.py`.)
+
+- **No refinement of the utilitarian-optimal set can work.** The point above is
+  not just about tie-breaking: on that instance the optimal set is a *singleton*,
+  so any rule selecting inside it returns the bad allocation. This kills the
+  cardinality-balance-then-cost-leximin refinement despite ~1050 clean random
+  trials. (`approach_2.tex`, verified by `update_4/checkD.py`.)
+- **Coverage cannot be encoded into the numbers.** No dichotomous reweighting of
+  the replica instance separates coverage from non-coverage — exhaustive over all
+  $990^3$ triples — and no weight inflation can steer R3's algorithm, because its
+  repair subroutine runs exactly where every candidate's marginal is 0 and a
+  duplicate moves no arc. (`approach_4.tex`, verified by `update_4/dupsep.py`.)
+
+All four negative results share one shape: **a rule fixed ex ante against a
+quantity determined ex post.** What survives is procedures that decide late.
 
 And the one worth building on:
 

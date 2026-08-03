@@ -16,7 +16,7 @@ iteration on maximum-weight walks, and record
 $\min_{\alloc} \max_i \pathw{\alloc}(i)$.
 
 \begin{center}
-\begin{tabular}{@{}p{0.46\textwidth}lp{0.30\textwidth}@{}}
+\begin{tabular}{@{}p{0.40\textwidth}p{0.19\textwidth}p{0.32\textwidth}@{}}
 \toprule
 Experiment & Script & Result \\
 \midrule
@@ -48,6 +48,24 @@ Theorem~\ref{thm:obstruction}
 Full peel state space of that witness, $7^3 = 343$ states, both move types
   & \texttt{peel3.py} & 175 legal, 166 good, \textbf{9 dead ends}, root good,
     all six reachable terminals are perfect matchings \\
+\midrule
+No dichotomous reweighting separates: all $990^3$ triples on the instance of
+Theorem~\ref{thm:w4}, plus the separable $P$-family on three instances
+  & \texttt{dupsep.py} & \textbf{0} separating triples
+    (Theorem~\ref{thm:w4prime}) \\
+Type-ordered peel schedules, witness plus $890$ random instances,
+$n \in \set{3,4}$, $m \le 4$
+  & \texttt{typeorder.py}, \texttt{stress.py} & every instance admitting a legal
+    schedule admits a type-ordered one; $\argmax$ recipient rule fails
+    (Proposition~\ref{prop:f4}) \\
+Double-refinement selection rule, ${\approx}\,1050$ random instances
+  & \texttt{rules.py} & no failure --- but see the next row \\
+The same rule on the instance of Proposition~\ref{prop:msw-false}
+  & \texttt{checkD.py} & \textbf{fails}: selected allocation needs $2$, another
+    needs $0$ (Remark~\ref{rem:double-refinement}) \\
+Iterated minimum-marginal perfect matching, non-additive costs
+  & \texttt{rules.py} & fails on $13/250$ at $n=3,m=4$ and $10/120$ at
+    $n=3,m=5$ \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -156,6 +174,12 @@ Script & Purpose \\
 \texttt{peel.py}       & the schedule and trap-state refusal of
                          \Cref{sec:dissolve} \\
 \texttt{peel3.py}      & the state-space table of Proposition~\ref{prop:deadends} \\
+\texttt{dupsep.py}     & Theorems~\ref{thm:w3}, \ref{thm:w4}, \ref{thm:w4prime};
+                         \texttt{dupsep.py pfamily} for the $P$-family sweeps \\
+\texttt{typeorder.py}  & type-ordered schedules on the witness and small families \\
+\texttt{stress.py}     & randomised type-ordering sweep, seeded \\
+\texttt{rules.py}      & the refinement rules and the matching lift \\
+\texttt{checkD.py}     & Remark~\ref{rem:double-refinement} \\
 \bottomrule
 \end{tabular}
 \end{center}

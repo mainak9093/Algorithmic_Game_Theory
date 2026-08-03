@@ -111,6 +111,51 @@ assumption that a witness may be sought among cost-minimising allocations at
 all. Any search procedure must be free to give up total cost.
 \end{remark}
 
+The consequence is worth stating in the strongest available form, because
+refinement schemes are easy to propose and all of them die here at once.
+
+\begin{corollary}[No refinement of the utilitarian-optimal set can work]
+\label{cor:no-refinement}
+Let $\mathcal{R}$ be any rule selecting a nonempty subset of the
+utilitarian-optimal allocations. Then $\mathcal{R}$ fails on the instance of
+Proposition~\ref{prop:msw-false}: every allocation it can return requires a
+subsidy of $2$, while some allocation outside the utilitarian-optimal set
+requires none.
+\end{corollary}
+
+\begin{proof}
+On that instance the utilitarian-optimal set is the singleton
+$\set{\alloc^\star}$, so $\mathcal{R}$ returns $\set{\alloc^\star}$, and
+$\pathw{\alloc^\star}(2) = 2$.
+\end{proof}
+
+\begin{remark}[A tempting refinement, and why it dies]
+\label{rem:double-refinement}
+Three independent signals --- Theorem~\ref{thm:sizeshift}, the balancedness
+guarantee of~\cite{BDNSV20}, and Remark~\ref{rem:balance} --- point at
+\emph{cardinality balance} as the missing ingredient, which suggests refining
+the utilitarian-optimal set lexicographically by the descending-sorted
+cardinality vector and then by the descending-sorted own-cost vector. Randomised
+search over roughly $1050$ instances at $n \in \set{3,4}$ and $m \le 5$ finds no
+failure, and neither refinement alone survives that same test, so the pair looks
+strong. It is nevertheless false, by Corollary~\ref{cor:no-refinement}: on the
+instance of Proposition~\ref{prop:msw-false} both refinements are no-ops on a
+singleton, and the selected allocation needs subsidy $2$ against $0$ achievable
+elsewhere. Verified directly by \texttt{checkD.py}.
+
+The episode is worth recording for two reasons. First, it is the sampler bias of
+\Cref{sec:samplerbias} firing again: the failure occurs in roughly one instance
+in $2.6 \times 10^{4}$, so a sweep of $10^{3}$ was two orders of magnitude short
+of being able to see it. Second, the slip underneath is a subtle misreading of
+Theorem~\ref{thm:hs-characterisation}. That theorem says an envy-freeable
+allocation maximises welfare across reassignments of \emph{its own bundles}; it
+does \emph{not} say that an envy-freeable allocation is globally
+welfare-maximising. Restricting to utilitarian-optimal allocations is therefore
+not free, and the zero-subsidy allocation of Proposition~\ref{prop:msw-false} ---
+of total cost $3$ against the optimum $2$, and envy-freeable --- is a direct
+witness that the two notions differ.
+\end{remark}
+
 % --------------------------------------------------------------------------
 \subsection{Selection rules that fail}
 \label{sec:tiebreaks}

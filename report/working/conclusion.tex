@@ -7,14 +7,26 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-We have not settled Conjecture~\ref{conj:main}. Two strategies that a reader
-would reasonably try first are ruled out: item-by-item insertion, which is the
-strategy that works in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}), and
-restriction to utilitarian-optimal allocations
-(Proposition~\ref{prop:msw-false}). Alongside those sit a small set of positive
-results --- binary additive costs (Theorem~\ref{thm:binadd}), identical costs
-(Theorem~\ref{thm:identical}), two agents --- and structural tools that say
-precisely how the chore problem differs from its goods mirror.
+We have not settled Conjecture~\ref{conj:main}. Three strategies that a reader
+would reasonably try are ruled out: item-by-item insertion, which is the strategy
+that works in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}); restriction to
+utilitarian-optimal allocations, together with \emph{every} refinement of that
+set (Proposition~\ref{prop:msw-false}, Corollary~\ref{cor:no-refinement}); and
+encoding the coverage constraint into the numbers, at either the valuation or
+the algorithm level (\Cref{sec:approach4}). Alongside those sit a small set of
+positive results --- binary additive costs (Theorem~\ref{thm:binadd}, now
+subsumed by~\cite{LMS26}), identical costs (Theorem~\ref{thm:identical}), two
+agents --- and structural tools that say precisely how the chore problem differs
+from its goods mirror.
+
+The three negative results are more useful together than separately, because
+they fail in the same way. Insertion fixes an owner before the consequences are
+visible; a selection rule fixes a criterion before knowing which allocation it
+will pick out; a reweighting fixes a penalty before knowing who will hold the
+duplicate. Each is \emph{a rule fixed ex ante against a quantity determined ex
+post} (\Cref{sec:holderblind}). What survives is procedures that decide late ---
+which is exactly the design of the peel frame, where ownership is settled only
+by the last move touching a chore.
 
 Both negative results are failures of \emph{timing}, and the constraint they
 jointly impose is that \emph{a correct algorithm must be free to move
@@ -38,11 +50,24 @@ signal of Remark~\ref{rem:balance} is the current best guess at its shape.
 
 \paragraph{Directions.}
 \begin{enumerate}
-  \item \textbf{The peel-frame search} (\Cref{sec:peelsearch}). Run the
-    fixed-point computation of \texttt{peel3.py} over the full $n = m = 3$
-    dichotomous family. A bad root anywhere kills the approach of
-    \Cref{sec:approach3}; a clean sweep is strong evidence for
-    Conjecture~\ref{conj:h1prime}. Cheapest decisive experiment available.
+  \item \textbf{The type-ordered peel search} (\Cref{sec:typeorder},
+    \Cref{sec:peelsearch}). Conjecture~\ref{conj:h1pp} has the best evidence of
+    anything currently open and a much smaller state space than
+    Conjecture~\ref{conj:h1prime}. Run the fixed-point computation over the full
+    $n = m = 3$ dichotomous family; a bad root anywhere kills the approach of
+    \Cref{sec:approach3}, a clean sweep is strong evidence for it. Cheapest
+    decisive experiment available. Note what a recipient rule must now satisfy:
+    by Theorem~\ref{thm:f2} the recipient in the hard case has zero marginal, and
+    by Proposition~\ref{prop:f4} $\argmax_i \pathw{}(i)$ is insufficient even
+    under the type-ordering, so the rule has to read the residual workload.
+  \item \textbf{Induct on agents rather than items.} Every approach here inducts
+    on items; \cite[\S4.3.1]{LMS26} adds agents one at a time, maintaining an
+    equality graph rather than a subsidy scalar. For chores a newcomer starts
+    with the cheapest possible bundle and is the natural sink, so the
+    orientation problem of \Cref{sec:approach1} does not arise, and the
+    equality graph is precisely the extra information the previous item says a
+    recipient rule needs. Untried, and currently the most promising untouched
+    route.
   \item \textbf{Characterise the dead ends} (Remark~\ref{rem:balance}). Test
     across that family whether every dead end is a state already committed to an
     unbalanced terminal. If so, the balance rule is the missing ingredient and
