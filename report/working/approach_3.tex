@@ -89,8 +89,10 @@ Call an allocation $B = (B_1,\dots,B_n)$ of all of $\hat{\items}$ a
 
 \begin{theorem}[Replica transform]
 \label{thm:replica}
-Let $\cost_1,\dots,\cost_n$ be monotone with $\cost_i(\emptyset) = 0$ and all
-marginals in $\set{0,1}$. Then
+Let $\cost_1,\dots,\cost_n$ be \emph{dichotomous} in the sense of
+\Cref{def:dichcost} --- that is, every marginal
+$\cost_i(S \cup \set{g}) - \cost_i(S)$ lies in $\set{0,1}$, which already forces
+$\cost_i$ to be monotone. Then
 \begin{enumerate}
   \item[(i)] each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in
     the sense of~\cite{BKNS22};
@@ -139,6 +141,36 @@ $\Phi(\Psi(B))$ agrees with $B$ up to which copy of a type sits where.
   = \cost_i(\bundle{i}) - \cost_i(\bundle{k}) = \edgew{\alloc}(i,k). \qedhere
 \]
 \end{proof}
+
+\begin{remark}[Monotonicity alone is not enough, and which clause does what]
+\label{rem:whichclause}
+The two halves of the hypothesis do different jobs in the proof of~(i), and it
+is worth separating them because the statement is easy to misread.
+Monotonicity of $\cost_i$ is what makes $\hat{v}_i$ monotone, and \emph{nothing
+else}. The binary-marginal condition is what makes $\hat{v}_i$'s marginals
+binary, because those marginals are \emph{downward} marginals of $\cost_i$:
+\[
+  \hat{v}_i(S \cup \set{b}) - \hat{v}_i(S)
+  \;=\; \cost_i(T) - \cost_i(T \setminus \set{j}), \qquad
+  T = \items \setminus \tau(S),
+\]
+so they inherit exactly the range of $\cost_i$'s own marginals. Monotonicity
+alone bounds this only by $\ge 0$.
+
+The failure is real rather than an artefact of the proof. Take $m = 2$ with
+$\cost(\emptyset) = \cost(\set{a}) = \cost(\set{b}) = 0$ and
+$\cost(\set{a,b}) = 2$. This $\cost$ is monotone and normalised but has a
+marginal of $2$, and the resulting dual has
+$\hat{v}(\set{b_a}) - \hat{v}(\emptyset) = 2 - 0 = 2$, so $\hat{v}$ is not
+dichotomous and~\cite{BKNS22} does not apply to $\hat{I}$ at all. Conversely,
+the normalisation $\cost_i(\emptyset) = 0$ is \emph{not} used in
+Theorem~\ref{thm:replica}: $\hat{v}_i(\emptyset) = \cost_i(\items) -
+\cost_i(\items) = 0$ regardless, and the constant $\cost_i(\items)$ cancels in
+part~(iii). It is retained only because it is part of the model. Verified by
+\texttt{monotone\_check.py}, which also confirms by exhaustive enumeration that
+binary marginals imply monotonicity, so the operative hypothesis is a single
+clause.
+\end{remark}
 
 Part~(i) is worth stating on its own: \emph{the dual of a dichotomous cost
 function is a dichotomous value function}, so the class is closed under this
@@ -543,7 +575,7 @@ Take $n = 3$, $m = 2$ with the costs
   \cost_1(\items) = 1; \qquad
   \cost_2(S) = \min(\abs{S},1); \qquad \cost_3 = \cost_1 .
 \]
-All three are monotone with marginals in $\set{0,1}$. Exhaustive search over
+All three are dichotomous (\Cref{def:dichcost}). Exhaustive search over
 both chore orders, both roles and all within-block sequences finds no legal
 type-ordered schedule in which every recipient lies in
 $\argmax_i \pathw{\workprofile}(i)$. Dropping only the $\argmax$ restriction,

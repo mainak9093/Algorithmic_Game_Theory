@@ -99,8 +99,37 @@ It is often more convenient to work with the non-negative \emph{cost form}
   \cost_i(S) \le \cost_i(T) \text{ for } S \subseteq T, \quad
   \cost_i(S \cup \set{g}) - \cost_i(S) \in \set{0,1}.
 \]
+\begin{definition}[Dichotomous cost function]
+\label{def:dichcost}
+A set function $\cost : 2^{\items} \to \R$ is \emph{dichotomous} if
+$\cost(\emptyset) = 0$ and every marginal $\cost(S \cup \set{g}) - \cost(S)$
+lies in $\set{0,1}$.
+\end{definition}
+
+Monotonicity is not a separate hypothesis: marginals in $\set{0,1}$ are
+non-negative, so a dichotomous $\cost$ is automatically non-decreasing. We
+nonetheless list it above because it is the property most often used directly.
+
+\begin{remark}[Three adjectives that are routinely confused]
+\label{rem:terminology}
+\emph{Monotone} means only $\cost(S) \le \cost(T)$ for $S \subseteq T$, with no
+bound whatever on how large an increment can be; it is far weaker than
+\Cref{def:dichcost} and, on its own, supports almost none of the arguments
+below. \emph{Dichotomous} adds the binary-marginal condition and is the class of
+this paper. \emph{Binary additive} is the strictly smaller class
+$\cost_i(S) = \abs{S \cap D_i}$ for a set $D_i$ of disliked chores, i.e.\
+additive with per-item costs in $\set{0,1}$; it is the case settled
+by~\cite{LMS26}.
+
+A warning about the literature: several papers say ``binary valuations'' for
+what is called dichotomous here --- \cite{BSY23} and~\cite{TWYZ23} both do ---
+and reserve ``binary additive'' for the additive subclass. When a bound is
+quoted, check which is meant, since the classes are not the same and the gap
+between them is where this paper lives.
+\end{remark}
+
 The correspondence $v_i \leftrightarrow \cost_i$ is a bijection between negative
-dichotomous valuations and dichotomous valuations in the sense
+dichotomous valuations and dichotomous cost functions in the sense
 of~\cite{BKNS22}: the class we study is exactly the pointwise negation of the
 class they study. In cost form an envy-free solution is the requirement
 $\cost_i(\bundle{i}) - \subsidy_i \le \cost_i(\bundle{j}) - \subsidy_j$ for all
