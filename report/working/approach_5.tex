@@ -143,6 +143,60 @@ only approximately, and the approximation is exactly the path slack.
 \end{remark}
 
 % --------------------------------------------------------------------------
+\subsection{The $n = 3$ specialisation}
+\label{sec:n3}
+
+Since the attack was aimed at $n = 3$ first, it is worth recording exactly what
+the target reduces to there. The point is that with three agents the path
+structure is finite and small, so ``$\pathw{} \le 1$'' becomes a fixed list of
+inequalities.
+
+\begin{proposition}[Characterisation at $n = 3$]
+\label{prop:n3}
+Let $n = 3$. An allocation $\alloc$ is good --- envy-freeable with
+$\pathw{\alloc} \le 1$ --- if and only if
+\begin{enumerate}
+  \item[(i)] every directed cycle of $\envygraph{\alloc}$ has weight at most
+    $0$;
+  \item[(ii)] every arc has weight at most $1$;
+  \item[(iii)] every directed path of length two has weight at most $1$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+Condition~(i) is envy-freeability, by Theorem~\ref{thm:hs-characterisation}.
+Given it, no positive cycle exists, so $\pathw{\alloc}(i)$ is the maximum weight
+of a \emph{simple} path leaving $i$; on three vertices such a path has length
+$0$, $1$ or $2$, contributing weight $0$, an arc, or a two-path respectively.
+So $\pathw{\alloc} \le 1$ is exactly (ii) together with (iii).
+\end{proof}
+
+\begin{corollary}[Only six inequalities, and most are free]
+\label{cor:n3-six}
+Let $n = 3$ and let $\alloc$ satisfy (i) and (ii). For distinct $i,j,k$ the
+three-cycle bound gives
+$\edgew{\alloc}(i,j) + \edgew{\alloc}(j,k) \le -\edgew{\alloc}(k,i)$, so the
+two-path $i \to j \to k$ has weight at most $1$ whenever
+$\edgew{\alloc}(k,i) \ge -1$. As $(i,j,k)$ runs over the six orderings of
+$\agents$, the closing arc $(k,i)$ runs over all six ordered pairs exactly once.
+Hence exactly those two-paths whose closing arc lies below $-1$ require separate
+checking, one per offending arc. In particular, if every arc lies in $[-1,1]$
+then (iii) is automatic and $\alloc$ is good.
+\end{corollary}
+
+Both statements are machine-checked against the true longest-path computation
+over $5.8 \times 10^{5}$ (instance, allocation) pairs --- exhaustively at
+$n = m = 3$ and randomised to $m = 6$ --- by \texttt{n3check.py}.
+
+Corollary~\ref{cor:n3-six} is the sharpest handle available at $n = 3$, and it
+also explains precisely why \Cref{sec:approach5} failed. The clause ``if every
+arc lies in $[-1,1]$'' is the uniform-balance hypothesis; the residual work is
+the two-paths whose closing arc is very negative; and
+Proposition~\ref{prop:arc-bound-blind} says that on the counterexample
+\emph{every} good allocation has such an arc, so the residual work is not a
+corner case but the whole problem.
+
+% --------------------------------------------------------------------------
 \subsection{What survives: the two-tier restatement}
 
 One reformulation does survive, and it is worth recording because it is

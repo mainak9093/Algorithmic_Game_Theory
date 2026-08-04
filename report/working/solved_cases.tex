@@ -9,7 +9,9 @@
 \label{sec:solved}
 
 Conjecture~\ref{conj:main} holds in three restrictions of the model, by explicit
-polynomial-time constructions. Each proof runs the same way: bound
+polynomial-time constructions, and on one further class of instances cut out by
+a certificate rather than by a restriction on the valuations
+(\Cref{sec:balancedclass}). The first three proofs run the same way: bound
 $\edgew{\alloc}(i,j)$ by a difference $\phi_i - \phi_j$ of a per-agent potential,
 so that the bound telescopes to $\phi_{i_1} - \phi_{i_r}$ along a path and to
 $0$ around a cycle. Envy-freeability and the $\set{0,1}$ bound then both follow
@@ -31,12 +33,16 @@ plainly, because two of the three cases are largely or wholly not ours.
     result is elementary and is best read as a warm-up.
   \item \textbf{Two agents} is~\cite[Theorem~4]{BKNS22}. Only the reduction
     carrying it to chores (Remark~\ref{rem:complement}) is ours.
+  \item \textbf{The uniformly balanced class} (\Cref{sec:balancedclass}) is new,
+    and is the only case here not implied by a cited paper. It is a certificate
+    rather than an algorithm, and it is incomplete.
 \end{itemize}
 
 \noindent
 Nothing in this section, in other words, is load-bearing. The substance of the
-paper is in \Cref{sec:approach1,sec:approach2}, which are negative, and in
-\Cref{sec:structure,sec:approach3}, which are structural.
+paper is in \Cref{sec:approach1,sec:approach2,sec:approach4,sec:approach5},
+which are negative, and in \Cref{sec:structure,sec:approach3}, which are
+structural.
 
 % --------------------------------------------------------------------------
 \subsection{Binary additive costs}
@@ -168,3 +174,51 @@ chore division \emph{is} two-agent goods division with the bundles swapped, so
 the content is~\cite[Theorem~4]{BKNS22} and ours is only the reduction. As noted
 there, that reduction consumes the identity $\items \setminus \bundle{j} =
 \bundle{i}$ and so says nothing for $n \ge 3$.
+
+% --------------------------------------------------------------------------
+\subsection{Instances admitting a uniformly balanced family}
+\label{sec:balancedclass}
+
+The fourth case is not a restriction on the valuation class but on the instance,
+and it is the only one of the four that is genuinely new here.
+
+\begin{theorem}
+\label{thm:balanced-class}
+Conjecture~\ref{conj:main} holds for every instance admitting a uniformly
+balanced family, i.e.\ a partition of $\items$ into $n$ bundles that every agent
+values within one unit of each other
+(\Cref{def:unifbal}). Given such a family, an envy-free solution with
+$\optsubsidy \in \set{0,1}^n$ and total subsidy at most $n-1$ is obtained by
+assigning the bundles by a single maximum-weight matching.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{prop:balance-suffices}.
+\end{proof}
+
+Three things should be said about the scope of this, none of which the proof
+makes evident.
+
+\begin{itemize}
+  \item \textbf{It is a certificate, not an algorithm.} Verifying a proposed
+    family and assigning it are polynomial; \emph{finding} one is a search over
+    partitions, and no polynomial procedure for that is known. So
+    Theorem~\ref{thm:balanced-class} decides an instance only once somebody
+    supplies the family.
+  \item \textbf{The class is large but not everything.} It contains every
+    instance at $n = m = 3$ --- all $9{,}880$, checked exhaustively --- and every
+    hard instance the project had accumulated before it was tested. It does
+    \emph{not} contain the discrepancy instance of
+    Proposition~\ref{prop:no-balance}, at $n = 3$ and $m = 4$, nor the
+    certified-hard set-splitting instance.
+  \item \textbf{Membership is not the same as difficulty.} The instances outside
+    the class are not the instances that need large subsidies; on the
+    counterexample of Proposition~\ref{prop:no-balance}, $19$ allocations are
+    good and several need no subsidy at all. Uniform balance is a property of
+    the certificate, not of the instance's hardness.
+\end{itemize}
+
+So this is a solved case in the same sense as the others in this section: real,
+checkable, and not load-bearing. What it contributes is the counterexample and
+Remark~\ref{rem:arc-vs-path}, which say that any complete method must reason
+about paths rather than arcs.

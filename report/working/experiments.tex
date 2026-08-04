@@ -101,6 +101,9 @@ How often a subsidy is needed at all
 Structure of the paid set on the $164$ instances that need one
   & \texttt{hardcases.py} & min $\abs{S} \le 3$, always inside
     $\argmax_i \cost_i(\bundle{i})$ (Remark~\ref{rem:paid-empirics}) \\
+The $n = 3$ characterisation, against the true longest-path computation
+  & \texttt{n3check.py} & $0$ mismatches over $5.8 \times 10^{5}$
+    (instance, allocation) pairs (Proposition~\ref{prop:n3}) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -252,6 +255,8 @@ Script & Purpose \\
                          and~\ref{prop:arc-bound-blind} \\
 \texttt{twotier.py}    & Remarks~\ref{rem:adversarial} and~\ref{rem:exactEF} \\
 \texttt{hardcases.py}  & Remark~\ref{rem:paid-empirics} \\
+\texttt{n3check.py}    & Proposition~\ref{prop:n3} and
+                         Corollary~\ref{cor:n3-six} \\
 \bottomrule
 \end{tabular}
 \end{center}
