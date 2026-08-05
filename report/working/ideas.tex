@@ -234,14 +234,63 @@ Conjecture~\ref{conj:main} itself, since carrying a whole chain of certificates
 upward is exactly what the step needs and what the plain statement cannot
 supply.
 
-\textbf{Status and next step.} The decomposition and the base case are proved;
-the chain conjecture is open and heavily tested. The remaining work is an
-induction on $K$: given a chain witness for depth $K-1$, extend it across the
-top layer $\mathcal{F}_K$. Because $\mathcal{F}_K$ is a single upward-closed
-family, that step is a question about monotone Boolean functions --- shifting,
-compression, Kruskal--Katona --- and not about moving items, so the exchange
-obstruction that blocked \Cref{sec:approach1,sec:approach2,sec:approach4,%
-sec:approach5} does not apply to it.
+\textbf{Progress on the step: the chain collapses to two levels.} Write
+$a_{ij} := \cost_i(\bundle{j})$ for the cost matrix of an allocation. Every
+level-$k$ arc depends on the matrix alone,
+\[
+  \edgew{}^{(k)}(i,j) \;=\; \min(a_{ii},k) - \min(a_{ij},k),
+\]
+and is therefore \emph{sign-constant and saturating}: it has the sign of
+$\edgew{}(i,j)$ throughout, its modulus is non-decreasing in $k$, and it reaches
+$\abs{\edgew{}(i,j)}$ once $k \ge \max(a_{ii},a_{ij})$. One consequence is
+immediate and proved.
+
+\begin{lemma}[Level one is exactly envy-freeability]
+\label{lem:levelone}
+An allocation is good for $(\min(\cost_i,1))_i$ if and only if it is
+envy-freeable for $(\min(\cost_i,1))_i$. No subsidy condition is needed.
+\end{lemma}
+
+\begin{proof}
+$\min(\cost_i,1)$ takes values in $\set{0,1}$, so every bundle costs at most $1$
+to every agent and Theorem~\ref{thm:smallbundle} applies to any envy-freeable
+allocation. The converse holds because goodness includes envy-freeability.
+\end{proof}
+
+Two further statements, tested over $2{,}288{,}509$ (instance, allocation) pairs
+--- exhaustively at $n = m = 3$, exhaustively over structured families at
+$m \le 4$, and randomised to $n = 5$, $m = 6$ --- with \textbf{zero violations},
+but \emph{not} proved:
+\begin{quote}
+\textbf{(I) Interval.} The set of levels at which a given allocation is good is
+always an interval.\\
+\textbf{(II) Endpoints.} If an allocation is good at level $1$ and at level $K$,
+it is good at every level in between.
+\end{quote}
+
+Granting (II), the chain conjecture collapses from $K$ conditions to two, and by
+Lemma~\ref{lem:levelone} one of the two is not a subsidy condition at all:
+\[
+  \textbf{Chain conjecture} \iff
+  \exists\,\alloc \text{ envy-freeable for } (\min(\cost_i,1))_i
+  \text{ and good for } (\cost_i)_i .
+\]
+So the whole approach reduces to finding one allocation that is simultaneously
+envy-freeable in the \emph{Boolean shadow} of the instance --- where every cost
+is $0$ or $1$ --- and good in the instance itself. Note this is strictly
+stronger than Conjecture~\ref{conj:main}: at $n = m = 3$ every top-good
+allocation happens to be good at all levels, but at larger sizes $3{,}858$
+top-good allocations fail level $1$, so the Boolean-shadow condition has real
+content.
+
+\textbf{Status and next step.} Proved: the decomposition, the truncation
+closure, the base case (Theorem~\ref{thm:smallbundle}), and
+Lemma~\ref{lem:levelone}. Open: (I), (II), and the chain conjecture itself. The
+sign-constant saturating form of $\edgew{}^{(k)}$ is the handle for (I) --- what
+blocks a one-line proof is that a path mixes positive arcs, which grow with $k$,
+with negative arcs, which shrink, so path weight is not monotone even though
+every arc is. A proof of (I) probably needs to track the maximising path rather
+than a fixed one.
 
 % --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
