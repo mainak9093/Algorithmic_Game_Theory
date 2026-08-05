@@ -257,40 +257,49 @@ to every agent and Theorem~\ref{thm:smallbundle} applies to any envy-freeable
 allocation. The converse holds because goodness includes envy-freeability.
 \end{proof}
 
-Two further statements, tested over $2{,}288{,}509$ (instance, allocation) pairs
---- exhaustively at $n = m = 3$, exhaustively over structured families at
-$m \le 4$, and randomised to $n = 5$, $m = 6$ --- with \textbf{zero violations},
-but \emph{not} proved:
+\textbf{A two-level reduction was proposed here and is now REFUTED.} It rested
+on two statements about a single allocation's set of good levels:
 \begin{quote}
-\textbf{(I) Interval.} The set of levels at which a given allocation is good is
-always an interval.\\
-\textbf{(II) Endpoints.} If an allocation is good at level $1$ and at level $K$,
-it is good at every level in between.
+\textbf{(I) Interval.} That set is always an interval.\\
+\textbf{(II) Endpoints.} Good at level $1$ and level $K$ implies good at every
+level between.
 \end{quote}
+Both survived $2{,}288{,}509$ (instance, allocation) pairs, and both are
+\textbf{false}.
 
-Granting (II), the chain conjecture collapses from $K$ conditions to two, and by
-Lemma~\ref{lem:levelone} one of the two is not a subsidy condition at all:
+The refutation came from a change of search space that is worth keeping. Since
+the level-$k$ arcs depend only on the matrix $a$, and \emph{every} non-negative
+integer matrix is realisable --- take $\cost_i(S) := \sum_j \min(\abs{S \cap
+\bundle{j}}, a_{ij})$, whose marginals are all $0$ or $1$, with bundles of size
+$\max_i a_{ij}$ --- claims (I) and (II) are equivalent to statements about all
+integer matrices, which can be \emph{enumerated} rather than sampled. Doing so
+finds $972$ counterexamples among the $261{,}632$ matrices with entries at most
+$3$ (\texttt{update\_11/matrix\_interval.py}). The smallest is
 \[
-  \textbf{Chain conjecture} \iff
-  \exists\,\alloc \text{ envy-freeable for } (\min(\cost_i,1))_i
-  \text{ and good for } (\cost_i)_i .
+  a \;=\; \big(\cost_i(\bundle{j})\big) \;=\;
+  \begin{pmatrix} 0&0&0 \\ 2&2&1 \\ 3&3&2 \end{pmatrix},
 \]
-So the whole approach reduces to finding one allocation that is simultaneously
-envy-freeable in the \emph{Boolean shadow} of the instance --- where every cost
-is $0$ or $1$ --- and good in the instance itself. Note this is strictly
-stronger than Conjecture~\ref{conj:main}: at $n = m = 3$ every top-good
-allocation happens to be good at all levels, but at larger sizes $3{,}858$
-top-good allocations fail level $1$, so the Boolean-shadow condition has real
-content.
+realised at $n = 3$, $m = 8$ by $\cost_1 \equiv 0$ and the two formulas above.
+That allocation is good at level $1$, has a \emph{positive cycle} at level $2$,
+and is good again at levels $3$ through $8$ --- so its good-level set
+$\set{1,3,4,\dots,8}$ is not an interval, and (II) fails at its endpoints
+(\texttt{update\_11/verify\_cex.py}). Every earlier sweep missed it only because
+none reached $m = 8$.
 
-\textbf{Status and next step.} Proved: the decomposition, the truncation
-closure, the base case (Theorem~\ref{thm:smallbundle}), and
-Lemma~\ref{lem:levelone}. Open: (I), (II), and the chain conjecture itself. The
-sign-constant saturating form of $\edgew{}^{(k)}$ is the handle for (I) --- what
-blocks a one-line proof is that a path mixes positive arcs, which grow with $k$,
-with negative arcs, which shrink, so path weight is not monotone even though
-every arc is. A proof of (I) probably needs to track the maximising path rather
-than a fixed one.
+\textbf{What survives.} The chain conjecture is untouched: (I) and (II) concern
+one allocation's level set, whereas the chain conjecture asserts the
+\emph{existence} of some allocation good at every level. On the refuting
+instance a chain witness does exist --- give everything to agent~1, who finds
+all of it free. So the collapse to two levels is gone, but the target is not.
+
+\textbf{Status.} Proved: the decomposition, truncation closure, the base case
+(Theorem~\ref{thm:smallbundle}), and Lemma~\ref{lem:levelone}. Refuted: (I),
+(II), and with them the two-level reduction. Open: the chain conjecture, now
+without a shortcut. Also learned, and more useful than any of it: for any
+question about a \emph{fixed} allocation, work with the cost matrix and
+enumerate, since matrix search reaches effective instance sizes that allocation
+enumeration cannot --- the counterexample sat two items beyond every sweep run
+before it.
 
 % --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
