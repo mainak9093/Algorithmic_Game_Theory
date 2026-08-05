@@ -346,6 +346,29 @@ instances with no exactly envy-free allocation --- a strictly smaller target
 than before, and one that now coincides with the known hardness core rather
 than straddling it.
 
+\textbf{The residual class, generated deliberately.} Since EF-free instances are
+about $1.4\%$ of the population they must be constructed rather than sampled.
+Two sources were used: rejection sampling from the endpoint-constant and
+matrix-realising families, and R10's Set-Splitting reduction, which is EF-free
+\emph{by construction} on a hypergraph with no proper $2$-colouring ---
+the triangle $U = \set{v_1,v_2,v_3}$, $F = \set{v_1v_2, v_1v_3, v_2v_3}$, giving
+$n = 5$, $m = 6$ with binary additive costs. Across $785$ EF-free instances so
+obtained, \textbf{every one has a chain witness}
+(\texttt{update\_13/residual.py}). On the Set-Splitting instance itself there
+are $1620$ of them.
+
+Two hypotheses this suggested, and their fates. On Set-Splitting the chain-good
+and top-good sets coincide exactly, both $1620$, which raised the possibility
+that on the residual the chain conjecture collapses to
+Conjecture~\ref{conj:main}. It does not: over $363$ further EF-free instances,
+$78$ have strictly fewer chain-good than top-good allocations. So the chain
+conjecture remains strictly stronger than Conjecture~\ref{conj:main} even after
+Corollary~\ref{cor:chain-residual} removes the easy instances --- there is no
+collapse, and the layer structure retains content exactly where the difficulty
+lives. Separately, the min-cost-balanced/min-envy rule of the earlier entry
+selects a chain witness on $420$ of $422$ residual instances but not all, so it
+is not the construction either.
+
 \textbf{Method note, worth more than any single result here.} For any question
 about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
 than sampling instances: every non-negative integer matrix is realisable, so
