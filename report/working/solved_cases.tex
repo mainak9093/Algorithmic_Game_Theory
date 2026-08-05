@@ -176,6 +176,75 @@ there, that reduction consumes the identity $\items \setminus \bundle{j} =
 \bundle{i}$ and so says nothing for $n \ge 3$.
 
 % --------------------------------------------------------------------------
+\subsection{Small bundles, and fewer chores than agents}
+\label{sec:smallbundle}
+
+Every other case in this section, and every approach in the paper, eventually
+needs an \emph{exchange} step: given a bad allocation, produce a better one by
+moving items. That is exactly what dichotomous costs refuse to supply, since a
+bundle of positive cost need not contain any single item whose removal lowers it
+--- for instance $\cost(S) = \min(\max(0,\abs{S}-1),1)$ on a three-element set
+has $\cost = 1$ while every single removal leaves it at $1$. The following
+theorem needs no exchange at all; it reads the conclusion straight off the
+cycle-closing bound.
+
+\begin{theorem}[Small-bundle theorem]
+\label{thm:smallbundle}
+Let $\alloc$ be envy-freeable and suppose every bundle costs at most one unit to
+every agent: $\cost_v(\bundle{i}) \le 1$ for all $v, i \in \agents$. Then
+$\optsubsidy \in \set{0,1}^n$ and the total subsidy is at most $n-1$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{thm:cyclebound},
+$\pathw{\alloc}(u) \le \max\big(0, \max_{v \ne u}[\cost_v(\bundle{u}) -
+\cost_v(\bundle{v})]\big) \le \max(0, 1 - 0) = 1$, using
+$\cost_v(\bundle{u}) \le 1$ and $\cost_v(\bundle{v}) \ge 0$.
+Observation~\ref{obs:integrality} then gives
+$\optsubsidy \in \set{0,1}^n$, and the endpoint of a heaviest path has
+$\pathw{} = 0$, so the total is at most $n-1$.
+\end{proof}
+
+\begin{corollary}[Fewer chores than agents]
+\label{cor:m-le-n}
+If $m \le n$ then Conjecture~\ref{conj:main} holds, and a witness is computable
+by a single minimum-cost bipartite matching.
+\end{corollary}
+
+\begin{proof}
+Among all allocations giving each agent at most one chore, take one minimising
+$\sum_i \cost_i(\bundle{i})$; such an allocation exists because $m \le n$, and
+it is a minimum-cost matching between agents and chores. Every permutation of
+its own bundles is again an allocation of this form, so the minimisation was
+over a set containing all of them, and condition~(ii) of
+Theorem~\ref{thm:hs-characterisation} holds: $\alloc$ is envy-freeable. Each
+bundle has $\abs{\bundle{i}} \le 1$, so $\cost_v(\bundle{i}) \le
+\abs{\bundle{i}} \le 1$ for every $v$ --- because marginals lie in $\set{0,1}$
+--- and Theorem~\ref{thm:smallbundle} applies. The bound is tight by
+Example~\ref{ex:lowerbound}, which has $m = n-1$.
+\end{proof}
+
+The hypothesis of Theorem~\ref{thm:smallbundle} is genuinely weaker than
+$m \le n$: it also covers instances with many chores in which every agent finds
+all but a few of them free, so that no bundle is expensive to anybody. Both
+statements were checked semantically against the true longest-path computation
+--- exhaustively for $m \le 3$, $n \le 3$, on $3{,}000$ random instances for the
+theorem, and on $111{,}232$ instances for the corollary --- with no violations
+(\texttt{structural.py}).
+
+\begin{remark}[Why this is worth stating despite being easy]
+\label{rem:smallbundle-scope}
+The proof is three lines and the class is small, so the content is not the
+theorem but the \emph{mechanism}: it is the only argument in this paper that
+reaches $\pathw{} \le 1$ without an exchange step, a balance hypothesis, a
+schedule, or a search. It does so by making the cycle-closing bound tight from
+the far side --- bounding $\cost_v(\bundle{u})$ from above rather than
+$\cost_v(\bundle{v})$ from below. Whether that trick has a wider reach is open;
+the obvious next question is what happens when bundles cost at most $2$, where
+the same computation gives only $\pathw{} \le 2$ and the argument stops.
+\end{remark}
+
+% --------------------------------------------------------------------------
 \subsection{Instances admitting a uniformly balanced family}
 \label{sec:balancedclass}
 

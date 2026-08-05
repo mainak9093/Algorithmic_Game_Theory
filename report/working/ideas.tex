@@ -135,6 +135,37 @@ makes the matroid-rank subclass (\Cref{sec:mrf}) the natural next target: there
 it \emph{is} available.
 
 % --------------------------------------------------------------------------
+\subsection*{2026-08-06 --- at most two distinct cost functions}
+
+\textbf{The idea.} Suppose the $n$ agents carry only \emph{two} distinct cost
+functions $\cost$ and $\cost'$, in groups of sizes $k$ and $n-k$. This strictly
+generalises the identical-cost case of Theorem~\ref{thm:identical} and is not
+covered by anything cited here: the literature settles identical, additive and
+submodular costs, but ``two types of agents'' is a different slice --- one that
+does appear in the house-allocation work of~\cite{DCWXZ24} as a tractable
+restriction, which is mild evidence it is the right kind of hypothesis.
+
+\textbf{Why it might work.} The two-tier conditions collapse dramatically. For
+two agents of the same type in the same tier, (a) forces
+$\cost(\bundle{i}) = \cost(\bundle{j})$ exactly; for two of the same type in
+different tiers, (b) and (c) force
+$\cost(\bundle{i}) = \cost(\bundle{j}) + 1$ exactly. So within each type group
+the bundle costs take at most two values, differing by exactly one, and the
+tier split inside that group is determined by which value a bundle takes. What
+remains is a finite system of cross-group inequalities in two functions rather
+than $n$, which is the kind of thing a direct construction can attack.
+
+\textbf{Status.} Untried as a proof. Zero failures over $7{,}805$ two-type
+instances at $m \in \set{3,4}$, $n \in \set{3,4}$, both for existence and for
+the rule of the previous entry (\texttt{update\_9/structural.py}). Worth one
+session: it is the first class in a while where the conditions genuinely
+simplify rather than merely being restricted.
+
+\textbf{What would kill it.} A two-type instance with no good allocation. Note
+this would also refute Conjecture~\ref{conj:main} outright, so the search is
+worth running for its own sake.
+
+% --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
 % it in.  Keep the three-part shape: what the idea is, why it might work, what
 % would kill it.  Newest entry goes at the bottom.
