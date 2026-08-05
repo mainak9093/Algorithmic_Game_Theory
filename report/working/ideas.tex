@@ -97,6 +97,44 @@ then Route X. Conjecture~\ref{conj:h1pp} --- the type-ordered peel --- stays
 live alongside them and has the best evidence of anything currently open.
 
 % --------------------------------------------------------------------------
+\subsection*{2026-08-06 --- a cleaner rule than construct-and-repair}
+
+\textbf{The idea.} \emph{Among cardinality-balanced allocations of minimum total
+cost, take one minimising the number of envious ordered pairs
+$\#\set{(i,j) : \cost_i(\bundle{i}) > \cost_i(\bundle{j})}$.} A single two-level
+optimisation: no local search, no restarts, no schedule, no warm start.
+
+\textbf{Why it might work.} It sidesteps Corollary~\ref{cor:no-refinement}
+because the counterexample there has a \emph{unique} optimum of sizes
+$(0,3,1)$, which is not balanced --- restricting the optimisation to balanced
+allocations removes it from the feasible set entirely. A cost-minimising
+balanced allocation is automatically envy-freeable, since any reassignment of
+its own bundles is another balanced allocation and so cannot be cheaper, which
+means only $\pathw{} \le 1$ remains to be shown. The second criterion is the one
+aligned with Proposition~\ref{prop:twotier}: in a $\set{0,1}$ solution envy runs
+only from the paid tier to the unpaid one, so minimising envy count pushes
+towards exactly the two-tier shape.
+
+\textbf{Status.} Zero failures in the \emph{strong} form --- every allocation
+the rule can select is good --- over $41{,}196$ instances: exhaustive over all
+dichotomous triples at $n = m = 3$, exhaustive over structured families at
+$m \le 4$, and endpoint-constant sweeps to $n = 5$, $m = 6$
+(\texttt{update\_8/ruleD\_adv.py}). Without the tie-break the cost-minimising
+balanced set always \emph{contains} a good allocation but is not uniformly good;
+the three other natural tie-breaks --- leximin own-cost, minimum total perceived
+load, leximin perceived load --- each fail at $n = 3$, $m = 4$
+(\texttt{tiebreak\_balanced.py}).
+
+\textbf{What would kill it.} A balanced instance where every minimum-cost,
+minimum-envy allocation needs subsidy $2$. \textbf{Not proved}, at any $n$: an
+attempt at $n = 3$ stalled on the exchange step, because dichotomous costs need
+not be submodular and a bundle of positive cost need not contain any single item
+whose removal lowers it --- so ``$\cost_u(\bundle{u})$ is large, therefore some
+swap improves'' is unavailable. That is the same missing exchange property that
+makes the matroid-rank subclass (\Cref{sec:mrf}) the natural next target: there
+it \emph{is} available.
+
+% --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
 % it in.  Keep the three-part shape: what the idea is, why it might work, what
 % would kill it.  Newest entry goes at the bottom.
