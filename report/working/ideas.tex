@@ -198,18 +198,50 @@ allocation --- $100\%$, with no instance where one is solvable and the other is
 not (\texttt{update\_10/layers.py}). That is precisely the compatibility an
 induction on depth needs.
 
-\textbf{What is missing.} Sharing a witness is necessary but not sufficient: the
-induction must \emph{name} which good allocation of the truncation to carry
-forward, and the plain statement ``every good allocation of the truncation is
-good for the full instance'' is expected to be false. So the induction has to
-carry a strengthened hypothesis --- some canonical choice, or an invariant
-about \emph{how} the allocation sits inside the top layer $\mathcal{F}_K$. That
-is the open step, and unlike the exchange step that blocked every previous
-attempt, it is a question about upward-closed set families rather than about
-moving items, so a different toolbox applies.
+\textbf{The kill condition, hunted and not found.} A depth-$\ge 2$ instance
+whose good allocations are disjoint from its truncation's would end the
+approach. Across $39{,}692$ depth-$\ge 2$ instances --- exhaustive over all
+dichotomous triples at $n = m = 3$, exhaustive over structured families at
+$m \le 4$, and endpoint-constant and deliberately high-depth sweeps to $n = 5$
+--- there is \textbf{no such instance}, in either peeling direction
+(\texttt{update\_10/layer\_hunt.py}). This is the generator that refuted
+Proposition~\ref{prop:no-balance} on its first run.
 
-\textbf{What would kill it.} A depth-$\ge 2$ instance whose good allocations are
-disjoint from its truncation's. Worth hunting adversarially before investing.
+The same sweep says which direction to peel. Measuring the fraction of the
+truncation's good allocations that survive into the full instance, top-peeling
+$\cost \mapsto \min(\cost, K-1)$ carries far more than bottom-peeling
+$\cost \mapsto \max(\cost - 1, 0)$ --- worst case $0.21$ against $0.05$ --- and
+on high-depth instances top-peeling carries \emph{all} of them, at
+$n \in \set{3,4,5}$.
+
+\textbf{The strengthened hypothesis, and why it is the right one.} Sharing a
+witness is necessary but not sufficient: an induction must \emph{name} which
+good allocation to carry forward. The fix is induction loading --- prove
+something stronger, so that the inductive hypothesis is strong enough to
+reproduce itself.
+
+\begin{quote}
+\textbf{Chain conjecture.} For every dichotomous instance of depth $K$ there is
+a \emph{single} allocation that is good for $(\min(\cost_i, k))_{i}$
+\emph{simultaneously} for every $k = 1, \dots, K$.
+\end{quote}
+
+Its top level $k = K$ is Conjecture~\ref{conj:main}; its bottom level $k = 1$ is
+Theorem~\ref{thm:smallbundle}, already proved. It has \textbf{zero failures over
+$30{,}405$ depth-$\ge 2$ instances} across the same exhaustive and adversarial
+sweeps. Being stronger it is a far better induction hypothesis than
+Conjecture~\ref{conj:main} itself, since carrying a whole chain of certificates
+upward is exactly what the step needs and what the plain statement cannot
+supply.
+
+\textbf{Status and next step.} The decomposition and the base case are proved;
+the chain conjecture is open and heavily tested. The remaining work is an
+induction on $K$: given a chain witness for depth $K-1$, extend it across the
+top layer $\mathcal{F}_K$. Because $\mathcal{F}_K$ is a single upward-closed
+family, that step is a question about monotone Boolean functions --- shifting,
+compression, Kruskal--Katona --- and not about moving items, so the exchange
+obstruction that blocked \Cref{sec:approach1,sec:approach2,sec:approach4,%
+sec:approach5} does not apply to it.
 
 % --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
