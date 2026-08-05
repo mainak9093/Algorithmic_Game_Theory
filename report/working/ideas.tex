@@ -166,6 +166,52 @@ this would also refute Conjecture~\ref{conj:main} outright, so the search is
 worth running for its own sake.
 
 % --------------------------------------------------------------------------
+\subsection*{2026-08-06 --- induct on the depth of the cost functions}
+
+\textbf{The idea.} Stop inducting on items, on agents, or on schedules, and
+induct on the \emph{cost functions themselves}. Every dichotomous $\cost$
+decomposes into nested monotone Boolean layers: putting $\mathcal{F}_t :=
+\set{S : \cost(S) \ge t}$, each $\mathcal{F}_t$ is upward-closed,
+$\mathcal{F}_1 \supseteq \dots \supseteq \mathcal{F}_K$ with $K = \cost(\items)$,
+and
+\[
+  \cost(S) \;=\; \#\set{t : S \in \mathcal{F}_t}
+  \;=\; \sum_{t=1}^{K} \mathbb{1}\big[S \in \mathcal{F}_t\big].
+\]
+Crucially the class is closed under truncation: $\min(\cost, k)$ is dichotomous
+for every $k$, so layers can be peeled one at a time without leaving the model.
+Define the \emph{depth} of an instance to be $K = \max_i \cost_i(\items)$.
+
+\textbf{Why it might work.} The base case is already proved. A depth-one
+instance has every $\cost_i$ taking values in $\set{0,1}$, so every bundle costs
+at most $1$ to everybody --- which is exactly the hypothesis of
+Theorem~\ref{thm:smallbundle}. So \emph{Conjecture~\ref{conj:main} holds
+unconditionally at depth $1$, for every $n$ and every $m$}. No other induction
+in this project has a proved base case, and none of the failed approaches
+touches the representation of the cost functions at all: they all manipulate
+allocations while treating $\cost_i$ as a black-box oracle.
+
+\textbf{Evidence for the inductive step.} Over all $1{,}330$ depth-$\ge 2$
+instances at $n = m = 3$, the full instance and its truncation
+$(\min(\cost_i, K-1))_i$ \emph{always} share at least one common good
+allocation --- $100\%$, with no instance where one is solvable and the other is
+not (\texttt{update\_10/layers.py}). That is precisely the compatibility an
+induction on depth needs.
+
+\textbf{What is missing.} Sharing a witness is necessary but not sufficient: the
+induction must \emph{name} which good allocation of the truncation to carry
+forward, and the plain statement ``every good allocation of the truncation is
+good for the full instance'' is expected to be false. So the induction has to
+carry a strengthened hypothesis --- some canonical choice, or an invariant
+about \emph{how} the allocation sits inside the top layer $\mathcal{F}_K$. That
+is the open step, and unlike the exchange step that blocked every previous
+attempt, it is a question about upward-closed set families rather than about
+moving items, so a different toolbox applies.
+
+\textbf{What would kill it.} A depth-$\ge 2$ instance whose good allocations are
+disjoint from its truncation's. Worth hunting adversarially before investing.
+
+% --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
 % it in.  Keep the three-part shape: what the idea is, why it might work, what
 % would kill it.  Newest entry goes at the bottom.
