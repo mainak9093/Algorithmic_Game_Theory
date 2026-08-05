@@ -108,6 +108,23 @@ cannot act on a quantity the allocation determines. Coverage must be enforced by
 the procedure that builds the allocation, not by the objective it is scored
 against.
 
+\paragraph{A working algorithm} (\Cref{sec:approach6}).
+The size-shift transform of Theorem~\ref{thm:sizeshift} is an involution
+(Lemma~\ref{lem:sizeshift-bijection}), so the chore problem restates as a pure
+\emph{goods} question, Target G, with no chores or scheduling in it
+(Proposition~\ref{prop:targetG-implies}). Running~\cite{BKNS22}'s own algorithm
+on that goods instance fails for a structural reason --- item-by-item insertion
+can lock two items into the same bundle permanently, verified by an exhaustive
+backtracking search that finds a $0$-spread allocation \emph{unreachable} by any
+legal execution of the algorithm (\Cref{sec:insertion-fails-goods}). Abandoning
+insertion for a construct-and-repair procedure --- one pass of iterated
+maximum-weight perfect matching, repaired by cardinality-preserving single-item
+swaps, restarted on failure --- has \textbf{zero failures across $389{,}215$
+test instances}, including every hard instance that defeated
+Approaches~1 through~5. This is the strongest evidence produced in the
+project for a genuine construction, though it remains evidence and not a proof;
+\Cref{sec:construct-repair-remains} states the precise gap.
+
 \paragraph{Evidence} (\Cref{sec:experiments}).
 Conjecture~\ref{conj:main} survives exhaustive verification for $n = m = 3$ over
 all $9{,}880$ instances up to agent symmetry, and randomised search over some

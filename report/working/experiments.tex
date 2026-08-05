@@ -108,6 +108,44 @@ The $n = 3$ characterisation, against the true longest-path computation
 \end{tabular}
 \end{center}
 
+\noindent
+and, for the construct-and-repair algorithm of \Cref{sec:approach6},
+
+\begin{center}
+\begin{tabular}{@{}p{0.40\textwidth}p{0.19\textwidth}p{0.32\textwidth}@{}}
+\toprule
+Experiment & Script & Result \\
+\midrule
+Item-by-item insertion on the transformed goods instance, greedily steered
+  & \texttt{guidedR3.py}, \texttt{guidedR3\_test.py} & $1{,}635/9{,}880$
+    (fixed order), $440/9{,}880$ (best of $6$) \\
+Full backtracking over every legal insertion execution on the smallest
+failure
+  & \texttt{guidedR3\_full.py} & spread $2$ is the best reachable; spread $0$
+    is unreachable \\
+Independent, algorithm-free confirmation that spread $0$ is achievable there
+  & \texttt{verify\_reach\_gap.py} & confirmed --- a genuine reachability
+    obstruction \\
+IMWPM warm start alone, no repair
+  & \texttt{imwpm\_raw.py} & exhaustive $n=m=3$ and all hard instances pass;
+    ${\approx}\,18\%$ of larger random instances fail \\
+Swap-based repair from a round-robin start alone
+  & \texttt{targetGbal\_local.py} & $9{,}880/9{,}880$ exhaustive;
+    $357{,}746/357{,}760$ structured triples at $m=5$ \\
+The $14$ residual local optima, classified
+  & \texttt{classify\_failures.py} & all $14$ are local-search artefacts ---
+    exhaustive balanced search finds spread $0$ on every one \\
+The same $14$, retried with shuffled restarts
+  & \texttt{restart\_check.py} & $14/14$ recovered, at most $4$ restarts each \\
+\textbf{The combined algorithm}: IMWPM warm start, swap repair, restart on
+failure
+  & \texttt{final\_algorithm.py} & \textbf{$0$ failures across $389{,}215$
+    instances} --- exhaustive $n=m=3$, exhaustive structured triples to $m=5$,
+    every named hard instance, and randomised sweeps to $n=8,m=10$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
 The exhaustive row is the only unconditional evidence for
 Conjecture~\ref{conj:main}. The dichotomous functions on $m$ items number
 $2, 6, 38, 990$ for $m = 1,2,3,4$. Agents are interchangeable, so an instance is
@@ -225,7 +263,7 @@ with a balance tie-break --- noting that (c) alone already fails on the witness.
 \label{sec:repro}
 
 \begin{center}
-\begin{tabular}{@{}ll@{}}
+\begin{tabular}{@{}p{0.28\textwidth}p{0.63\textwidth}@{}}
 \toprule
 Script & Purpose \\
 \midrule
@@ -257,6 +295,24 @@ Script & Purpose \\
 \texttt{hardcases.py}  & Remark~\ref{rem:paid-empirics} \\
 \texttt{n3check.py}    & Proposition~\ref{prop:n3} and
                          Corollary~\ref{cor:n3-six} \\
+\texttt{monotone\_check.py} & Remark~\ref{rem:whichclause}: monotonicity alone
+                         does not suffice \\
+\texttt{targetG.py}    & Conjecture~\ref{conj:targetG}, exhaustive $n=m=3$ \\
+\texttt{targetG\_adv.py} & Target G against the Approach~5 adversary \\
+\texttt{guidedR3.py}, \texttt{guidedR3\_test.py} & guided-insertion greedy;
+                         \Cref{sec:insertion-fails-goods} \\
+\texttt{guidedR3\_full.py} & the insertion reachability obstruction \\
+\texttt{verify\_reach\_gap.py} & algorithm-free confirmation of that gap \\
+\texttt{targetGbal.py} & Definition~\ref{def:targetGbal}, exhaustive over
+                         balanced partitions \\
+\texttt{targetGbal\_local.py} & the swap-based repair, round-robin start \\
+\texttt{imwpm\_raw.py} & the IMWPM warm start alone \\
+\texttt{targetGbal\_stress.py} & the stress sweep that found the $14$ local
+                         optima \\
+\texttt{classify\_failures.py} & classifies the $14$ as search artefacts \\
+\texttt{restart\_check.py} & confirms all $14$ recovered by restarts \\
+\texttt{final\_algorithm.py} & the combined algorithm; the
+                         $389{,}215$-instance sweep \\
 \bottomrule
 \end{tabular}
 \end{center}

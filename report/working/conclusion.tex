@@ -7,17 +7,39 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-We have not settled Conjecture~\ref{conj:main}. Three strategies that a reader
-would reasonably try are ruled out: item-by-item insertion, which is the strategy
-that works in~\cite{BKNS22} (Theorem~\ref{thm:obstruction}); restriction to
-utilitarian-optimal allocations, together with \emph{every} refinement of that
-set (Proposition~\ref{prop:msw-false}, Corollary~\ref{cor:no-refinement}); and
+We have not settled Conjecture~\ref{conj:main} with a proof, but
+\Cref{sec:approach6} now carries a construct-and-repair algorithm with
+\textbf{zero observed failures across $389{,}215$ test instances}, including
+every hard instance in this project. That is the headline result: strong
+constructive evidence for the conjecture, from an algorithm precise enough that
+the remaining gap to a proof is a single, sharply stated combinatorial claim
+(Conjecture~\ref{conj:algorithm-succeeds}).
+
+Getting there required ruling out three strategies a reader would reasonably try
+first: item-by-item insertion, the strategy that works in~\cite{BKNS22}
+(Theorem~\ref{thm:obstruction}, and again in the pure goods coordinates of
+\Cref{sec:insertion-fails-goods}); restriction to utilitarian-optimal
+allocations, together with \emph{every} refinement of that set
+(Proposition~\ref{prop:msw-false}, Corollary~\ref{cor:no-refinement}); and
 encoding the coverage constraint into the numbers, at either the valuation or
 the algorithm level (\Cref{sec:approach4}). Alongside those sit a small set of
 positive results --- binary additive costs (Theorem~\ref{thm:binadd}, now
 subsumed by~\cite{LMS26}), identical costs (Theorem~\ref{thm:identical}), two
 agents --- and structural tools that say precisely how the chore problem differs
 from its goods mirror.
+
+\paragraph{The lesson that ties the whole investigation together.}
+Every insertion-based strategy failed for the same reason, in three different
+coordinate systems: chores directly (\Cref{sec:approach1}), the replica/peel
+frame (\Cref{sec:approach3}), and even the pure goods frame
+(\Cref{sec:insertion-fails-goods}). Building an allocation one item at a time
+fixes decisions before their consequences are visible, and by the time a bad
+grouping shows itself, insertion has no way to undo it --- only permutation
+between agents, never a genuine re-split of a bundle's contents, is available.
+The algorithm that finally worked abandoned that template entirely:
+\emph{construct} a whole candidate partition directly, then \emph{repair} it by
+moves that can freely undo an earlier bad grouping. That is the one idea from
+this project worth carrying into any future attempt on a similar problem.
 
 The three negative results are more useful together than separately, because
 they fail in the same way. Insertion fixes an owner before the consequences are
@@ -50,6 +72,17 @@ signal of Remark~\ref{rem:balance} is the current best guess at its shape.
 
 \paragraph{Directions.}
 \begin{enumerate}
+  \item \textbf{Prove Conjecture~\ref{conj:algorithm-succeeds}}
+    (\Cref{sec:construct-repair-remains}). This is now the top-ranked direction
+    by a wide margin: it is the only open statement in the project backed by a
+    zero-failure sweep of $389{,}215$ instances, and it is purely combinatorial
+    --- cardinality-balanced partitions and single-item swaps, no chores, no
+    replica, no schedule. The $14$ known local optima are the concrete obstacle
+    a proof must explain: they show bad local optima exist in the swap
+    neighbourhood, but every one found so far was escaped by restarting from a
+    different starting partition. A proof needs either a potential that a
+    restart-reachable partition always decreases, or a precise characterisation
+    of the bad optima sharp enough to name a starting rule that avoids them.
   \item \textbf{The type-ordered peel search} (\Cref{sec:typeorder},
     \Cref{sec:peelsearch}). Conjecture~\ref{conj:h1pp} has the best evidence of
     anything currently open and a much smaller state space than

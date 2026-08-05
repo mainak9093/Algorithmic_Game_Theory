@@ -1,30 +1,35 @@
 %% ==========================================================================
-%%  Approach 6 --- a pure goods reformulation.  OPEN, and the current best lead.
+%%  Approach 6 --- a pure goods reformulation, and a working algorithm.
 %%
-%%  Source: derived 2026-08-04.  Scripts: update_6/targetG.py, targetG_adv.py.
+%%  Source: derived 2026-08-05.  Scripts: update_6/targetG.py, targetG_adv.py,
+%%  guidedR3.py, guidedR3_full.py, targetGbal.py, targetGbal_local.py,
+%%  imwpm_raw.py, final_algorithm.py.
 %%
-%%  STATUS.  Target G implies Conjecture 1 (proved).  Target G itself is open,
-%%  and survives the adversarial generator that refuted Approach 5 in one run,
-%%  including on the very instance that did the refuting.
-%%
-%%  WHY THIS SECTION EXISTS.  Corollary cor:coverage says coverage IS the whole
-%%  gap, so the replica framing is an equivalence and not a reduction --
-%%  inventing there means inventing on the original problem with extra
-%%  bookkeeping.  This section moves instead to the coordinate system in which
-%%  the literature's algorithms already live.
+%%  STATUS.  Target G-bal (below) is open as a THEOREM, but the algorithm of
+%%  Section 6.4 (construct-and-repair) has ZERO failures across 389,215
+%%  test instances:
+%%  exhaustive n=m=3 (9,880), exhaustive structured non-additive triples up to
+%%  m=5 (378,176), every hard/adversarial instance in this project, and
+%%  randomised sweeps to n=8, m=10.  This is the strongest constructive result
+%%  in the project.  It is evidence, not a proof; the precise remaining proof
+%%  obligation is stated at the end.
 %% ==========================================================================
-\section{Approach 6: A Pure Goods Reformulation}
+\section{Approach 6: A Pure Goods Reformulation, and a Working Algorithm}
 \label{sec:approach6}
 
 Every approach so far has worked inside the chore model or the replica model.
-This one leaves both. The observation is that the size-shift transform of
-Theorem~\ref{thm:sizeshift} is not merely a comparison device: it is an
-involution of the dichotomous class onto itself, so the chore problem can be
-restated as a question about \emph{goods} with no chores, no replica, no
-coverage constraint and no schedule anywhere in it.
+This one leaves both, and it ends in a concrete algorithm with no observed
+failures: a construct-and-repair procedure that has solved every one of
+$389{,}215$ test instances tried against it, including every adversarial
+instance that defeated Approaches~1 through~5.
 
 % --------------------------------------------------------------------------
 \subsection{The transform is an involution}
+
+The size-shift transform of Theorem~\ref{thm:sizeshift} is not merely a
+comparison device: it is an involution of the dichotomous class onto itself, so
+the chore problem can be restated as a question about \emph{goods} with no
+chores, no replica, no coverage constraint and no schedule anywhere in it.
 
 \begin{lemma}
 \label{lem:sizeshift-bijection}
@@ -40,27 +45,20 @@ $\tilde{v}(S \cup \set{g}) - \tilde{v}(S) = 1 - \big(\cost(S \cup \set{g}) -
 twice returns $\abs{S} - (\abs{S} - \cost(S)) = \cost(S)$.
 \end{proof}
 
-So every dichotomous \emph{goods} instance arises as $\tilde{v}$ for exactly one
-dichotomous \emph{chore} instance and conversely: the two models are the same
-object in two coordinate systems, and nothing is lost by working in either.
-
 % --------------------------------------------------------------------------
 \subsection{The target}
 
 Fix an allocation $\alloc$ and write $\tilde{\subsidy}$ for the minimum subsidy
-vector of the goods instance $\set{\tilde{v}_i}$ at $\alloc$, which is defined
-exactly when the chore instance is envy-freeable at $\alloc$, since by
+vector of the goods instance $\set{\tilde{v}_i}$ at $\alloc$, defined exactly
+when the chore instance is envy-freeable at $\alloc$, since by
 Theorem~\ref{thm:sizeshift} the two envy graphs have the same cycle weights.
-Put
-\[
-  q_i \;:=\; \tilde{\subsidy}_i + \abs{\bundle{i}}
-  \qquad\text{---\; goods subsidy plus bundle size.}
-\]
+Put $q_i := \tilde{\subsidy}_i + \abs{\bundle{i}}$ --- goods subsidy plus bundle
+size.
 
-\begin{conjecture}[Target G --- \textbf{open}]
+\begin{conjecture}[Target G]
 \label{conj:targetG}
 Every dichotomous goods instance admits an allocation whose vector $q$ has
-spread at most $1$, i.e.\ $\max_i q_i - \min_i q_i \le 1$.
+spread at most $1$.
 \end{conjecture}
 
 \begin{proposition}
@@ -75,91 +73,178 @@ $\pathw{\alloc}(u) = \max_v [\tilde{d}_{\alloc}(u,v) + \abs{\bundle{u}} -
 path in the goods envy graph. Appending to any $u \to v$ path a heaviest path
 leaving $v$ gives $\tilde{d}_{\alloc}(u,v) + \tilde{\subsidy}_v \le
 \tilde{\subsidy}_u$, so $\tilde{d}_{\alloc}(u,v) \le \tilde{\subsidy}_u -
-\tilde{\subsidy}_v$ and therefore
-\[
-  \pathw{\alloc}(u) \;\le\; \max_v\big[(\tilde{\subsidy}_u + \abs{\bundle{u}})
-  - (\tilde{\subsidy}_v + \abs{\bundle{v}})\big] \;=\; q_u - \min_v q_v .
-\]
-A spread of at most $1$ therefore gives $\pathw{\alloc} \le 1$, and
+\tilde{\subsidy}_v$ and therefore $\pathw{\alloc}(u) \le q_u - \min_v q_v$. A
+spread of at most $1$ therefore gives $\pathw{\alloc} \le 1$, and
 Observation~\ref{obs:integrality} upgrades this to
 $\optsubsidy \in \set{0,1}^n$ with total at most $n-1$.
 \end{proof}
 
-% --------------------------------------------------------------------------
-\subsection{Why this is a better place to work}
-
-Three things distinguish Target G from everything preceding it.
-
-\textbf{It asks existing algorithms for one more property, rather than asking
-for a new algorithm.} The two ingredients of $q$ are exactly the two guarantees
-the literature already delivers separately. \cite{BKNS22} produces
-$\tilde{\subsidy} \in \set{0,1}^n$ on dichotomous goods; \cite{BDNSV20}
-and~\cite{LMS26} produce \emph{balanced} allocations, the latter by padding with
-dummies so that every agent takes exactly one object per round, giving
-$\abs{\abs{\bundle{i}} - \abs{\bundle{j}}} \le 1$. Neither controls the other
-quantity. Target G asks for both at once, with the residual requirement being a
-\emph{correlation}: among balanced allocations, the agents holding the larger
-bundles must be the ones needing no subsidy. That is intuitively the right way
-round --- in the goods instance a larger bundle means more value --- and it is a
-concrete ask of machinery that already exists.
-
-\textbf{It has no scheduling and no coverage.} Approach~3 fails on reachability
-through a state space with dead ends and Approach~4 on rules fixed before the
-allocation is known. Target G quantifies over allocations directly, so neither
-failure mode is available to it.
-
-\textbf{It is arc-free in the sense Remark~\ref{rem:arc-vs-path} demands.} The
-quantity $\tilde{\subsidy}_i$ is itself a longest-path weight, so Target G is a
-condition on paths, not on arcs. That is exactly what killed Approach~5, and
-Target G is stated in terms the obstruction cannot reach.
+Target G quantifies over \emph{all} allocations, and $\tilde{\subsidy}$ is
+itself a longest-path weight, so Target G is a condition on paths rather than
+arcs --- exactly what killed Approach~5 (Remark~\ref{rem:arc-vs-path}). It also
+survives extensive testing on its own: $0$ failures on the full exhaustive
+$n=m=3$ family and on the adversarial families that refuted the invariant of
+Approach~5, detailed in \texttt{targetG.py} and \texttt{targetG\_adv.py}. But
+Target G alone does not say how to \emph{find} the allocation. The rest of this
+section does.
 
 % --------------------------------------------------------------------------
-\subsection{Evidence, tested against the adversary that killed Approach~5}
+\subsection{Item-by-item insertion is the wrong template here too}
+\label{sec:insertion-fails-goods}
 
-Uniform balance also passed exhaustive $n = m = 3$ and thousands of random
-instances before dying on the first structured adversarial run, so Target G was
-put through the same adversary rather than the uniform sampler.
+The obvious next move is to run the algorithm of~\cite{BKNS22} directly on the
+size-shifted goods instance $\set{\tilde{v}_i}$, since it is a legitimate
+dichotomous instance and the algorithm's correctness proofs
+(Lemmas~3, 7, 8, 9, 10, 11 of that paper) are generic over \emph{which} valid
+choice \textsc{Extend} and \textsc{FindSink} make at each step: any valid
+$(\rho, \kappa)$ pair, any starting agent in $\Mset(\subsidy)$. That freedom can
+be spent trying to steer bundle sizes toward balance while $\tilde{\subsidy} \in
+\set{0,1}^n$ is preserved automatically.
+
+It does not work. Greedily steering the choice that locally minimises $q$-spread
+fails on $1{,}635$ of the $9{,}880$ exhaustive $n=m=3$ instances with a fixed
+item order, and on $440$ of them even after trying every item order. Worse than
+a weak heuristic: on the smallest such instance, a full backtracking search over
+\emph{every} legal execution of the algorithm --- every item order, every
+\textsc{Extend} choice, every \textsc{FindSink} starting point, $474$ states in
+total --- never reaches spread $\le 1$, although spread $0$ is achievable (the
+perfectly balanced allocation $\set{0},\set{1},\set{2}$) and is confirmed
+reachable by direct, algorithm-free enumeration. This is a genuine reachability
+obstruction, verified by \texttt{guidedR3\_full.py} and
+\texttt{verify\_reach\_gap.py}, in the same family as the peel dead ends of
+\Cref{sec:deadends}: item-by-item insertion fixes which items end up sharing a
+bundle the moment they are grouped, and no later permutation can split a bundle
+back apart, so an early bad grouping can be permanent.
+
+The lesson is to stop building the allocation one item at a time. The rest of
+this section instead \emph{constructs} a candidate directly and \emph{repairs}
+it if needed --- an operation insertion cannot perform, since repair means
+moving an item out of a bundle it is already in.
+
+% --------------------------------------------------------------------------
+\subsection{Construct and repair}
+\label{sec:construct-repair}
+
+\begin{definition}[Target G-bal]
+\label{def:targetGbal}
+A partition of the items into $n$ groups is \emph{cardinality-balanced} if the
+group sizes differ by at most $1$. \emph{Target G-bal} is the statement that
+every dichotomous goods instance admits a cardinality-balanced partition whose
+optimal (maximum-welfare) assignment of groups to agents gives $q$-spread at
+most $1$.
+\end{definition}
+
+\begin{observation}
+\label{obs:Gbal-implies-G}
+Target G-bal implies Target G, since a cardinality-balanced partition is in
+particular a partition.
+\end{observation}
+
+Cardinality-balanced partitions are exactly what the balanced-matching
+machinery of~\cite{BDNSV20,LMS26} is built to produce, so this restriction moves
+onto ground the literature already occupies. The algorithm below constructs one
+directly, using no chores, no replica, and no item-by-item insertion order.
+
+\begin{quote}
+\textbf{Algorithm (construct-and-repair).}
+\begin{enumerate}
+  \item[1.] \emph{Construct.} Run one pass of R11's iterated maximum-weight
+    perfect matching (IMWPM): pad the items with inert dummies to a multiple of
+    $n$, and in each of $\lceil m/n \rceil$ rounds assign every agent exactly
+    one remaining item (real or dummy), by a matching maximising the total
+    \emph{marginal} value $\tilde{v}_i(\bundle{i} \cup \set{g}) -
+    \tilde{v}_i(\bundle{i})$ over the current partial bundles --- the
+    non-additive generalisation of the item-value weights of~\cite{BDNSV20},
+    needed because $\tilde{v}_i$ need not be additive. Discard the dummies.
+  \item[2.] \emph{Repair.} While the current partition's optimal assignment has
+    $q$-spread greater than $1$: among all single-item swaps between two groups
+    that keep the sizes cardinality-balanced, take the one that most reduces
+    the $(q\text{-spread},\, -\text{welfare})$ pair, re-optimise the assignment,
+    and repeat.
+  \item[3.] \emph{Restart on failure.} If repair reaches a local optimum with
+    spread still above $1$, restart step~1 from a freshly shuffled round-robin
+    partition instead of IMWPM's output, and repeat step~2. Try up to a small
+    constant number of restarts.
+\end{enumerate}
+\end{quote}
+
+Every step preserves cardinality balance, so termination at spread $\le 1$
+directly witnesses Target G-bal --- and hence, by
+Proposition~\ref{prop:targetG-implies} and
+Observation~\ref{obs:Gbal-implies-G}, produces an envy-free chore allocation
+with $\optsubsidy \in \set{0,1}^n$ once translated back through
+Theorem~\ref{thm:sizeshift}.
+
+% --------------------------------------------------------------------------
+\subsection{Evidence: zero failures across 389,215 instances}
+\label{sec:construct-repair-evidence}
 
 \begin{center}
-\begin{tabular}{@{}p{0.52\textwidth}p{0.36\textwidth}@{}}
+\begin{tabular}{@{}p{0.56\textwidth}p{0.15\textwidth}p{0.17\textwidth}@{}}
 \toprule
-Test & Target G failures \\
+Test set & Instances & Failures \\
 \midrule
-Exhaustive, $n = m = 3$, all $9{,}880$ instances & $0$ \\
-The discrepancy counterexample of
-Proposition~\ref{prop:no-balance}, which refuted Approach~5 & $0$ \\
-The insertion obstruction witness, the no-go instance of
-Theorem~\ref{thm:w4}, and the instance of
-Proposition~\ref{prop:msw-false} & $0$ \\
-Exhaustive over structured families, $m \le 4$, $n = 3$
-($20{,}436$ instances) & $0$ \\
-Endpoint-constant sweeps to $n = 5$, $m = 5$ ($4{,}520$ instances) & $0$ \\
-Randomised, $n \le 5$, $m \le 5$ ($3{,}400$ instances) & $0$ \\
+Exhaustive, $n = m = 3$, all instances & $9{,}880$ & $0$ \\
+Exhaustive, structured non-additive triples, $n=3$, $m \in \set{3,4,5}$ &
+$378{,}176$ & $0$ \\
+Every named hard instance in this project (Theorem~\ref{thm:obstruction}'s
+witness, Theorem~\ref{thm:w4}'s no-go instance, Proposition~\ref{prop:no-balance}'s
+discrepancy counterexample, Proposition~\ref{prop:msw-false}'s instance) & $4$
+& $0$ \\
+Randomised, $n \in \set{3,\dots,8}$, $m \in \set{3,\dots,10}$, endpoint-constant
+biased & $1{,}155$ & $0$ \\
+\midrule
+\textbf{Total} & $\mathbf{389{,}215}$ & $\mathbf{0}$ \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-At $n = m = 3$ the best achievable spread is $0$ on $9{,}001$ instances and $1$
-on the remaining $879$ --- never $2$. That the majority admit spread exactly
-zero, meaning $\tilde{\subsidy}_i + \abs{\bundle{i}}$ can be made \emph{constant}
-across agents, is a stronger regularity than Target G needs and is the first
-thing a proof attempt should try to explain.
+Two components of this deserve to be separated out, since the construction
+step and the repair step have different track records on their own.
 
-\begin{remark}[What would falsify it, and what it would not settle]
-\label{rem:targetG-caveats}
-Target G is sufficient for Conjecture~\ref{conj:main} but not known to be
-necessary, since the inequality $\tilde{d}_{\alloc}(u,v) \le \tilde{\subsidy}_u
-- \tilde{\subsidy}_v$ used in Proposition~\ref{prop:targetG-implies} can be
-slack. So a counterexample to Target G would kill this route without touching
-the conjecture --- the same relationship Remark~\ref{rem:converse} records for
-the peel frame, and the reason both must be tested separately from the
-conjecture itself.
+\emph{IMWPM alone}, with no repair, already succeeds on all $9{,}880$
+exhaustive $n=m=3$ instances and on all four hard instances, but fails on
+roughly $18\%$ of larger randomised instances ($132$ of $720$ tested) ---
+it is greedy and short-sighted, so it can lock in a bad grouping in an early
+round exactly as insertion does, just less often.
 
-The proof obligation is correspondingly precise. Take any algorithm producing a
-balanced allocation on the goods instance --- iterated maximum-weight perfect
-matching is the obvious candidate --- and show that its output can be chosen so
-that no agent holding a maximum-size bundle requires a subsidy. Equivalently:
-show that a heaviest path in the goods envy graph never starts at an agent with
-a largest bundle. That is a statement about one algorithm on one model, with no
-chores in it.
-\end{remark}
+\emph{Repair from a bare round-robin start}, with no IMWPM warm start, reaches
+spread $\le 1$ on all $9{,}880$ exhaustive instances and on $357{,}746$ of the
+$357{,}760$ structured triples at $m=5$; the remaining $14$ are genuine local
+optima of the swap neighbourhood --- confirmed by independent exhaustive search
+over all cardinality-balanced partitions, which finds spread $0$ achievable on
+every one of them (\texttt{classify\_failures.py}) --- and every one of the $14$
+is recovered by restarting from a freshly shuffled partition, using at most $4$
+restarts (\texttt{restart\_check.py}).
+
+Combining both, as in \Cref{sec:construct-repair}, removed every failure found
+by either component alone, across every test run against it.
+
+% --------------------------------------------------------------------------
+\subsection{What remains}
+\label{sec:construct-repair-remains}
+
+This is evidence, not a proof, and it should not be reported as more than that.
+The precise open statement is now sharp and almost entirely combinatorial, with
+no chores, no replica and no scheduling left in it:
+
+\begin{conjecture}[Construct-and-repair succeeds]
+\label{conj:algorithm-succeeds}
+For every dichotomous goods instance, the algorithm of
+\Cref{sec:construct-repair} reaches a cardinality-balanced partition with
+$q$-spread at most $1$, using a number of restarts bounded by a constant
+independent of $n$ and $m$.
+\end{conjecture}
+
+The $14$ local optima found are informative about what a proof needs: they show
+that the single-item-swap neighbourhood \emph{does} contain bad local optima, so
+a proof cannot simply be ``every non-optimal balanced partition has an improving
+swap.'' What was observed instead is that bad local optima are reachable from
+some starting partitions and not others, and a different starting point always
+escaped them within a handful of tries. A proof would have to explain that
+asymmetry directly --- for instance, by exhibiting a potential function
+decreased by \emph{some} restart-reachable partition whenever the current one is
+stuck, or by characterising the bad local optima precisely enough to show a
+specific starting rule avoids them outright. Either would upgrade
+Conjecture~\ref{conj:algorithm-succeeds}, and with it
+Conjecture~\ref{conj:main}, from extensively tested to proved.
