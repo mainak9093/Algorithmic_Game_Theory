@@ -1,0 +1,165 @@
+%% ==========================================================================
+%%  Approach 6 --- a pure goods reformulation.  OPEN, and the current best lead.
+%%
+%%  Source: derived 2026-08-04.  Scripts: update_6/targetG.py, targetG_adv.py.
+%%
+%%  STATUS.  Target G implies Conjecture 1 (proved).  Target G itself is open,
+%%  and survives the adversarial generator that refuted Approach 5 in one run,
+%%  including on the very instance that did the refuting.
+%%
+%%  WHY THIS SECTION EXISTS.  Corollary cor:coverage says coverage IS the whole
+%%  gap, so the replica framing is an equivalence and not a reduction --
+%%  inventing there means inventing on the original problem with extra
+%%  bookkeeping.  This section moves instead to the coordinate system in which
+%%  the literature's algorithms already live.
+%% ==========================================================================
+\section{Approach 6: A Pure Goods Reformulation}
+\label{sec:approach6}
+
+Every approach so far has worked inside the chore model or the replica model.
+This one leaves both. The observation is that the size-shift transform of
+Theorem~\ref{thm:sizeshift} is not merely a comparison device: it is an
+involution of the dichotomous class onto itself, so the chore problem can be
+restated as a question about \emph{goods} with no chores, no replica, no
+coverage constraint and no schedule anywhere in it.
+
+% --------------------------------------------------------------------------
+\subsection{The transform is an involution}
+
+\begin{lemma}
+\label{lem:sizeshift-bijection}
+The map $\cost \mapsto \tilde{v}$, $\tilde{v}(S) := \abs{S} - \cost(S)$, is an
+involution of the set of dichotomous set functions (\Cref{def:dichcost}) onto
+itself.
+\end{lemma}
+
+\begin{proof}
+$\tilde{v}(\emptyset) = 0$, and for $g \notin S$ the marginal is
+$\tilde{v}(S \cup \set{g}) - \tilde{v}(S) = 1 - \big(\cost(S \cup \set{g}) -
+\cost(S)\big) \in \set{0,1}$, so $\tilde{v}$ is dichotomous. Applying the map
+twice returns $\abs{S} - (\abs{S} - \cost(S)) = \cost(S)$.
+\end{proof}
+
+So every dichotomous \emph{goods} instance arises as $\tilde{v}$ for exactly one
+dichotomous \emph{chore} instance and conversely: the two models are the same
+object in two coordinate systems, and nothing is lost by working in either.
+
+% --------------------------------------------------------------------------
+\subsection{The target}
+
+Fix an allocation $\alloc$ and write $\tilde{\subsidy}$ for the minimum subsidy
+vector of the goods instance $\set{\tilde{v}_i}$ at $\alloc$, which is defined
+exactly when the chore instance is envy-freeable at $\alloc$, since by
+Theorem~\ref{thm:sizeshift} the two envy graphs have the same cycle weights.
+Put
+\[
+  q_i \;:=\; \tilde{\subsidy}_i + \abs{\bundle{i}}
+  \qquad\text{---\; goods subsidy plus bundle size.}
+\]
+
+\begin{conjecture}[Target G --- \textbf{open}]
+\label{conj:targetG}
+Every dichotomous goods instance admits an allocation whose vector $q$ has
+spread at most $1$, i.e.\ $\max_i q_i - \min_i q_i \le 1$.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:targetG-implies}
+Conjecture~\ref{conj:targetG} implies Conjecture~\ref{conj:main}.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:sizeshift},
+$\pathw{\alloc}(u) = \max_v [\tilde{d}_{\alloc}(u,v) + \abs{\bundle{u}} -
+\abs{\bundle{v}}]$, where $\tilde{d}_{\alloc}(u,v)$ is the heaviest $u \to v$
+path in the goods envy graph. Appending to any $u \to v$ path a heaviest path
+leaving $v$ gives $\tilde{d}_{\alloc}(u,v) + \tilde{\subsidy}_v \le
+\tilde{\subsidy}_u$, so $\tilde{d}_{\alloc}(u,v) \le \tilde{\subsidy}_u -
+\tilde{\subsidy}_v$ and therefore
+\[
+  \pathw{\alloc}(u) \;\le\; \max_v\big[(\tilde{\subsidy}_u + \abs{\bundle{u}})
+  - (\tilde{\subsidy}_v + \abs{\bundle{v}})\big] \;=\; q_u - \min_v q_v .
+\]
+A spread of at most $1$ therefore gives $\pathw{\alloc} \le 1$, and
+Observation~\ref{obs:integrality} upgrades this to
+$\optsubsidy \in \set{0,1}^n$ with total at most $n-1$.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{Why this is a better place to work}
+
+Three things distinguish Target G from everything preceding it.
+
+\textbf{It asks existing algorithms for one more property, rather than asking
+for a new algorithm.} The two ingredients of $q$ are exactly the two guarantees
+the literature already delivers separately. \cite{BKNS22} produces
+$\tilde{\subsidy} \in \set{0,1}^n$ on dichotomous goods; \cite{BDNSV20}
+and~\cite{LMS26} produce \emph{balanced} allocations, the latter by padding with
+dummies so that every agent takes exactly one object per round, giving
+$\abs{\abs{\bundle{i}} - \abs{\bundle{j}}} \le 1$. Neither controls the other
+quantity. Target G asks for both at once, with the residual requirement being a
+\emph{correlation}: among balanced allocations, the agents holding the larger
+bundles must be the ones needing no subsidy. That is intuitively the right way
+round --- in the goods instance a larger bundle means more value --- and it is a
+concrete ask of machinery that already exists.
+
+\textbf{It has no scheduling and no coverage.} Approach~3 fails on reachability
+through a state space with dead ends and Approach~4 on rules fixed before the
+allocation is known. Target G quantifies over allocations directly, so neither
+failure mode is available to it.
+
+\textbf{It is arc-free in the sense Remark~\ref{rem:arc-vs-path} demands.} The
+quantity $\tilde{\subsidy}_i$ is itself a longest-path weight, so Target G is a
+condition on paths, not on arcs. That is exactly what killed Approach~5, and
+Target G is stated in terms the obstruction cannot reach.
+
+% --------------------------------------------------------------------------
+\subsection{Evidence, tested against the adversary that killed Approach~5}
+
+Uniform balance also passed exhaustive $n = m = 3$ and thousands of random
+instances before dying on the first structured adversarial run, so Target G was
+put through the same adversary rather than the uniform sampler.
+
+\begin{center}
+\begin{tabular}{@{}p{0.52\textwidth}p{0.36\textwidth}@{}}
+\toprule
+Test & Target G failures \\
+\midrule
+Exhaustive, $n = m = 3$, all $9{,}880$ instances & $0$ \\
+The discrepancy counterexample of
+Proposition~\ref{prop:no-balance}, which refuted Approach~5 & $0$ \\
+The insertion obstruction witness, the no-go instance of
+Theorem~\ref{thm:w4}, and the instance of
+Proposition~\ref{prop:msw-false} & $0$ \\
+Exhaustive over structured families, $m \le 4$, $n = 3$
+($20{,}436$ instances) & $0$ \\
+Endpoint-constant sweeps to $n = 5$, $m = 5$ ($4{,}520$ instances) & $0$ \\
+Randomised, $n \le 5$, $m \le 5$ ($3{,}400$ instances) & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At $n = m = 3$ the best achievable spread is $0$ on $9{,}001$ instances and $1$
+on the remaining $879$ --- never $2$. That the majority admit spread exactly
+zero, meaning $\tilde{\subsidy}_i + \abs{\bundle{i}}$ can be made \emph{constant}
+across agents, is a stronger regularity than Target G needs and is the first
+thing a proof attempt should try to explain.
+
+\begin{remark}[What would falsify it, and what it would not settle]
+\label{rem:targetG-caveats}
+Target G is sufficient for Conjecture~\ref{conj:main} but not known to be
+necessary, since the inequality $\tilde{d}_{\alloc}(u,v) \le \tilde{\subsidy}_u
+- \tilde{\subsidy}_v$ used in Proposition~\ref{prop:targetG-implies} can be
+slack. So a counterexample to Target G would kill this route without touching
+the conjecture --- the same relationship Remark~\ref{rem:converse} records for
+the peel frame, and the reason both must be tested separately from the
+conjecture itself.
+
+The proof obligation is correspondingly precise. Take any algorithm producing a
+balanced allocation on the goods instance --- iterated maximum-weight perfect
+matching is the obvious candidate --- and show that its output can be chosen so
+that no agent holding a maximum-size bundle requires a subsidy. Equivalently:
+show that a heaviest path in the goods envy graph never starts at an agent with
+a largest bundle. That is a statement about one algorithm on one model, with no
+chores in it.
+\end{remark}
