@@ -369,6 +369,34 @@ lives. Separately, the min-cost-balanced/min-envy rule of the earlier entry
 selects a chain witness on $420$ of $422$ residual instances but not all, so it
 is not the construction either.
 
+\textbf{The Set-Splitting family, and a correction.} R10's reduction is the only
+generator of \emph{certified} EF-free instances, so it was rebuilt as a family
+over hypergraphs rather than the single triangle instance of
+\texttt{update\_3}. The reconstruction taken from that addendum's summary is
+\emph{wrong} and failed its own correctness check --- it produced an EF-free
+instance from a splittable hypergraph. Reading~\cite[proof of Theorem~2]{BSV21}
+directly supplies the missing clause: when $r < r'$ the padding agents
+$e_{r+1},\dots,e_{r'}$ are ``imaginary hyperedges adjacent to the \emph{entire}
+set of vertices'', so they cost $1$ on \emph{every} vertex chore, not $0$. With
+that fixed the reduction verifies in both directions --- an exactly envy-free
+allocation exists precisely on splittable hypergraphs --- across seven
+hypergraphs including two YES controls
+(\texttt{update\_14/setsplit\_family.py}).
+
+On the corrected NO instances the structure is sharp. Chain-good and top-good
+coincide \emph{exactly} on every one of them ($6$, $108$, $72$, $1620$, $1620$,
+$3840$ witnesses respectively), and the total subsidy is the same for every
+witness of a given instance, always $n-2$. The dominant form is describable: the
+$r'$ dummy chores are spread one per agent over $r'$ of the $n = r'+2$ agents,
+the two dummy-free agents hold only chores they value at $0$, and \emph{the paid
+set is exactly the set of dummy holders}. That account is exact up to $n = 5$
+and covers $96\%$ of witnesses at $n = 6$, $m = 8$, where $1{,}116$ of $30{,}276$
+chain witnesses take some other shape. So it is a strong structural lead and not
+yet a theorem --- but it is the first description of a chain witness in terms of
+the underlying combinatorial object rather than in terms of the allocation
+search, and R10's reduction is generic over hypergraphs, so completing it would
+cover an infinite certified-hard family at once.
+
 \textbf{Method note, worth more than any single result here.} For any question
 about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
 than sampling instances: every non-negative integer matrix is realisable, so
