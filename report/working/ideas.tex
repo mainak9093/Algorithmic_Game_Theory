@@ -292,14 +292,67 @@ one allocation's level set, whereas the chain conjecture asserts the
 instance a chain witness does exist --- give everything to agent~1, who finds
 all of it free. So the collapse to two levels is gone, but the target is not.
 
+\textbf{The chain conjecture survives past the frontier.} Every earlier chain
+test stopped at $m = 6$, while the counterexample above lives at $m = 8$, so the
+conjecture had never been tried where the level structure is known to
+misbehave. Re-run at $m = 7, 8, 9$ for $n = 3$ and at $m \le 8$ for
+$n \in \set{4,5}$ --- using both endpoint-constant sampling and the
+\emph{matrix-realising} family $\cost_i(S) = \sum_j \min(\abs{S \cap B_j},
+a_{ij})$ that produced the refutation --- it has \textbf{zero failures}
+(\texttt{update\_12/chain\_hunt.py}). Neither did any instance fail
+Conjecture~\ref{conj:main}. So the conjecture held exactly where its own
+shortcut broke.
+
+\textbf{A proved reduction.} The natural sufficient condition turns out to be
+the strongest possible one, and it is two lines.
+
+\begin{lemma}[Exact envy-freeness implies chain-goodness]
+\label{lem:ef-chain}
+If $\alloc$ is exactly envy-free for $(\cost_i)_i$ --- that is
+$\cost_i(\bundle{i}) \le \cost_i(\bundle{j})$ for all $i,j$ --- then $\alloc$ is
+good at \emph{every} level, with zero subsidy at every level.
+\end{lemma}
+
+\begin{proof}
+Exact envy-freeness says $a_{ii} \le a_{ij}$ for all $i,j$. Since
+$x \mapsto \min(x,k)$ is non-decreasing, $\min(a_{ii},k) \le \min(a_{ij},k)$,
+so every level-$k$ arc $\edgew{}^{(k)}(i,j)$ is at most $0$, for every $k$.
+Every cycle is then a sum of non-positive terms, so no positive cycle exists at
+any level; and every directed path likewise has weight at most $0$, so
+$\pathw{}^{(k)} \equiv 0$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:chain-residual}
+The chain conjecture holds for every instance that admits an exactly envy-free
+allocation. Equivalently, the chain conjecture is equivalent to its own
+restriction to instances admitting \emph{no} exactly envy-free allocation.
+\end{corollary}
+
+This localises the difficulty sharply. By Remark~\ref{rem:exactEF} an exactly
+envy-free allocation exists in about $98.6\%$ of adversarial instances, so
+Corollary~\ref{cor:chain-residual} disposes of almost everything and leaves a
+residual of roughly $1.4\%$. That residual is not a rounding error: it is
+precisely the class on which deciding envy-freeness is NP-complete even for
+binary additive costs~\cite{BSV21}. Across the $24$ envy-free-free instances
+encountered in the sweeps above, every one still had a chain witness, so the
+residual is not obviously where a counterexample lives either.
+
 \textbf{Status.} Proved: the decomposition, truncation closure, the base case
-(Theorem~\ref{thm:smallbundle}), and Lemma~\ref{lem:levelone}. Refuted: (I),
-(II), and with them the two-level reduction. Open: the chain conjecture, now
-without a shortcut. Also learned, and more useful than any of it: for any
-question about a \emph{fixed} allocation, work with the cost matrix and
-enumerate, since matrix search reaches effective instance sizes that allocation
-enumeration cannot --- the counterexample sat two items beyond every sweep run
-before it.
+(Theorem~\ref{thm:smallbundle}), Lemma~\ref{lem:levelone},
+Lemma~\ref{lem:ef-chain} and Corollary~\ref{cor:chain-residual}. Refuted: (I),
+(II) and the two-level reduction. Open: the chain conjecture restricted to
+instances with no exactly envy-free allocation --- a strictly smaller target
+than before, and one that now coincides with the known hardness core rather
+than straddling it.
+
+\textbf{Method note, worth more than any single result here.} For any question
+about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
+than sampling instances: every non-negative integer matrix is realisable, so
+matrix enumeration is exhaustive over a space that instance enumeration only
+samples, and it reaches effective sizes instance search cannot. The
+(I)/(II) counterexample sat two items beyond every sweep that preceded it and
+fell out of matrix enumeration immediately.
 
 % --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
