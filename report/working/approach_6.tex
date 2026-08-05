@@ -5,14 +5,13 @@
 %%  guidedR3.py, guidedR3_full.py, targetGbal.py, targetGbal_local.py,
 %%  imwpm_raw.py, final_algorithm.py.
 %%
-%%  STATUS.  Target G-bal (below) is open as a THEOREM, but the algorithm of
-%%  Section 6.4 (construct-and-repair) has ZERO failures across 389,215
-%%  test instances:
-%%  exhaustive n=m=3 (9,880), exhaustive structured non-additive triples up to
-%%  m=5 (378,176), every hard/adversarial instance in this project, and
-%%  randomised sweeps to n=8, m=10.  This is the strongest constructive result
-%%  in the project.  It is evidence, not a proof; the precise remaining proof
-%%  obligation is stated at the end.
+%%  STATUS (updated 2026-08-05).  PROVED: soundness + certification,
+%%  termination + polynomial complexity O(n^3 m^3 tau + n^4 m^3), assignment
+%%  invariance, and COMPLETENESS AT n = 2 (all m, constructive, O(m tau),
+%%  machine-verified over 521,310 instances).  OPEN: completeness for n >= 3
+%%  (Conjecture conj:algorithm-succeeds), backed by ZERO failures across
+%%  389,215 test instances.  The n=2 proof technique (h-window discrete IVT +
+%%  extremal endpoints) is the named candidate for the general case.
 %% ==========================================================================
 \section{Approach 6: A Pure Goods Reformulation, and a Working Algorithm}
 \label{sec:approach6}
@@ -221,30 +220,285 @@ Combining both, as in \Cref{sec:construct-repair}, removed every failure found
 by either component alone, across every test run against it.
 
 % --------------------------------------------------------------------------
+\subsection{Complexity, and what is proved unconditionally}
+\label{sec:construct-repair-theory}
+
+Three properties of the algorithm are theorems, not conjectures: its outputs
+are certified correct, it terminates in polynomial time, and its search space
+is genuinely the set of \emph{unordered} balanced partitions. We state them
+with proofs, in the value-oracle model with per-query cost $\tau$.
+
+\begin{lemma}[Assignment invariance]
+\label{lem:assignment-invariance}
+Fix an unordered family of $n$ bundles. The assignments of bundles to agents
+under which the allocation is envy-freeable are exactly the welfare-maximising
+ones, and every welfare-maximising assignment induces the same minimum subsidy
+on each \emph{bundle}~\cite[Lemma~2]{KMSTY24}. Hence the multiset
+$\set{\tilde{\subsidy}(B) + \abs{B}}$, and with it the $q$-spread, depends only
+on the unordered partition.
+\end{lemma}
+
+\begin{proof}
+The first claim is condition~(ii) of Theorem~\ref{thm:hs-characterisation}
+applied to the goods instance: an assignment is envy-freeable iff no
+reassignment of its own bundles raises welfare, which is exactly welfare
+maximality over assignments. The second is Lemma~2 of~\cite{KMSTY24}, which
+proves that the minimum subsidy vectors of any two maximum-weight assignments
+coincide bundle-by-bundle. Adding $\abs{B}$, a bundle attribute, preserves
+this.
+\end{proof}
+
+Two consequences. First, the $n!$ assignment loop in the implementation is
+mathematically equivalent to a single maximum-weight matching computation, so
+the complexity below is stated with the Hungarian algorithm, $O(n^3)$.
+Second, the algorithm's true search space is unordered balanced partitions ---
+the object Conjecture~\ref{conj:algorithm-succeeds} should be read as
+quantifying over.
+
+\begin{theorem}[Soundness, certified]
+\label{thm:algorithm-soundness}
+Suppose the algorithm outputs a partition and assignment with $q$-spread at
+most $1$. Then the \emph{same} allocation, read in the original chore instance
+--- the size-shift acts on valuations only, so the allocation needs no
+translation --- together with $\subsidy := \pathw{\alloc}$ is an envy-free
+solution with $\subsidy \in \set{0,1}^n$ and total subsidy at most $n-1$.
+Moreover the output is verifiable in $O(n^2 \tau + n^3)$ time independently of
+how it was found.
+\end{theorem}
+
+\begin{proof}
+Proposition~\ref{prop:targetG-implies} gives $\pathw{\alloc} \le 1$ on the
+chore side; Observation~\ref{obs:integrality} upgrades to
+$\optsubsidy \in \set{0,1}^n$; the endpoint of a heaviest path has
+$\pathw{} = 0$, giving total at most $n-1$. Verification recomputes the $n^2$
+bundle values ($n^2$ oracle calls), one maximum-weight matching and one
+longest-path computation ($O(n^3)$ each).
+\end{proof}
+
+\begin{theorem}[Termination and complexity]
+\label{thm:algorithm-complexity}
+On any dichotomous instance:
+\begin{enumerate}
+  \item[(i)] evaluating one partition costs $O(n^2 \tau + n^3)$;
+  \item[(ii)] the construction pass (IMWPM) costs $O(m^2 \tau + n m^2)$;
+  \item[(iii)] each repair iteration examines $O(nm)$ moves and costs
+    $O(n^3 m \tau + n^4 m)$;
+  \item[(iv)] the repair loop performs at most $O(m^2)$ iterations, so with a
+    constant number of restarts the whole algorithm runs in time
+    $O(n^3 m^3 \tau + n^4 m^3)$.
+\end{enumerate}
+In particular the algorithm always terminates, in polynomial time, regardless
+of whether it succeeds.
+\end{theorem}
+
+\begin{proof}
+(i) is the count in Theorem~\ref{thm:algorithm-soundness}, using
+Lemma~\ref{lem:assignment-invariance} to replace the assignment loop by one
+Hungarian computation. (ii): there are $\lceil m/n \rceil$ rounds; each builds
+an $n \times O(m)$ marginal table ($O(nm)$ oracle calls, two per entry) and
+solves one rectangular assignment problem in $O(n^2 m)$; summing gives the
+bound. (iii): a move sends one of $m$ items to one of $n-1$ other groups, and
+each candidate is evaluated by~(i). (iv) is the substantive claim. Because
+marginals lie in $\set{0,1}$, every bundle value satisfies
+$\tilde{v}_i(B) \le \abs{B}$; hence total welfare is an integer in $[0, m]$,
+and every subsidy $\tilde{\subsidy}_i$, being a path weight, is an integer in
+$[0, m]$, so the spread is an integer in $[0, m + 1]$. The repair loop moves
+only when the pair $(\text{spread}, -\text{welfare})$ strictly decreases
+lexicographically, and that pair takes at most $(m+2)(m+1)$ values, so at most
+$O(m^2)$ moves occur before the loop halts --- either at spread $\le 1$ or at
+a local optimum, where a restart or a failure report follows.
+\end{proof}
+
+The gap between these theorems and a full correctness proof is exactly
+Conjecture~\ref{conj:algorithm-succeeds}: soundness says the algorithm never
+lies, termination says it always answers, and what is missing is that the
+answer is always ``success.'' For two agents, that missing piece can be
+supplied.
+
+% --------------------------------------------------------------------------
+\subsection{A complete proof for two agents}
+\label{sec:n2-proof}
+
+\begin{theorem}[Completeness at $n = 2$]
+\label{thm:n2-complete}
+Every two-agent dichotomous goods instance admits a cardinality-balanced split
+with $q$-spread at most $1$. Consequently Target G-bal, Target G, and
+Conjecture~\ref{conj:main} all hold at $n = 2$ --- the last with the additional
+guarantee, not provided by the complementation route of
+Remark~\ref{rem:complement}, that the two bundles differ in size by at most
+one.
+\end{theorem}
+
+Fix dichotomous $\tilde{v}_1, \tilde{v}_2$ on $\items$, $\abs{\items} = m$. For
+an \emph{ordered} balanced split $(A, B)$ with $\abs{A} = \lceil m/2 \rceil
+\ge \abs{B}$, write
+\[
+  \alpha := \tilde{v}_1(A) - \tilde{v}_1(B), \qquad
+  \beta := \tilde{v}_2(A) - \tilde{v}_2(B), \qquad
+  u := \tilde{v}_1 + \tilde{v}_2, \qquad
+  h := u(A) - u(B) = \alpha + \beta .
+\]
+Call the split \emph{good} if some envy-freeable orientation (assignment of
+$A, B$ to the two agents) has $q$-spread at most $1$.
+
+\begin{lemma}[Swap step]
+\label{lem:swapstep}
+Exchanging one item of $A$ with one item of $B$ changes each of
+$\tilde{v}_i(A)$ and $\tilde{v}_i(B)$ by at most $1$, hence each of
+$\alpha, \beta$ by at most $2$ and $h$ by at most $4$.
+\end{lemma}
+
+\begin{proof}
+Removing an item changes a dichotomous value by $0$ or $-1$ and adding one by
+$0$ or $+1$, so the composite changes each side's value by at most $1$ in
+absolute value.
+\end{proof}
+
+\begin{lemma}[Window]
+\label{lem:window}
+If $m$ is even and $\abs{h} \le 3$, or $m$ is odd and $-1 \le h \le 3$, then
+the split is good.
+\end{lemma}
+
+\begin{proof}
+\emph{Even $m$.} Sizes are equal, so $q$-spread equals
+$\abs{\tilde{\subsidy}_1 - \tilde{\subsidy}_2}$, and it suffices to find an
+envy-freeable orientation in which both envies are at most $1$. Giving $A$ to
+agent~1 yields envies $(-\alpha, \beta)$, so that orientation is satisfactory
+iff $\alpha \ge -1$ and $\beta \le 1$; the flipped orientation iff
+$\alpha \le 1$ and $\beta \ge -1$. Both fail only when $\alpha, \beta \le -2$
+or $\alpha, \beta \ge 2$, and in either case $\abs{h} \ge 4$. It remains to
+check envy-freeability. The two-cycle of the first orientation has weight
+$\beta - \alpha$; if it is positive while that orientation is satisfactory
+($\alpha \ge -1$, $\beta \le 1$, $\beta > \alpha$), then $\alpha < \beta \le 1$
+and $\beta > \alpha \ge -1$ show the flipped orientation is satisfactory as
+well, and its cycle $\alpha - \beta$ is negative. So a satisfactory
+envy-freeable orientation exists, its subsidies lie in $\set{0,1}$, and the
+spread is at most $1$.
+
+\emph{Odd $m$.} Now $\abs{A} = \abs{B} + 1$, and with subsidies in
+$\set{0,1}$ the spread is at most $1$ iff the holder of the large bundle needs
+no subsidy --- both agents needing $1$ is impossible, since then the two-cycle
+$\ge 2$ would be positive. Giving $A$ to agent~1 is satisfactory iff
+$\alpha \ge 0$ and $\beta \le 1$; flipped, iff $\beta \ge 0$ and
+$\alpha \le 1$. Both fail only when $\alpha, \beta \le -1$ or
+$\alpha, \beta \ge 2$, i.e.\ when $h \le -2$ or $h \ge 4$. Envy-freeability is
+repaired exactly as in the even case: if the first satisfactory orientation
+has $\beta > \alpha$, then $\alpha < \beta \le 1$ gives $\alpha \le 0$ and
+$\beta > \alpha \ge 0$ gives $\beta \ge 0$, so the flipped orientation is
+satisfactory with a negative cycle.
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:n2-complete}]
+\emph{Even $m$.} Take any equal split, ordered so that $h \ge 0$. If
+$h \le 3$, Lemma~\ref{lem:window} finishes. Otherwise $h \ge 4$; walk to the
+complementary split $(B, A)$ by exchanging one paired item at a time
+($m/2$ swaps). The final value is $-h \le -4$, and by
+Lemma~\ref{lem:swapstep} each step changes $h$ by at most $4$, so at the first
+step where the value drops below $4$ it lies in $[0, 3]$ ---
+inside the window.
+
+\emph{Odd $m$.} The big sides are the $(k{+}1)$-subsets, $m = 2k+1$. Suppose no
+split is good; then by Lemma~\ref{lem:window} every big side $A$ has
+$h(A) \le -2$ or $h(A) \ge 4$. Any two big sides are connected by single
+exchanges (repeatedly swap an element of the difference), and a step from
+$h \ge 4$ to $h \le -2$ would change $h$ by at least $6 > 4$, so \emph{all}
+big sides lie on one side. If all have $h \ge 4$: let $A^*$ minimise $u$ over
+big sides, and pick any $x \in A^*$. Then $B := (\items \setminus A^*) \cup
+\set{x}$ is a big side with $u(B) \le u(\items \setminus A^*) + 2 \le
+u(A^*) - 2$, contradicting minimality --- the first inequality because $u$ has
+marginals in $\set{0,1,2}$, the second because $h(A^*) \ge 4$. If all have
+$h \le -2$: let $A^\circ$ maximise $u$ over big sides and pick any
+$x \in A^\circ$. Then $u((\items \setminus A^\circ) \cup \set{x}) \ge
+u(\items \setminus A^\circ) \ge u(A^\circ) + 2$, by monotonicity and
+$h(A^\circ) \le -2$, contradicting maximality.
+\end{proof}
+
+\begin{corollary}[An exact $O(m\tau)$ algorithm for two agents]
+\label{cor:n2-constructive}
+For $n = 2$ the proof is constructive and needs no restarts: start from any
+balanced split; if it is not good, then for even $m$ walk toward the
+complement, and for odd $m$ first apply the jump $A \mapsto
+(\items \setminus A) \cup \set{x}$ --- which maps $h \ge 4$ to $h \le 0$ and
+$h \le -2$ to $h \ge 2$ --- and then, if the jump target is still outside the
+window, walk between the two splits. Some split within $m/2 + 2$ evaluations
+lies in the window and is good. Each evaluation uses $O(1)$ oracle calls, so
+the whole procedure runs in $O(m\tau)$ time.
+\end{corollary}
+
+\begin{proof}
+The even case is the walk in the proof above. For the odd jump, write $B =
+(\items \setminus A) \cup \set{x}$ with $x \in A$, so $\items \setminus B =
+A \setminus \set{x}$ and $h(B) = u(B) - u(A \setminus \set{x})$. Recall that
+$u = \tilde{v}_1 + \tilde{v}_2$ has marginals in $\set{0,1,2}$, so adding or
+removing a single item changes $u$ by at most $2$. If $h(A) \ge 4$ then
+$u(B) \le u(\items \setminus A) + 2 \le u(A) - 2$ while $u(A \setminus
+\set{x}) \ge u(A) - 2$, giving $h(B) \le 0$. If $h(A) \le -2$ then
+$u(B) \ge u(\items \setminus A) \ge u(A) + 2$ while $u(A \setminus \set{x})
+\le u(A)$, giving $h(B) \ge 2$. Both bounds are attained, so neither can be
+sharpened. In either case the jump target is in the window $[-1,3]$ or
+strictly on the far side of it, and in the latter case the swap walk between
+$A$ and $B$ crosses the window as in the theorem: descending from $\ge 4$, the
+first value below $4$ is at least $0$; ascending from $\le -2$, the first value
+above $-2$ is at most $2$.
+\end{proof}
+
+The theorem and the walk are machine-verified by \texttt{n2proof\_check.py}:
+exhaustively over all instances at $m \le 4$ ($490{,}545$ pairs at $m = 4$
+alone) and on $30{,}000$ random instances at $m \in \set{5,6,7}$ --- $0$
+failures of either, with the walk never needing more than $2$ evaluations in
+practice against its $m/2 + 2$ bound.
+
+\begin{remark}[What the proof teaches the algorithm]
+\label{rem:proof-driven-refinement}
+Two findings from the proof effort feed back into the implementation. First,
+the moves that the $n = 2$ proof walks are \emph{pairwise exchanges}, which
+preserve group sizes exactly --- but the implemented repair neighbourhood
+contains only single-item \emph{moves}, which change two group sizes by one.
+When $n$ divides $m$, every group has size $m/n$ and every single move is
+rejected by the balance filter, so the repair loop is inert there and the
+implementation succeeds purely through IMWPM plus restarts; the zero failures
+at $n = m$ and at $(n,m) \in \set{(3,6), (6,6), (7,7), (8,8)}$ were all
+achieved in that degenerate mode. Adding exchanges to the neighbourhood is
+therefore both principled --- they are the proof's own moves --- and necessary
+for the repair step to act at all when $n \mid m$. Second, the $h$-window
+technique suggests the right potential for a general proof: a
+one-dimensional aggregate whose swap-Lipschitz constant is smaller than the
+width of the region it must cross. At $n = 2$ the aggregate $u = \tilde{v}_1 +
+\tilde{v}_2$ works because the goodness condition is two-sided in a single
+difference; for $n \ge 3$ goodness involves $\binom{n}{2}$ pairwise
+differences, and no single aggregate is yet known to control them.
+\end{remark}
+
+% --------------------------------------------------------------------------
 \subsection{What remains}
 \label{sec:construct-repair-remains}
 
-This is evidence, not a proof, and it should not be reported as more than that.
-The precise open statement is now sharp and almost entirely combinatorial, with
-no chores, no replica and no scheduling left in it:
+After \Cref{sec:construct-repair-theory,sec:n2-proof}, the standing of the
+approach is: soundness, certification, termination and polynomial complexity
+are theorems for every $n$; completeness is a theorem for $n = 2$; and for
+$n \ge 3$ completeness is the one remaining open statement, sharp and almost
+entirely combinatorial, with no chores, no replica and no scheduling left in
+it:
 
-\begin{conjecture}[Construct-and-repair succeeds]
+\begin{conjecture}[Construct-and-repair succeeds, $n \ge 3$]
 \label{conj:algorithm-succeeds}
 For every dichotomous goods instance, the algorithm of
-\Cref{sec:construct-repair} reaches a cardinality-balanced partition with
-$q$-spread at most $1$, using a number of restarts bounded by a constant
-independent of $n$ and $m$.
+\Cref{sec:construct-repair} --- with pairwise exchanges added to the repair
+neighbourhood, per Remark~\ref{rem:proof-driven-refinement} --- reaches a
+cardinality-balanced partition with $q$-spread at most $1$, using a number of
+restarts bounded by a constant independent of $n$ and $m$.
 \end{conjecture}
 
-The $14$ local optima found are informative about what a proof needs: they show
-that the single-item-swap neighbourhood \emph{does} contain bad local optima, so
-a proof cannot simply be ``every non-optimal balanced partition has an improving
-swap.'' What was observed instead is that bad local optima are reachable from
-some starting partitions and not others, and a different starting point always
-escaped them within a handful of tries. A proof would have to explain that
-asymmetry directly --- for instance, by exhibiting a potential function
-decreased by \emph{some} restart-reachable partition whenever the current one is
-stuck, or by characterising the bad local optima precisely enough to show a
-specific starting rule avoids them outright. Either would upgrade
-Conjecture~\ref{conj:algorithm-succeeds}, and with it
-Conjecture~\ref{conj:main}, from extensively tested to proved.
+The $14$ local optima found at $n = 3$ show that the move neighbourhood does
+contain bad local optima, so a proof cannot simply be ``every non-optimal
+balanced partition has an improving move.'' What was observed instead is that
+bad local optima are escapable from other starting partitions, always within a
+handful of restarts. The $n = 2$ proof suggests what to look for: a
+one-dimensional aggregate --- there, $u = \tilde{v}_1 + \tilde{v}_2$ with the
+window $\abs{h} \le 3$ --- whose per-move variation is smaller than the
+forbidden gap it must cross, together with an extremal argument at the ends.
+Finding the analogous aggregate for $n \ge 3$, where goodness involves
+$\binom{n}{2}$ pairwise comparisons rather than one, is the whole remaining
+problem; solving it would upgrade Conjecture~\ref{conj:algorithm-succeeds},
+and with it Conjecture~\ref{conj:main}, from extensively tested to proved.

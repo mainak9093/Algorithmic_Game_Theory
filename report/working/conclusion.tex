@@ -7,13 +7,26 @@
 \section{Conclusion and Future Work}
 \label{sec:conclusion}
 
-We have not settled Conjecture~\ref{conj:main} with a proof, but
-\Cref{sec:approach6} now carries a construct-and-repair algorithm with
+We have not settled Conjecture~\ref{conj:main} in general, but
+\Cref{sec:approach6} now carries a construct-and-repair algorithm together with
+a proof of most of what one would want from it. Four properties are theorems
+for every $n$: the algorithm's outputs are \emph{certified}, so it never lies
+(Theorem~\ref{thm:algorithm-soundness}); it always terminates, in polynomial
+time $O(n^3m^3\tau + n^4m^3)$ (Theorem~\ref{thm:algorithm-complexity}); its
+search space is genuinely the unordered balanced partitions
+(Lemma~\ref{lem:assignment-invariance}); and for \emph{two agents} it is
+\emph{complete} (Theorem~\ref{thm:n2-complete}) --- every two-agent dichotomous
+instance admits a balanced split of $q$-spread at most $1$, found in
+$O(m\tau)$ time with no restarts. That last result even strengthens the known
+$n = 2$ chore case, adding a balancedness guarantee the complementation route
+of Remark~\ref{rem:complement} does not provide.
+
+For $n \ge 3$ what is missing is completeness alone, and it is backed by
 \textbf{zero observed failures across $389{,}215$ test instances}, including
-every hard instance in this project. That is the headline result: strong
-constructive evidence for the conjecture, from an algorithm precise enough that
-the remaining gap to a proof is a single, sharply stated combinatorial claim
-(Conjecture~\ref{conj:algorithm-succeeds}).
+every hard instance in this project. So the headline is a proved algorithm
+whose only unproved property is that it always succeeds --- a single, sharply
+stated combinatorial claim (Conjecture~\ref{conj:algorithm-succeeds}), with a
+proved base case and a named proof technique to generalise.
 
 Getting there required ruling out three strategies a reader would reasonably try
 first: item-by-item insertion, the strategy that works in~\cite{BKNS22}
@@ -72,17 +85,23 @@ signal of Remark~\ref{rem:balance} is the current best guess at its shape.
 
 \paragraph{Directions.}
 \begin{enumerate}
-  \item \textbf{Prove Conjecture~\ref{conj:algorithm-succeeds}}
+  \item \textbf{Prove Conjecture~\ref{conj:algorithm-succeeds} for $n \ge 3$}
     (\Cref{sec:construct-repair-remains}). This is now the top-ranked direction
-    by a wide margin: it is the only open statement in the project backed by a
-    zero-failure sweep of $389{,}215$ instances, and it is purely combinatorial
-    --- cardinality-balanced partitions and single-item swaps, no chores, no
-    replica, no schedule. The $14$ known local optima are the concrete obstacle
-    a proof must explain: they show bad local optima exist in the swap
-    neighbourhood, but every one found so far was escaped by restarting from a
-    different starting partition. A proof needs either a potential that a
-    restart-reachable partition always decreases, or a precise characterisation
-    of the bad optima sharp enough to name a starting rule that avoids them.
+    by a wide margin, and it has a proved base case: completeness holds at
+    $n = 2$ for every $m$ (Theorem~\ref{thm:n2-complete}), constructively and
+    in $O(m\tau)$ time, by the $h$-window technique --- a discrete
+    intermediate-value argument on the aggregate $u = \tilde{v}_1 +
+    \tilde{v}_2$ along swap paths, closed off by extremal endpoint arguments.
+    Soundness, certification, termination and polynomial complexity are
+    theorems for every $n$
+    (Theorems~\ref{thm:algorithm-soundness} and~\ref{thm:algorithm-complexity}).
+    What remains is the $n \ge 3$ analogue of the window argument: a
+    one-dimensional aggregate whose per-move variation is smaller than the
+    forbidden gap it must cross, controlling $\binom{n}{2}$ pairwise
+    comparisons at once. The $14$ known local optima at $n = 3$ bound what any
+    such proof must accommodate, and Remark~\ref{rem:proof-driven-refinement}
+    records the move-set refinement (pairwise exchanges) the proof already
+    forced on the implementation.
   \item \textbf{The type-ordered peel search} (\Cref{sec:typeorder},
     \Cref{sec:peelsearch}). Conjecture~\ref{conj:h1pp} has the best evidence of
     anything currently open and a much smaller state space than

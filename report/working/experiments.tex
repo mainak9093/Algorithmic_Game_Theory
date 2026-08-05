@@ -112,7 +112,7 @@ The $n = 3$ characterisation, against the true longest-path computation
 and, for the construct-and-repair algorithm of \Cref{sec:approach6},
 
 \begin{center}
-\begin{tabular}{@{}p{0.40\textwidth}p{0.19\textwidth}p{0.32\textwidth}@{}}
+\begin{tabular}{@{}p{0.34\textwidth}p{0.27\textwidth}p{0.30\textwidth}@{}}
 \toprule
 Experiment & Script & Result \\
 \midrule
@@ -142,6 +142,11 @@ failure
   & \texttt{final\_algorithm.py} & \textbf{$0$ failures across $389{,}215$
     instances} --- exhaustive $n=m=3$, exhaustive structured triples to $m=5$,
     every named hard instance, and randomised sweeps to $n=8,m=10$ \\
+The $n=2$ completeness theorem and its $O(m\tau)$ constructive walk
+  & \texttt{n2proof\_check.py} & $0$ failures over $521{,}310$ instances ---
+    exhaustive $m \le 4$ ($490{,}545$ pairs at $m=4$), random $m \in
+    \set{5,6,7}$; walk never exceeded $2$ evaluations
+    (Theorem~\ref{thm:n2-complete}, Corollary~\ref{cor:n2-constructive}) \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -313,6 +318,9 @@ Script & Purpose \\
 \texttt{restart\_check.py} & confirms all $14$ recovered by restarts \\
 \texttt{final\_algorithm.py} & the combined algorithm; the
                          $389{,}215$-instance sweep \\
+\texttt{n2proof\_check.py} & Theorem~\ref{thm:n2-complete} and
+                         Corollary~\ref{cor:n2-constructive}, exhaustive
+                         $m \le 4$ plus random $m \le 7$ \\
 \bottomrule
 \end{tabular}
 \end{center}

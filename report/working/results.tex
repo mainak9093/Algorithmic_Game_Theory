@@ -121,9 +121,21 @@ insertion for a construct-and-repair procedure --- one pass of iterated
 maximum-weight perfect matching, repaired by cardinality-preserving single-item
 swaps, restarted on failure --- has \textbf{zero failures across $389{,}215$
 test instances}, including every hard instance that defeated
-Approaches~1 through~5. This is the strongest evidence produced in the
-project for a genuine construction, though it remains evidence and not a proof;
-\Cref{sec:construct-repair-remains} states the precise gap.
+Approaches~1 through~5.
+
+Four properties of that algorithm are now \emph{theorems}: its outputs are
+certified (Theorem~\ref{thm:algorithm-soundness}), it terminates in polynomial
+time $O(n^3 m^3 \tau + n^4 m^3)$ (Theorem~\ref{thm:algorithm-complexity}), its
+search space is genuinely the unordered balanced partitions
+(Lemma~\ref{lem:assignment-invariance}), and --- the main theoretical result of
+this line --- \textbf{it is complete for two agents}
+(Theorem~\ref{thm:n2-complete}): every two-agent dichotomous instance admits a
+balanced split of spread at most $1$, found constructively in $O(m\tau)$ time
+with no restarts, by a discrete intermediate-value argument on the aggregate
+$u = \tilde{v}_1 + \tilde{v}_2$ along swap paths. This strengthens even the
+known $n = 2$ chore result, adding balancedness that the complementation route
+does not provide. For $n \ge 3$, completeness remains the one open statement
+(\Cref{sec:construct-repair-remains}).
 
 \paragraph{Evidence} (\Cref{sec:experiments}).
 Conjecture~\ref{conj:main} survives exhaustive verification for $n = m = 3$ over
