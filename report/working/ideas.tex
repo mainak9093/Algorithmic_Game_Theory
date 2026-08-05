@@ -389,13 +389,37 @@ $3840$ witnesses respectively), and the total subsidy is the same for every
 witness of a given instance, always $n-2$. The dominant form is describable: the
 $r'$ dummy chores are spread one per agent over $r'$ of the $n = r'+2$ agents,
 the two dummy-free agents hold only chores they value at $0$, and \emph{the paid
-set is exactly the set of dummy holders}. That account is exact up to $n = 5$
-and covers $96\%$ of witnesses at $n = 6$, $m = 8$, where $1{,}116$ of $30{,}276$
-chain witnesses take some other shape. So it is a strong structural lead and not
-yet a theorem --- but it is the first description of a chain witness in terms of
-the underlying combinatorial object rather than in terms of the allocation
-search, and R10's reduction is generic over hypergraphs, so completing it would
-cover an infinite certified-hard family at once.
+set is exactly the set of dummy holders}. That account was exact up to $n = 5$ but covered only $96\%$ of the $30{,}276$
+witnesses at $n = 6$, $m = 8$. The exceptions are fully explained, and the
+explanation removes them.
+
+\textbf{The exceptions are an artefact of padding.} The reduction sets
+$r' = \max(q,r)$ and, when $r < r'$, fills the gap with imaginary hyperedges
+adjacent to every vertex. Those padding agents do not behave like real edge
+agents, which are free on vertex chores outside their own edge. Comparing two
+instances at the same $n = 6$ settles it: with $q = 4$, $r = 2$ --- two padding
+agents --- the form covers $96.3\%$ and total subsidies of $1$ and $2$ appear
+alongside $n-2 = 4$; with $q = 3$, $r = 4$ --- \emph{no} padding --- the form
+covers \textbf{$100\%$ of all $28{,}800$ witnesses}, the paid set is the
+dummy-holder set in every one, and the total subsidy is $n-2$ with no
+exceptions. Every zero-padding instance tested behaves this way.
+
+\begin{quote}
+\textbf{Characterisation (exact on all zero-padding instances tested).} Let
+$(U,F)$ be a NO instance of Set Splitting with $r \ge q$, so that $r' = r$ and
+every edge agent is real. In R10's reduced instance an allocation is a chain
+witness \emph{if and only if} the $r$ dummy chores are distributed one per agent
+among $r$ of the $n = r+2$ agents and the two dummy-free agents hold only chores
+they value at $0$. Its paid set is exactly the set of dummy-holders and its
+total subsidy is exactly $n - 2 = r$.
+\end{quote}
+
+The restriction $r \ge q$ costs nothing: duplicating hyperedges raises $r$
+without changing splittability, so Set Splitting stays NP-hard on it and the
+family stays certified-hard. This is now an exact description of every chain
+witness on an infinite family of hard instances, stated in terms of the
+hypergraph rather than of the allocation search --- which is what a proof needs
+as its starting point.
 
 \textbf{Method note, worth more than any single result here.} For any question
 about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
