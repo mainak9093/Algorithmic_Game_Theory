@@ -1,0 +1,233 @@
+%% ==========================================================================
+%%  Approach 7 --- local search on a lexicographic potential.
+%%
+%%  Source: derived 2026-08-06.  Scripts: update_18/localsearch_lemma.py,
+%%  potentials.py, stress_potentials.py, p6_deep.py.
+%%
+%%  STATUS (2026-08-06).  PROVED: the reduction --- the descent lemma (L_P6)
+%%  implies BOTH halves of Conjecture conj:main, existence and polynomial
+%%  computability, with an explicit O(m^4 n^4) bound.  PROVED: the sub-case
+%%  split, which isolates balanced partitions as the entire remaining burden.
+%%  OPEN: (L_P6) itself, backed by ZERO stuck partitions over every partition
+%%  of every instance tested (n <= 5, m <= 9, including 253 EF-free instances
+%%  and R10's certified-hard family).  REFUTED: the cost-minimising potential
+%%  P1, whose failure is diagnosed rather than merely observed.
+%% ==========================================================================
+
+\section{Approach 7: descent on a lexicographic potential}
+\label{sec:approach7}
+
+\subsection{The reformulation that suggests it}
+
+Section~\ref{sec:approach5} characterises good allocations by the two-tier
+condition: $\alloc$ is good precisely when there is a bipartition
+$S \subseteq \agents$ with
+\[
+  \cost_i(\bundle{i}) - [\,i \in S\,]
+  \;\le\;
+  \cost_i(\bundle{j}) - [\,j \in S\,]
+  \qquad \text{for all } i \ne j .
+\]
+Writing $\delta_j := [\,j \in S\,]$ and
+$\hat\cost_i(\bundle{j}) := \cost_i(\bundle{j}) - \delta_j$, this says exactly
+that \emph{every agent holds
+a bundle minimising its discounted cost}, where the discount is $1$ on the paid
+slots and $0$ elsewhere and depends only on the slot, not on the agent. Unpacked
+by tier:
+
+\begin{itemize}
+  \item within $S$, and within $\agents \setminus S$: exact envy-freeness;
+  \item an unpaid agent \emph{strictly} prefers its own bundle to every paid
+    agent's bundle;
+  \item a paid agent envies an unpaid agent by at most $1$.
+\end{itemize}
+
+Two consequences are worth stating before any search is set up. First, $S =
+\agents$ and $S = \emptyset$ impose \emph{identical} constraints, since the two
+indicators cancel; this is the structural reason the paid set is never all of
+$\agents$, and it is the combinatorial shadow of
+Proposition~\ref{prop:zero-coordinate}. Second, the existential over subsidy
+vectors has become an existential over bipartitions, of which there are $2^n$ ---
+the first formulation in which it is finite.
+
+\subsection{The search space and the potential}
+
+By Theorem~\ref{thm:hs-characterisation}(ii) an allocation is envy-freeable iff
+it maximises welfare among reassignments of its own bundles. So we search over
+\emph{partitions} and let the assignment be determined:
+
+\begin{definition}[Canonical form]
+\label{def:canonical}
+For a partition $\mathcal B = (B_1,\dots,B_n)$ of $\items$, the \emph{canonical
+allocation} $\alloc(\mathcal B)$ assigns bundles to agents by a minimum-cost
+perfect matching. It is envy-freeable, so $\pathw{\alloc(\mathcal B)}$ is finite.
+\end{definition}
+
+\begin{definition}[The potential]
+\label{def:potential}
+For a partition $\mathcal B$ with canonical allocation $\alloc$, set
+\[
+  \Psi(\mathcal B) \;:=\;
+  \Bigl(\; \max_{i \in \agents} \pathw{\alloc}(i), \;\;
+           \sum_{i \in \agents} \abs{B_i}^2 \;\Bigr)
+  \;\in\; \Z_{\ge 0} \times \Z_{\ge 0},
+\]
+ordered lexicographically. A \emph{transfer} moves one chore from one bundle to
+another.
+\end{definition}
+
+The conjecture this approach rests on is a statement about single transfers.
+
+\begin{conjecture}[Descent lemma]
+\label{conj:descent}
+Let $\mathcal B$ be a partition whose canonical allocation has
+$\max_i \pathw{\alloc}(i) \ge 2$. Then some transfer $\mathcal B'$ satisfies
+$\Psi(\mathcal B') < \Psi(\mathcal B)$.
+\end{conjecture}
+
+\subsection{The reduction, which is unconditional}
+
+\begin{theorem}[Descent suffices]
+\label{thm:descent-suffices}
+Conjecture~\ref{conj:descent} implies Conjecture~\ref{conj:main} in full: every
+instance with negative dichotomous valuations admits an envy-free solution
+$(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$ and total subsidy at most
+$n-1$, and one is computable in time $O(m^4 n^4)$ given value-oracle access.
+\end{theorem}
+
+\begin{proof}
+Start from any partition and pass to canonical form. While
+$\max_i \pathw{\alloc}(i) \ge 2$, apply Conjecture~\ref{conj:descent} to obtain a
+transfer strictly decreasing $\Psi$.
+
+\emph{Termination.} $\Psi$ takes values in $\Z_{\ge 0} \times \Z_{\ge 0}$ under
+the lexicographic order, which is a well-order, so no infinite strictly
+decreasing sequence exists. Quantitatively, every arc weight is at most $m$ in
+absolute value and $\pathw{\alloc}$ is a weight of a simple path, so the first
+coordinate lies in $\set{0,1,\dots,m}$; the second lies in $\set{m, \dots, m^2}$,
+since $\sum_i \abs{B_i}^2$ is minimised by an equal split and maximised by
+putting everything in one bundle. Hence $\Psi$ has at most $(m+1)(m^2+1) =
+O(m^3)$ values and the loop runs $O(m^3)$ times.
+
+\emph{Correctness.} The loop can only exit with $\max_i \pathw{\alloc}(i) \le 1$.
+By Observation~\ref{obs:integrality} the minimum subsidy vector is integral and
+non-negative, so $\optsubsidy \in \set{0,1}^n$; by
+Theorem~\ref{thm:hs-minsubsidy} the pair $(\alloc, \optsubsidy)$ is an envy-free
+solution; and by Proposition~\ref{prop:zero-coordinate} the total is at most
+$n-1$.
+
+\emph{Complexity.} One iteration examines $O(mn)$ transfers. Each requires a
+minimum-cost perfect matching on $n$ agents, $O(n^3)$ by the Hungarian method
+with $O(n^2)$ oracle calls, followed by an all-pairs longest-path computation on
+an $n$-vertex graph, $O(n^3)$. So an iteration costs $O(mn \cdot n^3) = O(mn^4)$
+and the whole procedure $O(m^4 n^4)$.
+\end{proof}
+
+Theorem~\ref{thm:descent-suffices} is the reason this approach is worth the
+space: unlike every earlier route, the gap between what is proved and
+Conjecture~\ref{conj:main} is a \emph{single} statement about \emph{single}
+transfers, and closing it delivers the polynomial-time clause for free rather
+than as a separate construction.
+
+\subsection{Why this potential and not the obvious one}
+
+The first potential tried was
+$\Psi_1 = (\max_i \pathw{\alloc}(i), \#\set{i : \pathw{\alloc}(i) = \max},
+\sum_i \cost_i(B_i))$, minimising total cost as a tie-break. It fails, and the
+witness explains the failure rather than merely exhibiting it. At $n = 3$,
+$m = 4$ with all four chores in one bundle and the other two empty,
+
+\[
+  \mathcal B = (\set{g_1,g_2,g_3,g_4}, \emptyset, \emptyset),
+  \qquad \pathw{\alloc} = (0,0,2),
+  \qquad \textstyle\sum_i \cost_i(B_i) = 2 ,
+\]
+every transfer leaves $\max_i \pathw{\alloc}(i) = 2$ and \emph{raises} the total
+cost. The reason is that dichotomous costs cap: the loaded agent already values
+its bundle at $2$, and removing one chore does not reduce that, while the
+recipient's cost rises. So the third coordinate pins the search at a utilitarian
+optimum --- precisely the class shown in Section~\ref{sec:approach6} not to be
+good in general. The tie-break must reward \emph{spreading chores out}, not
+minimising their total cost. Both $\sum_i \abs{B_i}^2$ and $\max_i \abs{B_i}$ do;
+$\sum_i \pathw{\alloc}(i)$ in place of the maximum does not.
+
+\begin{center}
+\begin{tabular}{llr}
+\toprule
+potential & tie-break & stuck partitions \\
+\midrule
+$(\max \ell,\, \#\text{at max},\, \sum_i \cost_i(B_i))$ & total cost   & $449$ \\
+$(\max \ell,\, \max_i \abs{B_i})$                       & largest bundle & $160$ \\
+$(\sum_i \ell_i,\, \sum_i \abs{B_i}^2)$                 & total envy first & $464$ \\
+\midrule
+$(\max \ell,\, \#\text{at max},\, \max_i \abs{B_i})$    & ---          & $0$ \\
+$(\max \ell,\, \#\text{at max},\, \sum_i \abs{B_i}^2)$  & ---          & $0$ \\
+$\Psi = (\max \ell,\, \sum_i \abs{B_i}^2)$              & ---          & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+$\Psi$ is the shortest surviving potential, which is why
+Definition~\ref{def:potential} takes it.
+
+\subsection{Where the remaining burden sits}
+
+The second coordinate of $\Psi$ moves in a completely explicit way, and this
+splits Conjecture~\ref{conj:descent} into two unequal halves.
+
+\begin{lemma}[Balance dichotomy]
+\label{lem:balance-dichotomy}
+Transferring a chore from a bundle of size $s$ to a bundle of size $t$ changes
+$\sum_i \abs{B_i}^2$ by exactly $2(t - s + 1)$. Hence the transfer strictly
+decreases the second coordinate of $\Psi$ if and only if $t \le s-2$.
+Consequently, if $\mathcal B$ is \emph{balanced} --- all bundle sizes within $1$
+of one another --- then no transfer decreases the second coordinate, and
+Conjecture~\ref{conj:descent} demands a transfer that strictly decreases
+$\max_i \pathw{\alloc}(i)$ itself.
+\end{lemma}
+
+\begin{proof}
+The sizes change from $(s,t)$ to $(s-1,t+1)$, so the sum changes by
+$(s-1)^2 + (t+1)^2 - s^2 - t^2 = 2(t-s+1)$, which is negative exactly when
+$t < s-1$. If all sizes lie in $\set{q, q+1}$ then $t \ge q \ge s-1$ for every
+ordered pair, so no transfer qualifies.
+\end{proof}
+
+So Conjecture~\ref{conj:descent} is really two claims. On unbalanced partitions
+one must find a size-equalising transfer that does not \emph{increase} the
+maximum subsidy; on balanced partitions one must strictly decrease the maximum
+subsidy by a single transfer. The second is the hard half and the natural next
+target: it is a statement about balanced partitions only, where every bundle has
+size $\lfloor m/n \rfloor$ or $\lceil m/n \rceil$, which is a far more rigid object than an
+arbitrary allocation. Note that the transfer is followed by re-matching, so a
+single transfer may permute the assignment substantially --- this is where the
+strength of the move comes from, and any proof must use it.
+
+\subsection{Evidence}
+
+Conjecture~\ref{conj:descent} was tested by enumerating \emph{every} partition of
+every test instance, computing $\Psi$ at each and at all $O(mn)$ of its
+transfers, and recording any partition with $\max_i \pathw{\alloc}(i) \ge 2$
+admitting no strict decrease.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+family & instances & stuck partitions \\
+\midrule
+random, $n \le 4$, $m \le 6$                    & $1{,}732$ & $0$ \\
+EF-free only, $n \le 5$, $m \le 6$              & $253$     & $0$ \\
+R10 Set-Splitting, certified hard               & $4$       & $0$ \\
+random, $n = 3$, $m \le 9$                      & $798$     & $0$ \\
+random, $n = 4$, $m \le 7$                      & $280$     & $0$ \\
+random, $n = 5$, $m \le 6$                      & $75$      & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The large-$m$ rows matter specifically: a size-based potential should fail when
+bundles grow, since $\sum_i \abs{B_i}^2$ can only be decreased by equalising
+sizes while a large bundle may be cheap under a capped cost function. No such
+failure appears up to $m = 9$. Separately, no instance in any of these families
+lacked a good allocation, so Conjecture~\ref{conj:main} itself remains unrefuted
+throughout.
