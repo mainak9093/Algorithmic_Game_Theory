@@ -841,6 +841,90 @@ dominant-marginal peels, $272{,}757$ ($9.4\%$) are illegal, and greedy descent
 under the rule reaches a terminal on only $10$ of $191$ instances.
 \end{remark}
 
+\subsection{Peel dynamics on the admissible paid sets}
+\label{sec:peel-paidsets}
+
+The object that is not blind at the root is the whole set of admissible
+potentials. Identify $p \in \set{0,1}^n$ with the paid set
+$S = \set{i : p_i = 1}$ and put
+\[
+  \paidsets(\workprofile) \;:=\;
+  \set{\,S \subseteq \agents \;:\;
+    \edgew{\workprofile}(i,k) \le \lambda_S(i,k) \ \text{ for all } i \ne k\,},
+\]
+where
+\[
+  \lambda_S(i,k) :=
+  \begin{cases}
+    0 & i,k \text{ on the same side of } S,\\
+    1 & i \in S,\ k \notin S,\\
+    -1 & i \notin S,\ k \in S,
+  \end{cases}
+\]
+so that $\workprofile$ is legal iff $\paidsets(\workprofile) \ne \emptyset$, by
+Lemma~\ref{lem:potential-form}. This is the two-tier data of
+Proposition~\ref{prop:twotier} carried along the peel process.
+
+\begin{observation}
+\label{obs:paidsets-root}
+At the root every arc weight is $0$, so $\lambda_S(i,k) = -1$ is violated for
+every pair with $i \notin S$, $k \in S$; hence
+$\paidsets(\text{root}) = \set{\emptyset, \agents}$ --- only the two constant
+potentials. Verified on $169$ instances without exception.
+\end{observation}
+
+The framework reproduces what is already proved. After
+$\mathrm{peel}(x,j)$ from the root the arcs are $\edgew{}(k,x) = \mu_k$,
+$\edgew{}(x,k) = -\mu_x$ and $0$ elsewhere, and $S = \agents \setminus \set{x}$
+is admissible exactly when $\mu_x \ge 1$, which with the free case is
+Proposition~\ref{prop:first-peel}.
+
+What the framework adds is the general safety criterion, of which
+Proposition~\ref{prop:tight-arc} is the special case $S = \set{i : \pathw{}(i)=1}$.
+
+\begin{proposition}[Out-arcs are free; only in-arcs can fail]
+\label{prop:inarcs-only}
+Let $S$ be any subset of $\agents$. After $\mathrm{peel}(x,j)$, the constraints on
+arcs \emph{out of} $x$ hold for $S$ whenever they held before, and the
+constraints on arcs not incident to $x$ are unchanged. Consequently
+\begin{align*}
+  S \in \paidsets(\workprofile')
+  \iff\ & S \text{ satisfies the non-$x$ constraints of } \workprofile, \\
+  \text{and}\ \ & \edgew{\workprofile}(i,x) + \mu_i \le \lambda_S(i,x)
+    \quad \text{for all } i \ne x .
+\end{align*}
+\end{proposition}
+
+\begin{proof}
+Lemma~\ref{lem:peel} leaves arcs not incident to $x$ untouched and replaces
+$\edgew{}(x,k)$ by $\edgew{}(x,k) - \mu_x \le \edgew{}(x,k)$, so any bound of the
+form $\edgew{}(x,k) \le \lambda_S(x,k)$ survives. The remaining constraints are
+those on arcs into $x$, which become $\edgew{}(i,x) + \mu_i \le \lambda_S(i,x)$.
+\end{proof}
+
+Two consequences worth having. First, legality of a peel is decided entirely by
+the arcs \emph{into} the peeled agent: peeling is safe exactly to the extent that
+the agents who envy $x$ can absorb $\mu_i$. Second --- and this is why
+$\paidsets$ is the right invariant rather than $\pathw{}$ ---
+$\paidsets(\workprofile') \not\subseteq \paidsets(\workprofile)$ in general: a
+set $S$ failing an out-arc constraint at $\workprofile$ may satisfy it at
+$\workprofile'$, since that arc dropped by $\mu_x$. New paid sets can appear.
+Lemma~\ref{lem:paid-peel} is exactly an instance: it produces the set
+$S \setminus \set{x}$, which need not lie in $\paidsets(\workprofile)$.
+
+\begin{remark}[Random testing has run out of power]
+\label{rem:testing-exhausted}
+Greedy rules driven by $\abs{\paidsets}$ were tried, maximising it at each step
+and --- as a control --- minimising it. Both terminate on all $169$ instances
+tested, so the criterion is not what makes them work; on random instances almost
+any legal balance-preserving greedy succeeds, because stuck states are of order
+$10^{-4}$ of the reachable set. Further progress on
+Conjecture~\ref{conj:balance-rule} has to be mathematical, not experimental:
+what is needed is a proof that some choice keeps $\paidsets$ non-empty, and
+Proposition~\ref{prop:inarcs-only} says such a proof only ever has to control the
+in-arcs at the peeled agent.
+\end{remark}
+
 So closing Conjecture~\ref{conj:balance-rule} needs a safety criterion strictly
 stronger than Lemmas~\ref{lem:free-peel-safe} and~\ref{lem:paid-peel}.
 Proposition~\ref{prop:tight-arc} says what such a criterion must engage with: it
