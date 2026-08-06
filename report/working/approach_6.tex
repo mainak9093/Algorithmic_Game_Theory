@@ -1054,6 +1054,74 @@ $\kappa_a - \kappa_b - \sum_P E_{ij}$ as a single object.
 \end{remark}
 
 % --------------------------------------------------------------------------
+\subsection{The closing arc: the one path-as-a-unit tool, and why it fails}
+\label{sec:approach6-closing-arc}
+
+Remark~\ref{rem:cancellation} says a proof may not split $\pathw{\alloc}$ into
+separately bounded parts. Exactly one classical tool respects that: close the
+heaviest path into a cycle. If $P$ is a heaviest path from $a$ ending at $b$, then
+$P + (b,a)$ is a cycle of non-positive weight, so
+\[
+  \pathw{\alloc}(a) \;\le\; -\edgew{\alloc}(b,a)
+  \;=\; \cost_b(\bundle{a}) - \cost_b(\bundle{b}). \tag{CL}
+\]
+This is the mechanism behind Theorem~\ref{thm:cyclebound} and
+behind~\cite[Lemma~4.1]{BDNSV20}, and it is strictly weaker than the uniform
+balance refuted in Section~\ref{sec:approach5}: uniform balance asks
+$\edgew{\alloc}(v,u) \ge -1$ for \emph{all} pairs, whereas (CL) needs it only for
+the single pair $(b,a)$ with $b$ ending $a$'s heaviest path.
+
+Note first that ``closing arc $\ge -1$'' is \emph{equivalent} to
+$\pathw{\alloc}(a) \le 1$, since $\pathw{\alloc}(a) \ge 2$ forces
+$-\edgew{\alloc}(b,a) \ge 2$ by (CL). So it cannot be tested as an independent
+hypothesis; its interest is as a proof target, being a claim about one pair rather
+than a path. The question that decides the route is therefore how much (CL) loses.
+
+\begin{proposition}[(CL) is too lossy at an IMWPM allocation]
+\label{prop:closing-arc-lossy}
+Over $452$ instances with $n \le 6$, $m \le 12$, on uniform, disjoint-interest and
+nested-interest families, the $210$ pairs $(a,b)$ with $b$ ending a heaviest path
+out of $a$ satisfied:
+\begin{itemize}
+  \item closing arcs $\edgew{\alloc}(b,a)$ distributed $-3\,{:}\,18$,
+    $-2\,{:}\,103$, $-1\,{:}\,89$ --- reaching $-3$;
+  \item slack $-\edgew{\alloc}(b,a) - \pathw{\alloc}(a)$ distributed
+    $0\,{:}\,89$, $1\,{:}\,103$, $2\,{:}\,18$, so (CL) is strictly lossy on
+    $58\%$ of the pairs and loses up to $2$.
+\end{itemize}
+Consequently (CL) certifies only $\pathw{\alloc}(a) \le 3$ where the truth is
+$1$, and proving ``closing arc $\ge -1$'' is a strictly harder statement than
+proving $\pathw{\alloc} \le 1$ (\texttt{update\_30/closing\_arc.py}).
+\end{proposition}
+
+So the route is worse than what it replaces, and the reason is instructive:
+endpoint pairs are the \emph{worst} pairs, not the best. Across the same run the
+arc distribution over all ordered pairs was $-4\,{:}\,5$, $-3\,{:}\,94$,
+$-2\,{:}\,619$, $-1\,{:}\,1846$, $0\,{:}\,1709$, $1\,{:}\,273$, so a typical arc
+is $-1$ or $0$ while every endpoint arc is at most $-1$. That is forced by what
+$b$ is: the agent everyone envies towards, hence the agent for whom other bundles
+look most expensive.
+
+\begin{remark}[Fourth instance of the cancellation]
+\label{rem:cancellation-four}
+Proposition~\ref{prop:closing-arc-lossy} is Remark~\ref{rem:cancellation} again in
+a fourth guise. (CL) bounds $\pathw{\alloc}$ by a single quantity, and that
+quantity is systematically more extreme than $\pathw{\alloc}$ itself. Together
+with the subsidy/size split, the round decomposition and the own-cost
+decomposition, every attempt to bound $\pathw{\alloc}$ by anything other than
+$\pathw{\alloc}$ has now come in strictly worse --- and the closing arc is the
+sharpest such attempt available, since it is the only one that treats the path as
+a unit. Whatever keeps $\pathw{\alloc}$ small at an IMWPM allocation is not
+visible in any single arc, any single round, or any two-term split of the path.
+\end{remark}
+
+The endpoint agents are nevertheless highly structured, which is worth recording
+even though it did not rescue the route: of the $210$ endpoints, $100\%$ had
+$\pathw{\alloc}(b) = 0$ (by construction), $94.3\%$ had the minimum own cost
+$\cost_b(\bundle{b})$ among all agents, $83.8\%$ paid in no round at all, and
+$73.8\%$ held a smallest bundle.
+
+% --------------------------------------------------------------------------
 \subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
 is submodularity}
 \label{sec:approach6-r11-audit}
