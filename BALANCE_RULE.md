@@ -2,6 +2,9 @@
 
 *Approach 3 of the dichotomous-chores subsidy project. Status as of 2026-08-08.*
 
+> **One statement is open: `conj:balance-rule`.** All machinery below is proved.
+> See §8 for what a proof would need and which candidate invariants are dead.
+
 This document is self-contained: it states the target, defines the peel frame,
 gives every proved lemma with its proof, and delimits exactly what is left. It is
 the working reference for the balance-rule line of attack.
@@ -432,14 +435,19 @@ $$w(i,x) + \mu_i \le \lambda_S(i,x) \quad \forall i \ne x$$
 
 plus the non-$x$ constraints — *one row of the envy matrix, not the whole graph.*
 
-**Constraints $\Phi$ must satisfy**, from the refutations:
+**Constraints $\Phi$ must satisfy**, from the refutations — the list has tightened
+considerably and is now the main obstacle:
 
 - not "legal ∧ balance-admitting" — the 37 stuck states satisfy it;
 - strictly stronger than the three safety lemmas — restricting to steps the
   first two certify (with $S$ free) reaches a terminal on only **48 of 191**
   instances, and the residual they leave is 4.7% of states;
 - it must produce a maximal-marginal first peel, since `prop:first-peel` proves
-  that is the only legal option at the root.
+  that is the only legal option at the root;
+- **it cannot read the move** — no feature of (state, move) separates peels into
+  a stuck state from peels away from one;
+- **it is not $(	extsc{commit})$**, the most natural state-only candidate, which
+  fails on 17 dead states.
 
 **Not required.** "balance $\Rightarrow$ live" (verified on 1.19M states) is
 motivational, not load-bearing: the chain never invokes it.
@@ -451,17 +459,33 @@ the polynomial algorithm, but means failure here would not refute Conjecture 2.
 
 ---
 
-## 8. The next milestone
+## 8. Status and what a proof would need
 
-**Certify one complete schedule** — even at $n=m=3$. That is the smallest thing
-that would show the lemma set can close, and it currently fails: the two lemmas
-carry a full schedule on 48 of 191 instances, so a third safety criterion is
-needed. `prop:inarcs-only` says where to look — the in-arcs at the peeled agent,
-and specifically at sets $S' \notin \mathcal P(W)$, since
-$\mathcal P(W') \not\subseteq \mathcal P(W)$ and new paid sets appear precisely
-when an out-arc drops by $\mu_x$.
+**Approach 3 has exactly one open statement: `conj:balance-rule`.** Everything
+else in this document is proved.
 
----
+**What is not close.** The local theory is complete — `prop:inarcs-only` decides
+any single peel exactly, and `cor:smax-canonical` collapses the $2^n$ search to
+one membership test. The *global* theorem is untouched. The honest measure is
+that certified-only schedules close **48 of 191** instances; per-step coverage of
+96.1% does not compound to a schedule.
+
+**What a proof needs** is an invariant $\Phi$ with (i) root, (ii) progress,
+(iii) soundness. Three families of candidate have now been eliminated:
+
+| candidate | why it fails |
+|---|---|
+| a local sufficient condition on the peel | four of them reach 96.1% and still only 48/191 schedules |
+| a predicate on (state, move) | nothing separates good from bad moves at the 171 predecessors |
+| $(	extsc{commit})$, a predicate on the state | 17 dead states satisfy it |
+
+That leaves $\Phi$ needing to be a predicate on the state that is strictly
+stronger than $(	extsc{commit})$ and not derived from $S_{\max}$ dynamics.
+No candidate is currently known.
+
+**Do not represent this as close to a proof of Conjecture 2.** There is no proof
+of any $n \ge 3$ case in any approach of the project; the unconditional results
+are $n = 2$ (all $m$) and $m \le n$.
 
 ## 9. Scripts
 
