@@ -364,3 +364,28 @@ two agents, not exact envy-freeness, and Example~\ref{ex:lowerbound} at $n = 2$
 already forces a dollar. The sub-problem at $n = 3$ is strictly harder than the
 one solved at $n = 2$, and the case must be attacked directly.
 \end{remark}
+
+\begin{remark}[No explicit rule solves the $n = 3$ residual either]
+\label{rem:n3-rules-fail}
+Section~\ref{sec:approach8} found no global objective whose optima are all good at
+general $n$, but it never tested one on the $n = 3$ residual, which is the only
+place the question has content. Seven lexicographic rules were tried there ---
+minimise the maximum own cost, with tie-breaks by total cost, by the number of
+agents at that maximum, by $\sum_i \abs{\bundle{i}}^2$, and the sorted own-cost
+vector with and without a balance tie-break.
+
+On a first sweep of $227$ residual instances, the rule ``minimise the sorted
+own-cost vector, then $\sum_i \abs{\bundle{i}}^2$'' had \emph{every} optimum good,
+with no failures --- the first rule anywhere in this report to do so on a
+residual. It does not survive. On $368$ residual instances it fails on $4$, and on
+one of them \emph{every} optimum is bad, so no tie-break can rescue it; the
+smallest failure is at $m = 4$ with singleton costs $(1,1,1,0)$, $(1,0,0,1)$,
+$(0,0,0,1)$. The earlier clean sweep was small-sample luck, of exactly the kind
+Remark~\ref{rem:double-refinement} records elsewhere: there a refinement survived
+$1{,}050$ instances and failed at a rate near $1$ in $2.6 \times 10^{4}$.
+
+So the explicit-rule route is closed at $n = 3$ as well as in general. What
+survives from this section is Observation~\ref{obs:n3-residual}: the residual is
+$6.2\%$ of instances, and at a minimal witness the singled-out agent is extremal
+in own cost.
+\end{remark}
