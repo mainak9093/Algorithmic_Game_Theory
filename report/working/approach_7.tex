@@ -10,8 +10,14 @@
 %%  split, which isolates balanced partitions as the entire remaining burden.
 %%  OPEN: (L_P6) itself, backed by ZERO stuck partitions over every partition
 %%  of every instance tested (n <= 5, m <= 9, including 253 EF-free instances
-%%  and R10's certified-hard family).  REFUTED: the cost-minimising potential
-%%  P1, whose failure is diagnosed rather than merely observed.
+%%  and R10's certified-hard family), and 7,416 crux partitions.
+%%  REFUTED: the cost-minimising potential P1, whose failure is diagnosed
+%%  rather than merely observed.  REFUTED: all five natural constructive rules
+%%  for the witnessing transfer, under both the Psi and the weaker P3
+%%  criterion -- in 2,264 of 7,416 crux partitions no transfer out of the
+%%  envious agent's own bundle works at all.  So the repairing move is not
+%%  local to the envy, and any proof must be non-constructive.  See also
+%%  rem:descent-stronger: this route proves MORE than Conjecture conj:main.
 %% ==========================================================================
 
 \section{Approach 7: descent on a lexicographic potential}
@@ -203,6 +209,76 @@ arbitrary allocation. Note that the transfer is followed by re-matching, so a
 single transfer may permute the assignment substantially --- this is where the
 strength of the move comes from, and any proof must use it.
 
+\subsection{The obstruction: the witnessing transfer is not local}
+\label{sec:approach7-obstruction}
+
+Conjecture~\ref{conj:descent} asserts that \emph{some} transfer works. A proof
+wants a \emph{rule} --- a named transfer, definable from the envy structure,
+that always works. The obvious candidates all fail, and the way they fail is
+informative.
+
+Two mechanisms can reduce an arc $\edgew{\alloc}(i,j) = \cost_i(\bundle{i}) -
+\cost_i(\bundle{j})$: remove a chore from $\bundle{i}$ to lower
+$\cost_i(\bundle{i})$, or add one to $\bundle{j}$ to raise
+$\cost_i(\bundle{j})$. Under dichotomous costs \emph{both can fail outright},
+because costs cap and marginals need not be monotone:
+
+\begin{itemize}
+  \item $\cost(S) = \min(\abs{S},1)$ has no chore whose removal lowers the cost
+    of a two-element bundle;
+  \item $\cost(S) = \max(\abs{S}-1,0)$ has no chore whose addition raises the
+    cost of the empty bundle.
+\end{itemize}
+
+Note that the second example also rules out the submodular shortcut: a chore may
+have marginal $1$ over a superset of $\bundle{j}$ and marginal $0$ over
+$\bundle{j}$ itself, so ``some chore raises $\cost_i(\bundle{j})$'' cannot be
+inferred from $\cost_i$ being large somewhere. This is the same failure of the
+exchange property that has obstructed every earlier approach in this report.
+
+Five rules were tested against all $7{,}416$ crux partitions --- balanced, with
+$\max_i \pathw{\alloc}(i) \ge 2$ --- under two criteria: the $\Psi$ criterion
+(strictly reduce $\max_i \pathw{\alloc}(i)$) and the weaker $P_3$ criterion
+(reduce $(\max_i \pathw{\alloc}(i), \#\text{at max})$ lexicographically).
+
+\begin{center}
+\begin{tabular}{llrr}
+\toprule
+rule & transfer & $\Psi$ criterion & $P_3$ criterion \\
+\midrule
+R1 & argmax-$\ell$ bundle $\to$ max-path endpoint & $2{,}856$ & $3{,}168$ \\
+R2 & argmax-$\ell$ bundle $\to$ its cheapest bundle & $3{,}827$ & $4{,}021$ \\
+R3 & argmax-$\ell$ bundle $\to$ anywhere           & $5{,}112$ & $5{,}152$ \\
+R4 & anywhere $\to$ max-path endpoint              & $6{,}039$ & $6{,}467$ \\
+R5 & largest bundle $\to$ smallest bundle          & $3{,}972$ & $4{,}086$ \\
+\midrule
+   & \emph{every transfer} (Conjecture~\ref{conj:descent}) & $7{,}416$ & $7{,}416$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The decisive row is R3. In $2{,}264$ of $7{,}416$ crux partitions, no transfer
+\emph{out of the envious agent's own bundle} works, even under the weaker
+criterion --- the witnessing move involves two bundles neither of which belongs
+to an agent attaining the maximum. So the move that repairs the envy is not
+local to the envy. Any proof of Conjecture~\ref{conj:descent} must therefore be
+non-constructive, or must name a rule of a kind not yet imagined; the five
+natural ones are exhausted.
+
+\begin{remark}[The descent lemma is strictly stronger than what is needed]
+\label{rem:descent-stronger}
+Conjecture~\ref{conj:descent} asserts more than
+Conjecture~\ref{conj:main}: it says both that good allocations exist and that
+greedy descent on $\Psi$ finds one, i.e.\ that $\Psi$ has no local minimum with
+$\max_i \pathw{\alloc}(i) \ge 2$. Conjecture~\ref{conj:main} is the statement
+that the \emph{global} minimum of $\Psi$ has first coordinate at most $1$. The
+extra strength is what buys the polynomial-time clause in
+Theorem~\ref{thm:descent-suffices} at no cost, but it also means this route is
+harder than the target, and the obstruction above may be a symptom of exactly
+that. A proof of Conjecture~\ref{conj:main} alone need not go through any local
+search.
+\end{remark}
+
 \subsection{Evidence}
 
 Conjecture~\ref{conj:descent} was tested by enumerating \emph{every} partition of
@@ -221,9 +297,19 @@ R10 Set-Splitting, certified hard               & $4$       & $0$ \\
 random, $n = 3$, $m \le 9$                      & $798$     & $0$ \\
 random, $n = 4$, $m \le 7$                      & $280$     & $0$ \\
 random, $n = 5$, $m \le 6$                      & $75$      & $0$ \\
+\midrule
+\emph{crux partitions only} (balanced, $\max \ell \ge 2$) & $7{,}416$ & $0$ \\
 \bottomrule
 \end{tabular}
 \end{center}
+
+The last row is the one that matters, and it was measured separately because the
+others do not imply it: ``zero stuck partitions over all partitions'' would be
+consistent with the crux population being empty. It is not. It is empty when
+$m = n$ --- a balanced partition then gives every agent one chore, and the
+min-cost matching caps $\pathw{\alloc}$ at $1$, so there is nothing to prove ---
+and it grows with $m$, reaching $990$ crux partitions at $n=3$, $m=9$ and
+$2{,}112$ at $n=4$, $m=6$. Every one of them admits a $\Psi$-decreasing transfer.
 
 The large-$m$ rows matter specifically: a size-based potential should fail when
 bundles grow, since $\sum_i \abs{B_i}^2$ can only be decreased by equalising
