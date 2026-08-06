@@ -292,6 +292,36 @@ $F(W') \subseteq F(W)$.
 > *Proof.* `lem:new-paidsets` gives $\mathcal P(W')\subseteq\mathcal P(W)$, and
 > the maximum of a subfamily is contained in the maximum of the family. $\square$
 
+**Proposition (what $S_{\max}$ is) — `prop:smax-closed-form`.** Let $\ell^*(k)$ be
+the heaviest weight of a path **ending** at $k$ (empty path $=0$). Then
+
+$$S_{\max}(W) = \{\, k : \ell^*(k) \le 0 \,\}$$
+
+> *Proof.* $w(i,k) \le p_i - p_k$ reads $p_k \le p_i - w(i,k)$; iterating along a
+> path ending at $k$ gives $p_k \le 1 - \ell^*(k)$, so $\ell^*(k)\ge1$ forces
+> $p_k=0$. Conversely $p_k := [\ell^*(k)\le 0]$ is admissible. $\square$
+
+Compare `cor:smin-is-ell`: **$S_{\min}$ is read off paths *leaving* an agent,
+$S_{\max}$ off paths *entering* it.** That duality is what makes $\mu_x=1$
+tractable.
+
+**Lemma (monotonicity off the peeled agent) — `lem:smax-mono-mu1`.** If
+$\mu_x = 1$ then $S_{\max}(W)\setminus\{x\} \subseteq S_{\max}(W')$.
+
+> *Proof.* Fix $k \ne x$ with $\ell^*(k)\le0$ and let $P$ end at $k$ in $W'$. If
+> $P$ avoids $x$, unchanged. If $P$ crosses $x$ it uses one arc in (risen by
+> $\mu_i \le 1$) and one out (fallen by $\mu_x = 1$), net $\le 0$. If $P$ starts
+> at $x$ it uses only a lowered arc. $\square$
+>
+> *(Verified: closed form on 93,819 states, monotonicity on 264,139 peels with
+> $\mu_x=1$; 0 violations each.)*
+
+With `prop:smax-monotone-mu0` this accounts for all observed behaviour but one
+case: $\mu_x=1$ with $x$ *leaving* $S_{\max}$, where $S_{\max}(W')$ contains
+$S_{\max}(W)\setminus\{x\}$ and could in principle also acquire a new element —
+making the two incomparable. **That never happens**, and proving it doesn't is
+what would close comparability.
+
 **Observation — `obs:smax-comparable`.** Over 615,517 peels, $F(W)$ and $F(W')$
 were **always comparable** under inclusion: 329,135 equal, 212,181 shrinking,
 74,201 growing, **0 incomparable**. The jump is not bounded by one — symmetric
@@ -299,9 +329,12 @@ difference reached 4 — and $F(W') \subseteq F(W)\cup\{x\}$ holds only 87.9% of
 the time.
 
 Since the shrinking half is proved, **every growth event has $\mu_x = 1$**,
-consistent with `lem:new-paidsets`. Comparability in the $\mu_x = 1$ case is
-**open**, and is the natural next lemma: it would make $F$ a monovariant along
-any schedule — the first quantity in this frame with a chance of being one.
+consistent with `lem:new-paidsets`.
+
+> ⚠ **Comparability would *not* make $F$ a monovariant** — $F$ both grows and
+> shrinks, so it gives no monotone progress. Termination was never the issue
+> anyway: each peel deletes an element, so $\sum_i|W_i|$ is already a
+> monovariant. The problem is legality, not termination.
 
 **Refuted — the canonical-support conjecture.** *"Every reachable legal
 balance-admitting state admits a balanced terminal $f$ with $f(j) \in S_{\max}$

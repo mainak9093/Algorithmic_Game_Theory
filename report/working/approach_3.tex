@@ -1030,6 +1030,59 @@ $\paidsets(\workprofile') \subseteq \paidsets(\workprofile)$, and the maximum of
 subfamily of a lattice is contained in the maximum of the family.
 \end{proof}
 
+The maximum of a difference-constraint system has a closed form, dual to the one
+for the minimum.
+
+\begin{proposition}[What $S_{\max}$ is]
+\label{prop:smax-closed-form}
+Let $\pathwin(k)$ denote the heaviest weight of a directed path \emph{ending} at
+$k$, the empty path counting as $0$. Then
+\[
+  S_{\max}(\workprofile) \;=\; \set{\, k \;:\; \pathwin(k) \le 0 \,}.
+\]
+\end{proposition}
+
+\begin{proof}
+The constraints $\edgew{}(i,k) \le p_i - p_k$ read $p_k \le p_i - \edgew{}(i,k)$,
+so iterating along a path ending at $k$ gives $p_k \le p_{\text{start}} -
+\pathwin(k) \le 1 - \pathwin(k)$. Hence $\pathwin(k) \ge 1$ forces $p_k = 0$.
+Conversely the vector $p_k := 1$ if $\pathwin(k) \le 0$ and $0$ otherwise is
+admissible: for an arc $(i,k)$, if $p_k = 1$ then $\pathwin(k) \le 0$, so
+$\pathwin(i) + \edgew{}(i,k) \le \pathwin(k) \le 0$ and, as $\pathwin(i) \ge 0$,
+$\edgew{}(i,k) \le 0 = p_i - p_k$ when $p_i = 1$; the case $p_i = 0$ gives
+$\pathwin(i) \ge 1$, whence $\edgew{}(i,k) \le \pathwin(k) - \pathwin(i) \le -1$
+as required.
+\end{proof}
+
+Compare Corollary~\ref{cor:smin-is-ell}: $S_{\min}$ is read off the paths
+\emph{leaving} each agent, $S_{\max}$ off the paths \emph{entering} it. That
+duality is what makes the $\mu_x = 1$ case tractable.
+
+\begin{lemma}[Monotonicity off the peeled agent]
+\label{lem:smax-mono-mu1}
+If $\mu_x = 1$ then $S_{\max}(\workprofile) \setminus \set{x} \subseteq
+S_{\max}(\workprofile')$.
+\end{lemma}
+
+\begin{proof}
+Fix $k \ne x$ with $\pathwin(k) \le 0$, and let $P$ be any path ending at $k$ in
+$\workprofile'$. If $P$ avoids $x$ its weight is unchanged. If $P$ passes through
+$x$, it uses one arc into $x$, which rose by some $\mu_i \le 1$, and one arc out
+of $x$, which fell by $\mu_x = 1$; the net change is $\mu_i - 1 \le 0$. If $P$
+starts at $x$ it uses only a lowered arc. In every case the weight does not
+increase, so the heaviest path ending at $k$ in $\workprofile'$ still has weight
+at most $\pathwin(k) \le 0$, and
+Proposition~\ref{prop:smax-closed-form} places $k$ in $S_{\max}(\workprofile')$.
+\end{proof}
+
+Verified: the closed form on $93{,}819$ states and the monotonicity lemma on
+$264{,}139$ peels with $\mu_x = 1$, both with $0$ violations. Together with
+Proposition~\ref{prop:smax-monotone-mu0} this accounts for all of the observed
+behaviour except one case: $\mu_x = 1$ with $x \in S_{\max}(\workprofile)$
+leaving, where $S_{\max}(\workprofile')$ contains
+$S_{\max}(\workprofile) \setminus \set{x}$ and might in principle also acquire a
+new element, which would make the two incomparable. That never happens.
+
 \begin{observation}[$F$ never moves sideways]
 \label{obs:smax-comparable}
 Over $615{,}517$ peels, $F(\workprofile)$ and $F(\workprofile')$ were
