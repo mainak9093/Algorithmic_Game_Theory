@@ -291,3 +291,76 @@ So this is a solved case in the same sense as the others in this section: real,
 checkable, and not load-bearing. What it contributes is the counterexample and
 Remark~\ref{rem:arc-vs-path}, which say that any complete method must reason
 about paths rather than arcs.
+
+% --------------------------------------------------------------------------
+\subsection{The residual at \texorpdfstring{$n = 3$}{n=3}, and who gets paid}
+\label{sec:n3-residual}
+
+Every approach in this report has attacked the general case, and each died on a
+general obstruction. The one gap in that coverage is a dedicated attack on a
+bounded case beyond $n = 2$. At $n = 3$ the target is finite in a useful way: by
+Proposition~\ref{prop:zero-coordinate} Conjecture~\ref{conj:main} is the single
+clause $\max_i \pathw{\alloc}(i) \le 1$, and by the two-tier characterisation with
+Theorem~\ref{thm:paidsets-lattice} the paid set lies in a lattice inside
+$2^{\set{1,2,3}}$ in which $\emptyset$ and $\agents$ impose the same condition. So
+there are exactly three cases, $\abs{S} = 0, 1, 2$, and
+Example~\ref{ex:lowerbound} shows the last is sometimes forced.
+
+\begin{observation}[The residual is small and its paid set is extremal]
+\label{obs:n3-residual}
+Over $2{,}460$ instances at $n = 3$ drawn from six families --- uniform, nested,
+mixed, capped, threshold and disjoint-interest --- searched exhaustively over all
+$3^m$ allocations:
+\begin{itemize}
+  \item every instance admits a good allocation; the minimal paid-set size is
+    $0$ on $2{,}304$, $1$ on $135$ and $2$ on $21$, so the residual beyond exact
+    envy-freeness is $156$ instances, $6.2\%$;
+  \item in \emph{every} minimal witness with $\abs{S} = 1$, the paid agent attains
+    $\max_i \cost_i(\bundle{i})$ --- $135$ of $135$;
+  \item in \emph{every} minimal witness with $\abs{S} = 2$, the unpaid agent
+    attains $\min_i \cost_i(\bundle{i})$ --- $21$ of $21$.
+\end{itemize}
+Bundle size does \emph{not} characterise it: the paid agent holds a largest
+bundle in only $91$ of $135$ witnesses, and the unpaid agent a smallest in $2$ of
+$21$ (\texttt{update\_44/n3\_cases.py}).
+\end{observation}
+
+So at a minimal witness the singled-out agent sits at an extreme of \emph{own
+cost}, which removes the choice of \emph{which} agent is paid: one may assume it
+is an $\argmax_i \cost_i(\bundle{i})$ when $\abs{S} = 1$, and that the unpaid one
+is an $\argmin$ when $\abs{S} = 2$. That is a necessary condition, not a
+sufficient one, and it is what a case analysis at $n = 3$ would start from.
+
+\begin{remark}[The tempting unification is false]
+\label{rem:n3-unified-false}
+Both clauses look like instances of $S = \set{i : \cost_i(\bundle{i}) >
+\min_j \cost_j(\bundle{j})}$ --- the paid agents being exactly those not attaining
+the minimum own cost. They are not. Over the residual instances that equality
+holds at \emph{some} minimal witness on $59$ of $69$ at $n = 3$, and at
+\emph{every} one on only $37$; the failure is visible already when two agents tie
+at the maximum while $\abs{S} = 1$. At $n = 4$ and $n = 5$ it fares better
+($48/53$ and $67/69$ for every witness), which is a warning rather than a
+comfort: the equality is not a theorem and should not be assumed.
+\end{remark}
+
+\begin{remark}[No counterexample, and the limits of looking]
+\label{rem:no-counterexample}
+Conjecture~\ref{conj:main} was also attacked directly, by searching for an
+instance admitting \emph{no} good allocation. Over $683$ instances at
+$n \le 6$, $m \le 11$, each searched exhaustively over all $n^m$ allocations and
+drawn from the adversarial families above, none was found. The power of that
+search is limited and should be read as such: only $32$ of the $683$ were hard at
+all, in the sense of admitting no exactly envy-free allocation, so the conjecture
+was under strain on under $5\%$ of the sample
+(\texttt{update\_44/counterexample\_hunt.py}).
+\end{remark}
+
+\begin{remark}[Why the two-agent theorem does not bootstrap]
+\label{rem:n2-no-bootstrap}
+In the $\abs{S} = 1$ case the two unpaid agents are exactly envy-free between
+themselves, which invites using Theorem~\ref{thm:n2-complete} on the sub-instance
+they share. It does not apply: that theorem delivers a subsidy of at most one for
+two agents, not exact envy-freeness, and Example~\ref{ex:lowerbound} at $n = 2$
+already forces a dollar. The sub-problem at $n = 3$ is strictly harder than the
+one solved at $n = 2$, and the case must be attacked directly.
+\end{remark}
