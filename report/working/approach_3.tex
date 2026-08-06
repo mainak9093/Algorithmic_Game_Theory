@@ -592,11 +592,25 @@ failures over $305$ instances at $n = 3$ ($m \le 6$), $n = 4$ ($m \le 4$) and
 $n = 5$ ($m = 3$) (\texttt{update\_32/balance\_rule.py}).
 \end{observation}
 
-\begin{conjecture}[Balance-rule maintenance]
+\begin{conjecture}[Balance-rule reachability]
 \label{conj:balance-rule}
-From every legal, non-terminal state admitting a balanced terminal, some legal
-peel or permutation leads to another legal state admitting a balanced terminal.
+Restricting the state graph to states that are both legal and balance-admitting,
+a terminal is reachable from the root.
 \end{conjecture}
+
+\begin{remark}[The pointwise form is false]
+\label{rem:balance-rule-pointwise-false}
+The stronger and more convenient statement --- \emph{from every} legal,
+non-terminal, balance-admitting state some legal move leads to another such
+state --- is refuted. Over $537{,}541$ legal balance-admitting non-terminal
+states, $5$ admit no legal balance-preserving peel and no legal permutation
+followed by one; the smallest is $n = 3$, $m = 4$ with
+$\workprofile = (\set{g_1,g_2}, \set{g_3,g_4}, \set{g_3,g_4})$. So the rule is
+not a local invariant that holds everywhere: those states are simply not reached
+from the root along the restricted graph, which is why
+Observation~\ref{obs:balance-rule-complete} sees no failure. Any proof must
+therefore argue about reachability from the root, not about arbitrary states.
+\end{remark}
 
 \begin{proposition}
 \label{prop:balance-rule-implies}
@@ -607,15 +621,60 @@ choosing a peel by one max-flow feasibility test.
 
 \begin{proof}
 The root is legal, its graph being identically zero, and admits a balanced
-terminal. Conjecture~\ref{conj:balance-rule} extends any such state to another,
-and each peel strictly decreases $\sum_i \abs{\workprofile_i}$, so after finitely
-many steps a terminal is reached with the invariant holding throughout --- which
-is Conjecture~\ref{conj:h1prime}. That implies Conjecture~\ref{conj:main} as
+terminal, so the restricted graph is non-empty.
+Conjecture~\ref{conj:balance-rule} supplies a path in it from the root to a
+terminal; every state on that path is legal, which is
+Conjecture~\ref{conj:h1prime}, and that implies Conjecture~\ref{conj:main} as
 already shown. Each step tests $O(nm)$ candidate peels, each by a transportation
 feasibility check on a bipartite graph with $n + m$ nodes.
 \end{proof}
 
-Two honest qualifications. First, Conjecture~\ref{conj:balance-rule} is
+\paragraph{What a proof must supply, and what it need not.} Two reductions narrow
+the target considerably.
+
+\begin{lemma}[Balance-preservation is free]
+\label{lem:balance-free}
+Let $\workprofile$ be non-terminal and admit a balanced terminal $f$. Then for
+every chore $j$ with $\abs{S_j} \ge 2$ and every $i \in S_j \setminus
+\set{f(j)}$, the state $\mathrm{peel}(i,j)$ still admits $f$.
+\end{lemma}
+
+\begin{proof}
+Peeling removes $i$ from $S_j$ only, and $f(j) \ne i$ lies in $S_j$ still, so $f$
+remains a legal choice function; the induced sizes are unchanged.
+\end{proof}
+
+So the balance half of the rule costs nothing: the entire content is
+\emph{legality}. A legal balance-preserving peel exists at $529{,}579$ of
+$537{,}541$ states, and at $342{,}048$ of them one such peel is \emph{free} ---
+no arc into the peeled agent rises at all, so legality is preserved
+automatically by Lemma~\ref{lem:peel}. Free peels are thus the common case, and
+the open question is what to do at the remainder.
+
+Second, the earlier guess at \emph{why} balance certifies liveness is wrong and
+should not be reused. One would expect a balance-admitting state to admit a
+balanced terminal that is itself legal, reached by a legal schedule. Both halves
+fail: over $349{,}188$ balance-admitting legal states, $76{,}220$ ($21.8\%$)
+admit \emph{no} legal balanced terminal at all, and of those that do, $3{,}669$
+admit no legal ordering of the peels down to one
+(\texttt{update\_33/why\_balance\_works.py}). Those states are live nonetheless
+--- the legal terminal they reach is \emph{unbalanced}. Balance is a certificate
+of liveness, not a description of the destination.
+
+What the dead states do look like is visible directly. Every dead state has
+$\min_j \abs{S_j} = 1$, and no state with $\min_j \abs{S_j} \ge 2$ was ever dead;
+the smallest witnesses are
+\[
+  \workprofile = (\set{g_2}, \set{g_2}, \set{g_1,g_3,g_4}),
+  \qquad \cost_i(\workprofile_i) = (0,0,2),
+\]
+in which $g_1, g_3, g_4$ are already committed to agent~$3$, so every terminal
+below forces it to hold three chores at cost $2$ while the others hold at most
+one --- and that same over-commitment is exactly what makes a balanced terminal
+impossible. Death is over-commitment to one agent, and balance-admissibility is
+the checkable shadow of it.
+
+\paragraph{Qualifications.} First, Conjecture~\ref{conj:balance-rule} is
 \emph{stronger} than Conjecture~\ref{conj:main}, as
 Remark~\ref{rem:converse} already warns for Conjecture~\ref{conj:h1prime}: a good
 allocation may exist while no legal schedule reaches one. Second, the sufficient
