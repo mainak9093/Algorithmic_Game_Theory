@@ -76,33 +76,6 @@ for an escalation.
 arbitrary reweightings $u_i$ of the replica and ask only that they separate the
 coverage allocations from the rest. They cannot.
 
-\begin{theorem}
-\label{thm:w3}
-Let $u_i = \hat{v}_i + \varepsilon d$ for every $i$, where
-$d(S) := \abs{S} - \abs{\tau(S)}$ counts duplicated copies, with the same
-$\varepsilon$ for all agents. Then $\edgew{B}^u(i,k) = \edgew{B}^{\hat{v}}(i,k) +
-\varepsilon(d(B_k) - d(B_i))$, and hence: \emph{(1)} every directed cycle has the
-same weight in both graphs, so a uniform penalty can never \emph{disqualify} an
-allocation; \emph{(2)} the agent holding the most duplicates gets weakly
-\emph{smaller} subsidy --- the penalty lands on the wrong agents; \emph{(3)} if
-$d(B_1) = \dots = d(B_n)$ the two graphs are identical, whatever $\varepsilon$.
-\end{theorem}
-
-\begin{proof}
-The identity is immediate. The correction telescopes to $0$ around any cycle,
-giving (1), and to endpoint minus start along a path, giving (2). For (3) all
-corrections vanish.
-\end{proof}
-
-\begin{example}[Maximally non-coverage, and invisible]
-\label{ex:w3}
-Take $n = m = 3$ with $\cost_i(S) = \abs{S}$ for every $i$, and let $B_i$ be both
-copies of $b_i$. Then $d(B_i) = 1$ for all $i$, so Theorem~\ref{thm:w3}(3)
-applies: every arc is $0$ and $\pathw{B}^u = (0,0,0)$. Yet every chore has two
-owners --- as far from coverage as possible. Exactly the outcome the staging was
-designed to prevent, and no $\varepsilon$ sees it.
-\end{example}
-
 \begin{theorem}[No-go]
 \label{thm:w4}
 There is a negative dichotomous instance on which \emph{no} faithful reweighting
@@ -147,17 +120,15 @@ Theorem~\ref{thm:f2} denies.
 \subsection{Why both fail: holder-blindness}
 \label{sec:holderblind}
 
-The two failures have one cause, and naming it is the useful output of this
-section.
-
-A duplicate penalty bites only through the arcs. Agent $k$ charging $+1$ for the
-duplicates in bundle $B_x$ adds $+1$ to $\edgew{}(k,x)$ --- but the same charge
-levied by $x$ on her own bundle adds $+1$ to $u_x(B_x)$, which is $-1$ on every
-arc \emph{out of} $x$. The two cancel around every cycle. So a penalty can
-disqualify an allocation only if the agent who \emph{holds} the duplicate does
-not feel it while somebody else does. But $u$ is fixed before the allocation is
-chosen, and it is the allocation that decides who holds the duplicate. Requiring
-the holder to be blind for every possible holder forces the penalty to zero.
+Both failures have one cause. A price on duplicates bites only through the arcs
+of the envy graph, and there it cancels: whatever an agent is charged for the
+duplicates she holds lowers every arc \emph{out of} her by the same amount that
+the charge raises the arcs \emph{into} her from everyone else. Around a cycle the
+two contributions annihilate, so a price can disqualify an allocation only if the
+agent who \emph{holds} the duplicate does not feel it while somebody else does.
+But the prices are fixed before the allocation is chosen, and it is the
+allocation that decides who holds the duplicate. Requiring the holder to be blind
+for every possible holder forces the price to zero.
 
 \begin{remark}[Verdict]
 \label{rem:w5}
