@@ -1243,6 +1243,34 @@ provably avoids them, and that is now the whole of the gap: the free case is
 settled by Lemma~\ref{lem:free-peel-safe}, and the non-free case is settled
 empirically but not in principle.
 
+\begin{remark}[The avoiding choice is not locally legible]
+\label{rem:no-separating-feature}
+Theorem~\ref{obs:smax-comparable} suggests looking for the rule in the dynamics
+of $S_{\max}$: if a peel moves it along a chain, a stuck state might be entered
+only by a distinguished kind of step. It is not. Taking every predecessor of a
+stuck state --- a state admitting a legal balance-preserving peel into one, of
+which there are $171$ --- and comparing the peels that enter a stuck state against
+those that do not, no feature available to a rule separates them:
+\begin{center}\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+feature & separates bad from good, per predecessor \\
+\midrule
+whether $S_{\max}$ shrinks, stays or grows & $2 / 171$ \\
+whether the peeled agent lies in $S_{\max}$ & $0 / 171$ \\
+$\mu_x$ & $2 / 171$ \\
+the change in $\abs{S_{\max}}$ & $7 / 171$ \\
+the number of chores still peelable & $0 / 171$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Indeed the same signature occurs on both sides: the profile
+$(\text{shrinks},\, x \in S_{\max},\, \mu_x = 1)$ arises $102$ times on peels into
+a stuck state and $35$ times on peels away from one. Whatever distinguishes the
+schedules that avoid the stuck states is not visible in the state and the move
+(\texttt{update\_42/predecessors.py}).
+\end{remark}
+
 \paragraph{Qualifications.} First, Conjecture~\ref{conj:balance-rule} is
 \emph{stronger} than Conjecture~\ref{conj:main}, as
 Remark~\ref{rem:converse} already warns for Conjecture~\ref{conj:h1prime}: a good
