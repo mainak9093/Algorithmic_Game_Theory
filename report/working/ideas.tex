@@ -1,613 +1,175 @@
 %% ==========================================================================
-%%  Ideas and Open Threads --- running log
+%%  Open threads --- status register.
 %%
-%%  THIS IS THE INBOX.  New thinking about the problem lands here first: half
-%%  -formed arguments, things to check, reasons to believe or disbelieve the
-%%  conjecture, failed attempts worth remembering.
-%%
-%%  CONVENTION.  One \subsection per idea, newest at the bottom, each headed
-%%  with the date it was recorded.  Say what the idea is, why it might work,
-%%  and what would kill it.  Nothing here is claimed to be true.
-%%
-%%  PROMOTION PATH.  idea -> proved and machine-checked -> its own section
-%%  under working/ -> a section under sections/ in the report itself.  When an
-%%  idea graduates, replace its entry here with a one-line pointer rather than
-%%  deleting it, so the record of how the argument was found survives.
+%%  Replaces the former "Ideas and Open Threads" running inbox and the
+%%  "Directions" enumerate of the conclusion, both of which had gone stale.
+%%  Every thread this project has raised appears exactly once here, with a
+%%  status.  Full text of the retired entries is in git history (see the
+%%  commit that introduced this file).
 %% ==========================================================================
-\section{Ideas and Open Threads}
+\section{Open Threads: Status Register}
 \label{sec:ideas}
 
-A running log, newest last. Nothing in this section is claimed to be true.
+Every thread this investigation has raised is listed once below, with a status.
+The vocabulary is fixed:
 
-% --------------------------------------------------------------------------
-\subsection*{2026-08-01 --- What the two negative results jointly require}
+\begin{description}\itemsep2pt
+  \item[\textsc{proved}] a theorem of this report.
+  \item[\textsc{refuted}] a counterexample or machine-verified failure exists.
+  \item[\textsc{withdrawn}] asserted here, then falsified by later work here.
+  \item[\textsc{open}] precisely stated, unrefuted, and load-bearing.
+  \item[\textsc{unexplored}] stated, never tested.
+  \item[\textsc{superseded}] absorbed into a later, stronger formulation.
+  \item[\textsc{excluded}] deliberately out of scope.
+\end{description}
 
-Taking Theorem~\ref{thm:obstruction} and Proposition~\ref{prop:msw-false}
-together, any correct algorithm must be free to (i) move already-allocated
-chores between bundles and (ii) give up total cost while doing so. Every
-construction that currently works does so by exhibiting a per-agent potential
-$\phi$ with $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$, which telescopes along
-paths and vanishes around cycles. \emph{Finding such a potential for general
-negative dichotomous costs, or proving that none exists, is the problem.} In
-Theorem~\ref{thm:binadd} the potential is $\phi_i = u_i$, the count of
-universally disliked chores held; in Theorem~\ref{thm:identical} it is
-$\phi_i = \cost(\bundle{i})$. What is the right $\phi$ in general?
+\subsection*{The live chain}
 
-Worth noting that the existence of such a $\phi$ is not merely sufficient but
-close to necessary: if $\optsubsidy \in \set{0,1}^n$ then $\phi_i :=
-\optsubsidy_i$ satisfies $\edgew{\alloc}(i,j) \le \phi_i - \phi_j$ by definition
-of an envy-free solution. So the search for a potential and the search for a
-proof are the same search, and the content is in constructing $\phi$ and the
-allocation \emph{together}.
-
-% --------------------------------------------------------------------------
-\subsection*{2026-08-03 --- routes surviving the two no-go results}
-
-\Cref{sec:approach4} closes valuation-level encoding and algorithm-level weight
-forcing, and Corollary~\ref{cor:no-refinement} closes every rule that selects
-inside the utilitarian-optimal set. What remains splits by which of those
-failures it avoids.
-
-\textbf{Route M --- iterated matching.} \cite[\S3]{LMS26} develops the
-objective-chores analogue of iterated maximum-weight \emph{perfect} matching,
-padding with zero-valued dummies so every agent takes one object per round,
-which makes the output balanced. The obvious lift to our setting --- each round
-assign every agent one remaining chore minimising the total marginal
-$\sum_i [\cost_i(\bundle{i} \cup \set{g_i}) - \cost_i(\bundle{i})]$ --- does
-\emph{not} give $\pathw{} \le 1$ for non-additive dichotomous costs: it fails on
-$13/250$ instances at $n=3,m=4$ and $10/120$ at $n=3,m=5$ (\texttt{rules.py}).
-That is diagnostic rather than discouraging, and \cite{LMS26} flags the obstacle
-itself: the telescoping needs additivity, because an additive round-$t$ cost is
-independent of what came before whereas a dichotomous marginal depends on the
-bundle already held. The repair to attempt is a round invariant replacing the
-additive domination --- each round's matching minimum-cost \emph{conditioned on
-the current bundles}, with marginals non-increasing across rounds, a ``peel the
-free chores first'' discipline. \textbf{Status:} the naive lift is refuted; the
-conditioned version is untested.
-
-\textbf{Route A --- induct on agents, not items.} Every approach so far inducts
-on items. \cite[\S4.3.1]{LMS26} instead maintains a set of active agents, adds
-one at a time, and restores two invariants: compensated utility at least
-$\lambda$ with $\lambda \le \subsidy_i \le 1$, and an equality path from every
-active agent to the set of minimum compensated utility. For chores this is
-attractive because a newcomer starts with an empty bundle, which is the
-\emph{cheapest} bundle, so the newcomer is the natural sink and the orientation
-problem of \Cref{sec:approach1} does not arise. The invariant carried is the
-equality graph rather than a subsidy scalar --- which is precisely the extra
-information Theorem~\ref{thm:f2} and Proposition~\ref{prop:f4} say a recipient
-rule needs. \textbf{Status:} untried, and the most promising of these.
-
-\textbf{Route N --- non-redundancy instead of coverage.} Theorem~\ref{thm:f2}
-says the failing placements are exactly the zero-marginal ones, and the
-literature already forbids those under the name non-wastefulness. A duplicate is
-redundant for its holder by construction, so ask for a \emph{non-redundant}
-allocation of the replica set --- which General Yankee Swap is built to maintain
---- and measure how far non-redundancy falls short of coverage. The two are not
-equivalent: a duplicate can be redundant for everyone when every other agent
-already holds the type or has zero marginal for it. But the residual gap is
-narrower than coverage itself and is exactly characterisable. \textbf{Status:}
-cheap to test, untested.
-
-\textbf{Route X --- matroid exchange.} As in \Cref{sec:mrf}. Highest ceiling,
-highest cost; the parallel-extension step needs a full proof before anything is
-built on it.
-
-\textbf{Ranking.} Route A, then Route M's conditioned repair, then Route N,
-then Route X. Conjecture~\ref{conj:h1pp} --- the type-ordered peel --- stays
-live alongside them and has the best evidence of anything currently open.
-
-% --------------------------------------------------------------------------
-\subsection*{2026-08-06 --- a cleaner rule than construct-and-repair}
-
-\textbf{The idea.} \emph{Among cardinality-balanced allocations of minimum total
-cost, take one minimising the number of envious ordered pairs
-$\#\set{(i,j) : \cost_i(\bundle{i}) > \cost_i(\bundle{j})}$.} A single two-level
-optimisation: no local search, no restarts, no schedule, no warm start.
-
-\textbf{Why it might work.} It sidesteps Corollary~\ref{cor:no-refinement}
-because the counterexample there has a \emph{unique} optimum of sizes
-$(0,3,1)$, which is not balanced --- restricting the optimisation to balanced
-allocations removes it from the feasible set entirely. A cost-minimising
-balanced allocation is automatically envy-freeable, since any reassignment of
-its own bundles is another balanced allocation and so cannot be cheaper, which
-means only $\pathw{} \le 1$ remains to be shown. The second criterion is the one
-aligned with Proposition~\ref{prop:twotier}: in a $\set{0,1}$ solution envy runs
-only from the paid tier to the unpaid one, so minimising envy count pushes
-towards exactly the two-tier shape.
-
-\textbf{Status.} Zero failures in the \emph{strong} form --- every allocation
-the rule can select is good --- over $41{,}196$ instances: exhaustive over all
-dichotomous triples at $n = m = 3$, exhaustive over structured families at
-$m \le 4$, and endpoint-constant sweeps to $n = 5$, $m = 6$
-(\texttt{update\_8/ruleD\_adv.py}). Without the tie-break the cost-minimising
-balanced set always \emph{contains} a good allocation but is not uniformly good;
-the three other natural tie-breaks --- leximin own-cost, minimum total perceived
-load, leximin perceived load --- each fail at $n = 3$, $m = 4$
-(\texttt{tiebreak\_balanced.py}).
-
-\textbf{What would kill it.} A balanced instance where every minimum-cost,
-minimum-envy allocation needs subsidy $2$. \textbf{Not proved}, at any $n$: an
-attempt at $n = 3$ stalled on the exchange step, because dichotomous costs need
-not be submodular and a bundle of positive cost need not contain any single item
-whose removal lowers it --- so ``$\cost_u(\bundle{u})$ is large, therefore some
-swap improves'' is unavailable. That is the same missing exchange property that
-makes the matroid-rank subclass (\Cref{sec:mrf}) the natural next target: there
-it \emph{is} available.
-
-% --------------------------------------------------------------------------
-\subsection*{2026-08-06 --- at most two distinct cost functions}
-
-\textbf{The idea.} Suppose the $n$ agents carry only \emph{two} distinct cost
-functions $\cost$ and $\cost'$, in groups of sizes $k$ and $n-k$. This strictly
-generalises the identical-cost case of Theorem~\ref{thm:identical} and is not
-covered by anything cited here: the literature settles identical, additive and
-submodular costs, but ``two types of agents'' is a different slice --- one that
-does appear in the house-allocation work of~\cite{DCWXZ24} as a tractable
-restriction, which is mild evidence it is the right kind of hypothesis.
-
-\textbf{Why it might work.} The two-tier conditions collapse dramatically. For
-two agents of the same type in the same tier, (a) forces
-$\cost(\bundle{i}) = \cost(\bundle{j})$ exactly; for two of the same type in
-different tiers, (b) and (c) force
-$\cost(\bundle{i}) = \cost(\bundle{j}) + 1$ exactly. So within each type group
-the bundle costs take at most two values, differing by exactly one, and the
-tier split inside that group is determined by which value a bundle takes. What
-remains is a finite system of cross-group inequalities in two functions rather
-than $n$, which is the kind of thing a direct construction can attack.
-
-\textbf{Status.} Untried as a proof. Zero failures over $7{,}805$ two-type
-instances at $m \in \set{3,4}$, $n \in \set{3,4}$, both for existence and for
-the rule of the previous entry (\texttt{update\_9/structural.py}). Worth one
-session: it is the first class in a while where the conditions genuinely
-simplify rather than merely being restricted.
-
-\textbf{What would kill it.} A two-type instance with no good allocation. Note
-this would also refute Conjecture~\ref{conj:main} outright, so the search is
-worth running for its own sake.
-
-% --------------------------------------------------------------------------
-\subsection*{2026-08-06 --- induct on the depth of the cost functions}
-
-\textbf{The idea.} Stop inducting on items, on agents, or on schedules, and
-induct on the \emph{cost functions themselves}. Every dichotomous $\cost$
-decomposes into nested monotone Boolean layers: putting $\mathcal{F}_t :=
-\set{S : \cost(S) \ge t}$, each $\mathcal{F}_t$ is upward-closed,
-$\mathcal{F}_1 \supseteq \dots \supseteq \mathcal{F}_K$ with $K = \cost(\items)$,
-and
+Conjecture~\ref{conj:main} currently reduces as follows; every implication is
+proved, so the chain is only as strong as its weakest open link.
 \[
-  \cost(S) \;=\; \#\set{t : S \in \mathcal{F}_t}
-  \;=\; \sum_{t=1}^{K} \mathbb{1}\big[S \in \mathcal{F}_t\big].
+  \text{Conj.~\ref{conj:main}}
+  \ \Longleftarrow\ \text{Target G}
+  \ \Longleftarrow\ \text{conj:warmstart}
+  \ \Longleftarrow\ \text{conj:imwpm-bound} + \text{conj:last-rung}
 \]
-Crucially the class is closed under truncation: $\min(\cost, k)$ is dichotomous
-for every $k$, so layers can be peeled one at a time without leaving the model.
-Define the \emph{depth} of an instance to be $K = \max_i \cost_i(\items)$.
 
-\textbf{Why it might work.} The base case is already proved. A depth-one
-instance has every $\cost_i$ taking values in $\set{0,1}$, so every bundle costs
-at most $1$ to everybody --- which is exactly the hypothesis of
-Theorem~\ref{thm:smallbundle}. So \emph{Conjecture~\ref{conj:main} holds
-unconditionally at depth $1$, for every $n$ and every $m$}. No other induction
-in this project has a proved base case, and none of the failed approaches
-touches the representation of the cost functions at all: they all manipulate
-allocations while treating $\cost_i$ as a black-box oracle.
-
-\textbf{Evidence for the inductive step.} Over all $1{,}330$ depth-$\ge 2$
-instances at $n = m = 3$, the full instance and its truncation
-$(\min(\cost_i, K-1))_i$ \emph{always} share at least one common good
-allocation --- $100\%$, with no instance where one is solvable and the other is
-not (\texttt{update\_10/layers.py}). That is precisely the compatibility an
-induction on depth needs.
-
-\textbf{The kill condition, hunted and not found.} A depth-$\ge 2$ instance
-whose good allocations are disjoint from its truncation's would end the
-approach. Across $39{,}692$ depth-$\ge 2$ instances --- exhaustive over all
-dichotomous triples at $n = m = 3$, exhaustive over structured families at
-$m \le 4$, and endpoint-constant and deliberately high-depth sweeps to $n = 5$
---- there is \textbf{no such instance}, in either peeling direction
-(\texttt{update\_10/layer\_hunt.py}). This is the generator that refuted
-Proposition~\ref{prop:no-balance} on its first run.
-
-The same sweep says which direction to peel. Measuring the fraction of the
-truncation's good allocations that survive into the full instance, top-peeling
-$\cost \mapsto \min(\cost, K-1)$ carries far more than bottom-peeling
-$\cost \mapsto \max(\cost - 1, 0)$ --- worst case $0.21$ against $0.05$ --- and
-on high-depth instances top-peeling carries \emph{all} of them, at
-$n \in \set{3,4,5}$.
-
-\textbf{The strengthened hypothesis, and why it is the right one.} Sharing a
-witness is necessary but not sufficient: an induction must \emph{name} which
-good allocation to carry forward. The fix is induction loading --- prove
-something stronger, so that the inductive hypothesis is strong enough to
-reproduce itself.
-
-\begin{quote}
-\textbf{Chain conjecture.} For every dichotomous instance of depth $K$ there is
-a \emph{single} allocation that is good for $(\min(\cost_i, k))_{i}$
-\emph{simultaneously} for every $k = 1, \dots, K$.
-\end{quote}
-
-Its top level $k = K$ is Conjecture~\ref{conj:main}; its bottom level $k = 1$ is
-Theorem~\ref{thm:smallbundle}, already proved. It has \textbf{zero failures over
-$30{,}405$ depth-$\ge 2$ instances} across the same exhaustive and adversarial
-sweeps. Being stronger it is a far better induction hypothesis than
-Conjecture~\ref{conj:main} itself, since carrying a whole chain of certificates
-upward is exactly what the step needs and what the plain statement cannot
-supply.
-
-\textbf{Progress on the step: the chain collapses to two levels.} Write
-$a_{ij} := \cost_i(\bundle{j})$ for the cost matrix of an allocation. Every
-level-$k$ arc depends on the matrix alone,
-\[
-  \edgew{}^{(k)}(i,j) \;=\; \min(a_{ii},k) - \min(a_{ij},k),
-\]
-and is therefore \emph{sign-constant and saturating}: it has the sign of
-$\edgew{}(i,j)$ throughout, its modulus is non-decreasing in $k$, and it reaches
-$\abs{\edgew{}(i,j)}$ once $k \ge \max(a_{ii},a_{ij})$. One consequence is
-immediate and proved.
-
-\begin{lemma}[Level one is exactly envy-freeability]
-\label{lem:levelone}
-An allocation is good for $(\min(\cost_i,1))_i$ if and only if it is
-envy-freeable for $(\min(\cost_i,1))_i$. No subsidy condition is needed.
-\end{lemma}
-
-\begin{proof}
-$\min(\cost_i,1)$ takes values in $\set{0,1}$, so every bundle costs at most $1$
-to every agent and Theorem~\ref{thm:smallbundle} applies to any envy-freeable
-allocation. The converse holds because goodness includes envy-freeability.
-\end{proof}
-
-\textbf{A two-level reduction was proposed here and is now REFUTED.} It rested
-on two statements about a single allocation's set of good levels:
-\begin{quote}
-\textbf{(I) Interval.} That set is always an interval.\\
-\textbf{(II) Endpoints.} Good at level $1$ and level $K$ implies good at every
-level between.
-\end{quote}
-Both survived $2{,}288{,}509$ (instance, allocation) pairs, and both are
-\textbf{false}.
-
-The refutation came from a change of search space that is worth keeping. Since
-the level-$k$ arcs depend only on the matrix $a$, and \emph{every} non-negative
-integer matrix is realisable --- take $\cost_i(S) := \sum_j \min(\abs{S \cap
-\bundle{j}}, a_{ij})$, whose marginals are all $0$ or $1$, with bundles of size
-$\max_i a_{ij}$ --- claims (I) and (II) are equivalent to statements about all
-integer matrices, which can be \emph{enumerated} rather than sampled. Doing so
-finds $972$ counterexamples among the $261{,}632$ matrices with entries at most
-$3$ (\texttt{update\_11/matrix\_interval.py}). The smallest is
-\[
-  a \;=\; \big(\cost_i(\bundle{j})\big) \;=\;
-  \begin{pmatrix} 0&0&0 \\ 2&2&1 \\ 3&3&2 \end{pmatrix},
-\]
-realised at $n = 3$, $m = 8$ by $\cost_1 \equiv 0$ and the two formulas above.
-That allocation is good at level $1$, has a \emph{positive cycle} at level $2$,
-and is good again at levels $3$ through $8$ --- so its good-level set
-$\set{1,3,4,\dots,8}$ is not an interval, and (II) fails at its endpoints
-(\texttt{update\_11/verify\_cex.py}). Every earlier sweep missed it only because
-none reached $m = 8$.
-
-\textbf{What survives.} The chain conjecture is untouched: (I) and (II) concern
-one allocation's level set, whereas the chain conjecture asserts the
-\emph{existence} of some allocation good at every level. On the refuting
-instance a chain witness does exist --- give everything to agent~1, who finds
-all of it free. So the collapse to two levels is gone, but the target is not.
-
-\textbf{The chain conjecture survives past the frontier.} Every earlier chain
-test stopped at $m = 6$, while the counterexample above lives at $m = 8$, so the
-conjecture had never been tried where the level structure is known to
-misbehave. Re-run at $m = 7, 8, 9$ for $n = 3$ and at $m \le 8$ for
-$n \in \set{4,5}$ --- using both endpoint-constant sampling and the
-\emph{matrix-realising} family $\cost_i(S) = \sum_j \min(\abs{S \cap B_j},
-a_{ij})$ that produced the refutation --- it has \textbf{zero failures}
-(\texttt{update\_12/chain\_hunt.py}). Neither did any instance fail
-Conjecture~\ref{conj:main}. So the conjecture held exactly where its own
-shortcut broke.
-
-\textbf{A proved reduction.} The natural sufficient condition turns out to be
-the strongest possible one, and it is two lines.
-
-\begin{lemma}[Exact envy-freeness implies chain-goodness]
-\label{lem:ef-chain}
-If $\alloc$ is exactly envy-free for $(\cost_i)_i$ --- that is
-$\cost_i(\bundle{i}) \le \cost_i(\bundle{j})$ for all $i,j$ --- then $\alloc$ is
-good at \emph{every} level, with zero subsidy at every level.
-\end{lemma}
-
-\begin{proof}
-Exact envy-freeness says $a_{ii} \le a_{ij}$ for all $i,j$. Since
-$x \mapsto \min(x,k)$ is non-decreasing, $\min(a_{ii},k) \le \min(a_{ij},k)$,
-so every level-$k$ arc $\edgew{}^{(k)}(i,j)$ is at most $0$, for every $k$.
-Every cycle is then a sum of non-positive terms, so no positive cycle exists at
-any level; and every directed path likewise has weight at most $0$, so
-$\pathw{}^{(k)} \equiv 0$.
-\end{proof}
-
-\begin{corollary}
-\label{cor:chain-residual}
-The chain conjecture holds for every instance that admits an exactly envy-free
-allocation. Equivalently, the chain conjecture is equivalent to its own
-restriction to instances admitting \emph{no} exactly envy-free allocation.
-\end{corollary}
-
-This localises the difficulty sharply. By Remark~\ref{rem:exactEF} an exactly
-envy-free allocation exists in about $98.6\%$ of adversarial instances, so
-Corollary~\ref{cor:chain-residual} disposes of almost everything and leaves a
-residual of roughly $1.4\%$. That residual is not a rounding error: it is
-precisely the class on which deciding envy-freeness is NP-complete even for
-binary additive costs~\cite{BSV21}. Across the $24$ envy-free-free instances
-encountered in the sweeps above, every one still had a chain witness, so the
-residual is not obviously where a counterexample lives either.
-
-\textbf{Status.} Proved: the decomposition, truncation closure, the base case
-(Theorem~\ref{thm:smallbundle}), Lemma~\ref{lem:levelone},
-Lemma~\ref{lem:ef-chain} and Corollary~\ref{cor:chain-residual}. Refuted: (I),
-(II) and the two-level reduction. Open: the chain conjecture restricted to
-instances with no exactly envy-free allocation --- a strictly smaller target
-than before, and one that now coincides with the known hardness core rather
-than straddling it.
-
-\textbf{The residual class, generated deliberately.} Since EF-free instances are
-about $1.4\%$ of the population they must be constructed rather than sampled.
-Two sources were used: rejection sampling from the endpoint-constant and
-matrix-realising families, and R10's Set-Splitting reduction, which is EF-free
-\emph{by construction} on a hypergraph with no proper $2$-colouring ---
-the triangle $U = \set{v_1,v_2,v_3}$, $F = \set{v_1v_2, v_1v_3, v_2v_3}$, giving
-$n = 5$, $m = 6$ with binary additive costs. Across $785$ EF-free instances so
-obtained, \textbf{every one has a chain witness}
-(\texttt{update\_13/residual.py}). On the Set-Splitting instance itself there
-are $1620$ of them.
-
-Two hypotheses this suggested, and their fates. On Set-Splitting the chain-good
-and top-good sets coincide exactly, both $1620$, which raised the possibility
-that on the residual the chain conjecture collapses to
-Conjecture~\ref{conj:main}. It does not: over $363$ further EF-free instances,
-$78$ have strictly fewer chain-good than top-good allocations. So the chain
-conjecture remains strictly stronger than Conjecture~\ref{conj:main} even after
-Corollary~\ref{cor:chain-residual} removes the easy instances --- there is no
-collapse, and the layer structure retains content exactly where the difficulty
-lives. Separately, the min-cost-balanced/min-envy rule of the earlier entry
-selects a chain witness on $420$ of $422$ residual instances but not all, so it
-is not the construction either.
-
-\textbf{The Set-Splitting family, and a correction.} R10's reduction is the only
-generator of \emph{certified} EF-free instances, so it was rebuilt as a family
-over hypergraphs rather than the single triangle instance of
-\texttt{update\_3}. The reconstruction taken from that addendum's summary is
-\emph{wrong} and failed its own correctness check --- it produced an EF-free
-instance from a splittable hypergraph. Reading~\cite[proof of Theorem~2]{BSV21}
-directly supplies the missing clause: when $r < r'$ the padding agents
-$e_{r+1},\dots,e_{r'}$ are ``imaginary hyperedges adjacent to the \emph{entire}
-set of vertices'', so they cost $1$ on \emph{every} vertex chore, not $0$. With
-that fixed the reduction verifies in both directions --- an exactly envy-free
-allocation exists precisely on splittable hypergraphs --- across seven
-hypergraphs including two YES controls
-(\texttt{update\_14/setsplit\_family.py}).
-
-On the corrected NO instances the structure is sharp. Chain-good and top-good
-coincide \emph{exactly} on every one of them ($6$, $108$, $72$, $1620$, $1620$,
-$3840$ witnesses respectively), and the total subsidy is the same for every
-witness of a given instance, always $n-2$. The dominant form is describable: the
-$r'$ dummy chores are spread one per agent over $r'$ of the $n = r'+2$ agents,
-the two dummy-free agents hold only chores they value at $0$, and \emph{the paid
-set is exactly the set of dummy holders}. That account was exact up to $n = 5$ but covered only $96\%$ of the $30{,}276$
-witnesses at $n = 6$, $m = 8$. The exceptions are fully explained, and the
-explanation removes them.
-
-\textbf{The exceptions are an artefact of padding.} The reduction sets
-$r' = \max(q,r)$ and, when $r < r'$, fills the gap with imaginary hyperedges
-adjacent to every vertex. Those padding agents do not behave like real edge
-agents, which are free on vertex chores outside their own edge. Comparing two
-instances at the same $n = 6$ settles it: with $q = 4$, $r = 2$ --- two padding
-agents --- the form covers $96.3\%$ and total subsidies of $1$ and $2$ appear
-alongside $n-2 = 4$; with $q = 3$, $r = 4$ --- \emph{no} padding --- the form
-covers \textbf{$100\%$ of all $28{,}800$ witnesses}, the paid set is the
-dummy-holder set in every one, and the total subsidy is $n-2$ with no
-exceptions. Every zero-padding instance tested behaves this way.
-
-\begin{quote}
-\textbf{Characterisation (exact on all zero-padding instances tested).} Let
-$(U,F)$ be a NO instance of Set Splitting with $r \ge q$, so that $r' = r$ and
-every edge agent is real. In R10's reduced instance an allocation is a chain
-witness \emph{if and only if} the $r$ dummy chores are distributed one per agent
-among $r$ of the $n = r+2$ agents and the two dummy-free agents hold only chores
-they value at $0$. Its paid set is exactly the set of dummy-holders and its
-total subsidy is exactly $n - 2 = r$.
-\end{quote}
-
-The restriction $r \ge q$ costs nothing: duplicating hyperedges raises $r$
-without changing splittability, so Set Splitting stays NP-hard on it and the
-family stays certified-hard. This is now an exact description of every chain
-witness on an infinite family of hard instances, stated in terms of the
-hypergraph rather than of the allocation search --- which is what a proof needs
-as its starting point.
-
-\textbf{The non-additive residual, which is the class that actually matters.}
-R10's family is binary \emph{additive}, so Conjecture~\ref{conj:main} already
-holds on all of it via~\cite{LMS26}, and the characterisation above is the
-binary-additive theorem's shape reappearing. The class that carries the open
-problem is the \emph{non-additive} envy-free-free instances, which that
-reduction cannot produce. Generating $553$ of them by rejection sampling with an
-explicit additivity filter settles three things
-(\texttt{update\_15/nonadditive\_residual.py}).
-
-\emph{The chain conjecture survives.} All $553$ have a chain witness ---
-$79{,}206$ of them in total, none missing. This is the most adversarial test the
-open statement has had, being simultaneously envy-free-free and non-additive.
-
-\emph{The Set-Splitting characterisation does not survive.} ``Paid set $=$
-holders of universally costly chores'' holds on $22$ of $553$, and ``total
-subsidy constant across the witnesses of an instance'' on $56$ of $553$. Both
-were exact on the additive family. So they are artefacts of additivity, and a
-proof of the characterisation on R10's family would not have generalised --- the
-check was worth running before the proof attempt rather than after.
-
-\emph{And it corrects an earlier lead.} The containment $\text{paid} \subseteq
-\argmax_i \cost_i(\bundle{i})$, recorded as $164/164$ in
-Remark~\ref{rem:paid-empirics}, fails on $141$ of the $553$. That sample had not
-been filtered for additivity. The remark is amended accordingly; what survives
-there is Proposition~\ref{prop:paid-characterisation}, which is proved rather
-than observed.
-
-\textbf{Back at the induction: what set is it aiming at?} Since level-$k$
-goodness depends only on $a$, and every non-negative integer matrix is
-realisable, ``which matrices are chain-good'' is decidable by enumeration.
-Doing it over all $261{,}632$ matrices with entries at most $3$ at $n = 3$
-(\texttt{update\_16/chain\_matrices.py}) kills the two natural invariants and
-leaves one lemma.
-
-\emph{Refuted: carry a bipartition.} By Proposition~\ref{prop:twotier},
-goodness at level $k$ means \emph{some} bipartition $S_k$ satisfies the two-tier
-inequalities at that level. If one $S$ worked at every level the induction could
-simply carry it. It cannot: $4{,}911$ matrices are chain-good with no single
-bipartition valid throughout. \emph{Refuted: the tier set is stable.} The
-canonical set $S_k = \set{i : \pathw{}^{(k)}(i) = 1}$ genuinely moves with $k$
---- $12{,}822$ violations. The smallest witness is
-\[
-  a = \begin{pmatrix} 0&0&0 \\ 2&1&2 \\ 2&1&2 \end{pmatrix},
-  \qquad \pathw{}^{(1)} = (0,0,0), \quad \pathw{}^{(2)} = (1,0,1),
-\]
-which is chain-good while its paid set grows from $\emptyset$ to
-$\set{1,3}$. So no invariant of the form ``fix who gets paid'' can work.
-
-\emph{What survives, and it is provable.}
-
-\begin{lemma}[Breakpoints]
-\label{lem:breakpoints}
-Let $T := \set{k \in [1,K] : k = a_{ij} \text{ for some } i,j} \cup \set{K}$.
-An allocation is good at every level in $[1,K]$ if and only if it is good at
-every level in $T$. Hence the chain condition amounts to at most $n^2+1$
-tests, \emph{independently of the depth $K$}.
-\end{lemma}
-
-\begin{proof}
-Between two consecutive elements of $T$ each $\min(a_{ij},k)$ is affine in $k$
---- equal to the constant $a_{ij}$ if $a_{ij}$ lies below the interval, and to
-$k$ if it lies above --- so every arc, and hence every cycle weight, is affine
-there. An affine function that is at most $0$ at both endpoints is at most $0$
-throughout, so no positive cycle can appear strictly inside an interval.
-Given that, $\pathw{}^{(k)}$ is the maximum of the finitely many affine
-functions given by simple paths, together with $0$; a maximum of affine
-functions is convex, and a convex function at most $1$ at both endpoints is at
-most $1$ throughout.
-\end{proof}
-
-Verified with $0$ violations over the same $261{,}632$ matrices. The
-consequence is worth stating: the chain conjecture's difficulty does
-\emph{not} grow with depth. Layers were introduced to give the induction a
-parameter to climb, and Lemma~\ref{lem:breakpoints} says the climb is bounded by
-$n^2+1$ steps no matter how tall the stack. An induction on $K$ is therefore the
-wrong shape --- the right parameter is the number of distinct cost values an
-allocation exhibits, which is at most $n^2$ and has nothing to do with $K$.
-
-\textbf{Method note, worth more than any single result here.} For any question
-about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
-than sampling instances: every non-negative integer matrix is realisable, so
-matrix enumeration is exhaustive over a space that instance enumeration only
-samples, and it reaches effective sizes instance search cannot. The
-(I)/(II) counterexample sat two items beyond every sweep that preceded it and
-fell out of matrix enumeration immediately.
-
-\subsection*{2026-08-06 --- how big must the paid set be, and what the
-target really is}
-
-\textbf{Two corrections first.} (i) The previous entry closed by suggesting the
-$n=3$ analysis was now small enough to do by hand, on the grounds that
-Corollary~\ref{cor:n3-six} makes the $2$-path $i \to j \to k$ free whenever
-$a_{ki} \le a_{kk}+1$. Counting how many \emph{hard pairs} --- ordered pairs with
-$a_{ki} > a_{kk}+1$ --- a good matrix can carry gives up to $6$ at $n = 3$
-(\texttt{update\_17}), so a case analysis branched on the hard-pair pattern has
-$2^6$ cases, not a handful. That framing was oversold. (ii) The first
-measurement run minimised the total subsidy over \emph{all} allocations, which is
-the wrong quantity: it returns spikes such as $\subsidy = (2,0,0)$, cheap in
-total but outside $\set{0,1}^n$ and so irrelevant to
-Conjecture~\ref{conj:main}. The corrected script
-\texttt{update\_17/minimal\_S.py} minimises $\abs{S}$ over \emph{good}
-allocations.
-
-\textbf{What the measurement says.} Over $11{,}163$ instances at $n \in
-\set{3,4,5}$, $m \le 6$:
-
-\begin{center}
-\begin{tabular}{lr}
+\begin{center}\small
+\begin{tabular}{@{}p{0.40\textwidth}p{0.20\textwidth}p{0.30\textwidth}@{}}
 \toprule
-minimal $\abs{S}$ over good allocations & instances \\
+thread & where & status \\
 \midrule
-$0$ (exactly envy-free)      & $10{,}559$ \quad($94.6\%$) \\
-$1$                          & $486$ \quad($4.4\%$) \\
-$2$                          & $93$ \quad($0.8\%$) \\
-$3$                          & $24$ \quad($0.2\%$) \\
-$4$                          & $1$ \\
+$\optsubsidy$ has a zero coordinate; Conj.~\ref{conj:main} is one clause
+  & Prop.~\ref{prop:zero-coordinate} & \textsc{proved} \\
+Conjecture~\ref{conj:main} for $n = 2$, all $m$
+  & Thm.~\ref{thm:n2-complete} & \textsc{proved} \\
+Conjecture~\ref{conj:main} for $m \le n$
+  & Cor.~\ref{cor:m-le-n} & \textsc{proved} \\
+Target G $\Rightarrow$ Conj.~\ref{conj:main}
+  & Prop.~\ref{prop:targetG-implies} & \textsc{proved} \\
+$q_i = \max_j[d(i,j) + \abs{\bundle{j}}]$
+  & Lem.~\ref{lem:q-formula} & \textsc{proved} \\
+IMWPM $=$ round-wise minimum total marginal
+  & Lem.~\ref{lem:imwpm-chores} & \textsc{proved} \\
+Round dominance, and its corollary
+  & Lem.~\ref{lem:round-dominance} & \textsc{proved} \\
+$\edgew{\alloc}(i,j) = (\kappa_i-\kappa_j) - E_{ij}$
+  & Lem.~\ref{lem:kappa-identity} & \textsc{proved} \\
 \midrule
-no good allocation at all    & $0$ \\
+IMWPM warm start has $q$-spread $\le 2$
+  & Conj.~\ref{conj:imwpm-bound} & \textsc{open} \\
+Spread $2$ repairs in one move
+  & Conj.~\ref{conj:last-rung} & \textsc{open} \\
+Repair from the warm start needs no restarts
+  & Conj.~\ref{conj:warmstart} & \textsc{open} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
-The maximum of the minimal $\abs{S}$ is exactly $n-1$ at every $n$ tested, always
-with witness $\subsidy = (1,\dots,1,0)$. So the answer to ``is the truth stronger
-than Conjecture~\ref{conj:main}?'' is \emph{no}: no constant bound, and no bound
-growing more slowly than $n-1$, can hold. Extracting the smallest extremal
-instance returns $n$ identical additive agents with $n-1$ unit chores --- which is
-Example~\ref{ex:lowerbound}, already in the report. The run therefore
-re-derives the known lower bound rather than finding a new one; what it does add
-is exhaustive confirmation of that example's ``no allocation does better''
-clause, for $n \le 7$ (\texttt{update\_17/tight\_family.py}).
+\subsection*{Closed threads}
 
-\textbf{Two things that are new.} First,
-Proposition~\ref{prop:zero-coordinate}: $\optsubsidy$ always has a zero
-coordinate, so the total-subsidy clause of Conjecture~\ref{conj:main} follows
-from the per-agent one and the target is the single inequality $\max_i
-\pathw{\alloc}(i) \le 1$. Second, in $9$ of the instances the minimum total over
-all allocations is strictly below the minimum over good ones --- at $n=4$, $2$
-against $3$. So Conjecture~\ref{conj:main} is \emph{not} the statement that the
-utilitarian-optimal subsidy is at most $n-1$; the $\set{0,1}$ shape genuinely
-costs money, and any argument that reasons about the total alone will prove the
-wrong theorem.
+\begin{center}\small
+\begin{tabular}{@{}p{0.44\textwidth}p{0.18\textwidth}p{0.28\textwidth}@{}}
+\toprule
+thread & where & status \\
+\midrule
+Item-by-item insertion (chores, peel, and goods frames)
+  & Thm.~\ref{thm:obstruction} & \textsc{refuted} \\
+Utilitarian-optimal allocations, and every refinement
+  & Cor.~\ref{cor:no-refinement} & \textsc{refuted} \\
+Encoding coverage into the numbers
+  & \S\ref{sec:approach4} & \textsc{refuted} \\
+Uniform balance (all arcs $\ge -1$)
+  & Prop.~\ref{prop:no-balance} & \textsc{refuted} \\
+Leximax objective; all $12$ tie-break chains
+  & Prop.~\ref{prop:no-distribution}, \S\ref{sec:approach8} & \textsc{refuted} \\
+Greedy insertion never stuck (NS), and its balanced form (NSB)
+  & Prop.~\ref{prop:nsb-fails} & \textsc{refuted} \\
+Descent potentials $P_1$, $(\max\ell,\max\abs{B})$, $(\sum\ell,\sum\abs{B}^2)$
+  & \S\ref{sec:approach7} & \textsc{refuted} \\
+All five local rules for the descent witness
+  & \S\ref{sec:approach7-obstruction} & \textsc{refuted} \\
+The $u$-spread window at $n \ge 3$
+  & \S\ref{sec:approach6-aggregate} & \textsc{refuted} \\
+Dichotomous analogue of \cite[Thm.~1.3]{BDNSV20}
+  & Prop.~\ref{prop:bdnsv-fails-dichotomous} & \textsc{refuted} \\
+IMWPM produces balanced bundles
+  & Prop.~\ref{prop:imwpm-unbalanced} & \textsc{refuted} \\
+Transplanting \cite{LMS26}'s telescoping
+  & Prop.~\ref{prop:r11-defect} & \textsc{refuted} \\
+Closing-arc bound as a route
+  & Prop.~\ref{prop:closing-arc-lossy} & \textsc{refuted} \\
+Parity of the good set
+  & Prop.~\ref{prop:parity-fails} & \textsc{refuted} \\
+Any natural distribution concentrating on good allocations
+  & Prop.~\ref{prop:no-distribution} & \textsc{refuted} \\
+$\operatorname{spread}(\kappa) \le 2$ and bounded path defect
+  & Rem.~\ref{rem:kappa-parts-refuted} & \textsc{withdrawn} \\
+Induction on the depth of the cost functions (the chain/layer route)
+  & retired, git \texttt{8be6e54} & \textsc{withdrawn} \\
+Descent lemma route (strictly stronger than needed)
+  & Rem.~\ref{rem:descent-stronger} & \textsc{superseded} \\
+Balance lemma (a weakening of Target G-bal)
+  & Rem.~\ref{rem:balance-vs-targetGbal} & \textsc{superseded} \\
+Choose the paid set first / build the two tiers first
+  & Prop.~\ref{prop:twotier} & \textsc{superseded} \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\textbf{The reframing worth carrying forward.} Reading the two-tier
-characterisation as a statement about matrices removes the subsidy vector
-entirely:
-\[
-  \text{Conjecture~\ref{conj:main}}
-  \iff
-  \exists\, \alloc,\ \exists\, S \subseteq \agents \ :\
-  \cost_i(\bundle{j}) \;\ge\; \cost_i(\bundle{i})
-    - [\,i \in S\,] + [\,j \in S\,]
-  \quad \forall\, i \ne j .
-\]
-What is left is a partition and a \emph{bipartition} --- and there are only $2^n$
-of the latter. This is the first form of the problem in which the existential
-over subsidies is finite and small: guess $S$, then ask whether a partition
-meeting a fixed system of local constraints exists. Every earlier formulation
-had to discover the subsidies and the bundles simultaneously.
+\subsection*{Never tested}
 
-\textbf{Status.} Proposition~\ref{prop:zero-coordinate} proved. Tightness
-confirmed for $n \le 7$. Conjecture~\ref{conj:main} unrefuted over these
-$11{,}163$ instances. Next: for fixed $S$, characterise when the constraint
-system is satisfiable --- note that $S = \agents$ and $S = \emptyset$ impose
-\emph{the same} constraints, namely exact envy-freeness, which is why the paid
-set is never everybody.
+\begin{center}\small
+\begin{tabular}{@{}p{0.44\textwidth}p{0.18\textwidth}p{0.28\textwidth}@{}}
+\toprule
+thread & where & status \\
+\midrule
+Type-ordered peel search; the fixed-point sweep over $n=m=3$
+  & Conj.~\ref{conj:h1pp} & \textsc{unexplored} \\
+Peel converse: is a good terminal always reachable?
+  & Rem.~\ref{rem:converse} & \textsc{unexplored} \\
+Characterise the peel dead ends
+  & Prop.~\ref{prop:deadends} & \textsc{unexplored} \\
+Agent induction carrying a \emph{path}-based invariant
+  & \S\ref{sec:approach5} & \textsc{unexplored} \\
+At most two distinct cost functions among the $n$ agents
+  & --- & \textsc{unexplored} \\
+Exchange \emph{paths} rather than single transfers
+  & --- & \textsc{unexplored} \\
+Balanced minimum-cost allocation minimising envious pairs
+  & --- & \textsc{unexplored} \\
+A non-uniform weighting concentrating on good allocations
+  & \S\ref{sec:approach8-nonlocal} & \textsc{unexplored} \\
+The $m$-threshold: $\pathw{\alloc} = 2$ occurs only at small $m$
+  & Rem.~\ref{rem:kappa-parts-refuted} & \textsc{unexplored} \\
+Hard adversarial search for a counterexample
+  & \S\ref{sec:samplerbias} & \textsc{unexplored} \\
+\bottomrule
+\end{tabular}
+\end{center}
 
-\textbf{Followed up the same day}, in Section~\ref{sec:approach7}. Taking the
-discounted-cost reading seriously turns the problem into local search over
-partitions, and Theorem~\ref{thm:descent-suffices} shows that a single descent
-lemma about single chore transfers implies Conjecture~\ref{conj:main} outright,
-polynomial-time clause included. That is the shortest remaining gap any approach
-in this report has produced, and Lemma~\ref{lem:balance-dichotomy} narrows the
-hard half of it to balanced partitions. It is where work should continue.
+\subsection*{Out of scope}
 
-% --------------------------------------------------------------------------
-% TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
-% it in.  Keep the three-part shape: what the idea is, why it might work, what
-% would kill it.  Newest entry goes at the bottom.
-%
-% \subsection*{YYYY-MM-DD --- short title}
-%
-% \textbf{The idea.} ...
-%
-% \textbf{Why it might work.} ...
-%
-% \textbf{What would kill it.} ...
-%
-% \textbf{Status.} untested / partially checked / refuted by <script or instance>
-% --------------------------------------------------------------------------
+Binary submodular / matroid-rank valuations, and the milestone ladder through
+them, are \textsc{excluded}: the dichotomous \emph{goods} corner is already
+settled in~\cite{BKNS22} by matroid machinery, and retreating to that hypothesis
+would re-prove a known result rather than the open one --- see
+Remark~\ref{rem:submodular-is-the-gap} for why submodularity is exactly what this
+problem lacks. The mixed goods-and-chores model of~\cite{KMSTY24} is likewise
+\textsc{excluded} as a different problem.
+
+\subsection*{What the closed column means}
+
+The refutations above are not independent. Grouped by the technique they kill:
+constructive routes fail because the witness exists but no local rule finds it
+(\S\ref{sec:approach7-obstruction}, \S\ref{sec:approach8-induction});
+decompositional routes fail because every two-term split of $\pathw{\alloc}$ has
+both parts unbounded while the whole stays small (Rem.~\ref{rem:cancellation},
+four instances); transplanted routes fail because additivity is load-bearing
+in~\cite{BDNSV20} and submodularity in~\cite{LMS26}
+(\S\ref{sec:approach6-bdnsv-audit}, \S\ref{sec:approach6-r11-audit}); and
+non-local routes fail for want of a distribution or an identity
+(\S\ref{sec:approach8-nonlocal}). Every named technique class has now been tried.
+That is a statement about where a proof will not come from, not evidence that
+Conjecture~\ref{conj:main} is false --- it survives every test at every size
+reached, now to $m = 12$.
