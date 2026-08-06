@@ -674,8 +674,54 @@ one --- and that same over-commitment is exactly what makes a balanced terminal
 impossible. Death is over-commitment to one agent, and balance-admissibility is
 the checkable shadow of it.
 
-\paragraph{Half the rule is now a theorem.} Lemma~\ref{lem:peel} makes the free
-case immediate.
+\subsection{When is a peel legal? A potential calculus}
+\label{sec:peel-calculus}
+
+The legality invariant has a potential form, and stating it that way turns
+``which peels are safe'' from a search into algebra.
+
+\begin{lemma}[Potential form of legality]
+\label{lem:potential-form}
+A state $\workprofile$ is legal if and only if there is $p \in \set{0,1}^n$ with
+\[
+  \edgew{\workprofile}(i,k) \;\le\; p_i - p_k \qquad \text{for all } i \ne k .
+\]
+\end{lemma}
+
+\begin{proof}
+($\Leftarrow$) Summing the inequality along a path from $i_0$ to $i_r$ telescopes
+to $\edgew{}(P) \le p_{i_0} - p_{i_r} \le 1$, and around a cycle to
+$\edgew{}(C) \le 0$. So there is no positive cycle and
+$\pathw{\workprofile} \le 1$. ($\Rightarrow$) Take $p = \pathw{\workprofile}$,
+which lies in $\set{0,1}^n$ by legality and
+Observation~\ref{obs:integrality}. By definition of a heaviest path,
+$\pathw{}(i) \ge \edgew{}(i,k) + \pathw{}(k)$, which is the inequality.
+\end{proof}
+
+Write $\mu_k := \cost_k(\workprofile_x) - \cost_k(\workprofile_x \setminus
+\set{j}) \in \set{0,1}$ as in Lemma~\ref{lem:peel}, and call an arc $(k,x)$
+\emph{tight} for $p$ if $\edgew{\workprofile}(k,x) = p_k - p_x$. Since
+Lemma~\ref{lem:peel} changes only the arcs incident to $x$ --- raising those into
+$x$ by $\mu_k$ and lowering those out of $x$ by $\mu_x$ --- the question of
+whether the \emph{same} potential still certifies the result is immediate.
+
+\begin{proposition}[Tight-arc criterion]
+\label{prop:tight-arc}
+Let $\workprofile$ be legal with potential $p$. Then $p$ certifies
+$\mathrm{peel}(x,j)$ if and only if $\mu_k = 0$ for every $k \ne x$ whose arc
+$(k,x)$ is tight for $p$.
+\end{proposition}
+
+\begin{proof}
+The constraints not involving $x$ are unchanged. Out of $x$,
+$\edgew{}(x,k) - \mu_x \le \edgew{}(x,k) \le p_x - p_k$ holds automatically. Into
+$x$, the requirement is $\edgew{}(k,x) + \mu_k \le p_k - p_x$; the slack
+$p_k - p_x - \edgew{}(k,x)$ is a non-negative integer, so this holds exactly when
+$\mu_k = 0$ or the slack is at least $1$, i.e.\ the arc is not tight.
+\end{proof}
+
+Two sufficient conditions follow, and they cover different ground. The first is
+the peel-side counterpart of Theorem~\ref{thm:freeinsert}.
 
 \begin{definition}
 \label{def:freepeel}
@@ -697,13 +743,43 @@ positive-weight cycle can appear and no path weight can rise, so the invariant
 survives.
 \end{proof}
 
-This is the peel-side counterpart of Theorem~\ref{thm:freeinsert}, and it was
-checked on $674{,}062$ free peels with $0$ violations. Combined with
-Lemma~\ref{lem:balance-free} --- balance-preservation costs nothing --- a free
-peel onto any chore $j$ with $\abs{S_j} \ge 2$ and any owner other than
-$f(j)$ is unconditionally safe. Over the reachable restricted states,
-$58.7\%$ have such a peel available, so the rule is proved correct on the
-majority of its steps.
+Immediate from Proposition~\ref{prop:tight-arc}, since $\mu_k = 0$ for every
+$k \ne x$. The second condition is new and is proved by \emph{moving} the
+potential rather than keeping it.
+
+\begin{lemma}[Paid-agent peel]
+\label{lem:paid-peel}
+Let $\workprofile$ be legal with potential $p$. If $p_x = 1$ and $\mu_x = 1$ ---
+the peeling agent is paid, and the chore is costly to it on its own residual
+workload --- then $\mathrm{peel}(x,j)$ is legal, whatever the other marginals.
+\end{lemma}
+
+\begin{proof}
+Take $p'_x := 0$ and $p'_i := p_i$ for $i \ne x$; then $p' \in \set{0,1}^n$. The
+constraints not involving $x$ are unchanged and $p'$ agrees with $p$ off $x$.
+Into $x$: $\edgew{}(k,x) \le p_k - p_x = p_k - 1$, so
+$\edgew{}(k,x) + \mu_k \le p_k - 1 + 1 = p_k = p'_k - p'_x$. Out of $x$:
+$\edgew{}(x,k) \le p_x - p_k = 1 - p_k$, so
+$\edgew{}(x,k) - \mu_x \le 1 - p_k - 1 = -p_k = p'_x - p'_k$. So $p'$ certifies
+the new state, which is legal by Lemma~\ref{lem:potential-form}.
+\end{proof}
+
+The two conditions are genuinely complementary: a free peel constrains the
+\emph{other} agents' marginals and says nothing about $x$, while
+Lemma~\ref{lem:paid-peel} constrains only $x$ and leaves the others free. Both
+were checked against the implementation --- $670{,}927$ free peels and
+$693{,}276$ paid-agent peels, with $0$ illegal outcomes between them --- and
+together with Lemma~\ref{lem:balance-free} they give a peel that is
+\emph{provably} safe and balance-preserving at
+\[
+  409{,}003 \ \text{of} \ 477{,}922 \ \text{reachable non-terminal states}
+  \quad (85.6\%),
+\]
+against $58.7\%$ for free peels alone. The residual is $68{,}919$ states at
+which neither condition fires; by Proposition~\ref{prop:tight-arc} those are
+exactly the states where every peelable chore has a tight incoming arc carrying
+marginal $1$ into every unpaid candidate owner, and closing them is what remains
+of Conjecture~\ref{conj:balance-rule}.
 
 \begin{observation}[The residual, and a correction]
 \label{obs:peel-residual}
