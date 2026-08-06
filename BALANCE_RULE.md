@@ -124,15 +124,31 @@ $$\mathcal P(\text{root}) = \{\emptyset,\ N\}$$
 
 ### 4.2 When is a peel legal?
 
-**Proposition — `prop:inarcs-only`.** For **any** $S$, the constraints on arcs
-*out of* $x$ survive a peel automatically (those arcs drop by $\mu_x$), and arcs
-off $x$ are untouched. Hence
+**Proposition (peel criterion) — `prop:inarcs-only`.** For any $S \subseteq N$,
+$S \in \mathcal P(W')$ **iff**
 
-$$S \in \mathcal P(W') \iff S \text{ satisfies the non-}x\text{ constraints of } W, \ \text{ and } \ w(i,x) + \mu_i \le \lambda_S(i,x) \ \ \forall i \ne x .$$
+$$\text{(i) } w(i,k) \le \lambda_S(i,k)\ (i,k \ne x); \quad \text{(ii) } w(i,x) + \mu_i \le \lambda_S(i,x); \quad \text{(iii) } w(x,k) - \mu_x \le \lambda_S(x,k).$$
 
-> **Legality of a peel is decided entirely by the arcs *into* the peeled agent.**
-> Peeling is safe exactly to the extent that the agents who envy $x$ can absorb
-> $\mu_i$.
+**If moreover $S \in \mathcal P(W)$, then (i) and (iii) are automatic and only the
+in-arc condition (ii) remains** — the out-arcs drop by $\mu_x$, so a bound that
+held still holds.
+
+> ⚠ **Earlier this was stated with (iii) omitted for arbitrary $S$. That is
+> false.** (iii) is automatic only for $S$ already admissible at $W$, and the
+> whole point of $\mathcal P$ is that new sets appear. Corrected form checked on
+> 21,451,744 instances of the criterion, 0 violations.
+
+**Lemma (new paid sets require a costly chore) — `lem:new-paidsets`.** If
+$\mu_x = 0$ then $\mathcal P(W') \subseteq \mathcal P(W)$. If $\mu_x = 1$, every
+$S \in \mathcal P(W')\setminus\mathcal P(W)$ violates at $W$ exactly one kind of
+constraint — an out-arc of $x$, by exactly one unit.
+
+> *Proof.* By (ii), $w(i,x) \le \lambda_S(i,x) - \mu_i \le \lambda_S(i,x)$, so the
+> in-arcs already held at $W$; by (i) so did the arcs off $x$. The only
+> constraint left is an out-arc of $x$, and (iii) bounds its violation by
+> $\mu_x$. $\square$
+>
+> *(Verified: 418,662 peels where a new paid set appears, $\mu_x = 1$ in all.)*
 
 **Proposition — `prop:tight-arc`.** Specialising to $S = \{i : \ell(i) = 1\}$:
 call an arc $(k,x)$ *tight* if $w(k,x) = p_k - p_x$. Then $p$ certifies
@@ -183,6 +199,31 @@ every $i \in S_j \setminus \{f(j)\}$, $\mathrm{peel}(i,j)$ still admits $f$.
 **So the balance half of the rule costs nothing — the entire content is
 legality.**
 
+**Lemma (slack-transfer peel) — `lem:slack-transfer`.** Let
+$S \in \mathcal P(W)$ with $x \notin S$, and let
+
+$$T := \{\, i \ne x : w(i,x) = \lambda_S(i,x) \text{ and } \mu_i = 1 \,\}$$
+
+be the agents whose in-arc blocks the peel. If
+
+1. $w(k,i) \le \lambda_S(k,i) - 1$ for every $i \in T$, $k \notin T\cup\{i\}$, and
+2. $w(x,k) - \mu_x \le -1$ for every $k \in T$,
+
+then $S \cup T$ certifies $\mathrm{peel}(x,j)$.
+
+> *Proof.* Moving $i$ from outside $S$ to inside raises $\lambda(i,\cdot)$ by one
+> and lowers $\lambda(\cdot,i)$ by one; pairs within $T$ and pairs avoiding $T$
+> are unchanged. (1) supplies the slack for the lowered constraints, giving (i).
+> For (ii): $i \in T$ has $\lambda$ raised by 1, absorbing $\mu_i = 1$; $i \notin
+> T$ is either untight or has $\mu_i = 0$. For (iii): out-arcs into $T$ need
+> $\lambda_{S'}(x,k) = -1$, which is (2). $\square$
+>
+> *(Verified: 46,723 certified peels, 0 illegal.)*
+
+**Idea:** adding an agent to the paid set *buys* $+1$ of slack on its outgoing
+arcs — in particular on its in-arc to $x$ — at the price of $-1$ on its incoming
+arcs. Slack transfer pays that price where there is slack to spare.
+
 ### 4.4 The root, exactly
 
 **Proposition — `prop:first-peel`.** From the root, $\mathrm{peel}(x,j)$ is legal
@@ -215,6 +256,19 @@ $S = \{i:\ell(i)=1\}$.)*
 | `lem:free-peel-safe` | 674,062 free peels | 0 illegal |
 | `lem:paid-peel` | 693,276 paid-agent peels | 0 illegal |
 | both lemmas, $S$ free | 1,558,435 certified peels | 0 illegal |
+| `prop:inarcs-only` corrected form | 21,451,744 checks | 0 violations |
+| `lem:new-paidsets` | 418,662 peels creating a new set | 0 with $\mu_x 
+e 1$ |
+| `lem:slack-transfer` | 46,723 certified peels | 0 illegal |
+
+**Coverage by the three sufficient conditions** (each with $S$ ranging over all of
+$\mathcal P(W)$), over 174,630 reachable non-terminal states:
+
+| conditions | states covered |
+|---|---|
+| free + paid-agent | 165,613 (94.8%) |
+| \+ slack-transfer | **166,480 (95.3%)** |
+| residual | 8,150 (4.7%) |
 
 ---
 
@@ -259,8 +313,9 @@ plus the non-$x$ constraints — *one row of the envy matrix, not the whole grap
 **Constraints $\Phi$ must satisfy**, from the refutations:
 
 - not "legal ∧ balance-admitting" — the 37 stuck states satisfy it;
-- strictly stronger than the two safety lemmas — restricting to steps they
-  certify (with $S$ free) reaches a terminal on only **48 of 191** instances;
+- strictly stronger than the three safety lemmas — restricting to steps the
+  first two certify (with $S$ free) reaches a terminal on only **48 of 191**
+  instances, and the residual they leave is 4.7% of states;
 - it must produce a maximal-marginal first peel, since `prop:first-peel` proves
   that is the only legal option at the root.
 

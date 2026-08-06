@@ -891,25 +891,60 @@ Proposition~\ref{prop:first-peel}.
 What the framework adds is the general safety criterion, of which
 Proposition~\ref{prop:tight-arc} is the special case $S = \set{i : \pathw{}(i)=1}$.
 
-\begin{proposition}[Out-arcs are free; only in-arcs can fail]
+\begin{proposition}[Peel criterion]
 \label{prop:inarcs-only}
-Let $S$ be any subset of $\agents$. After $\mathrm{peel}(x,j)$, the constraints on
-arcs \emph{out of} $x$ hold for $S$ whenever they held before, and the
-constraints on arcs not incident to $x$ are unchanged. Consequently
+For any $S \subseteq \agents$, $S \in \paidsets(\workprofile')$ if and only if
 \begin{align*}
-  S \in \paidsets(\workprofile')
-  \iff\ & S \text{ satisfies the non-$x$ constraints of } \workprofile, \\
-  \text{and}\ \ & \edgew{\workprofile}(i,x) + \mu_i \le \lambda_S(i,x)
-    \quad \text{for all } i \ne x .
+  \text{(i)}\ \ & \edgew{}(i,k) \le \lambda_S(i,k)
+    && \text{for } i,k \ne x, \\
+  \text{(ii)}\ \ & \edgew{}(i,x) + \mu_i \le \lambda_S(i,x)
+    && \text{for } i \ne x, \\
+  \text{(iii)}\ \ & \edgew{}(x,k) - \mu_x \le \lambda_S(x,k)
+    && \text{for } k \ne x .
 \end{align*}
+If moreover $S \in \paidsets(\workprofile)$, then (i) and (iii) hold
+automatically, and only the in-arc condition (ii) remains.
 \end{proposition}
 
 \begin{proof}
-Lemma~\ref{lem:peel} leaves arcs not incident to $x$ untouched and replaces
-$\edgew{}(x,k)$ by $\edgew{}(x,k) - \mu_x \le \edgew{}(x,k)$, so any bound of the
-form $\edgew{}(x,k) \le \lambda_S(x,k)$ survives. The remaining constraints are
-those on arcs into $x$, which become $\edgew{}(i,x) + \mu_i \le \lambda_S(i,x)$.
+The three groups are exactly the constraints on the arcs of $\workprofile'$,
+which by Lemma~\ref{lem:peel} are the old arcs off $x$, the old in-arcs raised by
+$\mu_i$, and the old out-arcs lowered by $\mu_x$. If $S \in
+\paidsets(\workprofile)$ then (i) is one of its defining constraints and (iii)
+follows from $\edgew{}(x,k) - \mu_x \le \edgew{}(x,k) \le \lambda_S(x,k)$.
 \end{proof}
+
+\begin{remark}[A correction]
+\label{rem:inarcs-corrected}
+An earlier version of Proposition~\ref{prop:inarcs-only} asserted the
+biconditional with (iii) omitted, for arbitrary $S$. That is false: (iii) is
+automatic only for $S$ already admissible at $\workprofile$, and the whole point
+of working with $\paidsets$ is that new sets appear. The corrected form was
+checked on $21{,}451{,}744$ instances of the criterion with $0$ violations.
+\end{remark}
+
+The correction is what identifies where a further criterion can come from.
+
+\begin{lemma}[New paid sets require a costly chore]
+\label{lem:new-paidsets}
+If $\mu_x = 0$ then $\paidsets(\workprofile') \subseteq
+\paidsets(\workprofile)$. If $\mu_x = 1$, every $S \in
+\paidsets(\workprofile') \setminus \paidsets(\workprofile)$ violates, at
+$\workprofile$, exactly one kind of constraint: an out-arc of $x$, and by exactly
+one unit.
+\end{lemma}
+
+\begin{proof}
+Let $S \in \paidsets(\workprofile')$. By (ii), $\edgew{}(i,x) \le \lambda_S(i,x)
+- \mu_i \le \lambda_S(i,x)$, so the in-arc constraints already held at
+$\workprofile$; by (i) so did the constraints off $x$. Hence the only constraint
+$S$ can violate at $\workprofile$ is an out-arc $\edgew{}(x,k) \le
+\lambda_S(x,k)$, and (iii) bounds the violation by $\mu_x$. If $\mu_x = 0$ there
+is no room for one.
+\end{proof}
+
+Verified: over $418{,}662$ peels at which a new paid set appears, $\mu_x = 1$ in
+every case.
 
 Two consequences worth having. First, legality of a peel is decided entirely by
 the arcs \emph{into} the peeled agent: peeling is safe exactly to the extent that
@@ -920,6 +955,45 @@ set $S$ failing an out-arc constraint at $\workprofile$ may satisfy it at
 $\workprofile'$, since that arc dropped by $\mu_x$. New paid sets can appear.
 Lemma~\ref{lem:paid-peel} is exactly an instance: it produces the set
 $S \setminus \set{x}$, which need not lie in $\paidsets(\workprofile)$.
+
+\begin{lemma}[Slack-transfer peel]
+\label{lem:slack-transfer}
+Let $S \in \paidsets(\workprofile)$ with $x \notin S$, and let
+\[
+  T := \set{\, i \ne x \;:\; \edgew{}(i,x) = \lambda_S(i,x) \text{ and } \mu_i = 1 \,}
+\]
+be the agents whose in-arc blocks the peel. Suppose
+\begin{enumerate}
+  \item[(1)] $\edgew{}(k,i) \le \lambda_S(k,i) - 1$ for every $i \in T$ and every
+    $k \notin T \cup \set{i}$, and
+  \item[(2)] $\edgew{}(x,k) - \mu_x \le -1$ for every $k \in T$.
+\end{enumerate}
+Then $S \cup T$ certifies $\mathrm{peel}(x,j)$, which is therefore legal.
+\end{lemma}
+
+\begin{proof}
+Write $S' := S \cup T$; note $x \notin S'$. Moving $i$ from outside $S$ to inside
+raises $\lambda(i,\cdot)$ by one and lowers $\lambda(\cdot,i)$ by one, and leaves
+all pairs within $T$ and all pairs avoiding $T$ unchanged. Condition~(1) is
+exactly the slack needed for the lowered constraints, so $S' \in
+\paidsets(\workprofile)$ apart from the arcs at $x$, giving (i) of
+Proposition~\ref{prop:inarcs-only}. For (ii): if $i \in T$ then $\lambda_{S'}(i,x)
+= \lambda_S(i,x) + 1$ absorbs $\mu_i = 1$; if $i \notin T$ then either the arc is
+not tight, leaving slack for $\mu_i \le 1$, or $\mu_i = 0$. For (iii): out-arcs
+into $S' \setminus S = T$ have $\lambda_{S'}(x,k) = -1$, which is condition~(2);
+out-arcs elsewhere are unchanged and drop by $\mu_x$.
+\end{proof}
+
+Verified: $46{,}723$ peels certified this way, none illegal. The three sufficient
+conditions together --- free, paid-agent, slack-transfer, each with $S$ ranging
+over all of $\paidsets(\workprofile)$ --- give a provably safe
+balance-preserving peel at
+\[
+  166{,}480 \ \text{of} \ 174{,}630 \ \text{reachable non-terminal states}
+  \quad (95.3\%),
+\]
+with the free and paid-agent pair supplying $94.8\%$ and slack transfer the
+remaining $0.5\%$. The residual is $8{,}150$ states, $4.7\%$.
 
 \begin{remark}[Random testing has run out of power]
 \label{rem:testing-exhausted}
