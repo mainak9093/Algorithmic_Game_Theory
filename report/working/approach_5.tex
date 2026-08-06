@@ -255,12 +255,17 @@ corroborate.
 Across the $164$ adversarial instances of Remark~\ref{rem:exactEF} that
 genuinely require a subsidy, the minimum-size paid set of the witness found is
 in every case contained in $\argmax_i \cost_i(\bundle{i})$ --- the paid agents
-are among those carrying the largest own cost. That is $164$ of $164$, but it is
-a property of a witness selected by enumeration order rather than a proved rule,
-and own costs of different agents are measured by different functions, so it is
-a lead and not a theorem. Combined with
-Proposition~\ref{prop:paid-characterisation}, the natural rule to test first is:
-\emph{pay exactly the agents whose bundle some other agent finds at least one
-unit more expensive than her own, and check whether the resulting bipartition
-admits an allocation satisfying the three two-tier conditions.}
+are among those carrying the largest own cost.
+
+\textbf{That lead is now withdrawn.} The $164$ instances were not filtered for
+additivity, and the containment turns out to be an artefact of additive
+instances. Re-tested on $553$ instances that are both envy-free-free
+\emph{and} non-additive, it fails on $141$ of them
+(\texttt{update\_15/nonadditive\_residual.py}). Own costs of different agents
+are measured by different functions, so there was never a reason to expect the
+comparison to mean anything; the earlier $164/164$ simply reflected a sample
+that was effectively additive. What survives is
+Proposition~\ref{prop:paid-characterisation}, which is proved: a paid agent's
+bundle must look at least one unit more expensive to \emph{somebody} than that
+somebody's own.
 \end{remark}

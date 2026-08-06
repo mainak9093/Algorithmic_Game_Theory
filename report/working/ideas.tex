@@ -421,6 +421,33 @@ witness on an infinite family of hard instances, stated in terms of the
 hypergraph rather than of the allocation search --- which is what a proof needs
 as its starting point.
 
+\textbf{The non-additive residual, which is the class that actually matters.}
+R10's family is binary \emph{additive}, so Conjecture~\ref{conj:main} already
+holds on all of it via~\cite{LMS26}, and the characterisation above is the
+binary-additive theorem's shape reappearing. The class that carries the open
+problem is the \emph{non-additive} envy-free-free instances, which that
+reduction cannot produce. Generating $553$ of them by rejection sampling with an
+explicit additivity filter settles three things
+(\texttt{update\_15/nonadditive\_residual.py}).
+
+\emph{The chain conjecture survives.} All $553$ have a chain witness ---
+$79{,}206$ of them in total, none missing. This is the most adversarial test the
+open statement has had, being simultaneously envy-free-free and non-additive.
+
+\emph{The Set-Splitting characterisation does not survive.} ``Paid set $=$
+holders of universally costly chores'' holds on $22$ of $553$, and ``total
+subsidy constant across the witnesses of an instance'' on $56$ of $553$. Both
+were exact on the additive family. So they are artefacts of additivity, and a
+proof of the characterisation on R10's family would not have generalised --- the
+check was worth running before the proof attempt rather than after.
+
+\emph{And it corrects an earlier lead.} The containment $\text{paid} \subseteq
+\argmax_i \cost_i(\bundle{i})$, recorded as $164/164$ in
+Remark~\ref{rem:paid-empirics}, fails on $141$ of the $553$. That sample had not
+been filtered for additivity. The remark is amended accordingly; what survives
+there is Proposition~\ref{prop:paid-characterisation}, which is proved rather
+than observed.
+
 \textbf{Method note, worth more than any single result here.} For any question
 about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
 than sampling instances: every non-negative integer matrix is realisable, so
