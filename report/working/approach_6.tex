@@ -975,7 +975,8 @@ own costs, and a defect part. The potential condition $\edgew{\alloc}(i,j) \le
 \phi_j - \phi_i$ for $\phi = -\kappa$ is exactly $E_{ij} \ge 0$, i.e.\ ``every
 bundle is cheapest for the agent holding it''. That fails --- but only just.
 
-\begin{observation}[Both parts are bounded at an IMWPM allocation]
+\begin{observation}[Both parts are bounded at an IMWPM allocation --- FALSE at
+larger $m$, see Remark~\ref{rem:kappa-parts-refuted}]
 \label{obs:kappa-parts}
 Over $657$ instances with $n \le 6$, $m \le 9$
 (\texttt{update\_28/potential\_search.py} and the accompanying path sweep):
@@ -993,7 +994,8 @@ Part (iii) is the substantive one: individual excesses go negative and paths are
 long, yet the negative excesses \emph{do not chain}. Combining it with (i)
 through Lemma~\ref{lem:kappa-identity}:
 
-\begin{corollary}[A constant bound, conditionally]
+\begin{corollary}[A constant bound, conditionally --- WITHDRAWN, see
+Remark~\ref{rem:kappa-parts-refuted}]
 \label{cor:constant-bound}
 If (i) and (iii) of Observation~\ref{obs:kappa-parts} hold in general, then at
 every IMWPM allocation $\max_i \pathw{\alloc}(i) \le 3$.
@@ -1004,27 +1006,52 @@ By Lemma~\ref{lem:kappa-identity}, $\edgew{\alloc}(P) = \kappa_a - \kappa_b -
 \sum_P E_{ij} \le \operatorname{spread}(\kappa) + 1 \le 3$.
 \end{proof}
 
-Three points about Corollary~\ref{cor:constant-bound}. First, the bound is
-\emph{constant}: it does not grow with $n$ or $m$. That is the substantive
-difference from Section~\ref{sec:approach6-r11-audit}, where carrying
-\cite{LMS26}'s telescoping across the additive boundary gave only $1 + 2(n-1)$;
-here the defect is controlled globally rather than accumulated round by round, and
-the $n$-dependence disappears. Since the best bound currently available for
-dichotomous chores is the $n-1$ per agent of~\cite{KMSTY24}, a proof of (i) and
-(iii) would be a genuine improvement in its own right, independently of
-Conjecture~\ref{conj:main}.
+\begin{remark}[Both hypotheses of Corollary~\ref{cor:constant-bound} are false]
+\label{rem:kappa-parts-refuted}
+Observation~\ref{obs:kappa-parts} rested on $n \le 6$, $m \le 9$, and its part~(i)
+was attained on only $3$ of $657$ instances --- thin evidence, since $\kappa_i$
+counts \emph{rounds} in which agent $i$ paid and that sweep barely left
+$T = 3$. Re-run at $m$ up to $12$, and on families built to make the agents
+disagree (disjoint interest blocks, nested interest sets, one agent finding
+everything costly), both parts fail:
+\begin{align*}
+  \operatorname{spread}(\kappa) &\text{ reached } 4
+    &&(n=3,\ m=12,\ \text{nested}), \\
+  \textstyle\sum_P E_{ij} &\text{ reached } -4
+    &&(n=3,\ m=12,\ \text{one-heavy}),
+\end{align*}
+with distributions $\operatorname{spread}(\kappa)$ given by $0{:}58$, $1{:}44$,
+$2{:}18$, $3{:}31$, $4{:}5$ and path defect by $-4{:}4$, $-3{:}21$, $-2{:}14$,
+$-1{:}12$, $0{:}105$ (\texttt{update\_29/stress\_kappa.py}). So
+Corollary~\ref{cor:constant-bound} yields at best $8$ at these sizes, and both of
+its inputs grow with $m$. It is withdrawn.
+\end{remark}
 
-Second, the bound is not tight: the observed maximum is $2$, not $3$, because the
-extremes of (i) and (iii) do not co-occur --- $\operatorname{spread}(\kappa) = 2$
-arose on $3$ instances and a path defect of $-1$ on $74$, never together. Closing
-that last unit is what would deliver Conjecture~\ref{conj:imwpm-bound} rather than
-merely a constant.
+What the same run shows is more interesting than what it refutes: across all
+$156$ of those larger instances, $\max_i \pathw{\alloc}(i)$ never exceeded $1$
+--- distribution $0{:}129$, $1{:}27$ --- which is \emph{stronger} than
+Conjecture~\ref{conj:imwpm-bound} requires and stronger than the small-$m$ sweeps,
+where $\pathw{\alloc} = 2$ did occur. Since Lemma~\ref{lem:kappa-identity} is an
+exact identity, the two terms $\kappa_a - \kappa_b$ and $\sum_P E_{ij}$ must
+therefore be \emph{cancelling}: both reach $4$ in magnitude while their difference
+stays at $1$.
 
-Third, the two remaining claims are of a different character from everything that
-has failed. (i) concerns the spread of the $n$ numbers $\cost_i(\bundle{i})$ at a
-single allocation, and (iii) concerns a sum of pairwise excesses along a path.
-Neither quantifies over allocations, neither needs additivity or submodularity,
-and both are statements about the output of one construction.
+\begin{remark}[The recurring obstruction, third instance]
+\label{rem:cancellation}
+This is now the third decomposition of the same quantity in which both parts are
+unbounded and only the combination is controlled.
+Proposition~\ref{prop:bdnsv-fails-dichotomous} found it for
+$q_i = \tilde\subsidy_i + \abs{\bundle{i}}$, where the subsidy reached $2$ while
+the bundle size compensated exactly.
+Proposition~\ref{prop:r11-defect} found it for the round decomposition, where the
+per-round defect accumulated to $-4$ while the true path weight stayed at $2$. And
+Remark~\ref{rem:kappa-parts-refuted} finds it for the own-cost decomposition. In
+each case the identity is exact and the bound on the whole is far better than any
+bound on the parts. The lesson is not that a particular split was unlucky: it is
+that $\pathw{\alloc}$ at an IMWPM allocation appears not to admit \emph{any}
+two-term decomposition with separately bounded parts, and a proof must treat
+$\kappa_a - \kappa_b - \sum_P E_{ij}$ as a single object.
+\end{remark}
 
 % --------------------------------------------------------------------------
 \subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
