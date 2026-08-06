@@ -55,6 +55,12 @@ Round dominance, and its corollary
   & Lem.~\ref{lem:round-dominance} & \textsc{proved} \\
 $\edgew{\alloc}(i,j) = (\kappa_i-\kappa_j) - E_{ij}$
   & Lem.~\ref{lem:kappa-identity} & \textsc{proved} \\
+Peel reachability, full $n=m=3$ family: no bad root
+  & Obs.~\ref{obs:peel-sweep} & \textsc{verified} \\
+Balance $\Rightarrow$ live (characterises the dead ends)
+  & Obs.~\ref{obs:balance-characterises} & \textsc{verified} \\
+Balance rule $\Rightarrow$ Conj.~\ref{conj:h1prime} $\Rightarrow$ Conj.~\ref{conj:main}
+  & Prop.~\ref{prop:balance-rule-implies} & \textsc{proved} \\
 \midrule
 IMWPM warm start has $q$-spread $\le 2$
   & Conj.~\ref{conj:imwpm-bound} & \textsc{open} \\
@@ -62,6 +68,8 @@ Spread $2$ repairs in one move
   & Conj.~\ref{conj:last-rung} & \textsc{open} \\
 Repair from the warm start needs no restarts
   & Conj.~\ref{conj:warmstart} & \textsc{open} \\
+\textbf{Balance-rule maintenance}
+  & Conj.~\ref{conj:balance-rule} & \textsc{open} --- best candidate \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -124,12 +132,10 @@ Choose the paid set first / build the two tiers first
 \toprule
 thread & where & status \\
 \midrule
-Type-ordered peel search; the fixed-point sweep over $n=m=3$
+Type-ordered peel search (a further restriction)
   & Conj.~\ref{conj:h1pp} & \textsc{unexplored} \\
-Peel converse: is a good terminal always reachable?
+Peel converse: does Conj.~\ref{conj:main} imply reachability?
   & Rem.~\ref{rem:converse} & \textsc{unexplored} \\
-Characterise the peel dead ends
-  & Prop.~\ref{prop:deadends} & \textsc{unexplored} \\
 Agent induction carrying a \emph{path}-based invariant
   & \S\ref{sec:approach5} & \textsc{unexplored} \\
 At most two distinct cost functions among the $n$ agents

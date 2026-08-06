@@ -526,6 +526,108 @@ is ever entered}, and Remark~\ref{rem:balance} is the first candidate for what
 that rule must enforce.
 
 % --------------------------------------------------------------------------
+\subsection{The sweep, and the rule it produces}
+\label{sec:peelsweep-done}
+
+The experiment this section has been calling for --- run the reachability
+computation over the full $n = m = 3$ family --- was finally run. At $n = m = 3$ a
+state is a workload profile, so there are at most $(2^m)^n = 512$ of them and
+reachability is decidable exactly.
+
+\begin{observation}[The sweep]
+\label{obs:peel-sweep}
+Over the complete exhaustive $n = m = 3$ dichotomous family --- all $9{,}880$
+instances --- there is \emph{no bad root}: from every root some sequence of peels
+and permutations reaches a terminal state with the invariant holding throughout.
+Extending to random instances at $n = 3$ with $m \le 6$, $n = 4$ with $m \le 4$
+and $n = 5$ with $m = 3$ gives $0$ bad roots as well
+(\texttt{update\_32/peel\_sweep.py}, \texttt{peel\_general.py}).
+\end{observation}
+
+So Conjecture~\ref{conj:h1prime} is not refuted, and Approach~3 is alive. But
+reachability from the root is not a rule: dead ends are plentiful --- $278$,
+$1{,}319$ and $1{,}633$ of them at $n=3$, $m = 4,5,6$ --- and all three natural
+greedy rules walk into them (peel from an $\argmax_i \pathw{}(i)$ agent, peel the
+chore with the largest candidate set, peel from the most burdened residual
+workload, failing $81$, $64$ and $66$ times respectively). What was missing was
+the rule. Remark~\ref{rem:balance} guessed it should enforce balance, and that
+guess is now confirmed in a sharp form.
+
+\begin{observation}[Balance characterises the dead ends]
+\label{obs:balance-characterises}
+Say a state $\workprofile$ \emph{admits a balanced terminal} if some choice of
+owner $f(j) \in S_j$ for each chore induces bundle sizes differing by at most
+$1$. Over $1{,}192{,}108$ reachable legal states, the count of states that are
+dead yet admit a balanced terminal is \emph{zero}. That is,
+\[
+  \text{$\workprofile$ admits a balanced terminal} \;\Longrightarrow\;
+  \text{$\workprofile$ is live.}
+\]
+The converse fails --- $132{,}958$ live states admit no balanced terminal --- so
+the condition is sufficient, not necessary
+(\texttt{update\_32/deadend\_char.py}).
+\end{observation}
+
+Admitting a balanced terminal is a degree-constrained bipartite feasibility
+question: with $m = qn + r$, it asks for an assignment of each chore $j$ to an
+agent of $S_j$ with $r$ agents receiving $q+1$ chores and $n-r$ receiving $q$.
+That is a transportation problem, decidable by one max-flow computation. So
+Observation~\ref{obs:balance-characterises} supplies something the earlier
+sections never had: a \emph{checkable} sufficient condition for not being stuck.
+
+\begin{quote}
+\textbf{The balance rule.} Never peel in a way that destroys the existence of a
+balanced terminal.
+\end{quote}
+
+The root admits a balanced terminal trivially, every $S_j$ being all of
+$\agents$, so the rule can start. Whether it can be \emph{followed} is the
+remaining question, and the answer so far is yes.
+
+\begin{observation}[The rule is complete, so far]
+\label{obs:balance-rule-complete}
+Restricting the state graph to states that are both legal and balance-admitting,
+a terminal is still reachable from the root on every instance tested: $0$
+failures over $305$ instances at $n = 3$ ($m \le 6$), $n = 4$ ($m \le 4$) and
+$n = 5$ ($m = 3$) (\texttt{update\_32/balance\_rule.py}).
+\end{observation}
+
+\begin{conjecture}[Balance-rule maintenance]
+\label{conj:balance-rule}
+From every legal, non-terminal state admitting a balanced terminal, some legal
+peel or permutation leads to another legal state admitting a balanced terminal.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:balance-rule-implies}
+Conjecture~\ref{conj:balance-rule} implies Conjecture~\ref{conj:h1prime}, hence
+Conjecture~\ref{conj:main}; and it yields a polynomial-time algorithm, each step
+choosing a peel by one max-flow feasibility test.
+\end{proposition}
+
+\begin{proof}
+The root is legal, its graph being identically zero, and admits a balanced
+terminal. Conjecture~\ref{conj:balance-rule} extends any such state to another,
+and each peel strictly decreases $\sum_i \abs{\workprofile_i}$, so after finitely
+many steps a terminal is reached with the invariant holding throughout --- which
+is Conjecture~\ref{conj:h1prime}. That implies Conjecture~\ref{conj:main} as
+already shown. Each step tests $O(nm)$ candidate peels, each by a transportation
+feasibility check on a bipartite graph with $n + m$ nodes.
+\end{proof}
+
+Two honest qualifications. First, Conjecture~\ref{conj:balance-rule} is
+\emph{stronger} than Conjecture~\ref{conj:main}, as
+Remark~\ref{rem:converse} already warns for Conjecture~\ref{conj:h1prime}: a good
+allocation may exist while no legal schedule reaches one. Second, the sufficient
+condition is not tight --- $132{,}958$ live states fail it --- so the rule
+discards live states, and its completeness is a genuine claim rather than a
+bookkeeping identity. What makes it worth more than the earlier strengthenings is
+that it comes with an \emph{explicit, polynomial-time checkable rule}: unlike the
+descent lemma of Section~\ref{sec:approach7}, whose witnessing move was shown not
+to be local, here the move to make is decided by a flow computation, and the open
+statement is only that a legal such move always exists.
+
+% --------------------------------------------------------------------------
 \subsection{The type-ordered restriction}
 \label{sec:typeorder}
 
