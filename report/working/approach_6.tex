@@ -936,6 +936,97 @@ open question, and it is now a question about consecutive agents on a path rathe
 than about all $T$ rounds at once.
 
 % --------------------------------------------------------------------------
+\subsection{The own-cost decomposition, and a constant bound}
+\label{sec:approach6-kappa}
+
+Turning Observation~\ref{obs:arc-one} into a path bound needs a potential: some
+$\phi$ with $\edgew{\alloc}(i,j) \le \phi_j - \phi_i$ on every arc makes path
+weights telescope, giving $\max_i \pathw{\alloc}(i) \le \operatorname{spread}(\phi)$.
+Taking $\phi = -\pathw{\alloc}$ works trivially and is circular, so $\phi$ must
+come from the algorithm. Nine candidates read off the round structure were tried
+and none holds universally; the best, $\phi = -\cost_i(\bundle{i})$, held on
+$583$ of $657$ instances (\texttt{update\_28/potential\_search.py}). But that
+candidate is worth keeping, because the algebra behind it is exact.
+
+\begin{lemma}[Own-cost decomposition]
+\label{lem:kappa-identity}
+Write $\kappa_i := \cost_i(\bundle{i})$ and
+$E_{ij} := \cost_i(\bundle{j}) - \cost_j(\bundle{j})$, the excess of $j$'s bundle
+to $i$ over its cost to its own holder. Then for every arc,
+\[
+  \edgew{\alloc}(i,j) \;=\; (\kappa_i - \kappa_j) \;-\; E_{ij},
+\]
+and consequently, for every directed path $P$ from $a$ to $b$,
+\[
+  \edgew{\alloc}(P) \;=\; \kappa_a - \kappa_b \;-\; \sum_{(i,j) \in P} E_{ij}.
+\]
+\end{lemma}
+
+\begin{proof}
+$\edgew{\alloc}(i,j) = \cost_i(\bundle{i}) - \cost_i(\bundle{j}) = \kappa_i -
+(\kappa_j + E_{ij})$ by the definition of $E_{ij}$. Summing along $P$, the
+$\kappa$ terms telescope.
+\end{proof}
+
+The identity is exact and holds for every allocation, not only IMWPM's; it was
+verified with $0$ violations over all simple paths of $657$ instances. It splits
+the path weight into a telescoping part, governed by the spread of the agents'
+own costs, and a defect part. The potential condition $\edgew{\alloc}(i,j) \le
+\phi_j - \phi_i$ for $\phi = -\kappa$ is exactly $E_{ij} \ge 0$, i.e.\ ``every
+bundle is cheapest for the agent holding it''. That fails --- but only just.
+
+\begin{observation}[Both parts are bounded at an IMWPM allocation]
+\label{obs:kappa-parts}
+Over $657$ instances with $n \le 6$, $m \le 9$
+(\texttt{update\_28/potential\_search.py} and the accompanying path sweep):
+\begin{enumerate}
+  \item[(i)] $\operatorname{spread}(\kappa) \le 2$ always, with distribution
+    $0\,{:}\,200$, $1\,{:}\,454$, $2\,{:}\,3$;
+  \item[(ii)] $E_{ij} \ge -1$ always --- all $80$ negative excesses, out of
+    $8{,}826$, equalled exactly $-1$;
+  \item[(iii)] $\sum_{(i,j) \in P} E_{ij} \ge -1$ for \emph{every} simple path
+    $P$, with distribution $-1\,{:}\,74$, $0\,{:}\,569$, $1\,{:}\,14$.
+\end{enumerate}
+\end{observation}
+
+Part (iii) is the substantive one: individual excesses go negative and paths are
+long, yet the negative excesses \emph{do not chain}. Combining it with (i)
+through Lemma~\ref{lem:kappa-identity}:
+
+\begin{corollary}[A constant bound, conditionally]
+\label{cor:constant-bound}
+If (i) and (iii) of Observation~\ref{obs:kappa-parts} hold in general, then at
+every IMWPM allocation $\max_i \pathw{\alloc}(i) \le 3$.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:kappa-identity}, $\edgew{\alloc}(P) = \kappa_a - \kappa_b -
+\sum_P E_{ij} \le \operatorname{spread}(\kappa) + 1 \le 3$.
+\end{proof}
+
+Three points about Corollary~\ref{cor:constant-bound}. First, the bound is
+\emph{constant}: it does not grow with $n$ or $m$. That is the substantive
+difference from Section~\ref{sec:approach6-r11-audit}, where carrying
+\cite{LMS26}'s telescoping across the additive boundary gave only $1 + 2(n-1)$;
+here the defect is controlled globally rather than accumulated round by round, and
+the $n$-dependence disappears. Since the best bound currently available for
+dichotomous chores is the $n-1$ per agent of~\cite{KMSTY24}, a proof of (i) and
+(iii) would be a genuine improvement in its own right, independently of
+Conjecture~\ref{conj:main}.
+
+Second, the bound is not tight: the observed maximum is $2$, not $3$, because the
+extremes of (i) and (iii) do not co-occur --- $\operatorname{spread}(\kappa) = 2$
+arose on $3$ instances and a path defect of $-1$ on $74$, never together. Closing
+that last unit is what would deliver Conjecture~\ref{conj:imwpm-bound} rather than
+merely a constant.
+
+Third, the two remaining claims are of a different character from everything that
+has failed. (i) concerns the spread of the $n$ numbers $\cost_i(\bundle{i})$ at a
+single allocation, and (iii) concerns a sum of pairwise excesses along a path.
+Neither quantifies over allocations, neither needs additivity or submodularity,
+and both are statements about the output of one construction.
+
+% --------------------------------------------------------------------------
 \subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
 is submodularity}
 \label{sec:approach6-r11-audit}
