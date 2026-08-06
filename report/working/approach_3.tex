@@ -1243,6 +1243,40 @@ provably avoids them, and that is now the whole of the gap: the free case is
 settled by Lemma~\ref{lem:free-peel-safe}, and the non-free case is settled
 empirically but not in principle.
 
+\begin{remark}[Dropping balance does not help, and the commitment predicate
+narrowly fails]
+\label{rem:commit-predicate}
+Since Conjecture~\ref{conj:balance-rule} is strictly stronger than
+Conjecture~\ref{conj:main}, it is worth asking whether
+Conjecture~\ref{conj:h1prime} is easier without the balance restriction. It is
+not: Conjecture~\ref{conj:h1} --- from every legal non-terminal state some legal
+move exists --- is already refuted by Proposition~\ref{prop:deadends}, so the
+wider graph carries the same dead ends and the same obstruction.
+
+What Remark~\ref{rem:balance} suggests is more promising, because it is a
+predicate on the \emph{state} alone, which is what
+Remark~\ref{rem:no-separating-feature} shows a rule must be. Writing
+$C_i(\workprofile) := \set{j : S_j = \set{i}}$ for the chores whose owner is
+already decided, consider
+\[
+  (\textsc{commit}) \qquad \cost_i\bigl(C_i(\workprofile)\bigr) \le 1
+  \quad \text{for every agent } i .
+\]
+It holds at the root, where every $C_i$ is empty, and it very nearly
+characterises liveness: over $151{,}374$ legal reachable states, $239$ of the
+$256$ dead states violate it. But it is not sufficient --- $17$ dead states
+satisfy it, the smallest at $n = 3$, $m = 4$ with
+$\workprofile = (\set{g_2},\set{g_2},\set{g_1,g_3,g_4})$ --- so it cannot serve
+as $\Phi$ (\texttt{update\_43/commitment.py}).
+
+The figures above are from a sweep restricted to instances whose \emph{entire}
+reachable set was enumerated, $88$ of them with none truncated. An earlier run
+capped the search at $6{,}000$ states per instance and reported $154{,}019$ dead
+states satisfying $(\textsc{commit})$; that was an artifact of the cap, since the
+backward liveness pass then runs on a truncated graph and misclassifies states
+whose route to a terminal leaves the explored set.
+\end{remark}
+
 \begin{remark}[The avoiding choice is not locally legible]
 \label{rem:no-separating-feature}
 Theorem~\ref{obs:smax-comparable} suggests looking for the rule in the dynamics
