@@ -862,6 +862,80 @@ Section~\ref{sec:approach6-r11-audit} shows is that accumulating it across round
 is exactly what fails.
 
 % --------------------------------------------------------------------------
+\subsection{From paths to arcs}
+\label{sec:approach6-arcs}
+
+Lemma~\ref{lem:q-formula} localises Conjecture~\ref{conj:imwpm-bound}. If $j^*$
+attains $q_i$ then $q_{i'} \ge d(i',j^*) + \abs{\bundle{j^*}}$, so
+$q_i - q_{i'} \le d(i,j^*) - d(i',j^*)$ and therefore
+\[
+  \text{$q$-spread} \le 2
+  \quad\Longleftrightarrow\quad
+  d(i,j) - d(i',j) \le 2 \quad \text{for all } i,i',j .
+\]
+Because $d(i,j) \ge \edgew{\alloc}(i,i') + d(i',j)$ whenever $i \ne i'$ --- with no
+positive cycle a heaviest walk may be taken simple, so concatenation is
+legitimate --- this \emph{forces} every arc to have weight at most $2$. The
+measurement returns something stronger.
+
+\begin{observation}[Arcs at an IMWPM allocation]
+\label{obs:arc-one}
+Over $746$ instances with $n \le 6$, $m \le 9$, every chores envy arc at the
+IMWPM allocation had weight at most $1$; the observed distribution of
+$\edgew{\alloc}(i,j)$ was $-3\,{:}\,3$, $-2\,{:}\,648$, $-1\,{:}\,3551$,
+$0\,{:}\,2356$, $1\,{:}\,300$ (\texttt{update\_27/arc\_bound.py}).
+\end{observation}
+
+An arc bound of $1$ says $\cost_i(\bundle{i}) \le \cost_i(\bundle{j}) + 1$, which
+--- since every marginal is at most $1$ --- is exactly the EF1 property for
+chores. Two things follow. First, the lower bound fails badly: arcs reach $-3$,
+so the hypothesis of~\cite[Lemma~4.1]{BDNSV20} is unavailable, which is precisely
+the situation that paper describes before introducing its modified valuation, and
+which Section~\ref{sec:approach6-bdnsv-audit} transplanted to the matrix level.
+Second, an arc bound alone cannot give a path bound: with arcs at most $1$, a
+path of length $k$ still admits weight $k$. Indeed $\max_j$-spread of $d(\cdot,j)$
+reached $3$, and $\max_i \pathw{\alloc}(i)$ reached $2$
+(Proposition~\ref{prop:bdnsv-fails-dichotomous}).
+
+What makes Observation~\ref{obs:arc-one} worth pursuing is that it is a
+\emph{pairwise} statement, and the round structure supplies a pairwise tool.
+
+\begin{lemma}[Round dominance]
+\label{lem:round-dominance}
+Let $g$ be a chore available at the start of round $t$ that the round-$t$
+assignment does not use. Then for every agent $i$,
+$\gamma_i^t(g_i^t) \le \gamma_i^t(g)$.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:imwpm-chores} the round-$t$ assignment minimises
+$\sum_k \gamma_k^t$ over all ways of handing one available chore to each agent.
+Replacing agent $i$'s chore $g_i^t$ by $g$ is such a way, since $g$ is available
+and unused, and it changes only the $i$-th term. Minimality gives
+$\gamma_i^t(g) \ge \gamma_i^t(g_i^t)$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:pay-one-all-cost}
+If $\gamma_i^t(g_i^t) = 1$ then every chore available and unused at round $t$ has
+marginal $1$ for agent $i$ over $\bundle{i}^{t-1}$.
+\end{corollary}
+
+Both were verified exactly: $0$ violations in $6{,}719$ checks over $520$
+instances. Together with the transposition bound already noted --- if agent $i$
+would rather have had $j$'s chore then $j$ strictly prefers its own ---
+Lemma~\ref{lem:round-dominance} gives a complete description of what one round
+guarantees, and Corollary~\ref{cor:pay-one-all-cost} is the sharp form: a round in
+which $i$ pays is a round in which \emph{nothing available was free for $i$}.
+
+This is the ingredient that the additive proofs obtain from item values and that
+Section~\ref{sec:approach6-r11-audit} showed cannot be recovered by summing
+rounds. Whether it can be accumulated \emph{along an envy path} --- where
+Lemma~\ref{lem:q-formula} says the quantity of interest actually lives --- is the
+open question, and it is now a question about consecutive agents on a path rather
+than about all $T$ rounds at once.
+
+% --------------------------------------------------------------------------
 \subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
 is submodularity}
 \label{sec:approach6-r11-audit}
