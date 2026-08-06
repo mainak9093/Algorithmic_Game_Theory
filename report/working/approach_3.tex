@@ -778,8 +778,80 @@ together with Lemma~\ref{lem:balance-free} they give a peel that is
 against $58.7\%$ for free peels alone. The residual is $68{,}919$ states at
 which neither condition fires; by Proposition~\ref{prop:tight-arc} those are
 exactly the states where every peelable chore has a tight incoming arc carrying
-marginal $1$ into every unpaid candidate owner, and closing them is what remains
-of Conjecture~\ref{conj:balance-rule}.
+marginal $1$ into every unpaid candidate owner.
+
+\subsection{What the two lemmas cannot do}
+\label{sec:peel-lemma-limits}
+
+\begin{corollary}[Structure of a stuck state]
+\label{cor:stuck-structure}
+If $\workprofile$ is stuck then for every peelable chore $j$ and every admissible
+$x \in S_j$, either $\pathw{\workprofile}(x) = 0$ or $\mu_x = 0$.
+\end{corollary}
+
+\begin{proof}
+Contrapositive of Lemma~\ref{lem:paid-peel}.
+\end{proof}
+
+That is the whole of what the two safety lemmas say about stuck states, and it is
+not enough: they cannot certify a schedule at all.
+
+\begin{proposition}[The two lemmas do not suffice]
+\label{prop:lemmas-insufficient}
+Restricting the peel process to steps certified by
+Lemma~\ref{lem:free-peel-safe} or Lemma~\ref{lem:paid-peel}, no terminal is
+reachable from the root on \emph{any} of $191$ test instances.
+\end{proposition}
+
+The reason is visible in the calculus rather than the data. At the root every
+$\workprofile_i = \items$, so every arc weight is $0$ and $\pathw{} \equiv 0$.
+Hence $p = 0$ is the potential, \emph{every} arc is tight, and
+Proposition~\ref{prop:tight-arc} degenerates to ``$\mu_k = 0$ for all $k$'', i.e.\
+to freeness; while Lemma~\ref{lem:paid-peel} needs $p_x = 1$ and so cannot fire at
+all. Both lemmas are blind near the root.
+
+The root is nevertheless settled exactly, and the answer is a genuine constraint
+on every schedule.
+
+\begin{proposition}[The first peel]
+\label{prop:first-peel}
+From the root, $\mathrm{peel}(x,j)$ is legal if and only if
+$\mu_x \ge \mu_k$ for every $k \ne x$: the chore must be taken from an agent who
+finds it at least as costly as everybody else does.
+\end{proposition}
+
+\begin{proof}
+After the peel, $\edgew{}(k,x) = \mu_k$, $\edgew{}(x,k) = -\mu_x$, and
+$\edgew{}(i,k) = 0$ for $i,k \ne x$. A potential $p'$ must satisfy
+$0 \le p'_i - p'_k$ both ways for $i,k \ne x$, forcing $p'_i = c$ off $x$; then
+the remaining constraints are $\mu_k \le c - p'_x$ and $-\mu_x \le p'_x - c$,
+i.e.\ $c - \mu_x \le p'_x \le c - \max_{k \ne x} \mu_k$. This interval contains an
+integer iff $\mu_x \ge \max_{k \ne x} \mu_k$, and when it does, $c = 1$ with
+$p'_x = 1 - \max_k \mu_k$ works. Conversely if $\mu_x < \max_k \mu_k$ the
+interval is empty, so no potential certifies the state and
+Lemma~\ref{lem:potential-form} makes it illegal.
+\end{proof}
+
+\begin{remark}[The generalisation fails]
+\label{rem:dominant-marginal-fails}
+Proposition~\ref{prop:first-peel} is exact only at the root, where all arcs
+vanish. The natural extension --- always peel a chore from an owner of maximal
+marginal --- is neither a lemma nor a usable rule: of $2{,}912{,}968$
+dominant-marginal peels, $272{,}757$ ($9.4\%$) are illegal, and greedy descent
+under the rule reaches a terminal on only $10$ of $191$ instances.
+\end{remark}
+
+So closing Conjecture~\ref{conj:balance-rule} needs a safety criterion strictly
+stronger than Lemmas~\ref{lem:free-peel-safe} and~\ref{lem:paid-peel}.
+Proposition~\ref{prop:tight-arc} says what such a criterion must engage with: it
+characterises legality for the potential $p = \pathw{\workprofile}$ only, and both
+lemmas are the two ways of exploiting it that keep the potential fixed or shift
+one coordinate. A criterion that closes the residual will have to reason about
+\emph{which potentials are available} at a state --- the set
+$\set{p \in \set{0,1}^n : \edgew{}(i,k) \le p_i - p_k}$, equivalently the set of
+admissible paid sets --- rather than about $\pathw{}$ alone. That set is exactly
+the two-tier data of Proposition~\ref{prop:twotier}, which is the one piece of
+machinery in this report not yet brought to bear on the peel frame.
 
 \begin{observation}[The residual, and a correction]
 \label{obs:peel-residual}
