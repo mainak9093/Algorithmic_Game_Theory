@@ -248,6 +248,71 @@ Section~\ref{sec:approach6}, whose algorithm is polynomial by construction and
 has never failed.
 \end{remark}
 
+\subsection{The non-local route: is there room, and can anything reach it?}
+\label{sec:approach8-nonlocal}
+
+Remark~\ref{rem:cancellation-four} closes the local and decompositional routes:
+four independent attempts to bound $\pathw{\alloc}$ by a part of itself all came
+in strictly worse than the truth. What remains is the non-local class --- counting,
+averaging, probabilistic-method and parity arguments, which reason about all
+allocations at once. Two questions decide whether that class is usable: whether
+the good allocations are numerous enough to be reached by such an argument, and
+whether any natural distribution or identity actually reaches them.
+
+\begin{observation}[There is room]
+\label{obs:counting-room}
+Exhaustively over all $n^m$ allocations of $1{,}169$ instances with $n \le 5$,
+$m \le 6$, the number of good allocations never fell below $11$, and on the $80$
+EF-free instances --- the residual class, since Conjecture~\ref{conj:main} is
+trivial where an exactly envy-free allocation exists --- never below $27$
+(\texttt{update\_31/counting\_room.py}).
+\end{observation}
+
+So the good set is not a needle: an argument that merely shows it non-empty has
+something to aim at, unlike the situation where only one witness exists and
+nothing short of exhibiting it can work. But the two standard ways of reaching it
+both fail.
+
+\begin{proposition}[Parity fails]
+\label{prop:parity-fails}
+The number of good allocations has no fixed parity: over $737$ instances it was
+even $469$ times and odd $268$ times. No Sperner- or Tucker-style identity forcing
+an odd count can hold.
+\end{proposition}
+
+\begin{proposition}[No natural distribution concentrates]
+\label{prop:no-distribution}
+The fraction of allocations that are good is not bounded below. Under the uniform
+distribution its minimum fell from $0.136$ at $n=3$, $m=4$ to $0.025$ at $n=m=5$.
+Restricting to cardinality-balanced partitions does not repair this --- the
+minimum fraction there was $0.042$ at $n=m=4$, \emph{worse} than uniform --- and
+restricting to minimum-cost allocations gives a minimum fraction of $0$,
+reconfirming Section~\ref{sec:approach6}'s refutation of that family.
+\end{proposition}
+
+The probabilistic method needs a distribution under which the good set has
+probability bounded away from zero, and Proposition~\ref{prop:no-distribution}
+rules out the three natural candidates; a counting proof needs an identity forcing
+the count non-zero, and Proposition~\ref{prop:parity-fails} rules out the parity
+identity. What is \emph{not} ruled out is a cleverer weighting: the fractions above
+are for specific distributions, and the space of weightings is unbounded. But no
+weighting suggested by the structure of the problem survives, and
+Observation~\ref{obs:counting-room} shows the target is generous enough that if a
+natural one existed it would likely have been among these.
+
+\begin{remark}[Status of the technique classes]
+\label{rem:technique-classes}
+Taken with Remark~\ref{rem:cancellation-four}, every named technique class has now
+been tried and refuted on this problem: constructive
+(Sections~\ref{sec:approach7-obstruction}, \ref{sec:approach8-induction}),
+decompositional (Remark~\ref{rem:cancellation}, four instances), transplanted from
+the additive literature (Sections~\ref{sec:approach6-bdnsv-audit},
+\ref{sec:approach6-r11-audit}), and now non-local. This is not a claim that
+Conjecture~\ref{conj:main} is false --- it survives every test at every size --- nor
+that it is unprovable. It is a claim about where a proof will not come from, and
+it is the most useful thing this report currently establishes.
+\end{remark}
+
 \subsection{The algorithmic clause}
 \label{sec:approach8-algorithmic}
 
