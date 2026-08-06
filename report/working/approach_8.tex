@@ -1,0 +1,184 @@
+%% ==========================================================================
+%%  Approach 8 --- the global route: which optimum is good?
+%%
+%%  Source: derived 2026-08-06.  Scripts: update_20/global_optima.py,
+%%  balance_lemma.py.
+%%
+%%  STATUS (2026-08-06).  REFUTED: the leximax objective (21 instances whose
+%%  optima are ALL bad) and, again, the utilitarian one (50).  REFUTED: every
+%%  lexicographic tie-break chain tried -- none makes all optima good, the best
+%%  (balance then leximax) failing on 4 of 1,082 instances.  OPEN, with strong
+%%  evidence: the BALANCE LEMMA, that every instance has a good BALANCED
+%%  allocation -- zero failures over 1,082 instances and 466,560 balanced
+%%  partitions, EF-free instances included.  Its value is that it restricts
+%%  Conjecture conj:main to a far more rigid class of witnesses without any
+%%  claim about local minima, which is what blocked Approach 7.
+%%  NOTE for the algorithmic clause: minimising sum |B_i|^2 is trivial, but the
+%%  lemma does not say WHICH balanced partition is good, so it is not by itself
+%%  an algorithm.  See the last subsection.
+%% ==========================================================================
+
+\section{Approach 8: the global route}
+\label{sec:approach8}
+
+\subsection{Why global}
+
+Approach 7 reduced Conjecture~\ref{conj:main} to a descent lemma, but
+Remark~\ref{rem:descent-stronger} records that the descent lemma is strictly
+stronger than the conjecture: it forbids bad \emph{local} minima of $\Psi$,
+whereas Conjecture~\ref{conj:main} only concerns the \emph{global} minimum. The
+global route drops the extra strength. It asks:
+
+\begin{quote}
+  is there an objective whose global optimum is always a good allocation?
+\end{quote}
+
+Such a statement would give existence with no reference to local search, and the
+polynomial-time clause becomes a separate question about computing the optimum.
+All objectives below are evaluated over partitions in canonical form
+(Definition~\ref{def:canonical}), so every candidate is envy-freeable and
+$\pathw{\alloc}$ is finite.
+
+\subsection{What is refuted}
+
+For an objective $f$, two questions differ: are \emph{all} $f$-optima good (a
+usable theorem, since then any optimum may be returned), or is merely
+\emph{some} $f$-optimum good (which needs a tie-break before it is a theorem)?
+Over $1{,}760$ instances at $n \le 5$, $m \le 7$:
+
+\begin{center}
+\begin{tabular}{llrr}
+\toprule
+objective & & all optima good & some optimum good \\
+\midrule
+$\sum_i \cost_i(B_i)$ & utilitarian    & $389$ fail & $50$ fail \\
+sorted cost vector    & leximax        & $54$ fail  & $21$ fail \\
+\midrule
+$\max_i \cost_i(B_i)$ & egalitarian    & $382$ fail & $0$ \\
+$\sum_i \abs{B_i}^2$  & balance        & $68$ fail  & $0$ \\
+$\max_i \cost_i - \min_i \cost_i$ & spread & $201$ fail & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The utilitarian row restates the refutation of Section~\ref{sec:approach6}. The
+leximax row is new and worth recording, because leximax is the objective the
+goods literature reaches for first: on $21$ instances \emph{every} leximax
+optimum is bad, so no tie-break can rescue it. Egalitarian, balance and spread
+all survive in the weaker sense.
+
+A tie-break chain would upgrade a ``some'' to a theorem, and twelve were tried.
+None succeeds:
+
+\begin{center}
+\begin{tabular}{lr@{\qquad}lr}
+\toprule
+chain & failures & chain & failures \\
+\midrule
+bal.                       & $75$ & bal.\ $\to$ lex.          & $4$ \\
+bal.\ $\to$ util.          & $21$ & bal.\ $\to$ lex.\ $\to$ util. & $4$ \\
+bal.\ $\to$ egal.          & $30$ & bal.\ $\to$ egal.\ $\to$ lex.\ $\to$ util. & $4$ \\
+bal.\ $\to$ egal.\ $\to$ util. & $8$ & egal.\ $\to$ bal.    & $48$ \\
+bal.\ $\to$ util.\ $\to$ egal. & $8$ & egal.\ $\to$ bal.\ $\to$ util. & $9$ \\
+bal.\ $\to$ spread         & $15$ & bal.\ $\to$ \#at max $\to$ util. & $29$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Adding components helps only down to $4$ failures out of $1{,}082$ and then
+stops; the last three chains are progressively finer and all fail on the same
+residue. So the good allocations are not picked out by any natural cost-based
+ordering. Note also that appending ``$\#$ agents at maximum cost'' actively
+\emph{breaks} the objective, turning $0$ ``some'' failures into $21$.
+
+\subsection{What survives: the balance lemma}
+
+The balance objective is special because its optima are describable outright:
+$\sum_i \abs{B_i}^2$ is minimised exactly by the \emph{balanced} partitions,
+those with all bundle sizes within $1$ of one another, i.e.\ every bundle of size
+$\lfloor m/n \rfloor$ or $\lceil m/n \rceil$. So its ``some optimum is good'' row
+reads as a structural restriction:
+
+\begin{conjecture}[Balance lemma]
+\label{conj:balance}
+Every instance with negative dichotomous valuations admits a good allocation
+whose partition is balanced.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:balance-implies-main}
+Conjecture~\ref{conj:balance} implies Conjecture~\ref{conj:main}, except for its
+polynomial-time clause.
+\end{proposition}
+
+\begin{proof}
+Immediate: a good allocation is one with $\max_i \pathw{\alloc}(i) \le 1$, which
+by Observation~\ref{obs:integrality} and
+Proposition~\ref{prop:zero-coordinate} yields $\optsubsidy \in \set{0,1}^n$ with
+total at most $n-1$.
+\end{proof}
+
+Conjecture~\ref{conj:balance} is stronger than Conjecture~\ref{conj:main}, and it
+is worth being explicit about why that strengthening is of a more useful kind
+than the one in Approach 7. The descent lemma strengthens the conjecture by
+constraining the \emph{optimisation landscape} --- it must have no bad local
+minimum --- which is a statement about every partition. The balance lemma
+strengthens it by constraining the \emph{witness}, and a constrained witness is
+extra structure a proof may use: on a balanced partition every bundle has one of
+two sizes, $m$ is nearly determined by $n$ and the common size, and the pigeonhole
+arguments that drive Example~\ref{ex:lowerbound} and the small-bundle theorem of
+Section~\ref{sec:solved} apply directly.
+
+\begin{center}
+\begin{tabular}{lrr}
+\toprule
+family & instances & no good balanced allocation \\
+\midrule
+random, $n \le 5$, $m \le 7$                & $1{,}760$ & $0$ \\
+random, $n \le 5$, $m \le 8$                & $1{,}082$ & $0$ \\
+EF-free only                                & $30$      & $0$ \\
+\midrule
+balanced partitions examined                & \multicolumn{2}{r}{$466{,}560$} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The two approaches also fit together rather than competing. The second
+coordinate of $\Psi$ in Definition~\ref{def:potential} is exactly
+$\sum_i \abs{B_i}^2$, so descent under $\Psi$ drives the partition towards
+balance; Conjecture~\ref{conj:balance} asserts that the balanced region is where
+the good allocations are. That the empirically successful potential and the
+empirically successful global objective agree on the same quantity is weak
+evidence that balance, not cost, is the operative structure.
+
+\subsection{The algorithmic clause}
+\label{sec:approach8-algorithmic}
+
+Conjecture~\ref{conj:main} also asks for a polynomial-time algorithm, and
+Proposition~\ref{prop:balance-implies-main} deliberately excludes it. The
+position is as follows.
+
+\begin{itemize}
+  \item Minimising $\sum_i \abs{B_i}^2$ is trivial --- every balanced partition
+    is optimal --- but that is exactly why the balance lemma gives no algorithm
+    on its own: it does not say \emph{which} balanced partition is good, and
+    there are exponentially many.
+  \item The objectives that would name one are not obviously tractable.
+    Minimising $\max_i \cost_i(B_i)$ is a makespan-type problem and NP-hard
+    already for identical additive costs, so ``compute the egalitarian optimum''
+    is not a polynomial algorithm even where it is correct.
+  \item Two polynomial candidates remain and are unaffected by this section: the
+    algorithm of Section~\ref{sec:approach6}, whose completeness is
+    Conjecture~\ref{conj:algorithm-succeeds} and which has never failed in
+    $389{,}215$ instances; and descent on $\Psi$, which
+    Theorem~\ref{thm:descent-suffices} shows runs in $O(m^4 n^4)$ and is correct
+    given Conjecture~\ref{conj:descent}.
+\end{itemize}
+
+So the division of labour is now explicit: the global route is the cleanest line
+on \emph{existence}, and the algorithmic clause rests on Approach 6 or Approach
+7. A proof of Conjecture~\ref{conj:balance} would settle the mathematical
+content of Conjecture~\ref{conj:main} and leave a well-posed, separately
+attackable computational question --- which is a better position than the
+current one, where existence and computation are entangled in a single
+conjecture that has resisted both.
