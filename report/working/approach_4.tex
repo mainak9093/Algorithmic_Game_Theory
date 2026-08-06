@@ -1,33 +1,86 @@
 %% ==========================================================================
-%%  Approach 4 --- encoding coverage into the numbers.   DEAD.
+%%  Approach 4 --- staged allocation with escalating type costs.   DEAD.
 %%
-%%  Presentation version: the idea, the two no-gos with one worked
-%%  counterexample, and the verdict (holder-blindness).  The separation
-%%  programme's intermediate machinery is removed; it is in git history.
+%%  Rewritten to present the ORIGINAL intuition (allocate the copies of one
+%%  type at a time, with each type made far costlier than the last, so that an
+%%  agent who has just taken a copy is never chosen again) rather than the
+%%  epsilon*d penalty formalism, which was a later and less faithful
+%%  rendering of it.  The failure is diagnosed at the right level: the
+%%  escalation separates TYPES, while the duplicate problem lives WITHIN a
+%%  type.
 %% ==========================================================================
-\section{Approach 4: Encoding Coverage into the Numbers}
+\section{Approach 4: Staged Allocation with Escalating Type Costs}
 \label{sec:approach4}
 
 \paragraph{The idea.} Corollary~\ref{cor:coverage} reduces
-Conjecture~\ref{conj:main} to a single constraint: the replica instance
-$\hat{I}$ must admit an allocation in which no agent holds two copies of one
-type. Applying~\cite{BKNS22} to $\hat{I}$ is legal but returns an allocation free
-to violate that. So change the numbers until a violation becomes unattractive ---
-either at the level of the valuations, by charging for duplicates, or at the level
-of the algorithm, by inflating weights so the wrong recipient is never selected.
+Conjecture~\ref{conj:main} to a single constraint on the replica instance
+$\hat{I}$: find an allocation in which no agent holds two copies of one type.
+Each type $b_j$ has $n-1$ copies, so a coverage allocation is exactly one that,
+for every type, spreads its $n-1$ copies over $n-1$ \emph{distinct} agents.
 
-\paragraph{Why it looks promising.} It would let a published algorithm be reused
-as a black box, with the only new work being the choice of penalty. And the
-penalty has an obvious shape: with $d(S) := \abs{S} - \abs{\tau(S)}$ counting
-duplicated copies, charge $u_i = \hat{v}_i + \varepsilon d$.
+That suggests allocating in \emph{stages}. Deal out all $n-1$ copies of $b_1$,
+then all $n-1$ copies of $b_2$, and so on. Within a stage the copies must land on
+distinct agents; across stages nothing is required. To make a black-box
+algorithm respect that, arrange the costs so that each type is far costlier than
+the one before,
+\[
+  b_1 \ \lll \ b_2 \ \lll \ \cdots \ \lll \ b_m ,
+\]
+the intention being that an agent who has just taken a copy of the current type
+is thereby so heavily loaded --- in the goods reading of the replica, so
+well-supplied --- that the algorithm's selection rule will not return to her
+while copies of that same type remain. Coverage would then be enforced by the
+\emph{schedule} rather than checked afterwards.
 
-\paragraph{Where it fails, at the valuation level.} The uniform penalty is a
-potential and therefore invisible.
+\paragraph{Why it looks promising.} The staging really does make coverage
+automatic: if each stage places its $n-1$ copies on distinct agents, the result
+is a coverage allocation by construction, with no constraint to verify at the
+end. And the selection rule of~\cite{BKNS22} does have the shape the intuition
+wants --- it hands the next item to a maximally subsidised agent, and an agent
+who has just received something valuable is not maximally subsidised. So the
+mechanism being appealed to exists.
+
+\paragraph{Why it fails.} The escalation separates \emph{types}, but the
+duplicate problem lives \emph{within} a type. Inside a stage all $n-1$ copies of
+$b_j$ are the same object, so no cost assigned to types can distinguish the copy
+an agent already holds from the copy she is about to be given. The formal
+statement of that is already available:
+
+\begin{theorem}
+\label{thm:w1}
+In $\hat{I}$ the marginal value of a second copy of a type is exactly $0$, for
+every agent and every set: if $b$ has type $j$ and $j \in \tau(S)$ then
+$\hat{v}_i(S \cup \set{b}) - \hat{v}_i(S) = 0$.
+\end{theorem}
+
+\begin{proof}
+$\tau(S \cup \set{b}) = \tau(S)$, and $\hat{v}_i$ factors through $\tau$.
+\end{proof}
+
+So an agent holding a copy of $b_j$ is \emph{indifferent} to a second one, not
+averse to it. Indifference is exactly the wrong sign for the intuition: the
+selection rule is not repelled by the duplicate, it simply gains nothing from
+avoiding it, and nothing in the invariant of~\cite{BKNS22} forbids handing it
+over. Escalating $b_{j}$ against $b_{j-1}$ does not touch this, because both
+copies in question are copies of $b_j$.
+
+Two further obstacles stand behind that one, and each is fatal on its own.
+
+\emph{Leaving the class.} Making one type ``much costlier'' than another
+requires weights growing faster than $1$ per item, which leaves the dichotomous
+class --- every marginal must lie in $\set{0,1}$ --- and so forfeits the very
+theorem the staging was meant to invoke. There is no room inside the hypothesis
+for an escalation.
+
+\emph{No weighting works even if the class is abandoned.} Suppose we allow
+arbitrary reweightings $u_i$ of the replica and ask only that they separate the
+coverage allocations from the rest. They cannot.
 
 \begin{theorem}
 \label{thm:w3}
-Let $u_i = \hat{v}_i + \varepsilon d$ for every $i$, with the same $\varepsilon$
-and $d$ for all agents. Then $\edgew{B}^u(i,k) = \edgew{B}^{\hat{v}}(i,k) +
+Let $u_i = \hat{v}_i + \varepsilon d$ for every $i$, where
+$d(S) := \abs{S} - \abs{\tau(S)}$ counts duplicated copies, with the same
+$\varepsilon$ for all agents. Then $\edgew{B}^u(i,k) = \edgew{B}^{\hat{v}}(i,k) +
 \varepsilon(d(B_k) - d(B_i))$, and hence: \emph{(1)} every directed cycle has the
 same weight in both graphs, so a uniform penalty can never \emph{disqualify} an
 allocation; \emph{(2)} the agent holding the most duplicates gets weakly
@@ -44,13 +97,11 @@ corrections vanish.
 \begin{example}[Maximally non-coverage, and invisible]
 \label{ex:w3}
 Take $n = m = 3$ with $\cost_i(S) = \abs{S}$ for every $i$, and let $B_i$ be both
-copies of $b_i$. Then $d(B_i) = 1$ for all $i$, so
-Theorem~\ref{thm:w3}(3) applies: every arc is $0$ and $\pathw{B}^u = (0,0,0)$.
-Yet every chore has two owners --- as far from coverage as possible. Applying
-\cite{BKNS22} to this $u$ may return exactly this allocation.
+copies of $b_i$. Then $d(B_i) = 1$ for all $i$, so Theorem~\ref{thm:w3}(3)
+applies: every arc is $0$ and $\pathw{B}^u = (0,0,0)$. Yet every chore has two
+owners --- as far from coverage as possible. Exactly the outcome the staging was
+designed to prevent, and no $\varepsilon$ sees it.
 \end{example}
-
-Dropping uniformity does not help, and this is the counterexample worth carrying:
 
 \begin{theorem}[No-go]
 \label{thm:w4}
@@ -68,8 +119,9 @@ the shape ``one duplicated pair plus two singletons''. Exhaustive, by
 critical family leaves $30$ classes, and $0$ class-triples survive.
 \end{theorem}
 
-\paragraph{Where it fails, at the algorithm level.} Steering the algorithm by
-inflating weights fails for a matching reason.
+\emph{Steering the algorithm instead of the numbers.} One might try to keep the
+valuations and instead bias the selection rule, so that the staging is enforced
+procedurally. That fails for a matching reason.
 
 \begin{theorem}
 \label{thm:f2}
@@ -86,9 +138,11 @@ Let $s$ be the agent returned by \textsc{FindSink} and $\alloc' =
 $\pathw{\alloc'}(s) = \pathw{\alloc}(s)$.
 \end{corollary}
 
-So in the branch that matters the recipient's marginal is already $0$: the
-weights the proposal wants to inflate are the ones the algorithm has already
-driven to zero, and no inflation can change which agent is selected.
+In the branch that matters the recipient's marginal is already $0$ --- the very
+weights the staging wants to inflate are the ones the algorithm has already
+driven to zero --- so no inflation can change which agent is selected. The
+intuition that ``receiving a copy makes an agent ineligible'' is precisely what
+Theorem~\ref{thm:f2} denies.
 
 \subsection{Why both fail: holder-blindness}
 \label{sec:holderblind}
@@ -107,19 +161,24 @@ the holder to be blind for every possible holder forces the penalty to zero.
 
 \begin{remark}[Verdict]
 \label{rem:w5}
-\textbf{Ruled out:} encoding coverage into the valuations so that~\cite{BKNS22}
-can be used as a black box (Theorem~\ref{thm:w4prime}), and steering that
-algorithm by inflating weights (Theorem~\ref{thm:f2}). Together these close the
-family ``encode coverage into the numbers and reuse~\cite{BKNS22} as a black
-box'' from both directions.
+\textbf{Ruled out:} enforcing coverage by pricing --- whether by escalating types
+across stages, or by any reweighting of the replica
+(Theorem~\ref{thm:w4prime}) --- and enforcing it by biasing the selection rule
+(Theorem~\ref{thm:f2}). The staging intuition is sound about \emph{what} a
+coverage allocation looks like, and wrong about \emph{how} to obtain one: the
+distinction it needs is between two identical objects, and prices cannot make
+that distinction.
 
-\textbf{Not ruled out:} coverage-aware \emph{algorithms}. Coverage is a
-constraint on the allocation, and the right place to enforce such a constraint is
-the procedure that builds it, not the objective it is scored against --- which is
-exactly what \Cref{sec:peelsweep-done} does.
+\textbf{Not ruled out:} enforcing coverage \emph{structurally}. If the copies of
+a type are simply not allowed to land on the same agent, coverage holds by
+construction and no pricing is needed. That is exactly what the peel process of
+\Cref{sec:peel} does --- a peel deletes $j$ from $\workprofile_x$, so the same
+pair $(x,j)$ can never be peeled twice --- and it is why
+\Cref{sec:approach3} inherits the staging intuition without inheriting its
+failure.
 
-The general shape of the failure is the same as in
-\Cref{sec:approach1}: \emph{a rule fixed ex ante against a quantity determined ex
-post}. There the owner was fixed before its consequences were visible; here the
-penalty must be levied on an agent who cannot be identified in advance.
+The general shape of the failure is the same as in \Cref{sec:approach1}:
+\emph{a rule fixed ex ante against a quantity determined ex post}. There the
+owner was fixed before its consequences were visible; here the price must be
+levied on an agent who cannot be identified in advance.
 \end{remark}
