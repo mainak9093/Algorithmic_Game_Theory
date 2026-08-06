@@ -1012,6 +1012,56 @@ whose hypothesis is $x \in S$. The right representative is $S_{\max}$, and by
 Corollary~\ref{cor:smax-canonical} it is the only one that ever needs to be
 computed.
 
+\subsection{The dynamics of \texorpdfstring{$S_{\max}$}{Smax}}
+\label{sec:smax-dynamics}
+
+Theorem~\ref{thm:paidsets-lattice} supplies a canonical element, so one may ask
+how it evolves rather than merely whether it exists. Write
+$F(\workprofile) := S_{\max}(\workprofile)$.
+
+\begin{proposition}
+\label{prop:smax-monotone-mu0}
+If $\mu_x = 0$ then $F(\workprofile') \subseteq F(\workprofile)$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:new-paidsets}, $\mu_x = 0$ gives
+$\paidsets(\workprofile') \subseteq \paidsets(\workprofile)$, and the maximum of a
+subfamily of a lattice is contained in the maximum of the family.
+\end{proof}
+
+\begin{observation}[$F$ never moves sideways]
+\label{obs:smax-comparable}
+Over $615{,}517$ peels, $F(\workprofile)$ and $F(\workprofile')$ were
+\emph{always} comparable under inclusion --- $329{,}135$ equal, $212{,}181$
+shrinking, $74{,}201$ growing, and \emph{zero} incomparable. The jump is not
+bounded by one: the symmetric difference reached $4$, with distribution
+$0{:}329{,}135$, $1{:}230{,}602$, $2{:}43{,}215$, $3{:}8{,}983$, $4{:}3{,}582$;
+and $F(\workprofile') \subseteq F(\workprofile) \cup \set{x}$ holds only $87.9\%$
+of the time.
+\end{observation}
+
+Proposition~\ref{prop:smax-monotone-mu0} proves the shrinking half, so every
+growth event has $\mu_x = 1$ --- consistent with
+Lemma~\ref{lem:new-paidsets}, since growth requires a new paid set. Comparability
+in the $\mu_x = 1$ case is open, and is the natural next lemma: it would make $F$
+a monovariant along any schedule, which is the first quantity in this frame with
+a chance of being one.
+
+\begin{remark}[The canonical-support conjecture is false]
+\label{rem:canonical-support-false}
+It is tempting to look for a bridge to the transportation side of the form:
+\emph{every reachable legal balance-admitting state admits a balanced terminal $f$
+with $f(j) \in S_{\max}$ whenever $S_j \cap S_{\max} \ne \emptyset$}, so that
+every chore whose candidates include a paid agent could be given to one. This is
+false, and not marginally: over $117{,}141$ balance-admitting states it fails on
+$59{,}623$, a little over half. The mixed case is common enough for the statement
+to have content --- $\abs{S_j \cap S_{\max}}$ was $0$ on $14{,}082$ chores and
+strictly between $0$ and $\abs{S_j}$ on most of the rest --- so the failure is not
+a vacuity. A bridge between balanced terminals and the admissible potentials, if
+one exists, does not take this form.
+\end{remark}
+
 \begin{lemma}[Slack-transfer peel]
 \label{lem:slack-transfer}
 Let $S \in \paidsets(\workprofile)$ with $x \notin S$, and let

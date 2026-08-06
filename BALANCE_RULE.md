@@ -282,6 +282,35 @@ stuck then for every peelable chore $j$ and admissible $x \in S_j$, either
 $\ell(x) = 0$ or $\mu_x = 0$. *(Contrapositive of `lem:paid-peel` with
 $S = \{i:\ell(i)=1\}$.)*
 
+### 4.5 Dynamics of $S_{\max}$
+
+Write $F(W) := S_{\max}(W)$.
+
+**Proposition — `prop:smax-monotone-mu0`.** If $\mu_x = 0$ then
+$F(W') \subseteq F(W)$.
+
+> *Proof.* `lem:new-paidsets` gives $\mathcal P(W')\subseteq\mathcal P(W)$, and
+> the maximum of a subfamily is contained in the maximum of the family. $\square$
+
+**Observation — `obs:smax-comparable`.** Over 615,517 peels, $F(W)$ and $F(W')$
+were **always comparable** under inclusion: 329,135 equal, 212,181 shrinking,
+74,201 growing, **0 incomparable**. The jump is not bounded by one — symmetric
+difference reached 4 — and $F(W') \subseteq F(W)\cup\{x\}$ holds only 87.9% of
+the time.
+
+Since the shrinking half is proved, **every growth event has $\mu_x = 1$**,
+consistent with `lem:new-paidsets`. Comparability in the $\mu_x = 1$ case is
+**open**, and is the natural next lemma: it would make $F$ a monovariant along
+any schedule — the first quantity in this frame with a chance of being one.
+
+**Refuted — the canonical-support conjecture.** *"Every reachable legal
+balance-admitting state admits a balanced terminal $f$ with $f(j) \in S_{\max}$
+whenever $S_j \cap S_{\max} \ne \emptyset$."* **False**, and not marginally: over
+117,141 balance-admitting states it fails on **59,623** (51%). The mixed case is
+common enough for the statement to have content ($|S_j \cap S_{\max}| = 0$ on
+only 14,082 chores), so this is not a vacuity. A bridge between balanced
+terminals and admissible potentials, if one exists, does not take this form.
+
 ---
 
 ## 5. Evidence
