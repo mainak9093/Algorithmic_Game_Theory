@@ -151,6 +151,85 @@ the good allocations are. That the empirically successful potential and the
 empirically successful global objective agree on the same quantity is weak
 evidence that balance, not cost, is the operative structure.
 
+\subsection{The induction the balance lemma invites, and why it does not close}
+\label{sec:approach8-induction}
+
+Restricting the witness suggests building it one chore at a time. Three
+statements of increasing strength were tested; the first holds, and the two that
+would prove anything fail.
+
+\begin{proposition}[Incremental structure, empirical]
+\label{prop:inc}
+Write $(\mathrm{INC})$ for: there is a good balanced allocation $\alloc$, with its
+assignment fixed, and an ordering $g_1,\dots,g_m$ of the chores such that
+$\alloc$ restricted to $\set{g_1,\dots,g_k}$ is good for every $k$. Over
+$1{,}125$ instances, $(\mathrm{INC})$ never failed --- not even when the
+assignment was forbidden to change between steps.
+\end{proposition}
+
+Restrictions of dichotomous cost functions to a subset of chores are again
+dichotomous, so each prefix is a legitimate smaller instance and
+$(\mathrm{INC})$ has exactly the shape of an induction on $m$. It is not one.
+$(\mathrm{INC})$ \emph{presupposes} a good balanced allocation and then asserts
+it can be reached; it says nothing about existence, and the induction does not
+close, because the good allocation supplied by the hypothesis on $m-1$ chores
+need not be the restriction of any good allocation on $m$.
+
+The statement that would prove existence has to be self-contained:
+
+\begin{quote}
+  $(\mathrm{NS})$ \; if $\alloc$ is a good allocation of a proper subset $T$ of
+  the chores, some chore outside $T$ can be added to some bundle leaving it good.
+\end{quote}
+
+$(\mathrm{NS})$ implies Conjecture~\ref{conj:main} by induction from the empty
+allocation, which is good since all costs are $0$, and gives an $O(m^2n^4)$
+algorithm with no backtracking. It is false. Over $502{,}528$ good partial
+allocations, $846$ admit no good one-chore extension, and $150$ resist even when
+re-matching is permitted. The first witness is
+\[
+  \bundle{} = (\emptyset,\; \set{g_1,g_2,g_3},\; \emptyset),
+  \qquad g_4 \text{ unassigned},
+\]
+three chores piled on one agent with two agents empty --- a state a balanced
+construction would never reach. That suggests the repair: keep the partial
+allocation balanced, inserting only into minimum-size bundles, which preserves
+balance and would prove the balance lemma and Conjecture~\ref{conj:main}
+together.
+
+\begin{proposition}[The balanced induction fails, and fails worse]
+\label{prop:nsb-fails}
+Write $(\mathrm{NSB})$ for $(\mathrm{NS})$ restricted to balanced partial
+allocations with insertion into a minimum-size bundle. Over $236{,}421$ good
+balanced partial allocations, $11{,}723$ are stuck --- $5.0\%$, against $0.17\%$
+for the unrestricted $(\mathrm{NS})$. Allowing insertion into any
+balance-preserving bundle rather than a minimum-size one changes nothing: the
+same $11{,}723$ states are stuck.
+\end{proposition}
+
+So balance does not rescue the induction; it makes it worse, by removing exactly
+the freedom --- piling chores onto one agent for a step --- that lets greedy
+insertion escape. Note that this does not contradict
+Proposition~\ref{prop:inc}: a good insertion order exists, but it cannot be found
+by extending an arbitrary good balanced partial allocation. The order must be
+chosen with foresight.
+
+\begin{remark}[The pattern across Approaches 7 and 8]
+\label{rem:pattern}
+Three independent constructive routes have now failed in the same way. The
+descent lemma is true in every test but its witnessing transfer is not local to
+the envy (Section~\ref{sec:approach7-obstruction}); $(\mathrm{INC})$ is true in
+every test but the insertion order is not locally determined; and no
+lexicographic objective picks out the good allocations. In each case the object
+exists and no rule computable from local data finds it. That is weak evidence
+that Conjecture~\ref{conj:main}, if true, is not provable by exhibiting a
+construction, and that the search should turn to non-constructive existence
+arguments --- counting, averaging, or a fixed-point or topological argument ---
+with the algorithmic clause pursued separately through
+Section~\ref{sec:approach6}, whose algorithm is polynomial by construction and
+has never failed.
+\end{remark}
+
 \subsection{The algorithmic clause}
 \label{sec:approach8-algorithmic}
 
