@@ -448,6 +448,57 @@ been filtered for additivity. The remark is amended accordingly; what survives
 there is Proposition~\ref{prop:paid-characterisation}, which is proved rather
 than observed.
 
+\textbf{Back at the induction: what set is it aiming at?} Since level-$k$
+goodness depends only on $a$, and every non-negative integer matrix is
+realisable, ``which matrices are chain-good'' is decidable by enumeration.
+Doing it over all $261{,}632$ matrices with entries at most $3$ at $n = 3$
+(\texttt{update\_16/chain\_matrices.py}) kills the two natural invariants and
+leaves one lemma.
+
+\emph{Refuted: carry a bipartition.} By Proposition~\ref{prop:twotier},
+goodness at level $k$ means \emph{some} bipartition $S_k$ satisfies the two-tier
+inequalities at that level. If one $S$ worked at every level the induction could
+simply carry it. It cannot: $4{,}911$ matrices are chain-good with no single
+bipartition valid throughout. \emph{Refuted: the tier set is stable.} The
+canonical set $S_k = \set{i : \pathw{}^{(k)}(i) = 1}$ genuinely moves with $k$
+--- $12{,}822$ violations. The smallest witness is
+\[
+  a = \begin{pmatrix} 0&0&0 \\ 2&1&2 \\ 2&1&2 \end{pmatrix},
+  \qquad \pathw{}^{(1)} = (0,0,0), \quad \pathw{}^{(2)} = (1,0,1),
+\]
+which is chain-good while its paid set grows from $\emptyset$ to
+$\set{1,3}$. So no invariant of the form ``fix who gets paid'' can work.
+
+\emph{What survives, and it is provable.}
+
+\begin{lemma}[Breakpoints]
+\label{lem:breakpoints}
+Let $T := \set{k \in [1,K] : k = a_{ij} \text{ for some } i,j} \cup \set{K}$.
+An allocation is good at every level in $[1,K]$ if and only if it is good at
+every level in $T$. Hence the chain condition amounts to at most $n^2+1$
+tests, \emph{independently of the depth $K$}.
+\end{lemma}
+
+\begin{proof}
+Between two consecutive elements of $T$ each $\min(a_{ij},k)$ is affine in $k$
+--- equal to the constant $a_{ij}$ if $a_{ij}$ lies below the interval, and to
+$k$ if it lies above --- so every arc, and hence every cycle weight, is affine
+there. An affine function that is at most $0$ at both endpoints is at most $0$
+throughout, so no positive cycle can appear strictly inside an interval.
+Given that, $\pathw{}^{(k)}$ is the maximum of the finitely many affine
+functions given by simple paths, together with $0$; a maximum of affine
+functions is convex, and a convex function at most $1$ at both endpoints is at
+most $1$ throughout.
+\end{proof}
+
+Verified with $0$ violations over the same $261{,}632$ matrices. The
+consequence is worth stating: the chain conjecture's difficulty does
+\emph{not} grow with depth. Layers were introduced to give the induction a
+parameter to climb, and Lemma~\ref{lem:breakpoints} says the climb is bounded by
+$n^2+1$ steps no matter how tall the stack. An induction on $K$ is therefore the
+wrong shape --- the right parameter is the number of distinct cost values an
+allocation exhibits, which is at most $n^2$ and has nothing to do with $K$.
+
 \textbf{Method note, worth more than any single result here.} For any question
 about a \emph{fixed} allocation, work with the cost matrix and enumerate rather
 than sampling instances: every non-negative integer matrix is realisable, so
