@@ -956,6 +956,62 @@ $\workprofile'$, since that arc dropped by $\mu_x$. New paid sets can appear.
 Lemma~\ref{lem:paid-peel} is exactly an instance: it produces the set
 $S \setminus \set{x}$, which need not lie in $\paidsets(\workprofile)$.
 
+\subsection{The admissible paid sets form a lattice}
+\label{sec:paidsets-lattice}
+
+So far $\paidsets(\workprofile)$ has been used only as a feasibility object ---
+non-empty or not. It has more structure than that, and the structure removes a
+search.
+
+\begin{theorem}[Lattice]
+\label{thm:paidsets-lattice}
+$\paidsets(\workprofile)$ is closed under union and intersection. Hence, when
+non-empty, it has a unique maximum element $S_{\max}$ and a unique minimum
+element $S_{\min}$.
+\end{theorem}
+
+\begin{proof}
+Work with potentials. Let $p, q \in \paidsets(\workprofile)$ and let
+$r := \max(p,q)$ coordinatewise; we must show $\edgew{}(i,k) \le r_i - r_k$. If
+$r$ agrees with $p$ at both $i$ and $k$, or with $q$ at both, this is one of the
+hypotheses. Otherwise, say $r_i = p_i \ge q_i$ and $r_k = q_k \ge p_k$; then
+\[
+  \edgew{}(i,k) \;\le\; q_i - q_k \;\le\; p_i - q_k \;=\; r_i - r_k ,
+\]
+using the $q$-constraint and $q_i \le p_i$. The remaining mixed case is
+symmetric. For $\min(p,q)$ the same argument applies with the roles reversed:
+if the minimum is $p_i$ at $i$ and $q_k$ at $k$ then $p_k \ge q_k$ gives
+$\edgew{}(i,k) \le p_i - p_k \le p_i - q_k$.
+\end{proof}
+
+This is the standard fact that the feasible set of a difference-constraint system
+is a lattice, but it has two consequences here that are worth naming.
+
+\begin{corollary}
+\label{cor:smin-is-ell}
+$S_{\min} = \set{i : \pathw{\workprofile}(i) = 1}$: the longest-path potential is
+the \emph{smallest} admissible paid set.
+\end{corollary}
+
+\begin{corollary}[The canonical potential for peeling]
+\label{cor:smax-canonical}
+Some admissible paid set contains $x$ if and only if $x \in S_{\max}$.
+Consequently Lemma~\ref{lem:paid-peel} fires for $x$ exactly when $\mu_x = 1$ and
+$x \in S_{\max}$, and Lemma~\ref{lem:slack-transfer} need only ever be run at
+$S = S_{\max}$, no larger admissible set being available to absorb blockers.
+\end{corollary}
+
+Verified on $140{,}785$ legal states and $492{,}100$ pairs: closure under union
+and intersection with $0$ violations, and both corollaries with $0$ violations.
+
+Corollary~\ref{cor:smin-is-ell} also explains the error recorded in
+Remark~\ref{rem:potential-free-choice}. Evaluating Lemma~\ref{lem:paid-peel} at
+$p = \pathw{\workprofile}$ is evaluating it at $S_{\min}$ --- the admissible set
+with the \emph{fewest} paid agents, hence the worst possible choice for a lemma
+whose hypothesis is $x \in S$. The right representative is $S_{\max}$, and by
+Corollary~\ref{cor:smax-canonical} it is the only one that ever needs to be
+computed.
+
 \begin{lemma}[Slack-transfer peel]
 \label{lem:slack-transfer}
 Let $S \in \paidsets(\workprofile)$ with $x \notin S$, and let

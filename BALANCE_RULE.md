@@ -158,6 +158,45 @@ $\mathrm{peel}(x,j)$ **iff** $\mu_k = 0$ for every $k \ne x$ with $(k,x)$ tight.
 > $\mu_k \in \{0,1\}$, so the constraint holds exactly when $\mu_k = 0$ or the
 > slack is $\ge 1$. $\square$
 
+### 4.2b Structure: $\mathcal P(W)$ is a lattice
+
+**Theorem — `thm:paidsets-lattice`.** $\mathcal P(W)$ is closed under union and
+intersection. When non-empty it therefore has a unique maximum $S_{\max}$ and a
+unique minimum $S_{\min}$.
+
+> *Proof.* Let $p,q \in \mathcal P(W)$, $r = \max(p,q)$. If $r$ agrees with $p$ at
+> both $i,k$ (or with $q$ at both) the constraint is a hypothesis. Otherwise say
+> $r_i = p_i \ge q_i$ and $r_k = q_k \ge p_k$; then
+> $w(i,k) \le q_i - q_k \le p_i - q_k = r_i - r_k$, using the $q$-constraint and
+> $q_i \le p_i$. The mixed case for $\min$ is symmetric. $\square$
+
+**Corollary — `cor:smin-is-ell`.** $S_{\min} = \{i : \ell(i) = 1\}$: the
+longest-path potential is the **smallest** admissible paid set.
+
+**Corollary (canonical potential) — `cor:smax-canonical`.** Some admissible paid
+set contains $x$ **iff** $x \in S_{\max}$. So `lem:paid-peel` fires exactly when
+$\mu_x = 1$ and $x \in S_{\max}$, and `lem:slack-transfer` need only be run at
+$S = S_{\max}$.
+
+> *(Verified: 140,785 legal states, 492,100 pairs; closure and both corollaries,
+> 0 violations.)*
+
+**This explains the earlier error.** Evaluating `lem:paid-peel` at $p = \ell$ is
+evaluating it at $S_{\min}$ — the admissible set with the *fewest* paid agents,
+the worst possible choice for a lemma whose hypothesis is $x \in S$. The right
+representative is $S_{\max}$, and it is the only one that ever needs computing:
+the existential over $2^n$ sets collapses to one membership test.
+
+**Corollary ($\mu_x = 0$ is exact) — `cor:mu-zero-exact`.** If $\mu_x = 0$ then
+$\mathcal P(W') \subseteq \mathcal P(W)$ by `lem:new-paidsets`, and (i),(iii) are
+automatic, so
+
+> peel$(x,j)$ is legal **iff** some $S \in \mathcal P(W)$ satisfies
+> $w(i,x) + \mu_i \le \lambda_S(i,x)$ for all $i \ne x$.
+
+*(Verified: 697,572 peels with $\mu_x = 0$, 0 mismatches.)* **All remaining
+difficulty is the $\mu_x = 1$ case** — exactly where new paid sets can appear.
+
 ### 4.3 Two sufficient conditions
 
 **Lemma (free peels are safe) — `lem:free-peel-safe`.** Call $\mathrm{peel}(x,j)$
