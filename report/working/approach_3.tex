@@ -674,6 +674,59 @@ one --- and that same over-commitment is exactly what makes a balanced terminal
 impossible. Death is over-commitment to one agent, and balance-admissibility is
 the checkable shadow of it.
 
+\paragraph{Half the rule is now a theorem.} Lemma~\ref{lem:peel} makes the free
+case immediate.
+
+\begin{definition}
+\label{def:freepeel}
+Call $\mathrm{peel}(x,j)$ \emph{free} if $\mu_k := \cost_k(\workprofile_x) -
+\cost_k(\workprofile_x \setminus \set{j}) = 0$ for every $k \ne x$, i.e.\ chore
+$j$ has zero marginal for every other agent on $x$'s residual workload.
+\end{definition}
+
+\begin{lemma}[Free peels are always legal]
+\label{lem:free-peel-safe}
+A free peel applied to a legal state yields a legal state.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:peel} the only arcs that change are those incident to $x$:
+$\Delta \edgew{}(k,x) = +\mu_k = 0$ for $k \ne x$, and
+$\Delta \edgew{}(x,k) = -\mu_x \le 0$. So every arc weight weakly decreases. No
+positive-weight cycle can appear and no path weight can rise, so the invariant
+survives.
+\end{proof}
+
+This is the peel-side counterpart of Theorem~\ref{thm:freeinsert}, and it was
+checked on $674{,}062$ free peels with $0$ violations. Combined with
+Lemma~\ref{lem:balance-free} --- balance-preservation costs nothing --- a free
+peel onto any chore $j$ with $\abs{S_j} \ge 2$ and any owner other than
+$f(j)$ is unconditionally safe. Over the reachable restricted states,
+$58.7\%$ have such a peel available, so the rule is proved correct on the
+majority of its steps.
+
+\begin{observation}[The residual, and a correction]
+\label{obs:peel-residual}
+Of $522{,}117$ reachable non-terminal states, $215{,}416$ ($41.3\%$) have no free
+balance-preserving peel. Of those, $207{,}543$ still admit a non-free legal one
+and $7{,}836$ admit one after a permutation --- but $37$ admit \emph{none at
+all}. So progress-stuck states are reachable, and
+Conjecture~\ref{conj:balance-rule} does not follow from a greedy-safety argument.
+
+An earlier count of $0$ stuck reachable states was wrong: it treated a
+permutation as a move out of a stuck state, but permutations remove nothing, so a
+state whose only legal moves are permutations makes no progress and is stuck.
+\end{observation}
+
+Two things survive this. The free-first strategy --- take a free
+balance-preserving peel when one exists, otherwise any legal one, permuting if
+necessary --- reached a terminal on every instance tested, so the $37$ stuck
+states are reachable but \emph{avoided} in practice. And they are rare, at
+$7 \times 10^{-5}$ of reachable states. What is missing is a proof that some rule
+provably avoids them, and that is now the whole of the gap: the free case is
+settled by Lemma~\ref{lem:free-peel-safe}, and the non-free case is settled
+empirically but not in principle.
+
 \paragraph{Qualifications.} First, Conjecture~\ref{conj:balance-rule} is
 \emph{stronger} than Conjecture~\ref{conj:main}, as
 Remark~\ref{rem:converse} already warns for Conjecture~\ref{conj:h1prime}: a good
