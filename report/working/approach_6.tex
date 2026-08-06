@@ -597,3 +597,91 @@ partitions. It concerns a \emph{single, structured} starting point --- the
 output of an iterated maximum-weight matching --- and the properties of that
 output are available to the proof. Whether the bad local optima are reachable
 from it is the question; the data say they are not.
+
+% --------------------------------------------------------------------------
+\subsection{What the warm start guarantees, and the two claims that remain}
+\label{sec:approach6-imwpm}
+
+Asking what the IMWPM output looks like, rather than only whether repair
+eventually succeeds, turns out to answer the question almost completely.
+
+\begin{observation}[The warm start never exceeds spread two]
+\label{obs:imwpm-two}
+Across every family tested --- the full exhaustive $n=m=3$ family, all
+$357{,}760$ triples of the structured non-additive pool at $m = 5$, sampled
+triples at $m = 6$, random instances up to $n = 7$, $m = 10$,
+disjoint-interest instances built for maximal disagreement, and the named hard
+instances of Section~\ref{sec:construct-repair-evidence} --- the $q$-spread of
+the raw IMWPM partition, before any repair, never exceeded $2$
+(\texttt{update\_23/warmstart.py}, \texttt{imwpm\_bound.py}).
+\end{observation}
+
+Two refinements make this sharper than it first appears. First, the bound is
+rarely attained: on the $m = 5$ pool, $352{,}468$ of $357{,}760$ instances start
+at spread at most~$1$, so IMWPM \emph{alone} already produces a witness for
+Target G-bal and repair is never invoked. The discrepancy counterexample, the
+insertion witness and the W4 no-go instance --- the three named obstructions of
+this section --- all start at spread at most $1$. Second, when spread~$2$ does
+occur, repair is immediate:
+
+\begin{observation}[One move suffices]
+\label{obs:one-move}
+Among $3{,}000$ instances whose IMWPM start has $q$-spread exactly $2$, repair
+reached spread at most~$1$ in exactly one improving move in every case, with no
+stalls.
+\end{observation}
+
+Together these decompose Conjecture~\ref{conj:warmstart} into two claims, neither
+of which is a descent along an unbounded chain:
+
+\begin{conjecture}[Warm-start bound]
+\label{conj:imwpm-bound}
+For every dichotomous goods instance, the IMWPM partition has $q$-spread at
+most~$2$.
+\end{conjecture}
+
+\begin{conjecture}[Last rung]
+\label{conj:last-rung}
+Every IMWPM partition with $q$-spread exactly $2$ admits a balance-preserving
+single-item move to $q$-spread at most~$1$.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:two-claims}
+Conjectures~\ref{conj:imwpm-bound} and~\ref{conj:last-rung} together imply
+Conjecture~\ref{conj:warmstart}, hence
+Conjecture~\ref{conj:algorithm-succeeds} with zero restarts, hence
+Conjecture~\ref{conj:main} together with its polynomial-time clause.
+\end{proposition}
+
+\begin{proof}
+By Conjecture~\ref{conj:imwpm-bound} the warm start has spread at most $2$. If it
+is at most $1$ the partition is already a Target G-bal witness. Otherwise it is
+exactly $2$, and Conjecture~\ref{conj:last-rung} supplies a move to spread at
+most~$1$; the move preserves cardinality balance by hypothesis. Either way a
+cardinality-balanced partition with $q$-spread at most~$1$ is produced, which is
+Target G-bal; Observation~\ref{obs:Gbal-implies-G} and
+Proposition~\ref{prop:targetG-implies} give Conjecture~\ref{conj:main}. The
+running time is that of Theorem~\ref{thm:algorithm-complexity} with the repair
+loop executing at most one iteration.
+\end{proof}
+
+The reason this is a better position than anything in
+Sections~\ref{sec:approach7} and~\ref{sec:approach8} is that
+Conjecture~\ref{conj:imwpm-bound} is not a statement about local search at all.
+It is a statement about what one round-based matching construction produces, and
+constructions of exactly this kind are what~\cite{BDNSV20} analyses: for
+\emph{additive} goods, iterated maximum-weight matching is shown there to need a
+subsidy of at most one per agent, which combined with cardinality balance is
+precisely a $q$-spread bound of $2$. So Conjecture~\ref{conj:imwpm-bound} asks
+for that analysis to survive the passage from additive to dichotomous values,
+where the matching weights are marginals $\tilde v_i(\bundle{i} \cup \set{g}) -
+\tilde v_i(\bundle{i})$ rather than fixed item values. This is the first point in
+this report at which the remaining gap abuts a theorem that is already proved in
+the literature rather than a fresh combinatorial obstruction, and it is where
+effort should go.
+
+Conjecture~\ref{conj:last-rung} is the smaller of the two and the more likely to
+yield to the two-tier machinery of Section~\ref{sec:approach5}: spread exactly
+$2$ means the agents split into a top and a bottom tier differing by $2$, and
+what must be shown is that one item can always be moved across.
