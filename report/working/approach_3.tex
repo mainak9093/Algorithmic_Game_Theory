@@ -799,16 +799,24 @@ not enough: they cannot certify a schedule at all.
 \begin{proposition}[The two lemmas do not suffice]
 \label{prop:lemmas-insufficient}
 Restricting the peel process to steps certified by
-Lemma~\ref{lem:free-peel-safe} or Lemma~\ref{lem:paid-peel}, no terminal is
-reachable from the root on \emph{any} of $191$ test instances.
+Lemma~\ref{lem:free-peel-safe} or Lemma~\ref{lem:paid-peel}, a terminal is
+reachable from the root on only $48$ of $191$ test instances. Soundness is not at
+issue: over $1{,}558{,}435$ certified peels, $0$ were illegal.
 \end{proposition}
 
-The reason is visible in the calculus rather than the data. At the root every
-$\workprofile_i = \items$, so every arc weight is $0$ and $\pathw{} \equiv 0$.
-Hence $p = 0$ is the potential, \emph{every} arc is tight, and
-Proposition~\ref{prop:tight-arc} degenerates to ``$\mu_k = 0$ for all $k$'', i.e.\
-to freeness; while Lemma~\ref{lem:paid-peel} needs $p_x = 1$ and so cannot fire at
-all. Both lemmas are blind near the root.
+\begin{remark}[A correction: the potential is a free choice]
+\label{rem:potential-free-choice}
+An earlier count reported $0$ of $191$. That test evaluated
+Lemma~\ref{lem:paid-peel} at the single potential $p = \pathw{\workprofile}$,
+whereas the lemma quantifies over \emph{any} $S \in \paidsets(\workprofile)$. The
+difference is not cosmetic: at the root $\pathw{} \equiv 0$, so the lemma appears
+never to fire, yet $\agents \in \paidsets(\text{root})$ by
+Observation~\ref{obs:paidsets-root} and with $S = \agents$ every agent is paid, so
+the lemma fires whenever some $\mu_x = 1$. That is exactly consistent with
+Proposition~\ref{prop:first-peel}, since $\mu_x = 1$ forces
+$\mu_x \ge \max_k \mu_k$. Reading a lemma at one witness rather than at its
+existential is the error; the corrected figure is $48$.
+\end{remark}
 
 The root is nevertheless settled exactly, and the answer is a genuine constraint
 on every schedule.
@@ -844,8 +852,9 @@ under the rule reaches a terminal on only $10$ of $191$ instances.
 \subsection{Peel dynamics on the admissible paid sets}
 \label{sec:peel-paidsets}
 
-The object that is not blind at the root is the whole set of admissible
-potentials. Identify $p \in \set{0,1}^n$ with the paid set
+Remark~\ref{rem:potential-free-choice} shows the right object is not a single
+potential but the whole admissible set, so it is worth naming and studying in its
+own right. Identify $p \in \set{0,1}^n$ with the paid set
 $S = \set{i : p_i = 1}$ and put
 \[
   \paidsets(\workprofile) \;:=\;
