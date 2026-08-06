@@ -768,6 +768,96 @@ controlled on its own; only their sum is. Any proof of
 Conjecture~\ref{conj:imwpm-bound} must therefore reason about $q$ directly, and
 the two-term split that makes the additive proof work is unavailable.
 
+% --------------------------------------------------------------------------
+\subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
+is submodularity}
+\label{sec:approach6-r11-audit}
+
+IMWPM is taken from~\cite{LMS26}, whose own analysis had not been read against
+our setting. Two things had to be checked: whether that paper covers non-additive
+valuations, and whether its proof technique transplants.
+
+The first is settled by its Section~2, which fixes $u_i(S) = \sum_{j \in S}
+u_i(j)$: the paper is entirely additive. But its Proposition~3.1 recovers the
+bound of~\cite{BDNSV20} by an argument far simpler than the modified-valuation
+construction audited in Section~\ref{sec:approach6-bdnsv-audit}. For a path
+$P = (1,\dots,k)$ with terminal agent $k$, put
+$F_t := \max(\set{0} \cup \set{u_k(g) : g \in J^t})$, the best item still
+available to $k$. Maximum-weight optimality of the round-$t$ matching, compared
+against the alternative that shifts each path item one step back and hands $k$ the
+best remaining item, gives $w_t(P) \le F_t - F_{t+1}$; summing telescopes to
+$w_{\alloc}(P) \le F_1 \le 1$.
+
+Additivity enters this proof in exactly two places, both of the form ``sum the
+rounds'':
+\[
+  \textrm{(A)}\quad u_i(\bundle{i}) = \sum_t u_i(\mu_i^t),
+  \qquad\qquad
+  \textrm{(B)}\quad u_i(\bundle{j}) = \sum_t u_i(\mu_j^t).
+\]
+
+\begin{lemma}[(A) survives with marginal weights]
+\label{lem:own-telescoping}
+Our IMWPM matches on marginals, so writing $\bundle{i}^t$ for agent $i$'s bundle
+after round $t$,
+\[
+  \tilde v_i(\bundle{i})
+  \;=\; \sum_t \Bigl[\tilde v_i(\bundle{i}^{t}) - \tilde v_i(\bundle{i}^{t-1})\Bigr]
+  \;=\; \sum_t \mu_i^t(\text{own item}),
+\]
+an exact telescoping identity requiring no additivity whatever.
+\end{lemma}
+
+So (A) costs nothing, and (B) is the entire gap. What the argument actually needs
+is only one direction of it,
+\[
+  \textrm{(B')}\qquad
+  \tilde v_i(\bundle{j}) \;\le\;
+  \sum_t \Bigl[\tilde v_i\bigl(\bundle{i}^{t-1} \cup \set{\mu_j^t}\bigr)
+               - \tilde v_i(\bundle{i}^{t-1})\Bigr],
+\]
+and (B$'$) is precisely \emph{submodularity}: for a submodular $v$ one has
+$v(S \cup T) - v(S) \le \sum_{g \in T}[v(S \cup \set{g}) - v(S)]$, which is (B$'$)
+read along the rounds. Dichotomous functions need not be submodular, and the
+failure is not marginal.
+
+\begin{proposition}[The defect, and why the transplant fails]
+\label{prop:r11-defect}
+Write $D_{ij} := \sum_t [\tilde v_i(\bundle{i}^{t-1} \cup \set{\mu_j^t}) -
+\tilde v_i(\bundle{i}^{t-1})] - \tilde v_i(\bundle{j})$, so that (B$'$) is the
+claim $D_{ij} \ge 0$, and
+\[
+  w_{\alloc}(P) \;\le\; 1 - \sum_{i \in P} D_{i,i+1}.
+\]
+Over $800$ instances, (A) failed $0$ times, while (B$'$) failed on $2{,}103$ of
+$6{,}660$ ordered pairs --- $31.6\%$ --- with individual defects reaching $-2$.
+Accumulated along a path the defect reached $-4$, so the transplanted bound is
+$w_{\alloc}(P) \le 5$ at $n \le 5$, and in general degrades as $1 + 2(n-1)$.
+\end{proposition}
+
+The observed maximum path weight is $2$. So the technique of~\cite{LMS26}, carried
+across as far as it will go, gives a bound of $1 + 2(n-1)$ where the truth appears
+to be $2$: no better than the $n-1$ per agent already available
+from~\cite{KMSTY24}, and the route yields nothing. The defect accumulates along
+the path, which is exactly the failure mode that ``sum the rounds'' arguments
+cannot survive.
+
+\begin{remark}[Why this corner of the $2\times 2$ is the open one]
+\label{rem:submodular-is-the-gap}
+Sections~\ref{sec:approach6-bdnsv-audit} and this one identify the same missing
+hypothesis from two directions. \cite{BDNSV20} needs additivity to \emph{build} a
+modified valuation from item values; \cite{LMS26} needs it to \emph{decompose} a
+bundle's value across rounds, and what would suffice there is submodularity
+rather than additivity outright. Dichotomous cost functions lie outside both:
+they are not additive, and $\cost(S) = \min(\abs{S},1)$ shows they need not be
+submodular. The dichotomous \emph{goods} corner is settled in~\cite{BKNS22}
+precisely because binary submodular valuations are matroid rank functions, where
+(B$'$) is free. Our corner has neither hypothesis available, and
+Proposition~\ref{prop:r11-defect} measures how far from free (B$'$) actually is.
+This is a quantitative account of why the fourth corner has stayed open, rather
+than a restatement that it is hard.
+\end{remark}
+
 \begin{remark}[Correction to Section~\ref{sec:construct-repair}]
 \label{rem:targetG-not-Gbal}
 Proposition~\ref{prop:imwpm-unbalanced} corrects the claim made when the
