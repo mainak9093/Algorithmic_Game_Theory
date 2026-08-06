@@ -769,6 +769,99 @@ Conjecture~\ref{conj:imwpm-bound} must therefore reason about $q$ directly, and
 the two-term split that makes the additive proof work is unavailable.
 
 % --------------------------------------------------------------------------
+\subsection{What \texorpdfstring{$q$}{q} is: the chores-side formula}
+\label{sec:approach6-qformula}
+
+The compensation observed in Proposition~\ref{prop:bdnsv-fails-dichotomous} ---
+subsidy $2$ against sizes $(3,3,1)$, giving $q = (3,3,3)$ --- is not a
+coincidence. It follows from an identity that removes the goods picture from this
+section altogether.
+
+\begin{lemma}[The $q$-formula]
+\label{lem:q-formula}
+Let $\alloc$ be envy-freeable and let $d(i,j)$ denote the heaviest $i \to j$ path
+in the \emph{chores} envy graph, with $d(i,i) := 0$. Then
+\[
+  q_i \;=\; \max_{j \in \agents}\ \bigl[\, d(i,j) + \abs{\bundle{j}} \,\bigr].
+\]
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:sizeshift-bijection}, $\tilde v_i(S) = \abs{S} - \cost_i(S)$, so
+the goods arc weight is
+\[
+  \tilde w(i,j) = \tilde v_i(\bundle{j}) - \tilde v_i(\bundle{i})
+   = \bigl[\cost_i(\bundle{i}) - \cost_i(\bundle{j})\bigr]
+     + \abs{\bundle{j}} - \abs{\bundle{i}}
+   = \edgew{\alloc}(i,j) + \abs{\bundle{j}} - \abs{\bundle{i}} .
+\]
+Along a path $i = u_0 \to u_1 \to \dots \to u_r = j$ the size terms telescope, so
+$\tilde d(i,j) = d(i,j) + \abs{\bundle{j}} - \abs{\bundle{i}}$; both heaviest-path
+functions are well defined because the two envy graphs have the same cycle
+weights (Theorem~\ref{thm:sizeshift}). Taking the maximum over $j$, and noting
+that the empty path contributes the term $j = i$,
+$\tilde\subsidy_i = \max_j[d(i,j) + \abs{\bundle{j}}] - \abs{\bundle{i}}$.
+Adding $\abs{\bundle{i}}$ gives the claim.
+\end{proof}
+
+So $q_i$ is \emph{the largest bundle size reachable from agent $i$, inflated by the
+envy accumulated on the way}. The compensation is then forced rather than
+fortuitous: an agent holding a small bundle can still carry a large $q$ by envying
+its way to a big bundle, and an agent holding a big bundle has $q_i \ge
+\abs{\bundle{i}}$ regardless of its subsidy. Neither term is controlled alone
+because $q$ was never a sum of two independent quantities.
+
+\begin{corollary}[$q$ at an IMWPM allocation]
+\label{cor:q-imwpm}
+IMWPM runs $T = \lceil m/n \rceil$ rounds giving every agent exactly one object
+per round, so $\abs{\bundle{j}} = T - \delta_j$ where $\delta_j$ is the number of
+dummies agent $j$ received. Hence
+\[
+  q_i \;=\; T + \max_{j}\ \bigl[\, d(i,j) - \delta_j \,\bigr],
+\]
+and the $q$-spread does not depend on $T$. In particular, when $n \mid m$ every
+$\delta_j = 0$ and $q_i = T + \pathw{\alloc}(i)$, so on those instances the
+$q$-spread equals $\max_i \pathw{\alloc}(i)$ exactly.
+\end{corollary}
+
+Both identities were checked against direct computation on $745$ instances with
+no mismatch, and the last claim held on all $276$ instances with $n \mid m$
+(\texttt{update\_26/q\_formula.py}). Corollary~\ref{cor:q-imwpm} is worth
+stating because it removes the apparent asymmetry between this section and the
+rest of the report: when $n$ divides $m$, Target~G at an IMWPM allocation
+\emph{is} Conjecture~\ref{conj:main} at that allocation, and
+Conjecture~\ref{conj:imwpm-bound} says exactly $\max_i \pathw{\alloc}(i) \le 2$.
+
+One more translation is worth recording, since it states the algorithm without
+any reference to goods at all.
+
+\begin{lemma}[IMWPM in chores terms]
+\label{lem:imwpm-chores}
+Let $\gamma_i^t(g) := \cost_i(\bundle{i}^{t-1} \cup \set{g}) -
+\cost_i(\bundle{i}^{t-1}) \in \set{0,1}$ be the chore marginal. The goods marginal
+used as a matching weight satisfies $\mu_i^t(g) = 1 - \gamma_i^t(g)$, so
+maximising $\sum_i \mu_i^t$ is the same as \emph{minimising} $\sum_i \gamma_i^t$.
+IMWPM is therefore: in each round, hand one remaining chore to every agent so as
+to minimise the total marginal cost incurred that round.
+\end{lemma}
+
+\begin{proof}
+$\mu_i^t(g) = \tilde v_i(\bundle{i}^{t-1} \cup \set{g}) -
+\tilde v_i(\bundle{i}^{t-1}) = 1 - \gamma_i^t(g)$ directly from
+$\tilde v_i(S) = \abs{S} - \cost_i(S)$. Summing over the $n$ agents turns
+$\max \sum_i \mu_i^t$ into $\min \sum_i \gamma_i^t$.
+\end{proof}
+
+Lemma~\ref{lem:imwpm-chores} also yields the per-round exchange property in a
+usable form: for any two agents $i,j$ matched to $g_i, g_j$ in round $t$,
+optimality against the transposition gives $\gamma_i^t(g_j) + \gamma_j^t(g_i) \ge
+\gamma_i^t(g_i) + \gamma_j^t(g_j)$. Since all four terms lie in $\set{0,1}$, this
+says: \emph{if agent $i$ would rather have had $j$'s chore, then $j$ strictly
+prefers its own}. That is a clean one-round invariant; what
+Section~\ref{sec:approach6-r11-audit} shows is that accumulating it across rounds
+is exactly what fails.
+
+% --------------------------------------------------------------------------
 \subsection{Auditing \texorpdfstring{\cite{LMS26}}{LMS26}: the missing hypothesis
 is submodularity}
 \label{sec:approach6-r11-audit}
