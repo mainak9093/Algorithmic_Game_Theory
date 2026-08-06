@@ -1,365 +1,125 @@
 %% ==========================================================================
-%%  Approach 4 --- encoding coverage into the numbers.  CLOSED, both levels.
+%%  Approach 4 --- encoding coverage into the numbers.   DEAD.
 %%
-%%  Source: update_4/PS1_note_weighted_penalty_no_go.md (Theorems W1-W4')
-%%          update_4/PS1_note_type_order_and_findsink.md (Theorems F1-F3)
-%%
-%%  STATUS.  Everything here is proved; W4' and W3's witness are additionally
-%%  machine-verified by update_4/dupsep.py, which reproduces every number.
-%%
-%%  READ THIS BEFORE PROPOSING ANY VARIANT OF "make duplicates expensive" OR
-%%  "inflate the weights so R3 picks the right agent".  Both are closed, and
-%%  they are closed for the same reason, stated in the holder-blindness
-%%  subsection.  What survives is coverage-aware ALGORITHMS, not encodings.
+%%  Presentation version: the idea, the two no-gos with one worked
+%%  counterexample, and the verdict (holder-blindness).  The separation
+%%  programme's intermediate machinery is removed; it is in git history.
 %% ==========================================================================
 \section{Approach 4: Encoding Coverage into the Numbers}
 \label{sec:approach4}
 
-Corollary~\ref{cor:coverage} reduces Conjecture~\ref{conj:main} to a single
-constraint: the replica instance $\hat{I}$ must admit an allocation in which no
-agent holds two copies of one type. Applying~\cite{BKNS22} to $\hat{I}$ is legal
-but returns an allocation free to violate that. The obvious response is to
-change the numbers so that a violation becomes unattractive --- either at the
-level of the valuations, by charging for duplicates, or at the level of the
-algorithm, by inflating weights so that the wrong recipient is never selected.
+\paragraph{The idea.} Corollary~\ref{cor:coverage} reduces
+Conjecture~\ref{conj:main} to a single constraint: the replica instance
+$\hat{I}$ must admit an allocation in which no agent holds two copies of one
+type. Applying~\cite{BKNS22} to $\hat{I}$ is legal but returns an allocation free
+to violate that. So change the numbers until a violation becomes unattractive ---
+either at the level of the valuations, by charging for duplicates, or at the level
+of the algorithm, by inflating weights so the wrong recipient is never selected.
 
-This section closes both. They fail for the same reason, isolated in
-\Cref{sec:holderblind}.
+\paragraph{Why it looks promising.} It would let a published algorithm be reused
+as a black box, with the only new work being the choice of penalty. And the
+penalty has an obvious shape: with $d(S) := \abs{S} - \abs{\tau(S)}$ counting
+duplicated copies, charge $u_i = \hat{v}_i + \varepsilon d$.
 
-% --------------------------------------------------------------------------
-\subsection{The literal proposal is a no-op}
-
-\begin{theorem}
-\label{thm:w1}
-In $\hat{I}$ the marginal value of a second copy of a type is already exactly
-$0$, for every agent and every set: if $b$ has type $j$ and $j \in \tau(S)$ then
-$\hat{v}_i(S \cup \set{b}) - \hat{v}_i(S) = 0$.
-\end{theorem}
-
-\begin{proof}
-$\tau(S \cup \set{b}) = \tau(S)$, and $\hat{v}_i$ factors through $\tau$.
-\end{proof}
-
-So ``let a first copy carry weight and a second carry none'' is not a
-modification of $\hat{I}$; it \emph{is} $\hat{I}$. Remark~\ref{rem:naive}
-already records that the other choice, a flat $+1$ per copy, destroys the
-transform outright.
-
-The reason this does not help is that zero marginal means \emph{indifferent},
-not \emph{averse}. Lemma~\ref{lem:dupfree} is the exact statement of the damage:
-a duplicate is envy-neutral, changing no arc of the envy graph at all. An
-objective built out of envy comparisons cannot see duplicates, and the dead ends
-of Proposition~\ref{prop:deadends} exist because of this rather than in spite of
-it --- at the dead end the one legal move is to spend a copy on a duplicate,
-which is free. To repel a duplicate rather than merely fail to attract it, the
-duplicate must be made \emph{visible}.
-
-% --------------------------------------------------------------------------
-\subsection{The separation programme, correctly stated}
-
-Write $d(S) := \abs{S} - \abs{\tau(S)}$ for the number of duplicated copies in
-$S$. Call $u = (u_1,\dots,u_n)$ on $\hat{\items}$ a \emph{faithful reweighting}
-if
-\begin{itemize}
-  \item[(D)] each $u_i$ is dichotomous --- $u_i(\emptyset) = 0$, monotone, all
-    marginals in $\set{0,1}$ --- so that~\cite{BKNS22} applies to
-    $(\hat{\items}, u)$; and
-  \item[(F)] $u_i(S) = \hat{v}_i(S)$ for every duplicate-free $S$, so that the
-    envy graph of a coverage allocation is unchanged.
-\end{itemize}
-Say $u$ \emph{separates} if every non-coverage allocation $B$ has
-$\max_i \pathw{B}^u(i) \ge 2$.
-
-\begin{observation}[The programme is logically valid]
-\label{obs:w0}
-If some faithful $u$ separates, then Conjecture~\ref{conj:main} holds for that
-instance.
-\end{observation}
-
-\begin{proof}
-Applying~\cite{BKNS22} to $(\hat{\items},u)$ returns $B$ with
-$\pathw{B}^u \in \set{0,1}^n$; separation forces $B$ to be a coverage
-allocation; on a coverage allocation (F) gives $u_i(B_k) = \hat{v}_i(B_k)$ for
-all $i,k$, so $\pathw{B}^{\hat{v}} = \pathw{B}^u \le 1$; and
-Theorem~\ref{thm:replica} hands back a chore partition with per-agent subsidy in
-$\set{0,1}$ and total at most $n-1$.
-\end{proof}
-
-The idea is therefore not confused --- it is a genuine reduction template. The
-rest of this subsection shows it cannot be filled in.
-
-\begin{theorem}[Duplicate budget]
-\label{thm:w2}
-Every faithful reweighting satisfies $\hat{v}_i(S) \le u_i(S) \le \hat{v}_i(S) +
-d(S)$ for all $i$ and all $S \subseteq \hat{\items}$. So the penalty
-$f_i := u_i - \hat{v}_i$ is non-negative, vanishes on duplicate-free sets, and
-is bounded by one unit per duplicated copy.
-\end{theorem}
-
-\begin{proof}
-Let $T \subseteq S$ be duplicate-free with $\tau(T) = \tau(S)$, so
-$\abs{S \setminus T} = d(S)$ and $\hat{v}_i(T) = \hat{v}_i(S)$. Monotonicity
-gives $u_i(S) \ge u_i(T) = \hat{v}_i(T) = \hat{v}_i(S)$ by (F). Adding the
-$d(S)$ elements of $S \setminus T$ one at a time raises $u_i$ by at most $1$
-each by (D), so $u_i(S) \le u_i(T) + d(S)$.
-\end{proof}
-
-The extreme $f_i = d$ is attained, since $u_i = \hat{v}_i + d$ is monotone,
-normalised and has marginals in $\set{0,1}$. So \emph{``a duplicate is worth
-$+1$ to everybody'' is the strongest legal penalty there is}, and any scaling by
-$\varepsilon \notin \set{0,1}$ leaves the dichotomous class and forfeits
-\cite{BKNS22} altogether.
-
-% --------------------------------------------------------------------------
-\subsection{The strongest uniform penalty is a potential}
+\paragraph{Where it fails, at the valuation level.} The uniform penalty is a
+potential and therefore invisible.
 
 \begin{theorem}
 \label{thm:w3}
 Let $u_i = \hat{v}_i + \varepsilon d$ for every $i$, with the same $\varepsilon$
-and the same $d$ for all agents. Then for every allocation $B$,
-\[
-  \edgew{B}^u(i,k) \;=\; \edgew{B}^{\hat{v}}(i,k)
-  \;+\; \varepsilon\big(d(B_k) - d(B_i)\big),
-\]
-and consequently
-\begin{enumerate}
-  \item[(1)] every directed cycle has the same weight in both graphs, so $B$ is
-    envy-freeable under $u$ if and only if it is under $\hat{v}$: a uniform
-    penalty can never \emph{disqualify} an allocation;
-  \item[(2)] the agent holding the \emph{most} duplicates has weakly
-    \emph{smaller} subsidy and everyone else weakly larger --- the penalty lands
-    on the wrong agents;
-  \item[(3)] if $d(B_1) = \dots = d(B_n)$ the two graphs are identical, so such
-    allocations are invisible to the penalty however large $\varepsilon$ is.
-\end{enumerate}
+and $d$ for all agents. Then $\edgew{B}^u(i,k) = \edgew{B}^{\hat{v}}(i,k) +
+\varepsilon(d(B_k) - d(B_i))$, and hence: \emph{(1)} every directed cycle has the
+same weight in both graphs, so a uniform penalty can never \emph{disqualify} an
+allocation; \emph{(2)} the agent holding the most duplicates gets weakly
+\emph{smaller} subsidy --- the penalty lands on the wrong agents; \emph{(3)} if
+$d(B_1) = \dots = d(B_n)$ the two graphs are identical, whatever $\varepsilon$.
 \end{theorem}
 
 \begin{proof}
-The identity is immediate from the definitions. The correction telescopes to $0$
-around any cycle, giving (1), and along a path to endpoint minus start, giving
-(2). For (3) all corrections vanish.
+The identity is immediate. The correction telescopes to $0$ around any cycle,
+giving (1), and to endpoint minus start along a path, giving (2). For (3) all
+corrections vanish.
 \end{proof}
 
 \begin{example}[Maximally non-coverage, and invisible]
 \label{ex:w3}
-Take $n = 3$, $m = 3$ and $\cost_i(S) = \abs{S}$ for every $i$, and let $B_i$ be
-both copies of $b_i$. Then $d(B_i) = 1$ for every $i$, so
-Theorem~\ref{thm:w3}(3) applies; $\hat{v}_i(B_k) = \abs{\tau(B_k)} = 1$ for all
-$i,k$, every arc is $0$ and $\pathw{B}^u = (0,0,0)$. Yet
-$\Psi(B)_i = \items \setminus \set{a_i}$ gives every chore two owners --- as far
-from coverage as it is possible to be. Applying~\cite{BKNS22} to this $u$ may
-return exactly this allocation.
+Take $n = m = 3$ with $\cost_i(S) = \abs{S}$ for every $i$, and let $B_i$ be both
+copies of $b_i$. Then $d(B_i) = 1$ for all $i$, so
+Theorem~\ref{thm:w3}(3) applies: every arc is $0$ and $\pathw{B}^u = (0,0,0)$.
+Yet every chore has two owners --- as far from coverage as possible. Applying
+\cite{BKNS22} to this $u$ may return exactly this allocation.
 \end{example}
 
-% --------------------------------------------------------------------------
-\subsection{No reweighting whatsoever separates}
-
-Theorem~\ref{thm:w3} leaves open the asymmetric case, in which different agents
-charge for duplicates of different types. That does break the potential
-structure and can create positive cycles, so it has to be excluded separately.
+Dropping uniformity does not help, and this is the counterexample worth carrying:
 
 \begin{theorem}[No-go]
 \label{thm:w4}
-There is a negative dichotomous instance on which \emph{no} faithful
-reweighting separates: $n = 3$, $m = 2$, $\cost_1 = \cost_2 = \cost_3 =
-\abs{\cdot}$.
+There is a negative dichotomous instance on which \emph{no} faithful reweighting
+separates: $n = 3$, $m = 2$, $\cost_1 = \cost_2 = \cost_3 = \abs{\cdot}$.
 \end{theorem}
 
-\begin{proof}
-The replica has types $a_1,a_2$ with two copies each and
-$\hat{v}_i(S) = \abs{\tau(S)}$. Write $D$ for the pair of copies of $b_1$, and
-$s_1, s_2$ for the two copies of $b_2$. For $x \in \set{1,2,3}$ let $B^{(x)}$
-give $D$ to agent $x$ and one of $s_1,s_2$ to each of the others; each is
-non-coverage.
-
-Let $u$ be faithful. The singletons are duplicate-free, so $u_i(s_1) =
-u_i(s_2) = 1$ for every $i$ by (F). For $D$ we have $\hat{v}_i(D) = 1$ and
-$d(D) = 1$, so Theorem~\ref{thm:w2} gives $u_i(D) = 1 + \delta_i$ with
-$\delta_i \in \set{0,1}$ --- and $\delta = (\delta_1,\delta_2,\delta_3)$ is the
-\emph{entire} freedom $u$ has on this family. Fixing $x$ and writing
-$\set{y,z} = \agents \setminus \set{x}$, the arcs of $B^{(x)}$ are
-\[
-  \edgew{}(y,x) = \delta_y, \quad \edgew{}(z,x) = \delta_z, \quad
-  \edgew{}(x,y) = \edgew{}(x,z) = -\delta_x, \quad
-  \edgew{}(y,z) = \edgew{}(z,y) = 0 .
-\]
-
-If $\delta_x = 1$: every arc out of $x$ is $-1$, every arc into $x$ is at most
-$1$, and the $y \leftrightarrow z$ arcs are $0$. Any cycle uses one arc into $x$
-and one out, so has weight at most $0$; any path out of $y$ has weight at most
-$\max(0,\delta_y,\delta_z) \le 1$, likewise out of $z$, and $\pathw{}(x) = 0$.
-So $B^{(x)}$ survives. If $\delta_x = 0$ and $\delta_y = \delta_z = 0$: every
-arc is $0$ and $B^{(x)}$ survives. If $\delta_x = 0$ and $\delta_k = 1$ for some
-$k \ne x$: the two-cycle $k \to x \to k$ has weight $\delta_k - \delta_x = 1 >
-0$, and $B^{(x)}$ is excluded.
-
-So $B^{(x)}$ is excluded exactly when $\delta_x = 0$ and $\delta_k = 1$ for some
-$k \ne x$. Separation demands all three of $B^{(1)},B^{(2)},B^{(3)}$ be
-excluded, forcing $\delta_1 = \delta_2 = \delta_3 = 0$ and hence no $\delta_k =
-1$ --- a contradiction.
-\end{proof}
-
-\begin{theorem}[Machine-verified strengthening]
+\begin{theorem}
 \label{thm:w4prime}
 On the same instance separation fails even if faithfulness is dropped entirely.
 Among all $990$ dichotomous valuations on the four replica copies, none of the
 $990^3$ triples $(u_1,u_2,u_3)$ excludes all twelve non-coverage allocations of
-the shape ``one duplicated pair plus two singletons''.
+the shape ``one duplicated pair plus two singletons''. Exhaustive, by
+\texttt{dupsep.py}: collapsing the $990$ valuations by their behaviour on the
+critical family leaves $30$ classes, and $0$ class-triples survive.
 \end{theorem}
 
-\begin{proof}
-Exhaustive, by \texttt{dupsep.py}: collapsing the $990$ valuations by their
-behaviour on the critical family leaves $30$ classes, and $0$ of the resulting
-class-triples survive the filter. No heuristics are used. The same script also
-sweeps the separable $P$-family $u_i(S) = \hat{v}_i(S) + \sum_{j \in P_i}
-(\abs{S_j}-1)^{+}$, which for $n = 3$ is the whole separable penalty family, and
-finds no separating member on $n=3,m=2$ (all $64$ triples), on $n=3,m=3$ with
-unit costs (all $512$), or on the witness of Theorem~\ref{thm:obstruction} (all
-$512$).
-\end{proof}
-
-The instance of Theorem~\ref{thm:w4} is \emph{not} a counterexample to
-Conjecture~\ref{conj:main}: the coverage allocation
-$B = (\set{b_1^{(1)},b_2^{(1)}}, \set{b_1^{(2)}}, \set{b_2^{(2)}})$, i.e.\ the
-chore partition $(\emptyset, \set{a_2}, \set{a_1})$, has $\pathw{} = (0,1,1)$
-and total $2 = n-1$. What is refuted is the \emph{method}, on the easiest
-instance available.
-
-% --------------------------------------------------------------------------
-\subsection{The same failure at the algorithm level}
-\label{sec:findsink}
-
-The second form of the idea leaves the valuations alone and instead inflates the
-weight of the block of copies currently being allocated, intending that
-receiving a copy drive the recipient's subsidy to $0$ so that an agent already
-holding that type is never chosen again. The diagnosis behind it is right.
+\paragraph{Where it fails, at the algorithm level.} Steering the algorithm by
+inflating weights fails for a matching reason.
 
 \begin{theorem}
-\label{thm:f1}
-In any run of the algorithm of~\cite{BKNS22} on $\hat{I}$, the \textsc{Extend}
-branch never places a duplicate. Every coverage violation is created by
-\textsc{FindSink}.
-\end{theorem}
-
-\begin{proof}
-\textsc{Extend} returns a pair $(\rho,k)$ drawn from its loop over
-$k \in \agents$ and $\ell \in \Mset(\subsidy)$ satisfying
-$v_k(A_\ell \cup \set{g}) - v_k(A_\ell) = 1$, and places $g$ into the bundle
-$B_k = A_\ell$. So the receiving bundle has strictly positive marginal for $g$.
-By Theorem~\ref{thm:w1} a copy of $b_j$ has marginal $0$ whenever
-$j \in \tau(S)$, so the receiving bundle contains no copy of $j$.
-\end{proof}
-
-But the lever cannot reach the subroutine that does the damage.
-
-\begin{theorem}[\textsc{FindSink} runs only in the zero-marginal regime]
 \label{thm:f2}
-Suppose the algorithm reaches its \textsc{FindSink} branch, i.e.\
-$(\alloc,\subsidy)$ is not extendable with $g$. Then every
-$\ell \in \Mset(\subsidy)$ satisfies
-$v_\ell(\bundle{\ell} \cup \set{g}) - v_\ell(\bundle{\ell}) = 0$.
+Suppose the algorithm of~\cite{BKNS22} reaches its \textsc{FindSink} branch, i.e.\
+$(\alloc,\subsidy)$ is not extendable with $g$. Then every $\ell \in
+\Mset(\subsidy)$ satisfies $v_\ell(\bundle{\ell} \cup \set{g}) -
+v_\ell(\bundle{\ell}) = 0$.
 \end{theorem}
 
-\begin{proof}
-Suppose some $\ell \in \Mset(\subsidy)$ had marginal $1$, and run
-\textsc{Extend}'s loop at $k = \ell$, which is then a feasible choice. It
-computes a maximum-weight matching $\rho$ on the complete bipartite graph
-between $\agents \setminus \set{\ell}$ and itself with weights $v_i(\bundle{j})$;
-maximality against the identity matching gives $\sum_{i \ne \ell}
-v_i(A_{\rho(i)}) \ge \sum_{i \ne \ell} v_i(\bundle{i})$. Setting
-$\rho(\ell) = \ell$ adds $v_\ell(\bundle{\ell})$ to both sides, so the welfare
-test passes and \textsc{Extend} returns $(\rho,\ell)$ --- contradicting
-non-extendability.
-\end{proof}
-
-\begin{corollary}[The recipient's subsidy is exactly preserved]
+\begin{corollary}
 \label{cor:f3}
 Let $s$ be the agent returned by \textsc{FindSink} and $\alloc' =
 (\bundle{1},\dots,\bundle{s} \cup \set{g},\dots,\bundle{n})$. Then
 $\pathw{\alloc'}(s) = \pathw{\alloc}(s)$.
 \end{corollary}
 
-\begin{proof}
-\cite{BKNS22} places $s \in \Mset(\subsidy)$, so Theorem~\ref{thm:f2} gives
-$v_s(\bundle{s} \cup \set{g}) = v_s(\bundle{s})$ and every arc out of $s$ is
-unchanged. Arcs not incident to $s$ are unchanged, and only arcs into $s$ can
-rise. Since $\alloc'$ is envy-freeable it has no positive cycle, so
-$\pathw{\alloc'}$ is the maximum weight over \emph{simple} paths; a simple path
-leaving $s$ never re-enters $s$ and therefore uses only unchanged arcs.
-\end{proof}
+So in the branch that matters the recipient's marginal is already $0$: the
+weights the proposal wants to inflate are the ones the algorithm has already
+driven to zero, and no inflation can change which agent is selected.
 
-Three consequences, each fatal on its own.
-
-\begin{enumerate}
-  \item \textbf{The lever multiplies a zero.} The premise --- that receiving a
-    copy forces the recipient's subsidy to $0$ --- holds only where the
-    recipient's marginal is positive. Theorem~\ref{thm:f2} says that in the
-    \textsc{FindSink} branch it is provably $0$, and scaling by any weight leaves
-    $0$ where it was. Corollary~\ref{cor:f3} makes it exact: the recipient's
-    subsidy does not move at all. Inflation bites only in the \textsc{Extend}
-    branch, which by Theorem~\ref{thm:f1} was never broken.
-  \item \textbf{A duplicate is \textsc{FindSink}'s safest move.} By
-    Lemma~\ref{lem:dupfree} a second copy changes no arc whatsoever, so the
-    subsidy vector after the tentative assignment is literally identical, the
-    subroutine's guard fails on the first test, and it returns immediately. A
-    duplicate is never rejected because there is nothing to detect.
-  \item \textbf{The scaling forfeits the guarantee anyway.} With block weights
-    the marginals lie in $\set{0,W_j}$ rather than $\set{0,1}$, and the step
-    of~\cite{BKNS22} that concludes $\subsidy \in \set{0,1}^n$ from integrality,
-    together with the unit path bounds throughout its analysis, is gone. Using
-    the lever is not \emph{applying}~\cite{BKNS22}; it is writing a new algorithm
-    and owing a new proof.
-\end{enumerate}
-
-It is worth recording where the lever \emph{does} bite, because that is why it
-looks like it works. Within a block, once some agent has been relieved of $a_j$
-while others still hold it, the arcs into the relieved agent from any holder
-with marginal $1$ carry the inflated weight, so $\Mset(\subsidy)$ collapses onto
-exactly the holders who care --- and those are precisely the agents for whom
-\textsc{Extend} applies. The lever keeps \textsc{FindSink} from firing at all.
-It runs out exactly when every remaining holder of $a_j$ has marginal $0$: then
-nothing is inflated, $\Mset(\subsidy)$ reverts to stale values from earlier
-blocks, and an already-relieved agent can sit at the top of it. The minimal
-shape is $n = 3$ with a chore of marginal $1$ for one agent and $0$ for the
-other two.
-
-% --------------------------------------------------------------------------
 \subsection{Why both fail: holder-blindness}
 \label{sec:holderblind}
 
 The two failures have one cause, and naming it is the useful output of this
 section.
 
-A duplicate penalty bites only through the arcs. The arc effect of agent $k$
-charging $+1$ for the duplicates in bundle $B_x$ is $+1$ on
-$\edgew{}(k,x)$ --- but the same charge levied by $x$ on her own bundle is $+1$
-on $u_x(B_x)$, which is $-1$ on every arc \emph{out of} $x$. The two cancel
-around every cycle. So a penalty can disqualify an allocation only if the agent
-who \emph{holds} the duplicate does not feel it while somebody else does. But
-$u$ is fixed before the allocation is chosen, and it is the allocation that
-decides who holds the duplicate. Requiring the holder to be blind for every
-possible holder forces the penalty to zero, which is exactly the $\delta$
-argument of Theorem~\ref{thm:w4}.
+A duplicate penalty bites only through the arcs. Agent $k$ charging $+1$ for the
+duplicates in bundle $B_x$ adds $+1$ to $\edgew{}(k,x)$ --- but the same charge
+levied by $x$ on her own bundle adds $+1$ to $u_x(B_x)$, which is $-1$ on every
+arc \emph{out of} $x$. The two cancel around every cycle. So a penalty can
+disqualify an allocation only if the agent who \emph{holds} the duplicate does
+not feel it while somebody else does. But $u$ is fixed before the allocation is
+chosen, and it is the allocation that decides who holds the duplicate. Requiring
+the holder to be blind for every possible holder forces the penalty to zero.
 
-Compare the orientation reversal of \Cref{sec:peel}. There the difficulty was
-that the navigation rule of~\cite{BKNS22} sends the item to the agent who must
-not receive it. Here the difficulty is that the penalty must be levied on an
-agent who cannot be identified in advance. Both are the same species of failure:
-\emph{a rule fixed ex ante against a quantity determined ex post}.
-
-\begin{remark}[What this rules out, and what it does not]
+\begin{remark}[Verdict]
 \label{rem:w5}
-\textbf{Ruled out:} encoding coverage into the valuations of the replica
-instance so that~\cite{BKNS22} can be used as a black box. Any such encoding is
-a dichotomous reweighting, and Theorem~\ref{thm:w4prime} kills it. Also ruled
-out: steering the algorithm of~\cite{BKNS22} by inflating weights, by
-Theorem~\ref{thm:f2}. Together these close the whole family \emph{``encode
-coverage into the numbers and reuse~\cite{BKNS22} as a black box''} from two
-directions.
+\textbf{Ruled out:} encoding coverage into the valuations so that~\cite{BKNS22}
+can be used as a black box (Theorem~\ref{thm:w4prime}), and steering that
+algorithm by inflating weights (Theorem~\ref{thm:f2}). Together these close the
+family ``encode coverage into the numbers and reuse~\cite{BKNS22} as a black
+box'' from both directions.
 
-\textbf{Not ruled out:} coverage-aware \emph{algorithms} --- Conjecture
-\ref{conj:h1prime} and the search for a peel rule that never enters a deadlock.
-Coverage is a constraint on the allocation, and the right place to enforce a
-constraint on the allocation is the procedure that builds it, not the objective
-it is scored against.
+\textbf{Not ruled out:} coverage-aware \emph{algorithms}. Coverage is a
+constraint on the allocation, and the right place to enforce such a constraint is
+the procedure that builds it, not the objective it is scored against --- which is
+exactly what \Cref{sec:peelsweep-done} does.
+
+The general shape of the failure is the same as in
+\Cref{sec:approach1}: \emph{a rule fixed ex ante against a quantity determined ex
+post}. There the owner was fixed before its consequences were visible; here the
+penalty must be levied on an agent who cannot be identified in advance.
 \end{remark}
