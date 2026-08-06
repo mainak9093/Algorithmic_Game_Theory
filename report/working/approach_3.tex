@@ -1081,25 +1081,67 @@ Proposition~\ref{prop:smax-monotone-mu0} this accounts for all of the observed
 behaviour except one case: $\mu_x = 1$ with $x \in S_{\max}(\workprofile)$
 leaving, where $S_{\max}(\workprofile')$ contains
 $S_{\max}(\workprofile) \setminus \set{x}$ and might in principle also acquire a
-new element, which would make the two incomparable. That never happens.
+new element, which would make the two incomparable. It cannot.
 
-\begin{observation}[$F$ never moves sideways]
+\begin{theorem}[$F$ never moves sideways]
 \label{obs:smax-comparable}
-Over $615{,}517$ peels, $F(\workprofile)$ and $F(\workprofile')$ were
-\emph{always} comparable under inclusion --- $329{,}135$ equal, $212{,}181$
-shrinking, $74{,}201$ growing, and \emph{zero} incomparable. The jump is not
-bounded by one: the symmetric difference reached $4$, with distribution
-$0{:}329{,}135$, $1{:}230{,}602$, $2{:}43{,}215$, $3{:}8{,}983$, $4{:}3{,}582$;
-and $F(\workprofile') \subseteq F(\workprofile) \cup \set{x}$ holds only $87.9\%$
-of the time.
-\end{observation}
+Let $\workprofile$ be legal and let $\workprofile' = \mathrm{peel}(x,j)$ also be
+legal. Then $S_{\max}(\workprofile)$ and $S_{\max}(\workprofile')$ are comparable
+under inclusion. More precisely, in the case $\mu_x = 1$ with
+$x \in S_{\max}(\workprofile)$ and $x \notin S_{\max}(\workprofile')$ one has
+$S_{\max}(\workprofile') = S_{\max}(\workprofile) \setminus \set{x}$ exactly.
+\end{theorem}
 
-Proposition~\ref{prop:smax-monotone-mu0} proves the shrinking half, so every
-growth event has $\mu_x = 1$ --- consistent with
-Lemma~\ref{lem:new-paidsets}, since growth requires a new paid set. Comparability
-in the $\mu_x = 1$ case is open, and is the natural next lemma: it would make $F$
-a monovariant along any schedule, which is the first quantity in this frame with
-a chance of being one.
+\begin{proof}
+If $\mu_x = 0$, Proposition~\ref{prop:smax-monotone-mu0} gives
+$S_{\max}(\workprofile') \subseteq S_{\max}(\workprofile)$. So assume
+$\mu_x = 1$; Lemma~\ref{lem:smax-mono-mu1} gives $S_{\max}(\workprofile)
+\setminus \set{x} \subseteq S_{\max}(\workprofile')$. If $x \in
+S_{\max}(\workprofile')$, or if $x \notin S_{\max}(\workprofile)$, that
+containment already reads $S_{\max}(\workprofile) \subseteq
+S_{\max}(\workprofile')$ and we are done. There remains the case
+$x \in S_{\max}(\workprofile)$, $x \notin S_{\max}(\workprofile')$, where it
+suffices to show no new element enters.
+
+Suppose some $k \notin S_{\max}(\workprofile)$ had $k \in
+S_{\max}(\workprofile')$; note $k \ne x$. By
+Proposition~\ref{prop:smax-closed-form} there is a simple path $Q$ ending at $k$
+with $\edgew{\workprofile}(Q) \ge 1$, while $\edgew{\workprofile'}(Q) \le 0$.
+Only arcs incident to $x$ changed, so $Q$ meets $x$, and being simple it meets
+$x$ once. Write $Q = Q_1 \cdot Q_2$, split at $x$, with $Q_1$ arriving from some
+$i'$ (possibly empty, if $Q$ starts at $x$). By Lemma~\ref{lem:peel},
+\[
+  \edgew{\workprofile'}(Q) \;=\; \edgew{\workprofile}(Q) + \mu_{i'} - \mu_x ,
+\]
+so $\edgew{\workprofile'}(Q) \le 0$ and $\edgew{\workprofile}(Q) \ge 1$ force
+$\mu_{i'} = 0$ and $\edgew{\workprofile}(Q) = 1$. Since $x \in
+S_{\max}(\workprofile)$, Proposition~\ref{prop:smax-closed-form} gives
+$\edgew{\workprofile}(Q_1) \le 0$, whence $\edgew{\workprofile}(Q_2) \ge 1$ and,
+the first arc of $Q_2$ having dropped by $\mu_x = 1$,
+$\edgew{\workprofile'}(Q_2) \ge 0$.
+
+Since $x \notin S_{\max}(\workprofile')$ there is a path $P$ ending at $x$ with
+$\edgew{\workprofile'}(P) \ge 1$. Concatenating, $P \cdot Q_2$ is a walk ending at
+$k$ of weight at least $1$ in $\workprofile'$. As $\workprofile'$ is legal its
+envy graph has no positive cycle, so a heaviest walk may be taken simple; hence
+there is a simple path ending at $k$ of positive weight, contradicting
+$k \in S_{\max}(\workprofile')$ by
+Proposition~\ref{prop:smax-closed-form}.
+\end{proof}
+
+Verified on $755{,}051$ peels with $0$ violations of the conclusion or of any
+step of the case split; the critical case --- $\mu_x = 1$ with $x$ leaving
+$S_{\max}$ --- arose $212{,}930$ times, so the theorem is not vacuous there
+(\texttt{update\_41/comparability.py}).
+
+So a peel moves the canonical paid set along a \emph{chain} in the lattice.
+Two cautions. The jump is not bounded by one: over the same sweeps the symmetric
+difference reached $4$, and $F(\workprofile') \subseteq F(\workprofile) \cup
+\set{x}$ held only $87.9\%$ of the time, so peels are not single lattice flips.
+And $F$ is \emph{not} a monovariant: it grows on roughly one peel in eight, so it
+supplies no monotone progress. Termination was never the difficulty in any case,
+since each peel deletes an element and $\sum_i \abs{\workprofile_i}$ already
+decreases; the difficulty is legality.
 
 \begin{remark}[The canonical-support conjecture is false]
 \label{rem:canonical-support-false}

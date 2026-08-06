@@ -322,19 +322,40 @@ $S_{\max}(W)\setminus\{x\}$ and could in principle also acquire a new element �
 making the two incomparable. **That never happens**, and proving it doesn't is
 what would close comparability.
 
-**Observation — `obs:smax-comparable`.** Over 615,517 peels, $F(W)$ and $F(W')$
-were **always comparable** under inclusion: 329,135 equal, 212,181 shrinking,
-74,201 growing, **0 incomparable**. The jump is not bounded by one — symmetric
-difference reached 4 — and $F(W') \subseteq F(W)\cup\{x\}$ holds only 87.9% of
-the time.
+**Theorem ($F$ never moves sideways) — `obs:smax-comparable`.** If $W$ and
+$W' = \mathrm{peel}(x,j)$ are both legal, then $S_{\max}(W)$ and $S_{\max}(W')$
+are **comparable** under inclusion. In the case $\mu_x = 1$ with
+$x \in S_{\max}(W)$, $x \notin S_{\max}(W')$ one has
+$S_{\max}(W') = S_{\max}(W)\setminus\{x\}$ exactly.
+
+> *Proof.* $\mu_x = 0$ is `prop:smax-monotone-mu0`. For $\mu_x = 1$,
+> `lem:smax-mono-mu1` gives $S_{\max}(W)\setminus\{x\}\subseteq S_{\max}(W')$;
+> if $x \in S_{\max}(W')$ or $x \notin S_{\max}(W)$ that already reads
+> $S_{\max}(W)\subseteq S_{\max}(W')$. In the remaining case suppose
+> $k \notin S_{\max}(W)$ but $k \in S_{\max}(W')$, $k \ne x$. Take a simple $Q$
+> ending at $k$ with $w_W(Q)\ge1$; then $w_{W'}(Q)\le0$, and $Q$ must meet $x$
+> (once, being simple). Splitting $Q = Q_1\cdot Q_2$ at $x$,
+> $w_{W'}(Q) = w_W(Q)+\mu_{i'}-\mu_x$ forces $\mu_{i'}=0$, $w_W(Q)=1$. As
+> $x \in S_{\max}(W)$, $w_W(Q_1)\le0$, so $w_W(Q_2)\ge1$ and $w_{W'}(Q_2)\ge0$.
+> As $x \notin S_{\max}(W')$ take $P$ ending at $x$ with $w_{W'}(P)\ge1$; then
+> $P\cdot Q_2$ is a walk ending at $k$ of weight $\ge1$, and $W'$ having no
+> positive cycle a heaviest walk may be taken simple — contradicting
+> $k \in S_{\max}(W')$. $\square$
+>
+> *(Verified: 755,051 peels, 0 violations of the conclusion or of any step of
+> the case split; the critical case arose 212,930 times, so it is not vacuous.)*
+
+**Two cautions.** The jump is not bounded by one — symmetric difference reached
+4, and $F(W')\subseteq F(W)\cup\{x\}$ held only 87.9% — so peels are **not**
+single lattice flips.
 
 Since the shrinking half is proved, **every growth event has $\mu_x = 1$**,
 consistent with `lem:new-paidsets`.
 
-> ⚠ **Comparability would *not* make $F$ a monovariant** — $F$ both grows and
-> shrinks, so it gives no monotone progress. Termination was never the issue
-> anyway: each peel deletes an element, so $\sum_i|W_i|$ is already a
-> monovariant. The problem is legality, not termination.
+> ⚠ **$F$ is *not* a monovariant** — it grows on roughly one peel in eight, so it
+> gives no monotone progress. Termination was never the issue anyway: each peel
+> deletes an element, so $\sum_i|W_i|$ already decreases. The problem is
+> legality.
 
 **Refuted — the canonical-support conjecture.** *"Every reachable legal
 balance-admitting state admits a balanced terminal $f$ with $f(j) \in S_{\max}$
