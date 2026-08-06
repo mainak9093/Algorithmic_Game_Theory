@@ -502,3 +502,98 @@ Finding the analogous aggregate for $n \ge 3$, where goodness involves
 $\binom{n}{2}$ pairwise comparisons rather than one, is the whole remaining
 problem; solving it would upgrade Conjecture~\ref{conj:algorithm-succeeds},
 and with it Conjecture~\ref{conj:main}, from extensively tested to proved.
+
+% --------------------------------------------------------------------------
+\subsection{The canonical aggregate, tested and refuted}
+\label{sec:approach6-aggregate}
+
+The aggregate the previous paragraph asks for has an obvious candidate. At
+$n = 2$ the quantity is $h = u(A) - u(B)$ with $u = \tilde{v}_1 + \tilde{v}_2$,
+which is the \emph{spread of $u$ across the bundles}; for general $n$ that reads
+\[
+  \uspread(\bundle{}) \;:=\; \max_j u(\bundle{j}) - \min_j u(\bundle{j}),
+  \qquad u := \textstyle\sum_i \cost_i ,
+\]
+and at $n = 2$ it is $\abs{h}$ exactly, so this is a genuine generalisation
+rather than an analogy. Splitting Lemma~\ref{lem:window} and the walk of
+Theorem~\ref{thm:n2-complete} along the same seam gives two statements:
+\begin{align*}
+  \textsc{Window}(K) &: \quad \text{every balanced partition with }
+    \uspread \le K \text{ is good;} \\
+  \textsc{Exists}(K) &: \quad \text{every instance has a balanced partition with }
+    \uspread \le K .
+\end{align*}
+Together they give Conjecture~\ref{conj:main}, and at $n = 2$ both hold with
+$K = 3$ --- that is precisely the content of the two-agent proof.
+
+The measurement (\texttt{update\_22/window\_general.py}) first reproduces the
+proved case: at $n = 2$ the smallest $\uspread$ carried by a \emph{bad} balanced
+split is $4$, i.e.\ $\abs{h} \le 3$ suffices, matching Lemma~\ref{lem:window}
+exactly. That agreement is what licenses reading the rest of the table as
+evidence about the same quantity rather than a different one.
+
+For $n \ge 3$ the two requirements separate and the route closes:
+
+\begin{center}
+\begin{tabular}{lll}
+\toprule
+ & smallest $\uspread$ of a bad & largest $\uspread$ forced \\
+ & balanced partition & on some instance \\
+\midrule
+$n = 2$      & $4$ \quad(so $\textsc{Window}(3)$) & $3$ \quad(so $\textsc{Exists}(3)$) \\
+$n \ge 3$    & $2$ \quad(so $K \le 1$)            & $3$ \quad(so $K \ge 3$) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+At $n = 3$, $m = 7$ a bad balanced partition occurs with $\uspread = 2$, forcing
+$K \le 1$; and $45$ of the instances tested admit no balanced partition with
+$\uspread$ below $3$, forcing $K \ge 3$. No $K$ serves both. \emph{The window
+shrinks below the achievable spread}, and this is exactly why $n = 2$ is
+tractable and $n \ge 3$ is not: there, both numbers are $3$ and the interval is
+non-empty.
+
+So the canonical aggregate is refuted. Any surviving aggregate must be
+sensitive to how welfare is distributed among agents, not only to its total ---
+$u$ discards precisely that information, and at $n = 2$ it could afford to,
+because with two agents a single difference determines the split.
+
+\subsection{Sharpening what needs proving}
+\label{sec:approach6-sharpen}
+
+Conjecture~\ref{conj:algorithm-succeeds} allows a constant number of restarts,
+and the $14$ local optima at $n = 3$ show the repair neighbourhood really does
+have bad local optima, so the allowance is not vacuous. But a local optimum
+matters only if the algorithm can \emph{reach} it, and the warm start is not an
+arbitrary partition.
+
+\begin{observation}[Restarts are never consumed]
+\label{obs:restarts-vestigial}
+Over $1{,}580$ random instances with $n \le 7$ and $m \le 9$, the IMWPM warm
+start followed by repair alone succeeded every time; the restart branch was
+never entered (\texttt{update\_22/restart\_necessity.py}).
+\end{observation}
+
+This matters for what a proof must establish, because the two readings of
+Conjecture~\ref{conj:algorithm-succeeds} are of quite different difficulty.
+Were restarts genuinely needed, completeness would be a \emph{reachability}
+claim over starting partitions --- which presupposes that a good partition
+exists and then adds that a shuffled round-robin start finds one, making it
+strictly harder than Conjecture~\ref{conj:main} and useless as a route to it.
+Observation~\ref{obs:restarts-vestigial} indicates the weight sits elsewhere:
+
+\begin{conjecture}[Warm-start descent]
+\label{conj:warmstart}
+For every dichotomous goods instance, repair from the IMWPM warm start reaches
+$q$-spread at most $1$ without restarts.
+\end{conjecture}
+
+Conjecture~\ref{conj:warmstart} implies Conjecture~\ref{conj:algorithm-succeeds}
+with zero restarts, hence Conjecture~\ref{conj:main}, and it is the better proof
+target for a specific reason: unlike the descent lemma of
+Section~\ref{sec:approach7}, whose witnessing move proved not to be local
+(Section~\ref{sec:approach7-obstruction}), it does not quantify over all
+partitions. It concerns a \emph{single, structured} starting point --- the
+output of an iterated maximum-weight matching --- and the properties of that
+output are available to the proof. Whether the bad local optima are reachable
+from it is the question; the data say they are not.

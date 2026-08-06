@@ -118,6 +118,24 @@ Proposition~\ref{prop:zero-coordinate} yields $\optsubsidy \in \set{0,1}^n$ with
 total at most $n-1$.
 \end{proof}
 
+\begin{remark}[Relation to Target G-bal, and a correction]
+\label{rem:balance-vs-targetGbal}
+Conjecture~\ref{conj:balance} was arrived at here by scanning global objectives,
+but the restriction to cardinality-balanced partitions is not new to this
+section: it is Definition~\ref{def:targetGbal}, introduced in
+Section~\ref{sec:approach6} on the goods side of the size-shift involution. The
+two are not the same statement, and the direction matters.
+Proposition~\ref{prop:targetG-implies} bounds $\pathw{\alloc}(u)$ by
+$q_u - \min_v q_v$ in one direction only, so Target G-bal implies
+Conjecture~\ref{conj:balance} but not conversely --- and the gap is real, not
+merely unproved. Over the balanced partitions enumerated in
+\texttt{update\_22}, $666$ are good while carrying $q$-spread at least $2$,
+whereas none has $q$-spread at most $1$ without being good. So
+Conjecture~\ref{conj:balance} is a strict weakening of Target G-bal, and to that
+extent a better target; but the idea of restricting to balanced partitions was
+already in hand, and this section should not be read as introducing it.
+\end{remark}
+
 Conjecture~\ref{conj:balance} is stronger than Conjecture~\ref{conj:main}, and it
 is worth being explicit about why that strengthening is of a more useful kind
 than the one in Approach 7. The descent lemma strengthens the conjecture by
