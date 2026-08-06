@@ -507,6 +507,87 @@ samples, and it reaches effective sizes instance search cannot. The
 (I)/(II) counterexample sat two items beyond every sweep that preceded it and
 fell out of matrix enumeration immediately.
 
+\subsection*{2026-08-06 --- how big must the paid set be, and what the
+target really is}
+
+\textbf{Two corrections first.} (i) The previous entry closed by suggesting the
+$n=3$ analysis was now small enough to do by hand, on the grounds that
+Corollary~\ref{cor:n3-six} makes the $2$-path $i \to j \to k$ free whenever
+$a_{ki} \le a_{kk}+1$. Counting how many \emph{hard pairs} --- ordered pairs with
+$a_{ki} > a_{kk}+1$ --- a good matrix can carry gives up to $6$ at $n = 3$
+(\texttt{update\_17}), so a case analysis branched on the hard-pair pattern has
+$2^6$ cases, not a handful. That framing was oversold. (ii) The first
+measurement run minimised the total subsidy over \emph{all} allocations, which is
+the wrong quantity: it returns spikes such as $\subsidy = (2,0,0)$, cheap in
+total but outside $\set{0,1}^n$ and so irrelevant to
+Conjecture~\ref{conj:main}. The corrected script
+\texttt{update\_17/minimal\_S.py} minimises $\abs{S}$ over \emph{good}
+allocations.
+
+\textbf{What the measurement says.} Over $11{,}163$ instances at $n \in
+\set{3,4,5}$, $m \le 6$:
+
+\begin{center}
+\begin{tabular}{lr}
+\toprule
+minimal $\abs{S}$ over good allocations & instances \\
+\midrule
+$0$ (exactly envy-free)      & $10{,}559$ \quad($94.6\%$) \\
+$1$                          & $486$ \quad($4.4\%$) \\
+$2$                          & $93$ \quad($0.8\%$) \\
+$3$                          & $24$ \quad($0.2\%$) \\
+$4$                          & $1$ \\
+\midrule
+no good allocation at all    & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The maximum of the minimal $\abs{S}$ is exactly $n-1$ at every $n$ tested, always
+with witness $\subsidy = (1,\dots,1,0)$. So the answer to ``is the truth stronger
+than Conjecture~\ref{conj:main}?'' is \emph{no}: no constant bound, and no bound
+growing more slowly than $n-1$, can hold. Extracting the smallest extremal
+instance returns $n$ identical additive agents with $n-1$ unit chores --- which is
+Example~\ref{ex:lowerbound}, already in the report. The run therefore
+re-derives the known lower bound rather than finding a new one; what it does add
+is exhaustive confirmation of that example's ``no allocation does better''
+clause, for $n \le 7$ (\texttt{update\_17/tight\_family.py}).
+
+\textbf{Two things that are new.} First,
+Proposition~\ref{prop:zero-coordinate}: $\optsubsidy$ always has a zero
+coordinate, so the total-subsidy clause of Conjecture~\ref{conj:main} follows
+from the per-agent one and the target is the single inequality $\max_i
+\pathw{\alloc}(i) \le 1$. Second, in $9$ of the instances the minimum total over
+all allocations is strictly below the minimum over good ones --- at $n=4$, $2$
+against $3$. So Conjecture~\ref{conj:main} is \emph{not} the statement that the
+utilitarian-optimal subsidy is at most $n-1$; the $\set{0,1}$ shape genuinely
+costs money, and any argument that reasons about the total alone will prove the
+wrong theorem.
+
+\textbf{The reframing worth carrying forward.} Reading the two-tier
+characterisation as a statement about matrices removes the subsidy vector
+entirely:
+\[
+  \text{Conjecture~\ref{conj:main}}
+  \iff
+  \exists\, \alloc,\ \exists\, S \subseteq \agents \ :\
+  \cost_i(\bundle{j}) \;\ge\; \cost_i(\bundle{i})
+    - [\,i \in S\,] + [\,j \in S\,]
+  \quad \forall\, i \ne j .
+\]
+What is left is a partition and a \emph{bipartition} --- and there are only $2^n$
+of the latter. This is the first form of the problem in which the existential
+over subsidies is finite and small: guess $S$, then ask whether a partition
+meeting a fixed system of local constraints exists. Every earlier formulation
+had to discover the subsidies and the bundles simultaneously.
+
+\textbf{Status.} Proposition~\ref{prop:zero-coordinate} proved. Tightness
+confirmed for $n \le 7$. Conjecture~\ref{conj:main} unrefuted over these
+$11{,}163$ instances. Next: for fixed $S$, characterise when the constraint
+system is satisfiable --- note that $S = \agents$ and $S = \emptyset$ impose
+\emph{the same} constraints, namely exact envy-freeness, which is why the paid
+set is never everybody.
+
 % --------------------------------------------------------------------------
 % TEMPLATE FOR THE NEXT ENTRY --- copy the block below, uncomment it, and fill
 % it in.  Keep the three-part shape: what the idea is, why it might work, what

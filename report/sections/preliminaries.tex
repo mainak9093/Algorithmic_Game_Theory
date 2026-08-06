@@ -252,3 +252,43 @@ once $\optsubsidy$ is known to be integral, showing $\optsubsidy_i \le 1$ for
 every $i$ is the same as showing $\optsubsidy \in \set{0,1}^n$. The same
 observation underlies the corresponding step in~\cite{BKNS22}, where the arc
 weights of a dichotomous instance are likewise integers.
+
+A second normalisation costs nothing and removes a clause from the target.
+
+\begin{proposition}[Some agent is always unpaid]
+\label{prop:zero-coordinate}
+For every envy-freeable allocation $\alloc$ there is an agent $h$ with
+$\optsubsidy_h = 0$. Consequently, if $\optsubsidy \in \set{0,1}^n$ then
+$\sum_{i \in \agents} \optsubsidy_i \le n-1$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:hs-characterisation}(iii) the envy graph $\envygraph{\alloc}$
+has no positive-weight cycle, so a walk of maximum weight may be taken simple
+and $\pathw{\alloc}$ is finite; it is non-negative because the empty path
+qualifies. Choose a path $P$ attaining $\max_{i} \pathw{\alloc}(i)$ and let $h$
+be its final vertex. If $\pathw{\alloc}(h) > 0$ there is a positive-weight walk
+$Q$ leaving $h$, and $P$ followed by $Q$ is a walk from $P$'s start of weight
+$\edgew{\alloc}(P) + \edgew{\alloc}(Q) > \edgew{\alloc}(P)$, contradicting the
+maximality of $P$ among walks. Hence $\pathw{\alloc}(h) = 0$. The second claim is immediate: at
+most $n-1$ coordinates of $\optsubsidy$ can equal $1$.
+\end{proof}
+
+Proposition~\ref{prop:zero-coordinate} justifies the word ``hence'' in
+Conjecture~\ref{conj:main}: the bound on the \emph{total} is not an independent
+requirement but a consequence of the per-agent one. The conjecture is therefore a
+single-clause statement,
+\[
+  \exists\, \alloc \ :\quad \max_{i \in \agents} \pathw{\alloc}(i) \;\le\; 1,
+\]
+and it is this form that the rest of the report works with. Two cautions are
+worth recording alongside it. First, the bound cannot be improved: the family of
+Example~\ref{ex:lowerbound} attains $n-1$ for every $n$, verified exhaustively
+for $n \le 7$. Second, the conjecture is \emph{not} the assertion that the
+utilitarian-optimal subsidy is at most $n-1$. Minimising the total over all
+allocations can do strictly better than any allocation with
+$\optsubsidy \in \set{0,1}^n$, by concentrating the subsidy on a single agent:
+there are instances at $n = 4$ whose cheapest envy-free solution costs $2$, borne
+entirely by one agent, while every allocation with $\optsubsidy \in \set{0,1}^4$
+costs $3$. The $\set{0,1}$ shape is a genuine restriction, not a normalisation of
+the total.
