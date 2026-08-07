@@ -1,0 +1,264 @@
+%% ==========================================================================
+%%  4  Obstructions to the Natural Approaches
+%%
+%%  MAIN REPORT ONLY -- not included by working.tex, which carries the full
+%%  approach sections.  Every label here is prefixed `main:' so that nothing
+%%  can collide with working/.
+%%
+%%  Condensed from working/approach_1.tex (thm:freeinsert, thm:cyclebound,
+%%  thm:obstruction), working/approach_2.tex (prop:msw-false),
+%%  working/approach_3.tex (thm:replica, cor:coverage) and
+%%  working/approach_4.tex (thm:w1, sec:holderblind).
+%% ==========================================================================
+\section{Obstructions to the Natural Approaches}
+\label{sec:obstructions}
+
+Three techniques settle the neighbouring corners of the square in
+\Cref{sec:intro}: build the allocation one item at a time, as
+in~\cite{BKNS22}; select a welfare-maximising allocation, as the exchange
+structure of dichotomous valuations invites; or reduce to a goods instance and
+price the residual constraint away. Each fails for negative dichotomous
+valuations, and each failure is witnessed by a single small instance. We record
+them because they delimit what a proof of Conjecture~\ref{conj:main} can look
+like, and because two of the tools built along the way are used throughout.
+
+% --------------------------------------------------------------------------
+\subsection{Incremental insertion}
+\label{sec:main-insertion}
+
+The algorithm of~\cite{BKNS22} maintains an envy-free solution over a partial
+allocation with $\subsidy \in \set{0,1}^n$, allocates one further item at each
+step, and repairs the invariant by permuting whole bundles. Nothing already
+allocated is ever moved. Two steps of that template come out \emph{easier} on
+the chore side.
+
+\begin{theorem}[Free insertion]
+\label{main:freeinsert}
+Let $\alloc$ be envy-freeable and let $g$ be an unallocated chore with
+$\cost_x(\bundle{x} \cup \set{g}) = \cost_x(\bundle{x})$ for some agent $x$.
+Then the allocation obtained by giving $g$ to $x$ is envy-freeable, and its
+subsidy vector is pointwise no larger than that of $\alloc$.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:arcupdate} the arcs between agents other than $x$ are
+unchanged; the arcs out of $x$ are unchanged, the marginal being $0$; and the
+arcs into $x$ weakly decrease. Every arc weight therefore weakly decreases, so
+no positive-weight cycle can appear and no path weight can rise.
+\end{proof}
+
+For goods the corresponding step needs the receiver to be maximally subsidised,
+a permutation of the bundles, and an extendability argument, because there the
+insertion \emph{raises} the arcs into the receiver. Here it lowers them. The
+only case requiring work is a chore whose marginal cost is $1$ for every agent
+on her own bundle.
+
+The second tool is the cheapest general handle on $\pathw{\alloc}$ available,
+and is used repeatedly below.
+
+\begin{theorem}[Cycle-closing bound]
+\label{main:cyclebound}
+For any envy-freeable allocation $\alloc$ and any agent $u$,
+\[
+  \pathw{\alloc}(u) \;\le\; \max\Big(0, \ \max_{v \ne u}
+  \big[\,\cost_v(\bundle{u}) - \cost_v(\bundle{v})\,\big]\Big).
+\]
+\end{theorem}
+
+\begin{proof}
+Since $\alloc$ is envy-freeable, $\envygraph{\alloc}$ has no positive-weight
+directed cycle (Theorem~\ref{thm:hs-characterisation}(iii)). Every closed walk
+decomposes into simple cycles and so also has weight at most $0$; deleting a
+closed sub-walk therefore never decreases a walk's weight, and every walk
+starting at $u$ is dominated by a \emph{simple} path starting at $u$. As there
+are finitely many simple paths, the maximum defining $\pathw{\alloc}(u)$ is
+attained, by a simple path $P^{\ast}$.
+
+If $P^{\ast}$ is empty then $\pathw{\alloc}(u) = 0$ and the claim holds, the
+right-hand side being non-negative. Otherwise $P^{\ast}$, being simple, does not
+revisit $u$, so its terminal vertex $v$ satisfies $v \ne u$ and appending the arc
+$(v,u)$ yields a simple cycle $C$ with $\edgew{\alloc}(C) \le 0$. Hence
+\[
+  \pathw{\alloc}(u) \;=\; \edgew{\alloc}(P^{\ast})
+  \;=\; \edgew{\alloc}(C) - \edgew{\alloc}(v,u)
+  \;\le\; -\edgew{\alloc}(v,u)
+  \;=\; \cost_v(\bundle{u}) - \cost_v(\bundle{v}),
+\]
+which is at most the maximum over $v \ne u$.
+\end{proof}
+
+\begin{corollary}
+\label{main:onestep}
+If $\cost_v(\bundle{u}) \le \cost_v(\bundle{v}) + 1$ for all $u,v \in \agents$
+--- no agent would suffer more than one extra unit by taking anybody else's
+bundle --- then $\optsubsidy \in \set{0,1}^n$.
+\end{corollary}
+
+The bound is an \emph{upper estimate}, not an evaluation: $\pathw{\alloc}(u)$ is
+the maximum weight of a path out of $u$, whereas the right-hand side retains only
+the endpoint of that path. The two are not equivalent and the inequality is
+routinely strict --- a path $u \to a \to b$ of weight $2$ with
+$\edgew{\alloc}(b,u) = -3$ closes a cycle of weight $-1$, so
+$\pathw{\alloc}(u) = 2$ while the bound returns $3$. Checked against the exact
+longest-path computation on $172{,}484$ (agent, allocation) pairs, it holds
+without exception but is tight on only $70.9\%$ of them.
+
+The template nevertheless cannot be completed.
+
+\begin{example}[Insertion cannot be completed]
+\label{main:ex-insertion}
+Take $\items = \set{a_1,a_2,g}$ and
+\[
+  \cost_1(S) = \max\big(0, \abs{S} - 1\big), \qquad
+  \cost_2(S) = \cost_3(S) = \abs{S},
+\]
+all dichotomous. The partial allocation
+$\alloc = (\set{a_1,a_2}, \emptyset, \emptyset)$ has envy matrix
+\[
+  \big(\edgew{\alloc}(i,j)\big) =
+  \begin{pmatrix} 0 & 1 & 1 \\ -2 & 0 & 0 \\ -2 & 0 & 0 \end{pmatrix},
+\]
+with no positive cycle and $\optsubsidy = (1,0,0)$: a legal state of the
+invariant. The marginal cost of $g$ is $1$ for every agent on her own bundle, and
+inserting $g$ into each bundle in turn gives minimum subsidy vectors
+$(2,0,0)$, $(2,1,0)$ and $(2,0,1)$ --- each with an entry equal to $2$. Yet the
+complete allocation $(\set{a_1}, \set{a_2}, \set{g})$ has an identically zero
+envy matrix and needs no subsidy at all.
+\end{example}
+
+Note that $\cost_1$ is supermodular, which is permitted: neither~\cite{BKNS22}
+nor the present work restricts to submodular valuations, and the instance
+genuinely needs it. The conclusion is that any proof of
+Conjecture~\ref{conj:main} must be free to \textbf{re-open already-allocated
+bundles}; repairing by permutation alone is provably insufficient.
+
+% --------------------------------------------------------------------------
+\subsection{Selecting a utilitarian optimum}
+\label{sec:main-utilitarian}
+
+If the allocation cannot be built incrementally, it may instead be
+\emph{selected} from a set small enough to reason about. Utilitarian optimality
+is the obvious candidate, for two good reasons. By
+Theorem~\ref{thm:hs-characterisation} an allocation minimising
+$\sum_i \cost_i(\bundle{i})$ over \emph{all} allocations is automatically
+envy-freeable, so half of what is needed comes free. And it carries an exchange
+property: if $g \in \bundle{i}$ satisfies $\cost_i(\bundle{i}) -
+\cost_i(\bundle{i} \setminus \set{g}) = 1$, then $\cost_j(\bundle{j} \cup
+\set{g}) = \cost_j(\bundle{j}) + 1$ for every $j$, since otherwise the
+allocation would not have been optimal.
+
+\begin{example}[The utilitarian optimum can be strictly worse]
+\label{main:ex-utilitarian}
+Take $\items = \set{g_1,g_2,g_3,g_4}$ with the costs below; each column is $0$ at
+$\emptyset$ with every marginal in $\set{0,1}$, so all three are dichotomous.
+
+\begin{center}\small
+\begin{tabular}{@{}lccc@{\hspace{2.5em}}lccc@{}}
+\toprule
+$S$ & $\cost_1$ & $\cost_2$ & $\cost_3$ &
+$S$ & $\cost_1$ & $\cost_2$ & $\cost_3$ \\
+\midrule
+$\emptyset$      & 0 & 0 & 0 & $g_3g_4$       & 2 & 1 & 1 \\
+$g_1$            & 1 & 1 & 1 & $g_1g_2g_3$    & 2 & 3 & 2 \\
+$g_2$            & 1 & 1 & 1 & $g_1g_2g_4$    & 3 & 2 & 2 \\
+$g_3$            & 1 & 1 & 0 & $g_1g_3g_4$    & 2 & 2 & 2 \\
+$g_4$            & 1 & 1 & 1 & $g_2g_3g_4$    & 2 & 2 & 2 \\
+$g_1g_2$         & 2 & 2 & 2 & $g_1g_2g_3g_4$ & 3 & 3 & 3 \\
+$g_1g_3$         & 1 & 2 & 1 & & & & \\
+$g_1g_4$         & 2 & 2 & 2 & & & & \\
+$g_2g_3$         & 1 & 2 & 1 & & & & \\
+$g_2g_4$         & 2 & 2 & 2 & & & & \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Agent~1 pays $1$ for every singleton and agent~3 pays $0$ only for
+$\set{g_3}$, so any allocation of total cost below $2$ would force
+$\bundle{2} \supseteq \set{g_1,g_2,g_4}$, costing agent~2 at least $2$. The
+minimum total cost is therefore $2$, attained \emph{only} by
+$\alloc^{\star} = (\emptyset,\ \set{g_1,g_2,g_4},\ \set{g_3})$, whose envy graph
+has $\edgew{\alloc^\star}(2,1) = 2$ and hence $\optsubsidy = (0,2,0)$. But
+$\allocB = (\set{g_1,g_3},\ \set{g_2},\ \set{g_4})$, of total cost $3$, has every
+arc at most $0$ and needs no subsidy.
+\end{example}
+
+The optimum here is \emph{unique}, so there is no tie to break: every rule
+selecting a nonempty subset of the utilitarian-optimal allocations returns
+$\alloc^{\star}$ and pays $2$, while a subsidy-free allocation exists outside
+that set. The gap is the largest possible in one step, for one extra unit of
+total burden. Any search procedure must therefore be free to \textbf{give up
+total cost}.
+
+% --------------------------------------------------------------------------
+\subsection{Pricing the coverage constraint}
+\label{sec:main-pricing}
+
+The third route reduces the problem to a goods instance and enforces what is
+left by pricing. The reduction is exact.
+
+Let $\hat{\items}$ consist of $n-1$ copies of each chore, write $\tau(S)$ for the
+set of chores represented in $S$, and put $\hat{v}_i(S) := \cost_i(\tau(S))$.
+Call an allocation of $\hat{\items}$ a \emph{coverage allocation} if no bundle
+holds two copies of one chore.
+
+\begin{theorem}[Replica transform]
+\label{main:replica}
+Each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in the sense
+of~\cite{BKNS22}, and the map sending an allocation $\alloc$ of $\items$ to the
+allocation of $\hat{\items}$ in which bundle $i$ receives one copy of each chore
+outside $\bundle{i}$ is a bijection onto the coverage allocations, under which
+the two envy graphs coincide.
+\end{theorem}
+
+\begin{corollary}[Coverage is the entire gap]
+\label{main:coverage}
+Conjecture~\ref{conj:main} holds if and only if every replica instance admits a
+coverage allocation $B$ with $\pathw{B}(i) \le 1$ for all $i$.
+\end{corollary}
+
+Applying~\cite{BKNS22} to the replica is legal and returns some $B$ with
+$\hat{\subsidy} \in \set{0,1}^n$, but it is free to place two copies of one chore
+in one bundle, in which case that chore has two owners and the image is not a
+partition. The natural repair is to make duplicates unattractive --- by staging
+the allocation so that each chore's copies are dealt out together with the later
+chores priced far above the earlier ones, or simply by charging for duplicates
+directly. Neither works, for one reason.
+
+\begin{example}[Duplicates are invisible to any price]
+\label{main:ex-pricing}
+In the replica a second copy of a chore has marginal value exactly $0$: if $b$
+has the type of a chore already represented in $S$ then
+$\tau(S \cup \set{b}) = \tau(S)$, so $\hat{v}_i(S \cup \set{b}) = \hat{v}_i(S)$
+for every agent $i$. The holder of a duplicate is therefore \emph{indifferent} to
+it, not averse, which is the wrong sign: a selection rule is not repelled by the
+duplicate, it merely gains nothing from avoiding it.
+
+Nor can a price supply the missing aversion. A charge levied on duplicates bites
+only through the arcs of the envy graph, and there it cancels: whatever an agent
+is charged for the duplicates she holds lowers every arc \emph{out of} her by
+exactly what the charge raises the arcs \emph{into} her from everyone else, so
+the two contributions annihilate around every cycle. A price can therefore
+disqualify an allocation only if the agent who \emph{holds} the duplicate does
+not feel it while somebody else does --- and since prices are fixed before the
+allocation is chosen, while the allocation decides who holds the duplicate,
+requiring holder-blindness for every possible holder forces the price to zero.
+\end{example}
+
+Staging by chore does not evade this, because the escalation separates
+\emph{chores} while the duplicate problem lives \emph{within} one chore: the two
+copies at issue are the same object, and no price on chores can tell them apart.
+
+% --------------------------------------------------------------------------
+\subsection{What the three failures have in common}
+\label{sec:main-expost}
+
+Each of the three fixes a rule before the quantity it must respond to has been
+determined. Insertion fixes an owner before the consequences of that grouping are
+visible, and cannot later re-split a bundle. A selection rule fixes its criterion
+before knowing which allocation the criterion will pick out. A price fixes a
+charge before knowing who will hold the duplicate being charged for. In each case
+the rule is settled \emph{ex ante} against a quantity determined \emph{ex post}.
+
+What survives is the requirement that a correct procedure decide late: it must be
+free to move already-allocated chores between bundles, and free to give up total
+cost while doing so.

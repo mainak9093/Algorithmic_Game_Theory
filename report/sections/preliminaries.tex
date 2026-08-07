@@ -62,6 +62,7 @@ They coincide when all items are goods and differ once chores are present, and
 only the two-sided form supports the doubly monotone results. We adopt the
 two-sided form.
 
+\ifworking
 \begin{definition}[EF1, two-sided form]
 \label{def:ef1}
 An allocation $\alloc$ is \emph{envy-free up to one item} (EF1) iff for all
@@ -69,6 +70,7 @@ $i, j \in \agents$ there exists $X \subseteq \bundle{i} \cup \bundle{j}$ with
 $\abs{X} \le 1$ such that
 $v_i(\bundle{i} \setminus X) \ge v_i(\bundle{j} \setminus X)$.
 \end{definition}
+\fi
 
 % --------------------------------------------------------------------------
 \subsection{Negative Dichotomous Valuations}
@@ -110,6 +112,7 @@ Monotonicity is not a separate hypothesis: marginals in $\set{0,1}$ are
 non-negative, so a dichotomous $\cost$ is automatically non-decreasing. We
 nonetheless list it above because it is the property most often used directly.
 
+\ifworking
 \begin{remark}[Three adjectives that are routinely confused]
 \label{rem:terminology}
 \emph{Monotone} means only $\cost(S) \le \cost(T)$ for $S \subseteq T$, with no
@@ -127,6 +130,7 @@ and reserve ``binary additive'' for the additive subclass. When a bound is
 quoted, check which is meant, since the classes are not the same and the gap
 between them is where this paper lives.
 \end{remark}
+\fi
 
 The correspondence $v_i \leftrightarrow \cost_i$ is a bijection between negative
 dichotomous valuations and dichotomous cost functions in the sense
@@ -137,6 +141,7 @@ $i,j$, read as ``my own burden net of my compensation is no worse than what I
 perceive of yours''. We use whichever of $v_i$ and $\cost_i$ is clearer locally
 and always state which.
 
+\ifworking
 The negation, however, does not carry results across, for the reasons given in
 \Cref{sec:intro}. The following remark isolates the one case in which a
 transformation does exist, and shows why it is uninformative.
@@ -167,6 +172,7 @@ $\items \setminus \bundle{j} = \bundle{i}$ has no analogue for $n \ge 3$, where
 the complement of one bundle is a union of several others, and no reduction of
 this kind is available.
 \end{remark}
+\fi
 
 % --------------------------------------------------------------------------
 \subsection{The Envy Graph and the Halpern--Shah Characterisation}
@@ -281,7 +287,11 @@ single-clause statement,
 \[
   \exists\, \alloc \ :\quad \max_{i \in \agents} \pathw{\alloc}(i) \;\le\; 1,
 \]
-and it is this form that the rest of the report works with. Two cautions are
+and it is this form that the rest of the report works with.
+
+\ifworking
+Two cautions are
+
 worth recording alongside it. First, the bound cannot be improved: the family of
 Example~\ref{ex:lowerbound} attains $n-1$ for every $n$, verified exhaustively
 for $n \le 7$. Second, the conjecture is \emph{not} the assertion that the
@@ -292,3 +302,4 @@ there are instances at $n = 4$ whose cheapest envy-free solution costs $2$, born
 entirely by one agent, while every allocation with $\optsubsidy \in \set{0,1}^4$
 costs $3$. The $\set{0,1}$ shape is a genuine restriction, not a normalisation of
 the total.
+\fi

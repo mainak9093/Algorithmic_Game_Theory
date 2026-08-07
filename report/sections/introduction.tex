@@ -91,8 +91,8 @@ $\cost_i := -v_i$ for the cost form of a negative dichotomous valuation, the
 complement $\tilde{v}_i(S) := \cost_i(\items) - \cost_i(\items \setminus S)$ is
 again dichotomous in the sense of~\cite{BKNS22}, so the class is closed under
 complementation. But the complement transformation respects the allocation only
-when $\items \setminus A_j = A_i$, that is, only when $n = 2$; see
-Remark~\ref{rem:complement}. For $n \ge 3$ there is no such reduction, and that is
+when $\items \setminus A_j = A_i$, that is, only when $n = 2$\ifworking; see
+Remark~\ref{rem:complement}\fi. For $n \ge 3$ there is no such reduction, and that is
 where the content of the problem lies.
 
 Third, and most tellingly, envy flows the other way. Under goods, envy
@@ -119,7 +119,8 @@ one, therefore applies off the shelf and yields a subsidy of at most $n-1$ per
 agent and $n(n-1)/2$ in total~\cite[Theorem~1]{KMSTY24}. Two details make the
 containment work and are easy to get wrong. Their normalisation is two-sided, so
 it bounds chore disutility as well as value; and the EF1 they require is the
-two-sided form of \Cref{def:ef1}, not the goods-only form
+two-sided form\ifworking\ of \Cref{def:ef1}\fi, which removes one item from
+\emph{either} bundle, not the goods-only form
 of~\cite{HS19} --- the two differ precisely when chores are present. An EF1
 allocation is guaranteed to exist and to be computable in polynomial time for
 doubly monotone valuations, so the reduction has an input; for that

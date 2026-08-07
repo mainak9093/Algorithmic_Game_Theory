@@ -53,11 +53,46 @@ For any envy-freeable allocation $\alloc$ and any agent $u$,
 \end{theorem}
 
 \begin{proof}
-The empty path contributes $0$. For a nonempty path $P$ from $u$ to $v \ne u$,
-appending the arc $(v,u)$ closes a directed cycle of weight at most $0$ by
-Theorem~\ref{thm:hs-characterisation}, so $\edgew{\alloc}(P) \le
--\edgew{\alloc}(v,u) = \cost_v(\bundle{u}) - \cost_v(\bundle{v})$.
+Since $\alloc$ is envy-freeable, $\envygraph{\alloc}$ contains no
+positive-weight directed cycle
+(Theorem~\ref{thm:hs-characterisation}(iii)). Every closed walk decomposes into
+simple cycles, so every closed walk also has weight at most $0$; deleting a
+closed sub-walk from a walk therefore never decreases its weight, and every walk
+starting at $u$ has weight at most that of some \emph{simple} path starting at
+$u$. As there are finitely many simple paths, the supremum defining
+$\pathw{\alloc}(u)$ is attained, by a simple path $P^{\ast}$.
+
+If $P^{\ast}$ is empty then $\pathw{\alloc}(u) = 0$ and the claim holds, the
+right-hand side being non-negative. Otherwise $P^{\ast}$ is simple and so does
+not revisit $u$; its terminal vertex $v$ therefore satisfies $v \ne u$, and
+appending the arc $(v,u)$ yields a genuine simple cycle $C$. By
+Theorem~\ref{thm:hs-characterisation}(iii), $\edgew{\alloc}(C) \le 0$, so
+\[
+  \pathw{\alloc}(u) \;=\; \edgew{\alloc}(P^{\ast})
+  \;=\; \edgew{\alloc}(C) - \edgew{\alloc}(v,u)
+  \;\le\; -\edgew{\alloc}(v,u)
+  \;=\; \cost_v(\bundle{u}) - \cost_v(\bundle{v}),
+\]
+which is at most the maximum over $v \ne u$.
 \end{proof}
+
+\begin{remark}[The bound is not an evaluation of $\pathw{\alloc}$]
+\label{rem:cyclebound-lossy}
+$\pathw{\alloc}(u)$ \emph{is} the maximum path weight out of $u$; the bound is a
+one-directional estimate of it in terms of a single arc, discarding everything
+about the heaviest path except where it ends. The two are not equivalent and the
+inequality is routinely strict: a path $u \to a \to b$ of weight $2$ with
+$\edgew{\alloc}(b,u) = -3$ closes a cycle of weight $-1 \le 0$, so
+$\pathw{\alloc}(u) = 2$ while the bound returns $3$. Checked against the true
+longest-path computation over $172{,}484$ (agent, allocation) pairs, the bound
+holds without exception but is exact on only $70.9\%$ of them, with slack up to
+$5$ (\texttt{update\_46/cyclebound\_check.py}). Evaluating $\pathw{\alloc}$
+requires the longest-path computation; the bound costs $O(n)$ arc lookups and is
+used only where an upper estimate suffices ---
+Corollary~\ref{cor:onestep} and Theorem~\ref{thm:smallbundle}. Where it was
+pressed into service as an equality it failed, which is the content of
+Proposition~\ref{prop:closing-arc-lossy}.
+\end{remark}
 
 \begin{corollary}
 \label{cor:onestep}
