@@ -1,0 +1,141 @@
+%% ==========================================================================
+%%  5  The Replica Instance
+%%
+%%  MAIN REPORT ONLY -- not included by working.tex.  Labels prefixed `main:'.
+%%
+%%  Carries the Approach 3 material that the main report needs (the replica
+%%  construction, the transform, and coverage-is-the-entire-gap), and then the
+%%  third obstruction, which is Approach 4: enforcing coverage by pricing.
+%%
+%%  Condensed from working/approach_3.tex (sec:replica, thm:replica,
+%%  cor:coverage) and working/approach_4.tex (thm:w1, sec:holderblind).
+%% ==========================================================================
+\section{The Replica Instance}
+\label{sec:replica}
+
+The third of the techniques named in \Cref{sec:obstructions} turns the chore
+problem into a \emph{goods} problem, to which the theorem of~\cite{BKNS22}
+applies verbatim, and then enforces what is left over by pricing. The translation
+is exact and is worth having in its own right; the pricing step is the third
+obstruction, and is treated in \Cref{sec:main-pricing}.
+
+% --------------------------------------------------------------------------
+\subsection{The construction}
+\label{sec:main-replica}
+
+Fix an instance with cost functions $\cost_i$ on chores
+$\items = \set{a_1,\dots,a_m}$. The \emph{replica instance} $\hat{I}$ carries
+$n-1$ copies of a good $b_j$ for each chore $a_j$,
+\[
+  \hat{\items} \;:=\; \set{\, b_j^{(1)}, \dots, b_j^{(n-1)} \;:\; j \in \items \,},
+\]
+and for $S \subseteq \hat{\items}$, writing $\tau(S) \subseteq \items$ for the
+set of \emph{types} occurring in $S$,
+\[
+  \hat{v}_i(S) \;:=\; \cost_i(\items) \;-\; \cost_i\big(\items \setminus \tau(S)\big).
+\]
+
+The reading is that \emph{handing agent $i$ a copy of $b_j$ relieves $i$ of chore
+$a_j$}. Each chore ends with exactly one owner, so exactly $n-1$ agents must be
+relieved of it --- hence $n-1$ copies --- and no agent may be relieved of the
+same chore twice, so no bundle may hold two copies of one type. Call an
+allocation of $\hat{\items}$ satisfying that last condition a \emph{coverage
+allocation}. The condition is load-bearing rather than cosmetic: it is what makes
+$\hat{v}_i$ well defined as a dual, a second copy of a type having marginal $0$
+and never $+1$ again.
+
+\begin{theorem}[Replica transform]
+\label{main:replica}
+Let $\cost_1,\dots,\cost_n$ be dichotomous. Then
+\begin{enumerate}
+  \item[(i)] each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in the
+    sense of~\cite{BKNS22};
+  \item[(ii)] the map $\Phi$ sending an allocation $\alloc$ of $\items$ to the
+    allocation in which bundle $i$ receives one copy of each type in
+    $\items \setminus \bundle{i}$ is a bijection between partitions of $\items$
+    and coverage allocations of $\hat{\items}$, up to relabelling copies of a
+    type;
+  \item[(iii)] corresponding allocations have identical envy graphs:
+    $\hat{\edgew{}}_{B}(i,k) = \edgew{\alloc}(i,k)$ for all $i,k$.
+\end{enumerate}
+\end{theorem}
+
+Since the envy graphs agree arc for arc, so do the feasible subsidy vectors, and
+the $\set{0,1}$ target transfers in both directions without loss. The problem is
+therefore not merely analogous to a dichotomous goods problem; on coverage
+allocations it \emph{is} one.
+
+\begin{corollary}[Coverage is the entire gap]
+\label{main:coverage}
+Conjecture~\ref{conj:main} holds if and only if every replica instance
+$\hat{I}$ admits a coverage allocation $B$ with $\pathw{B}(i) \le 1$ for all $i$.
+\end{corollary}
+
+% --------------------------------------------------------------------------
+\subsection{Pricing the coverage constraint}
+\label{sec:main-pricing}
+
+Applying~\cite{BKNS22} to $\hat{I}$ is legal by Theorem~\ref{main:replica}(i) and
+returns some $B$ with $\hat{\subsidy} \in \set{0,1}^n$ and total at most $n-1$.
+But it is free to place two copies of one type in one bundle, in which case that
+chore is absent from at least two bundles, has at least two owners, and the image
+under $\Phi^{-1}$ is not a partition. By Corollary~\ref{main:coverage} coverage
+is the sole residual difficulty, so it suffices to make duplicates unattractive.
+
+Two ways of doing so suggest themselves. One may \emph{stage} the allocation,
+dealing out the $n-1$ copies of $a_1$ together, then those of $a_2$, and so on,
+with each chore priced far above the last, so that an agent who has just taken a
+copy of the current chore is too well supplied to be selected again while copies
+of that chore remain; staging makes coverage automatic, since a stage placing its
+$n-1$ copies on distinct agents yields a coverage allocation by construction.
+Or one may simply charge for duplicates directly, adding a penalty proportional
+to the number of repeated copies a bundle holds. Neither works, and both fail for
+the same reason.
+
+\begin{example}[Duplicates are invisible to any price]
+\label{main:ex-pricing}
+In the replica a second copy of a chore has marginal value exactly $0$: if $b$
+has the type of a chore already represented in $S$ then
+$\tau(S \cup \set{b}) = \tau(S)$, so $\hat{v}_i(S \cup \set{b}) = \hat{v}_i(S)$
+for every agent $i$. The holder of a duplicate is therefore \emph{indifferent} to
+it, not averse, which is the wrong sign: a selection rule is not repelled by the
+duplicate, it merely gains nothing from avoiding it.
+
+Nor can a price supply the missing aversion. A charge levied on duplicates bites
+only through the arcs of the envy graph, and there it cancels: whatever an agent
+is charged for the duplicates she holds lowers every arc \emph{out of} her by
+exactly what the charge raises the arcs \emph{into} her from everyone else, so
+the two contributions annihilate around every cycle, and by
+Theorem~\ref{thm:hs-characterisation}(iii) no allocation is disqualified. A price
+can therefore work only if the agent who \emph{holds} the duplicate does not feel
+it while somebody else does --- and since prices are fixed before the allocation
+is chosen, while the allocation decides who holds the duplicate, requiring
+holder-blindness for every possible holder forces the price to zero.
+\end{example}
+
+Staging does not evade this. Its escalation separates \emph{chores}, whereas the
+duplicate problem lives \emph{within} one chore: the two copies at issue are
+copies of the same $a_j$, literally the same object, and no price assigned to
+chores can tell them apart. A further obstacle stands behind that one, and is
+fatal on its own --- making one chore ``much costlier'' than another requires
+marginals outside $\set{0,1}$, which leaves the dichotomous class and forfeits
+the very theorem the staging was meant to invoke.
+
+% --------------------------------------------------------------------------
+\subsection{What the three failures have in common}
+\label{sec:main-expost}
+
+Each of the three techniques fixes a rule before the quantity it must respond to
+has been determined. Insertion fixes an owner before the consequences of that
+grouping are visible, and cannot later re-split a bundle. A selection rule fixes
+its criterion before knowing which allocation the criterion will pick out. A
+price fixes a charge before knowing who will hold the duplicate being charged
+for. In each case the rule is settled \emph{ex ante} against a quantity
+determined \emph{ex post}.
+
+What survives is the requirement that a correct procedure decide late: it must be
+free to move already-allocated chores between bundles, and free to give up total
+cost while doing so. Enforcing coverage \emph{structurally} rather than by price
+meets that requirement --- if the copies of a chore simply cannot be placed on the
+same agent, coverage holds by construction and no charge is needed --- and it is
+the direction the constructions in progress take.

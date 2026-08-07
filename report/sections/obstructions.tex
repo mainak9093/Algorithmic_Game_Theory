@@ -5,22 +5,24 @@
 %%  approach sections.  Every label here is prefixed `main:' so that nothing
 %%  can collide with working/.
 %%
+%%  Covers the first two obstructions only.  The third needs the replica
+%%  instance and is therefore deferred to sections/replica.tex.
+%%
 %%  Condensed from working/approach_1.tex (thm:freeinsert, thm:cyclebound,
-%%  thm:obstruction), working/approach_2.tex (prop:msw-false),
-%%  working/approach_3.tex (thm:replica, cor:coverage) and
-%%  working/approach_4.tex (thm:w1, sec:holderblind).
+%%  thm:obstruction) and working/approach_2.tex (prop:msw-false).
 %% ==========================================================================
 \section{Obstructions to the Natural Approaches}
 \label{sec:obstructions}
 
 Three techniques settle the neighbouring corners of the square in
-\Cref{sec:intro}: build the allocation one item at a time, as
-in~\cite{BKNS22}; select a welfare-maximising allocation, as the exchange
-structure of dichotomous valuations invites; or reduce to a goods instance and
-price the residual constraint away. Each fails for negative dichotomous
-valuations, and each failure is witnessed by a single small instance. We record
-them because they delimit what a proof of Conjecture~\ref{conj:main} can look
-like, and because two of the tools built along the way are used throughout.
+\Cref{sec:intro}: build the allocation one item at a time, as in~\cite{BKNS22};
+select a welfare-maximising allocation, as the exchange structure of dichotomous
+valuations invites; or reduce to a goods instance and price the residual
+constraint away. Each fails for negative dichotomous valuations, and each failure
+is witnessed by a single small instance. We treat the first two here; the third
+needs a construction of its own and is deferred to \Cref{sec:replica}. These
+obstructions delimit what a proof of Conjecture~\ref{conj:main} can look like,
+and two of the tools built along the way are used throughout.
 
 % --------------------------------------------------------------------------
 \subsection{Incremental insertion}
@@ -189,114 +191,3 @@ $\alloc^{\star}$ and pays $2$, while a subsidy-free allocation exists outside
 that set. The gap is the largest possible in one step, for one extra unit of
 total burden. Any search procedure must therefore be free to \textbf{give up
 total cost}.
-
-% --------------------------------------------------------------------------
-\subsection{The replica instance}
-\label{sec:main-replica}
-
-The third route turns the chore problem into a \emph{goods} problem, to which
-the theorem of~\cite{BKNS22} applies verbatim, and enforces what is left over by
-pricing. The translation is exact, and stating it is what makes the obstruction
-in \Cref{sec:main-pricing} intelligible.
-
-Fix an instance with cost functions $\cost_i$ on chores
-$\items = \set{a_1,\dots,a_m}$. The \emph{replica instance} $\hat{I}$ carries
-$n-1$ copies of a good $b_j$ for each chore $a_j$,
-\[
-  \hat{\items} \;:=\; \set{\, b_j^{(1)}, \dots, b_j^{(n-1)} \;:\; j \in \items \,},
-\]
-and for $S \subseteq \hat{\items}$, writing $\tau(S) \subseteq \items$ for the
-set of \emph{types} occurring in $S$,
-\[
-  \hat{v}_i(S) \;:=\; \cost_i(\items) \;-\; \cost_i\big(\items \setminus \tau(S)\big).
-\]
-
-The reading is that \emph{handing agent $i$ a copy of $b_j$ relieves $i$ of chore
-$a_j$}. Each chore ends with exactly one owner, so exactly $n-1$ agents must be
-relieved of it --- hence $n-1$ copies --- and no agent may be relieved of the
-same chore twice, so no bundle may hold two copies of one type. Call an
-allocation of $\hat{\items}$ satisfying that last condition a \emph{coverage
-allocation}. The condition is load-bearing rather than cosmetic: it is what makes
-$\hat{v}_i$ well defined as a dual, a second copy of a type having marginal $0$
-and never $+1$ again.
-
-\begin{theorem}[Replica transform]
-\label{main:replica}
-Let $\cost_1,\dots,\cost_n$ be dichotomous. Then
-\begin{enumerate}
-  \item[(i)] each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in the
-    sense of~\cite{BKNS22};
-  \item[(ii)] the map $\Phi$ sending an allocation $\alloc$ of $\items$ to the
-    allocation in which bundle $i$ receives one copy of each type in
-    $\items \setminus \bundle{i}$ is a bijection between partitions of $\items$
-    and coverage allocations of $\hat{\items}$, up to relabelling copies of a
-    type;
-  \item[(iii)] corresponding allocations have identical envy graphs:
-    $\hat{\edgew{}}_{B}(i,k) = \edgew{\alloc}(i,k)$ for all $i,k$.
-\end{enumerate}
-\end{theorem}
-
-Since the envy graphs agree arc for arc, so do the feasible subsidy vectors, and
-the $\set{0,1}$ target transfers in both directions without loss.
-
-\begin{corollary}[Coverage is the entire gap]
-\label{main:coverage}
-Conjecture~\ref{conj:main} holds if and only if every replica instance
-$\hat{I}$ admits a coverage allocation $B$ with $\pathw{B}(i) \le 1$ for all $i$.
-\end{corollary}
-
-% --------------------------------------------------------------------------
-\subsection{Pricing the coverage constraint}
-\label{sec:main-pricing}
-
-Applying~\cite{BKNS22} to $\hat{I}$ is legal by
-Theorem~\ref{main:replica}(i) and returns some $B$ with
-$\hat{\subsidy} \in \set{0,1}^n$ and total at most $n-1$. But it is free to place
-two copies of one type in one bundle, in which case that chore is absent from at
-least two bundles, has at least two owners, and the image under $\Phi^{-1}$ is
-not a partition. By Corollary~\ref{main:coverage} coverage is the sole residual
-difficulty.
-
-The natural repair is to make duplicates unattractive --- by staging the
-allocation so that each chore's copies are dealt out together, with the later
-chores priced far above the earlier ones, or simply by charging for duplicates
-directly. Neither works, for one reason.
-
-\begin{example}[Duplicates are invisible to any price]
-\label{main:ex-pricing}
-In the replica a second copy of a chore has marginal value exactly $0$: if $b$
-has the type of a chore already represented in $S$ then
-$\tau(S \cup \set{b}) = \tau(S)$, so $\hat{v}_i(S \cup \set{b}) = \hat{v}_i(S)$
-for every agent $i$. The holder of a duplicate is therefore \emph{indifferent} to
-it, not averse, which is the wrong sign: a selection rule is not repelled by the
-duplicate, it merely gains nothing from avoiding it.
-
-Nor can a price supply the missing aversion. A charge levied on duplicates bites
-only through the arcs of the envy graph, and there it cancels: whatever an agent
-is charged for the duplicates she holds lowers every arc \emph{out of} her by
-exactly what the charge raises the arcs \emph{into} her from everyone else, so
-the two contributions annihilate around every cycle. A price can therefore
-disqualify an allocation only if the agent who \emph{holds} the duplicate does
-not feel it while somebody else does --- and since prices are fixed before the
-allocation is chosen, while the allocation decides who holds the duplicate,
-requiring holder-blindness for every possible holder forces the price to zero.
-\end{example}
-
-Staging by chore does not evade this, because the escalation separates
-\emph{chores} while the duplicate problem lives \emph{within} one chore: the two
-copies at issue are the same object, and no price on chores can tell them apart.
-
-% --------------------------------------------------------------------------
-\subsection{What the three failures have in common}
-\label{sec:main-expost}
-
-Each of the three fixes a rule before the quantity it must respond to has been
-determined. Insertion fixes an owner before the consequences of that grouping are
-visible, and cannot later re-split a bundle. A selection rule fixes its criterion
-before knowing which allocation the criterion will pick out. A price fixes a
-charge before knowing who will hold the duplicate being charged for. In each case
-the rule is settled \emph{ex ante} against a quantity determined \emph{ex post}.
-
-What survives is the requirement that a correct procedure decide late: it must be
-free to move already-allocated chores between bundles, and free to give up total
-cost while doing so.
