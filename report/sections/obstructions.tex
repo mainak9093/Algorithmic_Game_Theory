@@ -94,14 +94,15 @@ If $\cost_v(\bundle{u}) \le \cost_v(\bundle{v}) + 1$ for all $u,v \in \agents$
 bundle --- then $\optsubsidy \in \set{0,1}^n$.
 \end{corollary}
 
-The bound is an \emph{upper estimate}, not an evaluation: $\pathw{\alloc}(u)$ is
-the maximum weight of a path out of $u$, whereas the right-hand side retains only
-the endpoint of that path. The two are not equivalent and the inequality is
-routinely strict --- a path $u \to a \to b$ of weight $2$ with
-$\edgew{\alloc}(b,u) = -3$ closes a cycle of weight $-1$, so
-$\pathw{\alloc}(u) = 2$ while the bound returns $3$. Checked against the exact
-longest-path computation on $172{,}484$ (agent, allocation) pairs, it holds
-without exception but is tight on only $70.9\%$ of them.
+The bound is an \emph{upper estimate}, not an evaluation. Here
+$\pathw{\alloc}(u)$ is the maximum weight of a path out of $u$, whereas the
+right-hand side retains only the endpoint of that path, and the inequality is in
+general strict: if $u \to a \to b$ has weight $2$ and
+$\edgew{\alloc}(b,u) = -3$, the cycle weighs $-1$, so $\alloc$ is envy-freeable
+with $\pathw{\alloc}(u) = 2$ while the bound returns $3$. Evaluating
+$\pathw{\alloc}$ requires a longest-path computation; the bound costs $O(n)$ arc
+lookups and is used only where an upper estimate suffices, as in
+Corollary~\ref{main:onestep}.
 
 The template nevertheless cannot be completed.
 
@@ -190,37 +191,74 @@ total burden. Any search procedure must therefore be free to \textbf{give up
 total cost}.
 
 % --------------------------------------------------------------------------
-\subsection{Pricing the coverage constraint}
-\label{sec:main-pricing}
+\subsection{The replica instance}
+\label{sec:main-replica}
 
-The third route reduces the problem to a goods instance and enforces what is
-left by pricing. The reduction is exact.
+The third route turns the chore problem into a \emph{goods} problem, to which
+the theorem of~\cite{BKNS22} applies verbatim, and enforces what is left over by
+pricing. The translation is exact, and stating it is what makes the obstruction
+in \Cref{sec:main-pricing} intelligible.
 
-Let $\hat{\items}$ consist of $n-1$ copies of each chore, write $\tau(S)$ for the
-set of chores represented in $S$, and put $\hat{v}_i(S) := \cost_i(\tau(S))$.
-Call an allocation of $\hat{\items}$ a \emph{coverage allocation} if no bundle
-holds two copies of one chore.
+Fix an instance with cost functions $\cost_i$ on chores
+$\items = \set{a_1,\dots,a_m}$. The \emph{replica instance} $\hat{I}$ carries
+$n-1$ copies of a good $b_j$ for each chore $a_j$,
+\[
+  \hat{\items} \;:=\; \set{\, b_j^{(1)}, \dots, b_j^{(n-1)} \;:\; j \in \items \,},
+\]
+and for $S \subseteq \hat{\items}$, writing $\tau(S) \subseteq \items$ for the
+set of \emph{types} occurring in $S$,
+\[
+  \hat{v}_i(S) \;:=\; \cost_i(\items) \;-\; \cost_i\big(\items \setminus \tau(S)\big).
+\]
+
+The reading is that \emph{handing agent $i$ a copy of $b_j$ relieves $i$ of chore
+$a_j$}. Each chore ends with exactly one owner, so exactly $n-1$ agents must be
+relieved of it --- hence $n-1$ copies --- and no agent may be relieved of the
+same chore twice, so no bundle may hold two copies of one type. Call an
+allocation of $\hat{\items}$ satisfying that last condition a \emph{coverage
+allocation}. The condition is load-bearing rather than cosmetic: it is what makes
+$\hat{v}_i$ well defined as a dual, a second copy of a type having marginal $0$
+and never $+1$ again.
 
 \begin{theorem}[Replica transform]
 \label{main:replica}
-Each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in the sense
-of~\cite{BKNS22}, and the map sending an allocation $\alloc$ of $\items$ to the
-allocation of $\hat{\items}$ in which bundle $i$ receives one copy of each chore
-outside $\bundle{i}$ is a bijection onto the coverage allocations, under which
-the two envy graphs coincide.
+Let $\cost_1,\dots,\cost_n$ be dichotomous. Then
+\begin{enumerate}
+  \item[(i)] each $\hat{v}_i$ is a dichotomous valuation on $\hat{\items}$ in the
+    sense of~\cite{BKNS22};
+  \item[(ii)] the map $\Phi$ sending an allocation $\alloc$ of $\items$ to the
+    allocation in which bundle $i$ receives one copy of each type in
+    $\items \setminus \bundle{i}$ is a bijection between partitions of $\items$
+    and coverage allocations of $\hat{\items}$, up to relabelling copies of a
+    type;
+  \item[(iii)] corresponding allocations have identical envy graphs:
+    $\hat{\edgew{}}_{B}(i,k) = \edgew{\alloc}(i,k)$ for all $i,k$.
+\end{enumerate}
 \end{theorem}
+
+Since the envy graphs agree arc for arc, so do the feasible subsidy vectors, and
+the $\set{0,1}$ target transfers in both directions without loss.
 
 \begin{corollary}[Coverage is the entire gap]
 \label{main:coverage}
-Conjecture~\ref{conj:main} holds if and only if every replica instance admits a
-coverage allocation $B$ with $\pathw{B}(i) \le 1$ for all $i$.
+Conjecture~\ref{conj:main} holds if and only if every replica instance
+$\hat{I}$ admits a coverage allocation $B$ with $\pathw{B}(i) \le 1$ for all $i$.
 \end{corollary}
 
-Applying~\cite{BKNS22} to the replica is legal and returns some $B$ with
-$\hat{\subsidy} \in \set{0,1}^n$, but it is free to place two copies of one chore
-in one bundle, in which case that chore has two owners and the image is not a
-partition. The natural repair is to make duplicates unattractive --- by staging
-the allocation so that each chore's copies are dealt out together with the later
+% --------------------------------------------------------------------------
+\subsection{Pricing the coverage constraint}
+\label{sec:main-pricing}
+
+Applying~\cite{BKNS22} to $\hat{I}$ is legal by
+Theorem~\ref{main:replica}(i) and returns some $B$ with
+$\hat{\subsidy} \in \set{0,1}^n$ and total at most $n-1$. But it is free to place
+two copies of one type in one bundle, in which case that chore is absent from at
+least two bundles, has at least two owners, and the image under $\Phi^{-1}$ is
+not a partition. By Corollary~\ref{main:coverage} coverage is the sole residual
+difficulty.
+
+The natural repair is to make duplicates unattractive --- by staging the
+allocation so that each chore's copies are dealt out together, with the later
 chores priced far above the earlier ones, or simply by charging for duplicates
 directly. Neither works, for one reason.
 
