@@ -58,13 +58,29 @@ def f_oneheavy(m, n, rng):
 
 
 def f_capped(m, n, rng):
-    return [{S: min(len(S), rng.randrange(1, max(2, m // 2 + 1)))
-             for S in subsets(m)} for _ in range(n)]
+    # BUG (found 2026-08-09): the randrange sat INSIDE the comprehension, so the
+    # cap was redrawn for every subset S and the result was not a capping
+    # function at all -- marginals of 2 and more, i.e. outside the dichotomous
+    # class this project studies.  Draw one cap per agent instead.
+    # return [{S: min(len(S), rng.randrange(1, max(2, m // 2 + 1)))
+    #          for S in subsets(m)} for _ in range(n)]
+    out = []
+    for _ in range(n):
+        k = rng.randrange(1, max(2, m // 2 + 1))
+        out.append({S: min(len(S), k) for S in subsets(m)})
+    return out
 
 
 def f_threshold(m, n, rng):
-    return [{S: max(0, len(S) - rng.randrange(0, max(1, m // 2)))
-             for S in subsets(m)} for _ in range(n)]
+    # BUG (found 2026-08-09): same defect as f_capped -- the threshold was
+    # redrawn per subset.  One threshold per agent.
+    # return [{S: max(0, len(S) - rng.randrange(0, max(1, m // 2)))
+    #          for S in subsets(m)} for _ in range(n)]
+    out = []
+    for _ in range(n):
+        t = rng.randrange(0, max(1, m // 2))
+        out.append({S: max(0, len(S) - t) for S in subsets(m)})
+    return out
 
 
 def f_uniform(m, n, rng):
