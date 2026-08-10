@@ -204,9 +204,9 @@ equivalent rather than merely sufficient.
 
 \begin{proposition}
 \label{prop:twotier-equiv}
-Let $\alloc$ be envy-freeable with every arc at most $1$. Then $\alloc$ is good
-if and only if the digraph of weight-$1$ arcs contains no directed path of
-length two.
+Let $n = 3$ and let $\alloc$ be envy-freeable with every arc at most $1$. Then
+$\alloc$ is good if and only if the digraph of weight-$1$ arcs contains no
+directed path of length two.
 \end{proposition}
 
 \begin{proof}
@@ -219,6 +219,21 @@ $\agents \setminus S$, or from $\agents \setminus S$ into $S$ at weight at most
 $0$, so weight-$1$ arcs run only from $S$ to $\agents \setminus S$ and cannot be
 composed.
 \end{proof}
+
+\begin{remark}[The hypothesis $n = 3$ is needed, and only in one direction]
+\label{rem:twotier-equiv-scope}
+The converse direction above is general: for any $n$, a good allocation has its
+weight-$1$ arcs running one way across a bipartition, so none compose. The
+forward direction is not. It reads ``every directed path carries at most one
+positive arc'', which needs the two positive arcs of a heavy path to be
+\emph{consecutive} --- true at $n = 3$, where a simple path has length at most
+two, and false beyond it: at $n = 4$ the path $i_1 \to i_2 \to i_3 \to i_4$ with
+arc weights $1, 0, 1$ has weight $2$ while its two weight-$1$ arcs are not
+composable, so the digraph of weight-$1$ arcs contains no path of length two.
+For general $n$ the correct statement is Proposition~\ref{prop:twotier} itself
+--- a bipartition across which all strict envy runs one way --- and the
+composability form is a genuinely three-agent convenience.
+\end{remark}
 
 So the target is exactly: \emph{find an envy-freeable allocation together with a
 bipartition of the agents such that all strict envy runs from one side to the
