@@ -1,0 +1,364 @@
+%% ==========================================================================
+%%  Approach 10 --- minimum-spread families.  OPEN, and the best lead.
+%%
+%%  Source: RESIDUAL.md (2026-08-10) and update_48/.
+%%
+%%  NOTE ON PLACEMENT.  This is deliberately NOT part of \Cref{sec:approach9}.
+%%  Approach 9 is the conditioned-remainder induction, whose state is a partial
+%%  allocation under contracted costs; the technique below selects a PARTITION
+%%  by a global optimisation and assigns it by a matching.  The two share
+%%  nothing but the target, so they are kept apart.
+%%
+%%  STATUS.  The rule (F5*) is unrefuted over 2,574 instances and implies
+%%  Conjecture 2.  At n = 3 everything here is proved except Conjecture G,
+%%  which alone would close n = 3.
+%% ==========================================================================
+\section{Approach 10: Minimum-Spread Families}
+\label{sec:approach10}
+
+Every approach so far has selected an \emph{allocation}. This one selects a
+\emph{family} --- an unassigned partition --- by a global optimisation, and only
+then hands the bundles out. The optimisation is the obvious one suggested by
+\Cref{sec:balancedclass}: Theorem~\ref{thm:balanced-class} succeeds exactly when
+some family has every agent valuing all bundles within one unit, so the natural
+move when no such family exists is to ask for the family that comes closest.
+
+\begin{definition}[Spread]
+\label{def:spread}
+For a family $B = (B_1,\dots,B_n)$ --- a partition of $\items$ into $n$ possibly
+empty bundles --- and an agent $i$, put
+\[
+  \mathrm{sp}_i(B) \;:=\; \max_t \cost_i(B_t) - \min_t \cost_i(B_t),
+  \qquad
+  \Sigma(B) \;:=\; \sum_{i \in \agents} \mathrm{sp}_i(B).
+\]
+A family is uniformly balanced (\Cref{def:unifbal}) exactly when
+$\mathrm{sp}_i(B) \le 1$ for every $i$.
+\end{definition}
+
+\begin{conjecture}[The minimum-spread rule --- \textbf{open}]
+\label{conj:f5}
+Let $B$ minimise $\Sigma$ over all families and let $\sigma$ minimise
+$\sum_i \cost_i(B_{\sigma(i)})$. Then $\alloc$ with $\bundle{i} =
+B_{\sigma(i)}$ satisfies $\pathw{\alloc} \le 1$.
+\end{conjecture}
+
+Conjecture~\ref{conj:f5} implies Conjecture~\ref{conj:main} at once, and a
+minimiser exists by definition, so unlike Conjecture~\ref{conj:balance-rule} it
+always applies and needs no schedule. It is unrefuted over $2{,}574$ instances at
+$n \le 6$, $m \le 8$ across eleven generators, in the strong form --- \emph{every}
+minimiser works, not merely some --- on a corpus not selected for it
+(\texttt{update\_48/minsum\_stress.py}).
+
+\begin{remark}[What a proof may not use]
+\label{rem:f5-closures}
+Three mechanisms are already closed and none of the arguments below uses any of
+them. First, the arc bound: Proposition~\ref{prop:arc-bound-blind} shows that on
+the instance of Proposition~\ref{prop:no-balance} \emph{every} good allocation
+has an arc of weight $-2$ or less, so no criterion of the form
+``all arcs $\ge -1$'' --- that is, Corollary~\ref{cor:onestep} --- can be the
+mechanism, and Remark~\ref{rem:arc-vs-path} draws the conclusion that any correct
+certificate is path-based. Second, balance: over $42{,}711$ families of spread at
+most $2$, requiring bundle sizes to differ by at most one admits $792$ families
+whose matching is bad, so the balance signal of Remark~\ref{rem:balance} is not
+sufficient here. Third, single-item exchange: $\cost(S) = \min(\max(0,\abs{S}-1),1)$
+on a three-element set has $\cost = 1$ with every single removal leaving it at
+$1$, so no step may move one item and expect a cost to move.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{Normalisation}
+\label{sec:f5-normal}
+
+Fix a family $B$ and put
+$v_i(t) := \cost_i(B_t) - \min_s \cost_i(B_s) \ge 0$, so each $v_i$ attains the
+value $0$. Three identities make the whole question finite for a fixed family:
+\[
+  \mathrm{sp}_i(B) = \max_t v_i(t), \qquad
+  \edgew{\alloc}(i,k) = v_i(\sigma(i)) - v_i(\sigma(k)), \qquad
+  \sum_i \cost_i(B_{\sigma(i)}) = \sum_i v_i(\sigma(i)) + \text{const}.
+\]
+The last one says a minimum-cost assignment is exactly one minimising
+$F(\sigma) := \sum_i v_i(\sigma(i))$. Write $x_i := v_i(\sigma(i))$ for what
+agent $i$ pays after normalisation.
+
+\begin{observation}
+\label{obs:f5-arcs}
+The heaviest arc out of $i$ equals $x_i$ if $x_i \ge 1$, and is at most $0$ if
+$x_i = 0$.
+\end{observation}
+
+\begin{proof}
+$\max_{k \ne i}\edgew{\alloc}(i,k) = x_i - \min_{k \ne i} v_i(\sigma(k))$. If
+$x_i \ge 1$ then $v_i$ does not vanish at $\sigma(i)$, so its zero lies at some
+$\sigma(k)$ with $k \ne i$ and the inner minimum is $0$. If $x_i = 0$ then every
+arc out of $i$ is $-v_i(\sigma(k)) \le 0$.
+\end{proof}
+
+A minimum-cost assignment maximises welfare over reassignments, so
+$\alloc$ is envy-freeable by Theorem~\ref{thm:hs-characterisation} and
+Proposition~\ref{prop:n3} applies at $n = 3$. Combining it with
+Observation~\ref{obs:f5-arcs}:
+
+\begin{proposition}[Criterion at $n = 3$]
+\label{prop:f5-n3crit}
+Let $n = 3$. Then $\alloc$ is good if and only if
+\begin{enumerate}
+  \item[(a)] $x_i \le 1$ for every $i$, and
+  \item[(b)] there are no distinct $i,j,k$ with $x_i = x_j = 1$,
+    $v_i(\sigma(j)) = 0$ and $v_j(\sigma(k)) = 0$.
+\end{enumerate}
+\end{proposition}
+
+\begin{proof}
+By Observation~\ref{obs:f5-arcs}, (a) is exactly ``every arc has weight at most
+$1$''. Given (a), a two-path $i \to j \to k$ has weight $2$ if and only if both
+its arcs weigh $1$, that is $x_i - v_i(\sigma(j)) = 1$ and
+$x_j - v_j(\sigma(k)) = 1$; under (a) this is (b). Proposition~\ref{prop:n3}
+then gives the claim.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{The main lemma}
+\label{sec:f5-main}
+
+\begin{theorem}[Small total spread is enough]
+\label{thm:f5-sigma3}
+Let $n = 3$ and let $\sigma$ be any minimum-cost assignment of a family $B$.
+\begin{enumerate}
+  \item[(i)] If some arc of $\envygraph{\alloc}$ has weight at least $2$, then
+    $\Sigma(B) \ge 4$.
+  \item[(ii)] If every arc has weight at most $1$ but some two-path has weight
+    $2$, then $\Sigma(B) \ge 5$.
+\end{enumerate}
+In particular, if $\Sigma(B) \le 3$ then \emph{every} minimum-cost assignment of
+$B$ is good.
+\end{theorem}
+
+\begin{proof}
+\emph{(i)} By Proposition~\ref{prop:f5-n3crit} some $x_i \ge 2$. As $x_i > 0$,
+the zero of $v_i$ lies at $\sigma(k)$ for some $k \ne i$. Reassigning by the
+transposition of $i$ and $k$ changes $F$ by
+$\big[v_i(\sigma(k)) + v_k(\sigma(i))\big] - \big[x_i + x_k\big] =
+v_k(\sigma(i)) - x_i - x_k$, which is non-negative by optimality, so
+$v_k(\sigma(i)) \ge x_i + x_k \ge 2$ and $\mathrm{sp}_k \ge 2$. Together with
+$\mathrm{sp}_i \ge x_i \ge 2$ this gives $\Sigma(B) \ge 4$.
+
+\emph{(ii)} By Proposition~\ref{prop:f5-n3crit}(b) there are distinct $i,j,k$
+with $x_i = x_j = 1$, $v_i(\sigma(j)) = 0$ and $v_j(\sigma(k)) = 0$; here
+$F(\sigma) = 2 + x_k$. Transposing $i$ and $j$ gives cost
+$v_i(\sigma(j)) + v_j(\sigma(i)) + x_k = v_j(\sigma(i)) + x_k$, so optimality
+forces $v_j(\sigma(i)) \ge 2$ and $\mathrm{sp}_j \ge 2$. Now take the
+three-cycle $i \mapsto \sigma(j)$, $j \mapsto \sigma(k)$, $k \mapsto \sigma(i)$,
+of cost
+$v_i(\sigma(j)) + v_j(\sigma(k)) + v_k(\sigma(i)) = v_k(\sigma(i))$; optimality
+forces $v_k(\sigma(i)) \ge 2 + x_k \ge 2$, so $\mathrm{sp}_k \ge 2$. With
+$\mathrm{sp}_i \ge x_i = 1$ we get $\Sigma(B) \ge 1 + 2 + 2 = 5$.
+
+The final claim is the contrapositive of (i) and (ii) together.
+\end{proof}
+
+Theorem~\ref{thm:f5-sigma3} uses \emph{only} optimality of the assignment. It
+needs no minimality of the family, no balance hypothesis and no exchange step,
+so it passes clear of all three closures of Remark~\ref{rem:f5-closures}.
+
+\begin{corollary}
+\label{cor:f5-contains-balanced}
+Theorem~\ref{thm:f5-sigma3} contains Theorem~\ref{thm:balanced-class}.
+\end{corollary}
+
+\begin{proof}
+A uniformly balanced family has $\mathrm{sp}_i \le 1$ for each of the three
+agents, hence $\Sigma \le 3$.
+\end{proof}
+
+It is strictly wider: the spread profiles $(2,1,0)$ and $(3,0,0)$ also have
+$\Sigma \le 3$ and are not uniformly balanced, so instances outside
+\Cref{def:unifbal} are covered too --- including residual instances, on which no
+uniformly balanced family exists at all.
+
+\begin{corollary}
+\label{cor:f5-reduction}
+Conjecture~\ref{conj:f5} holds at $n = 3$ for every instance admitting a family
+with $\Sigma \le 3$.
+\end{corollary}
+
+\begin{proof}
+The $\Sigma$-minimal family of such an instance has $\Sigma \le 3$; apply
+Theorem~\ref{thm:f5-sigma3}.
+\end{proof}
+
+So the whole of $n = 3$ rests on one purely combinatorial statement, with no
+allocation, assignment or envy graph in it.
+
+\begin{conjecture}[Total spread three --- \textbf{open}]
+\label{conj:f5-sigma3}
+Every three-agent negative dichotomous instance admits a partition of $\items$
+into three bundles with $\sum_i \mathrm{sp}_i \le 3$.
+\end{conjecture}
+
+% --------------------------------------------------------------------------
+\subsection{What stands in the way if Conjecture~\ref{conj:f5-sigma3} fails}
+\label{sec:f5-pattern}
+
+Theorem~\ref{thm:f5-sigma3} localises the obstruction completely at
+$\Sigma = 4$, and the answer is a single rigid pattern.
+
+\begin{proposition}[The unique obstruction at $\Sigma = 4$]
+\label{prop:f5-pattern}
+Let $n = 3$, let $\Sigma(B) = 4$ and let a minimum-cost $\sigma$ be bad. Then,
+writing coordinates in the order $(\sigma(i),\sigma(j),\sigma(k))$ for a suitable
+labelling of the agents,
+\[
+  v_i = v_k = (2,2,0), \qquad v_j = (0,0,0).
+\]
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:f5-sigma3}(ii) a two-path failure needs $\Sigma \ge 5$, so
+the failure is an arc of weight at least $2$ and part~(i) applies: with $k$ the
+holder of the zero of $v_i$, we have $\mathrm{sp}_i, \mathrm{sp}_k \ge 2$. Since
+$\Sigma = 4$, this forces $\mathrm{sp}_i = \mathrm{sp}_k = 2$ and
+$\mathrm{sp}_j = 0$, so $v_j \equiv 0$ and $x_j = 0$. Then $x_i \le
+\mathrm{sp}_i = 2$ and $x_i \ge 2$ give $x_i = 2$, and
+$v_k(\sigma(i)) \ge x_i + x_k = 2 + x_k$ with $v_k \le 2$ gives $x_k = 0$ and
+$v_k(\sigma(i)) = 2$. Transposing $i$ and $j$ costs
+$v_i(\sigma(j)) + v_j(\sigma(i)) + x_k = v_i(\sigma(j))$, so optimality gives
+$v_i(\sigma(j)) \ge 2$, hence $= 2$. Finally the three-cycle
+$i \mapsto \sigma(k)$, $j \mapsto \sigma(i)$, $k \mapsto \sigma(j)$ costs
+$v_i(\sigma(k)) + v_j(\sigma(i)) + v_k(\sigma(j)) = v_k(\sigma(j))$, so
+$v_k(\sigma(j)) \ge 2$, hence $= 2$. Collecting, $v_i = v_k = (2,2,0)$ and
+$v_j = (0,0,0)$.
+\end{proof}
+
+Two agents therefore have \emph{identical} normalised vectors --- both see two
+heavy bundles and one light one --- while the third is indifferent, and every
+minimum-cost assignment strands one of the two on a heavy bundle. Ruling the
+pattern out means re-partitioning the two heavy bundles so as to balance
+\emph{both} of those agents at once, which is Conjecture~\ref{conj:f5-2balance}
+below.
+
+% --------------------------------------------------------------------------
+\subsection{Two exchange lemmas, and one more conjecture}
+\label{sec:f5-exchange}
+
+\begin{lemma}[Intermediate value]
+\label{lem:f5-ivt}
+Let $\cost$ be dichotomous and $Y \subseteq \items$. For every integer
+$0 \le k \le \cost(Y)$ there is $Z \subseteq Y$ with $\cost(Z) = k$.
+\end{lemma}
+
+\begin{proof}
+Along a maximal chain $\emptyset = Z_0 \subset \dots \subset Z_r = Y$ consecutive
+costs differ by $0$ or $1$, so the values $\cost(Z_0), \dots, \cost(Z_r)$ sweep
+every integer between $0$ and $\cost(Y)$.
+\end{proof}
+
+Lemma~\ref{lem:f5-ivt} is what replaces the exchange step forbidden by the third
+closure of Remark~\ref{rem:f5-closures}: single items need not move a cost, but
+\emph{sets} realising any intermediate value always exist.
+
+\begin{lemma}[Two-way balance, one agent]
+\label{lem:f5-balance1}
+For dichotomous $\cost$ and any $U \subseteq \items$ there is $Z \subseteq U$
+with $\abs{\cost(Z) - \cost(U \setminus Z)} \le 1$.
+\end{lemma}
+
+\begin{proof}
+On a maximal chain $\emptyset = Z_0 \subset \dots \subset Z_r = U$ put
+$f(t) := \cost(Z_t) - \cost(U \setminus Z_t)$. Then $f(0) = -\cost(U) \le 0$ and
+$f(r) = \cost(U) \ge 0$. Each step raises the first term by $0$ or $1$ and
+lowers the second by $0$ or $1$, so $f$ is non-decreasing with steps in
+$\set{0,1,2}$. A step of $2$ cannot carry $f$ from at most $-2$ to at least $2$,
+so some $f(t)$ lies in $\set{-1,0,1}$.
+\end{proof}
+
+\begin{conjecture}[Two-way balance, two agents --- \textbf{open}]
+\label{conj:f5-2balance}
+For any two dichotomous costs and any $U \subseteq \items$ there is a partition
+$U = Z \sqcup (U \setminus Z)$ with $\mathrm{sp}_1 \le 1$ and
+$\mathrm{sp}_2 \le 1$ on the two parts.
+\end{conjecture}
+
+Note that Proposition~\ref{prop:no-balance} obstructs the \emph{three}-agent
+analogue of Conjecture~\ref{conj:f5-2balance}, not this one, so no barrier is
+known.
+
+\begin{remark}[The two-agent statement is a synchronisation problem]
+\label{rem:f5-walk}
+For $Z \subseteq U$ put
+\[
+  g(Z) \;:=\; \Big(\cost_1(Z) - \cost_1(U \setminus Z),\;
+                   \cost_2(Z) - \cost_2(U \setminus Z)\Big),
+\]
+so that Conjecture~\ref{conj:f5-2balance} asks for $g(Z) \in \set{-1,0,1}^2$;
+note $g(U \setminus Z) = -g(Z)$, so the image is symmetric about the origin.
+Along any maximal chain both coordinates of $g$ are \emph{non-decreasing} with
+steps in $\set{0,1,2}$, running from $(-\cost_1(U), -\cost_2(U))$ to
+$(\cost_1(U), \cost_2(U))$. Lemma~\ref{lem:f5-balance1} is the one-coordinate
+case of this. The two-coordinate case does not follow, because the coordinates
+cross the band $\set{-1,0,1}$ at different times: at the first $t$ with
+$g_2(t) \ge -1$ one gets $g_2(t) \in \set{-1,0}$, but $g_1(t)$ may already be
+far above $1$. The content of Conjecture~\ref{conj:f5-2balance} is exactly that
+the \emph{order} of the chain --- the only freedom available --- can be chosen to
+synchronise the two crossings. For additive measures this is the discrete
+necklace-splitting theorem with two cuts; dichotomous costs are not additive, so
+that result does not transfer.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{Status}
+\label{sec:f5-status}
+
+At $n = 3$ everything above is proved except two statements, and either one
+closes the case:
+
+\begin{center}\small
+\begin{tabular}{@{}ll@{}}
+\toprule
+statement & status \\
+\midrule
+Observation~\ref{obs:f5-arcs}, Proposition~\ref{prop:f5-n3crit} & proved \\
+Theorem~\ref{thm:f5-sigma3} ($\Sigma \le 3$ suffices) & proved \\
+Corollary~\ref{cor:f5-contains-balanced} (contains Thm~\ref{thm:balanced-class})
+  & proved \\
+Corollary~\ref{cor:f5-reduction} (the reduction) & proved \\
+Proposition~\ref{prop:f5-pattern} (the unique $\Sigma = 4$ pattern) & proved \\
+Lemma~\ref{lem:f5-ivt}, Lemma~\ref{lem:f5-balance1} & proved \\
+\textbf{Conjecture~\ref{conj:f5-sigma3}} ($\min \Sigma \le 3$) & \textbf{open} \\
+\textbf{Conjecture~\ref{conj:f5-2balance}} (two-agent balance) & \textbf{open} \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+\begin{remark}[Why Conjecture~\ref{conj:f5-sigma3} is plausible, and how it would
+fail]
+\label{rem:f5-sigma3-odds}
+On a residual instance no family has all three spreads at most $1$, so
+$\Sigma \le 3$ must be attained as $(2,1,0)$, $(2,0,0)$ or $(3,0,0)$ --- each of
+which needs some agent to have spread exactly $0$, that is, to value all three
+bundles equally. For a binary additive agent that means the three bundles hold
+equally many elements of $D_i$, which is impossible unless $3$ divides
+$\abs{D_i}$. So a counterexample needs three binary additive agents with no
+$\abs{D_i}$ divisible by $3$ and no uniformly balanced family.
+
+The two requirements pull against each other, which is the reason to expect the
+conjecture to hold. Writing $\abs{D_i} = 3q_i + r_i$, uniform balance asks the
+counts of $D_i$ to be $(q_i{+}1,q_i,q_i)$ or $(q_i{+}1,q_i{+}1,q_i)$ up to
+order when $r_i \ne 0$ --- in each case a free choice of which bundle is heavy.
+Only $3 \mid \abs{D_i}$ makes the count vector rigid, and it is exactly that
+rigidity which Proposition~\ref{prop:no-balance} exploits: its two size-three
+sets are forced rainbow and its size-two set then contradicts them. Barring
+sizes divisible by $3$ removes the rigidity that makes uniform balance fail,
+while being precisely what is needed to block spread $0$.
+
+This is a heuristic and it concerns binary additive agents only; a general
+dichotomous agent can reach spread $0$ with no divisibility condition, as
+$\cost(S) = \min(\abs{S},1)$ does on any partition into non-empty bundles.
+\end{remark}
+
+\paragraph{Verdict.} Conjecture~\ref{conj:f5} is open, unrefuted, constructive
+and always applicable, which no earlier target in this report has been at once.
+At $n = 3$ it is reduced to Conjecture~\ref{conj:f5-sigma3}, a statement about
+partitions alone. Nothing here proves any case with $n \ge 3$, and the reduction
+should not be represented as one.
