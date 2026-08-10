@@ -1,0 +1,649 @@
+%% ==========================================================================
+%%  Approach 9 --- the conditioned-remainder induction.  OPEN.
+%%
+%%  Source: CRI.md (2026-08-09) and update_47/.  Every lemma here is proved and
+%%  machine-checked.  conj:cri-depth, once the open statement here, is REFUTED
+%%  (prop:cri-depth-false, 2026-08-10).  The surviving route is the
+%%  witness-carrying invariant of sec:cri-witness, whose one open clause is
+%%  conj:cri-progress.
+%%
+%%  This is Approach 3 done as an INDUCTION rather than as a search.  The peel
+%%  frame of Approach 3 is retained wholesale --- nothing there is retracted ---
+%%  but the state space is replaced by one whose elements are partial
+%%  allocations under contracted cost functions.
+%%
+%%  Scripts: update_47/cri_anchor.py    (the lemmas)
+%%           update_47/cri_sweep.py     (0 bad roots; the refutations)
+%%           update_47/cri_stuck.py     (the contingency tables)
+%%           update_47/cri_where.py     (stuckness sits at |R| <= 2)
+%%           update_47/cri_lookahead.py (no dead state at |R| >= 3)
+%%           update_47/cri_witnesses.py (the minimal witness for each refutation)
+%% ==========================================================================
+\section{Approach 9: The Conditioned-Remainder Induction}
+\label{sec:approach9}
+
+\Cref{sec:approach3} left exactly one statement open,
+Conjecture~\ref{conj:balance-rule}, and \Cref{rem:testing-exhausted} recorded
+that random testing had run out of power on it. What followed narrowed the
+target without closing it: three families of candidate invariant were
+eliminated --- a local sufficient condition on the peel
+(Proposition~\ref{prop:lemmas-insufficient}), a predicate on the pair
+(state, move) (\Cref{rem:no-separating-feature}), and the commitment predicate
+on the state alone (\Cref{rem:commit-predicate}) --- leaving no candidate at
+all.
+
+This section changes the state space rather than hunting for another predicate
+on the old one. The diagnosis is that a workload profile is the wrong object: it
+is an arbitrary tuple of subsets, there are $(2^m)^n$ of them, and an individual
+profile means nothing. What follows replaces it with a space whose elements are
+\emph{partial allocations}, and in which the peel frame's known dead ends
+provably do not lie.
+
+% --------------------------------------------------------------------------
+\subsection{The frame}
+\label{sec:cri-frame}
+
+\begin{definition}[CR state]
+\label{def:crstate}
+A \emph{conditioned-remainder state}, or CR state, is a pair $(\alloc, R)$ with
+$R \subseteq \items$ and $\alloc = (\bundle{1},\dots,\bundle{n})$ a partition of
+$D := \items \setminus R$. Its \emph{profile} is
+\[
+  \workprofile_i \;:=\; \bundle{i} \cup R,
+\]
+so every agent is still on the hook for the whole undecided remainder, and its
+\emph{contracted cost functions} are
+\[
+  \cost^{R}_i(T) \;:=\; \cost_i(T \cup R) - \cost_i(R),
+  \qquad T \subseteq D .
+\]
+The moves are \emph{assignment} --- give some $a \in R$ to some agent $x$,
+setting $\bundle{x}' = \bundle{x} \cup \set{a}$ and $R' = R \setminus \set{a}$
+--- and \emph{relabelling}, $\alloc \mapsto \alloc \circ \sigma$. The
+\emph{root} has $\alloc$ empty and $R = \items$; a state is \emph{terminal} when
+$R = \emptyset$; and \emph{legality} is the invariant of \Cref{def:peel}: no
+positive-weight cycle and $\pathw{\workprofile}(i) \le 1$ for every $i$.
+\end{definition}
+
+In the language of \Cref{def:peel} an assignment is one \emph{atomic block}:
+relieve all $n-1$ non-owners of $a$ at once. So a CR state is a peel state, a CR
+move is $n-1$ consecutive peels, and the frame differs from
+Conjecture~\ref{conj:h1pp} exactly by dropping the legality requirement at the
+$n-2$ intermediates \emph{within} a block.
+
+\begin{conjecture}[CRI --- \textbf{open}]
+\label{conj:cri}
+From the root, some sequence of assignments and relabellings reaches a terminal
+state with every intermediate CR state legal.
+\end{conjecture}
+
+Conjecture~\ref{conj:h1pp} implies Conjecture~\ref{conj:cri} implies
+Conjecture~\ref{conj:main}, the last because a terminal CR state \emph{is} an
+allocation and its legality is exactly $\max_i \pathw{\alloc}(i) \le 1$. So
+Conjecture~\ref{conj:cri} is strictly the weaker target of the two peel-frame
+statements, and unlike Conjecture~\ref{conj:balance-rule} it is not obviously
+stronger than what is wanted.
+
+% --------------------------------------------------------------------------
+\subsection{Why the frame is different}
+\label{sec:cri-different}
+
+Three things separate it from a restriction of the peel process.
+
+\paragraph{The space is small.} CR states are partial functions $\items \to
+\agents$, so there are $(n+1)^m$ of them against $(2^m)^n$ profiles: at
+$n = 3, m = 6$, $4{,}096$ against $262{,}144$. Reachability is therefore
+decidable exhaustively well past every sweep of \Cref{sec:approach3}.
+
+\paragraph{The known dead ends are not CR states.} A profile is a CR state if
+and only if the sets $\workprofile_i \setminus \bigcap_k \workprofile_k$ are
+pairwise disjoint and cover $\items \setminus \bigcap_k \workprofile_k$. Both
+witnesses recorded in \Cref{sec:deadends} repeat an item across bundles ---
+$(\set{a_1,a_2},\set{g},\set{g})$ and
+$(\set{g_2},\set{g_2},\set{g_1,g_3,g_4})$ --- so neither is a CR state. The
+obstruction of Proposition~\ref{prop:deadends} is removed rather than worked
+around.
+
+\paragraph{The induction is restored.} This is the substantive point, and it is
+Lemmas~\ref{lem:cri-contract} and~\ref{lem:cri-witness} below: a CR state is a
+\emph{solved instance of the problem on a contracted ground set}, and a move
+un-contracts one element. Conjecture~\ref{conj:cri} is therefore an induction in
+which the instance \emph{grows} while a witness is maintained --- the shape of
+the proof of~\cite{BKNS22} --- run on the conditioned cost functions that
+dissolve the obstruction of Theorem~\ref{thm:obstruction}.
+\Cref{sec:approach1} grew the instance with the \emph{unconditioned} costs and
+died on that obstruction; \Cref{sec:approach3} identified the right conditioning
+in \Cref{rem:conditioned} and then abandoned the induction for a state-space
+search. This section is the synthesis of the two.
+
+% --------------------------------------------------------------------------
+\subsection{The calculus}
+\label{sec:cri-calculus}
+
+\begin{lemma}[Contraction stays in the class]
+\label{lem:cri-contract}
+$\cost^{R}_i$ is normalised with every marginal in $\set{0,1}$. Hence
+$(D, \cost^{R})$ is again a negative dichotomous instance.
+\end{lemma}
+
+\begin{proof}
+$\cost^{R}_i(\emptyset) = \cost_i(R) - \cost_i(R) = 0$, and for
+$g \notin T \subseteq D$,
+\[
+  \cost^{R}_i(T \cup \set{g}) - \cost^{R}_i(T)
+  \;=\; \cost_i\big((T \cup R) \cup \set{g}\big) - \cost_i(T \cup R)
+  \;\in\; \set{0,1}
+\]
+because $\cost_i$ is dichotomous (\Cref{def:dichcost}).
+\end{proof}
+
+\begin{lemma}[A CR state is a witness on the contracted instance]
+\label{lem:cri-witness}
+$\edgew{\workprofile}(i,k) = \cost^{R}_i(\bundle{i}) - \cost^{R}_i(\bundle{k})$.
+Consequently $(\alloc,R)$ is legal if and only if $\alloc$ witnesses
+Conjecture~\ref{conj:main} on the instance $(D, \cost^{R})$.
+\end{lemma}
+
+\begin{proof}
+$\edgew{\workprofile}(i,k) = \cost_i(\bundle{i} \cup R) - \cost_i(\bundle{k}
+\cup R) = \big[\cost^{R}_i(\bundle{i}) + \cost_i(R)\big] -
+\big[\cost^{R}_i(\bundle{k}) + \cost_i(R)\big]$, and the $\cost_i(R)$ cancel.
+The two envy graphs are therefore equal arc for arc, so the legality conditions
+coincide.
+\end{proof}
+
+\begin{lemma}[CR arc update]
+\label{lem:cri-arcupdate}
+Let $(\alloc,R) \to (\alloc',R')$ assign $a$ to $x$, and write
+$\beta_i(T) := \cost^{R'}_i(T \cup \set{a}) - \cost^{R'}_i(T) \in \set{0,1}$ for
+the marginal of $a$ to agent $i$ on $T$, conditioned on $R'$. Then for $i \ne k$,
+\[
+  \edgew{\alloc'}(i,k) - \edgew{\alloc}(i,k)
+  \;=\; \beta_i(\bundle{k})\,[k \ne x] \;-\; \beta_i(\bundle{i})\,[i \ne x].
+\]
+So arcs \emph{into} $x$ fall by $\beta_i(\bundle{i})$, arcs \emph{out of} $x$
+rise by $\beta_x(\bundle{k})$, and arcs between third parties move by
+$\beta_i(\bundle{k}) - \beta_i(\bundle{i}) \in \set{-1,0,1}$.
+\end{lemma}
+
+\begin{proof}
+First the contraction identity: for $T \subseteq D$,
+\begin{align*}
+  \cost^{R'}_i(T \cup \set{a}) - \cost^{R'}_i(\set{a})
+  &= \big[\cost_i(T \cup \set{a} \cup R') - \cost_i(R')\big]
+   - \big[\cost_i(\set{a} \cup R') - \cost_i(R')\big] \\
+  &= \cost_i(T \cup R) - \cost_i(R) \;=\; \cost^{R}_i(T).
+\end{align*}
+Applying it to both terms of $\edgew{\alloc}(i,k)$, the
+$\cost^{R'}_i(\set{a})$ cancel and
+\[
+  \edgew{\alloc}(i,k) = \cost^{R'}_i(\bundle{i} \cup \set{a})
+  - \cost^{R'}_i(\bundle{k} \cup \set{a})
+  = \big[\cost^{R'}_i(\bundle{i}) + \beta_i(\bundle{i})\big]
+  - \big[\cost^{R'}_i(\bundle{k}) + \beta_i(\bundle{k})\big].
+\]
+Meanwhile $\edgew{\alloc'}(i,k) = \cost^{R'}_i(\bundle{i}') -
+\cost^{R'}_i(\bundle{k}')$ with $\bundle{x}' = \bundle{x} \cup \set{a}$ and
+$\bundle{k}' = \bundle{k}$ for $k \ne x$. Subtracting in each of the three cases
+$i,k \ne x$; $k = x$; $i = x$ gives the stated formula.
+\end{proof}
+
+\begin{corollary}[The additive collapse]
+\label{cor:cri-additive}
+If the $\cost_i$ are additive then $\beta_i$ is constant, so third-party arcs do
+not move and only the arcs at $x$ change.
+\end{corollary}
+
+The corollary localises the difficulty sharply: \emph{the entire obstruction to
+the induction is the variation of $\beta_i$ across bundles}, and the additive
+case is closed independently by Theorem~\ref{thm:binadd}.
+
+\begin{proposition}[The first chore, exactly]
+\label{prop:cri-first}
+From the root, assigning $a$ to $x$ is legal if and only if
+$\beta_x \le \beta_k$ for every $k$, where
+$\beta_i := \cost_i(\items) - \cost_i(\items \setminus \set{a})$: the chore must
+go to an agent of \emph{minimal} marginal.
+\end{proposition}
+
+\begin{proof}
+At the root every $\bundle{i}$ is empty, so afterwards $\workprofile_x = \items$
+and $\workprofile_i = \items \setminus \set{a}$ for $i \ne x$. Hence
+$\edgew{}(i,k) = 0$ for $i,k \ne x$, $\edgew{}(i,x) = -\beta_i$ and
+$\edgew{}(x,k) = \beta_x$. For $n \ge 3$ the first group forces $\subsidy_i = c$
+for all $i \ne x$, and the remaining constraints read
+$c + \beta_x \le \subsidy_x \le c + \min_{i \ne x}\beta_i$. This interval meets
+$\set{0,1}$ exactly when $\beta_x \le \min_{i \ne x}\beta_i$: if $\beta_x = 0$
+take $c = \subsidy_x = 0$, and if $\beta_x = 1$ then the minimum is also $1$ and
+$c = 0$, $\subsidy_x = 1$ works, while $\beta_x = 1 > 0 = \min_i \beta_i$ leaves
+it empty. For $n = 2$ the first group is vacuous and the same two constraints
+give the same criterion. Legality is then Lemma~\ref{lem:potential-form}.
+\end{proof}
+
+This is the exact mirror of Proposition~\ref{prop:first-peel}, which takes a
+chore \emph{from} an agent of maximal marginal. Such an $x$ always exists, so
+the base case never blocks.
+
+\begin{lemma}[Free assignment]
+\label{lem:cri-free}
+If $\beta_x(\bundle{k}) = 0$ for every $k \ne x$ and $\beta_i(\bundle{k}) \le
+\beta_i(\bundle{i})$ for all $i,k \ne x$, then every arc weight weakly decreases,
+so the assignment preserves legality.
+\end{lemma}
+
+\begin{proof}
+Immediate from Lemma~\ref{lem:cri-arcupdate}: arcs into $x$ fall, arcs out of
+$x$ rise by $\beta_x(\bundle{k}) = 0$, and third-party arcs move by
+$\beta_i(\bundle{k}) - \beta_i(\bundle{i}) \le 0$. Path and cycle weights are
+sums of arc weights.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{What the frame does not fix}
+\label{sec:cri-refuted}
+
+Conjecture~\ref{conj:cri} survives every instance tested (\Cref{sec:cri-evidence}),
+but the local statements one would want to prove it with do not. One instance
+carries most of the damage.
+
+\begin{example}[A zero-subsidy dead end]
+\label{ex:cri-deadend}
+Take $\items = \set{a,b,c}$ with the dichotomous costs
+\begin{center}\small
+\begin{tabular}{@{}lcccccccc@{}}
+\toprule
+$S$ & $\emptyset$ & $a$ & $b$ & $c$ & $ab$ & $ac$ & $bc$ & $abc$ \\
+\midrule
+$\cost_1$ & 0 & 0 & 0 & 0 & 0 & 1 & 1 & 1 \\
+$\cost_2$ & 0 & 0 & 1 & 1 & 1 & 1 & 1 & 1 \\
+$\cost_3$ & 0 & 1 & 1 & 1 & 1 & 1 & 2 & 2 \\
+\bottomrule
+\end{tabular}
+\end{center}
+and the CR state $\alloc = (\emptyset, \set{b}, \set{a})$, $R = \set{c}$, whose
+profile is $\workprofile = (\set{c},\set{bc},\set{ac})$ with
+\[
+  \big(\edgew{\workprofile}(i,k)\big) =
+  \begin{pmatrix} 0 & -1 & -1 \\ 0 & 0 & 0 \\ 0 & -1 & 0 \end{pmatrix},
+  \qquad \pathw{\workprofile} = (0,0,0).
+\]
+The state is reachable from the root and \emph{exactly envy-free}: it needs no
+subsidy at all. Yet each of the three ways to place the last chore creates a
+positive-weight cycle --- $c \to 1$ gives $\edgew{}(2,3) + \edgew{}(3,2) = 1$,
+$c \to 2$ gives $\edgew{}(3,1) + \edgew{}(1,3) = 1$, and $c \to 3$ gives
+$\edgew{}(2,1) + \edgew{}(1,2) = 1$ --- so no continuation is even
+envy-freeable. Conjecture~\ref{conj:main} nevertheless holds on this instance:
+$(\set{c},\set{ab},\emptyset)$ has an identically zero envy matrix.
+\end{example}
+
+\begin{remark}[What Example~\ref{ex:cri-deadend} rules out]
+\label{rem:cri-nopotential}
+It refutes three statements at once. \emph{Pointwise} extendability --- every
+legal non-terminal CR state has a legal assignment --- fails, as it does in the
+peel frame (Conjecture~\ref{conj:h1}); $3{,}024$ reachable states are of this
+kind. The \emph{last-rung} lemma --- a legal state with one chore left can
+always place it --- fails, and $1{,}765$ of the $1{,}778$ stuck states have
+$\abs{R} = 1$, so this is where essentially all stuckness lives.
+
+The third is the one that constrains a proof. The doomed state has
+$\pathw{\workprofile} = (0,0,0)$: it is as good as a CR state can possibly be,
+and the instance itself is not a counterexample to
+Conjecture~\ref{conj:main}. \emph{So no potential function measuring the quality
+of the current state can serve as the invariant}, since the state that must be
+avoided is optimal. \Cref{rem:no-separating-feature} reached a similar
+conclusion in the peel frame by exhausting the features of a move; here it
+follows from one instance, and for a structural reason.
+\end{remark}
+
+\begin{remark}[Balance does not transplant]
+\label{rem:cri-balance-fails}
+The same state refutes the one idea that survived \Cref{sec:approach3}. Its
+bundle sizes are $(0,1,1)$ with one chore undecided, so the completion with
+sizes $(1,1,1)$ exists and the state \emph{admits a balanced terminal} in the
+sense of Observation~\ref{obs:balance-characterises} --- and it is dead. Over
+the corpus, $132$ dead CR states admit a balanced completion. The certificate of
+Conjecture~\ref{conj:balance-rule} is therefore specific to the peel frame and
+does not carry to this one.
+\end{remark}
+
+Three further statements fail. Each has an explicit minimal witness, recorded
+and re-verified in \texttt{cri\_witnesses.py}.
+\emph{Relabelling is load-bearing}: with
+$\cost_1 = \cost_2$ charging $1$ only for the grand bundle and
+$\cost_3(S) = \min(\abs{S},2)$, assignments alone cannot reach a legal terminal
+from the root while one relabelling suffices, and $3$ such instances occur in
+the exhaustive family. \emph{Death is not always immediate}: at $n = 3$,
+$m = 5$ there is a dead state with two legal assignments available, so one-step
+legality cannot certify a rule and Lemma~\ref{lem:cri-free} is sound for a move
+and worthless for a schedule. And the commitment predicate of
+\Cref{rem:commit-predicate} transplants \emph{backwards}: of $1{,}210$ states in
+which some agent already carries conditioned cost $2$, none is dead.
+
+% --------------------------------------------------------------------------
+\subsection{Where the difficulty is, and the one open statement}
+\label{sec:cri-evidence}
+
+Every sweep below enumerates its state space completely, with no cap, and draws
+from all seven generators of \texttt{update\_44/counterexample\_hunt.py} rather
+than the single uniform sampler used throughout \Cref{sec:approach3}.
+
+\begin{observation}[The sweep]
+\label{obs:cri-sweep}
+Over the complete exhaustive $n = m = 3$ family --- all $9{,}880$ instances ---
+together with $438$ adversarial instances at $n = 3$ ($m \le 7$), $n = 4$
+($m \le 6$) and $n = 5$ ($m \le 5$), there is \emph{no bad root}:
+Conjecture~\ref{conj:cri} holds on every one. Without the relabelling move there
+are $3$ bad roots, all in the exhaustive family
+(\texttt{update\_47/cri\_sweep.py}).
+\end{observation}
+
+The dead states are confined to the end of the induction, and sharply so.
+
+\begin{observation}[Death lives in the last two rungs]
+\label{obs:cri-depth}
+Over $312{,}436$ reachable non-terminal CR states:
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+$\abs{R}$ & dead & reachable & dead share \\
+\midrule
+$1$        & $1{,}230$ & $183{,}984$ & $0.669\%$ \\
+$2$        & $45$      & $93{,}909$  & $0.048\%$ \\
+$\ge 3$    & $\mathbf{0}$ & $34{,}543$ & $\mathbf{0\%}$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Correspondingly, playing an arbitrary legal assignment while $\abs{R} > 3$ and
+then searching the last three chores reached a terminal on all $10{,}045$
+instances tested, with the play above the threshold chosen at random so that the
+result is not an artefact of a tie-break
+(\texttt{update\_47/cri\_lookahead.py}).
+\end{observation}
+
+\begin{conjecture}[Depth --- \textbf{refuted}]
+\label{conj:cri-depth}
+Every reachable legal CR state with $\abs{R} \ge 3$ is live: some sequence of
+assignments and relabellings from it reaches a terminal state through legal
+states.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:cri-depth-implies}
+Conjecture~\ref{conj:cri-depth} implies Conjecture~\ref{conj:cri}, hence
+Conjecture~\ref{conj:main}.
+\end{proposition}
+
+\begin{proof}
+The root is legal, its envy graph being identically zero, and has
+$\abs{R} = m$. If $m \le 3$ the statement is vacuous and
+Conjecture~\ref{conj:cri} is a finite check; otherwise any legal assignment from
+a state with $\abs{R} \ge 4$ lands in a state with $\abs{R} \ge 3$, which is
+live by hypothesis, and a live state reaches a terminal by definition.
+\end{proof}
+
+This would have been a different shape of target from
+Conjecture~\ref{conj:balance-rule}: that one asks for a global invariant on an
+unbounded search, whereas Conjecture~\ref{conj:cri-depth} carries a constant, and
+the constant is small. It is however false.
+
+\begin{proposition}[The depth conjecture fails]
+\label{prop:cri-depth-false}
+Conjecture~\ref{conj:cri-depth} is refuted. There are reachable legal CR states
+with $\abs{R} \ge 3$ from which no sequence of assignments and relabellings
+reaches a terminal state through legal states.
+\end{proposition}
+
+\begin{proof}
+Complete enumeration of the state space over instances drawn from four families
+at $n = 3$ and $m \in \set{6,7,8}$ finds $657$ such states
+(\texttt{update\_48/depth\_stress.py}):
+\begin{center}\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+family & $m = 6$ & $m = 7$ & $m = 8$ \\
+\midrule
+composed  & $7$  & $243$ & $137$ \\
+capped    & $60$ & $210$ & $0$ \\
+threshold & $0$  & $0$   & $0$ \\
+nested    & $0$  & $0$   & $0$ \\
+\bottomrule
+\end{tabular}
+\end{center}
+Nothing is sampled within an instance: for each one every state is enumerated and
+liveness is computed by a backward pass, so a reported dead state is dead.
+\end{proof}
+
+\begin{remark}[The caveat was the right one, and it fired]
+\label{rem:cri-caveat}
+Conjecture~\ref{conj:cri-depth} rested on $34{,}543$ states at $m \le 7$ with only
+$6$ of them at $\abs{R} = 7$, and was recorded as a hypothesis rather than a
+result on exactly that ground --- the lesson of \Cref{rem:n3-rules-fail}, where a
+rule surviving $227$ instances failed on $368$. Two details of the refutation are
+worth keeping. Every failure lies in the \emph{composed} family
+$\cost_i(S) = f_i(\abs{S \cap D_i})$, where the residual of the solved cases
+lives, or in \emph{capped}; threshold and nested produce none. And the capped
+family had never been generated correctly before the defect of
+\Cref{rem:cri-genbug} was repaired, so half of the refuting evidence was
+unavailable while the conjecture was being formed.
+\end{remark}
+
+What Example~\ref{ex:cri-deadend} forces on any replacement is that its proof
+cannot argue that the state stays good, since the state it must avoid is
+optimal. It has to argue about what remains \emph{available}: by
+Lemma~\ref{lem:cri-witness} every arc is computed on the contracted instance
+$(D, \cost^{R})$, which by Lemma~\ref{lem:cri-contract} is again dichotomous, so
+any such statement is internal to the class. \Cref{sec:cri-witness} takes that
+route.
+
+\begin{remark}[A defect in the test generators, and what it touched]
+\label{rem:cri-genbug}
+The adversarial families used here and in \Cref{sec:experiments} had a defect
+found while checking Proposition~\ref{prop:cri-first}: in \texttt{f\_capped} and
+\texttt{f\_threshold} the random parameter was drawn \emph{inside} the
+comprehension over subsets, so it was redrawn for every $S$ and the resulting
+functions were neither cappings nor thresholds --- they had marginals of $2$ and
+more, and so lay \emph{outside} the dichotomous class. \texttt{f\_mixed} draws
+from both and was affected too. The uniform, disjoint, nested and one-heavy
+families were clean throughout.
+
+The consequence is one of coverage rather than of correctness: those sweeps
+tested a wider class than intended, so their negative findings stand while their
+claimed coverage of capped and threshold instances does not. The
+cycle-closing check of \Cref{rem:cyclebound-lossy} is unaffected, since
+Theorem~\ref{thm:cyclebound} assumes only envy-freeability and not dichotomous
+costs. With the generators repaired, the counterexample hunt still finds no
+counterexample, and of the $29$ instances that come within one unit of being one,
+$17$ are \emph{threshold} against $4$ nested and $3$ capped --- so
+$\cost(S) = \max(0, \abs{S} - t)$ is the tightest family known, and it was not
+previously being generated at all.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{Carrying a witness, and a bridge to Approach 10}
+\label{sec:cri-witness}
+
+Every invariant tried so far has been a \emph{predicate on the state}, and every
+one has died: the three families eliminated in \Cref{sec:approach3}, and here
+pointwise extendability, the last rung, balance, the commitment predicate and
+Conjecture~\ref{conj:cri-depth}. Example~\ref{ex:cri-deadend} explains why, and
+rules out the whole family at a stroke --- the state to be avoided there is
+\emph{optimal}, with $\pathw{} = (0,0,0)$, so no measure of the current state's
+quality can separate it from a live one. The standard response to that situation
+is not another predicate but a stronger induction hypothesis: carry a
+\emph{witness} alongside the state.
+
+\begin{definition}[Completion]
+\label{def:cri-completion}
+A \emph{completion} of a CR state $(\alloc, R)$ is an allocation $\alloc^{\star}$
+of all of $\items$ with $\bundle{i} \subseteq \alloc^{\star}_i$ for every $i$. It
+is \emph{good} if $\pathw{\alloc^{\star}} \le 1$. Write
+\[
+  \Phi(\alloc,R) \;:\iff\; (\alloc,R) \text{ is legal and some completion of it
+  is good.}
+\]
+\end{definition}
+
+\begin{proposition}[The three easy clauses]
+\label{prop:cri-phi}
+$\Phi(\text{root})$ holds if and only if Conjecture~\ref{conj:main} holds for the
+instance; at a terminal state $\Phi$ holds if and only if that state is good; and
+$\Phi$ implies legality by definition.
+\end{proposition}
+
+\begin{proof}
+The root has $\bundle{i} = \emptyset$ for every $i$, so every allocation of
+$\items$ is a completion of it, and it is legal because its envy graph vanishes.
+A terminal state has $R = \emptyset$, so it is its own unique completion.
+\end{proof}
+
+So, as always, progress is the whole content. What is new is that the standing
+counterexample does not dispose of $\Phi$ before the work starts.
+
+\begin{observation}[$\Phi$ survives Example~\ref{ex:cri-deadend}]
+\label{obs:cri-phi-survives}
+In Example~\ref{ex:cri-deadend} each of the three ways of placing the last chore
+creates a positive-weight cycle, so that state has \emph{no} good completion and
+$\Phi$ excludes it. Every predicate eliminated in \Cref{sec:approach3} and in
+\Cref{sec:cri-refuted} was, by contrast, satisfied by some dead state.
+\end{observation}
+
+Pure witness-following is nevertheless not enough, and the reason is recorded
+rather than guessed.
+
+\begin{proposition}[Relabelling is unavoidable]
+\label{prop:cri-follow-fails}
+It is not the case that from every state satisfying $\Phi$ some chore may be
+assigned to its owner in a good completion while preserving legality.
+\end{proposition}
+
+\begin{proof}
+Such a rule would, by induction on $\abs{R}$ from the root, produce a schedule of
+\emph{assignments alone} reaching a good terminal whenever
+Conjecture~\ref{conj:main} holds for the instance. But three instances of the
+complete exhaustive $n = m = 3$ family are bad roots in the assignment-only
+frame while satisfying Conjecture~\ref{conj:main} and
+Conjecture~\ref{conj:cri} (\Cref{obs:cri-sweep}).
+\end{proof}
+
+Hence a witness-carrying proof must let the target \emph{move}, which is exactly
+what relabelling does: it permutes the bundles, and with them the completion
+being carried.
+
+\paragraph{The bridge.} Lemma~\ref{lem:cri-witness} says a CR state is a witness
+on the contracted instance, and Lemma~\ref{lem:cri-contract} says that instance
+is again dichotomous. Both hypotheses of \Cref{sec:approach10}'s main theorem are
+therefore available, and in the CR frame relabelling \emph{is} the choice of
+assignment, so a minimum-cost labelling may always be selected. Writing
+\[
+  \Sigma^{R}(\alloc) \;:=\; \sum_{i \in \agents}
+  \Big[\max_t \cost^{R}_i(\bundle{t}) - \min_t \cost^{R}_i(\bundle{t})\Big]
+\]
+for the total spread of the family measured in the contracted costs:
+
+\begin{theorem}[Bridge]
+\label{thm:cri-bridge}
+Let $n = 3$ and let $(\alloc, R)$ be a CR state with $\Sigma^{R}(\alloc) \le 3$.
+Then every labelling of the family $\alloc$ minimising
+$\sum_i \cost^{R}_i(\bundle{\sigma(i)})$ is legal.
+\end{theorem}
+
+\begin{proof}
+By Lemma~\ref{lem:cri-contract} the contracted instance $(D, \cost^{R})$ is
+negative dichotomous, and by Lemma~\ref{lem:cri-witness} the envy graph of the CR
+state is the envy graph of the allocation $\alloc$ in that instance. Apply
+Theorem~\ref{thm:f5-sigma3} to $(D,\cost^{R})$: a family of total spread at most
+$3$ assigned by a minimum-cost matching is good, which is precisely legality of
+the CR state.
+\end{proof}
+
+This is the first point at which the two lines meet: \Cref{sec:approach10}'s
+theorem serves as the \emph{soundness} clause of this section's induction. The
+base case is then immediate, and agrees with what was already proved.
+
+\begin{corollary}[Base case]
+\label{cor:cri-base}
+From the root, assigning any chore $a$ to any agent yields
+$\Sigma^{R'} = \sum_i \beta_i \le 3$, where
+$\beta_i = \cost_i(\items) - \cost_i(\items \setminus \set{a})$; and the
+minimum-cost labelling gives $a$ to an agent of minimal $\beta$, which is
+Proposition~\ref{prop:cri-first}.
+\end{corollary}
+
+\begin{proof}
+At the root every bundle is empty, so after the assignment
+$\cost^{R'}_i(\set{a}) = \cost_i(\set{a} \cup R') - \cost_i(R') =
+\cost_i(\items) - \cost_i(\items \setminus \set{a}) = \beta_i$ while the two
+empty bundles have contracted cost $0$. Agent $i$'s three values are therefore
+$(\beta_i, 0, 0)$ up to order, with spread $\beta_i \in \set{0,1}$, so
+$\Sigma^{R'} = \sum_i \beta_i \le n = 3$. The cost of a labelling is $\beta_j$
+for whichever agent $j$ receives $\set{a}$, minimised exactly at
+$\beta_j = \min_k \beta_k$.
+\end{proof}
+
+\paragraph{The candidate invariant, and what is left.} Take
+$\Phi_{\Sigma}(\alloc,R) :\iff \Sigma^{R}(\alloc) \le 3$. Its root clause is free
+($\cost^{\items}_i \equiv 0$, so $\Sigma = 0$), its soundness clause is
+Theorem~\ref{thm:cri-bridge}, and at a terminal $\cost^{\emptyset} = \cost$, so
+$\Phi_\Sigma$ delivers a \emph{good allocation} --- that is,
+Conjecture~\ref{conj:main} at $n = 3$. One clause remains.
+
+\begin{remark}[The labelling must be got right, not waved through]
+\label{rem:cri-labelling}
+Every state \emph{visited} must be legal, so one may not assign and then relabel
+to minimum cost: the un-relabelled state is visited on the way. A relabelling is
+a single move between two states, both of which must be legal, so it cannot be
+used to escape an illegal one. The correct form of the progress step therefore
+quantifies over labellings as well as over chores.
+\end{remark}
+
+\begin{conjecture}[Progress --- \textbf{open}]
+\label{conj:cri-progress}
+Let $n = 3$ and let $\alloc$ be a family with $\Sigma^{R}(\alloc) \le 3$ and
+$R \ne \emptyset$. Then there are a legal labelling of $\alloc$, a chore
+$a \in R$ and a bundle of $\alloc$ such that adjoining $a$ to that bundle yields
+a family $\alloc'$ with $\Sigma^{R'}(\alloc') \le 3$ whose induced labelling is
+legal.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:cri-progress-implies}
+Conjecture~\ref{conj:cri-progress} implies Conjecture~\ref{conj:cri} at $n = 3$,
+and hence Conjecture~\ref{conj:main} at $n = 3$.
+\end{proposition}
+
+\begin{proof}
+The root satisfies $\Phi_\Sigma$ and is legal. Each application of
+Conjecture~\ref{conj:cri-progress} decreases $\abs{R}$ by one through legal
+states, so after $m$ steps a terminal state is reached with
+$\Sigma^{\emptyset} \le 3$; Theorem~\ref{thm:cri-bridge} makes it good.
+\end{proof}
+
+\begin{remark}[What this route costs, and why the weaker target comes first]
+\label{rem:cri-progress-cost}
+At $\abs{R} = 1$ Conjecture~\ref{conj:cri-progress} produces a terminal family of
+total spread at most $3$, so it implies Conjecture~\ref{conj:f5-sigma3}. The two
+lines are therefore \emph{not} independent: this route to $n = 3$ contains
+\Cref{sec:approach10}'s open statement. Two consequences, and they are the
+practical content of this subsection. Conjecture~\ref{conj:f5-sigma3} is the
+weaker target and should be settled first, since a refutation of it would refute
+Conjecture~\ref{conj:cri-progress} without any further work. And if it is
+refuted, $\Phi_\Sigma$ fails as an invariant and Conjecture~\ref{conj:cri} would
+need a different one --- $\Phi$ of \Cref{def:cri-completion} being the candidate
+that Observation~\ref{obs:cri-phi-survives} leaves standing.
+\end{remark}
+
+\paragraph{Verdict.} Conjecture~\ref{conj:cri} is open and unrefuted, and it is a
+weaker target than either Conjecture~\ref{conj:h1prime} or
+Conjecture~\ref{conj:balance-rule}. Lemmas~\ref{lem:cri-contract}
+to~\ref{lem:cri-free}, Proposition~\ref{prop:cri-first} and
+Theorem~\ref{thm:cri-bridge} are the first statement of this problem as an
+induction on the \emph{instance} rather than a search over states, and they stand
+whatever becomes of Conjecture~\ref{conj:cri-progress}. What the frame does
+\emph{not} do is remove dead ends: it removes the ones of
+Proposition~\ref{prop:deadends} and grows its own, and
+Example~\ref{ex:cri-deadend} shows the new ones are harder to characterise, being
+optimal states. Conjecture~\ref{conj:cri-depth} is refuted, and the surviving
+route --- Conjecture~\ref{conj:cri-progress} --- is by
+Remark~\ref{rem:cri-progress-cost} at least as strong as the open statement of
+\Cref{sec:approach10}. As with every other approach in this document, no case
+with $n \ge 3$ is proved here.
