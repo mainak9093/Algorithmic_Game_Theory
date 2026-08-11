@@ -980,6 +980,164 @@ three.
 \end{corollary}
 
 % --------------------------------------------------------------------------
+\subsection{The chain at three agents, audited}
+\label{sec:f5-audit}
+
+Theorem~\ref{thm:f5-n3composed} is assembled from nine statements, and it is
+worth setting them out as a single dependency list, with the hypothesis each one
+consumes made explicit. Nothing here is new; the point of the list is that every
+link is a proved statement of this section and that the hypotheses match end to
+end.
+
+\begin{enumerate}\itemsep2pt
+\item \emph{Normalisation.} For a fixed family $B$ put
+  $v_i(t) = \cost_i(B_t) - \min_s \cost_i(B_s)$. Then $v_i \ge 0$, some
+  $v_i(t) = 0$, $\mathrm{sp}_i(B) = \max_t v_i(t)$, and a minimum-cost
+  assignment is one minimising $F(\sigma) = \sum_i v_i(\sigma(i))$, since
+  $\sum_i \cost_i(B_{\sigma(i)})$ and $F(\sigma)$ differ by
+  $\sum_i \min_s \cost_i(B_s)$, a constant of $B$. \emph{No hypothesis on the
+  costs.}
+\item \emph{Goodness at three agents}
+  (Proposition~\ref{prop:f5-n3crit}): an envy-freeable allocation is good iff no
+  arc and no directed two-path has weight $2$ or more, because a simple path on
+  three vertices has length at most two. \emph{Envy-freeability only.}
+\item \emph{The criterion} (Theorem~\ref{thm:f5-sigma3}): an arc of weight
+  $\ge 2$ forces $\Sigma(B) \ge 4$ and a two-path of weight $2$ forces
+  $\Sigma(B) \ge 5$, so $\Sigma(B) \le 3$ makes \emph{every} minimum-cost
+  assignment of $B$ good. \emph{Dichotomous costs, $n = 3$.}
+\item \emph{Escape hatch} (Theorem~\ref{thm:balanced-class}): if some family is
+  uniformly balanced we are done already, so assume none is.
+\item \emph{Compression} (Lemma~\ref{lem:f5-compress}):
+  $\mathrm{sp}_{\cost_i}(B) \le \mathrm{sp}_{D_i}(B)$, because
+  $\cost_i(B_t) = f_i(\abs{B_t \cap D_i})$ with $f_i$ monotone and $1$-Lipschitz
+  makes $\mathrm{sp}_{\cost_i}(B) = f_i(\max_t a_t) - f_i(\min_t a_t)$.
+  \emph{First use of composedness.}
+\item \emph{A divisible set exists} (Corollary~\ref{cor:f5-residual-div3}, resting
+  on Theorem~\ref{thm:f5-Qproved}): an instance with no uniformly balanced family
+  has some $3 \mid \abs{D_i}$. \emph{Composed.}
+\item \emph{Rigidity} (Lemma~\ref{lem:f5-rigid}(b)): a set of size divisible by
+  $3$ has count spread $0$ or at least $2$, since a triple with spread exactly
+  $1$ has sum $\equiv 1$ or $2 \pmod 3$.
+\item \emph{The target} (Theorem~\ref{thm:f5-target}): any three sets
+  $D_1,D_2,D_3$ admit a $3$-colouring splitting $D_1,D_2$ within one and $D_3$
+  within two. \emph{No hypothesis at all --- a statement about sets.}
+\item \emph{Assembly.} Nominate a set of size divisible by $3$ as $D_1$. Items
+  7 and 8 give it count spread $0$; item 8 gives the others $\le 1$ and $\le 2$;
+  item 5 transfers these to the costs; $\Sigma \le 0+1+2 = 3$; item 3 finishes,
+  and the subsidies are the longest-path labels, which are then at most $1$ with
+  at least one of them $0$, so the total subsidy is at most $2 = n-1$.
+\end{enumerate}
+
+Two places in that list are easy to state in a form that looks equivalent and is
+not. The first is item 9's word \emph{nominate}.
+
+\begin{remark}[The target theorem must be the nominating form]
+\label{rem:f5-nomination}
+Theorem~\ref{thm:f5-target} is stated for a labelled triple: the three sets are
+given as $D_1,D_2,D_3$ and the conclusion attaches the slack to $D_3$. This is
+what item 9 needs, and it is stronger than the unlabelled reading
+\begin{quote}
+  \emph{for any three sets there is a $3$-colouring under which, after relabelling,
+  two are split within one and the third within two,}
+\end{quote}
+in which the colouring is free to choose which set receives the slack. Under the
+weaker reading the argument breaks at item 7: divisibility upgrades ``within
+one'' to ``exactly $0$'' but does nothing to ``within two'', since a triple with
+spread $2$ may perfectly well have sum divisible by $3$. For $\abs{D_1} = 3$ split
+as $(0,1,2)$ and any $f_1$ with $f_1(0)=0$, $f_1(1)=1$, the cost spread is $2$,
+and the budget $\Sigma \le 3$ is already spent before the other two agents are
+considered. The nominating form is what the proof of
+Theorem~\ref{thm:f5-target} in fact delivers: the ordering
+$\epsilon_{123},\epsilon_{12},\epsilon_{13},\epsilon_1,\epsilon_{23},\epsilon_2,
+\epsilon_3$ is written in terms of the labels, so it may be run after permuting
+them arbitrarily, and any nominated set can be placed in a tight slot.
+\end{remark}
+
+\begin{remark}[A total-spread bound would close it, but not through the target]
+\label{rem:f5-sigma2}
+It is tempting to look for the cleaner statement
+$\min_B \sum_i \mathrm{sp}_{D_i}(B) \le 2$ for every triple of sets --- it holds
+on the $K_4$ instance of Proposition~\ref{prop:no-balance}, where the profile
+$(0,0,2)$ is attained --- and to regard it as implying
+Theorem~\ref{thm:f5-target}. It does not: a profile of $(2,0,0)$ has total $2$
+while putting spread $2$ on a nominated set, which is exactly what
+Remark~\ref{rem:f5-nomination} forbids. It would nevertheless close the composed
+case, by a shorter route: Lemma~\ref{lem:f5-compress} would give
+$\Sigma \le 2 \le 3$ directly, with no divisible set and hence no appeal to
+Corollary~\ref{cor:f5-residual-div3} or Lemma~\ref{lem:f5-rigid}. Whether it is
+true is open; Theorem~\ref{thm:f5-interleaved} gives only $\le 4$.
+\end{remark}
+
+The second is item 5's hypothesis. Remark~\ref{rem:f5-notclosed} records that a
+dichotomous cost need not be composed; the following makes it concrete and shows
+that the failure is not a technicality of the write-up but a genuine boundary of
+the method.
+
+\begin{proposition}[A rigid cost outside the composed class]
+\label{prop:f5-noncomposed}
+Call a dichotomous cost \emph{rigid} if no $3$-partition of $\items$ gives it
+spread $0$. On $\items = \set{1,2,3}$ let
+\[
+  \cost(S) = \begin{cases} 0 & S \subseteq \set{1} \text{ or } S \subseteq \set{2},\\
+  1 & \text{otherwise.}\end{cases}
+\]
+Then $\cost$ is dichotomous and rigid, and is not composed.
+\end{proposition}
+
+\begin{proof}
+The sets of cost $0$ are $\emptyset, \set{1}, \set{2}$, a down-set containing
+$\emptyset$, so $\cost$ is monotone with $\cost(\emptyset) = 0$ and every
+marginal in $\set{0,1}$. The $3$-partitions of a three-element set are, up to
+reordering the parts, $(\set{1},\set{2},\set{3})$,
+$(\set{1,2},\set{3},\emptyset)$, $(\set{1,3},\set{2},\emptyset)$,
+$(\set{2,3},\set{1},\emptyset)$ and $(\set{1,2,3},\emptyset,\emptyset)$, with
+cost triples $(0,0,1)$, $(1,1,0)$, $(1,0,0)$, $(1,0,0)$ and $(1,0,0)$; none is
+constant, so $\cost$ is rigid. If $\cost(S) = f(\abs{S \cap D})$ then comparing
+$\cost(\set{1}) = \cost(\set{2}) = 0$ with $\cost(\set{3}) = 1$ forces
+$3 \in D$ and $1,2 \notin D$, so $D = \set{3}$ and
+$\cost(\set{1,2}) = f(0) = \cost(\emptyset) = 0$, contradicting
+$\cost(\set{1,2}) = 1$.
+\end{proof}
+
+\begin{remark}[What general $n = 3$ reduces to]
+\label{rem:f5-Qprime}
+Proposition~\ref{prop:f5-noncomposed} disables both engines of items 6 and 7 at
+once. Lemma~\ref{lem:f5-rigid} identifies rigidity with a divisibility
+condition, and Theorem~\ref{thm:f5-Qproved} then rules out three rigid sets
+evading uniform balance; here $\cost$ is rigid with no size in play at all, so
+neither has a general analogue --- and Corollary~\ref{cor:f5-residual-div3} is
+precisely the step that hands Theorem~\ref{thm:f5-n3composed} its spread-$0$
+agent. What survives without composedness is the whole of the reduction:
+items 1--4, Lemma~\ref{lem:f5-indiv} (each agent alone can be brought to spread
+$\le 1$) and Corollary~\ref{cor:f5-needzero} (with no uniformly balanced family,
+a family with $\Sigma \le 3$ needs an agent at spread exactly $0$). So general
+$n = 3$ turns on
+\begin{quote}
+  \textbf{(Q$'$)} Can three \emph{rigid} dichotomous costs on a common ground set
+  fail to admit a uniformly balanced family?
+\end{quote}
+The two answers are not symmetric. \emph{Yes} refutes
+Conjecture~\ref{conj:f5-sigma3} outright --- three rigid agents with no uniformly
+balanced family force $\Sigma \ge 4$ on every family --- and pushes $n = 3$
+through the $\Sigma = 4$ obstruction of Proposition~\ref{prop:f5-pattern}
+instead. \emph{No} is necessary but not by itself sufficient: it says every
+instance without a uniformly balanced family has a non-rigid agent, so some
+family gives that agent spread exactly $0$, but that same family must still hold
+the other two to a total of $3$. Closing the gap needs the general analogue of
+Theorem~\ref{thm:f5-target}, with the nomination of
+Remark~\ref{rem:f5-nomination} now falling on the non-rigid agent rather than on
+a set of size divisible by $3$. The question is open, and both obvious attacks
+stall. A counterexample needs three rigid costs
+with no uniformly balanced family, and rigidity is demanding: the witness above
+needs $\abs{\items} = 3$ exactly so that every part is forced to be a singleton,
+and enlarging $\items$ admits a partition into three parts of cost $1$, which
+destroys rigidity. Three copies of it rotated over $\set{1,2,3}$ are each rigid
+but do admit a uniformly balanced family, namely the singleton partition, on
+which all three spreads are $1$. The affirmative direction cannot go through
+Theorem~\ref{thm:f5-Qproved}, there being no residue system to run it on.
+\end{remark}
+
+% --------------------------------------------------------------------------
 \subsection{Status}
 \label{sec:f5-status}
 
@@ -1027,6 +1185,12 @@ Lemma~\ref{lem:f5-greedy2}, Lemma~\ref{lem:f5-tiebreak} (tie-breaking)
   & \textbf{proved} \\
 \textbf{Theorem~\ref{thm:f5-n3composed}} (Conj.~\ref{conj:main} at $n=3$,
   composed costs) & \textbf{PROVED} \\
+Remarks~\ref{rem:f5-nomination}, \ref{rem:f5-sigma2} (the two false
+  weakenings) & proved \\
+\textbf{Proposition~\ref{prop:f5-noncomposed}} (a rigid cost outside the
+  composed class) & \textbf{proved} \\
+Remark~\ref{rem:f5-Qprime} (general $n = 3$ reduces to (Q$'$)) & proved \\
+\textbf{(Q$'$)} (three rigid costs versus uniform balance) & \textbf{open} \\
 $n = 3$ for dichotomous costs that are not composed & \textbf{open} \\
 \textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
   & \textbf{open} \\

@@ -964,589 +964,6 @@ when two of the shared majority regions coincide. Choosing the three pair
 residues distinct discharges most of it; a single sub-case survives, and **(Q)
 is not closed.**
 
-### 7.16.1 (Q) is PROVED
-
-*This supersedes an earlier draft of this subsection organised around keeping
-the "spine" $c_{12},c_{13},c_{123}$ rainbow. That was the wrong organising idea —
-the hard case needs colours to **coincide** so that opposite signs cancel, not to
-be distinct. The right lemma is K″ below, and with it the whole of (Q) falls out
-by a case exhaustion on the active **shared** regions alone.*
-
-Write $u_T := \sigma_T e_{c_T}$ for each active region, so
-$F_i = \sum_{T \ni i} u_T$, and split off the private region:
-$$F_i = G_i + \sigma_{\{i\}} e_{c_{\{i\}}}, \qquad G_i := \sum_{T \ni i,\ T \ne \{i\}} u_T ,$$
-with the second term absent when $\{i\}$ is inactive. $G_i$ ranges over the
-**shared** regions of set $i$, namely $\{ij\},\{ik\},\{123\}$.
-
-> **Lemma K″ (the private knob absorbs any levelled shared part).** If
-> $\mathrm{spread}(G_i) \le 1$ and $\{i\}$ is active, then some choice of
-> $c_{\{i\}}$ gives $\mathrm{spread}(F_i) \le 1$ — for **either** sign
-> $\sigma_{\{i\}}$.
-
-*Proof.* Entries of $G_i$ lie in $\{\mu,\mu+1\}$. If $\sigma_{\{i\}}=+1$: when
-some entry equals $\mu$, add there and the entries stay in $\{\mu,\mu+1\}$; when
-all equal $\mu$, adding anywhere gives $(\mu+1,\mu,\mu)$, spread $1$. If
-$\sigma_{\{i\}}=-1$: symmetrically, subtract at a $\mu+1$ entry, or from a
-constant vector to get $(\mu-1,\mu,\mu)$. $\square$
-
-> **Lemma K‴ (rescue at spread 2, all values distinct).** If $\{i\}$ is active
-> and $G_i$ has entries $\{\mu,\mu+1,\mu+2\}$, then either sign admits a choice
-> of $c_{\{i\}}$ with $\mathrm{spread}(F_i)\le1$.
-
-*Proof.* $\sigma_{\{i\}}=+1$: add at the $\mu$ entry, giving
-$\{\mu+1,\mu+1,\mu+2\}$. $\sigma_{\{i\}}=-1$: subtract at the $\mu+2$ entry,
-giving $\{\mu,\mu+1,\mu+1\}$. $\square$
-
-**The reduction.** By K″, if the four shared colours can be chosen so that every
-$G_i$ has spread $\le 1$, then every set is satisfied — those with an inactive
-private because $F_i = G_i$, those with an active private by the knob. So **(Q)
-reduces to a problem in the four shared variables only.** The needed conditions,
-read off the $k$-vector analysis of §7.10.1:
-
-| $\lvert G_i\rvert$ | condition for $\mathrm{spread}(G_i)\le1$ |
-|---|---|
-| $0$ or $1$ region | automatic |
-| $2$ regions | signs **equal** $\Rightarrow$ colours differ; signs **opposite** $\Rightarrow$ colours equal |
-| $3$ regions | signs all equal $\Rightarrow$ all three colours distinct; signs split $2$–$1$ $\Rightarrow$ the minority's colour lies in $\{$the two majority colours$\}$ |
-
-> **Theorem Z′.** (Q) holds: any three sets none of whose sizes is divisible by
-> $3$ admit a uniformly balanced $3$-colouring.
-
-*Proof.* Let $S \subseteq \{12,13,23,123\}$ be the active shared regions, and
-write $a=\sigma_{12}$, $b=\sigma_{13}$, $c=\sigma_{23}$, $w=\sigma_{123}$. The
-hypothesis is $s_i \not\equiv 0 \pmod 3$, where $s_i$ sums $\sigma_T$ over **all**
-active regions containing $i$, private included. Negating every sign negates
-every $F_i$ and preserves spreads, so we may fix $w=+$ whenever $123 \in S$.
-
-**(A) $123 \notin S$.** Each $G_i$ spans at most two regions.
-
-*(A1) $\lvert S\rvert \le 1$:* every $G_i$ has at most one region — automatic.
-
-*(A2) $\lvert S\rvert = 2$, say $S=\{12,13\}$:* only $G_1$ spans two regions;
-$G_2 = u_{12}$ and $G_3 = u_{13}$ are automatic. Satisfy $G_1$'s single
-two-region condition.
-
-*(A3) $S=\{12,13,23\}$:* all three $G_i$ span two regions. If $a=b=c$, all three
-conditions read "colours differ", so take $c_{12},c_{13},c_{23}$ pairwise
-distinct. Otherwise exactly two signs agree, say $a=b\ne c$; then $G_1$ demands
-$c_{12}\ne c_{13}$ while $G_2, G_3$ demand $c_{12}=c_{23}$ and $c_{13}=c_{23}$ —
-inconsistent. But $a=-c$ gives $s_2 = \sigma_{\{2\}}[\text{active}] + a + c
-= \sigma_{\{2\}}[\text{active}]$, so $\{2\}$ must be active or $s_2 = 0$;
-likewise $\{3\}$. With $\{2\}$ active, set $2$'s three regions
-$\{2\},\{12\},\{23\}$ carry signs $\{\sigma_{\{2\}}, a, -a\}$, necessarily a
-$2$–$1$ split, and the minority condition is met by choosing $c_{\{2\}}$ — equal
-to the minority's colour if $\{2\}$ is in the majority, or to either majority
-colour if $\{2\}$ is itself the minority. Set $3$ likewise. Only $G_1$'s
-condition remains: take $c_{12}\ne c_{13}$.
-
-**(B) $123 \in S$, $w=+$.**
-
-*(B0) $S=\{123\}$:* every $G_i = u_{123}$, spread $1$.
-
-*(B1) $S=\{123,12\}$:* $G_3 = u_{123}$ is automatic; $G_1$ and $G_2$ impose the
-same two-region condition on $(c_{12},c_{123})$. Satisfy it.
-
-*(B2) $S=\{123,12,13\}$:* $G_1$ spans three regions, $G_2$ and $G_3$ two. Four
-sign patterns:
-- $a=b=+$: $G_2,G_3$ demand $c_{12}\ne c_{123}$ and $c_{13}\ne c_{123}$; $G_1$
-  (all signs $+$) demands all three distinct. Take them distinct — this
-  satisfies all three.
-- $a=+, b=-$: $G_2$ demands $c_{12}\ne c_{123}$, $G_3$ (opposite signs) demands
-  $c_{13}=c_{123}$, and $G_1$ has minority $\{13\}$, needing
-  $c_{13}\in\{c_{12},c_{123}\}$ — already true. Take $c_{123}=c_{13}=A$,
-  $c_{12}=B$.
-- $a=-, b=+$: symmetric.
-- $a=b=-$: $G_2,G_3$ demand $c_{12}=c_{123}$ and $c_{13}=c_{123}$; $G_1$ has
-  minority $\{123\}$, needing $c_{123}\in\{c_{12},c_{13}\}$ — already true. Take
-  all three equal.
-
-*(B3) $S=\{123,12,13,23\}$:* every $G_i$ spans three regions. Up to the global
-sign flip there are eight patterns $(a,b,c)$ with $w=+$.
-- $(a,b,c)=(+,+,+)$: each $G_i$ demands its three colours be distinct. From
-  $G_1$, $(c_{12},c_{13},c_{123})$ is a rainbow, say $(A,B,C)$; $G_2$ then forces
-  $c_{23}=B$; and $G_3$ sees $(B,B,C)$ — **not** distinct. No choice of the four
-  shared colours works. But here $s_1 = \sigma_{\{1\}}[\text{active}]+3$, so
-  $\{1\}$ must be active, and likewise $\{2\},\{3\}$ — **all three privates are
-  forced active by the hypothesis.** Take $c_{12}=A$, $c_{13}=B$, $c_{123}=C$,
-  $c_{23}=B$. Then $G_1 = e_A+e_B+e_C$ and $G_2 = e_A+e_B+e_C$ are constant, so
-  K″ frees sets $1$ and $2$; and $G_3 = e_B+e_B+e_C$ has entries $\{0,2,1\}$ —
-  three distinct values — so K‴ frees set $3$.
-- $(+,+,-)$: $G_1$ demands $c_{12},c_{13},c_{123}$ distinct; $G_2$ and $G_3$ have
-  minority $\{23\}$, demanding $c_{23}\in\{c_{12},c_{123}\}$ and
-  $c_{23}\in\{c_{13},c_{123}\}$. Take $(A,B,C)$ distinct and $c_{23}=C$.
-- $(+,-,+)$: $G_2$ demands $c_{12},c_{23},c_{123}$ distinct; $G_1,G_3$ have
-  minority $\{13\}$. Take $c_{12}=A,c_{23}=B,c_{123}=C$ and $c_{13}=C$.
-- $(-,+,+)$: symmetric to the previous.
-- $(+,-,-)$, $(-,+,-)$, $(-,-,+)$, $(-,-,-)$: in each, every $G_i$ has a $2$–$1$
-  sign split, and the **constant** colouring satisfies every minority condition.
-  Take all four shared colours equal.
-
-Every case is discharged, so (Q) holds. $\square$
-
-**Verification against the standing witnesses.** `prop:no-balance` has sizes
-$2,3,3$ and the $K_4$ instance has sizes $3,3,3$; both contain a size divisible
-by $3$, so both fall **outside** (Q)'s hypothesis — exactly as required, since
-both provably lack a uniformly balanced family. Theorem Z′ does not contradict
-them.
-
-> **Corollary Q′ (now unconditional).** A residual composed instance must contain
-> a set whose size is divisible by $3$.
-
-*Proof.* If no $\lvert D_i\rvert$ were divisible by $3$, Theorem Z′ gives a
-colouring balancing all three underlying sets within one, and Lemma O carries
-that to the composed costs — a uniformly balanced family, contradicting S4.
-$\square$
-
-This removes the conditional from §7.12: the prediction that every residual
-instance contains a size-$3$ set, checked earlier against the 46 known residual
-instances, is now a theorem rather than a consequence of an open conjecture.
-
-### 7.16.2 What Theorem Z′ does and does not settle
-
-**It closes Lemma E on the all-additive side in one direction only.** For an
-all-binary-additive instance with no $\lvert D_i\rvert$ divisible by $3$,
-Theorem Z′ gives uniform balance, hence $\Sigma \le 3$, hence Lemma E. But an
-additive instance *with* a size divisible by $3$ is not covered: Corollary R
-supplies one agent at spread $0$, and the other two must still be shown to sum to
-at most $3$ — which is exactly (R), i.e. the **Target Theorem**, still open.
-
-**⚠ A correction to Theorem I′'s "only if".** Theorem I′ was stated as an
-equivalence — "Lemma E is false **iff** some instance has three rigid agents and
-no uniformly balanced family". The forward direction is proved; the converse is
-**not**, and the write-up glossed it. An instance can have a non-rigid agent
-(so not three rigid ones) and still fail $\Sigma\le3$, if driving that agent to
-spread $0$ forces the other two to sum to $4$ or more. Theorem I′ should be read
-as the one-directional statement it proves, and Lemma E does **not** follow from
-Theorem Z′ alone.
-
-### 7.16.3 Superseded: the earlier $d_i=4$ draft
-
-Fix set $1$ at $d_1 = 4$: regions $\{1\},\{12\},\{13\},\{123\}$ all active. Since
-$\{12\},\{13\},\{123\}$ are then forced active, sets $2$ and $3$ automatically
-have $d_2, d_3 \ge 2$ before their own private regions $\{2\},\{3\}$ or the
-region $\{23\}$ are even considered.
-
-> **Lemma K′ (the private region still frees set $i$, if the spine is rainbow).**
-> If $c_{12}, c_{13}, c_{123}$ are pairwise distinct, then for **any** signs
-> $(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123})$ with $(p_1,q_1)\ne(2,2)$,
-> some choice of $c_1$ gives $\mathrm{spread}(F_1)\le1$.
-
-*Proof.* Since $c_{12},c_{13},c_{123}$ are a bijection onto the three colours,
-the vector $G$ with $G_t := \sum_{T \in \{12,13,123\},\, c_T = t}\sigma_T$ is, as
-a multiset of entries, exactly $\{\sigma_{12},\sigma_{13},\sigma_{123}\}$. Two
-cases. If all three signs agree ($G$ constant, $=(\pm1,\pm1,\pm1)$), adding
-$\sigma_1$ to any one coordinate gives spread exactly $1$, for either sign of
-$\sigma_1$ — direct computation. If they split $2$–$1$ (say two $+1$s and one
-$-1$, so $G$ is a permutation of $(1,1,-1)$), choose $c_1$ to land on the
-lone-sign coordinate: $\sigma_1=+1$ added to the $-1$ entry gives
-$(1,1,0)$-type, spread $1$; $\sigma_1=-1$ added to either $+1$ entry gives
-$(0,1,-1)$-type, spread $1$. The case $(2,2)$ is excluded by hypothesis, and the
-all-agree / $2$-$1$ split exhausts every other sign pattern. $\square$
-
-So **whenever the spine $c_{12},c_{13},c_{123}$ can be kept rainbow, set $1$ is
-free.** The question is whether sets $2$ and $3$ can always be satisfied without
-breaking that.
-
-**When it works outright.** If $x = 1$ (region $\{2\}$ active) or $z=1$
-(region $\{3\}$ active), Lemma K frees that set via its own private colour,
-regardless of the spine — no constraint on $c_{12},c_{13},c_{123}$ at all. If
-$x=y=z=0$, sets $2,3$ have $d=2$ each ($\{12,123\}$ and $\{13,123\}$), giving
-only the disequalities $c_{12}\ne c_{123}$, $c_{13}\ne c_{123}$ — both **implied**
-by rainbow. So the only case needing real work is $x=z=0$, $y=1$: no private
-regions active for sets $2,3$, and $\{23\}$ active, shared between them.
-
-**The case that looked like a counterexample.** With the spine rainbow
-($c_{12}=A, c_{13}=B, c_{123}=C$, all distinct) and $d_2=d_3=3$ via
-$\{12,23,123\}$ and $\{13,23,123\}$, each set's condition is a membership
-constraining $c_{23}$: if $\{12\}$ is set $2$'s minority, the condition forces
-$c_{23}=A$ exactly (since its majority partner $\{123\}$ already carries $C\ne A$);
-if $\{13\}$ is set $3$'s minority, it forces $c_{23}=B$. Choosing the adversary's
-signs so that $\{12\}$ is set $2$'s minority **and** $\{13\}$ is set $3$'s
-minority simultaneously — which is a legal choice, e.g.
-$(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123},\sigma_{23}) =
-(-1,-1,-1,+1,+1)$, giving set $1$ the valid pattern $(p_1,q_1)=(1,3)$ — demands
-$c_{23}=A$ and $c_{23}=B$ at once, and $A\ne B$. **Under a rainbow spine this
-configuration is genuinely unsatisfiable.**
-
-**It is satisfiable anyway, by breaking the spine.** Set $c_{123}=A$ (merging
-it with $c_{12}$, abandoning rainbow) and $c_{13}=B \ne A$. Set $2$'s condition
-becomes $A \in \{c_{23}, A\}$ — true for **any** $c_{23}$, since $\{123\}$ now
-already carries the minority's colour. Set $3$'s condition becomes
-$B \in \{c_{23}, A\}$, and since $B\ne A$ this forces $c_{23} = B$. Take
-$c_{23} = B$. Check set $1$ directly: with signs
-$(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123})=(-1,-1,-1,+1)$ and colours
-$c_{12}=c_{123}=A$, the two opposite-signed copies of $A$ **cancel**:
-$F_1 = -e_{c_1} - e_A - e_B + e_A = -e_{c_1} - e_B$. Choosing $c_1 = A$ (or the
-third colour) gives entries $\{-1,-1,0\}$, spread $1$. All three sets check
-directly against the definitions:
-
-- Set $1$: $F_1 = -e_A - e_B$, spread $1$. ✓
-- Set $2$ ($\{12,23,123\}$, signs $(-1,+1,+1)$, colours $A,B,A$):
-  $F_2 = -e_A + e_B + e_A = e_B$, spread $1$. ✓
-- Set $3$ ($\{13,23,123\}$, signs $(-1,+1,+1)$, colours $B,B,A$):
-  $F_3 = -e_B + e_B + e_A = e_A$, spread $1$. ✓
-
-**So the configuration is not a counterexample** — it needed a *cancellation*
-strategy (merge two spine colours to neutralise opposite signs) rather than the
-rainbow strategy Lemma K′ uses, and the cancellation strategy happens to satisfy
-sets $2,3$'s memberships for free as a side effect.
-
-**Retained only as a record.** The worked cancellation example above is the
-special case that showed the rainbow strategy was the wrong organising idea;
-Theorem Z′ of §7.16.1 subsumes it and closes (Q) in full. Lemma K′ is likewise
-superseded by Lemma K″, which needs no rainbow hypothesis.
-
-### 7.16.4 Interleaved greedy: two sets within one, the third within three
-
-The Target Theorem asks for two sets within one and the third within **two**.
-Interleaving the greedy of Lemma W across the three sets gets two within one and
-the third within **three** — one short of the Target, but enough to close a case
-outright.
-
-> **Theorem AA (interleaved greedy).** For any three sets
-> $D_1, D_2, D_3 \subseteq M$ there is a $3$-colouring splitting $D_1$ and $D_2$
-> each within one and $D_3$ within three.
-
-*Proof.* Work in the residue frame of §7.10: each region $T$ contributes
-$\epsilon_T \in \{0,1\}^3$ of weight $b_T$, and set $i$'s spread is the spread of
-$E_i = \sum_{T \ni i}\epsilon_T$. Place the seven residues in this order, each
-greedily — on the currently smallest coordinates — with respect to the running
-sum named:
-
-1. $\epsilon_{123}$, freely;
-2. $\epsilon_{12}$, w.r.t. $\epsilon_{123}$;
-3. $\epsilon_{13}$, w.r.t. $\epsilon_{123}+\epsilon_{12}$;
-4. $\epsilon_{1}$, w.r.t. $\epsilon_{123}+\epsilon_{12}+\epsilon_{13}$;
-5. $\epsilon_{23}$, w.r.t. $\epsilon_{123}+\epsilon_{12}$;
-6. $\epsilon_{2}$, w.r.t. $\epsilon_{123}+\epsilon_{12}+\epsilon_{23}$;
-7. $\epsilon_{3}$, w.r.t. $\epsilon_{123}+\epsilon_{13}+\epsilon_{23}$.
-
-**Set 1** sees $\epsilon_{123},\epsilon_{12},\epsilon_{13},\epsilon_1$, placed at
-steps 1–4, and each is greedy with respect to set $1$'s own running sum. By
-Lemma W the invariant holds throughout, so $\mathrm{spread}(E_1) \le 1$.
-
-**Set 2** sees $\epsilon_{123},\epsilon_{12},\epsilon_{23},\epsilon_2$. Its
-running sum after the first two is $\epsilon_{123}+\epsilon_{12}$ — *the same
-vector* as set 1's, since both sets contain both regions — so steps 1–2 are
-greedy for set 2 as well, and steps 5–6 are greedy for set 2 by construction.
-Hence $\mathrm{spread}(E_2) \le 1$.
-
-**Set 3** sees $\epsilon_{123},\epsilon_{13},\epsilon_{23},\epsilon_3$. Only the
-first and last were placed greedily for it. Adding a $\{0,1\}$ vector to any
-vector raises the spread by at most $1$, so after $\epsilon_{123}$ (spread $\le
-1$), $\epsilon_{13}$ and $\epsilon_{23}$ the spread is at most $3$; and greedy
-**never increases** the spread — for sorted $e_1\le e_2\le e_3$, adding $1$ to the
-$w$ smallest leaves the maximum unchanged unless all entries are equal, and
-raises the minimum — so step 7 keeps it at most $3$. $\square$
-
-**Why the third set is the one that suffers.** Sets $1$ and $2$ share exactly one
-region *among those processed before either finishes* — namely $\{12\}$, with
-$\{123\}$ ahead of it — so a single ordering serves both. Set $3$ shares
-$\{13\}$ with set $1$ and $\{23\}$ with set $2$, and both were already committed
-to the other sets' greedy when set $3$ needs them. This is Lemma W's
-"three sets share two regions pairwise" obstruction made quantitative: the cost
-is exactly one unit of spread per stolen region, hence $1 + 1 + 1 = 3$.
-
-### 7.16.5 One case of $n=3$ closed outright
-
-> **Theorem BB.** Let $n = 3$ and let the costs be composed,
-> $\cost_i(S) = f_i(\lvert S \cap D_i\rvert)$. If at least **two** of
-> $\lvert D_1\rvert, \lvert D_2\rvert, \lvert D_3\rvert$ are divisible by $3$,
-> then some family has $\Sigma \le 3$ — and hence, by Lemma A, Conjecture 2
-> holds for the instance.
-
-*Proof.* Relabel so that $3 \mid \lvert D_1\rvert$ and $3 \mid \lvert D_2\rvert$,
-and apply Theorem AA with those two in the tight slots. It splits $D_1$ and $D_2$
-each within one; by Lemma H(b) a set whose size is divisible by $3$ has count
-spread $0$ or at least $2$, so "within one" forces count spread exactly $0$. It
-splits $D_3$ within three. Lemma O carries each count spread to the composed cost
-as an upper bound, so the cost spreads are $0$, $0$ and at most $3$, giving
-$\Sigma \le 3$. Lemma A then makes every minimum-cost assignment of that family
-good. $\square$
-
-**This is a genuinely new solved case.** It is not contained in S1–S4: the
-instance need not be additive, identical, small-bundled, or uniformly balanced —
-indeed by Corollary Q′ every residual instance has a size divisible by $3$, and
-Theorem BB closes all those with two such sizes. Checked against the residual
-instances of §3, whose size multisets are $(2,3,3)$ and $(3,3,3)$: **the
-$(3,3,3)$ instances are now closed by Theorem BB.** The $(2,3,3)$ instances have
-exactly one size divisible by $3$ and are not.
-
-### 7.16.6 What is left of $n = 3$
-
-Exactly one case: **exactly one $\lvert D_i\rvert$ divisible by $3$.** There
-Theorem AA gives $0 + 1 + 3 = 4$, one over budget. Closing it needs the third set
-within **two** rather than three — which is precisely the Target Theorem, now
-reduced to this single configuration.
-
-The one unit is available in principle. Tracing the proof of Theorem AA, the
-spread of set $3$ reaches $3$ only if $\epsilon_{123}$, $\epsilon_{13}$ and
-$\epsilon_{23}$ all put a one on some coordinate $t$ and all avoid some
-coordinate $s$. Writing $P = \epsilon_{123}+\epsilon_{12}$ for the vector both
-$\epsilon_{13}$ and $\epsilon_{23}$ are placed against, $\epsilon_{123,t}=1$
-gives $P_t = 1 + \epsilon_{12,t}$, while $\epsilon_{123,s}=0$ gives
-$P_s = \epsilon_{12,s}$. For $\epsilon_{13}$ to choose $t$ and avoid $s$ we need
-$P_s \ge P_t$, i.e. $\epsilon_{12,s} \ge 1 + \epsilon_{12,t}$, forcing
-$\epsilon_{12,s}=1$ and $\epsilon_{12,t}=0$ — and then $P_t = P_s = 1$.
-
-> **So whenever the bad alignment occurs, the two coordinates are tied in $P$,
-> and greedy had a free choice between them.** Since Lemma W's invariant holds
-> for *any* choice among the currently smallest coordinates, re-breaking that tie
-> costs sets $1$ and $2$ nothing.
-
-What is not yet proved is that a single consistent tie-breaking rule avoids the
-bad alignment at every coordinate simultaneously, for all weight combinations
-$b_{123}, b_{13}, b_{23} \in \{0,1,2\}$. That is the whole remaining gap in
-$n=3$, and it is now a finite question about three vectors in $\{0,1\}^3$.
-
-### 7.16.7 The tie-break lemma, and the Target Theorem
-
-The gap of §7.16.6 closes. The point is that the bad alignment can always be
-broken, and the case split is on $b_{123}$ alone.
-
-First, a sharpening of how greedy behaves, needed because we now start from a
-nonzero vector.
-
-> **Lemma CC.** Adding a $\{0,1\}$ vector greedily — ones on the currently
-> smallest coordinates — leaves the spread at most $\max(\text{old spread}, 1)$.
-
-*Proof.* Sorted $e_1\le e_2\le e_3$. For $w=1$ the new values are
-$e_1+1,e_2,e_3$; if $e_1+1\le e_3$ the maximum is unchanged and the minimum is
-$\min(e_1+1,e_2)\ge e_1$, so the spread does not grow; otherwise
-$e_1=e_2=e_3$ and the new spread is $1$. For $w=2$ the new values are
-$e_1+1,e_2+1,e_3$: if $e_3\ge e_2+1$ the spread drops, if $e_3=e_2$ it is
-$e_2+1-\min(e_1+1,e_2)$, which is $e_3-e_1$ when $e_1+1\le e_2$ and $1$
-otherwise. For $w\in\{0,3\}$ nothing changes. $\square$
-
-> **Lemma DD (tie-break).** In the ordering of Theorem AA the tie-breaks for
-> $\epsilon_{13}$ and $\epsilon_{23}$ can be chosen so that
-> $H := \epsilon_{123}+\epsilon_{13}+\epsilon_{23}$ has spread at most $2$.
-
-*Proof.* Recall $\epsilon_{12}$ is placed greedily on $\epsilon_{123}$, and both
-$\epsilon_{13}$ and $\epsilon_{23}$ are placed greedily on
-$P := \epsilon_{123}+\epsilon_{12}$. Since $H$ is a sum of three $\{0,1\}$
-vectors, its entries lie in $[0,3]$, so spread $3$ requires **both** a coordinate
-$t$ lying in all three and a coordinate $s$ avoided by all three. Split on
-$b_{123}$.
-
-**$b_{123}=0$.** Then $H=\epsilon_{13}+\epsilon_{23}$ has entries at most $2$ and
-spread at most $2$ automatically.
-
-**$b_{123}=1$, say $\epsilon_{123}=e_a$.** Only $a$ lies in $\epsilon_{123}$, so
-the coordinate $t$ above must be $a$; it is enough to keep $a$ out of both
-$\epsilon_{13}$ and $\epsilon_{23}$. This is always possible, because $a$ is
-never *forced*: $\epsilon_{12}$ is greedy on $e_a$, hence prefers the two
-non-$a$ coordinates, and
-- $b_{12}=0$ gives $P=e_a$, where $a$ is the unique **largest**, so the two
-  smallest are non-$a$;
-- $b_{12}=1$ gives $\epsilon_{12}=e_v$ with $v\ne a$ and
-  $P=(1_a,1_v,0_w)$, whose smallest is $w$ and whose second tier $\{a,v\}$ is
-  **tied**, so a weight-$2$ choice may take $v$;
-- $b_{12}=2$ gives $\epsilon_{12}$ on both non-$a$ coordinates and $P=(1,1,1)$,
-  entirely tied, so any $b_{13}\le2$ ones may be placed off $a$.
-
-With $a$ excluded from both, $H_a = 1$ and $H_x \le 2$ for $x\ne a$, so the
-maximum is at most $2$ and the spread at most $2$.
-
-**$b_{123}=2$, say $\epsilon_{123}$ avoiding $c$.** Now $\epsilon_{123}$ avoids
-only $c$, so the coordinate $s$ above must be $c$; it is enough that at least one
-of $\epsilon_{13},\epsilon_{23}$ contains $c$. If both have weight $0$ then
-$H=\epsilon_{123}$ has spread $1$. Otherwise $c$ is always **available**, since
-$\epsilon_{12}$ is greedy on a vector that is $0$ at $c$ and $1$ at $a,b$, hence
-takes $c$ first, and
-- $b_{12}=0$ gives $P=(1_a,1_b,0_c)$ with $c$ uniquely smallest, so $c$ is
-  *forced* into any $\epsilon_{13}$ of positive weight;
-- $b_{12}=1$ gives $\epsilon_{12}=\{c\}$ and $P=(1,1,1)$, entirely tied;
-- $b_{12}=2$ gives $\epsilon_{12}=\{c\}\cup\{a\}$ say, and $P=(2_a,1_b,1_c)$,
-  whose smallest are $b$ and $c$, tied.
-
-Taking $c$ into $\epsilon_{13}$ (or $\epsilon_{23}$) gives $H_c\ge1$, while
-$H_a,H_b\ge1$ from $\epsilon_{123}$; so the minimum is at least $1$, the maximum
-at most $3$, and the spread at most $2$.
-
-In every case the choices are among coordinates that are tied for smallest, and
-Lemma W's invariant holds for *any* such choice, so sets $1$ and $2$ are
-unaffected. $\square$
-
-> **Theorem EE (Target Theorem).** For any three sets $D_1,D_2,D_3 \subseteq M$
-> there is a $3$-colouring splitting $D_1$ and $D_2$ each within **one** and
-> $D_3$ within **two**.
-
-*Proof.* Run the ordering of Theorem AA with the tie-breaks of Lemma DD. Sets $1$
-and $2$ are levelled exactly as in Theorem AA, the tie-breaking being immaterial
-to them. For set $3$, $E_3 = H + \epsilon_3$ with $\epsilon_3$ placed greedily,
-so by Lemmas DD and CC its spread is at most $\max(2,1)=2$. $\square$
-
-### 7.16.8 Conjecture 2 at $n=3$ for composed costs
-
-> **Theorem FF.** Let $n = 3$ and let every cost be composed,
-> $\cost_i(S) = f_i(\lvert S\cap D_i\rvert)$ with $f_i$ monotone and all
-> increments in $\{0,1\}$. Then Conjecture 2 holds.
-
-*Proof.* If the instance admits a uniformly balanced family, `thm:balanced-class`
-applies. Otherwise, by Corollary Q′ some $3 \mid \lvert D_i\rvert$; relabel it as
-$D_1$ and apply Theorem EE.
-
-If a second size is also divisible by $3$, put that set in the other tight slot.
-Both then have count spread within one, which Lemma H(b) upgrades to exactly $0$,
-and the third has count spread at most $2$.
-
-If exactly one size is divisible by $3$, put any other set in the second tight
-slot: $D_1$ gets count spread $0$ as before, the second at most $1$, the third at
-most $2$.
-
-Lemma O bounds each cost spread by the corresponding count spread, so
-$\Sigma \le 0+0+2 = 2$ or $\Sigma \le 0+1+2 = 3$. Lemma A then makes every
-minimum-cost assignment of that family good, which is Conjecture 2 for the
-instance. $\square$
-
-**This closes $n = 3$ on the composed family** — every instance of the form
-$\cost_i(S) = f_i(\lvert S \cap D_i\rvert)$, which includes binary additive,
-capped, threshold, and every mixture of them, and in particular every residual
-instance exhibited in §3.
-
-⚠ **It does not close $n = 3$ in general.** Lemma O, and through it Corollary Q′
-and the transfer from counts to costs, needs the cost to depend only on
-$\lvert S \cap D_i \rvert$. A dichotomous cost that is not a function of a single
-intersection size is outside the argument. Whether every $n=3$ instance reduces
-to a composed one is **not** proved — the residual instances found in §3 all
-happened to be composed, but that was a property of how they were constructed,
-not a theorem.
-
-### 7.16.9 Why Theorem FF does not extend: rigid non-composed costs exist
-
-The next target is $n=3$ for general dichotomous costs. The composed proof runs
-on one engine — **rigidity is equivalent to a divisibility condition**
-(Lemma H: an additive $D_i$ is rigid exactly when $3 \nmid \lvert D_i\rvert$) —
-and Theorem Z′ then says three rigid sets cannot evade uniform balance. Both
-steps die outside the composed class, and here is the witness.
-
-> **Example.** On $\items = \{1,2,3\}$ define
-> $$\cost(S) = \begin{cases} 0 & S \subseteq \{1\} \text{ or } S \subseteq \{2\},\\ 1 & \text{otherwise.}\end{cases}$$
-
-**It is dichotomous.** Monotone, since the zero sets $\{\emptyset,\{1\},\{2\}\}$
-form a down-set. Every marginal is $0$ or $1$: from $\emptyset$ the marginals are
-$0,0,1$ to $\{1\},\{2\},\{3\}$; from $\{1\}$ they are $1,1$; from $\{3\}$ they
-are $0,0$; and from any two-element set the marginal to $\items$ is $0$.
-
-**It is rigid.** The $3$-partitions of a three-element set, up to reordering, are
-$(\{1\},\{2\},\{3\})$ with costs $(0,0,1)$; $(\{1,2\},\{3\},\emptyset)$ with
-$(1,1,0)$; $(\{1,3\},\{2\},\emptyset)$ and $(\{2,3\},\{1\},\emptyset)$ with
-$(1,0,0)$; and $(\items,\emptyset,\emptyset)$ with $(1,0,0)$. None is constant,
-so no partition gives spread $0$.
-
-**It is not composed.** Suppose $\cost(S) = f(\lvert S \cap D\rvert)$. From
-$\cost(\{1\}) = 0 \ne 1 = \cost(\{3\})$ and monotonicity of $f$ we get $3 \in D$
-and $1 \notin D$; from $\cost(\{2\}) = 0$ likewise $2 \notin D$. So $D = \{3\}$
-and $\cost(\{1,2\}) = f(0) = \cost(\emptyset) = 0$, contradicting
-$\cost(\{1,2\}) = 1$.
-
-**What this settles.** Rigidity outside the composed class has nothing to do with
-divisibility — here $\cost(\items) = 1$ and no size is in play at all. So
-Lemma H has no general analogue, Theorem Z′ has no general analogue, and
-Corollary Q′ — "a residual instance must contain a set of size divisible by
-$3$", the step that hands Theorem FF its spread-$0$ agent for free — simply does
-not parse without the sets. **Theorem FF's method does not extend, and this is
-not a gap in the write-up but a genuine boundary.**
-
-### 7.16.10 What general $n=3$ reduces to
-
-The reduction itself survives, because it never used composedness:
-
-- Lemma F (each agent alone reaches spread $\le 1$) — general.
-- Corollary G (no uniform balance $\Rightarrow$ a family with $\Sigma\le3$ needs
-  some agent at spread exactly $0$) — general.
-- Proposition/Theorem I′ forward direction (three rigid agents and no uniform
-  balance $\Rightarrow$ $\Sigma \ge 4$) — general.
-- Lemma A ($\Sigma \le 3 \Rightarrow$ good at $n=3$) — general.
-
-So general $n = 3$ turns on exactly the question already named:
-
-> **(Q′)** Can three **rigid** dichotomous costs fail to admit a uniformly
-> balanced family?
-
-**No** would give $\Sigma\le3$ whenever uniform balance fails — some agent
-reaches spread $0$ — and, with the other two controlled, Conjecture 2 at $n=3$
-in general. **Yes** produces an instance where $\Sigma \ge 4$ for every family,
-refuting Lemma E outright and forcing $n=3$ through the $\Sigma=4$ obstruction of
-`prop:f5-pattern` instead.
-
-**Status: (Q′) is open, and the two obvious attacks both stall.** Building a
-counterexample needs three rigid costs on a common ground set with no uniformly
-balanced family, and rigidity is a demanding condition — the example above needs
-$\lvert\items\rvert = 3$ precisely so that every part is forced to be a
-singleton; enlarging $\items$ lets a partition into three cost-$1$ parts appear
-and destroys rigidity. Three copies of it rotated over $\{1,2,3\}$ are each
-rigid but *do* admit a uniformly balanced family, namely the singleton
-partition, on which all three spreads are $1$. Proving (Q′) in the affirmative,
-on the other hand, cannot go through Theorem Z′'s route, since there is no
-residue system to run the argument on.
-
-### 7.16.11 Audit of the $n=3$ chain (against the user's verification dossier)
-
-`Conjecture_2_n3_Verification_Dossier.md` and `Target_T_n3_AI_Agent_Research.md`
-lay out the $n=3$ chain independently. Both predate `843bac3` and therefore both
-record Target T and Lemma E as open; with Theorem EE and Theorem FF that status
-line is superseded on the composed family. Every substantive step in the dossier
-was checked against the certified results above and is correct. Three points in
-its presentation are not, and the first two are worth keeping because a later
-restatement could reintroduce them silently.
-
-**(1) The Target Theorem must be the *nominating* form.** Both files state Target
-T as "there is a 3-colouring such that, *after relabelling the sets*, two are
-split within one and the third within two", then use it as "arrange the labels so
-that the divisible set occupies one of the two spread-$\le1$ positions"
-(dossier §13; Target-T file §0(4), §6 Case B, §14 Step 2). Those are different
-statements. Under the unlabelled reading the colouring picks which set gets the
-slack, and the argument dies at the divisibility step: "within one" upgrades to
-"exactly 0" for a set of size divisible by 3, but "within two" does not — a
-size-3 set split $(0,1,2)$ has spread 2 and sum divisible by 3, and any $f$ with
-$f(0)=0,f(1)=1$ then has cost spread 2, exhausting the budget $\Sigma\le3$ on one
-agent. **Theorem EE is proved in the nominating form** — the ordering
-$\epsilon_{123},\epsilon_{12},\epsilon_{13},\epsilon_1,\epsilon_{23},\epsilon_2,
-\epsilon_3$ is written in the labels, so it may be run after permuting them — so
-the chain does close, but only because of that. Recorded as `rem:f5-nomination`.
-
-**(2) "Residual $\Rightarrow$ composed" is assumed, not proved, and is false.**
-The dossier's §6 asserts the residual family is the composed one; §15 and §21
-then conclude "Conjecture 2 for $n=3$" unqualified, on the grounds that "the
-non-residual families are handled separately". The composed hypothesis is never
-discharged, and by §7.16.9 it cannot be: there is a rigid dichotomous cost that
-is not composed. The chain proves Theorem FF — $n=3$ for composed costs — which
-is a real theorem but not general $n=3$. To the dossier's credit its own §17
-checklist item C.2 flags exactly this ("the residual family is indeed of composed
-form where Target T is being applied") as requiring verification; the answer is
-no.
-
-**(3) Smaller items.** §1 writes the dichotomous condition as
-$c_i(S)-c_i(S\cup\{g\})\in\{0,1\}$, the wrong sign (with $c(\emptyset)=0$ that
-forces $c\equiv0$); the next sentence gives the intent. §1 and §5 say the project
-"has reduced" Conjecture 2 at $n=3$ *to* F5\*, which reads as an equivalence —
-Lemma A is one-directional, and no converse is proved. §19 Option 3 claims
-$\min_B\sum_i \mathrm{sp}_{D_i}(B)\le2$ would "immediately imply Target T"; it
-implies only the unlabelled form, by (1), though it *would* close the composed
-case more cheaply — compression gives $\Sigma\le2$ directly, with no divisible
-set needed (`rem:f5-sigma2`). In the Target-T file, §6 Case A derives the profile
-$(0,0,\le2)$ from "the established two-set theorem", which constrains only two
-sets and says nothing about the third; the conclusion is recoverable from
-Theorem EE with both divisible sets nominated, or from Theorem AA as $0+0+3$
-(Theorem BB).
-
-Everything else checks out: §3 normalisation, §4 Lemma A, §7 compression
-(the use of $f$ monotone and 1-Lipschitz is right), §8 divisibility, §9–§10 the
-seven-region residue reduction, §11 Theorem S and the "spread 1 is impossible
-when $3\mid|D|$" step, §13's arithmetic, §14's conversion to subsidies
-($\min_i p_i=0$, so $\sum_i p_i\le2=n-1$), and §16's list of non-substitutable
-statements — including the $K_4$ obstruction, re-verified here: the three
-triangles $\{1,2,3\},\{1,2,4\},\{1,3,4\}$ cover all six edges of $K_4$, which is
-not 3-colourable.
-
-**LaTeX.** `report/working/approach_10.tex` §"The chain at three agents, audited"
-now carries the nine-step dependency list with the hypothesis each link consumes,
-`rem:f5-nomination`, `rem:f5-sigma2`, and — filling the gap `43e33b2` left —
-`prop:f5-noncomposed` (the rigid non-composed witness, with proof) and
-`rem:f5-Qprime` ((Q′) and what each answer to it buys).
-
 ### 7.17 Status
 
 | statement | status |
@@ -1582,31 +999,15 @@ now carries the nine-step dependency list with the hypothesis each link consumes
 | **Lemma W** (greedy levelling — the engine; re-proves Lemma F and Theorem S) | **proved** |
 | **Lemma X** (in-region placement of $D_3$) | **proved** |
 | **Corollary Y** (structural feature every residual instance must have) | **proved** |
-| **Target Theorem** (two sets within 1, third within 2) | ~~open~~ → **PROVED** as Theorem EE below; must be read in the *nominating* form (§7.16.11) |
+| **Target Theorem** (two sets within 1, third within 2) | **open** — closes $n=3$ on the composed family |
 | the "spread $0$ iff $3 \mid c(M)$" criterion | **RETRACTED** — false without additivity (§7.9) |
-| **Theorem Z** ((Q) holds when no private region is active) | **proved** — subsumed by Z′ |
-| **Lemma K″** (private knob absorbs a levelled shared part) | **proved** |
-| **Lemma K‴** (knob rescue when $G_i$ has three distinct values) | **proved** |
-| **Theorem Z′** — **(Q) holds in full** | **PROVED** |
-| **Corollary Q′** (residual instance must contain a set of size divisible by 3) | **proved, now unconditional** |
-| Theorem I′'s "only if" direction | **RETRACTED** — forward direction only (§7.16.2) |
-| **Lemma E** | ~~open~~ → **PROVED for composed costs** (Theorem FF); open in general |
-| **Theorem AA** (interleaved greedy: two within 1, third within 3) | **PROVED** |
-| **Theorem BB** ($n=3$ closed when **two** sizes divisible by 3) | **PROVED** — subsumed by FF |
-| **Lemma CC** (greedy keeps spread $\le \max(\text{old},1)$) | **PROVED** |
-| **Lemma DD** (tie-break: $\mathrm{spread}(H) \le 2$) | **PROVED** |
-| **Theorem EE — the Target Theorem** | **PROVED** |
-| **Theorem FF — Conjecture 2 at $n=3$ for composed costs** | **PROVED** |
-| rigid **non-composed** dichotomous costs exist (explicit witness) | **PROVED** — so FF's method cannot extend |
-| general $n=3$ reduces to **(Q′)** | **PROVED** |
-| **(Q′)** (three rigid costs vs uniform balance) | **open** — a *No* is necessary, not sufficient, for general $n=3$ (§7.16.11) |
-| **Lemma E** ($\min \Sigma \le 3$), general dichotomous costs | **open** |
+| **Theorem Z** ((Q) holds when no private region is active) | **proved** |
+| **(Q)** in general | **open** — only $d_i = 4$ sets survive, and only one sub-case |
+| **Lemma E** ($\min \Sigma \le 3$) | **open** — reduces to (Q) on the additive side |
 | **Lemma D** (two-agent balance) | **open** |
-| audit of the user's verification dossier (§7.16.11) | **done** — chain correct; nominating form required; "residual ⇒ composed" false |
 
-(F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
-Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
-general dichotomous costs and thence to (Q′). Everything above is unconditional.
+(F5\*) at $n = 3$ is **not** closed. It is reduced to Lemma E, or failing that to
+Lemma D. Everything above is unconditional.
 
 ## 8. Scripts
 
@@ -1622,3 +1023,236 @@ general dichotomous costs and thence to (Q′). Everything above is unconditiona
 | `update_48/spread_which.py` | not every spread-2 family works |
 | `update_48/spread_rule.py` | the sufficient predicates; balance is not one |
 | `update_48/minsum_stress.py` | the broad stress test of (F5\*) |
+
+---
+
+## 9. Session update — 2026-08-11: the next obstruction is isolated
+
+This section records the conclusions reached in the latest proof attack. It is deliberately separated from the earlier development so that a future AI agent can distinguish established results from the remaining conjectural step.
+
+### 9.1 Status correction: do **not** promote Lemma D to an arbitrary-dichotomous theorem
+
+The file `lemma_D_full_proof.md` contains a proof attempt for the following statement:
+
+> **Lemma D (claimed general form).** For any two dichotomous costs on a finite ground set, there exists a bipartition $S,U\setminus S$ for which both agents have spread at most $1$.
+
+This proof is **not currently certified**. In particular, the current main development already correctly records that Lemma D for arbitrary dichotomous costs is open. Do not cite the proof attempt as an established theorem.
+
+What *is* established is the following stronger-in-its-own-domain result:
+
+> **Theorem S (two-set balance).** For any two set-based additive/composed costs represented by underlying sets $D_1,D_2$, and any number $k$ of bundles, there is a $k$-colouring that splits both underlying sets within one.
+
+The proof is the Venn-region/excess-vector construction in §7.13. fileciteturn58file5L300-L328
+
+For composed costs $c_i(S)=f_i(|S\cap D_i|)$ with monotone $0/1$ increments, this implies simultaneous spread-$\le1$ for the composed costs themselves. This follows from the compression lemma. fileciteturn58file8L454-L469
+
+### 9.2 The $\Sigma=4$ obstruction is unique
+
+At $n=3$, Lemma A establishes:
+
+1. If a minimum-cost assignment has an arc of weight at least $2$, then $\Sigma\ge4$.
+2. If all arcs have weight at most $1$ but a two-path has weight $2$, then $\Sigma\ge5$.
+3. Therefore, if $\Sigma\le3$, every minimum-cost assignment is good.
+
+The proof is purely matching-optimality based and does not use family minimality, balance, or an exchange argument. fileciteturn56file2L120-L147
+
+Consequently, if Lemma E fails, the first possible obstruction is exactly at $\Sigma=4$, and it must be an arc-weight-$2$ obstruction. Equality in the matching optimality inequalities forces, after relabelling agents and bundles,
+
+$$
+\boxed{v_i=v_k=(2,2,0),\qquad v_j=(0,0,0).}
+$$
+
+Here the coordinates are ordered as $(\sigma(i),\sigma(j),\sigma(k))$. fileciteturn57file0L47-L55
+
+Equivalently, the two problematic agents $i,k$ have cost profiles
+
+$$
+(m_i+2,m_i+2,m_i),\qquad
+(m_k+2,m_k+2,m_k),
+$$
+
+while agent $j$ is constant across the three bundles.
+
+This is the **only** $\Sigma=4$ failure mode currently known/proved from the matching optimality analysis.
+
+### 9.3 Why the obvious two-bundle attack is insufficient
+
+A tempting next step is to merge $B_1$ and $B_2$, apply a two-agent balancing theorem to $B_1\cup B_2$, and then restore $B_3$.
+
+This does not solve the problem. Balancing the restriction to $B_1\cup B_2$ only proves
+
+$$
+|c_i(X)-c_i(Y)|\le1,
+\qquad
+|c_k(X)-c_k(Y)|\le1,
+$$
+
+for $X\sqcup Y=B_1\cup B_2$. It gives no control over the comparison with the fixed third bundle $B_3$.
+
+The generic failure mode is already visible for a capped cost such as
+
+$$c(S)=\min(|S|,2),$$
+
+with
+
+$$
+B_1=\{1,2\},\quad B_2=\{3,4\},\quad B_3=\varnothing.
+$$
+
+The merged two-way partition can have costs $(2,2)$, perfectly balanced on $B_1\cup B_2$, while the three-way profile remains $(2,2,0)$ and therefore has spread $2$.
+
+Thus:
+
+> **Negative result.** A proof of the residual theorem cannot merely balance $B_1\cup B_2$ while keeping $B_3$ fixed. The third bundle must participate in the exchange.
+
+### 9.4 The correct local objective: turn $(2,2,0)$ into a spread-$\le1$ profile
+
+For either problematic agent, the obstruction is
+
+$$
+(2,2,0)
+$$
+
+up to an additive constant. The desired repair is therefore of the form
+
+$$
+(2,2,0)\longrightarrow(2,1,1),
+$$
+
+or another profile with spread at most $1$.
+
+A single-item move $x:B_a\to B_b$ changes each dichotomous cost by a binary marginal at the source and a binary marginal at the destination. For a problematic agent, the move that reduces a heavy bundle by one without increasing the destination has the marginal signature
+
+$$
+(1,0)
+$$
+
+in the natural ``loss at source / gain at destination'' convention.
+
+To repair **both** problematic agents with one move, the desired common signature is therefore
+
+$$
+\boxed{(1,1)}
+$$
+
+for the pair $(i,k)$.
+
+### 9.5 What has been ruled out: a common-pivotal-item proof is not enough
+
+The latest attack considered whether the existence of the two simultaneous gaps
+
+$$
+(c_i(B_1)-c_i(B_3),\;c_k(B_1)-c_k(B_3))=(2,2)
+$$
+
+forces an item with a common improving marginal signature.
+
+It does not follow from dichotomousness alone. Different items may realize incompatible marginal signatures for $i$ and $k$, and there is no currently proved pigeonhole principle forcing a single item to be pivotal for both agents in the required direction.
+
+Therefore:
+
+> **Negative result.** The remaining $\Sigma=4$ obstruction cannot be closed by a one-item/common-pivot argument alone.
+
+The missing information must come from **global consistency of the marginal system across the three bundles**, not from an isolated item.
+
+### 9.6 The remaining precise target: a three-bundle exchange theorem
+
+The clean remaining target is to prove that the profile
+
+$$
+(2,2,0)\text{ for both }i,k
+$$
+
+cannot be exchange-minimal.
+
+A useful formalization is to examine the six directed elementary transfers
+
+$$
+B_1\to B_2,\ B_1\to B_3,\ B_2\to B_1,\ B_2\to B_3,
+\ B_3\to B_1,\ B_3\to B_2.
+$$
+
+For each transfer, record its two-agent marginal signature
+
+$$
+\tau(x;a\to b)=(\tau_i,\tau_k)\in\{-1,0,1\}^2.
+$$
+
+The desired proof should establish a global statement of the following form:
+
+> **Open Exchange Target.** If both $i$ and $k$ have profile $(2,2,0)$ (up to additive constants), then the six directed transfer signatures cannot all avoid a sequence of transfers that reduces the total spread. Equivalently, the obstruction is not exchange-minimal.
+
+This is **not proved yet**. It is the next mathematically precise target.
+
+### 9.7 Why this target is better than the discarded routes
+
+The exchange target uses all three bundles simultaneously, exactly where the merged-two-bundle argument loses information. It also avoids assuming a common pivotal item. Most importantly, it attacks the only remaining $\Sigma=4$ configuration rather than reopening the already settled cases.
+
+The logical chain to preserve is:
+
+$$
+\boxed{
+\text{Lemma E}
+\Longrightarrow
+\text{a family with }\Sigma\le3
+\Longrightarrow
+\text{good minimum-cost assignment}
+\Longrightarrow
+\text{F5* at }n=3.
+}
+$$
+
+The first implication remains the only open existence step in the residual $n=3$ route. The reduction to Lemma E is unconditional. fileciteturn57file0L36-L45
+
+### 9.8 Established structural reductions that should not be retried
+
+The following facts are already established and should be treated as lemmas/results, not conjectures:
+
+- A minimum-cost assignment depends only on normalized costs $v_i$, and its objective is the minimum of $F(\sigma)=\sum_i v_i(\sigma(i))$. fileciteturn56file0L18-L28
+- For $n=3$, goodness is characterized by: (a) every assigned normalized cost $x_i\le1$, and (b) no two consecutive weight-$1$ arcs forming a weight-$2$ path. fileciteturn56file0L30-L50
+- $\Sigma\le3$ implies every minimum-cost assignment is good. fileciteturn56file2L120-L147
+- Hence F5* at $n=3$ reduces to Lemma E: every three-agent dichotomous instance admits a partition with total spread at most $3$. fileciteturn57file0L34-L45
+- Every individual dichotomous agent can be made spread $\le1$; consequently, if no uniformly balanced family exists, a minimum-total-spread obstruction must have profile $(0,0,2)$, $(0,0,3)$, or $(0,1,2)$. fileciteturn58file4L239-L254
+- For additive costs, the divisibility rigidity lemma holds: if $3\nmid|D_i|$, spread $0$ is impossible; if $3\mid|D_i|$, spread $1$ is impossible. fileciteturn58file6L357-L366
+- For composed costs $f_i(|S\cap D_i|)$ with monotone $0/1$ increments, spread is compressed relative to the underlying additive count cost. fileciteturn58file8L459-L469
+- If $3\mid|D_i|$, an equal split of $D_i$ gives that agent spread exactly $0$, independently of the particular composed function $f_i$. fileciteturn58file9L526-L536
+- The two-set balance theorem is proved for underlying sets, and therefore all known residual composed instances reduce to a genuinely three-set interaction rather than a two-set obstruction. fileciteturn58file5L306-L328
+
+### 9.9 AI-agent continuation protocol
+
+When continuing this project, do **not** restart the entire search. Start from the following state:
+
+1. **Do not retry:** CRI-depth, arbitrary spread-2 selection, balanced bundle sizes, nonempty-bundle selection, or the already refuted broad selectors. Their failures are recorded in §6.
+2. **Do not treat `lemma_D_full_proof.md` as a certified proof** of arbitrary dichotomous Lemma D.
+3. **Do use Theorem S** for two underlying sets and composed costs.
+4. **Do use Lemma A** to reduce every possible $\Sigma\le3$ failure to the unique $\Sigma=4$ arc obstruction.
+5. **Attack only:**
+   $$
+   v_i=v_k=(2,2,0),\qquad v_j=0.
+   $$
+6. First test a **three-bundle exchange theorem**. Do not assume the existence of a single item simultaneously pivotal for both problematic agents.
+7. Any new claimed lemma must be checked against capped costs and arbitrary monotone $0/1$-marginal costs before being promoted to the main theorem chain.
+8. Preserve the distinction between:
+   - arbitrary dichotomous costs;
+   - additive costs $|S\cap D|$;
+   - composed costs $f(|S\cap D|)$.
+
+### 9.10 Current frontier
+
+At the end of this session, the mathematically honest status is:
+
+$$
+\boxed{
+\begin{array}{c}
+\text{F5* at }n=3\\[2mm]
+\Downarrow\\[2mm]
+\text{Lemma E: }\min_B\Sigma(B)\le3\\[2mm]
+\Downarrow\\[2mm]
+\text{only possible first obstruction: }\Sigma=4,\\
+(v_i,v_k,v_j)=((2,2,0),(2,2,0),(0,0,0))\\[2mm]
+\Downarrow\\[2mm]
+\textbf{OPEN: three-bundle exchange theorem.}
+\end{array}}
+$$
+
+No stronger conclusion should be recorded until that final exchange step is proved or a genuine counterexample is constructed.
