@@ -1998,12 +1998,50 @@ a further attempt and is analogous in spirit to how
 Proposition~`prop:f5-pattern` characterised the unique $\Sigma=4$ obstruction
 in the assignment-layer problem, but has not been carried out here.
 
-**Status: open.** Not closed by this attempt. What is now on record: a false
-simplification correctly ruled out, a clean and heavily-tested (though not
-proved) Lipschitz law, confirmation that Lemma D's specific reversal-parity
-mechanism does not transfer, and a precisely-stated extremal-argument strategy
-with its exact missing step identified. This is substantially more structure
-than was available before this attempt, even without a proof.
+### 7.16.19 The simplest completion is ruled out: same-cut degradation genuinely reaches 2
+
+Continued the attempt at the missing Lipschitz mechanism by checking the most
+natural candidate directly: does the *same cut point*, applied before and after
+the swap, ever degrade a *single* agent's own three-way spread by more than $1$?
+A hand construction using two disjoint sets $P,Q$ (playing the roles
+$B_1=P\cup\set x$, $B_2=Q\cup\set y$) suggested this should be achievable if $x$
+is redundant and $y$ pivotal for *both* $P$ and $Q$ simultaneously — checked
+this is locally consistent (no contradiction in the marginal constraints on a
+$4$-element example) but a first attempt at realising it with $P,Q$ singletons
+failed for a size reason: a singleton's cost is capped at $1$ by dichotomy, so
+the needed gap ($a \ge b+2$) is unreachable. A direct targeted computational
+search using larger ground sets removed that artefact and **found the jump
+directly**: a single dichotomous cost with $(\cost(B_1),\cost(B_2),\cost(B_3))$
+going from $(2,1,1)$ (spread $1$) to $(3,0,1)$ (spread $3$) under one adjacent
+transposition of the ordering — a jump of exactly $2$, and not rare ($\sim\!10\%$
+hit rate in the search, $1928$ instances out of the sampled cases).
+
+**This rules out the simplest possible completion of the Lipschitz proof.** It
+is not true that *any single agent's* same-cut spread is $1$-Lipschitz under
+adjacent transposition; the crude bound of $2$ derived by hand in §7.16.18 is
+in fact tight at the single-agent, single-cut level. So $B(\sigma)$'s
+empirically-observed Lipschitz-$1$ behaviour (§7.16.18: exhaustively confirmed
+at $\abs M=4$, near-exhaustively at $\abs M=5$, never once exceeding $1$) is
+not a fact about any one agent or any one cut — it must be an emergent,
+*joint* property: when one agent's spread would blow up at the inherited cut,
+either (a) it does not control the max over all three agents at that moment
+(some other agent is already at least that bad), or (b) $\sigma'$ has some
+*different* cut, not the one inherited from $\sigma$, that avoids the damage
+entirely. Both possibilities require reasoning about the interaction of all
+three agents and the full re-optimisation freedom simultaneously — a
+substantially harder claim than the one this pass set out to prove, and the
+reason the proof is not closed.
+
+**Status: open, and now more precisely so.** Two proof avenues have been
+tried and both are now known to fail for identifiable reasons: the
+Sperner/topological framing (§7.16.17, boundary conditions do not match the
+classical necklace-splitting setup) and the single-agent same-cut Lipschitz
+argument (§7.16.19, false in general). What survives, heavily tested and not
+yet explained: $B(\sigma)$ itself — the *joint*, re-optimised quantity — does
+appear to be genuinely Lipschitz-$1$, and reversal-invariant. A proof, if one
+exists along these lines, has to work with the three-agent interaction and the
+cut-choice freedom directly, not reduce to a single agent or a fixed cut. This
+is where the trail currently ends; nothing further was found in this pass.
 
 ### 7.17 Status
 
@@ -2074,6 +2112,8 @@ than was available before this attempt, even without a proof.
 | $B(\sigma)$ Lipschitz-$1$ law under adjacent transposition (§7.16.18) | **open, exhaustively/near-exhaustively tested** — jump never $>1$ at $\abs M=4,5$; only a Lipschitz-$2$ bound derived by hand; the tighter mechanism not found |
 | $B(\sigma)$ invariance under full reversal (§7.16.18) | **tested, holds** — unlike Lemma D's winner, which always flips; rules out reusing Lemma D's exact contradiction mechanism |
 | extremal-argument proof strategy for the contiguous conjecture (§7.16.18) | **precisely stated, not carried out** — needs a structural contradiction from local optimality at the unit-step level, analogous to Prop.~`prop:f5-pattern` |
+| single-agent same-cut Lipschitz-1 (the natural completion of §7.16.18) | **REFUTED** (§7.16.19) — explicit jump-of-2 instance found, $(2,1,1)\to(3,0,1)$, not rare ($\sim\!10\%$ hit rate) |
+| $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
