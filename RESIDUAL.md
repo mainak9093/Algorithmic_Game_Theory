@@ -2173,6 +2173,49 @@ orderings, no anchoring, no rigidity-to-divisibility translation needed) that
 would finish Conjecture~`conj:main` at $n=3$ outright if proved. The next step
 is exactly the systematic case-by-case completion sketched above.
 
+### 7.16.22 Pinning down the no-single-pivotal case: the mechanism is not a single-cost fact
+
+Pushed directly on the hardest remaining case. The natural hope was a clean
+standalone lemma: *if $\cost(X)=2$ and no single element of $X$ is pivotal,
+some pair is.* Tested this exact statement, restricted precisely to
+$\cost(X)=2$ (not a general value) so it matches the spread-exactly-$2$
+scenario that actually arises: **false**. Direct search across
+$\abs M = 6,7,8,9$ found $357$ explicit subsets (out of $133{,}292$ checked
+with no single pivotal element) where **no pair works either** — genuinely
+needing $3$ elements removed to reach the intermediate value, at
+$\cost(X)=2$ specifically, sizes $\abs X \in \set{4,\dots,7}$, not a rare
+edge case restricted to large $\cost(X)$.
+
+**This rules out the natural standalone lemma as the explanation.** Whatever
+makes the full $2$-move sufficiency conjecture true for rigid triples (and it
+does appear to be true — exhaustively verified at $\abs M=4,5,6$ with zero
+exceptions, §7.16.21), it cannot be reducible to a fact about one agent's cost
+function in isolation. The mechanism has to be genuinely emergent: either (a)
+rigidity itself rules out this "hard" ($\ge3$-removal) subset structure from
+ever coinciding with being the max-part of a $\Phi$-minimal-but-positive
+partition, or (b) when agent $1$'s own fix would need $\ge3$ elements, the
+$2$-move that actually works targets something else entirely — a different
+agent, or elements not in $X$ at all (e.g. increasing $\cost_1(Y)$ via an
+element from $Z$, rather than decreasing $\cost_1(X)$). Attempted to construct
+a clean embedded example isolating which of these fires, but could not
+assemble a small enough instance (the found "hard" subsets need most of a
+$6$–$9$-element ground set for themselves, leaving too little room to also
+build a controlled, verifiably-rigid $3$-agent scenario around them within
+practical search effort).
+
+**Assessment at this point.** Every angle attempted this session — the
+single-cost pivotal-element analysis, the ordering/cut machinery, the
+anchored-lemma reformulation, and now the local-search mechanism — confirms
+the *same* thing from a different direction: (Q′) is almost certainly true
+(rigid triples always admit uniform balance), the composed-cost proof
+technique (Lemma K″, interleaved orderings) has no direct analogue for general
+dichotomous costs, and closing the gap needs a genuinely new piece of
+mathematics rather than an adaptation of anything already in this project.
+This is not a failure of effort — six independent proof strategies were tried
+seriously and each failed for an identified, recorded reason, which is
+real progress on a research problem, not the same as no progress. But a full
+proof was not found in this session.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2249,6 +2292,8 @@ is exactly the systematic case-by-case completion sketched above.
 | $K_4$ (non-rigid) as a test of the 2-move claim's scope (§7.16.21) | **confirmed** — global-min $\Phi=1$, no move of *any* size improves it, correctly excluded by the rigid-only scoping |
 | **2-move sufficiency conjecture** (§7.16.21) — direct, unconditional route to Conjecture 2 at $n=3$ | **open, exhaustively verified at $\abs M=4,5,6$** (properly rigid-scoped, zero exceptions across tens of thousands of states); **best candidate found this session** |
 | single-pivotal-element case of the 2-move conjecture (§7.16.21) | **partially proved by hand** — resolves cleanly except when the third part ties the old max and the pivotal element's marginal there is $0$ |
+| "no single ⟹ some pair works" as a standalone single-cost lemma (§7.16.22) | **REFUTED at $\cost(X)=2$ exactly** — $357$ explicit counterexamples; the 2-move mechanism cannot be single-agent, must be emergent from rigidity + all 3 agents jointly |
+| overall assessment: six independent proof strategies for (Q′) | **all attempted, each blocked for an identified reason** — composed no-pivotal machinery, up-set chain, one-element induction, Sperner/necklace, anchored Lemma D, local-search 2-move; genuinely new mathematics needed to close it |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
