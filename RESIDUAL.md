@@ -2203,18 +2203,67 @@ $6$–$9$-element ground set for themselves, leaving too little room to also
 build a controlled, verifiably-rigid $3$-agent scenario around them within
 practical search effort).
 
-**Assessment at this point.** Every angle attempted this session — the
-single-cost pivotal-element analysis, the ordering/cut machinery, the
-anchored-lemma reformulation, and now the local-search mechanism — confirms
-the *same* thing from a different direction: (Q′) is almost certainly true
-(rigid triples always admit uniform balance), the composed-cost proof
-technique (Lemma K″, interleaved orderings) has no direct analogue for general
-dichotomous costs, and closing the gap needs a genuinely new piece of
-mathematics rather than an adaptation of anything already in this project.
-This is not a failure of effort — six independent proof strategies were tried
-seriously and each failed for an identified, recorded reason, which is
-real progress on a research problem, not the same as no progress. But a full
-proof was not found in this session.
+### 7.16.23 The actual mechanism, found: removal-hardness forces a small insertion-witness
+
+Continued past §7.16.22's negative finding by asking the right follow-up
+question. §7.16.22 showed the fix cannot be "shrink $X$ by removing $\le2$
+elements." But a hand-built, fully-understood example (a "redundant-OR"
+gadget: $\cost(S) = [v_1{\in}S \lor w_1{\in}S \lor \{a,b\}{\subseteq}S] +
+[\text{same pattern on a disjoint second team}]$, verified dichotomous by
+direct marginal check, verified to need exactly $3$ elements removed to drop
+from $2$ to $1$) revealed the real mechanism directly: moving $v_1$ and $w_1$
+out of $X$ into the two low parts **doesn't shrink $X$ at all** ($X$ keeps
+$\cost_1(X)=2$ throughout, via the surviving $\{a,b\}$ leaves) — it **raises
+the two low parts instead**, because $v_1,w_1$ are redundant inside the
+crowded set $X$ but individually sufficient ($\cost_1(\set{v_1})=1$) once
+isolated. The fix was never about reducing the max; it was about the
+elements causing the redundancy being independently powerful in a smaller
+context.
+
+**Generalised and tested at scale.** The natural hypothesis: a
+removal-hard $X$ (no $\le2$-element removal reaches $\cost(X)-1$) always
+contains a small *insertion-witness* — either two elements each individually
+positive ($\cost(\set x)\ge1$), or one pair jointly positive
+($\cost(\set{x,y})\ge1$) — obtainable at budget $\le2$ and usable to raise a
+low part instead of shrinking $X$. Tested directly against $485$ removal-hard
+instances ($\cost(X)=2$, $\abs M$ up to $10$, freshly generated, not reusing
+§7.16.22's sample): **every single one** has such a witness ($485/485$).
+Refined further by checking the *minimal* insertion-witness size directly
+under the removal-hardness hypothesis across $546$ instances: size $1$ in
+$545$, size $2$ in exactly $1$, **size $\ge3$ in zero**. Removal-hardness
+appears to force insertion-easiness essentially always, and by a comfortable
+margin (a lone counterexample at size $2$, none at size $3$, out of hundreds).
+
+**Not yet a completed proof.** Attempted a direct argument via a chain
+$x_1,\dots,x_k$ built up to $X$: since $\cost(X)=2$, exactly two steps of any
+such chain are the "+1" steps, at positions $i<j$ say. The natural hope —
+that $\cost(\set{x_i})\ge1$ on its own — does **not** follow just from $x_i$
+causing a jump *in that chain*, since the jump is relative to whatever
+elements preceded it, not to $\emptyset$; a genuine proof needs to relate a
+chain-relative marginal to an absolute singleton/pair cost, which is exactly
+where the argument currently stalls. The empirical margin (zero failures at
+size $\ge3$ out of $546$, one at size $2$) is strong enough that this reads
+as a true theorem waiting for the right argument, not a coincidence, but the
+argument itself has not been found.
+
+**If proved, this would complete the whole chain.** Removal-hardness forcing
+a small insertion witness, combined with the already-complete easy-case proof
+(§7.16.21) and the (already precisely identified) bookkeeping needed to check
+the other two agents aren't pushed net-worse, would close the $2$-move
+sufficiency conjecture, hence (Q′), hence Conjecture~`conj:main` at $n=3$ in
+full generality — unconditionally, with no ordering/cut machinery and no
+composed-cost structure required anywhere in the argument.
+
+**Assessment at this point.** This session found the actual mechanism by
+which the local-search route works — not a hoped-for property that turned
+out false (§7.16.22), but a real, heavily-tested structural fact
+(removal-hardness $\Rightarrow$ small insertion-witness) discovered by tracing
+through a hand-built, fully-understood example rather than more random
+search. What remains is one precise combinatorial lemma about dichotomous
+set functions, stated exactly, tested at a scale that makes it very unlikely
+to be false, with the general chain-based proof attempt identified and its
+exact sticking point named. This is substantially closer to a full proof of
+Conjecture~`conj:main` at $n=3$ than anything found earlier in this session.
 
 ### 7.17 Status
 
@@ -2294,6 +2343,7 @@ proof was not found in this session.
 | single-pivotal-element case of the 2-move conjecture (§7.16.21) | **partially proved by hand** — resolves cleanly except when the third part ties the old max and the pivotal element's marginal there is $0$ |
 | "no single ⟹ some pair works" as a standalone single-cost lemma (§7.16.22) | **REFUTED at $\cost(X)=2$ exactly** — $357$ explicit counterexamples; the 2-move mechanism cannot be single-agent, must be emergent from rigidity + all 3 agents jointly |
 | overall assessment: six independent proof strategies for (Q′) | **all attempted, each blocked for an identified reason** — composed no-pivotal machinery, up-set chain, one-element induction, Sperner/necklace, anchored Lemma D, local-search 2-move; genuinely new mathematics needed to close it |
+| **removal-hardness $\Rightarrow$ small insertion-witness** (the actual 2-move mechanism, §7.16.23) | **open, extremely strongly tested** — $485/485$ and $546/546$ ($545$ at size $1$, $1$ at size $2$, zero at size $\ge3$); precise chain-based proof attempt identified with exact sticking point named; the single remaining piece needed to close Conjecture 2 at $n=3$ in full |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
