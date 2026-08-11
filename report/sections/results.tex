@@ -1,0 +1,201 @@
+%% ==========================================================================
+%%  6  What is Proved
+%%
+%%  MAIN REPORT ONLY -- not included by working.tex, which carries the full
+%%  development.  Every label here is prefixed `main:' so nothing can collide
+%%  with working/.
+%%
+%%  Condensed from working/solved_cases.tex (thm:binadd, thm:identical,
+%%  thm:smallbundle, cor:m-le-n, thm:balanced-class) and
+%%  working/approach_10.tex (thm:f5-sigma3 and the reduction around it).
+%% ==========================================================================
+\section{What is Proved}
+\label{sec:results}
+
+Conjecture~\ref{conj:main} is open. Five restrictions of it are not, and they are
+collected here because together they delimit what a general proof still has to
+reach. The first four are cases of the valuation class or of the instance; the
+fifth is a criterion, and it is the only one that says anything about three
+agents in general.
+
+% --------------------------------------------------------------------------
+\subsection{Four solved cases}
+\label{sec:main-solved}
+
+\begin{theorem}[Binary additive costs]
+\label{main:binadd}
+Conjecture~\ref{conj:main} holds when every $\cost_i$ is additive with all
+singleton values in $\set{0,1}$, that is
+$\cost_i(S) = \abs{S \cap D_i}$ for some $D_i \subseteq \items$.
+\end{theorem}
+
+This is~\cite{LMS26}; the contribution here is only the observation that the
+class sits inside the dichotomous one.
+
+\begin{theorem}[Identical costs]
+\label{main:identical}
+If $\cost_1 = \dots = \cost_n = \cost$ then every allocation is envy-freeable,
+and greedily adding each chore to a currently cheapest bundle yields
+$\optsubsidy \in \set{0,1}^n$.
+\end{theorem}
+
+\begin{proof}
+For any permutation $\sigma$, $\sum_i \cost(A_{\sigma(i)}) = \sum_i
+\cost(\bundle{i})$, so condition~(ii) of Theorem~\ref{thm:hs-characterisation}
+holds with equality and every allocation is envy-freeable. Moreover
+$\edgew{\alloc}(i,j) = \cost(\bundle{i}) - \cost(\bundle{j})$ telescopes exactly
+along a path, giving $\pathw{\alloc}(u) = \cost(\bundle{u}) - \min_j
+\cost(\bundle{j})$, so it suffices to keep $\max_i \cost(\bundle{i}) - \min_i
+\cost(\bundle{i}) \le 1$. That is an invariant of the greedy rule: if all costs
+lie in $\set{\mu,\mu+1}$ and the next chore joins a bundle attaining $\mu$, its
+cost becomes $\mu$ or $\mu+1$ because marginals lie in $\set{0,1}$, and no other
+bundle moves. Observation~\ref{obs:integrality} finishes.
+\end{proof}
+
+The case $n = 2$ also holds, with total subsidy at most $1$; there the theorem
+is~\cite[Theorem~4]{BKNS22} and ours is only the reduction, which consumes the
+identity $\items \setminus \bundle{j} = \bundle{i}$ and so says nothing for
+$n \ge 3$.
+
+\begin{theorem}[Small bundles]
+\label{main:smallbundle}
+Let $\alloc$ be envy-freeable with $\cost_v(\bundle{i}) \le 1$ for all
+$v, i \in \agents$. Then $\optsubsidy \in \set{0,1}^n$ and the total subsidy is
+at most $n-1$.
+\end{theorem}
+
+\begin{proof}
+By Theorem~\ref{main:cyclebound}, $\pathw{\alloc}(u) \le \max(0, \max_{v \ne u}
+[\cost_v(\bundle{u}) - \cost_v(\bundle{v})]) \le \max(0, 1-0) = 1$.
+Observation~\ref{obs:integrality} gives $\optsubsidy \in \set{0,1}^n$, and the
+endpoint of a heaviest path has $\pathw{} = 0$.
+\end{proof}
+
+\begin{corollary}[Fewer chores than agents]
+\label{main:m-le-n}
+If $m \le n$ then Conjecture~\ref{conj:main} holds, and a witness is computable
+by one minimum-cost bipartite matching.
+\end{corollary}
+
+\begin{proof}
+Among allocations giving each agent at most one chore take one minimising
+$\sum_i \cost_i(\bundle{i})$. Every permutation of its own bundles is an
+allocation of the same form, so Theorem~\ref{thm:hs-characterisation}(ii) makes
+it envy-freeable; and $\abs{\bundle{i}} \le 1$ forces
+$\cost_v(\bundle{i}) \le 1$, so Theorem~\ref{main:smallbundle} applies. The
+bound is tight by Example~\ref{ex:lowerbound}, which has $m = n-1$.
+\end{proof}
+
+\begin{definition}[Uniformly balanced family]
+\label{main:unifbal}
+A partition of $\items$ into $n$ bundles is \emph{uniformly balanced} if every
+agent values all $n$ bundles within one unit of each other.
+\end{definition}
+
+\begin{theorem}[Instances admitting a uniformly balanced family]
+\label{main:balanced-class}
+Conjecture~\ref{conj:main} holds for every instance admitting a uniformly
+balanced family, and a witness is obtained by assigning the bundles by one
+maximum-weight matching.
+\end{theorem}
+
+\begin{proof}
+Assign by a maximum-weight matching; Theorem~\ref{thm:hs-characterisation} makes
+the allocation envy-freeable, and uniform balance gives
+$\edgew{\alloc}(i,j) \ge -1$ for \emph{any} assignment of that family, so
+Corollary~\ref{main:onestep} applies.
+\end{proof}
+
+This last case is much the widest of the four. It contains, for instance, every
+\emph{symmetric} instance --- one in which each $\cost_i(S)$ depends only on
+$\abs{S}$ --- since a partition into bundles of near-equal size shows agent $i$
+only the two values $f_i(q)$ and $f_i(q+1)$, which differ by a single marginal.
+It is nevertheless not everything: there are instances admitting no uniformly
+balanced family at all, and by \Cref{sec:obstructions} no criterion phrased on
+arcs alone can reach them.
+
+% --------------------------------------------------------------------------
+\subsection{A criterion at three agents}
+\label{sec:main-spread}
+
+The fifth result is a criterion rather than a class, and it is the only
+statement in this report that bears on three agents in general. For a family
+$B = (B_1,\dots,B_n)$ --- a partition of $\items$ into $n$ possibly empty
+bundles, not yet assigned to agents --- write
+\[
+  \mathrm{sp}_i(B) := \max_t \cost_i(B_t) - \min_t \cost_i(B_t),
+  \qquad
+  \Sigma(B) := \sum_{i \in \agents}\mathrm{sp}_i(B) .
+\]
+A family is uniformly balanced exactly when every $\mathrm{sp}_i(B) \le 1$.
+
+\begin{theorem}[Small total spread suffices]
+\label{main:sigma3}
+Let $n = 3$ and let $\sigma$ be any minimum-cost assignment of a family $B$ to
+the agents. If an arc of $\envygraph{\alloc}$ has weight at least $2$ then
+$\Sigma(B) \ge 4$; and if every arc has weight at most $1$ but some two-path has
+weight $2$, then $\Sigma(B) \ge 5$. In particular, if $\Sigma(B) \le 3$ then
+\emph{every} minimum-cost assignment of $B$ is good.
+\end{theorem}
+
+\begin{proof}
+Normalise by $v_i(t) := \cost_i(B_t) - \min_s \cost_i(B_s)$ and put
+$x_i := v_i(\sigma(i))$, so that
+$\edgew{\alloc}(i,k) = v_i(\sigma(i)) - v_i(\sigma(k))$ and a minimum-cost
+assignment is one minimising $F(\sigma) = \sum_i x_i$. If $x_i \ge 1$ then $v_i$
+does not vanish at $\sigma(i)$, so its zero lies at some $\sigma(k)$ and the
+heaviest arc out of $i$ is exactly $x_i$; if $x_i = 0$ every arc out of $i$ is at
+most $0$.
+
+Suppose some arc has weight at least $2$, so some $x_i \ge 2$, and let $k$ hold
+the zero of $v_i$. Transposing $i$ and $k$ changes $F$ by
+$v_k(\sigma(i)) - x_i - x_k$, non-negative by optimality, so
+$v_k(\sigma(i)) \ge x_i + x_k \ge 2$ and $\mathrm{sp}_k \ge 2$; with
+$\mathrm{sp}_i \ge x_i \ge 2$ this gives $\Sigma \ge 4$.
+
+Suppose instead every arc is at most $1$ and some two-path $i \to j \to k$ has
+weight $2$. Then $x_i = x_j = 1$, $v_i(\sigma(j)) = 0$ and $v_j(\sigma(k)) = 0$,
+so $F(\sigma) = 2 + x_k$. Transposing $i$ and $j$ costs
+$v_j(\sigma(i)) + x_k$, forcing $v_j(\sigma(i)) \ge 2$ and $\mathrm{sp}_j \ge 2$.
+The three-cycle $i \mapsto \sigma(j)$, $j \mapsto \sigma(k)$, $k \mapsto
+\sigma(i)$ costs $v_k(\sigma(i))$, forcing $v_k(\sigma(i)) \ge 2 + x_k \ge 2$ and
+$\mathrm{sp}_k \ge 2$. With $\mathrm{sp}_i \ge 1$ this gives $\Sigma \ge 5$.
+
+For the last claim, a minimum-cost assignment is envy-freeable by
+Theorem~\ref{thm:hs-characterisation}, so by \Cref{prop:n3-main} goodness is
+exactly the absence of an arc of weight $2$ and of a two-path of weight $2$, both
+of which force $\Sigma \ge 4$.
+\end{proof}
+
+\begin{proposition}[Goodness at three agents]
+\label{prop:n3-main}
+Let $n = 3$ and let $\alloc$ be envy-freeable. Then $\alloc$ is good if and only
+if every arc has weight at most $1$ and every directed two-path has weight at
+most $1$.
+\end{proposition}
+
+\begin{proof}
+With no positive cycle, $\pathw{\alloc}(i)$ is the heaviest weight of a
+\emph{simple} path leaving $i$; on three vertices such a path has length $0$, $1$
+or $2$.
+\end{proof}
+
+Theorem~\ref{main:sigma3} strictly contains Theorem~\ref{main:balanced-class} at
+$n = 3$: a uniformly balanced family has $\Sigma \le 3$, but so do families with
+spread profiles such as $(2,1,0)$ and $(3,0,0)$, which are not uniformly
+balanced. It therefore reaches instances admitting no uniformly balanced family
+at all --- the ones \Cref{sec:obstructions} shows no arc-based criterion can
+certify.
+
+\begin{remark}[What it leaves open]
+\label{main:rem-spread-gap}
+Theorem~\ref{main:sigma3} is conditional on a family with $\Sigma \le 3$
+existing. Whether one always does is open, and is the single statement to which
+Conjecture~\ref{conj:main} at $n = 3$ has been reduced. Two facts bound the
+question. If no uniformly balanced family exists then, since each agent can
+individually be brought to spread at most $1$ by the greedy rule of
+Theorem~\ref{main:identical}, a family with $\Sigma \le 3$ must give some agent
+spread exactly $0$. And for binary additive costs such an agent exists only when
+$3$ divides $\abs{D_i}$, so the question turns on a divisibility condition on the
+underlying sets. The full development is deferred.
+\end{remark}

@@ -307,6 +307,462 @@ that result does not transfer.
 \end{remark}
 
 % --------------------------------------------------------------------------
+\subsection{Balancing sets: the greedy engine}
+\label{sec:f5-greedy}
+
+Everything that follows rests on one lemma, worth isolating because it explains
+both what works and what does not.
+
+\begin{lemma}[Greedy levelling]
+\label{lem:f5-greedy}
+Let $w_1,\dots,w_N$ be integers with $0 \le w_j \le k$. Then one may choose
+$\delta_j \in \set{0,1}^k$ with $\abs{\delta_j} = w_j$ so that $\sum_j \delta_j$
+has spread at most $1$.
+\end{lemma}
+
+\begin{proof}
+Process in any order, placing $\delta_j$'s ones on the $w_j$ currently smallest
+coordinates. The invariant is that the entries lie in $\set{\mu,\mu+1}$. Let $k'$
+be the number of entries equal to $\mu$. If $w_j \le k'$ then $w_j$ of them rise
+to $\mu+1$ and the entries still lie in $\set{\mu,\mu+1}$. If $w_j > k'$ then all
+$k'$ rise to $\mu+1$ and $w_j - k'$ of the others rise to $\mu+2$, so the entries
+lie in $\set{\mu+1,\mu+2}$. Either way the spread stays at most $1$.
+\end{proof}
+
+Read through the Venn regions of a family of sets, Lemma~\ref{lem:f5-greedy} says
+a \emph{single} set can always be levelled: run greedy over the regions meeting
+it. Two sets share exactly one region, so fixing that region first lets both run
+greedy independently --- which is the next theorem. Three sets share two regions
+pairwise and one triply, and no ordering lets all three run greedy; that is the
+entire obstruction.
+
+\begin{theorem}[Two-set balance]
+\label{thm:f5-twoset}
+For any two sets $D_1, D_2 \subseteq \items$ and any number $k$ of bundles there
+is a $k$-colouring of $\items$ splitting \emph{both} within one.
+\end{theorem}
+
+\begin{proof}
+The Venn regions are $P_1 = D_1 \setminus D_2$, $P_{12} = D_1 \cap D_2$ and
+$P_2 = D_2 \setminus D_1$; elements in neither set are free. Write
+$\abs{P} = k a_P + b_P$ with $0 \le b_P < k$, split each region as evenly as
+possible, and let $\epsilon_P \in \set{0,1}^k$ with exactly $b_P$ ones record
+which colours take an extra element. The count of $D_i$ in colour $t$ is then
+$A_i + E_{i,t}$ with $A_i$ independent of $t$ and
+$E_1 = \epsilon_{P_1} + \epsilon_{P_{12}}$, $E_2 = \epsilon_{P_2} +
+\epsilon_{P_{12}}$.
+
+Fix $\epsilon_{P_{12}}$ arbitrarily. Each $E_i$ is a sum of two $\set{0,1}$
+vectors, so its entries lie in $\set{0,1,2}$ and its spread is at most $1$
+exactly when the two supports are \emph{disjoint} (entries in $\set{0,1}$) or
+together \emph{cover} all $k$ colours (entries in $\set{1,2}$). If
+$b_{P_1} + b_{P_{12}} \le k$ choose the supports disjoint; if
+$b_{P_1} + b_{P_{12}} \ge k$ choose them covering. One is always available, and
+$\epsilon_{P_2}$ is chosen the same way, independently.
+\end{proof}
+
+\begin{corollary}
+\label{cor:f5-threeneeded}
+Proposition~\ref{prop:no-balance} genuinely requires all three sets: no two-set
+system obstructs uniform balance, at any number of bundles.
+\end{corollary}
+
+\begin{corollary}[Conjecture~\ref{conj:f5-2balance} for composed costs]
+\label{cor:f5-2balance-composed}
+For any two costs of the form $\cost_i(S) = f_i(\abs{S \cap D_i})$ and any
+$U \subseteq \items$, some partition of $U$ into two parts gives both spread at
+most $1$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:f5-twoset} at $k = 2$ balances the underlying sets within one;
+Lemma~\ref{lem:f5-compress} below carries that to the composed costs.
+\end{proof}
+
+This settles Conjecture~\ref{conj:f5-2balance} on the family where the residual
+of the solved cases lives. It does \emph{not} settle it for arbitrary
+dichotomous costs, since Lemma~\ref{lem:f5-compress} needs the cost to depend
+only on $\abs{S \cap D}$.
+
+\begin{corollary}[Two sets go to spread zero together]
+\label{cor:f5-twozero}
+If $3 \mid \abs{D_i}$ and $3 \mid \abs{D_j}$, some $3$-colouring makes both
+$D_i$ and $D_j$ exactly balanced, that is both agents at spread $0$.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:f5-twoset} splits both within one, and by
+Lemma~\ref{lem:f5-rigid}(b) a set whose size is divisible by $3$ has spread $0$
+or at least $2$, so ``within one'' forces spread $0$.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{Compression, and the shape of the residual}
+\label{sec:f5-compress}
+
+\begin{lemma}[Compression]
+\label{lem:f5-compress}
+Let $\cost(S) = f(\abs{S \cap D})$ with $f$ monotone and all increments in
+$\set{0,1}$. Then for every family $B$,
+$\mathrm{sp}_{\cost}(B) \le \mathrm{sp}_{\abs{\cdot \cap D}}(B)$.
+\end{lemma}
+
+\begin{proof}
+Such an $f$ is monotone and $1$-Lipschitz, so with $a_{\max}, a_{\min}$ the
+extreme counts, $\max_t f(a_t) - \min_t f(a_t) = f(a_{\max}) - f(a_{\min}) \le
+a_{\max} - a_{\min}$.
+\end{proof}
+
+So among costs built on the same sets, the \emph{additive} one is hardest to
+balance, and a colouring balancing the underlying sets balances every composed
+cost over them. Two consequences.
+
+\begin{corollary}[A spread-zero agent for free]
+\label{cor:f5-freezero}
+If $3 \mid \abs{D_i}$, then splitting $D_i$ into three equal parts and
+distributing $\items \setminus D_i$ arbitrarily gives agent $i$ spread exactly
+$0$ --- whatever $f_i$ is, since all three counts equal $\abs{D_i}/3$ and $f_i$
+sees only the count.
+\end{corollary}
+
+\begin{corollary}
+\label{cor:f5-residual-shape}
+Let all three costs be composed. If $3 \nmid \abs{D_i}$ for every $i$, then the
+instance admits a uniformly balanced family.
+\end{corollary}
+
+\begin{proof}
+Theorem~\ref{thm:f5-Qproved} balances the three underlying sets within one, and
+Lemma~\ref{lem:f5-compress} carries this to the composed costs.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{Rigidity, and where $\Sigma \le 3$ can fail}
+\label{sec:f5-rigid}
+
+\begin{lemma}[Individual minimum]
+\label{lem:f5-indiv}
+For any dichotomous $\cost$ and any $n$, some family has $\mathrm{sp}(B) \le 1$.
+\end{lemma}
+
+\begin{proof}
+Add the items one at a time, each to a bundle of currently minimum cost. The
+invariant that all bundle costs lie in $\set{\mu,\mu+1}$ holds when all bundles
+are empty, and adding an item to a bundle of cost $\mu$ makes that bundle cost
+$\mu$ or $\mu+1$, marginals lying in $\set{0,1}$, and changes nothing else. This
+is the invariant of Theorem~\ref{thm:identical}.
+\end{proof}
+
+\begin{corollary}
+\label{cor:f5-needzero}
+Conjecture~\ref{conj:f5-sigma3} has content only when no uniformly balanced
+family exists. There the spread profile realising $\Sigma \le 3$ must be
+$(0,0,2)$, $(0,0,3)$ or $(0,1,2)$ --- in particular \emph{some agent must have
+spread exactly $0$}.
+\end{corollary}
+
+\begin{proof}
+By Lemma~\ref{lem:f5-indiv} each $\mathrm{sp}_i$ can individually be brought to
+at most $1$, so a uniformly balanced family is exactly one attaining all three
+simultaneously. If none exists, every family has some $\mathrm{sp}_i \ge 2$, and
+the multisets with $\Sigma \le 3$ and maximum at least $2$ are the three listed;
+each contains a $0$.
+\end{proof}
+
+\begin{definition}
+\label{def:f5-rigidcost}
+A dichotomous cost is \emph{rigid} if no $3$-partition gives it spread $0$.
+\end{definition}
+
+\begin{lemma}[Additive rigidity]
+\label{lem:f5-rigid}
+Let $\cost_i(S) = \abs{S \cap D_i}$. In every $3$-partition,
+\begin{enumerate}
+  \item[(a)] if $3 \nmid \abs{D_i}$ the spread is at least $1$ --- never $0$;
+  \item[(b)] if $3 \mid \abs{D_i}$ the spread is $0$ or at least $2$ --- never
+    $1$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The counts $a_t = \abs{B_t \cap D_i}$ sum to $\abs{D_i}$. For (a), spread $0$
+forces $a_1 = a_2 = a_3$, so $3 \mid \abs{D_i}$. For (b), suppose the spread is
+$1$, so the $a_t$ lie in $\set{\mu,\mu+1}$ with $k$ of them at $\mu+1$ and
+$1 \le k \le 2$; then $\abs{D_i} = 3\mu + k$ forces $k \equiv 0 \pmod 3$, a
+contradiction.
+\end{proof}
+
+Rigidity is not the same as non-additivity: $\cost(S) = \min(\abs{S \cap D}, 3)$
+with $\abs{D} = 4$ is not additive, yet is rigid, since equal costs would need
+either $a_1 = a_2 = a_3$ (impossible, $3 \nmid 4$) or all $a_t \ge 3$
+(impossible, $4 < 9$). More generally, $\min(\abs{S\cap D},k)$ is rigid exactly
+when $3 \nmid \abs{D}$ and $\abs{D} < 3k$, and $\max(0,\abs{S\cap D}-t)$ exactly
+when $3 \nmid \abs{D}$ and $\abs{D} > 3t$.
+
+\begin{proposition}
+\label{prop:f5-rigidfail}
+If all three agents are rigid and no uniformly balanced family exists, then
+$\Sigma(B) \ge 4$ for every family, so Conjecture~\ref{conj:f5-sigma3} fails for
+that instance.
+\end{proposition}
+
+\begin{proof}
+Rigidity gives $\mathrm{sp}_i \ge 1$ for every $i$ and every family; failure of
+uniform balance gives some $\mathrm{sp}_i \ge 2$; so $\Sigma \ge 4$.
+\end{proof}
+
+\begin{remark}[The converse does not hold, and an earlier claim is withdrawn]
+\label{rem:f5-retract-iff}
+Proposition~\ref{prop:f5-rigidfail} was at one stage asserted as an
+equivalence --- that Conjecture~\ref{conj:f5-sigma3} fails \emph{if and only if}
+some instance has three rigid agents and no uniformly balanced family. Only the
+direction proved above is available. An instance may have a non-rigid agent, so
+not three rigid ones, and still admit no family with $\Sigma \le 3$: driving the
+non-rigid agent to spread $0$ may force the other two to sum to $4$ or more.
+Nothing in this section uses the converse.
+\end{remark}
+
+\begin{remark}[A withdrawn criterion for spread zero]
+\label{rem:f5-retract-div}
+It is \emph{not} true that a dichotomous $\cost$ admits a spread-$0$
+$3$-partition if and only if $3 \mid \cost(\items)$. Both directions fail without
+additivity: cutting a maximal chain at $\cost(Z) = \cost(\items)/3$ says nothing
+about $\cost$ of the later blocks, since
+$\cost(Z' \setminus Z) \ne \cost(Z') - \cost(Z)$ in general, and
+$\sum_t \cost(B_t) \ne \cost(\items)$. For a counterexample take
+$\cost(S) = \min(\abs{S},1)$ on three items: $\cost(\items) = 1$ while the
+partition into singletons gives $(1,1,1)$, spread $0$. The divisibility
+criterion is available only in the additive case, which is
+Lemma~\ref{lem:f5-rigid}.
+\end{remark}
+
+% --------------------------------------------------------------------------
+\subsection{The additive question, and its proof}
+\label{sec:f5-Q}
+
+By Corollary~\ref{cor:f5-residual-shape} the additive case governs the composed
+family, so the following is the load-bearing combinatorial statement.
+
+\begin{theorem}[Three sets with no size divisible by three]
+\label{thm:f5-Qproved}
+Let $D_1,D_2,D_3 \subseteq \items$ with $3 \nmid \abs{D_i}$ for every $i$. Then
+some $3$-colouring splits all three within one.
+\end{theorem}
+
+The proof uses a normal form. Index the Venn regions by nonempty
+$T \subseteq \set{1,2,3}$, write $\abs{P_T} = 3a_T + b_T$ with
+$b_T \in \set{0,1,2}$, split each region as evenly as possible and let
+$\epsilon_T \in \set{0,1}^3$ with $\abs{\epsilon_T} = b_T$ record which colours
+take an extra element. The count of $D_i$ in colour $t$ is $A_i + E_{i,t}$ with
+$A_i$ independent of $t$ and $E_i = \sum_{T \ni i}\epsilon_T$, so the spread of
+$D_i$ is the spread of $E_i$, and $\sum_t E_{i,t} = \beta_i \equiv \abs{D_i}
+\pmod 3$. Call a region \emph{active} when $b_T \ne 0$; putting
+$\epsilon_T = e_{c_T}$ when $b_T = 1$ and $\epsilon_T = \mathbf 1 - e_{c_T}$ when
+$b_T = 2$, each active region simply chooses a colour $c_T$, and with
+$u_T := \sigma_T e_{c_T}$, $\sigma_T = \pm 1$ according as $b_T$ is $1$ or $2$,
+\[
+  \mathrm{spread}(E_i) = \mathrm{spread}(F_i), \qquad F_i = \sum_{T \ni i} u_T .
+\]
+Writing $p_i, q_i$ for the numbers of active regions of $D_i$ with
+$\sigma_T = +1, -1$, we have $\sum_t F_{i,t} = s_i := p_i - q_i$ and
+$\beta_i = p_i + 2q_i \equiv s_i$, so the hypothesis reads
+$s_i \not\equiv 0 \pmod 3$: \emph{no set imposes the rigid requirement that
+$F_i$ be constant.} Finally split off the private region,
+$F_i = G_i + \sigma_{\set{i}} e_{c_{\set{i}}}$ with $G_i$ summing over the
+\emph{shared} regions $\set{ij},\set{ik},\set{123}$ of set $i$.
+
+\begin{lemma}[The private knob absorbs a levelled shared part]
+\label{lem:f5-knob}
+If $\mathrm{spread}(G_i) \le 1$ and $\set{i}$ is active, some choice of
+$c_{\set{i}}$ gives $\mathrm{spread}(F_i) \le 1$, for either sign
+$\sigma_{\set{i}}$.
+\end{lemma}
+
+\begin{proof}
+The entries of $G_i$ lie in $\set{\mu,\mu+1}$. For $\sigma_{\set{i}} = +1$: if
+some entry equals $\mu$, add there and the entries stay in $\set{\mu,\mu+1}$; if
+all equal $\mu$, adding anywhere gives $(\mu+1,\mu,\mu)$, spread $1$. For
+$\sigma_{\set{i}} = -1$ subtract at a $\mu+1$ entry, or from a constant vector to
+get $(\mu-1,\mu,\mu)$.
+\end{proof}
+
+\begin{lemma}[Rescue at spread two]
+\label{lem:f5-knob2}
+If $\set{i}$ is active and $G_i$ has entries $\set{\mu,\mu+1,\mu+2}$, then either
+sign admits a choice of $c_{\set{i}}$ with $\mathrm{spread}(F_i) \le 1$.
+\end{lemma}
+
+\begin{proof}
+For $+1$ add at the $\mu$ entry, giving $\set{\mu+1,\mu+1,\mu+2}$; for $-1$
+subtract at the $\mu+2$ entry, giving $\set{\mu,\mu+1,\mu+1}$.
+\end{proof}
+
+By Lemma~\ref{lem:f5-knob}, if the four shared colours can be chosen so that
+every $G_i$ has spread at most $1$ then every set is satisfied --- those with an
+inactive private because $F_i = G_i$, those with an active private by the knob.
+The conditions on $G_i$ are read off directly: with two regions, equal signs
+demand different colours and opposite signs demand equal ones; with three
+regions, all signs equal demands three distinct colours, and a $2$--$1$ split
+demands that the minority's colour lie among the two majority colours.
+
+\begin{proof}[Proof of Theorem~\ref{thm:f5-Qproved}]
+Let $S \subseteq \set{12,13,23,123}$ be the active shared regions and write
+$a = \sigma_{12}$, $b = \sigma_{13}$, $c = \sigma_{23}$, $w = \sigma_{123}$.
+Negating every sign negates every $F_i$ and preserves spreads, so we may take
+$w = +$ when $123 \in S$.
+
+\emph{$123 \notin S$.} Each $G_i$ spans at most two regions. If $\abs{S} \le 1$
+every $G_i$ spans at most one and there is nothing to satisfy. If $\abs{S} = 2$,
+say $S = \set{12,13}$, only $G_1$ spans two regions and its single condition is
+satisfiable. If $S = \set{12,13,23}$ and $a = b = c$, all three conditions read
+``colours differ'', so take $c_{12},c_{13},c_{23}$ pairwise distinct. Otherwise
+exactly two signs agree, say $a = b \ne c$; then $G_1$ demands
+$c_{12} \ne c_{13}$ while $G_2,G_3$ demand $c_{12} = c_{23}$ and
+$c_{13} = c_{23}$, which is inconsistent. But $a = -c$ gives
+$s_2 = \sigma_{\set{2}}[\text{active}]$, so $\set{2}$ must be active, and
+likewise $\set{3}$. Set $2$'s three regions then carry signs
+$\set{\sigma_{\set{2}}, a, -a}$, a $2$--$1$ split, whose minority condition is
+met by choosing $c_{\set{2}}$ --- equal to the minority's colour if $\set{2}$
+lies in the majority, or to either majority colour if $\set{2}$ is the minority.
+Set $3$ likewise, leaving only $c_{12} \ne c_{13}$.
+
+\emph{$123 \in S$.} If $S = \set{123}$ every $G_i = u_{123}$. If
+$S = \set{123,12}$ then $G_3$ is automatic and $G_1, G_2$ impose the same
+two-region condition. If $S = \set{123,12,13}$ there are four sign patterns: for
+$a = b = +$ take $c_{12},c_{13},c_{123}$ distinct, which meets $G_1$'s
+all-distinct demand and both disequalities; for $a = +, b = -$ take
+$c_{123} = c_{13}$ and $c_{12}$ different, and $G_1$'s minority condition on
+$\set{13}$ already holds; $a = -, b = +$ is symmetric; and for $a = b = -$ take
+all three equal, which meets both equalities and $G_1$'s minority condition on
+$\set{123}$.
+
+Finally $S = \set{123,12,13,23}$, where every $G_i$ spans three regions. For
+$(a,b,c) = (+,+,-)$ take $c_{12},c_{13},c_{123}$ distinct and $c_{23} = c_{123}$;
+for $(+,-,+)$ take $c_{12},c_{23},c_{123}$ distinct and $c_{13} = c_{123}$;
+$(-,+,+)$ is symmetric; and for each of $(+,-,-)$, $(-,+,-)$, $(-,-,+)$,
+$(-,-,-)$ every $G_i$ has a $2$--$1$ split and the constant colouring meets every
+minority condition. There remains $(a,b,c) = (+,+,+)$, where each $G_i$ demands
+its three colours be distinct: $G_1$ forces $(c_{12},c_{13},c_{123})$ to be a
+rainbow, $G_2$ then forces $c_{23} = c_{13}$, and $G_3$ sees a repeat, so no
+choice of the four shared colours works. Here, however,
+$s_i = \sigma_{\set{i}}[\text{active}] + 3$ for each $i$, so all three private
+regions are forced active. Take $c_{12} = A$, $c_{13} = B$, $c_{123} = C$ and
+$c_{23} = B$: then $G_1$ and $G_2$ are constant and Lemma~\ref{lem:f5-knob}
+frees sets $1$ and $2$, while $G_3 = e_B + e_B + e_C$ has three distinct entries
+and Lemma~\ref{lem:f5-knob2} frees set $3$.
+\end{proof}
+
+Both standing witnesses fall outside the hypothesis, as they must:
+Proposition~\ref{prop:no-balance} has sizes $2,3,3$ and the instance of
+Example~\ref{ex:f5-k4} has sizes $3,3,3$, each containing a size divisible by
+$3$, and both provably lack a uniformly balanced family.
+
+\begin{corollary}
+\label{cor:f5-residual-div3}
+A composed instance admitting no uniformly balanced family must contain a set
+whose size is divisible by $3$.
+\end{corollary}
+
+\begin{proof}
+Contrapositive of Corollary~\ref{cor:f5-residual-shape}.
+\end{proof}
+
+\begin{example}[The minimal obstruction]
+\label{ex:f5-k4}
+Take $D_1 = \set{1,2,3}$, $D_2 = \set{1,2,4}$, $D_3 = \set{1,3,4}$ on
+$\items = \set{1,2,3,4}$, all additive. Each has size $3$, so uniform balance
+demands each be rainbow, and the three triangles they impose have union
+$\set{12,13,23} \cup \set{12,14,24} \cup \set{13,14,34} = E(K_4)$, which is not
+$3$-colourable. So no uniformly balanced family exists --- and by
+Corollary~\ref{cor:f5-threeneeded} this is the smallest possible shape of such an
+obstruction. Yet $\Sigma \le 3$ holds easily: the family
+$\set{1},\set{2,4},\set{3}$ gives counts $(1,1,1)$, $(1,2,0)$, $(1,1,1)$, hence
+$\Sigma = 0 + 2 + 0 = 2$, two agents at spread $0$ and one at $2$ --- the
+mechanism of Corollary~\ref{cor:f5-twozero}.
+\end{example}
+
+% --------------------------------------------------------------------------
+\subsection{What the remaining gap is}
+\label{sec:f5-gap}
+
+Corollary~\ref{cor:f5-residual-div3} says the instances that matter all have a
+set of size divisible by $3$ --- precisely where
+Theorem~\ref{thm:f5-Qproved} does \emph{not} apply. So the theorem, while it
+settles the additive question, does not reach the residual. What remains splits
+by how many sizes are divisible by $3$: if two or more,
+Corollary~\ref{cor:f5-twozero} puts two agents at spread $0$ and the third must
+be shown to have spread at most $3$; if exactly one,
+Theorem~\ref{thm:f5-twoset} applied to that set and one other gives
+$\mathrm{sp} = 0$ and $\mathrm{sp} \le 1$, and the third must be shown to have
+spread at most $2$. Both follow from one symmetric statement.
+
+\begin{conjecture}[Two tight, one loose --- \textbf{open}]
+\label{conj:f5-target}
+For any three sets there is a $3$-colouring splitting two of them within one and
+the third within two.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:f5-target-suffices}
+Conjecture~\ref{conj:f5-target} implies Conjecture~\ref{conj:f5-sigma3} for every
+composed instance.
+\end{proposition}
+
+\begin{proof}
+By Corollary~\ref{cor:f5-residual-div3} some $3 \mid \abs{D_i}$, and by
+Lemma~\ref{lem:f5-rigid}(b) ``within one'' for such a set means spread $0$. Put
+it in a tight slot. If a second size is divisible by $3$, put that in the other
+tight slot for $\Sigma \le 0 + 0 + 2$; otherwise the other tight slot gives
+$\mathrm{sp} \le 1$ and $\Sigma \le 0 + 1 + 2 = 3$. Apply
+Lemma~\ref{lem:f5-compress} to transfer from the sets to the costs.
+\end{proof}
+
+The method of Theorem~\ref{thm:f5-Qproved} does \emph{not} extend to
+Conjecture~\ref{conj:f5-target}. That proof ran entirely on the hypothesis
+$s_i \not\equiv 0 \pmod 3$, used twice to force private regions active; without
+it, sets with $s_i \equiv 0$ impose the rigid requirement that $F_i$ be constant,
+which is exactly what makes obstructions of the $K_4$ shape possible. A proof of
+Conjecture~\ref{conj:f5-target} needs a different idea.
+
+What is available is a necessary condition on any counterexample. Fix the
+colouring of Theorem~\ref{thm:f5-twoset} for $D_1,D_2$, write $R$ for a region
+of their Venn diagram, $r_{R,t}$ for the number of its elements sent to colour
+$t$, and $d_R = \abs{D_3 \cap R}$.
+
+\begin{lemma}[In-region placement]
+\label{lem:f5-inregion}
+If $r_{R,\cdot}$ has spread at most $1$ and $0 \le d_R \le \abs{R}$, then some
+$x_{R,\cdot}$ with $0 \le x_{R,t} \le r_{R,t}$ and $\sum_t x_{R,t} = d_R$ has
+spread at most $1$.
+\end{lemma}
+
+\begin{proof}
+Write $d_R = 3\lambda + \rho$ and put the $\rho$ ceilings on the coordinates with
+the largest $r_{R,t}$. The floors need $\lambda \le \min_t r_{R,t}$, and
+$\min_t r_{R,t} \ge \lfloor \abs{R}/3\rfloor \ge \lfloor d_R/3\rfloor = \lambda$.
+The ceilings need $\lambda + 1 \le r_{R,t}$ on $\rho$ coordinates; if $\rho \ge
+1$ then $\abs{R} \ge 3\lambda+1$, so the largest $r_{R,t}$ is at least
+$\lambda+1$, and if $\rho = 2$ then $\abs{R} \ge 3\lambda+2$ forces the two
+largest to be at least $\lambda+1$.
+\end{proof}
+
+Each region therefore contributes $x_{R,\cdot} = \lambda_R \mathbf 1 + \delta_R$
+with $\delta_R \in \set{0,1}^3$, and $D_3$'s counts are a constant plus
+$\sum_R \delta_R$. Were the $\delta_R$ free, Lemma~\ref{lem:f5-greedy} would
+level them and $D_3$ would land within one, giving a uniformly balanced family.
+So on an instance admitting none, the placement restriction --- $\delta_{R,t}=1$
+requires $r_{R,t} \ge \lambda_R + 1$ --- must bite, giving the following.
+
+\begin{corollary}
+\label{cor:f5-counterex-shape}
+On a composed instance with no uniformly balanced family, for every choice of two
+sets to play $D_1,D_2$, some region $R$ of their Venn diagram has
+$3 \nmid \abs{R}$ and $\lfloor \abs{D_3 \cap R}/3\rfloor = \lfloor \abs{R}/3
+\rfloor$: the third set nearly fills a region whose size is not a multiple of
+three.
+\end{corollary}
+
+% --------------------------------------------------------------------------
 \subsection{Status}
 \label{sec:f5-status}
 
@@ -325,8 +781,28 @@ Corollary~\ref{cor:f5-contains-balanced} (contains Thm~\ref{thm:balanced-class})
 Corollary~\ref{cor:f5-reduction} (the reduction) & proved \\
 Proposition~\ref{prop:f5-pattern} (the unique $\Sigma = 4$ pattern) & proved \\
 Lemma~\ref{lem:f5-ivt}, Lemma~\ref{lem:f5-balance1} & proved \\
+Lemma~\ref{lem:f5-greedy} (greedy levelling, the engine) & proved \\
+Theorem~\ref{thm:f5-twoset} (two-set balance, any $k$) & proved \\
+Corollaries~\ref{cor:f5-threeneeded}, \ref{cor:f5-2balance-composed},
+  \ref{cor:f5-twozero} & proved \\
+Lemma~\ref{lem:f5-compress} (compression) and its corollaries & proved \\
+Lemma~\ref{lem:f5-indiv}, Corollary~\ref{cor:f5-needzero} & proved \\
+Lemma~\ref{lem:f5-rigid} (additive rigidity),
+  Proposition~\ref{prop:f5-rigidfail} & proved \\
+\textbf{Theorem~\ref{thm:f5-Qproved}} (no size divisible by $3$
+  $\Rightarrow$ balanced) & \textbf{proved} \\
+Corollary~\ref{cor:f5-residual-div3} (the residual has a size $3 \mid \abs{D_i}$)
+  & proved \\
+Lemma~\ref{lem:f5-inregion}, Corollary~\ref{cor:f5-counterex-shape} & proved \\
+Remark~\ref{rem:f5-retract-iff} (converse of
+  Prop.~\ref{prop:f5-rigidfail}) & \textbf{withdrawn} \\
+Remark~\ref{rem:f5-retract-div} (divisibility criterion for spread $0$)
+  & \textbf{withdrawn} \\
+\textbf{Conjecture~\ref{conj:f5-target}} (two tight, one loose)
+  & \textbf{open} \\
 \textbf{Conjecture~\ref{conj:f5-sigma3}} ($\min \Sigma \le 3$) & \textbf{open} \\
-\textbf{Conjecture~\ref{conj:f5-2balance}} (two-agent balance) & \textbf{open} \\
+\textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
+  & \textbf{open} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -342,8 +818,10 @@ equally many elements of $D_i$, which is impossible unless $3$ divides
 $\abs{D_i}$. So a counterexample needs three binary additive agents with no
 $\abs{D_i}$ divisible by $3$ and no uniformly balanced family.
 
-The two requirements pull against each other, which is the reason to expect the
-conjecture to hold. Writing $\abs{D_i} = 3q_i + r_i$, uniform balance asks the
+That route to a counterexample is now closed:
+Theorem~\ref{thm:f5-Qproved} proves no such instance exists. The two
+requirements do pull against each other, and the mechanism is exactly the one
+the theorem exploits. Writing $\abs{D_i} = 3q_i + r_i$, uniform balance asks the
 counts of $D_i$ to be $(q_i{+}1,q_i,q_i)$ or $(q_i{+}1,q_i{+}1,q_i)$ up to
 order when $r_i \ne 0$ --- in each case a free choice of which bundle is heavy.
 Only $3 \mid \abs{D_i}$ makes the count vector rigid, and it is exactly that
@@ -352,13 +830,19 @@ sets are forced rainbow and its size-two set then contradicts them. Barring
 sizes divisible by $3$ removes the rigidity that makes uniform balance fail,
 while being precisely what is needed to block spread $0$.
 
-This is a heuristic and it concerns binary additive agents only; a general
-dichotomous agent can reach spread $0$ with no divisibility condition, as
-$\cost(S) = \min(\abs{S},1)$ does on any partition into non-empty bundles.
+The catch is that this closes the wrong half. By
+Corollary~\ref{cor:f5-residual-div3} the instances that actually matter --- those
+with no uniformly balanced family --- all contain a size divisible by $3$, so
+Theorem~\ref{thm:f5-Qproved} never applies to one. It settles the additive
+question and makes Corollary~\ref{cor:f5-residual-div3} unconditional, but it
+does not reach the residual.
 \end{remark}
 
 \paragraph{Verdict.} Conjecture~\ref{conj:f5} is open, unrefuted, constructive
 and always applicable, which no earlier target in this report has been at once.
-At $n = 3$ it is reduced to Conjecture~\ref{conj:f5-sigma3}, a statement about
-partitions alone. Nothing here proves any case with $n \ge 3$, and the reduction
-should not be represented as one.
+At $n = 3$ it is reduced to Conjecture~\ref{conj:f5-target} --- two sets split
+within one and the third within two --- a statement about partitions alone, with
+Theorem~\ref{thm:f5-Qproved} disposing of the case where no size is divisible by
+three and Corollary~\ref{cor:f5-residual-div3} showing that case never arises on
+a residual instance. Nothing here proves any case with $n \ge 3$, and the
+reduction should not be represented as one.
