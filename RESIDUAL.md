@@ -1299,6 +1299,120 @@ bad alignment at every coordinate simultaneously, for all weight combinations
 $b_{123}, b_{13}, b_{23} \in \{0,1,2\}$. That is the whole remaining gap in
 $n=3$, and it is now a finite question about three vectors in $\{0,1\}^3$.
 
+### 7.16.7 The tie-break lemma, and the Target Theorem
+
+The gap of §7.16.6 closes. The point is that the bad alignment can always be
+broken, and the case split is on $b_{123}$ alone.
+
+First, a sharpening of how greedy behaves, needed because we now start from a
+nonzero vector.
+
+> **Lemma CC.** Adding a $\{0,1\}$ vector greedily — ones on the currently
+> smallest coordinates — leaves the spread at most $\max(\text{old spread}, 1)$.
+
+*Proof.* Sorted $e_1\le e_2\le e_3$. For $w=1$ the new values are
+$e_1+1,e_2,e_3$; if $e_1+1\le e_3$ the maximum is unchanged and the minimum is
+$\min(e_1+1,e_2)\ge e_1$, so the spread does not grow; otherwise
+$e_1=e_2=e_3$ and the new spread is $1$. For $w=2$ the new values are
+$e_1+1,e_2+1,e_3$: if $e_3\ge e_2+1$ the spread drops, if $e_3=e_2$ it is
+$e_2+1-\min(e_1+1,e_2)$, which is $e_3-e_1$ when $e_1+1\le e_2$ and $1$
+otherwise. For $w\in\{0,3\}$ nothing changes. $\square$
+
+> **Lemma DD (tie-break).** In the ordering of Theorem AA the tie-breaks for
+> $\epsilon_{13}$ and $\epsilon_{23}$ can be chosen so that
+> $H := \epsilon_{123}+\epsilon_{13}+\epsilon_{23}$ has spread at most $2$.
+
+*Proof.* Recall $\epsilon_{12}$ is placed greedily on $\epsilon_{123}$, and both
+$\epsilon_{13}$ and $\epsilon_{23}$ are placed greedily on
+$P := \epsilon_{123}+\epsilon_{12}$. Since $H$ is a sum of three $\{0,1\}$
+vectors, its entries lie in $[0,3]$, so spread $3$ requires **both** a coordinate
+$t$ lying in all three and a coordinate $s$ avoided by all three. Split on
+$b_{123}$.
+
+**$b_{123}=0$.** Then $H=\epsilon_{13}+\epsilon_{23}$ has entries at most $2$ and
+spread at most $2$ automatically.
+
+**$b_{123}=1$, say $\epsilon_{123}=e_a$.** Only $a$ lies in $\epsilon_{123}$, so
+the coordinate $t$ above must be $a$; it is enough to keep $a$ out of both
+$\epsilon_{13}$ and $\epsilon_{23}$. This is always possible, because $a$ is
+never *forced*: $\epsilon_{12}$ is greedy on $e_a$, hence prefers the two
+non-$a$ coordinates, and
+- $b_{12}=0$ gives $P=e_a$, where $a$ is the unique **largest**, so the two
+  smallest are non-$a$;
+- $b_{12}=1$ gives $\epsilon_{12}=e_v$ with $v\ne a$ and
+  $P=(1_a,1_v,0_w)$, whose smallest is $w$ and whose second tier $\{a,v\}$ is
+  **tied**, so a weight-$2$ choice may take $v$;
+- $b_{12}=2$ gives $\epsilon_{12}$ on both non-$a$ coordinates and $P=(1,1,1)$,
+  entirely tied, so any $b_{13}\le2$ ones may be placed off $a$.
+
+With $a$ excluded from both, $H_a = 1$ and $H_x \le 2$ for $x\ne a$, so the
+maximum is at most $2$ and the spread at most $2$.
+
+**$b_{123}=2$, say $\epsilon_{123}$ avoiding $c$.** Now $\epsilon_{123}$ avoids
+only $c$, so the coordinate $s$ above must be $c$; it is enough that at least one
+of $\epsilon_{13},\epsilon_{23}$ contains $c$. If both have weight $0$ then
+$H=\epsilon_{123}$ has spread $1$. Otherwise $c$ is always **available**, since
+$\epsilon_{12}$ is greedy on a vector that is $0$ at $c$ and $1$ at $a,b$, hence
+takes $c$ first, and
+- $b_{12}=0$ gives $P=(1_a,1_b,0_c)$ with $c$ uniquely smallest, so $c$ is
+  *forced* into any $\epsilon_{13}$ of positive weight;
+- $b_{12}=1$ gives $\epsilon_{12}=\{c\}$ and $P=(1,1,1)$, entirely tied;
+- $b_{12}=2$ gives $\epsilon_{12}=\{c\}\cup\{a\}$ say, and $P=(2_a,1_b,1_c)$,
+  whose smallest are $b$ and $c$, tied.
+
+Taking $c$ into $\epsilon_{13}$ (or $\epsilon_{23}$) gives $H_c\ge1$, while
+$H_a,H_b\ge1$ from $\epsilon_{123}$; so the minimum is at least $1$, the maximum
+at most $3$, and the spread at most $2$.
+
+In every case the choices are among coordinates that are tied for smallest, and
+Lemma W's invariant holds for *any* such choice, so sets $1$ and $2$ are
+unaffected. $\square$
+
+> **Theorem EE (Target Theorem).** For any three sets $D_1,D_2,D_3 \subseteq M$
+> there is a $3$-colouring splitting $D_1$ and $D_2$ each within **one** and
+> $D_3$ within **two**.
+
+*Proof.* Run the ordering of Theorem AA with the tie-breaks of Lemma DD. Sets $1$
+and $2$ are levelled exactly as in Theorem AA, the tie-breaking being immaterial
+to them. For set $3$, $E_3 = H + \epsilon_3$ with $\epsilon_3$ placed greedily,
+so by Lemmas DD and CC its spread is at most $\max(2,1)=2$. $\square$
+
+### 7.16.8 Conjecture 2 at $n=3$ for composed costs
+
+> **Theorem FF.** Let $n = 3$ and let every cost be composed,
+> $\cost_i(S) = f_i(\lvert S\cap D_i\rvert)$ with $f_i$ monotone and all
+> increments in $\{0,1\}$. Then Conjecture 2 holds.
+
+*Proof.* If the instance admits a uniformly balanced family, `thm:balanced-class`
+applies. Otherwise, by Corollary Q′ some $3 \mid \lvert D_i\rvert$; relabel it as
+$D_1$ and apply Theorem EE.
+
+If a second size is also divisible by $3$, put that set in the other tight slot.
+Both then have count spread within one, which Lemma H(b) upgrades to exactly $0$,
+and the third has count spread at most $2$.
+
+If exactly one size is divisible by $3$, put any other set in the second tight
+slot: $D_1$ gets count spread $0$ as before, the second at most $1$, the third at
+most $2$.
+
+Lemma O bounds each cost spread by the corresponding count spread, so
+$\Sigma \le 0+0+2 = 2$ or $\Sigma \le 0+1+2 = 3$. Lemma A then makes every
+minimum-cost assignment of that family good, which is Conjecture 2 for the
+instance. $\square$
+
+**This closes $n = 3$ on the composed family** — every instance of the form
+$\cost_i(S) = f_i(\lvert S \cap D_i\rvert)$, which includes binary additive,
+capped, threshold, and every mixture of them, and in particular every residual
+instance exhibited in §3.
+
+⚠ **It does not close $n = 3$ in general.** Lemma O, and through it Corollary Q′
+and the transfer from counts to costs, needs the cost to depend only on
+$\lvert S \cap D_i \rvert$. A dichotomous cost that is not a function of a single
+intersection size is outside the argument. Whether every $n=3$ instance reduces
+to a composed one is **not** proved — the residual instances found in §3 all
+happened to be composed, but that was a property of how they were constructed,
+not a theorem.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1344,8 +1458,12 @@ $n=3$, and it is now a finite question about three vectors in $\{0,1\}^3$.
 | Theorem I′'s "only if" direction | **RETRACTED** — forward direction only (§7.16.2) |
 | **Lemma E** | **open** — Z′ covers only instances with no size divisible by 3 |
 | **Theorem AA** (interleaved greedy: two within 1, third within 3) | **PROVED** |
-| **Theorem BB** ($n=3$ closed when **two** sizes divisible by 3) | **PROVED** — new solved case |
-| **Target Theorem** / (R) | **open** — now only for *exactly one* size divisible by 3 |
+| **Theorem BB** ($n=3$ closed when **two** sizes divisible by 3) | **PROVED** — subsumed by FF |
+| **Lemma CC** (greedy keeps spread $\le \max(\text{old},1)$) | **PROVED** |
+| **Lemma DD** (tie-break: $\mathrm{spread}(H) \le 2$) | **PROVED** |
+| **Theorem EE — the Target Theorem** | **PROVED** |
+| **Theorem FF — Conjecture 2 at $n=3$ for composed costs** | **PROVED** |
+| $n = 3$ for dichotomous costs that are **not** composed | **open** |
 | **Lemma E** ($\min \Sigma \le 3$) | **open** — reduces to (Q) on the additive side |
 | **Lemma D** (two-agent balance) | **open** |
 

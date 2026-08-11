@@ -12,11 +12,11 @@
 \section{What is Proved}
 \label{sec:results}
 
-Conjecture~\ref{conj:main} is open. Five restrictions of it are not, and they are
-collected here because together they delimit what a general proof still has to
-reach. The first four are cases of the valuation class or of the instance; the
-fifth is a criterion, and it is the only one that says anything about three
-agents in general.
+Conjecture~\ref{conj:main} is open. Several restrictions of it are not, and they
+are collected here because together they delimit what a general proof still has
+to reach. The first four are cases of the valuation class or of the instance.
+The fifth is a criterion at three agents, and it yields the last: the first case
+of the conjecture proved for any $n \ge 3$.
 
 % --------------------------------------------------------------------------
 \subsection{Four solved cases}
@@ -187,15 +187,44 @@ balanced. It therefore reaches instances admitting no uniformly balanced family
 at all --- the ones \Cref{sec:obstructions} shows no arc-based criterion can
 certify.
 
-\begin{remark}[What it leaves open]
-\label{main:rem-spread-gap}
 Theorem~\ref{main:sigma3} is conditional on a family with $\Sigma \le 3$
-existing. Whether one always does is open, and is the single statement to which
-Conjecture~\ref{conj:main} at $n = 3$ has been reduced. Two facts bound the
-question. If no uniformly balanced family exists then, since each agent can
-individually be brought to spread at most $1$ by the greedy rule of
-Theorem~\ref{main:identical}, a family with $\Sigma \le 3$ must give some agent
-spread exactly $0$. And for binary additive costs such an agent exists only when
-$3$ divides $\abs{D_i}$, so the question turns on a divisibility condition on the
-underlying sets. The full development is deferred.
+existing. Such a family does always exist for a large class of costs, and that
+gives the first case of Conjecture~\ref{conj:main} with three agents.
+
+\begin{definition}[Composed cost]
+\label{main:composed}
+A cost is \emph{composed} if $\cost_i(S) = f_i(\abs{S \cap D_i})$ for some
+$D_i \subseteq \items$ and some monotone $f_i$ with all increments in
+$\set{0,1}$.
+\end{definition}
+
+Writing $x := \abs{S \cap D_i}$, the composed costs include the binary additive
+ones $x$, the capped ones $\min(x,k)$, the threshold ones $\max(0, x-t)$, and
+any mixture of these across agents.
+
+\begin{theorem}[Three agents, composed costs]
+\label{main:n3composed}
+Conjecture~\ref{conj:main} holds for every instance with $n = 3$ in which every
+cost is composed.
+\end{theorem}
+
+The argument runs as follows; the details are deferred. If the instance admits a
+uniformly balanced family, Theorem~\ref{main:balanced-class} already applies. If
+it does not, one shows first that some $\abs{D_i}$ must be divisible by $3$, and
+then that any three sets admit a $3$-colouring splitting two of them within one
+and the third within two. Splitting within one is the same as splitting exactly
+evenly for a set whose size is divisible by $3$, so that agent is driven to
+spread $0$; a composed cost has spread at most that of its underlying set; and
+the three cost spreads come to at most $0 + 1 + 2 = 3$. Theorem~\ref{main:sigma3}
+then applies.
+
+\begin{remark}[What remains]
+\label{main:rem-spread-gap}
+Theorem~\ref{main:n3composed} does not settle $n = 3$ in general. The step from
+a set's spread to its cost's spread needs the cost to be a function of the single
+quantity $\abs{S \cap D_i}$, and a dichotomous cost need not be of that form; no
+reduction of the general case to the composed one is known. For $n \ge 4$
+nothing beyond the four cases of \Cref{sec:main-solved} is available, since
+Theorem~\ref{main:sigma3} is proved only at three agents --- its proof uses the
+fact that a simple path on three vertices has length at most two.
 \end{remark}

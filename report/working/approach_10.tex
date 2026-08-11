@@ -776,15 +776,133 @@ Corollary~\ref{cor:f5-residual-div3} every instance lacking a uniformly balanced
 family has a size divisible by $3$, and this theorem closes all those with two
 such sizes.
 
-\begin{remark}[What is left of $n=3$, and where the missing unit is]
-\label{rem:f5-lastgap}
-Exactly one configuration remains, namely that in which precisely one
-$\abs{D_i}$ is divisible by $3$; there
-Theorem~\ref{thm:f5-interleaved} yields $0 + 1 + 3 = 4$, one over budget.
-Closing it needs the third set within two, which is
-Conjecture~\ref{conj:f5-target} restricted to this single configuration.
+The missing unit is recoverable, and recovering it closes the case. Two lemmas
+are needed: a sharpening of how greedy behaves when started from a nonzero
+vector, and the tie-breaking rule itself.
 
-The unit is available in principle. In the proof of
+\begin{lemma}[Greedy does not spoil a spread]
+\label{lem:f5-greedy2}
+Adjoining a $\set{0,1}$ vector greedily --- ones on the currently smallest
+coordinates --- leaves the spread at most $\max(\text{old spread}, 1)$.
+\end{lemma}
+
+\begin{proof}
+Take sorted entries $e_1 \le e_2 \le e_3$. For weight $1$ the new entries are
+$e_1+1, e_2, e_3$: if $e_1 + 1 \le e_3$ the maximum is unchanged and the minimum
+is $\min(e_1+1,e_2) \ge e_1$, so the spread does not grow; otherwise
+$e_1 = e_2 = e_3$ and the new spread is $1$. For weight $2$ they are
+$e_1+1,e_2+1,e_3$: if $e_3 \ge e_2+1$ the spread drops; if $e_3 = e_2$ it equals
+$e_2 + 1 - \min(e_1+1,e_2)$, which is $e_3-e_1$ when $e_1+1 \le e_2$ and $1$
+otherwise. Weights $0$ and $3$ change nothing.
+\end{proof}
+
+\begin{lemma}[Tie-breaking]
+\label{lem:f5-tiebreak}
+In the ordering of Theorem~\ref{thm:f5-interleaved} the tie-breaks for
+$\epsilon_{13}$ and $\epsilon_{23}$ may be chosen so that
+$H := \epsilon_{123} + \epsilon_{13} + \epsilon_{23}$ has spread at most $2$.
+\end{lemma}
+
+\begin{proof}
+Both $\epsilon_{13}$ and $\epsilon_{23}$ are placed greedily on
+$P := \epsilon_{123}+\epsilon_{12}$, and $\epsilon_{12}$ is placed greedily on
+$\epsilon_{123}$. As $H$ is a sum of three $\set{0,1}$ vectors its entries lie in
+$[0,3]$, so spread $3$ requires both a coordinate $t$ lying in all three and a
+coordinate $s$ avoided by all three. Split on $b_{123}$.
+
+If $b_{123} = 0$ then $H = \epsilon_{13}+\epsilon_{23}$ has entries at most $2$,
+so its spread is at most $2$.
+
+If $b_{123} = 1$, say $\epsilon_{123} = e_a$, the coordinate $t$ must be $a$, so
+it suffices to keep $a$ out of both $\epsilon_{13}$ and $\epsilon_{23}$; and $a$
+is never forced. Indeed $\epsilon_{12}$, being greedy on $e_a$, prefers the two
+non-$a$ coordinates: for $b_{12} = 0$ we get $P = e_a$, in which $a$ is the
+unique \emph{largest}; for $b_{12} = 1$ we get $\epsilon_{12} = e_v$ with
+$v \ne a$ and $P = (1_a, 1_v, 0_w)$, whose smallest is $w$ and whose second tier
+$\set{a,v}$ is tied, so a weight-$2$ choice may take $v$; and for $b_{12} = 2$ we
+get $P = (1,1,1)$, entirely tied. With $a$ excluded from both, $H_a = 1$ and
+$H_x \le 2$ for $x \ne a$, so the spread is at most $2$.
+
+If $b_{123} = 2$, say $\epsilon_{123}$ avoiding $c$, then $\epsilon_{123}$ avoids
+only $c$, so the coordinate $s$ must be $c$, and it suffices that one of
+$\epsilon_{13}, \epsilon_{23}$ contain $c$. If both have weight $0$ then
+$H = \epsilon_{123}$ has spread $1$. Otherwise $c$ is available: $\epsilon_{12}$
+is greedy on a vector that is $0$ at $c$ and $1$ at $a$ and $b$, hence takes $c$
+first, so for $b_{12} = 0$ we get $P = (1_a,1_b,0_c)$ with $c$ uniquely smallest
+and therefore forced; for $b_{12}=1$ we get $\epsilon_{12} = \set{c}$ and
+$P = (1,1,1)$, tied; and for $b_{12}=2$ we get $P = (2_a,1_b,1_c)$ say, whose
+smallest are $b$ and $c$, tied. Taking $c$ gives $H_c \ge 1$, while
+$H_a, H_b \ge 1$ from $\epsilon_{123}$, so the minimum is at least $1$, the
+maximum at most $3$, and the spread at most $2$.
+
+Every choice made is among coordinates tied for smallest, and
+Lemma~\ref{lem:f5-greedy}'s invariant holds for any such choice, so sets $1$ and
+$2$ are unaffected.
+\end{proof}
+
+\begin{theorem}[Two tight, one loose]
+\label{thm:f5-target}
+For any three sets $D_1,D_2,D_3 \subseteq \items$ there is a $3$-colouring
+splitting $D_1$ and $D_2$ each within one and $D_3$ within two. That is,
+Conjecture~\ref{conj:f5-target} holds.
+\end{theorem}
+
+\begin{proof}
+Run the ordering of Theorem~\ref{thm:f5-interleaved} with the tie-breaks of
+Lemma~\ref{lem:f5-tiebreak}. Sets $1$ and $2$ are levelled exactly as there, the
+tie-breaking being immaterial to them. For set $3$ we have
+$E_3 = H + \epsilon_3$ with $\epsilon_3$ placed greedily, so by
+Lemmas~\ref{lem:f5-tiebreak} and~\ref{lem:f5-greedy2} its spread is at most
+$\max(2,1) = 2$.
+\end{proof}
+
+\begin{theorem}[Conjecture~\ref{conj:main} at three agents, composed costs]
+\label{thm:f5-n3composed}
+Let $n = 3$ and let every cost be composed,
+$\cost_i(S) = f_i(\abs{S \cap D_i})$ with $f_i$ monotone and all increments in
+$\set{0,1}$. Then Conjecture~\ref{conj:main} holds.
+\end{theorem}
+
+\begin{proof}
+If the instance admits a uniformly balanced family,
+Theorem~\ref{thm:balanced-class} applies. Otherwise
+Corollary~\ref{cor:f5-residual-div3} gives some $3 \mid \abs{D_i}$; relabel it
+$D_1$ and apply Theorem~\ref{thm:f5-target}. If a second size is divisible by
+$3$, put that set in the other tight slot; both then have count spread within
+one, which Lemma~\ref{lem:f5-rigid}(b) upgrades to exactly $0$, and the third has
+count spread at most $2$. If exactly one size is divisible by $3$, put any other
+set in the second tight slot, giving count spreads $0$, at most $1$, and at most
+$2$. Lemma~\ref{lem:f5-compress} bounds each cost spread by the corresponding
+count spread, so $\Sigma \le 2$ or $\Sigma \le 3$; and
+Theorem~\ref{thm:f5-sigma3} makes every minimum-cost assignment of that family
+good.
+\end{proof}
+
+This closes $n = 3$ on the composed family, which contains binary additive,
+capped and threshold costs and every mixture of them.
+
+\begin{remark}[What is \emph{not} closed]
+\label{rem:f5-notclosed}
+Theorem~\ref{thm:f5-n3composed} needs each cost to be a function of a single
+intersection size $\abs{S \cap D_i}$: that hypothesis is used by
+Lemma~\ref{lem:f5-compress}, and through it by
+Corollary~\ref{cor:f5-residual-div3} and by the transfer from count spreads to
+cost spreads. A dichotomous cost not of this form lies outside the argument, and
+whether every three-agent instance reduces to a composed one is \emph{not}
+proved. The residual instances exhibited in \Cref{sec:f5-gap} are all composed,
+but that reflects how they were constructed rather than a theorem about the
+residual.
+\end{remark}
+
+\begin{remark}[Superseded]
+\label{rem:f5-lastgap}
+This remark recorded the last gap before
+Lemma~\ref{lem:f5-tiebreak} closed it, and is kept because it isolates why the
+tie-break is the right move. At the time, one configuration remained --- precisely
+one $\abs{D_i}$ divisible by $3$, where
+Theorem~\ref{thm:f5-interleaved} yields $0 + 1 + 3 = 4$, one over budget.
+
+The unit is available because, in the proof of
 Theorem~\ref{thm:f5-interleaved} the spread of set $3$ reaches $3$ only if
 $\epsilon_{123}, \epsilon_{13}, \epsilon_{23}$ all place a one on some coordinate
 $t$ and all avoid some coordinate $s$. Writing
@@ -796,10 +914,9 @@ $P_s \ge P_t$, forcing $\epsilon_{12,s}=1$, $\epsilon_{12,t}=0$ and therefore
 $P_t = P_s = 1$. So the bad alignment can only arise where $P$ is \emph{tied},
 and greedy had a free choice; since Lemma~\ref{lem:f5-greedy}'s invariant holds
 for any choice among the currently smallest coordinates, re-breaking that tie
-costs sets $1$ and $2$ nothing. What is not proved is that one consistent
-tie-breaking rule avoids the alignment at every coordinate at once, for all
-weights $b_{123},b_{13},b_{23} \in \set{0,1,2}$. That is the entire remaining gap
-at $n = 3$, and it is a finite question about three vectors in $\set{0,1}^3$.
+costs sets $1$ and $2$ nothing. Lemma~\ref{lem:f5-tiebreak} carries this out,
+and the case split there is on $b_{123}$ rather than on the coordinates, which
+is what makes it finite.
 \end{remark}
 
 \begin{proposition}
@@ -866,8 +983,8 @@ three.
 \subsection{Status}
 \label{sec:f5-status}
 
-At $n = 3$ everything above is proved except the three conjectures listed last,
-and a single configuration now separates the case from being closed:
+At $n = 3$ the composed case is now closed, and what remains open is recorded at
+the foot of the table:
 
 \begin{center}\small
 \begin{tabular}{@{}ll@{}}
@@ -894,6 +1011,8 @@ Lemma~\ref{lem:f5-rigid} (additive rigidity),
 Corollary~\ref{cor:f5-residual-div3} (the residual has a size $3 \mid \abs{D_i}$)
   & proved \\
 Lemma~\ref{lem:f5-inregion}, Corollary~\ref{cor:f5-counterex-shape} & proved \\
+\textbf{Conjecture~\ref{conj:f5-sigma3}} ($\min \Sigma \le 3$), composed costs
+  & \textbf{proved} \\
 Remark~\ref{rem:f5-retract-iff} (converse of
   Prop.~\ref{prop:f5-rigidfail}) & \textbf{withdrawn} \\
 Remark~\ref{rem:f5-retract-div} (divisibility criterion for spread $0$)
@@ -902,9 +1021,13 @@ Remark~\ref{rem:f5-retract-div} (divisibility criterion for spread $0$)
   & \textbf{proved} \\
 \textbf{Theorem~\ref{thm:f5-twodiv}} ($n=3$ when two sizes are divisible by $3$)
   & \textbf{proved} \\
-\textbf{Conjecture~\ref{conj:f5-target}} (two tight, one loose)
-  & \textbf{open} (one case) \\
-\textbf{Conjecture~\ref{conj:f5-sigma3}} ($\min \Sigma \le 3$) & \textbf{open} \\
+Lemma~\ref{lem:f5-greedy2}, Lemma~\ref{lem:f5-tiebreak} (tie-breaking)
+  & proved \\
+\textbf{Theorem~\ref{thm:f5-target}} (two tight, one loose)
+  & \textbf{proved} \\
+\textbf{Theorem~\ref{thm:f5-n3composed}} (Conj.~\ref{conj:main} at $n=3$,
+  composed costs) & \textbf{PROVED} \\
+$n = 3$ for dichotomous costs that are not composed & \textbf{open} \\
 \textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
   & \textbf{open} \\
 \bottomrule
@@ -944,9 +1067,20 @@ does not reach the residual.
 
 \paragraph{Verdict.} Conjecture~\ref{conj:f5} is open, unrefuted, constructive
 and always applicable, which no earlier target in this report has been at once.
-At $n = 3$ it is reduced to Conjecture~\ref{conj:f5-target} --- two sets split
-within one and the third within two --- a statement about partitions alone, with
-Theorem~\ref{thm:f5-Qproved} disposing of the case where no size is divisible by
-three and Corollary~\ref{cor:f5-residual-div3} showing that case never arises on
-a residual instance. Nothing here proves any case with $n \ge 3$, and the
-reduction should not be represented as one.
+At $n = 3$ its consequence Conjecture~\ref{conj:f5-sigma3} is now
+\emph{proved} for composed costs, by way of
+Theorem~\ref{thm:f5-target}: two sets split within one and the third within two.
+With Theorem~\ref{thm:f5-sigma3} this gives
+Theorem~\ref{thm:f5-n3composed} --- Conjecture~\ref{conj:main} at three agents
+whenever every cost is a function of a single intersection size. That is the
+first case with $n \ge 3$ proved anywhere in this document, and it covers binary
+additive, capped and threshold costs and every mixture of them.
+
+Two things it is not. It is not $n = 3$ in general:
+Remark~\ref{rem:f5-notclosed} records that a dichotomous cost need not be
+composed, and that no reduction of the general case to the composed one is
+known. And it is not Conjecture~\ref{conj:f5}, which remains open at every
+$n \ge 4$ and is not settled at $n = 3$ either, since
+Theorem~\ref{thm:f5-n3composed} routes around it through
+Theorem~\ref{thm:f5-sigma3} rather than establishing the minimum-spread rule
+itself.
