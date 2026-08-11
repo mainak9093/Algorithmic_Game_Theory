@@ -1936,8 +1936,74 @@ deliberate adversarial construction, not just random search), a natural
 connection to a classical theorem (necklace splitting) via a proof technique
 already certified correct at $n=2$ (Lemma D), and a search space small enough
 that a real proof — rather than another exchange argument — looks plausible.
-Not yet attempted: a genuine two-dimensional discrete IVT/topological argument
-(Sperner-lemma-style) on the $(p,q)$ grid, which is the natural next step.
+
+### 7.16.18 A genuine attempt at the two-dimensional proof: the Lipschitz law, and where it stalls
+
+Attempted the two-dimensional discrete IVT / Sperner-style argument directly.
+Did not complete it. What follows is exactly how far it got.
+
+**The "every ordering works" simplification is false — checked properly this
+time.** §7.16.17's exhaustive tests happened to hit only easy triples. A
+dedicated search (rigid triples at $\abs M=4$, all $24$ orderings checked per
+triple) found genuine counterexamples: $2$ of $500$ triples have orderings
+admitting no good cut at all, at almost exactly the same rate ($\sim\!0.4\%$)
+as the analogous failure rate for Lemma D itself at two agents ($1/200$). So the
+theorem, if true, genuinely needs "some ordering," not "every ordering" —
+matching Lemma D's own logical shape, not a simplification of it.
+
+**But failing orderings are always adjacent to a working one.** For every bad
+ordering found (both failing triples, all $4$ bad orderings between them), some
+single adjacent transposition repairs it — confirmed by direct check, not
+sampling.
+
+**This sharpens into a clean empirical law.** Define $B(\sigma) := \min_{p\le q}
+\max_i \mathrm{sp}_i(B_1,B_2,B_3)$, the best achievable max-spread for a fixed
+ordering $\sigma$. Measured $\abs{B(\sigma)-B(\sigma')}$ across every
+adjacent-transposition edge touching a bad ordering (both failing $\abs M=4$
+triples, all edges) and across a large near-exhaustive sample at $\abs M=5$
+(full permutation enumeration, $400$ triples, $\sim\!190{,}000$ edges): the jump
+is **never more than $1$**, and often exactly $1$ at the boundary between a good
+and a bad ordering. $B$ is also invariant under full reversal
+($B(\sigma)=B(\sigma^{\mathrm{rev}})$ in every case checked) — unlike Lemma D's
+winner, which *always* flips under reversal, so Lemma D's specific
+transposition-invariant/reversal-flips contradiction mechanism does not carry
+over as is.
+
+**Attempted to prove the Lipschitz bound directly, and only got a weaker one.**
+For an adjacent swap of $x,y$ at the boundary of the optimal cut $(p^*,q^*)$
+(the case where the swap moves an element between $B_1$ and $B_2$, leaving
+$B_3$ untouched — the only case that can change anything), write
+$B_1'=B_1-x+y$, $B_2'=B_2-y+x$. For any agent, removing one element changes
+cost by $0$ or $-1$, then adding one element changes it by $0$ or $+1$, giving
+$\cost_i(B_1')-\cost_i(B_1) \in \set{-1,0,1}$ and independently
+$\cost_i(B_2')-\cost_i(B_2)\in\set{-1,0,1}$, with $\cost_i(B_3)$ fixed. Since
+both $B_1,B_2$ (but not $B_3$) can shift, and in principle in *opposite*
+directions relative to whatever was the max/min, the crude bound this gives is
+$\abs{B(\sigma)-B(\sigma')}\le 2$, not $1$. Looked for a conservation law
+tying the two shifts together — e.g. via the invariant $\cost_i(B_1\cup B_2)$,
+which genuinely is unchanged by the swap (elements only move between $B_1,B_2$,
+never in or out of their union) — but did not find the mechanism ruling out
+both shifts landing unfavourably at once. This is an identified, unclosed gap:
+the empirical law is stronger than what was derived.
+
+**The strategy this points to, precisely.** Take $\sigma^*$ minimising
+$B(\sigma)$ over all $m!$ orderings. If the Lipschitz bound of $1$ were proved,
+$\sigma^*$ being a global minimum forces $B(\sigma')\ge B(\sigma^*)$ for every
+neighbour $\sigma'$; combined with Lipschitz-$1$, every neighbour has
+$B(\sigma')\in\set{B(\sigma^*),B(\sigma^*)+1}$. The remaining step — deriving a
+contradiction from "$B(\sigma^*)\ge2$ and every adjacent transposition can only
+keep it the same or make it worse" using the specific unit-step marginal
+structure at the optimal cut — was not attempted; it is the natural target for
+a further attempt and is analogous in spirit to how
+Proposition~`prop:f5-pattern` characterised the unique $\Sigma=4$ obstruction
+in the assignment-layer problem, but has not been carried out here.
+
+**Status: open.** Not closed by this attempt. What is now on record: a false
+simplification correctly ruled out, a clean and heavily-tested (though not
+proved) Lipschitz law, confirmation that Lemma D's specific reversal-parity
+mechanism does not transfer, and a precisely-stated extremal-argument strategy
+with its exact missing step identified. This is substantially more structure
+than was available before this attempt, even without a proof.
 
 ### 7.17 Status
 
@@ -2004,6 +2070,10 @@ Not yet attempted: a genuine two-dimensional discrete IVT/topological argument
 | **Lemma D / Conjecture~`conj:f5-2balance`** (two agents, general costs, any 2-way split) | **overwhelmingly likely true, PROVED pending one step** (§7.16.15) — architecture (§§1-4,6,7) independently verified; §5's conclusion has $3.3M$+ trials with zero violations; §5's sign mechanism not independently reconstructed after two attempts; not yet promoted to LaTeX |
 | (Q′) search with fully general (not just bottleneck) random costs (§7.16.16) | **negative on $100{,}000{+}$ triples** at $\abs M=4,5,6,7$ — broadens, does not replace, the evidence toward (Q′) $=$ No |
 | **contiguous 2-cut conjecture** (§7.16.17) — strictly implies (Q′) via a necklace-splitting-style claim | **open, strong evidence** — exhaustive at $\abs M{=}4$ ($400$ triples incl. the adversarial cyclic witness), randomized at $\abs M{=}6,7,8$; two proof strategies attempted and stalled; most promising open lead |
+| "every ordering works" simplification (§7.16.18) | **REFUTED** — genuine failing orderings exist, $\sim0.4\%$ rate, matching Lemma D's own failure rate |
+| $B(\sigma)$ Lipschitz-$1$ law under adjacent transposition (§7.16.18) | **open, exhaustively/near-exhaustively tested** — jump never $>1$ at $\abs M=4,5$; only a Lipschitz-$2$ bound derived by hand; the tighter mechanism not found |
+| $B(\sigma)$ invariance under full reversal (§7.16.18) | **tested, holds** — unlike Lemma D's winner, which always flips; rules out reusing Lemma D's exact contradiction mechanism |
+| extremal-argument proof strategy for the contiguous conjecture (§7.16.18) | **precisely stated, not carried out** — needs a structural contradiction from local optimality at the unit-step level, analogous to Prop.~`prop:f5-pattern` |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
