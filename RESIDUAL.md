@@ -2265,6 +2265,48 @@ to be false, with the general chain-based proof attempt identified and its
 exact sticking point named. This is substantially closer to a full proof of
 Conjecture~`conj:main` at $n=3$ than anything found earlier in this session.
 
+### 7.16.24 Confirming the mechanism directly: a pure AND-gadget is forced to be removal-easy
+
+Pushed on *why* large minimal witnesses (a "pure $k$-AND" with $k\ge3$, no
+smaller subset triggering it, the one structure that would break the pattern)
+never coexist with removal-hardness — tested this directly rather than only
+by broad random search.
+
+**A bare $3$-AND is removal-easy, exactly as hypothesised.** Built
+$\cost(S) = [\set{p,q,r}\subseteq S] + [v\in S]$ (a pure $3$-AND term plus an
+unrelated singleton term, $\cost(X)=2$ on $X=\set{p,q,r,v}$) and checked
+removal directly: $\cost(X-p)=\cost(X-q)=\cost(X-r)=1$ — every one of
+$p,q,r$ is individually pivotal, because nothing else can substitute for a
+missing member of the AND. So a bare $k$-AND with $k\ge3$ makes $X$
+removal-*easy*, never removal-hard — consistent with never appearing as an
+obstruction to the $\le2$ insertion-witness claim.
+
+**Adding the backup that would rescue $p,q,r$ from single-removal
+reintroduces a small witness by construction.** Built
+$\cost(S) = [\set{p,q,r}\subseteq S \lor v_1\in S \lor w_1\in S] + [z\in S]$.
+Now $\cost(X-p)=\cost(X-q)=\cost(X-r)=2$ — $p,q,r$ are protected, exactly
+because $v_1,w_1$ back them up. But $v_1,w_1,z$ are each themselves a
+size-$1$ insertion witness ($\cost(\set{v_1})=\cost(\set{w_1})=\cost(\set z)=1$),
+confirming directly: the *same* backup elements that make the AND-gadget's
+members removal-safe are the small witnesses the conjecture needs. There is
+no way seen so far to protect a large AND-witness from single-removal without
+introducing exactly this kind of small independent witness alongside it.
+
+**This is the shape a complete proof would take**, though it is not yet one:
+by strong induction on the size of a minimal cost-$1$ witness $A\subseteq X$.
+Base cases $\abs A\in\set{1,2}$ give the claim directly. For $\abs A\ge3$,
+every $a\in A$ is pivotal *within $A$* (minimality), so removal-hardness of
+$X$ (which says $a$ is *not* pivotal within the larger $X$) forces some
+"backup" mechanism specific to $X\setminus A$ to be doing the protecting —
+and by Lemma ivt applied to $X - a$ (which still has cost $2$, since $a$
+wasn't pivotal), that backup manifests as a witness $Z_a \subseteq X - a$ with
+$\cost(Z_a)=1$. The two hand-built examples above show concretely what $Z_a$
+looks like when it exists cleanly ($\set{v_1}$ or $\set{w_1}$ — size $1$).
+What is missing is a general argument that $Z_a$ (or a minimal witness inside
+it) is *always* smaller than $A$ itself, which would close the induction; this
+has not been established for arbitrary dichotomous cost structures, only
+confirmed on hand-built and randomly-generated instances.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2344,6 +2386,8 @@ Conjecture~`conj:main` at $n=3$ than anything found earlier in this session.
 | "no single ⟹ some pair works" as a standalone single-cost lemma (§7.16.22) | **REFUTED at $\cost(X)=2$ exactly** — $357$ explicit counterexamples; the 2-move mechanism cannot be single-agent, must be emergent from rigidity + all 3 agents jointly |
 | overall assessment: six independent proof strategies for (Q′) | **all attempted, each blocked for an identified reason** — composed no-pivotal machinery, up-set chain, one-element induction, Sperner/necklace, anchored Lemma D, local-search 2-move; genuinely new mathematics needed to close it |
 | **removal-hardness $\Rightarrow$ small insertion-witness** (the actual 2-move mechanism, §7.16.23) | **open, extremely strongly tested** — $485/485$ and $546/546$ ($545$ at size $1$, $1$ at size $2$, zero at size $\ge3$); precise chain-based proof attempt identified with exact sticking point named; the single remaining piece needed to close Conjecture 2 at $n=3$ in full |
+| bare $k$-AND ($k\ge3$) forced removal-easy (§7.16.24) | **confirmed directly** — every AND-member individually pivotal when nothing backs it up |
+| backup elements protecting an AND-gadget $=$ the small witnesses (§7.16.24) | **confirmed directly** on two hand-built examples — the induction's shape is right, general "$Z_a$ always smaller than $A$" step not yet established |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
