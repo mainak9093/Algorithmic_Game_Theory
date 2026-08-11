@@ -2040,8 +2040,53 @@ argument (§7.16.19, false in general). What survives, heavily tested and not
 yet explained: $B(\sigma)$ itself — the *joint*, re-optimised quantity — does
 appear to be genuinely Lipschitz-$1$, and reversal-invariant. A proof, if one
 exists along these lines, has to work with the three-agent interaction and the
-cut-choice freedom directly, not reduce to a single agent or a fixed cut. This
-is where the trail currently ends; nothing further was found in this pass.
+cut-choice freedom directly, not reduce to a single agent or a fixed cut.
+
+### 7.16.20 What actually repairs the damage, and a reformulation
+
+Pushed one step further: in every one of the $59$ same-cut-jump-$\ge\!2$ cases
+found in §7.16.19, checked *which* mechanism rescues $B(\sigma)$ — another
+agent already being at least as bad at the old cut, or the new ordering
+admitting a genuinely different repairing cut. The result is completely
+one-sided: **mechanism (a) never fires ($0/59$); mechanism (b) always does
+($59/59$).** So the rescue is never "someone else was already the bottleneck"
+— it is always a different cut.
+
+**The repairing cut has an overwhelmingly common, simple form.** In $52$ of
+the $59$ cases ($88\%$), the repairing cut for $\sigma'$ is exactly
+$(p^*+1, q^*)$ — the $p$-boundary shifted by one, $q$ unchanged. Tracing
+through what this means concretely: writing $x,y$ for the swapped pair
+($x$ = old last element of $B_1$, $y$ = old first element of $B_2$), the cut
+$(p^*+1,q^*)$ applied to the *swapped* ordering gives
+$B_1^{\text{new}} = B_1 \cup \set y$ and $B_2^{\text{new}} = B_2 \setminus \set
+y$ — **exactly the partition reached by moving the single element $y$ from
+$B_2$ to $B_1$ in the *original*, unswapped ordering, with $x$ never touched
+at all.** The transposition-and-cut-shift is, in the overwhelming majority of
+repair cases, just an elaborate way of describing a single-element move
+between adjacent bundles.
+
+**This reframes the missing lemma.** It suggests the object actually doing the
+work is not the transposition/reversal structure that powers Lemma D, but a
+more basic *anchored* two-way balance statement:
+
+> **Anchored two-way balance (candidate lemma, untested beyond the above).**
+> Fix $B_3 \subseteq \items$ and write $v_i := \cost_i(B_3)$ for each agent.
+> For $L := \items \setminus B_3$, there is a split $L = B_1 \sqcup B_2$ such
+> that for every agent $i$, the three values $\set{\cost_i(B_1), \cost_i(B_2),
+> v_i}$ span a window of width at most $1$.
+
+If true, this is exactly Lemma D with a *third, externally fixed* target
+value added to the window condition for each agent, rather than only requiring
+$B_1,B_2$ close to each other. It is a strictly different (and on its face
+harder) statement than Lemma D itself — Lemma D's own winner/parity proof
+does not obviously carry an external anchor — and it has not been tested
+independently of the contiguous-cut experiments above. This is the most
+concrete open target to emerge from this investigation: proving the anchored
+lemma (for some judicious choice of $B_3$, e.g. via the same
+divisibility/rigidity machinery used for composed costs, or by a genuinely new
+argument) would complete the contiguous 2-cut conjecture, hence (Q′), hence
+Conjecture~`conj:main` at $n=3$ in full generality. It has not yet been
+attempted. This is where the trail currently ends.
 
 ### 7.17 Status
 
@@ -2113,6 +2158,9 @@ is where the trail currently ends; nothing further was found in this pass.
 | $B(\sigma)$ invariance under full reversal (§7.16.18) | **tested, holds** — unlike Lemma D's winner, which always flips; rules out reusing Lemma D's exact contradiction mechanism |
 | extremal-argument proof strategy for the contiguous conjecture (§7.16.18) | **precisely stated, not carried out** — needs a structural contradiction from local optimality at the unit-step level, analogous to Prop.~`prop:f5-pattern` |
 | single-agent same-cut Lipschitz-1 (the natural completion of §7.16.18) | **REFUTED** (§7.16.19) — explicit jump-of-2 instance found, $(2,1,1)\to(3,0,1)$, not rare ($\sim\!10\%$ hit rate) |
+| rescue mechanism when same-cut jump $\ge2$ occurs (§7.16.20) | **always re-optimised cut, never another agent** — $59/59$, $0/59$ |
+| repairing cut $=$ single-element move (§7.16.20) | **$88\%$ of cases** ($52/59$) — cut shift $(+1,0)$ is algebraically a move of one element between adjacent bundles |
+| **anchored two-way balance** (candidate lemma, §7.16.20) | **open, not yet tested** — the most concrete remaining target; would complete the contiguous conjecture, hence (Q′), hence Conjecture 2 at $n=3$ in general |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
