@@ -1681,7 +1681,69 @@ composed costs) but by an argument on the general unit-step structure of a
 dichotomous cost directly — e.g.\ an exchange/potential argument in the style of
 Lemma K″ but stated for the up-set chain $U_1 \supseteq U_2 \supseteq \dots$ that
 any dichotomous cost admits ($U_\ell = \set{S : \cost(S) \ge \ell}$), rather than
-for a single underlying set $D_i$. This has not been attempted yet.
+for a single underlying set $D_i$.
+
+### 7.16.14 The direct attempt on (Q′): where it breaks, precisely
+
+Attempted the up-set-chain generalisation of Lemma K″. It does not go through, and
+the reason is structural, not a missing trick.
+
+**Why the composed machinery works at all.** Lemma K″'s proof needs exactly one
+thing: an element in agent $i$'s private Venn region has a *context-independent*
+marginal — adding it changes $\cost_i$ by exactly $1$ regardless of what else is
+already present, because $\cost_i(S) = f_i(\abs{S \cap D_i})$ collapses everything
+relevant to agent $i$ into a single running count. That single count is the
+"state" the interleaved-greedy ordering of Theorem~\ref{thm:f5-interleaved}
+tracks across all three agents at once via the seven-region frame. A general
+dichotomous cost has no such collapse: an element's marginal for agent $i$ can be
+$1$ in one context and $0$ in another, so there is no finite-dimensional
+coordinate system to run an analogous ordering on.
+
+**The one-element-induction route gets stuck.** The natural substitute: induct on
+$\abs{\items}$, remove an element $x$, get a balanced partition of $\items
+\setminus \set{x}$ by the inductive hypothesis (assuming, as needed, that
+removing $x$ preserves rigidity of all three agents — a separate case to handle),
+then insert $x$ into whichever part stays safe for every agent. Working out
+"safe": agent $i$ is safe at part $t$ iff $t$ currently holds agent $i$'s minimum
+level, or $x$'s marginal there is $0$. This can fail for *two* agents already: take
+agent $1$'s only safe part to be $\set{1}$ (marginal $1$ elsewhere), agent $2$'s
+only safe part to be $\set{2}$ (marginal $1$ elsewhere), and arrange $x$'s
+marginals so part $3$ is unsafe for both. Then every one of the three insertion
+points breaks some agent. Concretely: parts $\set{1},\set{2},\set{3}$ currently at
+levels $(\mu_1,\mu_1{+}1,\mu_1{+}1)$ for agent $1$ and $(\mu_2{+}1,\mu_2,\mu_2{+}1)$
+for agent $2$, with $x$'s marginal $1$ at every part except its own current
+minimum for each agent. No single insertion is simultaneously safe. One-element
+induction is not salvageable without a batched, look-ahead move, and none is in
+hand.
+
+**Dichotomous costs also lack a pivotal-element property.** The star-cover gadget
+of §7.16.9's discussion ($\cost(S)=1$ iff $v\in S$ or all of a leaf set
+$\subseteq S$) has $\cost(\items)=1$ with \emph{no} single element whose removal
+lowers the cost when both witnesses are present: removing $v$ alone leaves the
+leaves intact (still cost $1$), removing any one leaf alone leaves $v$ intact
+(still cost $1$). Matroid rank functions always have a pivotal element for
+independent sets (the exchange axiom); general dichotomous costs do not. This
+kills local-exchange repair arguments generically, not just the specific
+induction above.
+
+**Broadened the counterexample search accordingly**, since a genuine obstruction
+to the easy proof raises the prior on a counterexample existing. Targeted the
+*two-agent* general claim directly (Conjecture~`conj:f5-2balance`, itself still
+open) with $5634$ further random rigid bottleneck-cost pairs on a shared
+$6$-element ground set: zero violations, on top of the $427$ three-agent trials
+and two hand-built adversarial constructions already on record.
+
+**Status: (Q′) is open, general Lemma D (two-agent) is open, and the natural
+proof route is now known to be blocked rather than merely untried.** The
+remaining candidate directions, none attempted:
+(a) a genuinely global argument — LP duality or a flow formulation exploiting
+that $n=3$ is a very low-dimensional discrepancy problem, rather than local
+exchange; (b) prove two-agent Lemma D first, as a strictly smaller target with
+the same core obstruction but one fewer moving part; (c) resume the
+counterexample hunt, but away from the bottleneck family — bottleneck costs have
+a compact $3$-number sufficient statistic per partition ($a_t,b_t,e_t$) and may
+simply be too tame; a real counterexample, if one exists, likely needs a cost
+with no bounded-size sufficient statistic at all.
 
 ### 7.17 Status
 
@@ -1742,6 +1804,10 @@ for a single underlying set $D_i$. This has not been attempted yet.
 | audit of second findings pass (§7.16.12) | **done** — confirms Theorem EE/FF independently; no new math; one catalog of reported (unverified) leads for (Q′) |
 | unbounded family of rigid non-composed costs (§7.16.13) | **proved** — corrects the "must be small" reading of the §7.16.9 witness |
 | hunt for a (Q′) counterexample (§7.16.13) | **negative on every attempt** — 2 adversarial hand-constructions + 427 random rigid triples, all admit uniform balance; evidence toward (Q′) = No, not a proof |
+| direct proof attempt on (Q′) via up-set-chain generalisation of Lemma K″ (§7.16.14) | **blocked, identified precisely** — no context-independent "private lever" outside composed costs |
+| one-element induction for (Q′) | **fails** — explicit two-agent stuck configuration exhibited |
+| pivotal-element / exchange property for general dichotomous costs | **REFUTED** — star-cover witness with no removable element |
+| **Conjecture~`conj:f5-2balance`** (Lemma D, two agents, general costs) | **open** — $6061$ combined random-trial attempts, zero counterexamples |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
