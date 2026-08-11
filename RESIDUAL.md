@@ -964,6 +964,238 @@ when two of the shared majority regions coincide. Choosing the three pair
 residues distinct discharges most of it; a single sub-case survives, and **(Q)
 is not closed.**
 
+### 7.16.1 (Q) is PROVED
+
+*This supersedes an earlier draft of this subsection organised around keeping
+the "spine" $c_{12},c_{13},c_{123}$ rainbow. That was the wrong organising idea —
+the hard case needs colours to **coincide** so that opposite signs cancel, not to
+be distinct. The right lemma is K″ below, and with it the whole of (Q) falls out
+by a case exhaustion on the active **shared** regions alone.*
+
+Write $u_T := \sigma_T e_{c_T}$ for each active region, so
+$F_i = \sum_{T \ni i} u_T$, and split off the private region:
+$$F_i = G_i + \sigma_{\{i\}} e_{c_{\{i\}}}, \qquad G_i := \sum_{T \ni i,\ T \ne \{i\}} u_T ,$$
+with the second term absent when $\{i\}$ is inactive. $G_i$ ranges over the
+**shared** regions of set $i$, namely $\{ij\},\{ik\},\{123\}$.
+
+> **Lemma K″ (the private knob absorbs any levelled shared part).** If
+> $\mathrm{spread}(G_i) \le 1$ and $\{i\}$ is active, then some choice of
+> $c_{\{i\}}$ gives $\mathrm{spread}(F_i) \le 1$ — for **either** sign
+> $\sigma_{\{i\}}$.
+
+*Proof.* Entries of $G_i$ lie in $\{\mu,\mu+1\}$. If $\sigma_{\{i\}}=+1$: when
+some entry equals $\mu$, add there and the entries stay in $\{\mu,\mu+1\}$; when
+all equal $\mu$, adding anywhere gives $(\mu+1,\mu,\mu)$, spread $1$. If
+$\sigma_{\{i\}}=-1$: symmetrically, subtract at a $\mu+1$ entry, or from a
+constant vector to get $(\mu-1,\mu,\mu)$. $\square$
+
+> **Lemma K‴ (rescue at spread 2, all values distinct).** If $\{i\}$ is active
+> and $G_i$ has entries $\{\mu,\mu+1,\mu+2\}$, then either sign admits a choice
+> of $c_{\{i\}}$ with $\mathrm{spread}(F_i)\le1$.
+
+*Proof.* $\sigma_{\{i\}}=+1$: add at the $\mu$ entry, giving
+$\{\mu+1,\mu+1,\mu+2\}$. $\sigma_{\{i\}}=-1$: subtract at the $\mu+2$ entry,
+giving $\{\mu,\mu+1,\mu+1\}$. $\square$
+
+**The reduction.** By K″, if the four shared colours can be chosen so that every
+$G_i$ has spread $\le 1$, then every set is satisfied — those with an inactive
+private because $F_i = G_i$, those with an active private by the knob. So **(Q)
+reduces to a problem in the four shared variables only.** The needed conditions,
+read off the $k$-vector analysis of §7.10.1:
+
+| $\lvert G_i\rvert$ | condition for $\mathrm{spread}(G_i)\le1$ |
+|---|---|
+| $0$ or $1$ region | automatic |
+| $2$ regions | signs **equal** $\Rightarrow$ colours differ; signs **opposite** $\Rightarrow$ colours equal |
+| $3$ regions | signs all equal $\Rightarrow$ all three colours distinct; signs split $2$–$1$ $\Rightarrow$ the minority's colour lies in $\{$the two majority colours$\}$ |
+
+> **Theorem Z′.** (Q) holds: any three sets none of whose sizes is divisible by
+> $3$ admit a uniformly balanced $3$-colouring.
+
+*Proof.* Let $S \subseteq \{12,13,23,123\}$ be the active shared regions, and
+write $a=\sigma_{12}$, $b=\sigma_{13}$, $c=\sigma_{23}$, $w=\sigma_{123}$. The
+hypothesis is $s_i \not\equiv 0 \pmod 3$, where $s_i$ sums $\sigma_T$ over **all**
+active regions containing $i$, private included. Negating every sign negates
+every $F_i$ and preserves spreads, so we may fix $w=+$ whenever $123 \in S$.
+
+**(A) $123 \notin S$.** Each $G_i$ spans at most two regions.
+
+*(A1) $\lvert S\rvert \le 1$:* every $G_i$ has at most one region — automatic.
+
+*(A2) $\lvert S\rvert = 2$, say $S=\{12,13\}$:* only $G_1$ spans two regions;
+$G_2 = u_{12}$ and $G_3 = u_{13}$ are automatic. Satisfy $G_1$'s single
+two-region condition.
+
+*(A3) $S=\{12,13,23\}$:* all three $G_i$ span two regions. If $a=b=c$, all three
+conditions read "colours differ", so take $c_{12},c_{13},c_{23}$ pairwise
+distinct. Otherwise exactly two signs agree, say $a=b\ne c$; then $G_1$ demands
+$c_{12}\ne c_{13}$ while $G_2, G_3$ demand $c_{12}=c_{23}$ and $c_{13}=c_{23}$ —
+inconsistent. But $a=-c$ gives $s_2 = \sigma_{\{2\}}[\text{active}] + a + c
+= \sigma_{\{2\}}[\text{active}]$, so $\{2\}$ must be active or $s_2 = 0$;
+likewise $\{3\}$. With $\{2\}$ active, set $2$'s three regions
+$\{2\},\{12\},\{23\}$ carry signs $\{\sigma_{\{2\}}, a, -a\}$, necessarily a
+$2$–$1$ split, and the minority condition is met by choosing $c_{\{2\}}$ — equal
+to the minority's colour if $\{2\}$ is in the majority, or to either majority
+colour if $\{2\}$ is itself the minority. Set $3$ likewise. Only $G_1$'s
+condition remains: take $c_{12}\ne c_{13}$.
+
+**(B) $123 \in S$, $w=+$.**
+
+*(B0) $S=\{123\}$:* every $G_i = u_{123}$, spread $1$.
+
+*(B1) $S=\{123,12\}$:* $G_3 = u_{123}$ is automatic; $G_1$ and $G_2$ impose the
+same two-region condition on $(c_{12},c_{123})$. Satisfy it.
+
+*(B2) $S=\{123,12,13\}$:* $G_1$ spans three regions, $G_2$ and $G_3$ two. Four
+sign patterns:
+- $a=b=+$: $G_2,G_3$ demand $c_{12}\ne c_{123}$ and $c_{13}\ne c_{123}$; $G_1$
+  (all signs $+$) demands all three distinct. Take them distinct — this
+  satisfies all three.
+- $a=+, b=-$: $G_2$ demands $c_{12}\ne c_{123}$, $G_3$ (opposite signs) demands
+  $c_{13}=c_{123}$, and $G_1$ has minority $\{13\}$, needing
+  $c_{13}\in\{c_{12},c_{123}\}$ — already true. Take $c_{123}=c_{13}=A$,
+  $c_{12}=B$.
+- $a=-, b=+$: symmetric.
+- $a=b=-$: $G_2,G_3$ demand $c_{12}=c_{123}$ and $c_{13}=c_{123}$; $G_1$ has
+  minority $\{123\}$, needing $c_{123}\in\{c_{12},c_{13}\}$ — already true. Take
+  all three equal.
+
+*(B3) $S=\{123,12,13,23\}$:* every $G_i$ spans three regions. Up to the global
+sign flip there are eight patterns $(a,b,c)$ with $w=+$.
+- $(a,b,c)=(+,+,+)$: each $G_i$ demands its three colours be distinct. From
+  $G_1$, $(c_{12},c_{13},c_{123})$ is a rainbow, say $(A,B,C)$; $G_2$ then forces
+  $c_{23}=B$; and $G_3$ sees $(B,B,C)$ — **not** distinct. No choice of the four
+  shared colours works. But here $s_1 = \sigma_{\{1\}}[\text{active}]+3$, so
+  $\{1\}$ must be active, and likewise $\{2\},\{3\}$ — **all three privates are
+  forced active by the hypothesis.** Take $c_{12}=A$, $c_{13}=B$, $c_{123}=C$,
+  $c_{23}=B$. Then $G_1 = e_A+e_B+e_C$ and $G_2 = e_A+e_B+e_C$ are constant, so
+  K″ frees sets $1$ and $2$; and $G_3 = e_B+e_B+e_C$ has entries $\{0,2,1\}$ —
+  three distinct values — so K‴ frees set $3$.
+- $(+,+,-)$: $G_1$ demands $c_{12},c_{13},c_{123}$ distinct; $G_2$ and $G_3$ have
+  minority $\{23\}$, demanding $c_{23}\in\{c_{12},c_{123}\}$ and
+  $c_{23}\in\{c_{13},c_{123}\}$. Take $(A,B,C)$ distinct and $c_{23}=C$.
+- $(+,-,+)$: $G_2$ demands $c_{12},c_{23},c_{123}$ distinct; $G_1,G_3$ have
+  minority $\{13\}$. Take $c_{12}=A,c_{23}=B,c_{123}=C$ and $c_{13}=C$.
+- $(-,+,+)$: symmetric to the previous.
+- $(+,-,-)$, $(-,+,-)$, $(-,-,+)$, $(-,-,-)$: in each, every $G_i$ has a $2$–$1$
+  sign split, and the **constant** colouring satisfies every minority condition.
+  Take all four shared colours equal.
+
+Every case is discharged, so (Q) holds. $\square$
+
+**Verification against the standing witnesses.** `prop:no-balance` has sizes
+$2,3,3$ and the $K_4$ instance has sizes $3,3,3$; both contain a size divisible
+by $3$, so both fall **outside** (Q)'s hypothesis — exactly as required, since
+both provably lack a uniformly balanced family. Theorem Z′ does not contradict
+them.
+
+> **Corollary Q′ (now unconditional).** A residual composed instance must contain
+> a set whose size is divisible by $3$.
+
+*Proof.* If no $\lvert D_i\rvert$ were divisible by $3$, Theorem Z′ gives a
+colouring balancing all three underlying sets within one, and Lemma O carries
+that to the composed costs — a uniformly balanced family, contradicting S4.
+$\square$
+
+This removes the conditional from §7.12: the prediction that every residual
+instance contains a size-$3$ set, checked earlier against the 46 known residual
+instances, is now a theorem rather than a consequence of an open conjecture.
+
+### 7.16.2 What Theorem Z′ does and does not settle
+
+**It closes Lemma E on the all-additive side in one direction only.** For an
+all-binary-additive instance with no $\lvert D_i\rvert$ divisible by $3$,
+Theorem Z′ gives uniform balance, hence $\Sigma \le 3$, hence Lemma E. But an
+additive instance *with* a size divisible by $3$ is not covered: Corollary R
+supplies one agent at spread $0$, and the other two must still be shown to sum to
+at most $3$ — which is exactly (R), i.e. the **Target Theorem**, still open.
+
+**⚠ A correction to Theorem I′'s "only if".** Theorem I′ was stated as an
+equivalence — "Lemma E is false **iff** some instance has three rigid agents and
+no uniformly balanced family". The forward direction is proved; the converse is
+**not**, and the write-up glossed it. An instance can have a non-rigid agent
+(so not three rigid ones) and still fail $\Sigma\le3$, if driving that agent to
+spread $0$ forces the other two to sum to $4$ or more. Theorem I′ should be read
+as the one-directional statement it proves, and Lemma E does **not** follow from
+Theorem Z′ alone.
+
+### 7.16.3 Superseded: the earlier $d_i=4$ draft
+
+Fix set $1$ at $d_1 = 4$: regions $\{1\},\{12\},\{13\},\{123\}$ all active. Since
+$\{12\},\{13\},\{123\}$ are then forced active, sets $2$ and $3$ automatically
+have $d_2, d_3 \ge 2$ before their own private regions $\{2\},\{3\}$ or the
+region $\{23\}$ are even considered.
+
+> **Lemma K′ (the private region still frees set $i$, if the spine is rainbow).**
+> If $c_{12}, c_{13}, c_{123}$ are pairwise distinct, then for **any** signs
+> $(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123})$ with $(p_1,q_1)\ne(2,2)$,
+> some choice of $c_1$ gives $\mathrm{spread}(F_1)\le1$.
+
+*Proof.* Since $c_{12},c_{13},c_{123}$ are a bijection onto the three colours,
+the vector $G$ with $G_t := \sum_{T \in \{12,13,123\},\, c_T = t}\sigma_T$ is, as
+a multiset of entries, exactly $\{\sigma_{12},\sigma_{13},\sigma_{123}\}$. Two
+cases. If all three signs agree ($G$ constant, $=(\pm1,\pm1,\pm1)$), adding
+$\sigma_1$ to any one coordinate gives spread exactly $1$, for either sign of
+$\sigma_1$ — direct computation. If they split $2$–$1$ (say two $+1$s and one
+$-1$, so $G$ is a permutation of $(1,1,-1)$), choose $c_1$ to land on the
+lone-sign coordinate: $\sigma_1=+1$ added to the $-1$ entry gives
+$(1,1,0)$-type, spread $1$; $\sigma_1=-1$ added to either $+1$ entry gives
+$(0,1,-1)$-type, spread $1$. The case $(2,2)$ is excluded by hypothesis, and the
+all-agree / $2$-$1$ split exhausts every other sign pattern. $\square$
+
+So **whenever the spine $c_{12},c_{13},c_{123}$ can be kept rainbow, set $1$ is
+free.** The question is whether sets $2$ and $3$ can always be satisfied without
+breaking that.
+
+**When it works outright.** If $x = 1$ (region $\{2\}$ active) or $z=1$
+(region $\{3\}$ active), Lemma K frees that set via its own private colour,
+regardless of the spine — no constraint on $c_{12},c_{13},c_{123}$ at all. If
+$x=y=z=0$, sets $2,3$ have $d=2$ each ($\{12,123\}$ and $\{13,123\}$), giving
+only the disequalities $c_{12}\ne c_{123}$, $c_{13}\ne c_{123}$ — both **implied**
+by rainbow. So the only case needing real work is $x=z=0$, $y=1$: no private
+regions active for sets $2,3$, and $\{23\}$ active, shared between them.
+
+**The case that looked like a counterexample.** With the spine rainbow
+($c_{12}=A, c_{13}=B, c_{123}=C$, all distinct) and $d_2=d_3=3$ via
+$\{12,23,123\}$ and $\{13,23,123\}$, each set's condition is a membership
+constraining $c_{23}$: if $\{12\}$ is set $2$'s minority, the condition forces
+$c_{23}=A$ exactly (since its majority partner $\{123\}$ already carries $C\ne A$);
+if $\{13\}$ is set $3$'s minority, it forces $c_{23}=B$. Choosing the adversary's
+signs so that $\{12\}$ is set $2$'s minority **and** $\{13\}$ is set $3$'s
+minority simultaneously — which is a legal choice, e.g.
+$(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123},\sigma_{23}) =
+(-1,-1,-1,+1,+1)$, giving set $1$ the valid pattern $(p_1,q_1)=(1,3)$ — demands
+$c_{23}=A$ and $c_{23}=B$ at once, and $A\ne B$. **Under a rainbow spine this
+configuration is genuinely unsatisfiable.**
+
+**It is satisfiable anyway, by breaking the spine.** Set $c_{123}=A$ (merging
+it with $c_{12}$, abandoning rainbow) and $c_{13}=B \ne A$. Set $2$'s condition
+becomes $A \in \{c_{23}, A\}$ — true for **any** $c_{23}$, since $\{123\}$ now
+already carries the minority's colour. Set $3$'s condition becomes
+$B \in \{c_{23}, A\}$, and since $B\ne A$ this forces $c_{23} = B$. Take
+$c_{23} = B$. Check set $1$ directly: with signs
+$(\sigma_1,\sigma_{12},\sigma_{13},\sigma_{123})=(-1,-1,-1,+1)$ and colours
+$c_{12}=c_{123}=A$, the two opposite-signed copies of $A$ **cancel**:
+$F_1 = -e_{c_1} - e_A - e_B + e_A = -e_{c_1} - e_B$. Choosing $c_1 = A$ (or the
+third colour) gives entries $\{-1,-1,0\}$, spread $1$. All three sets check
+directly against the definitions:
+
+- Set $1$: $F_1 = -e_A - e_B$, spread $1$. ✓
+- Set $2$ ($\{12,23,123\}$, signs $(-1,+1,+1)$, colours $A,B,A$):
+  $F_2 = -e_A + e_B + e_A = e_B$, spread $1$. ✓
+- Set $3$ ($\{13,23,123\}$, signs $(-1,+1,+1)$, colours $B,B,A$):
+  $F_3 = -e_B + e_B + e_A = e_A$, spread $1$. ✓
+
+**So the configuration is not a counterexample** — it needed a *cancellation*
+strategy (merge two spine colours to neutralise opposite signs) rather than the
+rainbow strategy Lemma K′ uses, and the cancellation strategy happens to satisfy
+sets $2,3$'s memberships for free as a side effect.
+
+**Retained only as a record.** The worked cancellation example above is the
+special case that showed the rainbow strategy was the wrong organising idea;
+Theorem Z′ of §7.16.1 subsumes it and closes (Q) in full. Lemma K′ is likewise
+superseded by Lemma K″, which needs no rainbow hypothesis.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1001,8 +1233,14 @@ is not closed.**
 | **Corollary Y** (structural feature every residual instance must have) | **proved** |
 | **Target Theorem** (two sets within 1, third within 2) | **open** — closes $n=3$ on the composed family |
 | the "spread $0$ iff $3 \mid c(M)$" criterion | **RETRACTED** — false without additivity (§7.9) |
-| **Theorem Z** ((Q) holds when no private region is active) | **proved** |
-| **(Q)** in general | **open** — only $d_i = 4$ sets survive, and only one sub-case |
+| **Theorem Z** ((Q) holds when no private region is active) | **proved** — subsumed by Z′ |
+| **Lemma K″** (private knob absorbs a levelled shared part) | **proved** |
+| **Lemma K‴** (knob rescue when $G_i$ has three distinct values) | **proved** |
+| **Theorem Z′** — **(Q) holds in full** | **PROVED** |
+| **Corollary Q′** (residual instance must contain a set of size divisible by 3) | **proved, now unconditional** |
+| Theorem I′'s "only if" direction | **RETRACTED** — forward direction only (§7.16.2) |
+| **Lemma E** | **open** — Z′ covers only instances with no size divisible by 3 |
+| **Target Theorem** / (R) | **open** — still what $n=3$ needs |
 | **Lemma E** ($\min \Sigma \le 3$) | **open** — reduces to (Q) on the additive side |
 | **Lemma D** (two-agent balance) | **open** |
 
