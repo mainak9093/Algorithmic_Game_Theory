@@ -1611,6 +1611,78 @@ reason. But without explicit cost tables we cannot certify 2–5, so they are
 recorded as leads, not results: useful for steering (Q$'$) away from another
 local-argument attempt, not citable as theorems.
 
+### 7.16.13 Attacking (Q′) directly: an unbounded rigid non-composed family, and a failed hunt for a counterexample
+
+**A necessary condition, free.** If $\cost(\items) \le 1$ then $\cost$ takes only
+values in $\set{0,1}$ (monotone, $\cost(\emptyset)=0$, marginals $\le 1$), so its
+spread is $\le 1$ under *every* partition — it can never be the agent that fails
+uniform balance. So a counterexample to (Q′) needs all three agents at
+$\cost_i(\items) \ge 2$; combined with rigid $+$ composed already being closed by
+Theorem FF (Lemma H + Theorem Z′), the live target is specifically **rigid,
+non-composed, $\cost(\items)\ge2$**.
+
+**The $\abs{\items}=3$ witness does not represent the general case.** The
+$\abs{\items}=3$ witness of §7.16.9 suggested rigid non-composed costs might need
+a small ground set. That is false. Take
+$\cost(S) = \min(\abs{S\cap D}, \abs{S \cap D'})$ for $D,D'\subseteq\items$ with
+$D\setminus D' = P$ (size $p$, arbitrary), $D'\setminus D = \set{q}$ (a single
+element), $D\cap D' = \set{r}$ (a single element), $\items = P \sqcup \set{q,r}$.
+This is dichotomous (checked directly: adding $g\in P$ changes the min by $0$ or
+$1$ depending on which side is currently smaller; adding $q$ or $r$ likewise), it
+is **not composed** whenever $p \ge 2$ (the standard singleton-comparison
+argument: comparing $\cost$ on singletons from $P$ pins any candidate
+representing set to $\set{r}$, and then a mixed pair from $P$ and $\set{q}$
+contradicts it), and:
+
+> **Rigid for every $p$.** Write $\beta,\rho$ for the parts holding $q,r$. If
+> $\beta \ne \rho$: the part holding $q$ alone scores $\le 1$, the part holding
+> $r$ alone scores exactly $1$, the third scores $0$ — spread exactly $1$, never
+> $0$. If $\beta = \rho$: that part scores $\ge 1$ (from $r$ alone) and the other
+> two both score $0$ — spread $\ge 1$. Either way spread is never $0$, and this
+> uses only $p \ge 0$: the $P$-elements are inert for this argument, however many
+> there are.
+
+So this is a genuinely **unbounded family** of rigid, non-composed, range-$2$
+dichotomous costs — the earlier "must be small" intuition was an artifact of the
+one witness on hand, not a real obstruction. Verified computationally for
+$p \in \set{1,2,5,10,20,50,100}$ (min spread stays $1$ throughout); see
+transcript. This also pins down the *exact* boundary within this family: growing
+$q$ or $r$ to $2$ (even with $p$ small) kills rigidity immediately — spread $0$
+becomes reachable at $(p,q,r)=(2,2,1)$ and at $(1,1,2)$, verified directly.
+
+**Combining three of them: every attempt still finds uniform balance.** Three
+such "pinch" costs sharing a ground set is the natural next object for a (Q′)
+counterexample, since each individually is rigid and range-$\ge2$. Three attempts,
+increasingly adversarial, all failed to break uniform balance:
+
+1. Three independent pinch pairs on $6$ elements, each agent's $P$-zone equal to
+   the *other two* agents' special elements (so isolating one agent's pair
+   necessarily shares space with another's). Best achievable: $(1,1,1)$ — the
+   solver isolates each pair in its own part and nothing else joins it.
+2. The same, but with the three pairs forced to overlap cyclically on only $3$
+   elements — $\set{a,b},\set{b,c},\set{c,a}$ as the three $(q_i,r_i)$ pairs, so
+   no partition can keep all three pairs disjointly isolated. Still $(1,1,1)$,
+   witnessed by partition $\set{a},\set{b},\set{c}$.
+3. A random search over $427$ valid all-rigid triples of bottleneck costs on a
+   shared $5$-element ground set (random $D_i,D_i'$, filtered to keep only rigid
+   ones): zero achieved max-spread $\ge 2$. Every one admitted uniform balance.
+
+**Reading.** This is evidence, not a proof — the search covers the bottleneck
+family specifically, not the full space of dichotomous costs, and finitely many
+trials cannot rule out a counterexample outside it. But it reverses the earlier
+default expectation: the obstacle to proving (Q′) does not look like "rigid
+non-composed costs are rare/small and hard to find", since we now have an
+unbounded supply of them; it looks like "no matter how these are combined across
+three agents, there is always enough shared room in three bundles to route around
+all three simultaneously" — a stronger, more encouraging signal for (Q′) being
+**true** than anything found so far. The natural next step is a *direct* proof of
+(Q′), not by the Venn-region/composed machinery (which does not apply outside
+composed costs) but by an argument on the general unit-step structure of a
+dichotomous cost directly — e.g.\ an exchange/potential argument in the style of
+Lemma K″ but stated for the up-set chain $U_1 \supseteq U_2 \supseteq \dots$ that
+any dichotomous cost admits ($U_\ell = \set{S : \cost(S) \ge \ell}$), rather than
+for a single underlying set $D_i$. This has not been attempted yet.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1667,6 +1739,9 @@ local-argument attempt, not citable as theorems.
 | **Lemma E** ($\min \Sigma \le 3$), general dichotomous costs | **open** |
 | **Lemma D** (two-agent balance) | **open** |
 | audit of the user's verification dossier (§7.16.11) | **done** — chain correct; nominating form required; "residual ⇒ composed" false |
+| audit of second findings pass (§7.16.12) | **done** — confirms Theorem EE/FF independently; no new math; one catalog of reported (unverified) leads for (Q′) |
+| unbounded family of rigid non-composed costs (§7.16.13) | **proved** — corrects the "must be small" reading of the §7.16.9 witness |
+| hunt for a (Q′) counterexample (§7.16.13) | **negative on every attempt** — 2 adversarial hand-constructions + 427 random rigid triples, all admit uniform balance; evidence toward (Q′) = No, not a proof |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
