@@ -1413,6 +1413,75 @@ to a composed one is **not** proved — the residual instances found in §3 all
 happened to be composed, but that was a property of how they were constructed,
 not a theorem.
 
+### 7.16.9 Why Theorem FF does not extend: rigid non-composed costs exist
+
+The next target is $n=3$ for general dichotomous costs. The composed proof runs
+on one engine — **rigidity is equivalent to a divisibility condition**
+(Lemma H: an additive $D_i$ is rigid exactly when $3 \nmid \lvert D_i\rvert$) —
+and Theorem Z′ then says three rigid sets cannot evade uniform balance. Both
+steps die outside the composed class, and here is the witness.
+
+> **Example.** On $\items = \{1,2,3\}$ define
+> $$\cost(S) = \begin{cases} 0 & S \subseteq \{1\} \text{ or } S \subseteq \{2\},\\ 1 & \text{otherwise.}\end{cases}$$
+
+**It is dichotomous.** Monotone, since the zero sets $\{\emptyset,\{1\},\{2\}\}$
+form a down-set. Every marginal is $0$ or $1$: from $\emptyset$ the marginals are
+$0,0,1$ to $\{1\},\{2\},\{3\}$; from $\{1\}$ they are $1,1$; from $\{3\}$ they
+are $0,0$; and from any two-element set the marginal to $\items$ is $0$.
+
+**It is rigid.** The $3$-partitions of a three-element set, up to reordering, are
+$(\{1\},\{2\},\{3\})$ with costs $(0,0,1)$; $(\{1,2\},\{3\},\emptyset)$ with
+$(1,1,0)$; $(\{1,3\},\{2\},\emptyset)$ and $(\{2,3\},\{1\},\emptyset)$ with
+$(1,0,0)$; and $(\items,\emptyset,\emptyset)$ with $(1,0,0)$. None is constant,
+so no partition gives spread $0$.
+
+**It is not composed.** Suppose $\cost(S) = f(\lvert S \cap D\rvert)$. From
+$\cost(\{1\}) = 0 \ne 1 = \cost(\{3\})$ and monotonicity of $f$ we get $3 \in D$
+and $1 \notin D$; from $\cost(\{2\}) = 0$ likewise $2 \notin D$. So $D = \{3\}$
+and $\cost(\{1,2\}) = f(0) = \cost(\emptyset) = 0$, contradicting
+$\cost(\{1,2\}) = 1$.
+
+**What this settles.** Rigidity outside the composed class has nothing to do with
+divisibility — here $\cost(\items) = 1$ and no size is in play at all. So
+Lemma H has no general analogue, Theorem Z′ has no general analogue, and
+Corollary Q′ — "a residual instance must contain a set of size divisible by
+$3$", the step that hands Theorem FF its spread-$0$ agent for free — simply does
+not parse without the sets. **Theorem FF's method does not extend, and this is
+not a gap in the write-up but a genuine boundary.**
+
+### 7.16.10 What general $n=3$ reduces to
+
+The reduction itself survives, because it never used composedness:
+
+- Lemma F (each agent alone reaches spread $\le 1$) — general.
+- Corollary G (no uniform balance $\Rightarrow$ a family with $\Sigma\le3$ needs
+  some agent at spread exactly $0$) — general.
+- Proposition/Theorem I′ forward direction (three rigid agents and no uniform
+  balance $\Rightarrow$ $\Sigma \ge 4$) — general.
+- Lemma A ($\Sigma \le 3 \Rightarrow$ good at $n=3$) — general.
+
+So general $n = 3$ turns on exactly the question already named:
+
+> **(Q′)** Can three **rigid** dichotomous costs fail to admit a uniformly
+> balanced family?
+
+**No** would give $\Sigma\le3$ whenever uniform balance fails — some agent
+reaches spread $0$ — and, with the other two controlled, Conjecture 2 at $n=3$
+in general. **Yes** produces an instance where $\Sigma \ge 4$ for every family,
+refuting Lemma E outright and forcing $n=3$ through the $\Sigma=4$ obstruction of
+`prop:f5-pattern` instead.
+
+**Status: (Q′) is open, and the two obvious attacks both stall.** Building a
+counterexample needs three rigid costs on a common ground set with no uniformly
+balanced family, and rigidity is a demanding condition — the example above needs
+$\lvert\items\rvert = 3$ precisely so that every part is forced to be a
+singleton; enlarging $\items$ lets a partition into three cost-$1$ parts appear
+and destroys rigidity. Three copies of it rotated over $\{1,2,3\}$ are each
+rigid but *do* admit a uniformly balanced family, namely the singleton
+partition, on which all three spreads are $1$. Proving (Q′) in the affirmative,
+on the other hand, cannot go through Theorem Z′'s route, since there is no
+residue system to run the argument on.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1463,7 +1532,9 @@ not a theorem.
 | **Lemma DD** (tie-break: $\mathrm{spread}(H) \le 2$) | **PROVED** |
 | **Theorem EE — the Target Theorem** | **PROVED** |
 | **Theorem FF — Conjecture 2 at $n=3$ for composed costs** | **PROVED** |
-| $n = 3$ for dichotomous costs that are **not** composed | **open** |
+| rigid **non-composed** dichotomous costs exist (explicit witness) | **PROVED** — so FF's method cannot extend |
+| general $n=3$ reduces to **(Q′)** | **PROVED** |
+| **(Q′)** (three rigid costs vs uniform balance) | **open** — the whole of general $n=3$ |
 | **Lemma E** ($\min \Sigma \le 3$) | **open** — reduces to (Q) on the additive side |
 | **Lemma D** (two-agent balance) | **open** |
 
