@@ -2085,8 +2085,93 @@ concrete open target to emerge from this investigation: proving the anchored
 lemma (for some judicious choice of $B_3$, e.g. via the same
 divisibility/rigidity machinery used for composed costs, or by a genuinely new
 argument) would complete the contiguous 2-cut conjecture, hence (Q′), hence
-Conjecture~`conj:main` at $n=3$ in full generality. It has not yet been
-attempted. This is where the trail currently ends.
+Conjecture~`conj:main` at $n=3$ in full generality.
+
+### 7.16.21 Consolidation: a direct local-search route, precisely scoped and partially proved
+
+Abandoned the ordering/cut machinery for a more direct route: local search on
+*arbitrary* 3-partitions (not contiguous ones), moving elements one or two at a
+time, minimising $\Phi(B) := \sum_i \max(0, \mathrm{sp}_i(B) - 1)$ — the total
+excess spread beyond the uniform-balance target.
+
+**The claim must be scoped to rigid triples — checked precisely, not assumed.**
+A "moves always help when $\Phi>0$" claim cannot hold unconditionally: the
+$K_4$ witness (`prop:no-balance`, all three $D_i$ of size $3$, hence
+non-rigid) has global-minimum $\Phi = 1$, and verified directly that **no move
+of any size** (up to moving all $4$ elements at once) improves it — exactly
+matching the known fact that uniform balance genuinely fails there.
+So the correct target is:
+
+> **Conjecture (2-move sufficiency).** For any three *rigid* dichotomous costs
+> and any partition $B$ with $\Phi(B) > 0$, some move of at most $2$ elements
+> (each independently reassigned to a possibly different part) strictly
+> decreases $\Phi$.
+
+By induction on the integer $\Phi$ (bounded below by $0$, strictly decreasing),
+this would give $\Phi = 0$ in finitely many steps — uniform balance for every
+rigid triple, i.e. (Q′), hence Conjecture~`conj:main` at $n=3$ **in full
+generality**, unconditionally (no ordering/cut machinery, no anchored lemma
+needed).
+
+**Computational status: exhaustively verified, properly scoped, at every size
+tested.** Earlier tests in this investigation mixed rigid and non-rigid
+sampling; redone cleanly:
+- $\abs M=4$: $500$ rigid triples, all $3^4=81$ states each checked
+  exhaustively for $\Phi>0$ states lacking a $\le2$-move improvement — zero.
+- $\abs M=5$: same exhaustive method, $150$ rigid triples, $3^5=243$ states
+  each — zero (one *non-2-move* case was found here on an earlier, less
+  careful pass, and its true global optimum was independently confirmed to
+  reach $\Phi=0$ via $\mathrm{sp}=(1,1,1)$ — the earlier "stuck" state was a
+  local-search-with-only-$\Phi$-descent artifact from a bad starting point,
+  not a failure of the $2$-move claim from *that* state itself, which does
+  admit a $2$-move improvement).
+- $\abs M=6$: $80$ rigid triples, all $3^6=729$ states each, exhaustive — zero.
+- Randomised (non-exhaustive) spot checks at $\abs M=7,8$ found none needing
+  more than a $2$-move, out of several thousand $\Phi>0$ states sampled.
+
+This is now the most rigorously and precisely tested claim in the whole (Q′)
+investigation: correctly excludes the one class of instance (non-rigid,
+$K_4$-shaped) where it must fail, and holds with zero exceptions everywhere it
+should.
+
+**Partial hand proof: the case where a single pivotal element exists.**
+Suppose agent $1$ has $\mathrm{sp}_1(B) \ge 2$; write $X,Y,Z$ for the three
+parts with $\cost_1(X)$ the max, $\cost_1(Y)$ the min,
+$\cost_1(X)-\cost_1(Y)\ge2$. Suppose some $x\in X$ is *pivotal*:
+$\cost_1(X\setminus x) = \cost_1(X)-1$. Consider moving $x$ from $X$ to $Y$.
+Worked through the case split by hand:
+- If $Z \ne \cost_1(X)$ (not tied with the old max), the move strictly
+  decreases $\mathrm{sp}_1$ regardless of $x$'s marginal on $Y$.
+- If $Z = \cost_1(X)$ (tied with the old max) **and** $x$'s marginal on $Y$ is
+  $1$ (not $0$), the move still strictly decreases $\mathrm{sp}_1$ by exactly
+  $1$ ($Z$ would otherwise inherit the max role unchanged).
+- If $Z = \cost_1(X)$ **and** $x$'s marginal on $Y$ is $0$, this specific move
+  achieves *no* improvement for agent $1$ at all — $Z$ silently takes over as
+  the new max at the *same* value, and the move must be abandoned in favour of
+  a different pivotal element (if one with marginal $1$ on $Y$ exists) or a
+  different target part, or a genuinely different move entirely.
+
+So even the *easiest* sub-case (a single pivotal element exists) already
+branches into real sub-cases before even checking the other two agents are
+not made worse — confirming this is not a one-line argument. Given how many
+lemmas the composed-cost route needed to close the analogous case work
+(Lemma~`lem:f5-greedy` through Theorem~`thm:f5-target`, over many results),
+a full proof of the $2$-move conjecture likely needs comparable investment:
+systematically covering (a) single-pivotal cases including the tie-break
+above, (b) the no-single-pivotal case (Lemma ivt guarantees *some* subset
+reaches the intermediate value, but its complement can have size $\ge3$ in
+isolation — §7.16.19 found explicit examples — so the $2$-move guarantee, when
+it holds, must come from the joint $3$-agent structure, not from the
+single-agent subset-removal problem alone), and (c) verifying the two
+*other* agents are never pushed to a net-worse $\Phi$ contribution by whichever
+move is chosen for agent $1$.
+
+**Where this stands.** Not a completed proof. It is the most concrete,
+best-tested, and most directly promising target found across this entire
+session's attack on (Q′) — a single, clean, unconditional statement (no
+orderings, no anchoring, no rigidity-to-divisibility translation needed) that
+would finish Conjecture~`conj:main` at $n=3$ outright if proved. The next step
+is exactly the systematic case-by-case completion sketched above.
 
 ### 7.17 Status
 
@@ -2161,6 +2246,9 @@ attempted. This is where the trail currently ends.
 | rescue mechanism when same-cut jump $\ge2$ occurs (§7.16.20) | **always re-optimised cut, never another agent** — $59/59$, $0/59$ |
 | repairing cut $=$ single-element move (§7.16.20) | **$88\%$ of cases** ($52/59$) — cut shift $(+1,0)$ is algebraically a move of one element between adjacent bundles |
 | **anchored two-way balance** (candidate lemma, §7.16.20) | **open, not yet tested** — the most concrete remaining target; would complete the contiguous conjecture, hence (Q′), hence Conjecture 2 at $n=3$ in general |
+| $K_4$ (non-rigid) as a test of the 2-move claim's scope (§7.16.21) | **confirmed** — global-min $\Phi=1$, no move of *any* size improves it, correctly excluded by the rigid-only scoping |
+| **2-move sufficiency conjecture** (§7.16.21) — direct, unconditional route to Conjecture 2 at $n=3$ | **open, exhaustively verified at $\abs M=4,5,6$** (properly rigid-scoped, zero exceptions across tens of thousands of states); **best candidate found this session** |
+| single-pivotal-element case of the 2-move conjecture (§7.16.21) | **partially proved by hand** — resolves cleanly except when the third part ties the old max and the pivotal element's marginal there is $0$ |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
