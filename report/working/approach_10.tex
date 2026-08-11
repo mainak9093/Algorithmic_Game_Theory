@@ -1137,6 +1137,43 @@ which all three spreads are $1$. The affirmative direction cannot go through
 Theorem~\ref{thm:f5-Qproved}, there being no residue system to run it on.
 \end{remark}
 
+\begin{remark}[Local arguments do not reach (Q$'$)]
+\label{rem:f5-local-fail}
+Every mechanism attempted against (Q$'$) or its non-composed relatives that
+localises to a single item, a single Venn region, or a single pair of agents has
+failed, and this is not a coincidence of the particular attempts tried. Each of
+the positive results above needed coordination across \emph{all seven} Venn
+regions at once: Lemma~\ref{lem:f5-knob} absorbs a levelled shared part only
+because the private region sees the whole running sum; the ordering of
+Theorem~\ref{thm:f5-interleaved} is a single global schedule, not three separate
+ones; and the case split of Lemma~\ref{lem:f5-tiebreak} is on the shared
+region's residue $b_{123}$, visible to all three sets simultaneously. Two
+instances of the failure, one checkable here and one not:
+\begin{itemize}
+\item \emph{Fixing one bundle and rebalancing the other two.} Take
+  $\cost_1 = \cost_2 = \abs{\cdot}$ additive, $\abs{A} = \abs{B} = 2$, $C =
+  \emptyset$: both agents already read $(2,2,0)$, and no redistribution confined
+  to $A,B$ can move anything into $C$. Any argument for general Lemma E$'$ needs
+  the freedom to move items across all three bundles at once, never two of three
+  with the third held fixed.
+\item \emph{Permutation optimality of a fixed partition.} The six-permutation
+  assignment layer of \S\ref{sec:f5-normal} can be fully optimal for a
+  partition $B$ while a strictly better \emph{partition} exists; this is exactly
+  why Theorem~\ref{thm:f5-sigma3} operates one level above assignment, and why
+  every proof above constructs a partition rather than post-processing a fixed
+  one by transpositions.
+\end{itemize}
+A second, independently-run exploration
+(\texttt{n3\_conjecture2\_consolidated\_findings.md}) reports the same pattern
+of failure for three further mechanisms aimed at (Q$'$) directly --- transferring
+a minimal threshold witness from a receiving to a donor context, a claimed
+exclusion between two simultaneously-obstructed agents, and synchronising two
+agents' critical edges while a third has an independent threshold boundary ---
+without exhibiting explicit cost tables for any of the three. They are recorded
+as leads against (Q$'$), not as results: consistent with the pattern above, but
+not independently verified here.
+\end{remark}
+
 % --------------------------------------------------------------------------
 \subsection{Status}
 \label{sec:f5-status}
@@ -1192,6 +1229,8 @@ Remarks~\ref{rem:f5-nomination}, \ref{rem:f5-sigma2} (the two false
 Remark~\ref{rem:f5-Qprime} (general $n = 3$ reduces to (Q$'$)) & proved \\
 \textbf{(Q$'$)} (three rigid costs versus uniform balance) & \textbf{open} \\
 $n = 3$ for dichotomous costs that are not composed & \textbf{open} \\
+Remark~\ref{rem:f5-local-fail} (local arguments do not reach (Q$'$)) & proved
+  in part, rest reported \\
 \textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
   & \textbf{open} \\
 \bottomrule

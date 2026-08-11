@@ -1547,6 +1547,70 @@ now carries the nine-step dependency list with the hypothesis each link consumes
 `prop:f5-noncomposed` (the rigid non-composed witness, with proof) and
 `rem:f5-Qprime` ((Q′) and what each answer to it buys).
 
+### 7.16.12 Second pass: `n3_conjecture2_consolidated_findings.md`
+
+A second, independently-produced document covering the same ground. It re-derives
+Target T (its §12–§14) and the composed $n=3$ closure by the identical
+seven-region residue argument, and independently states the unique $\Sigma=4$
+obstruction pattern (its §7): $v_i=v_k=(2,2,0)$, $v_j=(0,0,0)$. This is exactly
+`prop:f5-pattern`, word for word in substance — a genuine independent check, and
+it passes. Its own verification of Target T is computational (a $3^7$-residue,
+$7^7$-colouring exhaustive search via an external, unreachable script) rather
+than a proof; the arithmetic is internally consistent
+($1{+}3{+}3=7$ per region, $7^7=823543$, and its histogram sums to $2187=3^7$)
+but we do not need it, having Theorem EE already. No new mathematics in this
+part.
+
+**One claimed "correction" does not apply here.** Its §17 says an earlier line
+of reasoning wrongly concluded every $\Sigma\le3$ solution needs a spread-zero
+agent, correcting this with a $(1,1,1)$ profile (total spread $3$, no zero). This
+is not a correction to Corollary~`cor:f5-needzero` above: that corollary's
+zero-forcing claim is explicitly conditional on *no uniformly balanced family
+existing* — and a $(1,1,1)$ profile **is** a uniformly balanced family
+(Definition~`main:unifbal`), so it never falls under the corollary's hypothesis
+in the first place. No fix needed on our side.
+
+**What is new: a catalogue of ruled-out strategies for general Lemma E$'$.** Its
+§8 lists six proof mechanisms tried against the *non-composed* case — exactly
+our open (Q$'$)/general-Lemma-E′ frontier — and reports each as insufficient.
+Only the first comes with a fully specified witness; the rest are asserted
+without one, so they are recorded here as reported findings from that
+exploration, not independently re-verified:
+
+1. **Fixed-third-bundle split** (self-checked, trivial). Rebalancing only
+   $A \cup B$ while leaving $C$ untouched cannot help once $C$ is committed:
+   with $\cost_1=\cost_2=\abs{\cdot}$ additive, $\abs{A}=\abs{B}=2$, $C=\emptyset$,
+   both agents see $(2,2,0)$, and no redistribution confined to $A,B$ moves
+   anything into $C$. Confirms the obvious: any general argument needs the
+   freedom to move items across all three bundles, not two.
+2. **Single pivotal item** — reported, no witness given. Claims there need not
+   be one item whose marginal simultaneously improves both problematic agents.
+3. **Minimal threshold witness transfer** — reported, no witness given. Claims a
+   witness set controlling the receiving side of a move need not control the
+   donor side.
+4. **Type-II/Type-II exclusion** — reported, no witness given. Claims two
+   problematic agents can simultaneously have the stated "donor-catastrophic"
+   structure.
+5. **Nested threshold / critical-edge route** — reported, no witness given.
+   Claims two agents can have synchronised critical edges while a third has an
+   independent threshold boundary on the refined partition.
+6. **Matching transpositions and 3-cycles** — reported, no witness given. Claims
+   the six-permutation assignment layer can be fully optimal while a strictly
+   better *repartition* of the items exists, so permutation optimality alone
+   cannot prove Lemma E$'$. This one is consistent with our own architecture:
+   Lemma A already operates one level above repartitioning (§4 above), and
+   Theorem EE's proof works entirely by constructing partitions, never by
+   permuting a fixed one, for exactly this reason.
+
+Items 2–5 are plausible in light of our own experience — every one of our
+positive results needed *global* coordination across the seven Venn regions
+(Lemma K″, the interleaved ordering of Theorem AA, the tie-break case split of
+Lemma DD), and every attempt at a *local* argument (a single item, a single
+region, a single pair of agents) that we tried failed for the same structural
+reason. But without explicit cost tables we cannot certify 2–5, so they are
+recorded as leads, not results: useful for steering (Q$'$) away from another
+local-argument attempt, not citable as theorems.
+
 ### 7.17 Status
 
 | statement | status |
