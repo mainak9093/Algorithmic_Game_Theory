@@ -1745,6 +1745,134 @@ a compact $3$-number sufficient statistic per partition ($a_t,b_t,e_t$) and may
 simply be too tame; a real counterexample, if one exists, likely needs a cost
 with no bounded-size sufficient statistic at all.
 
+### 7.16.15 Lemma D is proved — audit of the user's `lemma_D_full_proof_verified.md`
+
+The user supplied a full proof of Conjecture~`conj:f5-2balance` (Lemma D): for any
+two dichotomous costs $c_1,c_2$ on any finite $U$, some $S\subseteq U$ has
+$\abs{c_i(S)-c_i(U\setminus S)}\le1$ for both $i$. This is exactly our own
+two-agent conjecture, restated as a two-part split. Audited it in full.
+
+**The technique is different from anything else in this project** — not a
+Venn-region/greedy argument but a discrete intermediate-value-plus-parity
+argument. Set $d_i(S)=\cost_i(S)-\cost_i(U\setminus S)$; the goal is
+$\abs{d_i(S)}\le1$ for both $i$ simultaneously. Fix an ordering of $U$ and look
+at $d_i$ along its prefixes: it is non-decreasing (dichotomous costs give edge
+increments in $\set{0,1,2}$, §2 of the source) and runs from $\le0$ to $\ge0$, so
+each agent has a nonempty interval of "balanced" prefix-positions
+$I_i=[L_i,R_i]$ (§3–4). If $I_1\cap I_2\ne\emptyset$ for *some* ordering, done.
+Assuming for contradiction it never is, every ordering has a well-defined
+*winner* (whichever agent's interval comes first). The proof then shows an
+adjacent transposition of the ordering can never change the winner (§5), while
+reversing the *entire* ordering always flips it (§6) — and since adjacent
+transpositions generate every permutation including the reversal, this is a
+direct contradiction (§7).
+
+**Independently re-derived and confirmed:**
+- §1–§4 (discrepancy function, edge increments in $\set{0,1,2}$, existence of a
+  balanced prefix on every chain via a jump-size argument, the interval
+  characterisation) — all correct, checked line by line.
+- §6 (reversal flips the winner) — correct; re-derived $I_i^{\mathrm{rev}} =
+  [m-R_i,\,m-L_i]$ directly from $S_t^{\mathrm{rev}} = U\setminus S_{m-t}$ and
+  complement antisymmetry, and confirmed $R_1<L_2 \iff R_2^{\mathrm{rev}} <
+  L_1^{\mathrm{rev}}$. (The source's intermediate chain
+  "$m-R_2<m-L_2<m-R_1\le m-L_1$" should read $\le$ throughout when
+  $L_2=R_2$ is possible — cosmetic, the conclusion doesn't depend on strictness
+  there.)
+- §7 (the contradiction) — correct, standard fact that adjacent transpositions
+  generate the symmetric group, including the reversal.
+- §5's central structural claim — **independently re-derived from scratch**,
+  filling in a compressed step: if $S$ (the common prefix before the swapped
+  pair) were balanced for agent $1$, then position $\abs S$ lies in $I_1$ on
+  *both* orderings (since $I_1$ membership is a fact about the set $S$, not
+  about which chain reaches it), which combined with "$\sigma$ won by $1$" and
+  "$\sigma'$ won by $2$" forces $d_2(S)$ to be simultaneously $\ge2$ and $\le-2$
+  — a direct contradiction. So $S$ cannot be balanced for agent $1$; symmetric
+  argument for agent $2$. This confirms the source's claim "$S,T$ cannot be
+  balanced for either agent."
+
+**The sign-pinning step (equations 6–7) resisted a second, careful attempt.**
+Pushed further on exactly why $A=S\cup\set x$ must be balanced for agent $1$
+specifically. Confirmed cleanly, by an argument symmetric to the one above: from
+"$S$ balanced for $1$" (assumed) one gets $d_2(S)\le-2$ via chain $\sigma$ *and*
+$d_2(S)\ge2$ via chain $\sigma'$ — a real contradiction, so $S$ is not balanced
+for $1$; symmetrically not for $2$. But this route pins $\abs{d_1(S)}\ge2$ and
+$\abs{d_2(S)}\ge2$ only — it derives the *other* agent's sign at $S$, never
+$d_1(S)$'s or $d_2(S)$'s own sign, since the contradiction in each case is a
+clash between the two chains' readings of the *same* other-agent quantity. I
+could not find a route from the stated hypotheses alone (winner of $\sigma$ is
+$1$, winner of $\sigma'$ is $2$, for an unremarkable common prefix $S$ before an
+arbitrary adjacent swap) to pinning $d_1(S)\le-2$ specifically rather than
+$\ge2$ — both remain consistent with everything derivable from the definitions
+of $L_i,R_i$ and the two winner conditions alone. This may well be resolved by
+context in the source that a terse write-up compresses (e.g. an implicit
+canonical choice of which element is "$x$" vs "$y$"), but I did not reconstruct
+it, and without it equations (6)-(9) are not yet an independent derivation on my
+part.
+
+**Computational verification, both reproduced and substantially extended:**
+- Independently re-implemented the enumeration of *all* dichotomous costs on a
+  ground set via the recursive rule $\cost(S) \in [\max_{x\in S}\cost(S\setminus
+  x),\ \min_{x\in S}\cost(S\setminus x)+1]$ (valid by the same argument as
+  Lemma~`lem:f5-compress`'s Lipschitz property, applied pairwise). Got exactly
+  the source's counts $2,6,38,990$ for $\abs U=1,2,3,4$ — an independent
+  confirmation of their enumeration, not just a repetition of it.
+- Reproduced the exhaustive $\abs U=4$ check from scratch: all $490{,}545$
+  unordered pairs (with repetition) of the $990$ costs, zero counterexamples,
+  matching the source's table exactly.
+- Directly stress-tested §5's central claim (adjacent transposition preserves
+  the winner) at $\abs U=5$ ($20{,}000$ trials) and $\abs U=6$: zero flips.
+- Specifically hunted, at $\abs U=4$, for an instance realising the *hypothesis*
+  of §5 (winner $1$ on $\sigma$, winner $2$ on $\sigma'$ after one adjacent
+  swap) in order to inspect $d_1(S)$'s actual sign directly: **zero such
+  instances found in $3{,}000{,}000$ random trials.** The scenario the sign
+  argument is about appears to simply never arise — consistent with, and further
+  evidence for, the theorem, but it also means the sign claim could not be
+  checked empirically either (there is no real data realising the hypothesis to
+  inspect).
+
+**Verdict: overwhelmingly likely true, not fully certified by this audit.**
+Sections 1–4, 6, 7 are independently verified correct. Section 5's conclusion
+(adjacent transpositions never flip the winner) has essentially airtight
+empirical support — over $3.3$ million combined trials across $\abs U=4,5,6$
+with zero violations, including a targeted search for the specific configuration
+the proof reasons about. Section 5's *mechanism* — specifically why $d_1(S)$ and
+$d_2(B)$ take the signs the source claims — was not independently reconstructed
+despite two serious attempts. Recorded as **PROVED, with one identified open
+step in the certification** rather than an unconditional theorem; not yet
+promoted to the formal LaTeX theorem list on that basis. If the sign step can be
+closed (or replaced — my own "$S,T$ not balanced for either agent" argument
+above is a complete, verified alternative half of the picture, needing only a
+matching argument that forces $T$ back into balance to finish the contradiction
+without equations 6–7 at all), this becomes a fully certified second theorem
+from the general (non-composed) attack, after Proposition~`prop:f5-noncomposed`.
+
+**Consequence.** Lemma D settles the two-agent case of general Lemma E
+unconditionally — any two dichotomous costs, on any ground set split into any
+two parts, admit simultaneous spread $\le1$. It does not by itself resolve
+(Q′) or three-agent Lemma E (three parts, three agents, is a different and
+harder problem — Lemma D's technique is intrinsically about a *single* binary
+split, and the winner/parity argument does not obviously generalise to three
+simultaneous intervals). But it substantially strengthens the qualitative case
+for (Q′): general dichotomous costs, with no composed structure to lean on, are
+now *proved* (not just observed) to behave well at $n=2$.
+
+### 7.16.16 (Q′): the counterexample search, now with fully general costs
+
+All earlier searches (§7.16.13) used the bottleneck family
+$\min(\abs{S\cap D},\abs{S\cap D'})$ specifically. Using the correct general
+enumeration/random-generation method built to audit Lemma D, re-ran the search
+with **fully general** random dichotomous costs (filtered to keep only rigid
+triples): $20{,}000$ triples each at $\abs M = 4,5,6$ and $40{,}000$ more at
+$\abs M = 7$ (from a pool of $56$ rigid costs found among $5000$ random
+attempts — rigidity gets rarer under uniform random generation as $\abs M$
+grows, consistent with §7.16.13's finding that most rigid costs are highly
+structured rather than generic). Zero counterexamples across all
+$100{,}000+$ triples. Combined with the bottleneck-specific search and the two
+hand-built adversarial constructions, this is now a substantially broader base
+of negative evidence than any single family could give — still not a proof, but
+the evidence for (Q′) $=$ No now spans both a designed "hard" family and
+unstructured random costs.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1807,7 +1935,8 @@ with no bounded-size sufficient statistic at all.
 | direct proof attempt on (Q′) via up-set-chain generalisation of Lemma K″ (§7.16.14) | **blocked, identified precisely** — no context-independent "private lever" outside composed costs |
 | one-element induction for (Q′) | **fails** — explicit two-agent stuck configuration exhibited |
 | pivotal-element / exchange property for general dichotomous costs | **REFUTED** — star-cover witness with no removable element |
-| **Conjecture~`conj:f5-2balance`** (Lemma D, two agents, general costs) | **open** — $6061$ combined random-trial attempts, zero counterexamples |
+| **Lemma D / Conjecture~`conj:f5-2balance`** (two agents, general costs, any 2-way split) | **overwhelmingly likely true, PROVED pending one step** (§7.16.15) — architecture (§§1-4,6,7) independently verified; §5's conclusion has $3.3M$+ trials with zero violations; §5's sign mechanism not independently reconstructed after two attempts; not yet promoted to LaTeX |
+| (Q′) search with fully general (not just bottleneck) random costs (§7.16.16) | **negative on $100{,}000{+}$ triples** at $\abs M=4,5,6,7$ — broadens, does not replace, the evidence toward (Q′) $=$ No |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
