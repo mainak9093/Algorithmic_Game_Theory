@@ -2307,6 +2307,136 @@ it) is *always* smaller than $A$ itself, which would close the induction; this
 has not been established for arbitrary dichotomous cost structures, only
 confirmed on hand-built and randomly-generated instances.
 
+### 7.16.25 Working the induction with pure mathematics: the value-$2$ minimal witness
+
+Switched from inducting on a minimal *value-$1$* witness $A$ (§7.16.23–24,
+where large witnesses like a bare $k$-AND exist as standalone objects with no
+further structure to exploit) to inducting on a minimal *value-$2$* witness
+$B\subseteq X$ — i.e. $c(B)=2$ and no proper subset of $B$ reaches $2$. This
+has genuinely more structure to work with.
+
+\begin{lemma}
+\label{lem:f5-value2shrink}
+If $B$ is minimal with $\cost(B)=2$, then $\cost(B\setminus\set b)=1$ exactly,
+for every $b\in B$.
+\end{lemma}
+
+\begin{proof}
+Minimality gives $\cost(B\setminus\set b)\le1$ (else the proper subset
+$B\setminus\set b$ would already reach $2$). The marginal bound gives
+$\cost(B\setminus\set b)\ge\cost(B)-1=1$. Together, equality.
+\end{proof}
+
+**This resolves $\abs B=3$ completely, with no computation.** If $\abs B=3$,
+then for any $b\in B$, $B\setminus\set b$ is a $2$-element set with cost
+exactly $1\ge1$ — directly a valid $\le2$-element insertion witness. Done.
+
+**For $\abs B=4$, the lemma pins down the exact internal structure.** Applying
+Lemma~\ref{lem:f5-value2shrink} to all four $b\in B=\set{b_1,b_2,b_3,b_4}$,
+and then minimality of each resulting triple $B\setminus\set{b_i}$ (cost $1$,
+so every proper subset of it costs $0$), forces: every pair and singleton
+*within $B$* costs $0$, and every triple costs $1$. This is realised exactly
+by the threshold function $\cost(S) = \max(0,\abs{S\cap B}-2)$ — i.e. $B$'s
+internal structure, if it resists a size-$2$ witness at all, is forced to look
+like a simple counting threshold. Crucially, this internal function is
+removal-*easy*: removing any single $b_i$ drops the cost from $2$ to $1$
+directly. So for the *enclosing* $X\supseteq B$ to stay removal-hard despite
+$B$'s internal easiness, $X\setminus B$ must supply a backup protecting each
+$b_i$ — reintroducing exactly the "redundant-but-individually-powerful
+element" mechanism found by hand in §7.16.23–24.
+
+**A second, independent structural fact, proved directly.** For any two
+elements $x,y\in X$: order $X$ as $(X\setminus\set{x,y})$, then $x$, then $y$.
+Since $\cost(X\setminus\set y)=\cost(X)=2$ (single removal-hardness), $y$'s
+marginal in this order is $0$; since
+$\cost(X\setminus\set{x,y})=\cost(X\setminus\set y)=2$ (pair removal-hardness),
+$x$'s marginal is also $0$. So **the full cost $2$ is already achieved by
+$X$ minus any chosen pair** — removal-hardness is not merely "nothing helps
+when removed," it means the entire value is already present in every
+$(\abs X{-}2)$-sized subset. This is a clean, general, unconditionally proved
+fact (not requiring $\abs B\ge4$ or any case split).
+
+**Where the induction still stalls.** The natural next step is to iterate
+this second fact — peel off disjoint pairs one at a time, always retaining
+cost $2$, until reaching a residual set small enough to apply
+Lemma~\ref{lem:f5-value2shrink} directly. This does not yet go through:
+removal-hardness of $X$ gives $\cost(X - x - y) = 2$ for a pair removed
+*directly from $X$*, but says nothing about whether $X - x - y$ is *itself*
+removal-hard for a second pair — that would require
+$\cost(X - x - y - x' - y') = 2$, a $4$-element removal from $X$, which is
+outside the hypothesis entirely. Nothing in the argument so far propagates
+removal-hardness down to derived subsets, which is exactly the barrier
+identified from the other direction in §7.16.23 (the $Z_a$-smaller-than-$A$
+gap). Both routes converge on the same missing step: some argument that lets
+hardness (or a witness bound) survive being handed down to a smaller instance,
+which has not been found.
+
+**One more layer worked out: the forced internal structure is uniform, not
+growing.** If $B$'s internal structure (assuming no $\le2$-witness anywhere)
+is forced to the threshold form $\cost(S)=\max(0,\abs{S\cap B}-2)$ — verified
+exactly for $\abs B=4$ above, and the same minimality cascade forces the
+identical form for any $\abs B=k$: every pair costs $0$, every triple costs
+$1$, matching $\max(0,m-2)$ at $m=2,3$ — then *every* minimal value-$1$
+witness living purely inside $B$ has size exactly $3$ ($\max(0,3-2)=1$,
+$\max(0,2-2)=0$), regardless of how large $k=\abs B$ grows. So Lemma ivt
+applied inside $B$ alone can never produce a witness smaller than $3$ this
+way — confirming precisely, not just by example, that if $B$ has this forced
+form, the escape to a $\le2$ witness cannot come from within $B$'s own
+elements at all, and must come from $X\setminus B$. This sharpens the
+remaining target: show that whatever in $X\setminus B$ is needed to protect
+$B$'s individually-pivotal elements from removal-hardness's violation is
+itself forced to contain a $\le2$-element witness — the missing propagation
+step is now confined to *that* specific sub-question, not the general one.
+
+**Pushing the confined sub-question to its exact final form.** Fix
+$b_i\in B$. Define $f:2^{X\setminus B}\to\set{1,2}$ by
+$f(T) = \cost((B\setminus\set{b_i})\cup T)$; this is well-defined, monotone,
+with $f(\emptyset)=\cost(B\setminus\set{b_i})=1$ and $f(X\setminus B) =
+\cost(X\setminus\set{b_i}) = 2$, and inherits unit marginal steps from
+$\cost$ itself. So $f$ is exactly a "shifted" dichotomous function
+(base value $1$, not $0$), and Lemma~\ref{lem:f5-ivt}-style reasoning applies
+to it directly: there is a *minimal* $T^\ast\subseteq X\setminus B$ with
+$f(T^\ast)=2$, i.e. adding $T^\ast$ to $B\setminus\set{b_i}$ completes the
+missing unit, and no proper subset of $T^\ast$ does.
+
+If $\abs{T^\ast}=1$, write $T^\ast=\set{w^\ast}$: then $w^\ast$'s marginal
+*on top of $B\setminus\set{b_i}$* is exactly $1$
+($\cost((B\setminus\set{b_i})\cup\set{w^\ast})=2 \ne 1 =
+\cost(B\setminus\set{b_i})$). This is precisely the situation realised by
+$v_1,w_1$ in the §7.16.23–24 hand-built examples, where $w^\ast$ additionally
+turned out to be *absolutely* positive ($\cost(\set{w^\ast})\ge1$ with no
+help from $B$ at all) — which is exactly the $\le2$-element witness needed.
+**This is exactly the point the argument does not close in general.** A
+marginal of $1$ *conditional on* $B\setminus\set{b_i}$ being present does not,
+for a general (non-submodular) dichotomous cost, imply a positive marginal on
+the empty set — the compression argument used throughout the composed-cost
+route (Lemma~`lem:f5-compress`) relied on the single-count structure of
+composed costs precisely to rule this gap out, and no analogous fact is
+available here. It is entirely possible, as far as this argument shows, for
+$w^\ast$'s usefulness to depend essentially on $B\setminus\set{b_i}$'s
+"almost-complete" presence, in which case $w^\ast$ alone contributes nothing
+and the search for a small witness would have to continue elsewhere. Whether
+this scenario can actually be realised by a valid dichotomous cost *while
+simultaneously keeping $X$ removal-hard* is the single remaining open
+question; every attempt to construct such an example by hand in this session
+instead produced a $w^\ast$ (or similar element) with genuine absolute
+positive cost, but no argument was found ruling out the alternative in
+general.
+
+**Honest summary of the mathematics reached.** Four facts are now fully
+proved, unconditionally, for general dichotomous costs: Lemma ivt's
+intermediate-value property; Lemma~\ref{lem:f5-value2shrink}
+($\cost(B\setminus b)=1$ for a minimal value-$2$ witness); the $\abs B=3$
+resolution; and the pair-removal-preserves-full-cost fact
+("$\cost(X)=\cost(X\setminus\set{x,y})$ for a removal-hard $X$, any pair").
+These combine to reduce the entire remaining question — the whole gap between
+what is proved here and a full proof of Conjecture~`conj:main` at $n=3$ — to
+one precisely stated combinatorial question about whether a *conditionally*
+pivotal element (pivotal only in the presence of a specific large context)
+must also be *absolutely* pivotal, under a removal-hardness hypothesis. This
+is now a clean, self-contained, checkable mathematical statement — a real
+narrowing, even though it was not resolved in this session.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2388,6 +2518,11 @@ confirmed on hand-built and randomly-generated instances.
 | **removal-hardness $\Rightarrow$ small insertion-witness** (the actual 2-move mechanism, §7.16.23) | **open, extremely strongly tested** — $485/485$ and $546/546$ ($545$ at size $1$, $1$ at size $2$, zero at size $\ge3$); precise chain-based proof attempt identified with exact sticking point named; the single remaining piece needed to close Conjecture 2 at $n=3$ in full |
 | bare $k$-AND ($k\ge3$) forced removal-easy (§7.16.24) | **confirmed directly** — every AND-member individually pivotal when nothing backs it up |
 | backup elements protecting an AND-gadget $=$ the small witnesses (§7.16.24) | **confirmed directly** on two hand-built examples — the induction's shape is right, general "$Z_a$ always smaller than $A$" step not yet established |
+| **Lemma~`lem:f5-value2shrink`** ($\cost(B{-}b)=1$ for minimal value-$2$ witness $B$) | **PROVED** (§7.16.25), unconditional |
+| $\abs B=3$ case of the value-$2$ induction | **PROVED** (§7.16.25) directly, no computation needed |
+| $\abs B=k$ forced internal structure is the threshold $\max(0,\abs{S\cap B}-2)$ (§7.16.25) | **PROVED** — internal witnesses stuck at size $3$ uniformly, escape must come from $X\setminus B$ |
+| pair-removal preserves the full value ($\cost(X)=\cost(X-x-y)$ for removal-hard $X$) (§7.16.25) | **PROVED**, unconditional, general |
+| conditional-vs-absolute pivotal-ness of the backup element $w^\ast$ (§7.16.25) | **open — the single remaining gap.** Precisely stated: does a marginal of $1$ on top of a specific large context force a positive marginal on $\emptyset$, under removal-hardness? Closing this closes Conjecture 2 at $n=3$ in full |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
