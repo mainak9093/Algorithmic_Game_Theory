@@ -1196,6 +1196,109 @@ special case that showed the rainbow strategy was the wrong organising idea;
 Theorem Z′ of §7.16.1 subsumes it and closes (Q) in full. Lemma K′ is likewise
 superseded by Lemma K″, which needs no rainbow hypothesis.
 
+### 7.16.4 Interleaved greedy: two sets within one, the third within three
+
+The Target Theorem asks for two sets within one and the third within **two**.
+Interleaving the greedy of Lemma W across the three sets gets two within one and
+the third within **three** — one short of the Target, but enough to close a case
+outright.
+
+> **Theorem AA (interleaved greedy).** For any three sets
+> $D_1, D_2, D_3 \subseteq M$ there is a $3$-colouring splitting $D_1$ and $D_2$
+> each within one and $D_3$ within three.
+
+*Proof.* Work in the residue frame of §7.10: each region $T$ contributes
+$\epsilon_T \in \{0,1\}^3$ of weight $b_T$, and set $i$'s spread is the spread of
+$E_i = \sum_{T \ni i}\epsilon_T$. Place the seven residues in this order, each
+greedily — on the currently smallest coordinates — with respect to the running
+sum named:
+
+1. $\epsilon_{123}$, freely;
+2. $\epsilon_{12}$, w.r.t. $\epsilon_{123}$;
+3. $\epsilon_{13}$, w.r.t. $\epsilon_{123}+\epsilon_{12}$;
+4. $\epsilon_{1}$, w.r.t. $\epsilon_{123}+\epsilon_{12}+\epsilon_{13}$;
+5. $\epsilon_{23}$, w.r.t. $\epsilon_{123}+\epsilon_{12}$;
+6. $\epsilon_{2}$, w.r.t. $\epsilon_{123}+\epsilon_{12}+\epsilon_{23}$;
+7. $\epsilon_{3}$, w.r.t. $\epsilon_{123}+\epsilon_{13}+\epsilon_{23}$.
+
+**Set 1** sees $\epsilon_{123},\epsilon_{12},\epsilon_{13},\epsilon_1$, placed at
+steps 1–4, and each is greedy with respect to set $1$'s own running sum. By
+Lemma W the invariant holds throughout, so $\mathrm{spread}(E_1) \le 1$.
+
+**Set 2** sees $\epsilon_{123},\epsilon_{12},\epsilon_{23},\epsilon_2$. Its
+running sum after the first two is $\epsilon_{123}+\epsilon_{12}$ — *the same
+vector* as set 1's, since both sets contain both regions — so steps 1–2 are
+greedy for set 2 as well, and steps 5–6 are greedy for set 2 by construction.
+Hence $\mathrm{spread}(E_2) \le 1$.
+
+**Set 3** sees $\epsilon_{123},\epsilon_{13},\epsilon_{23},\epsilon_3$. Only the
+first and last were placed greedily for it. Adding a $\{0,1\}$ vector to any
+vector raises the spread by at most $1$, so after $\epsilon_{123}$ (spread $\le
+1$), $\epsilon_{13}$ and $\epsilon_{23}$ the spread is at most $3$; and greedy
+**never increases** the spread — for sorted $e_1\le e_2\le e_3$, adding $1$ to the
+$w$ smallest leaves the maximum unchanged unless all entries are equal, and
+raises the minimum — so step 7 keeps it at most $3$. $\square$
+
+**Why the third set is the one that suffers.** Sets $1$ and $2$ share exactly one
+region *among those processed before either finishes* — namely $\{12\}$, with
+$\{123\}$ ahead of it — so a single ordering serves both. Set $3$ shares
+$\{13\}$ with set $1$ and $\{23\}$ with set $2$, and both were already committed
+to the other sets' greedy when set $3$ needs them. This is Lemma W's
+"three sets share two regions pairwise" obstruction made quantitative: the cost
+is exactly one unit of spread per stolen region, hence $1 + 1 + 1 = 3$.
+
+### 7.16.5 One case of $n=3$ closed outright
+
+> **Theorem BB.** Let $n = 3$ and let the costs be composed,
+> $\cost_i(S) = f_i(\lvert S \cap D_i\rvert)$. If at least **two** of
+> $\lvert D_1\rvert, \lvert D_2\rvert, \lvert D_3\rvert$ are divisible by $3$,
+> then some family has $\Sigma \le 3$ — and hence, by Lemma A, Conjecture 2
+> holds for the instance.
+
+*Proof.* Relabel so that $3 \mid \lvert D_1\rvert$ and $3 \mid \lvert D_2\rvert$,
+and apply Theorem AA with those two in the tight slots. It splits $D_1$ and $D_2$
+each within one; by Lemma H(b) a set whose size is divisible by $3$ has count
+spread $0$ or at least $2$, so "within one" forces count spread exactly $0$. It
+splits $D_3$ within three. Lemma O carries each count spread to the composed cost
+as an upper bound, so the cost spreads are $0$, $0$ and at most $3$, giving
+$\Sigma \le 3$. Lemma A then makes every minimum-cost assignment of that family
+good. $\square$
+
+**This is a genuinely new solved case.** It is not contained in S1–S4: the
+instance need not be additive, identical, small-bundled, or uniformly balanced —
+indeed by Corollary Q′ every residual instance has a size divisible by $3$, and
+Theorem BB closes all those with two such sizes. Checked against the residual
+instances of §3, whose size multisets are $(2,3,3)$ and $(3,3,3)$: **the
+$(3,3,3)$ instances are now closed by Theorem BB.** The $(2,3,3)$ instances have
+exactly one size divisible by $3$ and are not.
+
+### 7.16.6 What is left of $n = 3$
+
+Exactly one case: **exactly one $\lvert D_i\rvert$ divisible by $3$.** There
+Theorem AA gives $0 + 1 + 3 = 4$, one over budget. Closing it needs the third set
+within **two** rather than three — which is precisely the Target Theorem, now
+reduced to this single configuration.
+
+The one unit is available in principle. Tracing the proof of Theorem AA, the
+spread of set $3$ reaches $3$ only if $\epsilon_{123}$, $\epsilon_{13}$ and
+$\epsilon_{23}$ all put a one on some coordinate $t$ and all avoid some
+coordinate $s$. Writing $P = \epsilon_{123}+\epsilon_{12}$ for the vector both
+$\epsilon_{13}$ and $\epsilon_{23}$ are placed against, $\epsilon_{123,t}=1$
+gives $P_t = 1 + \epsilon_{12,t}$, while $\epsilon_{123,s}=0$ gives
+$P_s = \epsilon_{12,s}$. For $\epsilon_{13}$ to choose $t$ and avoid $s$ we need
+$P_s \ge P_t$, i.e. $\epsilon_{12,s} \ge 1 + \epsilon_{12,t}$, forcing
+$\epsilon_{12,s}=1$ and $\epsilon_{12,t}=0$ — and then $P_t = P_s = 1$.
+
+> **So whenever the bad alignment occurs, the two coordinates are tied in $P$,
+> and greedy had a free choice between them.** Since Lemma W's invariant holds
+> for *any* choice among the currently smallest coordinates, re-breaking that tie
+> costs sets $1$ and $2$ nothing.
+
+What is not yet proved is that a single consistent tie-breaking rule avoids the
+bad alignment at every coordinate simultaneously, for all weight combinations
+$b_{123}, b_{13}, b_{23} \in \{0,1,2\}$. That is the whole remaining gap in
+$n=3$, and it is now a finite question about three vectors in $\{0,1\}^3$.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1240,7 +1343,9 @@ superseded by Lemma K″, which needs no rainbow hypothesis.
 | **Corollary Q′** (residual instance must contain a set of size divisible by 3) | **proved, now unconditional** |
 | Theorem I′'s "only if" direction | **RETRACTED** — forward direction only (§7.16.2) |
 | **Lemma E** | **open** — Z′ covers only instances with no size divisible by 3 |
-| **Target Theorem** / (R) | **open** — still what $n=3$ needs |
+| **Theorem AA** (interleaved greedy: two within 1, third within 3) | **PROVED** |
+| **Theorem BB** ($n=3$ closed when **two** sizes divisible by 3) | **PROVED** — new solved case |
+| **Target Theorem** / (R) | **open** — now only for *exactly one* size divisible by 3 |
 | **Lemma E** ($\min \Sigma \le 3$) | **open** — reduces to (Q) on the additive side |
 | **Lemma D** (two-agent balance) | **open** |
 

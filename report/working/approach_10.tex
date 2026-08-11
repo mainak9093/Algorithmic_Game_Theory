@@ -702,6 +702,106 @@ For any three sets there is a $3$-colouring splitting two of them within one and
 the third within two.
 \end{conjecture}
 
+Interleaving the greedy of Lemma~\ref{lem:f5-greedy} across the three sets gets
+within one unit of this, and that is already enough to close one of the two
+cases outright.
+
+\begin{theorem}[Interleaved greedy]
+\label{thm:f5-interleaved}
+For any three sets $D_1,D_2,D_3 \subseteq \items$ there is a $3$-colouring
+splitting $D_1$ and $D_2$ each within one and $D_3$ within three.
+\end{theorem}
+
+\begin{proof}
+Work in the residue frame of \Cref{sec:f5-Q}: region $T$ contributes
+$\epsilon_T \in \set{0,1}^3$ of weight $b_T$, and the spread of $D_i$ is the
+spread of $E_i = \sum_{T \ni i}\epsilon_T$. Place the residues in the order
+\[
+  \epsilon_{123},\quad \epsilon_{12},\quad \epsilon_{13},\quad \epsilon_{1},
+  \quad \epsilon_{23},\quad \epsilon_{2},\quad \epsilon_{3},
+\]
+each on the currently smallest coordinates of, respectively, the zero vector,
+$\epsilon_{123}$, $\epsilon_{123}+\epsilon_{12}$,
+$\epsilon_{123}+\epsilon_{12}+\epsilon_{13}$, $\epsilon_{123}+\epsilon_{12}$,
+$\epsilon_{123}+\epsilon_{12}+\epsilon_{23}$, and
+$\epsilon_{123}+\epsilon_{13}+\epsilon_{23}$.
+
+Set $1$ sees $\epsilon_{123},\epsilon_{12},\epsilon_{13},\epsilon_1$, and each was
+placed greedily against set $1$'s own running sum, so
+$\mathrm{spread}(E_1) \le 1$ by Lemma~\ref{lem:f5-greedy}. Set $2$ sees
+$\epsilon_{123},\epsilon_{12},\epsilon_{23},\epsilon_2$; its running sum after
+the first two is the same vector $\epsilon_{123}+\epsilon_{12}$ as set $1$'s,
+both sets containing both regions, so those two steps are greedy for set $2$ as
+well, and the last two are greedy for it by construction. Hence
+$\mathrm{spread}(E_2)\le1$.
+
+Set $3$ sees $\epsilon_{123},\epsilon_{13},\epsilon_{23},\epsilon_3$, of which
+only the first and last were placed greedily for it. Adjoining a $\set{0,1}$
+vector raises a spread by at most $1$, so after the first three the spread is at
+most $3$. Greedy never increases a spread: for sorted $e_1 \le e_2 \le e_3$,
+adding $1$ to the $w$ smallest leaves the maximum unchanged unless all entries
+are equal, and does not lower the minimum. So the last step keeps it at most $3$.
+\end{proof}
+
+The asymmetry is exactly the obstruction named after
+Lemma~\ref{lem:f5-greedy}, made quantitative. Sets $1$ and $2$ share only
+$\set{12}$ among the regions processed before either finishes, so one ordering
+serves both; set $3$ shares $\set{13}$ with set $1$ and $\set{23}$ with set $2$,
+and both are already committed when set $3$ needs them. The cost is one unit of
+spread per stolen region.
+
+\begin{theorem}[Two sizes divisible by three]
+\label{thm:f5-twodiv}
+Let $n = 3$ and let the costs be composed, $\cost_i(S) = f_i(\abs{S \cap D_i})$.
+If at least two of $\abs{D_1},\abs{D_2},\abs{D_3}$ are divisible by $3$, then
+some family has $\Sigma \le 3$, and hence Conjecture~\ref{conj:main} holds for
+the instance.
+\end{theorem}
+
+\begin{proof}
+Relabel so that $3 \mid \abs{D_1}$ and $3 \mid \abs{D_2}$, and apply
+Theorem~\ref{thm:f5-interleaved} with those in the tight slots. It splits $D_1$
+and $D_2$ within one; by Lemma~\ref{lem:f5-rigid}(b) a set of size divisible by
+$3$ has count spread $0$ or at least $2$, so within one forces count spread
+exactly $0$. It splits $D_3$ within three. Lemma~\ref{lem:f5-compress} bounds
+each cost spread by the corresponding count spread, giving cost spreads $0$, $0$
+and at most $3$, so $\Sigma \le 3$; Theorem~\ref{thm:f5-sigma3} then makes every
+minimum-cost assignment of that family good.
+\end{proof}
+
+Theorem~\ref{thm:f5-twodiv} is not contained in the four cases of
+\Cref{sec:balancedclass} and its neighbours: the instance need be neither
+additive, nor identical, nor small-bundled, nor uniformly balanced. By
+Corollary~\ref{cor:f5-residual-div3} every instance lacking a uniformly balanced
+family has a size divisible by $3$, and this theorem closes all those with two
+such sizes.
+
+\begin{remark}[What is left of $n=3$, and where the missing unit is]
+\label{rem:f5-lastgap}
+Exactly one configuration remains, namely that in which precisely one
+$\abs{D_i}$ is divisible by $3$; there
+Theorem~\ref{thm:f5-interleaved} yields $0 + 1 + 3 = 4$, one over budget.
+Closing it needs the third set within two, which is
+Conjecture~\ref{conj:f5-target} restricted to this single configuration.
+
+The unit is available in principle. In the proof of
+Theorem~\ref{thm:f5-interleaved} the spread of set $3$ reaches $3$ only if
+$\epsilon_{123}, \epsilon_{13}, \epsilon_{23}$ all place a one on some coordinate
+$t$ and all avoid some coordinate $s$. Writing
+$P = \epsilon_{123}+\epsilon_{12}$ for the vector against which both
+$\epsilon_{13}$ and $\epsilon_{23}$ are placed, $\epsilon_{123,t}=1$ gives
+$P_t = 1 + \epsilon_{12,t}$ and $\epsilon_{123,s}=0$ gives
+$P_s = \epsilon_{12,s}$; for $\epsilon_{13}$ to choose $t$ over $s$ we need
+$P_s \ge P_t$, forcing $\epsilon_{12,s}=1$, $\epsilon_{12,t}=0$ and therefore
+$P_t = P_s = 1$. So the bad alignment can only arise where $P$ is \emph{tied},
+and greedy had a free choice; since Lemma~\ref{lem:f5-greedy}'s invariant holds
+for any choice among the currently smallest coordinates, re-breaking that tie
+costs sets $1$ and $2$ nothing. What is not proved is that one consistent
+tie-breaking rule avoids the alignment at every coordinate at once, for all
+weights $b_{123},b_{13},b_{23} \in \set{0,1,2}$. That is the entire remaining gap
+at $n = 3$, and it is a finite question about three vectors in $\set{0,1}^3$.
+\end{remark}
+
 \begin{proposition}
 \label{prop:f5-target-suffices}
 Conjecture~\ref{conj:f5-target} implies Conjecture~\ref{conj:f5-sigma3} for every
@@ -766,8 +866,8 @@ three.
 \subsection{Status}
 \label{sec:f5-status}
 
-At $n = 3$ everything above is proved except two statements, and either one
-closes the case:
+At $n = 3$ everything above is proved except the three conjectures listed last,
+and a single configuration now separates the case from being closed:
 
 \begin{center}\small
 \begin{tabular}{@{}ll@{}}
@@ -798,8 +898,12 @@ Remark~\ref{rem:f5-retract-iff} (converse of
   Prop.~\ref{prop:f5-rigidfail}) & \textbf{withdrawn} \\
 Remark~\ref{rem:f5-retract-div} (divisibility criterion for spread $0$)
   & \textbf{withdrawn} \\
+\textbf{Theorem~\ref{thm:f5-interleaved}} (two within $1$, third within $3$)
+  & \textbf{proved} \\
+\textbf{Theorem~\ref{thm:f5-twodiv}} ($n=3$ when two sizes are divisible by $3$)
+  & \textbf{proved} \\
 \textbf{Conjecture~\ref{conj:f5-target}} (two tight, one loose)
-  & \textbf{open} \\
+  & \textbf{open} (one case) \\
 \textbf{Conjecture~\ref{conj:f5-sigma3}} ($\min \Sigma \le 3$) & \textbf{open} \\
 \textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
   & \textbf{open} \\
