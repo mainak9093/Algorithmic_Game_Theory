@@ -1873,6 +1873,72 @@ of negative evidence than any single family could give — still not a proof, bu
 the evidence for (Q′) $=$ No now spans both a designed "hard" family and
 unstructured random costs.
 
+### 7.16.17 A new, more structured target: contiguous 2-cut partitions (necklace splitting)
+
+Lemma D's technique — a discrete IVT/parity argument over *orderings*, not
+Venn regions or local exchange — is genuinely different from everything else
+in this project, and Remark~`rem:f5-walk` already names the connection: for
+additive costs, the two-agent one-cut version is the discrete necklace-splitting
+theorem. That suggests the natural three-agent target: not an arbitrary
+3-partition, but a **contiguous** one under some ordering.
+
+> **Conjecture (contiguous 2-cut sufficiency).** For any three dichotomous costs
+> $\cost_1,\cost_2,\cost_3$ on $\items$, there is an ordering
+> $\sigma=(x_1,\dots,x_m)$ and cut points $0\le p\le q\le m$ such that, writing
+> $B_1=\set{x_1,\dots,x_p}$, $B_2=\set{x_{p+1},\dots,x_q}$,
+> $B_3=\set{x_{q+1},\dots,x_m}$, every $\mathrm{sp}_i(B_1,B_2,B_3)\le1$.
+
+This is a *strictly stronger* claim than (Q′) — a contiguous partition is a
+special case of an arbitrary one, so proving this closes (Q′) (hence general
+Lemma E, hence Conjecture~`conj:main` at $n=3$) outright. It is also a much
+more structured object than an arbitrary partition: only $\binom{m+2}{2}$
+choices of $(p,q)$ per ordering instead of $3^m$ assignments, and the
+per-agent behaviour along $p$ and along $q$ separately is monotone (exactly
+the structure Lemma D's proof exploits in one dimension).
+
+**Computational support, both random and adversarial:**
+- Exhaustive search (all $m!$ orderings, all $\binom{m+2}{2}$ cut pairs) over
+  $400$ random rigid triples at $\abs M=4$: zero failures.
+- The same exhaustive search on the cyclic-overlap adversarial witness of
+  §7.16.13 (the one deliberately built to force three pinch-pairs into mutual
+  conflict on $3$ elements): solved immediately, ordering $(a,b,c)$, cuts
+  $(0,1)$.
+- Randomized search (up to $300$ random orderings per triple, full cut search
+  within each): $60$ rigid triples each at $\abs M = 6,7,8$ (rigid pools of
+  $40$, increasingly hard to find by uniform random generation — $17{,}886$
+  attempts needed at $\abs M=8$): zero failures.
+
+**No proof yet.** Two partial strategies were explored and both stall in
+recognisable ways:
+- *Two-stage bootstrap via Lemma D twice.* Apply Lemma D to $(\cost_1,\cost_2)$
+  to get a $2$-way split $\set{S,\items\setminus S}$ with both spread $\le1$;
+  then split $S$ further into $(B_1,B_2)$ to introduce $\cost_3$. Splitting only
+  ever *lowers* $\cost_1(B_1),\cost_1(B_2)$ below $\cost_1(S)$ (monotone,
+  subsets), so the upper bound relative to $\cost_1(\items\setminus S)$ survives
+  automatically; the lower bound ($\cost_1(B_1),\cost_1(B_2)\ge
+  \cost_1(\items\setminus S)-1$) does not, and nothing controls it, nor does
+  anything about agent $3$'s full three-way spread get addressed by this
+  construction at all — $\cost_3$ was never consulted in choosing $S$.
+- *Direct two-dimensional generalisation of the winner/parity argument.* Along
+  $p$ (fixed $q$), $\cost_i(B_1)$ is monotone non-decreasing; along $q$ (fixed
+  $p$), $\cost_i(B_3)$ is monotone non-increasing; $\cost_i(B_2)$ depends on
+  both. The one-dimensional "interval of balanced positions" that powers
+  Lemma D's proof does not have an obvious two-dimensional analogue — the
+  balanced *region* in the $(p,q)$ grid for a single agent is some
+  monotone-boundary shape, not an interval, and three such regions need a
+  common point. This is the same three-way-simultaneity obstacle that has
+  recurred throughout the project, just relocated to a smaller, more structured
+  search space.
+
+**Assessment.** This is now the most promising open lead on (Q′): the
+strongest and most structured empirical support found so far (surviving
+deliberate adversarial construction, not just random search), a natural
+connection to a classical theorem (necklace splitting) via a proof technique
+already certified correct at $n=2$ (Lemma D), and a search space small enough
+that a real proof — rather than another exchange argument — looks plausible.
+Not yet attempted: a genuine two-dimensional discrete IVT/topological argument
+(Sperner-lemma-style) on the $(p,q)$ grid, which is the natural next step.
+
 ### 7.17 Status
 
 | statement | status |
@@ -1937,6 +2003,7 @@ unstructured random costs.
 | pivotal-element / exchange property for general dichotomous costs | **REFUTED** — star-cover witness with no removable element |
 | **Lemma D / Conjecture~`conj:f5-2balance`** (two agents, general costs, any 2-way split) | **overwhelmingly likely true, PROVED pending one step** (§7.16.15) — architecture (§§1-4,6,7) independently verified; §5's conclusion has $3.3M$+ trials with zero violations; §5's sign mechanism not independently reconstructed after two attempts; not yet promoted to LaTeX |
 | (Q′) search with fully general (not just bottleneck) random costs (§7.16.16) | **negative on $100{,}000{+}$ triples** at $\abs M=4,5,6,7$ — broadens, does not replace, the evidence toward (Q′) $=$ No |
+| **contiguous 2-cut conjecture** (§7.16.17) — strictly implies (Q′) via a necklace-splitting-style claim | **open, strong evidence** — exhaustive at $\abs M{=}4$ ($400$ triples incl. the adversarial cyclic witness), randomized at $\abs M{=}6,7,8$; two proof strategies attempted and stalled; most promising open lead |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
