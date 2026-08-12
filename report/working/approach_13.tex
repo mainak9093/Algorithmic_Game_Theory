@@ -102,6 +102,26 @@ most $\sum_a \varepsilon_a(\pi) = \Xi(\pi)$. The empty path has weight $0
 \end{proof}
 
 \begin{lemma}
+\label{lem:g3-minzero}
+Let $\alloc$ be an envy-freeable allocation and $\optsubsidy$ its
+pointwise-minimal subsidy. Then $\min_{a} \optsubsidy_a = 0$. Consequently,
+if $\optsubsidy \in \set{0,1}^n$ then $\sum_a \optsubsidy_a \le n-1$.
+\end{lemma}
+
+\begin{proof}
+The condition defining an envy-free solution,
+$\cost_a(\bundle a) - \subsidy_a \le \cost_a(\bundle b) - \subsidy_b$,
+depends on $\subsidy$ only through the differences $\subsidy_a - \subsidy_b$,
+so it is invariant under adding a constant to every coordinate. Let
+$\mu := \min_a \optsubsidy_a$ and suppose $\mu > 0$. Then
+$\optsubsidy - \mu \mathbf 1$ is non-negative and $(\alloc, \optsubsidy -
+\mu\mathbf 1)$ is again an envy-free solution, contradicting the pointwise
+minimality of $\optsubsidy$. Hence $\mu = 0$, and if
+$\optsubsidy \in \set{0,1}^n$ then at least one coordinate vanishes, so the
+sum is at most $n-1$.
+\end{proof}
+
+\begin{lemma}
 \label{lem:g3-criterion}
 Suppose some permutation $\sigma$ satisfies $\Xi(\sigma) \le 1$, and let
 $\pi$ minimise $\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation assigning
@@ -314,8 +334,9 @@ $\pathw{}(a)$ is an integer, $\subsidy \in \set{0,1}^n$.
 \label{thm:g3-main}
 Conjecture~\ref{conj:main} holds for $n \le 3$: for all dichotomous cost
 functions $\cost_1,\dots,\cost_n$ with $n \le 3$ there exist an allocation
-$\alloc$ and $\subsidy \in \set{0,1}^n$ such that $(\alloc,\subsidy)$ is an
-envy-free solution, and both are computable in polynomial time.
+$\alloc$ and $\subsidy \in \set{0,1}^n$ with $\sum_a \subsidy_a \le n-1$ such
+that $(\alloc,\subsidy)$ is an envy-free solution, and both are computable in
+polynomial time.
 \end{corollary}
 
 \begin{proof}
@@ -330,9 +351,10 @@ If $\abs{R(\alloc)} = 1$, apply Theorem~\ref{thm:g3-r1}.
 If $\abs{R(\alloc)} = 2$ then $n = 3$ and $\abs{R(\alloc)} = n-1$, so
 Theorem~\ref{thm:g3-r2} applies.
 
-In each case the construction is a minimum-cost assignment on at most three
-bundles preceded by a polynomial-time algorithm, so the total running time is
-polynomial.
+In each case the subsidy produced is the pointwise-minimal one, so
+Lemma~\ref{lem:g3-minzero} gives $\sum_a \subsidy_a \le n-1$. The
+construction is a minimum-cost assignment on at most three bundles preceded
+by a polynomial-time algorithm, so the total running time is polynomial.
 \end{proof}
 
 \subsection{The range not covered}

@@ -3118,6 +3118,55 @@ verification demoted to a section nothing cites, `rem:g2-blackbox` records
 why the black-box form is insufficient, `rem:g2-beyond` states the general-$n$
 reach and the exact remaining range. Builds clean at 125 pages.
 
+### 7.16.36 Independent audit of the n=3 proof, and one real gap found
+
+Full end-to-end audit (`update_12/audit_full_pipeline.py`), written to assume
+nothing from the proof: implements **Tao et al.'s Algorithm 3 verbatim**, runs
+it on random dichotomous instances, checks the halting lemma's claims
+*independently*, applies the construction, and verifies the output is EF with
+p in {0,1}^3 -- computing p both by the Halpern-Shah longest-path formula and
+by brute force over all 8 subsidy vectors, cross-checking the two.
+
+| check | result |
+|---|---|
+| Algorithm 3 output always EF, always leaves <= n-1 | **0 failures** |
+| envy graph strongly connected whenever \|R\|=2 (Lemma stopping (a)) | **0 failures** |
+| own-bundle marginals = 1 (stopping (b)) | **0 failures** |
+| marginals = 1 on every arc (stopping (c)) | **0 failures** |
+| augmented bundles cost every agent >= own+1 (expensive lemma) | **0 failures** |
+| every placement x every min-cost perm gives p in {0,1} | **0 failures** |
+| HS longest-path p agrees with brute force | **0 failures** |
+| fixed tie-break: 9,000 trials | 1,145 at \|R\|=1, **162 at \|R\|=2** |
+| randomised tie-break (reaches other halting states): 6,000 trials | 599 at \|R\|=1, **97 at \|R\|=2** |
+
+**GAP FOUND AND FIXED.** Conjecture 2 as stated (`conj:main`) asserts
+p in {0,1}^n *"hence total subsidy at most n-1"*. The proof established
+p in {0,1}^n but **never established that some p_i = 0**, without which the
+total bound is n, not n-1. Fixed by adding `lem:g3-minzero`: the envy-free
+condition depends on p only through differences p_a - p_b, so it is invariant
+under adding a constant; if min_a p_a > 0 then p - (min p)*1 is a smaller
+non-negative envy-free subsidy, contradicting pointwise minimality. Hence
+min_a p_a = 0 and the total is at most n-1. Confirmed computationally
+(0 violations in 3,000 trials). Added to `approach_13.tex`; `approach_12.tex`
+was left as the user asked, so **that section still lacks this step**.
+
+**Also checked, no problem found.** (i) Halpern-Shah is stated in `HS19` for
+additive valuations; the report's preliminaries already justify its use here
+(its proofs use only arc weights and permutations), and that reasoning was
+re-verified. (ii) The proof does not depend on *which* tail SCC the algorithm
+selects: at a halting state with \|R\|=n-1 the selected S has \|S\| > n-1,
+so S = agents regardless. (iii) Empty bundles cause no issue.
+
+**Bug fixed.** `approach_12.tex` used `\Cref` on theorem-like environments,
+which share one counter here, so every Lemma/Example/Definition rendered as
+"Theorem". Replaced with explicit typed `ef`; `approach_13.tex` was already
+correct.
+
+**Audit limitation, stated honestly.** The computational audit exercises
+halting states reachable by two tie-breaking policies; it cannot enumerate all
+halting states. It is a check on the proof, not a component of it -- the proof
+itself covers every halting state satisfying the stopping conditions.
+
 ### 7.17 Status
 
 | statement | status |
