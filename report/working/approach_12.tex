@@ -1,555 +1,376 @@
 %% ==========================================================================
-%%  Approach 12 --- self-contained treatment of Conjecture 2 at n = 3.
-%%  BOTH cases PROVED, no exhaustion. |R|=1 holds for all n; |R|=2 uses the
-%%  stopping structure of TWYZ's algorithm and holds whenever |R|=n-1.
+%%  Approach 12 --- Envy-free allocations with unit subsidies via partial
+%%  allocations. Research-style writeup intended for the final report.
 %%
-%%  Source: RESIDUAL.md \S7.16.32--7.16.33; formalised piecemeal in
-%%  \Cref{sec:approach11}. This section restates the same result as one
-%%  linear proof, written to be read on its own: every definition it needs is
-%%  given here, and every lemma kept is one the final proof actually calls.
-%%  Nothing about paths that were tried and abandoned appears below; see
-%%  RESIDUAL.md \S7 and \Cref{sec:approach10} for that history.
+%%  Results: Theorem (one unallocated item, every n); Theorem (n-1
+%%  unallocated items, every n); Corollary (Conjecture 2 for n <= 3).
+%%  No step uses exhaustive computation.
+%%
+%%  NOTE ON REFERENCING: theorem-like environments share one counter here, so
+%%  \Cref renders all of them as "Theorem". Use explicit "Lemma~\ref{...}",
+%%  "Theorem~\ref{...}", "Corollary~\ref{...}" throughout this file.
 %% ==========================================================================
-\section{Approach 12: A Complete Proof of Conjecture 2 at \texorpdfstring{$n=3$}{n=3}}
+\section{Unit Subsidies via Partial Allocations}
 \label{sec:approach12}
 
-This section attacks Conjecture~\ref{conj:main} at $n=3$ in full generality,
-from scratch. It assumes nothing from the rest of this document except the
-definitions restated in \Cref{sec:g2-setup}, the two classical facts about
-envy-freeability quoted in \Cref{sec:g2-hs}, and one external theorem
-(\Cref{thm:g2-twyz}). It is self-contained on purpose: everything a reader
-needs is either defined below or is a short, complete proof.
+Throughout this section $\agents = \set{1,\dots,n}$ is a set of agents and
+$\items$ a finite set of indivisible chores. Each agent $i$ has a
+dichotomous cost function $\cost_i : 2^{\items} \to \Z_{\ge 0}$ in the sense
+of Definition~\ref{def:dichcost}: $\cost_i(\emptyset) = 0$ and
+$\cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for all $S \subseteq
+\items$ and $e \in \items \setminus S$. We write
+$\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S)$. Every such
+$\cost_i$ is integer-valued and non-decreasing.
 
-\paragraph{Status, stated up front.} Every statement below is proved. No
-step relies on a computation: \Cref{sec:g2-verification} records finite
-checks, but nothing cites it. The case of one leftover item
-(\Cref{thm:g2-r1}) is proved by an argument that never mentions $n$ and so
-holds for every number of agents (\Cref{cor:g2-anyn}). The case of two
-(\Cref{thm:g2-r2}) needs more: it uses the structure that
-\Cref{thm:g2-twyz}'s \emph{algorithm} must leave behind when it halts, not
-just the statement of that theorem, and it holds for every $n$ whenever the
-number of leftover items is $n-1$ (\Cref{rem:g2-beyond}). At $n=3$ those two
-results cover all cases, so \Cref{thm:g2-main} is unconditional.
+A \emph{partial allocation} is a tuple $\alloc = (\bundle1,\dots,\bundle n)$
+of pairwise disjoint subsets of $\items$; its \emph{residue} is
+$R(\alloc) := \items \setminus \bigcup_i \bundle i$, and $\alloc$ is an
+allocation when $R(\alloc) = \emptyset$. A partial allocation is
+\emph{envy-free} if $\cost_i(\bundle i) \le \cost_i(\bundle j)$ for all
+$i,j \in \agents$. For $\subsidy \in \Z_{\ge0}^n$ the pair
+$(\alloc,\subsidy)$ is an \emph{envy-free solution} if
+$\cost_i(\bundle i) - \subsidy_i \le \cost_i(\bundle j) - \subsidy_j$ for all
+$i,j$.
 
-\subsection{Setup}
-\label{sec:g2-setup}
+We use two facts from~\cite{HS19}, recorded as
+Theorem~\ref{thm:hs-characterisation} and
+Theorem~\ref{thm:hs-minsubsidy} in \Cref{sec:prelim}. In the cost
+formulation they read as follows. Given an allocation $\alloc$, its
+\emph{envy graph} is the complete digraph on $\agents$ with arc weights
+$\edgew{}(i,j) := \cost_i(\bundle i) - \cost_i(\bundle j)$. First, $\alloc$
+admits an envy-free solution for some $\subsidy \in \Z^n_{\ge0}$ if and only
+if $\alloc$ minimises $\sum_{i} \cost_i(\bundle{\sigma(i)})$ over all
+permutations $\sigma$ of its own bundles among the agents; equivalently, if
+and only if its envy graph has no positive-weight directed cycle. Second,
+when this holds, the pointwise-minimal such subsidy is
+$\subsidy_i = \pathw{\alloc}(i)$, the maximum weight of a simple directed
+path in the envy graph starting at $i$ (the empty path being allowed, so
+$\pathw{\alloc}(i) \ge 0$).
 
-There are $3$ agents and a finite set $\items$ of indivisible chores. Each
-agent $i$ has a \emph{dichotomous cost function} $\cost_i : 2^{\items} \to
-\R_{\ge0}$: $\cost_i(\emptyset) = 0$, and every marginal $\cost_i(S \cup
-\set e) - \cost_i(S)$, for $S \subseteq \items$ and $e \notin S$, lies in
-$\set{0,1}$. This forces $\cost_i$ to be monotone ($\cost_i(S) \le
-\cost_i(T)$ whenever $S \subseteq T$), but assumes nothing else: not
-additivity, not submodularity, not any relationship between $\cost_1,
-\cost_2, \cost_3$.
+Finally we use the following, which is Theorem 5.1 of~\cite{TWYZ23}.
 
-An \emph{allocation} $\alloc = (\bundle1,\bundle2,\bundle3)$ is a partition
-of $\items$ into three (possibly empty) bundles, one per agent. A subsidy
-vector $\subsidy = (\subsidy_1,\subsidy_2,\subsidy_3) \in \set{0,1}^3$ pays
-agent $i$ the amount $\subsidy_i$. The pair $(\alloc,\subsidy)$ is
-\emph{envy-free} (EF) if
-\[
-  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
-  \qquad \text{for all agents } i,j:
-\]
-net of compensation, no agent would rather have someone else's bundle and
-subsidy. A \emph{partial allocation} assigns each item to at most one agent
-(some items may be unallocated); it is EF if the inequality above holds for
-all $i,j$ using only the bundles actually assigned so far.
-
-\begin{quote}
-\textbf{Conjecture 2.} For every instance of $3$ dichotomous cost functions
-on a finite item set $\items$, there is an allocation $\alloc$ and a subsidy
-$\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free, and
-such a pair can be found in polynomial time.
-\end{quote}
-
-Read top to bottom; each step uses only what came before it.
-
-\subsection{Step 1: start from a partial allocation that is already free}
-\label{sec:g2-step1}
-
-The proof does not build an allocation from nothing. It starts from an
-external result that hands us most of one for free.
-
-\begin{theorem}[Tao, Wu, Yu, Zhou 2023~\cite{TWYZ23}]
+\begin{theorem}[\cite{TWYZ23}]
 \label{thm:g2-twyz}
-For any number of agents $n$ and any dichotomous cost functions, there is a
-polynomial-time algorithm producing a partial allocation
-$(\bundle1,\dots,\bundle n)$ that is envy-free with $\subsidy = 0$ (no
-subsidy needed at all) and leaves at most $n-1$ items of $\items$
-unassigned.
+For every $n$ and all dichotomous cost functions $\cost_1,\dots,\cost_n$
+there is a polynomial-time algorithm returning an envy-free partial
+allocation $\alloc$ with $\abs{R(\alloc)} \le n-1$.
 \end{theorem}
 
-We use this as a black box; the idea behind it (an envy-graph process that
-gives an item to whoever is willing to take it for free, and otherwise
-rotates bundles around a cycle of mutually-envious agents) is not needed
-here. At $n=3$, \Cref{thm:g2-twyz} gives an EF partial allocation
-$(\bundle1,\bundle2,\bundle3)$ together with a leftover set $R = \items
-\setminus (\bundle1 \cup \bundle2 \cup \bundle3)$ of at most $2$ items. If
-$R = \emptyset$ we are already done, with $\subsidy = 0$. What remains is
-to show that the leftover $1$ or $2$ items can always be placed --- possibly
-by reassigning which agent gets which of the three bundles, and possibly
-with a subsidy of $1$ for one or two agents --- so that the full allocation
-is envy-free.
+\subsection{A potential for the assignment of bundles}
 
-\subsection{Step 2: free items can always be inserted}
-\label{sec:g2-step2}
-
-\begin{lemma}[Free insertion]
-\label{lem:g2-free}
-Let $(\bundle1,\bundle2,\bundle3)$ be an EF partial allocation and let $S$ be
-a set of unallocated items with $\cost_i(\bundle i \cup S) = \cost_i(\bundle
-i)$ for some agent $i$ (item(s) $S$ cost $i$ nothing on top of what $i$
-already holds). Giving all of $S$ to $i$, and changing nothing else, keeps
-the allocation EF, with $\subsidy = 0$.
-\end{lemma}
-\begin{proof}
-Agent $i$'s own cost is unchanged, so $i$'s non-envy of every other agent
-$j$ is unchanged: $\cost_i(\bundle i \cup S) = \cost_i(\bundle i) \le
-\cost_i(\bundle j)$. For any other agent $j$: before the change,
-$\cost_j(\bundle j) \le \cost_j(\bundle i)$ (that's $j$ not envying $i$,
-which held already); after the change $j$ must compare against $\bundle i
-\cup S$ instead of $\bundle i$, but $\cost_j(\bundle i \cup S) \ge
-\cost_j(\bundle i)$ by monotonicity, so $\cost_j(\bundle j) \le \cost_j(\bundle
-i) \le \cost_j(\bundle i \cup S)$ still holds. No agent's envy status
-changes for the worse.
-\end{proof}
-
-This lemma costs nothing to apply and needs no case analysis, so the proof
-always uses it first: whenever some leftover item is free to some agent's
-current bundle, hand it over and shrink the leftover set by one. Repeating
-this can only ever reduce $\abs R$. The only way this process does not
-immediately finish the job is if it gets stuck: every agent has a strictly
-positive marginal cost for every leftover item, on their own current bundle.
-Call this the \emph{stuck} case. It is the only case left to handle, and it
-splits into $\abs R = 1$ and $\abs R = 2$.
-
-\subsection{A motivating example: subsidy alone is not enough}
-\label{sec:g2-example}
-
-Before handling the stuck case in general, one example shows why a natural
-simpler idea --- keep everyone's bundle as is, place the leftover item, and
-patch any envy with a subsidy --- can fail outright, and what actually fixes
-it.
-
-\begin{example}
-\label{ex:g2-motivating}
-Let $\items = \set{a,b,c,e}$ and $\bundle1 = \set a$, $\bundle2 = \set b$,
-$\bundle3 = \set c$ (so $R = \set e$). Define, for each agent $i \in
-\set{1,2,3}$ with trigger pair $T_1 = \set{a,e}$, $T_2 = \set{b,e}$, $T_3 =
-\set{c,e}$,
+Fix pairwise disjoint bundles $Y_1,\dots,Y_n$ with
+$\bigcup_j Y_j = \items$, and let $\pi$ be a permutation of $\agents$, agent
+$a$ receiving $Y_{\pi(a)}$. Put
 \[
-  \cost_i(S) = \begin{cases} 1 & \text{if } T_i \subseteq S \\ 0 & \text{otherwise.} \end{cases}
+  \beta_a \;:=\; \min_{j \in \agents} \cost_a(Y_j),
+  \qquad
+  \varepsilon_a(\pi) \;:=\; \cost_a(Y_{\pi(a)}) - \beta_a \;\ge\; 0 ,
 \]
-Each $\cost_i$ is dichotomous (it only ever jumps by $1$, exactly when the
-last missing element of $T_i$ is added). The starting partial allocation is
-EF: every agent's cost for every one of the three bundles is $0$, since none
-contains any full trigger pair. Every agent has marginal cost $1$ for $e$ on
-their own bundle ($\cost_i(\bundle i \cup e) = 1 \ne 0$), so \Cref{lem:g2-free}
-does not apply: this is a stuck instance.
+and call $\Xi(\pi) := \sum_{a \in \agents} \varepsilon_a(\pi)$ the
+\emph{total excess} of $\pi$.
 
-Try giving $e$ to agent $1$, keeping bundles otherwise fixed:
-$\bundle1' = \set{a,e}$. Now $\cost_1(\bundle1') = 1 > 0 = \cost_1(\bundle2)$,
-so agent $1$ envies agent $2$ unless $\subsidy_1 - \subsidy_2 \ge 1$, forcing
-$\subsidy_1 = 1, \subsidy_2 = 0$. But agent $2$ sees $\cost_2(\bundle1') = 0$
-(agent $2$'s trigger is $\set{b,e}$, and $b \notin \bundle1'$) and
-$\cost_2(\bundle2) = 0$: with $\subsidy_1 = 1$, agent $2$'s comparison becomes
-$0 - 0 \le 0 - 1$, which is false. Agent $2$ now envies agent $1$. Trying the
-other two agents as the recipient of $e$ fails the same way by symmetry, and
-no subsidy vector in $\set{0,1}^3$ rescues any of the three choices.
-
-What does work is reassigning bundles, not just placing $e$: give agent $3$
-the bundle $\set{a,e}$, agent $1$ the bundle $\set b$, and agent $2$ the
-bundle $\set c$. Every agent's cost for their new bundle is $0$ (agent $3$'s
-trigger is $\set{c,e}$, and $\set{a,e}$ doesn't contain $c$; similarly for
-the other two), so $\subsidy = 0$ works.
-\end{example}
-
-The move that rescued \Cref{ex:g2-motivating} was not moving an item between
-bundles --- it was reassigning which \emph{agent} receives which
-\emph{bundle}. This is the extra freedom the rest of the proof uses: after
-deciding where the leftover item(s) go, we are also free to permute which of
-the three agents receives which of the three resulting bundles, before
-falling back on subsidy.
-
-\subsection{Step 3: the two classical facts that do the work}
-\label{sec:g2-hs}
-
-Nothing below is a search. The whole argument rests on two standard facts
-about envy-freeability, both already stated in
-\Cref{sec:prelim}: \Cref{thm:hs-characterisation} (an allocation admits
-\emph{some} non-negative subsidy exactly when its bundles are assigned to
-agents at minimum total cost) and \Cref{thm:hs-minsubsidy} (when it does,
-the pointwise-smallest such subsidy is $\subsidy_i = \pathw{\alloc}(i)$, the
-greatest weight of a simple path starting at $i$ in the envy graph, whose
-arcs carry $\edgew{}(a,b) = \cost_a(\bundle a) - \cost_a(\bundle b)$).
-
-Together they convert the question ``does a subsidy in $\set{0,1}^n$ exist?''
-into two concrete obligations: \emph{assign the bundles by a minimum-cost
-matching}, and then \emph{show every simple path in the resulting envy graph
-has weight at most $1$}. The first is a polynomial-time algorithm (Hungarian
-method) defined for every $n$. The second is what the next lemma delivers.
-
-\begin{definition}[Excess]
-\label{def:g2-excess}
-Fix bundles $Y_1,\dots,Y_n$ and an assignment $\pi$ (agent $a$ receives
-$Y_{\pi(a)}$). Write $\beta_a := \min_j \cost_a(Y_j)$ for what agent $a$
-would pay for their favourite bundle, and
-\[
-  \varepsilon_a \;:=\; \cost_a(Y_{\pi(a)}) - \beta_a \;\ge\; 0
-\]
-for how much worse than that $a$ actually does. Call $\sum_a \varepsilon_a$
-the \emph{total excess} of $\pi$.
-\end{definition}
-
-\begin{lemma}[Paths are bounded by total excess]
-\label{lem:g2-pathbound}
-Every simple path in the envy graph of $(Y,\pi)$ has weight at most
-$\sum_a \varepsilon_a$. Hence $\pathw{}(i) \le \sum_a \varepsilon_a$ for every
-agent $i$.
-\end{lemma}
-\begin{proof}
-Each arc out of $a$ has weight $\edgew{}(a,b) = \cost_a(Y_{\pi(a)}) -
-\cost_a(Y_{\pi(b)}) \le \cost_a(Y_{\pi(a)}) - \beta_a = \varepsilon_a$,
-since $\beta_a$ is a minimum over \emph{all} bundles. A simple path leaves
-each agent at most once, so its weight is at most $\sum_a \varepsilon_a$.
-\end{proof}
-
-\begin{lemma}[Minimum-cost assignment minimises total excess]
+\begin{lemma}
 \label{lem:g2-mincost-excess}
-For any assignment $\sigma$, $\sum_a \cost_a(Y_{\sigma(a)}) = \sum_a \beta_a +
-\sum_a \varepsilon_a(\sigma)$. Since $\sum_a \beta_a$ does not depend on
-$\sigma$, an assignment has minimum total cost if and only if it has minimum
-total excess.
+$\pi$ minimises $\sum_{a} \cost_a(Y_{\pi(a)})$ if and only if it minimises
+$\Xi(\pi)$.
 \end{lemma}
+
 \begin{proof}
-Immediate from \Cref{def:g2-excess} by summing.
+Summing the definition of $\varepsilon_a(\pi)$ over $a$ gives
+$\sum_a \cost_a(Y_{\pi(a)}) = \sum_a \beta_a + \Xi(\pi)$. The quantity
+$\sum_a \beta_a$ does not depend on $\pi$, so the two minimisation problems
+have the same minimisers.
 \end{proof}
 
-These two lemmas reduce everything to a single quantity. To get $\subsidy \in
-\set{0,1}^n$ it suffices to exhibit \emph{one} assignment whose total excess
-is at most $1$: the minimum-cost assignment then has total excess at most $1$
-too (\Cref{lem:g2-mincost-excess}), is envy-freeable
-(\Cref{thm:hs-characterisation}), and its minimal subsidy is bounded by $1$
-(\Cref{lem:g2-pathbound} with \Cref{thm:hs-minsubsidy}). Subsidies are
-non-negative integers here, so ``at most $1$'' means ``in $\set{0,1}$''.
+\begin{lemma}
+\label{lem:g2-pathbound}
+Let $\alloc$ be the allocation assigning $Y_{\pi(a)}$ to $a$. Every simple
+directed path in the envy graph of $\alloc$ has weight at most $\Xi(\pi)$.
+In particular $\pathw{\alloc}(a) \le \Xi(\pi)$ for every $a$.
+\end{lemma}
 
-\subsection{Step 4: closing the case of one leftover item}
-\label{sec:g2-r1}
+\begin{proof}
+For any $a,b$,
+\[
+  \edgew{}(a,b) = \cost_a(Y_{\pi(a)}) - \cost_a(Y_{\pi(b)})
+  \le \cost_a(Y_{\pi(a)}) - \beta_a = \varepsilon_a(\pi),
+\]
+because $\beta_a \le \cost_a(Y_{\pi(b)})$ by definition of $\beta_a$. A
+simple path has at most one arc leaving each vertex, so its weight is at
+most $\sum_a \varepsilon_a(\pi) = \Xi(\pi)$. The empty path has weight $0
+\le \Xi(\pi)$.
+\end{proof}
+
+\begin{lemma}
+\label{lem:g2-criterion}
+Suppose some permutation $\sigma$ satisfies $\Xi(\sigma) \le 1$, and let
+$\pi$ minimise $\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation assigning
+$Y_{\pi(a)}$ to $a$ admits an envy-free solution with subsidy in
+$\set{0,1}^n$, and $\pi$ is computable in polynomial time given a value
+oracle.
+\end{lemma}
+
+\begin{proof}
+By Lemma~\ref{lem:g2-mincost-excess}, $\pi$ minimises $\Xi$, so
+$\Xi(\pi) \le \Xi(\sigma) \le 1$. Being cost-minimising among reassignments
+of its own bundles, the allocation admits an envy-free solution by
+Theorem~\ref{thm:hs-characterisation}, and by
+Theorem~\ref{thm:hs-minsubsidy} its minimal subsidy is
+$\subsidy_a = \pathw{}(a)$, which lies in $[0, \Xi(\pi)] \subseteq [0,1]$ by
+Lemma~\ref{lem:g2-pathbound}. Each $\pathw{}(a)$ is a difference of integers,
+hence $\subsidy \in \set{0,1}^n$. Computing $\pi$ is an assignment problem on
+$n$ agents and $n$ bundles, solvable in time polynomial in $n$ after $n^2$
+oracle calls.
+\end{proof}
+
+\subsection{Residues of size one}
 
 \begin{theorem}
 \label{thm:g2-r1}
-If $(\bundle1,\bundle2,\bundle3)$ is an EF partial allocation with exactly
-one leftover item $e$, some choice of which bundle receives $e$, some
-permutation of the resulting three bundles to the three agents, and some
-$\subsidy \in \set{0,1}^3$ gives a full EF allocation.
+Let $\alloc = (\bundle1,\dots,\bundle n)$ be an envy-free partial allocation
+with $R(\alloc) = \set e$. For any $m \in \agents$, set $Y_m := \bundle m
+\cup \set e$ and $Y_j := \bundle j$ for $j \ne m$, and let $\pi$ minimise
+$\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation assigning $Y_{\pi(a)}$ to
+$a$ admits an envy-free solution with subsidy in $\set{0,1}^n$.
 \end{theorem}
+
 \begin{proof}
-Put $e$ into \emph{any} bundle --- say $Y_m := \bundle m \cup \set e$, with
-$Y_j := \bundle j$ for $j \ne m$; the choice of $m$ is immaterial. By the
-discussion closing \Cref{sec:g2-hs} it is enough to exhibit one assignment
-of total excess at most $1$, and the identity assignment already is one.
+By Lemma~\ref{lem:g2-criterion} it suffices to exhibit one permutation of
+total excess at most $1$; we show the identity is such a permutation.
 
-For an agent $a \ne m$: their own original bundle is still their favourite,
-because
+Let $a \ne m$. For every $j$,
 \[
-  \cost_a(Y_a) \;=\; \cost_a(\bundle a) \;\le\; \cost_a(\bundle j)
-  \;\le\; \cost_a(Y_j) \qquad \text{for every } j,
+  \cost_a(Y_a) = \cost_a(\bundle a) \le \cost_a(\bundle j) \le \cost_a(Y_j),
 \]
-the first inequality being envy-freeness of the partial allocation and the
-second monotonicity ($Y_j \supseteq \bundle j$). Hence $\cost_a(Y_a) =
-\beta_a$ and $\varepsilon_a = 0$.
+the first inequality by envy-freeness of $\alloc$ and the second because
+$\bundle j \subseteq Y_j$ and $\cost_a$ is non-decreasing. Hence
+$\beta_a = \cost_a(Y_a)$ and $\varepsilon_a(\mathrm{id}) = 0$.
 
-For the agent $m$: the single added item raises the cost by at most one
-unit, so for every $j$,
+For $a = m$ and every $j$,
 \[
-  \cost_m(Y_m) \;=\; \cost_m(\bundle m \cup \set e)
-  \;\le\; \cost_m(\bundle m) + 1
-  \;\le\; \cost_m(\bundle j) + 1
-  \;\le\; \cost_m(Y_j) + 1,
+  \cost_m(Y_m) = \cost_m(\bundle m) + \cost_m(e \mid \bundle m)
+  \le \cost_m(\bundle m) + 1 \le \cost_m(\bundle j) + 1 \le \cost_m(Y_j) + 1,
 \]
-using the unit-marginal property, then envy-freeness, then monotonicity.
-Taking the minimum over $j$ gives $\cost_m(Y_m) \le \beta_m + 1$, i.e.\
-$\varepsilon_m \le 1$.
+using in turn that marginals lie in $\set{0,1}$, envy-freeness of $\alloc$,
+and monotonicity. Taking the minimum over $j$ gives $\cost_m(Y_m) \le
+\beta_m + 1$, i.e.\ $\varepsilon_m(\mathrm{id}) \le 1$.
 
-The identity assignment therefore has total excess at most $1$, so a
-minimum-cost assignment $\pi$ has total excess at most $1$
-(\Cref{lem:g2-mincost-excess}). Being minimum-cost, $(Y,\pi)$ is
-envy-freeable (\Cref{thm:hs-characterisation}), and its minimal subsidy is
-$\subsidy_i = \pathw{}(i) \le \sum_a \varepsilon_a \le 1$
-(\Cref{thm:hs-minsubsidy} with \Cref{lem:g2-pathbound}). Subsidies are
-non-negative integers, so $\subsidy \in \set{0,1}^n$.
+Therefore $\Xi(\mathrm{id}) \le 1$.
 \end{proof}
 
-Three things about this proof are worth stating explicitly, because they are
-what a scaling argument would need. It contains no search. It never uses
-$n = 3$ --- it is written for, and valid at, every number of agents. And it
-does not need the ``stuck'' case distinction at all: it subsumes
-\Cref{lem:g2-free} rather than branching on it. Recording the consequence
-separately, since it is stronger than what \Cref{thm:g2-main} will need:
+\subsection{Residues of maximum size}
 
-\begin{corollary}[One leftover item, any number of agents]
-\label{cor:g2-anyn}
-Let $(\bundle1,\dots,\bundle n)$ be an envy-free partial allocation for any
-number $n$ of agents with dichotomous costs, leaving exactly one item
-unallocated. Then a minimum-cost assignment of the augmented bundles admits
-a subsidy $\subsidy \in \set{0,1}^n$ making it envy-free, computable in
-polynomial time.
-\end{corollary}
+Theorem~\ref{thm:g2-r1} uses only the envy-freeness of $\alloc$. The
+remaining case uses properties of the partial allocation returned by the
+algorithm of Theorem~\ref{thm:g2-twyz}, which we now record. That algorithm
+maintains an envy-free partial allocation and the digraph
+\begin{equation}
+\label{eq:g2-graph}
+  G \;=\; (\agents, E), \qquad
+  (i,j) \in E \iff i \ne j \text{ and } \cost_i(\bundle i) = \cost_i(\bundle j),
+\end{equation}
+and it iterates three rules: (R1) if some $e \in R(\alloc)$ and some $i$
+satisfy $\cost_i(e \mid \bundle i) = 0$, give $e$ to $i$; (R2) if some
+$e \in R(\alloc)$ and some arc $(i,j) \in E$ lying on a directed cycle of
+$G$ satisfy $\cost_i(e \mid \bundle j) = 0$, rotate the bundles along that
+cycle and give $e$ to $i$; (R3) otherwise select a tail strongly connected
+component $S$ of $G$ --- one with no arc of $E$ leaving $S$ --- and, if
+$\abs{R(\alloc)} \ge \abs S$, give one residual item to each agent of $S$.
+The three rules are attempted in this order and the algorithm loops while
+$R(\alloc) \ne \emptyset$; the only exit with $R(\alloc) \ne \emptyset$ is
+the failure of the test in (R3). Hence if the algorithm halts with
+$R(\alloc) \ne \emptyset$, then (R1) and (R2) do not apply at the halting
+state and $\abs{R(\alloc)} < \abs S$ for the component $S$ selected by (R3).
 
-\subsection{Step 5: closing the case of two leftover items}
-\label{sec:g2-r2}
-
-This case needs one thing \Cref{thm:g2-r1} did not: the fact that the
-partial allocation was produced by \emph{a particular algorithm}. Used as a
-black box, \Cref{thm:g2-twyz} says only that at most two items are left. But
-its algorithm cannot stop with two items left at $n = 3$ unless the
-allocation it stops on has a very rigid shape, and that shape is exactly
-what closes the case.
-
-\begin{lemma}[What the algorithm leaves behind]
+\begin{lemma}
 \label{lem:g2-stopping}
-Suppose the algorithm of \Cref{thm:g2-twyz}, run on $3$ agents, halts with an
-EF partial allocation $(\bundle1,\bundle2,\bundle3)$ and two unallocated
-items $R = \set{e_1,e_2}$. Let $G$ be the digraph on the agents with an arc
-$i \to j$ ($i \ne j$) exactly when $\cost_i(\bundle i) = \cost_i(\bundle j)$.
-Then:
+Let $n \ge 2$, let $\alloc$ be the partial allocation at which the algorithm
+of Theorem~\ref{thm:g2-twyz} halts, and suppose $\abs{R(\alloc)} = n-1$.
+Then, with $G$ as in \eqref{eq:g2-graph}:
 \begin{enumerate}
   \item[(a)] $G$ is strongly connected;
-  \item[(b)] $\cost_i(e \mid \bundle i) = 1$ for every agent $i$ and every
-        $e \in R$;
-  \item[(c)] $\cost_i(e \mid \bundle j) = 1$ for every arc $i \to j$ of $G$
-        and every $e \in R$.
+  \item[(b)] $\cost_i(e \mid \bundle i) = 1$ for every $i \in \agents$ and
+        every $e \in R(\alloc)$;
+  \item[(c)] $\cost_i(e \mid \bundle j) = 1$ for every arc $(i,j) \in E$ and
+        every $e \in R(\alloc)$.
 \end{enumerate}
 \end{lemma}
+
 \begin{proof}
-The algorithm halts only at its final line, having failed each of its three
-update rules in turn.
+Since $\abs{R(\alloc)} = n-1 \ge 1$, the algorithm halted with
+$R(\alloc) \ne \emptyset$, so the description above applies.
 
-(b) is the failure of the first rule, which would otherwise hand a
-zero-marginal item to an agent who accepts it for free.
+(a) At the halting state the component $S$ selected by (R3) satisfies
+$\abs{R(\alloc)} < \abs S$, so $\abs S > n-1$, forcing $\abs S = n$. Thus
+$S = \agents$, and $S$ is a strongly connected subgraph of $G$ by
+construction, so $G$ is strongly connected.
 
-(a): the halting rule inspects a tail strongly connected component $S$ of
-$G$ and halts only when the number of unallocated items is smaller than
-$\abs S$. Two items are unallocated, so $\abs S \ge 3$, forcing $\abs S = 3$;
-thus $S$ is the whole agent set and $G$ is strongly connected.
+(b) Rule (R1) does not apply, so $\cost_i(e \mid \bundle i) \ne 0$ for all
+$i$ and all $e \in R(\alloc)$; marginals lie in $\set{0,1}$.
 
-(c) is the failure of the second rule, which would otherwise rotate bundles
-around a directed cycle whenever some arc $i \to j$ \emph{lying on a
-directed cycle} has $\cost_i(e \mid \bundle j) = 0$. In a strongly connected
-digraph every arc lies on a directed cycle, so by (a) that restriction is
-vacuous and the condition applies to every arc of $G$.
+(c) Let $(i,j) \in E$. By (a) there is a directed path in $G$ from $j$ to
+$i$; choosing one with no repeated vertex and appending the arc $(i,j)$
+yields a directed cycle of $G$ through $(i,j)$. Since (R2) does not apply,
+$\cost_i(e \mid \bundle j) \ne 0$ for every $e \in R(\alloc)$.
 \end{proof}
 
-The single consequence we need is that, in this situation, \emph{any} bundle
-carrying a leftover item is strictly worse for \emph{everybody} than their
-own original bundle.
-
-\begin{lemma}[Augmented bundles are strictly expensive]
+\begin{lemma}
 \label{lem:g2-expensive}
-Under \Cref{lem:g2-stopping}, for every agent $a$, every $j$, and every
-$e \in R$,
+In the situation of Lemma~\ref{lem:g2-stopping}, for every $a, j \in \agents$
+and every $e \in R(\alloc)$,
 \[
   \cost_a(\bundle j \cup \set e) \;\ge\; \cost_a(\bundle a) + 1 .
 \]
 \end{lemma}
+
 \begin{proof}
-Write $\cost_a(\bundle j \cup \set e) = \cost_a(\bundle j) + \cost_a(e \mid
-\bundle j)$. Envy-freeness of the partial allocation gives $\cost_a(\bundle
-j) \ge \cost_a(\bundle a)$. If that inequality is strict the claim follows,
-since costs are integers and marginals are non-negative. If it is an
-equality, then either $j = a$, and $\cost_a(e \mid \bundle a) = 1$ by
-\Cref{lem:g2-stopping}(b); or $j \ne a$, in which case $a \to j$ is an arc of
-$G$ and $\cost_a(e \mid \bundle j) = 1$ by \Cref{lem:g2-stopping}(c). Either
-way the marginal is $1$.
+Envy-freeness of $\alloc$ gives $\cost_a(\bundle j) \ge \cost_a(\bundle a)$,
+and both sides are integers. If $\cost_a(\bundle j) \ge \cost_a(\bundle a)+1$
+the claim follows from $\cost_a(\bundle j \cup \set e) \ge
+\cost_a(\bundle j)$. Otherwise $\cost_a(\bundle j) = \cost_a(\bundle a)$. If
+$j = a$ then $\cost_a(e \mid \bundle a) = 1$ by
+Lemma~\ref{lem:g2-stopping}(b); if $j \ne a$ then $(a,j) \in E$ by
+\eqref{eq:g2-graph} and $\cost_a(e \mid \bundle j) = 1$ by
+Lemma~\ref{lem:g2-stopping}(c). In both cases
+$\cost_a(\bundle j \cup \set e) = \cost_a(\bundle a) + 1$.
 \end{proof}
 
 \begin{theorem}
 \label{thm:g2-r2}
-Let $(\bundle1,\bundle2,\bundle3)$ be the EF partial allocation at which the
-algorithm of \Cref{thm:g2-twyz} halts with two unallocated items. Send the
-two items to two \emph{distinct} bundles --- any two --- and assign the three
-resulting bundles to the three agents by any minimum-cost matching. The
-result is envy-free with a subsidy in $\set{0,1}^3$.
+Let $n \ge 2$, let $\alloc = (\bundle1,\dots,\bundle n)$ be the partial
+allocation at which the algorithm of Theorem~\ref{thm:g2-twyz} halts, and
+suppose $R(\alloc) = \set{e_1,\dots,e_{n-1}}$ has exactly $n-1$ elements. Choose
+distinct indices $m_1,\dots,m_{n-1}$ and set
+\[
+  Y_{m_t} := \bundle{m_t} \cup \set{e_t} \ \ (1 \le t \le n-1),
+  \qquad
+  Y_w := \bundle w \text{ for the remaining index } w .
+\]
+Let $\pi$ minimise $\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation
+assigning $Y_{\pi(a)}$ to $a$ admits an envy-free solution with subsidy in
+$\set{0,1}^n$.
 \end{theorem}
+
 \begin{proof}
-Write $Y_1,Y_2,Y_3$ for the bundles after placement: two of them are
-\emph{augmented} (one leftover item each) and one is \emph{clean}. Put
-$L := \sum_a \cost_a(\bundle a)$, and for an assignment $\pi$ put
-$g_a := \cost_a(Y_{\pi(a)}) - \cost_a(\bundle a)$, which is non-negative
-because $\cost_a(Y_{\pi(a)}) \ge \cost_a(\bundle{\pi(a)}) \ge
-\cost_a(\bundle a)$ by monotonicity and partial envy-freeness.
+Call $Y_{m_1},\dots,Y_{m_{n-1}}$ \emph{augmented} and $Y_w$ \emph{clean}.
+Put $L := \sum_{a} \cost_a(\bundle a)$ and, for a permutation $\sigma$,
+\[
+  g_a(\sigma) \;:=\; \cost_a(Y_{\sigma(a)}) - \cost_a(\bundle a).
+\]
+Since $\bundle{\sigma(a)} \subseteq Y_{\sigma(a)}$ and $\alloc$ is
+envy-free, $\cost_a(Y_{\sigma(a)}) \ge \cost_a(\bundle{\sigma(a)}) \ge
+\cost_a(\bundle a)$, so $g_a(\sigma) \ge 0$, and
+$\sum_a \cost_a(Y_{\sigma(a)}) = L + \sum_a g_a(\sigma)$.
 
-\emph{The minimum cost is exactly $L + 2$.} For the lower bound, under any
-$\pi$ the two agents holding augmented bundles have $g_a \ge 1$ by
-\Cref{lem:g2-expensive}, and the third has $g_a \ge 0$, so the total is at
-least $L+2$. For the upper bound, let $u,v$ index the augmented bundles and
-hand each bundle to its original owner: agents $u$ and $v$ pay
-$\cost_u(\bundle u) + 1$ and $\cost_v(\bundle v)+1$ by
-\Cref{lem:g2-stopping}(b), and the remaining agent $w$ pays
-$\cost_w(\bundle w)$, for a total of exactly $L+2$.
+\emph{The minimum of $\sum_a \cost_a(Y_{\sigma(a)})$ equals $L + n - 1$.}
+For the lower bound, fix $\sigma$. Exactly $n-1$ agents receive augmented
+bundles, and each such agent $a$ has $g_a(\sigma) \ge 1$ by
+Lemma~\ref{lem:g2-expensive}; the remaining agent has $g_a(\sigma) \ge 0$.
+Hence $\sum_a g_a(\sigma) \ge n-1$. For the upper bound, take $\sigma =
+\mathrm{id}$: for $t = 1,\dots,n-1$ agent $m_t$ pays
+$\cost_{m_t}(\bundle{m_t}) + \cost_{m_t}(e_t \mid \bundle{m_t}) =
+\cost_{m_t}(\bundle{m_t}) + 1$ by Lemma~\ref{lem:g2-stopping}(b), and agent
+$w$ pays $\cost_w(\bundle w)$; the total is $L + n - 1$.
 
-\emph{Hence at a minimum-cost $\pi$ the excesses are pinned.} We have
-$\sum_a g_a = 2$ with $g \ge 1$ on each of the two augmented-bundle holders,
-so those two have $g = 1$ exactly and the agent $c$ holding the clean bundle
-has $g_c = 0$.
+\emph{Consequently $g_a(\pi) = 1$ for each of the $n-1$ agents holding an
+augmented bundle, and $g_c(\pi) = 0$ for the agent $c := \pi^{-1}(w)$
+holding the clean bundle.} Indeed $\sum_a g_a(\pi) = n-1$ by the previous
+paragraph, while the $n-1$ agents holding augmented bundles contribute at
+least $1$ each and $g_c(\pi) \ge 0$; so all these inequalities are
+equalities.
 
-\emph{Now read off the envy graph.} Let $a,b$ be the augmented-bundle
-holders. Recall $\edgew{}(x,y) = \cost_x(Y_{\pi(x)}) - \cost_x(Y_{\pi(y)})$.
+\emph{Arc weights.} Write $\edgew{}(x,y) = \cost_x(Y_{\pi(x)}) -
+\cost_x(Y_{\pi(y)})$ and let $a,b$ denote agents holding augmented bundles.
 \begin{itemize}
-  \item $\edgew{}(a,b) = \bigl(\cost_a(\bundle a) + 1\bigr) -
-        \cost_a(Y_{\pi(b)}) \le 0$: the first term because $g_a = 1$, and
-        $\cost_a(Y_{\pi(b)}) \ge \cost_a(\bundle a) + 1$ by
-        \Cref{lem:g2-expensive}, the bundle $Y_{\pi(b)}$ being augmented.
-        Symmetrically $\edgew{}(b,a) \le 0$.
-  \item $\edgew{}(a,c) = \bigl(\cost_a(\bundle a)+1\bigr) -
-        \cost_a(Y_{\pi(c)}) \le 1$, since $Y_{\pi(c)}$ is clean and so costs
-        $a$ at least $\cost_a(\bundle a)$. Symmetrically
-        $\edgew{}(b,c) \le 1$.
-  \item $\edgew{}(c,x) = \cost_c(\bundle c) - \cost_c(Y_{\pi(x)}) \le 0$ for
-        both $x$, since $g_c = 0$ gives the first term and every bundle
-        costs $c$ at least $\cost_c(\bundle c)$.
+  \item $\edgew{}(a,b) \le 0$. Indeed $\cost_a(Y_{\pi(a)}) =
+        \cost_a(\bundle a) + 1$ since $g_a(\pi) = 1$, while
+        $Y_{\pi(b)}$ is augmented, say $Y_{\pi(b)} = \bundle{\pi(b)} \cup
+        \set{e}$, so $\cost_a(Y_{\pi(b)}) \ge \cost_a(\bundle a) + 1$ by
+        Lemma~\ref{lem:g2-expensive}.
+  \item $\edgew{}(a,c) \le 1$. Indeed $\cost_a(Y_{\pi(c)}) =
+        \cost_a(\bundle w) \ge \cost_a(\bundle a)$ by envy-freeness of
+        $\alloc$, and $\cost_a(Y_{\pi(a)}) = \cost_a(\bundle a) + 1$.
+  \item $\edgew{}(c,y) \le 0$ for every $y$. Indeed $\cost_c(Y_{\pi(c)}) =
+        \cost_c(\bundle c)$ since $g_c(\pi) = 0$, while
+        $\cost_c(Y_{\pi(y)}) \ge \cost_c(\bundle{\pi(y)}) \ge
+        \cost_c(\bundle c)$ by monotonicity and envy-freeness of $\alloc$.
 \end{itemize}
-So every arc has weight at most $0$ except the two arcs pointing \emph{into}
-$c$, which have weight at most $1$. A simple path enters $c$ at most once,
-every arc leaving $c$ has weight at most $0$, and every other arc available
-to it has weight at most $0$ as well. Hence no simple path has weight above
-$1$.
+Thus every arc of the envy graph has weight at most $0$, except arcs whose
+head is $c$, which have weight at most $1$.
 
-The assignment is minimum-cost, so $(Y,\pi)$ is envy-freeable
-(\Cref{thm:hs-characterisation}), and its minimal subsidy is
-$\subsidy_i = \pathw{}(i) \le 1$ (\Cref{thm:hs-minsubsidy}). Subsidies are
-non-negative integers, so $\subsidy \in \set{0,1}^3$.
+\emph{Path bound.} Let $P$ be a simple directed path. At most one arc of $P$
+has head $c$, since $P$ visits $c$ at most once; every other arc of $P$ has
+weight at most $0$. Hence $P$ has weight at most $1$. In particular the
+envy graph has no positive-weight cycle, so by
+Theorem~\ref{thm:hs-characterisation} the allocation admits an envy-free
+solution, and by Theorem~\ref{thm:hs-minsubsidy} its minimal subsidy
+satisfies $0 \le \subsidy_a = \pathw{}(a) \le 1$ for every $a$. As
+$\pathw{}(a)$ is an integer, $\subsidy \in \set{0,1}^n$.
 \end{proof}
 
-\begin{remark}[Why this does not follow from the black box]
-\label{rem:g2-blackbox}
-\Cref{thm:g2-r2} uses \Cref{thm:g2-twyz}'s \emph{construction}, not merely
-its statement, and it has to. Among abstract cost tables satisfying only
-``EF partial allocation, two leftover items, every agent's marginal on their
-own bundle equal to $1$'', the conclusion genuinely fails for some
-placements: there the minimum-cost total excess reaches $2$ and so does the
-longest path (\Cref{sec:g2-verification}). Such tables exist as tables; what
-\Cref{lem:g2-stopping} shows is that the algorithm never halts on one.
-Strong connectivity of $G$ is what excludes them, and it is available only
-because two unallocated items is the \emph{maximum} the algorithm may leave
-at $n = 3$ --- which is precisely what forces its tail component to be the
-whole agent set.
-\end{remark}
+\subsection{Three agents}
 
-\begin{remark}[How far this reaches beyond $n = 3$]
-\label{rem:g2-beyond}
-The proof of \Cref{thm:g2-r2} never uses $n = 3$ except through one fact:
-that the number of leftover items is one less than the number of agents, so
-that placing them in distinct bundles leaves exactly \emph{one} clean bundle.
-Everything then goes through verbatim for any $n$: the minimum cost is
-$L + (n-1)$, each of the $n-1$ agents holding an augmented bundle has
-$g_a = 1$, the single clean-bundle holder has $g = 0$, arcs between
-augmented holders are non-positive, arcs into the clean holder are at most
-$1$, and arcs out of it are non-positive --- so again no simple path exceeds
-$1$. This proves Conjecture~\ref{conj:main} for every $n$ on every instance
-where the algorithm of \Cref{thm:g2-twyz} leaves exactly $n-1$ items, just
-as \Cref{cor:g2-anyn} does when it leaves exactly one.
-
-What is \emph{not} covered for $n \ge 4$ is the intermediate range
-$2 \le \abs R \le n-2$. Two things fail there at once. The halting rule gives
-only $\abs S \ge \abs R + 1$, so $G$ need not be strongly connected on all
-agents and \Cref{lem:g2-expensive} loses its justification; and with two or
-more clean bundles a simple path can alternate --- an arc of weight $1$ into
-one clean holder, a non-positive arc out of it, then another arc of weight
-$1$ into a second clean holder --- so the path bound of $1$ is no longer
-forced. Closing that range is what a full proof of
-Conjecture~\ref{conj:main} now requires. At $n = 3$ the range is empty,
-which is why $n = 3$ closes here.
-\end{remark}
-
-\subsection{Putting it together}
-\label{sec:g2-main}
-
-\begin{theorem}[Conjecture 2 holds at $n=3$]
+\begin{corollary}
 \label{thm:g2-main}
-For every instance of $3$ dichotomous cost functions on a finite item set
-$\items$, there is an allocation $\alloc$ and a subsidy
-$\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free,
-computable in polynomial time.
-\end{theorem}
+Conjecture~\ref{conj:main} holds for $n \le 3$: for all dichotomous cost
+functions $\cost_1,\dots,\cost_n$ with $n \le 3$ there exist an allocation
+$\alloc$ and $\subsidy \in \set{0,1}^n$ such that $(\alloc,\subsidy)$ is an
+envy-free solution, and both are computable in polynomial time.
+\end{corollary}
+
 \begin{proof}
-Run the algorithm of \Cref{thm:g2-twyz} to get an EF partial allocation with
-at most $2$ leftover items. If none are left, $\subsidy=0$ finishes it. If
-one or two items are left, \Cref{thm:g2-r1} or \Cref{thm:g2-r2}
-(respectively) produces a full EF allocation with $\subsidy \in
-\set{0,1}^3$. Every step is constructive and the extra search in
-\Cref{thm:g2-r1,thm:g2-r2} is over a bounded number of choices --- at most
-$6$ placements, $6$ permutations, $8$ subsidy vectors --- that does not grow
-with $\abs\items$, so the whole procedure runs in polynomial time.
+Run the algorithm of Theorem~\ref{thm:g2-twyz} to obtain an envy-free partial
+allocation $\alloc$ with $\abs{R(\alloc)} \le n-1 \le 2$.
+
+If $\abs{R(\alloc)} = 0$ then $\alloc$ is an allocation and
+$(\alloc, \mathbf 0)$ is an envy-free solution.
+
+If $\abs{R(\alloc)} = 1$, apply Theorem~\ref{thm:g2-r1}.
+
+If $\abs{R(\alloc)} = 2$ then $n = 3$ and $\abs{R(\alloc)} = n-1$, so
+Theorem~\ref{thm:g2-r2} applies.
+
+In each case the construction is a minimum-cost assignment on at most three
+bundles preceded by a polynomial-time algorithm, so the total running time is
+polynomial.
 \end{proof}
 
-\subsection{Verification (not part of any proof)}
-\label{sec:g2-verification}
+\subsection{The range not covered}
 
-This section records finite checks. \emph{Nothing above depends on any of
-them}; every result in \Cref{sec:g2-r1,sec:g2-r2} is proved outright. The
-checks are reported because they were how the results were found, and
-because one of them delimits the argument in a way worth knowing.
+Theorem~\ref{thm:g2-r1} and Theorem~\ref{thm:g2-r2} hold for every $n$, at
+residue sizes $1$ and $n-1$ respectively; these coincide with the full range
+$\set{0,1,\dots,n-1}$ permitted by Theorem~\ref{thm:g2-twyz} exactly when
+$n \le 3$. For $n \ge 4$ the residue sizes $k$ with $2 \le k \le n-2$ are not
+covered, and neither proof extends to them, for the following two reasons.
 
-The enumeration is complete rather than sampled, by the following
-observation, which is what makes a bounded search decisive at all.
+First, Lemma~\ref{lem:g2-stopping}(a) fails. At a halting state with
+$\abs{R(\alloc)} = k$ the selected component satisfies only $\abs S \ge k+1$,
+so $S$ may be a proper subset of $\agents$; arcs of $E$ with tail outside
+$S$ need not lie on any directed cycle, since $S$ has no outgoing arcs.
+Consequently Lemma~\ref{lem:g2-expensive} is unavailable for agents outside
+$S$, and with it the lower bound $\sum_a g_a(\sigma) \ge k$ in the proof of
+Theorem~\ref{thm:g2-r2}.
 
-\begin{lemma}[Saturation]
-\label{lem:g2-saturation}
-Let $D$ be a $3\times3$ table, $D_{ij}$ the cost to agent $i$ of candidate
-bundle $j$. Whether some permutation of bundles to agents and some
-$\subsidy \in \set{0,1}^3$ make the allocation envy-free depends on $D$ only
-through, for each row $i$ and pair of columns $j,k$, whether $D_{ij}-D_{ik}$
-is $\le -1$, exactly $0$, exactly $1$, or $\ge 2$. Hence if a base matrix
-$C$ has zero diagonal and off-diagonal entries in $\set{0,1,2}$, enumerating
-all such $C$ covers every case an unbounded cost table could produce.
-\end{lemma}
-\begin{proof}
-Agent $i$ holding column $j$ does not envy column $k$ exactly when
-$D_{ij}-\subsidy_j \le D_{ik}-\subsidy_k$, i.e.\ $D_{ij}-D_{ik} \le
-\subsidy_j-\subsidy_k$, and $\subsidy_j-\subsidy_k$ ranges only over
-$\set{-1,0,1}$; the four cases follow. Subtracting $C_{ii}$ from row $i$
-changes no within-row difference, so the diagonal may be taken to be zero,
-and entries in $\set{0,1,2}$ already realise differences across
-$\set{-2,\dots,2}$, hitting all four cases.
-\end{proof}
+Second, even granting that lower bound, the path bound fails. With $k$
+augmented bundles there are $n - k \ge 2$ clean bundles, so the envy graph
+may contain two distinct vertices $c_1 \ne c_2$ holding clean bundles. The
+argument of Theorem~\ref{thm:g2-r2} then bounds by $1$ every arc with head
+$c_1$ or $c_2$ and by $0$ every other arc, which permits a simple path
+$a_1 \to c_1 \to a_2 \to c_2$ of weight up to $2$: the arcs into $c_1$ and
+into $c_2$ each contribute at most $1$, and the arc $c_1 \to a_2$ contributes
+at most $0$, but nothing in the argument forces the two contributions of $1$
+to be non-simultaneous.
 
-With the two leftover items sent to distinct bundles, the doubly-stuck
-configuration is described by $6$ base entries $C_{ij} \in \set{0,1,2}$ and
-$12$ marginal bits $\mu_{i,e,j} = \cost_i(e \mid \bundle{j})$, $i \ne j$,
-$e \in \set{1,2}$, with $\mu_{i,e,i} = 1$ forced. Checking all
-$3^6 \times 2^{12} = 2{,}985{,}984$ combinations against all $6$ ordered
-choices of receiving bundles, all $6$ permutations and all $8$ subsidy
-vectors finds a valid completion every time, with no exceptions
-(\texttt{update\_12/prove\_r2.py}, about $20$ seconds). Separately,
-\texttt{update\_12/verify\_real.py} draws genuine random dichotomous cost
-triples rather than bounded abstract tables, isolates real doubly-stuck EF
-partial allocations (over $9{,}000$ with two leftover items and over
-$30{,}000$ with one, in $300$ trials), and confirms the same completions
-there.
-
-Two negative findings from the same enumeration are more informative than
-the positive one, and they are what \Cref{rem:g2-blackbox} reports: over
-abstract cost tables --- unconstrained by any algorithm --- the minimum-cost
-total excess genuinely reaches $2$
-(\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
-(\texttt{update\_49/test\_excess\_r2.py}). This is why \Cref{thm:g2-r2}
-cannot be proved from the statement of \Cref{thm:g2-twyz} alone and must
-appeal to its algorithm: the obstruction is real for tables in general and
-is removed only by \Cref{lem:g2-stopping}. A further enumeration restricted
-to tables satisfying \Cref{lem:g2-stopping}'s conclusions
-(\texttt{update\_49/check\_proof\_r2.py}) finds no failures, agreeing with
-the proof.
-
-\paragraph{What this covers, and what it does not.} \Cref{thm:g2-main} makes
-no assumption on the cost functions beyond dichotomy: not additive, not
-submodular, not related across agents in any way, and no bound on the number
-of items. Neither of the two theorems it rests on is inherently a $3$-agent
-argument --- \Cref{cor:g2-anyn} holds at every $n$ when one item is left
-over, and \Cref{rem:g2-beyond} shows \Cref{thm:g2-r2} holds at every $n$
-when $n-1$ are. What is missing for $n \ge 4$ is the intermediate range
-$2 \le \abs R \le n-2$, and \Cref{rem:g2-beyond} gives the two independent
-reasons the present argument does not reach it. That range is empty at
-$n = 3$, which is exactly why $n = 3$ closes here and general $n$ does not.
+The two obstructions are independent: removing the first restores the
+bound $\sum_a g_a(\sigma) \ge k$ but leaves the alternating path of the
+second available, and removing the second leaves the lower bound
+unjustified. For $2 \le k \le n-2$ it would suffice, for a given halting
+state, to exhibit either a placement of $R(\alloc)$ into bundles and a
+permutation of total excess at most $1$, in which case
+Lemma~\ref{lem:g2-criterion} applies directly; or a placement together with
+a minimum-cost permutation for which every simple path in the envy graph has
+weight at most $1$, in which case Theorem~\ref{thm:hs-characterisation} and
+Theorem~\ref{thm:hs-minsubsidy} apply as at the end of the proof of
+Theorem~\ref{thm:g2-r2}. Establishing either for every halting state with
+$2 \le \abs{R(\alloc)} \le n-2$ would, with Theorem~\ref{thm:g2-r1} and
+Theorem~\ref{thm:g2-r2}, prove Conjecture~\ref{conj:main} for all $n$.
