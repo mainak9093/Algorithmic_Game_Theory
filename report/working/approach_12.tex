@@ -1,5 +1,6 @@
 %% ==========================================================================
-%%  Approach 12 --- a complete, self-contained proof of Conjecture 2 at n = 3.
+%%  Approach 12 --- self-contained treatment of Conjecture 2 at n = 3.
+%%  |R|=1 is PROVED for all n; |R|=2 is NOT proved (thm:g2-r2), only verified.
 %%
 %%  Source: RESIDUAL.md \S7.16.32--7.16.33; formalised piecemeal in
 %%  \Cref{sec:approach11}. This section restates the same result as one
@@ -8,14 +9,25 @@
 %%  Nothing about paths that were tried and abandoned appears below; see
 %%  RESIDUAL.md \S7 and \Cref{sec:approach10} for that history.
 %% ==========================================================================
-\section{Approach 12: A Complete Proof of Conjecture 2 at \texorpdfstring{$n=3$}{n=3}}
+\section{Approach 12: Conjecture 2 at \texorpdfstring{$n=3$}{n=3} via Partial Allocations}
 \label{sec:approach12}
 
-This section proves Conjecture~\ref{conj:main} for $n=3$ agents, in full
-generality, from scratch. It assumes nothing from the rest of this document
-except the two definitions restated in \Cref{sec:g2-setup} and standard
-facts about set functions. It is self-contained on purpose: everything a
-reader needs is either defined below or is a short, complete proof.
+This section attacks Conjecture~\ref{conj:main} at $n=3$ in full generality,
+from scratch. It assumes nothing from the rest of this document except the
+definitions restated in \Cref{sec:g2-setup}, the two classical facts about
+envy-freeability quoted in \Cref{sec:g2-hs}, and one external theorem
+(\Cref{thm:g2-twyz}). It is self-contained on purpose: everything a reader
+needs is either defined below or is a short, complete proof.
+
+\paragraph{Status, stated up front.} The case of one leftover item is
+\emph{proved}, by an argument that never mentions $n$ and therefore holds
+for every number of agents (\Cref{thm:g2-r1}, \Cref{cor:g2-anyn}). The case
+of two leftover items is \emph{not} proved: it is \Cref{thm:g2-r2}, for
+which only a partial argument is given here, and the remaining step is
+supported by finite verification quarantined in
+\Cref{sec:g2-verification}. Consequently the headline statement,
+\Cref{thm:g2-main}, is conditional on \Cref{thm:g2-r2}. Nothing in this
+section other than \Cref{thm:g2-r2} depends on a computation.
 
 \subsection{Setup}
 \label{sec:g2-setup}
@@ -50,8 +62,7 @@ $\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free, and
 such a pair can be found in polynomial time.
 \end{quote}
 
-The rest of this section proves this in five steps. Read top to bottom; each
-step uses only what came before it.
+Read top to bottom; each step uses only what came before it.
 
 \subsection{Step 1: start from a partial allocation that is already free}
 \label{sec:g2-step1}
@@ -222,67 +233,6 @@ too (\Cref{lem:g2-mincost-excess}), is envy-freeable
 (\Cref{lem:g2-pathbound} with \Cref{thm:hs-minsubsidy}). Subsidies are
 non-negative integers here, so ``at most $1$'' means ``in $\set{0,1}$''.
 
-\subsection{A finiteness tool, still needed for one case}
-\label{sec:g2-saturation}
-
-The machinery above closes \Cref{sec:g2-r1} outright. One case ---
-\Cref{sec:g2-r2}, two leftover items --- is not yet closed by it, and there
-the following observation is still used. It is recorded honestly as a
-finiteness device, not as an explanation: it certifies \emph{that} a claim
-holds without saying \emph{why}, and \Cref{rem:g2-honest} states exactly
-what would be needed to remove it.
-
-Both remaining cases ($\abs R = 1$ and the stuck case at $\abs R = 2$)
-reduce to the same kind of question: given a $3\times3$ table of costs
-(agent $i$'s cost for candidate bundle $j$), does some permutation of
-bundles to agents plus a subsidy in $\set{0,1}^3$ make the allocation EF?
-The next observation turns this into something a finite check can decide
-completely, for every possible cost table at once.
-
-\begin{lemma}[Saturation]
-\label{lem:g2-saturation}
-Let $D$ be a $3\times3$ table, $D_{ij}$ the cost to agent $i$ of candidate
-bundle $j$. Whether some permutation $\pi$ of bundles to agents and some
-$\subsidy \in \set{0,1}^3$ make the allocation ``agent $i$ gets bundle
-$\pi(i)$'' envy-free depends on $D$ only through, for every row $i$ and pair
-of columns $j,k$: whether $D_{ij} - D_{ik}$ is $\le -1$, exactly $0$,
-exactly $1$, or $\ge 2$. Consequently, if the diagonal of a base matrix $C$
-is $0$ (always achievable, see the proof) and its off-diagonal entries are
-confined to $\set{0,1,2}$, checking every such $C$ exhaustively already
-covers every case an unbounded cost table could ever produce.
-\end{lemma}
-\begin{proof}
-Agent $i$ (holding column $j$) does not envy column $k$ exactly when
-$D_{ij} - \subsidy_j \le D_{ik} - \subsidy_k$, i.e.\ $D_{ij} - D_{ik} \le
-\subsidy_j - \subsidy_k$. Since $\subsidy \in \set{0,1}^3$, the quantity
-$\subsidy_j - \subsidy_k$ only ever takes the values $-1,0,1$. So: if
-$D_{ij}-D_{ik} \le -1$ the inequality holds no matter what $\subsidy$ is;
-if $=0$ it holds iff $\subsidy_j \ge \subsidy_k$; if $=1$ it holds iff
-$\subsidy_j = 1,\subsidy_k = 0$ exactly; if $\ge2$ it never holds. Those are
-exactly the four cases claimed.
-
-For the second part: given any cost table, subtract $C_{ii}$ from every
-entry in row $i$ (each row independently). This does not change any
-difference $D_{ij}-D_{ik}$ within a row, hence does not change which of the
-four cases above we are in for any comparison, so it does not change the
-answer to the yes/no question --- it only relabels the diagonal to $0$. With
-$C_{ii}=0$, the off-diagonal entries are $\ge0$ automatically (they were
-$\ge C_{ii}$ before the shift, since agent $i$ never has negative cost
-relative to their own bundle in the partial allocations this proof
-considers). Restricting them to $\set{0,1,2}$ still lets differences
-$C_{ij}-C_{ik}$ range over $\set{-2,\dots,2}$, which covers all four cases
-above ($\le-1$ via $-1$ or $-2$, $=0$, $=1$, $\ge2$ via $+2$). An exhaustive
-search over $\set{0,1,2}$ therefore realises every combination of the four
-cases, across every row and pair, that any cost table --- bounded or not ---
-could ever exhibit.
-\end{proof}
-
-In short: subsidies can only ever bridge a gap of exactly $1$, so nothing
-about a gap larger than $1$ matters beyond the fact that it \emph{is} larger
-than $1$, and nothing about the exact size of a gap matters at all once it
-exceeds $1$. This is the only idea needed to turn the next two steps from an
-open-ended search into two finite, complete checks.
-
 \subsection{Step 4: closing the case of one leftover item}
 \label{sec:g2-r1}
 
@@ -349,14 +299,22 @@ polynomial time.
 \subsection{Step 5: closing the case of two leftover items}
 \label{sec:g2-r2}
 
-\begin{theorem}
+\begin{proposition}[\textbf{not proved here}; established only by verification]
 \label{thm:g2-r2}
 If $(\bundle1,\bundle2,\bundle3)$ is an EF partial allocation with exactly
 two leftover items, some assignment of them to bundles, some permutation of
 the resulting three bundles to the three agents, and some $\subsidy \in
 \set{0,1}^3$ gives a full EF allocation.
-\end{theorem}
-\begin{proof}
+\end{proposition}
+
+This is the one statement in this section without a proof. What follows is a
+genuine argument as far as it goes; it stops one unit short, and the gap is
+closed only by the finite verification of \Cref{sec:g2-verification}, which
+is reported separately precisely so that it is not mistaken for a proof.
+Everything downstream that depends on \Cref{thm:g2-r2} is marked
+accordingly.
+
+\begin{proof}[Partial argument]
 Write $R = \set{e_1,e_2}$. If \Cref{lem:g2-free} applies to either item on
 its own, hand it over and the leftover set shrinks to one item;
 \Cref{thm:g2-r1} then finishes the job (it does not care how the partial
@@ -372,30 +330,60 @@ $\varepsilon_{m_2} \le 1$; so the identity assignment has total excess at
 most $2$, hence so does the minimum-cost assignment, hence $\subsidy \in
 \set{0,1,2}^n$. That is one unit short of the claim, and the shortfall is
 real rather than an artefact of loose estimation: the minimum-cost total
-excess genuinely attains $2$ (see \Cref{rem:g2-honest}). The remaining unit
-is recovered below by finite verification, not by an argument.
+excess genuinely attains $2$, and so does the longest path, for some choices
+of where the two items go and --- when several assignments tie for minimum
+cost --- of which one is taken (see \Cref{rem:g2-honest}). Unlike
+\Cref{thm:g2-r1}, where the placement is immaterial, here the choice matters
+and a bad choice really does fail.
 
-Send $e_1$ to one bundle and $e_2$ to a \emph{different} bundle (never both
-to the same bundle --- this already turns out to be enough). By
-\Cref{lem:g2-saturation}, the question is again decided by finitely many
-bounded quantities: the $6$ base entries $C_{ij} \in \set{0,1,2}$, and now
-$12$ marginal bits $\mu_{i,e,j} = \cost_i(e \mid \bundle{j})$ for $i \ne j$,
-$e \in \set{1,2}$ (with $\mu_{i,e,i}=1$ forced). There are $3^6 \times
-2^{12} = 2{,}985{,}984$ combinations. For each, checking all $6$ ordered
-choices of which two (distinct) bundles receive $e_1$ and $e_2$, all $6$
-permutations, and all $8$ subsidy vectors finds an EF allocation every time
---- zero exceptions (\texttt{update\_12/prove\_r2.py}, runtime about $20$
-seconds).
-
-As an independent check, \texttt{update\_12/verify\_real.py} generates
-genuine random dichotomous cost triples (not the bounded abstract model),
-finds real EF partial allocations with two leftover items where both are
-genuinely stuck for every agent (this is common, not a corner case: with the
-script's defaults, over $9{,}000$ such instances turned up in $300$ random
-trials), and confirms the same rescue works on every one of them --- and,
-in the same run, finds and rescues over $30{,}000$ genuinely stuck
-one-leftover-item instances too, confirming \Cref{thm:g2-r1} the same way.
+This is as far as the argument reaches. What is missing is a rule for
+choosing the placement and the tie-break, together with a proof that the
+rule keeps every simple path at weight one.
 \end{proof}
+
+\subsection{What is known about the missing rule}
+\label{sec:g2-lead}
+
+The gap is not formless, and two constraints on any solution are already
+established.
+
+First, the extremal configuration is pinned down. Total excess $2$ with a
+path of weight $2$ requires, after relabelling, agents $a,b,c$ with
+$\varepsilon_a = \varepsilon_b = 1$, $\varepsilon_c = 0$, and a path
+$a \to b \to c$ whose two arcs both have weight exactly $1$ --- so
+$\pi(b)$ is a favourite bundle of $a$, and $\pi(c)$ is a favourite bundle of
+$b$. Applying minimum-cost optimality to the three-cycle rotation
+$a \mapsto \pi(b),\, b \mapsto \pi(c),\, c \mapsto \pi(a)$ gives
+$\cost_c(Y_{\pi(a)}) \ge \beta_c + 2$: the one contented agent must dislike
+the bundle released by $a$ by two full units. Any proof must exclude exactly
+this configuration, and may assume it.
+
+Second, there is unused structure in where the two leftover items come from.
+\Cref{thm:g2-twyz} is not an oracle: its algorithm halts with two items
+unallocated at $n=3$ only when its own stopping rule fires, and that rule
+forces a strongly connected component containing \emph{all three} agents in
+the graph whose arcs record exact indifference $\cost_i(\bundle i) =
+\cost_i(\bundle j)$. So after relabelling there is a cycle
+\[
+  \cost_1(\bundle1) = \cost_1(\bundle2), \quad
+  \cost_2(\bundle2) = \cost_2(\bundle3), \quad
+  \cost_3(\bundle3) = \cost_3(\bundle1),
+\]
+and the same stopping rule forces $\cost_1(e \mid \bundle2) =
+\cost_2(e \mid \bundle3) = \cost_3(e \mid \bundle1) = 1$ for both leftover
+items $e$. Rotating along that cycle therefore hands each agent a bundle
+they value exactly as their own, at the cost of one unit for each augmented
+bundle --- which recovers the bound $2$ again, but leaves the three
+\emph{reverse} marginals $\cost_1(e \mid \bundle3)$,
+$\cost_2(e \mid \bundle1)$, $\cost_3(e \mid \bundle2)$ entirely
+unconstrained. A rule that routes the items so as to be received through
+those unconstrained slots is the most promising route to closing
+\Cref{thm:g2-r2}, and is not attempted here.
+
+Using this structure means using \Cref{thm:g2-twyz}'s construction rather
+than only its statement, which is a real change in what the proof depends
+on. That is a cost worth paying if it removes a verification step, but it
+should be recorded as a change, not slipped in.
 
 \begin{remark}[What is proved, what is only verified, and what scaling needs]
 \label{rem:g2-honest}
@@ -414,13 +402,21 @@ bound $\subsidy \le \abs R$: with $\abs R$ leftover items placed in distinct
 bundles, at most $\abs R$ agents carry an excess of one apiece, so the total
 excess --- and hence the subsidy --- is at most $\abs R$. At $\abs R = 1$
 that is the theorem; at $\abs R = 2$ it gives $2$ where $1$ is wanted, and
-this is not slack in the estimate. Enumerating the minimum-cost assignments
-over all bounded cost tables in the doubly-stuck case, the total excess
-reaches $2$ (\texttt{update\_49/eps\_only\_r2.py}). So
-\Cref{lem:g2-pathbound} --- bounding a path by the \emph{sum} of all
-excesses --- must be lossy in exactly these cases: a simple path cannot in
-fact collect both units at once, and the finite check confirms the outcome
-without exhibiting the reason.
+this is not slack in the estimate. Enumerating over all bounded cost tables
+in the doubly-stuck case, the minimum-cost total excess reaches $2$
+(\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
+(\texttt{update\_49/test\_excess\_r2.py}).
+
+That second fact deserves emphasis, because it rules out the tempting
+repair. One cannot argue that a simple path merely fails to collect both
+units: sometimes it collects both, and the resulting subsidy really is $2$.
+What the same enumeration shows is weaker and less structural --- that
+\emph{some} choice always avoids this, over the six ways of sending the two
+items to two distinct bundles and, when several assignments tie for minimum
+cost, over which of them is selected. So at $\abs R = 2$ the placement is no
+longer immaterial as it was in \Cref{thm:g2-r1}, and no rule for making that
+choice is known: the finite check reports that a good choice exists without
+identifying it.
 
 This localises the obstruction precisely, and it is the same obstruction
 that blocks general $n$. Combining \Cref{thm:g2-twyz} ($\abs R \le n-1$)
@@ -441,21 +437,42 @@ By \Cref{lem:g2-pathbound,lem:g2-mincost-excess} together with
 \Cref{thm:hs-characterisation,thm:hs-minsubsidy}, that single statement
 implies Conjecture~\ref{conj:main} in full, for every $n$. Its $\abs R = 1$
 case is \Cref{thm:g2-r1}; its $\abs R = 2$ case is what \Cref{thm:g2-r2}
-verifies at $n = 3$ without explaining. Note also that it cannot be proved
-by bounding the total excess alone, since that quantity really does reach
-$2$: what must be shown is the sharper statement that no simple path
-collects more than one unit of it.
+verifies at $n = 3$ without explaining.
+
+Two warnings about how it must be attacked, both forced by the enumeration
+above. It cannot be proved by bounding the total excess of an arbitrary
+minimum-cost assignment, since that quantity reaches $2$. Nor can it be
+proved by showing that paths never collect the full excess, since they
+sometimes do. What is needed is a \emph{rule for choosing} --- which bundles
+receive the leftover items, and how to break ties among minimum-cost
+assignments --- together with a proof that the rule keeps every simple path
+at weight one. At $\abs R = 1$ that rule is vacuous, which is exactly why
+that case fell to a three-line argument and this one has not.
+\end{remark}
+
+\begin{remark}[The shape of the missing rule]
+\label{rem:g2-shape}
+One further constraint is worth recording for whoever attacks
+\Cref{rem:g2-honest}'s lemma. The two obvious candidate rules are already
+ruled out at $\abs R = 2$. Sending both leftover items to the \emph{same}
+bundle concentrates the damage on one agent, whose excess can then be $2$ on
+its own, so that is no better. And among assignments tied for minimum cost,
+the tie-break cannot be made arbitrarily --- some minimum-cost assignments
+give a path of weight $2$ while others, on the same instance, do not. Any
+successful rule must therefore look at the envy graph, not merely at total
+cost, which is precisely the information \Cref{lem:g2-mincost-excess}
+discards.
 \end{remark}
 
 \subsection{Putting it together}
 \label{sec:g2-main}
 
-\begin{theorem}[Conjecture 2 holds at $n=3$]
+\begin{theorem}[Conjecture 2 at $n=3$; \textbf{modulo \Cref{thm:g2-r2}}]
 \label{thm:g2-main}
-For every instance of $3$ dichotomous cost functions on a finite item set
-$\items$, there is an allocation $\alloc$ and a subsidy $\subsidy \in
-\set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free, computable in
-polynomial time.
+Assume \Cref{thm:g2-r2}. Then for every instance of $3$ dichotomous cost
+functions on a finite item set $\items$, there is an allocation $\alloc$ and
+a subsidy $\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is
+envy-free, computable in polynomial time.
 \end{theorem}
 \begin{proof}
 Run the algorithm of \Cref{thm:g2-twyz} to get an EF partial allocation with
@@ -467,6 +484,59 @@ one or two items are left, \Cref{thm:g2-r1} or \Cref{thm:g2-r2}
 $6$ placements, $6$ permutations, $8$ subsidy vectors --- that does not grow
 with $\abs\items$, so the whole procedure runs in polynomial time.
 \end{proof}
+
+\subsection{Verification (not part of any proof)}
+\label{sec:g2-verification}
+
+This section records finite checks. Nothing above depends on it except
+\Cref{thm:g2-r2}, which is stated as unproved for exactly that reason. The
+checks are evidence that \Cref{thm:g2-r2} is true and worth trying to prove;
+they are not an argument for why it is true, and they do not scale --- the
+state space they enumerate is specific to $n = 3$.
+
+The enumeration is complete rather than sampled, by the following
+observation, which is what makes a bounded search decisive at all.
+
+\begin{lemma}[Saturation]
+\label{lem:g2-saturation}
+Let $D$ be a $3\times3$ table, $D_{ij}$ the cost to agent $i$ of candidate
+bundle $j$. Whether some permutation of bundles to agents and some
+$\subsidy \in \set{0,1}^3$ make the allocation envy-free depends on $D$ only
+through, for each row $i$ and pair of columns $j,k$, whether $D_{ij}-D_{ik}$
+is $\le -1$, exactly $0$, exactly $1$, or $\ge 2$. Hence if a base matrix
+$C$ has zero diagonal and off-diagonal entries in $\set{0,1,2}$, enumerating
+all such $C$ covers every case an unbounded cost table could produce.
+\end{lemma}
+\begin{proof}
+Agent $i$ holding column $j$ does not envy column $k$ exactly when
+$D_{ij}-\subsidy_j \le D_{ik}-\subsidy_k$, i.e.\ $D_{ij}-D_{ik} \le
+\subsidy_j-\subsidy_k$, and $\subsidy_j-\subsidy_k$ ranges only over
+$\set{-1,0,1}$; the four cases follow. Subtracting $C_{ii}$ from row $i$
+changes no within-row difference, so the diagonal may be taken to be zero,
+and entries in $\set{0,1,2}$ already realise differences across
+$\set{-2,\dots,2}$, hitting all four cases.
+\end{proof}
+
+With the two leftover items sent to distinct bundles, the doubly-stuck
+configuration is described by $6$ base entries $C_{ij} \in \set{0,1,2}$ and
+$12$ marginal bits $\mu_{i,e,j} = \cost_i(e \mid \bundle{j})$, $i \ne j$,
+$e \in \set{1,2}$, with $\mu_{i,e,i} = 1$ forced. Checking all
+$3^6 \times 2^{12} = 2{,}985{,}984$ combinations against all $6$ ordered
+choices of receiving bundles, all $6$ permutations and all $8$ subsidy
+vectors finds a valid completion every time, with no exceptions
+(\texttt{update\_12/prove\_r2.py}, about $20$ seconds). Separately,
+\texttt{update\_12/verify\_real.py} draws genuine random dichotomous cost
+triples rather than bounded abstract tables, isolates real doubly-stuck EF
+partial allocations (over $9{,}000$ with two leftover items and over
+$30{,}000$ with one, in $300$ trials), and confirms the same completions
+there.
+
+Two negative findings from the same enumeration are more informative than
+the positive one, and are what \Cref{sec:g2-lead} is built on: the
+minimum-cost total excess genuinely reaches $2$
+(\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
+(\texttt{update\_49/test\_excess\_r2.py}). They are the reason no proof of
+\Cref{thm:g2-r2} can proceed by bounding either quantity alone.
 
 \paragraph{What this covers, and what it does not.} \Cref{thm:g2-main} makes
 no assumption on the cost functions beyond dichotomy: not additive, not

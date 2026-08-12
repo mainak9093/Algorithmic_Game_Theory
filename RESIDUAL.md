@@ -3020,10 +3020,37 @@ verifies at $n=3$ without explaining. Crucially it **cannot** be proved by
 bounding total excess alone (that quantity reaches $2$); what is needed is
 the sharper statement that no simple path collects more than one unit.
 
-Recorded in LaTeX as the rewritten `approach_12.tex` (Step 3 replaced by the
+**CORRECTION to the first draft of this section.** An earlier version of
+this entry claimed "a simple path cannot collect both units at once." That
+is false: `update_49/test_excess_r2.py` shows the longest path over
+min-cost assignments **genuinely reaches 2**. What is true is weaker — that
+*some* choice of placement and of min-cost tie-break avoids it. So at
+$bs R=2$ the placement is no longer immaterial (it is at $bs R=1$), and
+no rule for making the choice is known. This also rules out both obvious
+repairs: bounding total excess (reaches 2) and bounding path collection
+(reaches 2). A proof must supply a *choice rule* plus an argument that the
+rule keeps every path at weight 1.
+
+**Structural lead, not yet exploited.** Tao et al.'s algorithm halts with
+$bs R=2$ at $n=3$ only when its own stopping rule fires, and that forces
+an SCC containing *all three* agents in the exact-indifference graph: after
+relabelling, $\cost_1(X_1)=\cost_1(X_2)$, $\cost_2(X_2)=\cost_2(X_3)$,
+$\cost_3(X_3)=\cost_3(X_1)$, together with
+$\cost_1(e\mid X_2)=\cost_2(e\mid X_3)=\cost_3(e\mid X_1)=1$ for both
+leftover items. Rotating along that cycle recovers the bound 2 again, but
+leaves the three *reverse* marginals $\cost_1(e\mid X_3)$,
+$\cost_2(e\mid X_1)$, $\cost_3(e\mid X_2)$ completely unconstrained —
+routing the items through those slots is the most promising route. Using
+this means depending on Theorem 5.1's *construction*, not just its
+statement.
+
+Recorded in LaTeX as the restructured `approach_12.tex` (Step 3 replaced by the
 Halpern–Shah/excess machinery; `thm:g2-r1` now carries a real proof plus
-`cor:g2-anyn` for general $n$; `rem:g2-honest` states the gap). `working.pdf`
-builds clean at $124$ pages.
+`cor:g2-anyn` for general $n$; `rem:g2-honest` states the gap; `thm:g2-r2` is
+now a **Proposition explicitly marked unproved**, the headline
+`thm:g2-main` is **conditional on it**, and all finite checks are
+quarantined in a separate `sec:g2-verification` that no proof cites).
+`working.pdf` builds clean at $125$ pages.
 
 ### 7.17 Status
 
