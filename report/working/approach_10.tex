@@ -1322,33 +1322,59 @@ either at a witness of size $\le 3$ or by exhausting the ground set.
 What remains open is confined to two cases, both requiring $\abs B \ge 4$ and
 $\cost(X \setminus B) \in \set{0, 1}$.
 
-\begin{proposition}
+\begin{proposition}[Only correct as stated at $\abs B = 4$]
 \label{prop:f5-forcedstructure}
-If $\abs B = k \ge 4$ is a minimal value-$2$ witness and no insertion witness
-of size $\le 2$ exists inside $B$, then for every subset $S \subseteq B$,
+If $\abs B = 4$ is a minimal value-$2$ witness and no insertion witness of
+size $\le 2$ exists inside $B$, then for every subset $S \subseteq B$,
 $\cost(S) = \max(0, \abs S - 2)$.
 \end{proposition}
 
 \begin{proof}
 By Lemma~\ref{lem:f5-value2shrink}, $\cost(B \setminus \set b) = 1$ for every
-$b$; since $B \setminus \set b$ has cost $1$ and no witness of size $\le 2$
-exists, applying Lemma~\ref{lem:f5-value2shrink}-style minimality within each
-$B \setminus \set b$ (a value-$1$ set now, so every proper subset costs $0$)
-forces every pair and singleton in $B$ to cost $0$ and every triple to cost
-$1$. This matches $\max(0,\abs S - 2)$ at $\abs S \in \set{0,1,2,3}$, and
-monotonicity plus the marginal bound extend it to all sizes.
+$b \in B$; since $\abs B = 4$, each $B \setminus \set b$ has size exactly
+$3$. Applying the hypothesis "no witness of size $\le 2$" directly to
+$B \setminus \set b$ (whose proper subsets have size $\le 2$) forces every
+proper subset of $B \setminus \set b$ to cost $0$ --- i.e.\ every pair and
+singleton of $B$ costs $0$. Ranging $b$ over all four elements of $B$ gives
+every one of the four size-$3$ subsets of $B$ (each arising as some
+$B \setminus \set b$) cost exactly $1$. This matches $\max(0,\abs S-2)$ at
+$\abs S \in \set{0,1,2,3,4}$.
 \end{proof}
 
-In particular every minimal value-$1$ witness living purely inside $B$ has size
-exactly $3$, regardless of how large $B$ grows: Lemma~\ref{lem:f5-ivt} applied
-inside $B$ alone can never produce a witness smaller than $3$ this way. If
-Conjecture~\ref{conj:f5-removalhard} is to fail, the escape to a small witness
-cannot come from within $B$'s own elements --- it must come from
-$\items \setminus B$.
+\begin{remark}[This does not extend to $\abs B \ge 5$]
+\label{rem:f5-forcedstructure-fails}
+An earlier version of this document claimed
+Proposition~\ref{prop:f5-forcedstructure} for all $\abs B = k \ge 4$; that
+claim is false as stated and is corrected here. The argument specifically used
+that $B \setminus \set b$ has size $3$ when $k = 4$, so that the global
+"no $\le 2$-witness" hypothesis applies directly to \emph{all} of its proper
+subsets. For $k \ge 5$, $B \setminus \set b$ has size $\ge 4$, and its
+size-$3$ subsets (triples of $B$) are \emph{not} constrained by the global
+hypothesis at all --- a triple is permitted to cost $0$ or $1$ without
+contradicting anything assumed. So for $k \ge 5$ a minimal witness need not
+have this threshold structure, and whether the smallest minimal witness can
+always be taken to have size exactly $4$ (which would let
+Proposition~\ref{prop:f5-forcedstructure} apply without loss of generality) is
+a separate, unresolved question. A partial attempt: if $B$ is chosen as the
+\emph{smallest} minimal witness and $A \subsetneq B \setminus \set{b_1}$ is a
+minimal value-$1$ witness with $\cost(A \cup \set{b_1}) = 2$, then
+$A \cup \set{b_1}$ is a value-$2$ witness of size $\abs A + 1 < \abs B$,
+contradicting minimality --- so this forces either $b_1$'s marginal on $A$ to
+be $0$ (i.e.\ $b_1$ is redundant given $A$, and $B$'s completion to value $2$
+must go through some other element instead), or $A = B \setminus \set{b_1}$
+exactly (no smaller value-$1$ witness inside it). Neither branch was closed
+into a proof that $k = 4$ is forced; this is recorded as an explicit
+sub-question rather than left implicit.
+\end{remark}
+
+The remainder of this section's results are stated for the case $\abs B = 4$
+specifically, which Proposition~\ref{prop:f5-forcedstructure} correctly
+covers; the case $\abs B \ge 5$ is open independently of
+Remark~\ref{rem:f5-gap} below, per Remark~\ref{rem:f5-forcedstructure-fails}.
 
 \begin{proposition}
 \label{prop:f5-case0}
-Suppose $\abs B = k \ge 4$, $\cost(X \setminus B) = 0$, and $B$ has the forced
+Suppose $\abs B = 4$, $\cost(X \setminus B) = 0$, and $B$ has the forced
 structure of Proposition~\ref{prop:f5-forcedstructure}. Then for every
 $b \in B$, $\cost\bigl((X \setminus B) \cup \set b\bigr) = 1$.
 \end{proposition}
@@ -1485,9 +1511,12 @@ Lemma~\ref{lem:f5-pairfull}, Proposition~\ref{prop:f5-onelevel}
   (pair-removal; propagation) & \textbf{proved} \\
 \textbf{Proposition~\ref{prop:f5-case2}} ($\cost(X\setminus B)=2$ case)
   & \textbf{proved} \\
-Proposition~\ref{prop:f5-forcedstructure} ($B$'s forced structure)
+Proposition~\ref{prop:f5-forcedstructure} ($B$'s forced structure, $\abs B{=}4$
+  only) & \textbf{proved} \\
+Remark~\ref{rem:f5-forcedstructure-fails} (does not extend to $\abs B\ge5$)
+  & \textbf{correction; open} \\
+Proposition~\ref{prop:f5-case0} ($\abs B{=}4$, $\cost(X\setminus B)=0$ case)
   & \textbf{proved} \\
-Proposition~\ref{prop:f5-case0} ($\cost(X\setminus B)=0$ case) & \textbf{proved} \\
 Remark~\ref{rem:f5-gap} (conditional-vs-absolute pivotal) & \textbf{the gap} \\
 \bottomrule
 \end{tabular}
