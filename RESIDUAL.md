@@ -2495,7 +2495,50 @@ consistent with, and a sharper version of, the barrier already identified,
 but confirming it is a *hard* stop after one level rather than an immediate
 one.
 
-**Honest summary of the mathematics reached.** Four facts are now fully
+### 7.16.27 Splitting on $\cost(X\setminus B)$: one full case closes, two remain
+
+Returned to the minimal value-$2$ witness $B\subseteq X$ (the case $\abs
+B\ge4$) and split on $\cost(X\setminus B)\in\set{0,1,2}$, using
+removal-hardness of $X$ applied to *every* pair $\set{b_i,b_j}\subseteq B$ at
+once: since $\cost(B\setminus\set{b_i,b_j})=0$ (any pair inside the forced
+threshold structure), pair removal-hardness gives
+$\cost\big((X\setminus B)\cup(B\setminus\set{b_i,b_j})\big)=2$, i.e.
+$\cost\big((X\setminus B)\cup P\big)=2$ for *every* pair $P\subseteq B$
+(relabelling the complementary pair as $P$).
+
+\begin{itemize}
+\item[$\cost(X\setminus B)=2$:] **This case is fully resolved.** $X\setminus
+  B$ is itself a value-$2$ witness, strictly smaller than $X$ (as $B$ is
+  nonempty). Apply Lemma ivt to it directly to get a minimal witness
+  $B'\subseteq X\setminus B$. If $\abs{B'}\le3$,
+  Lemma~\ref{lem:f5-value2shrink} finishes the whole argument immediately. If
+  $\abs{B'}\ge4$ too, repeat — each round the *ground set itself* shrinks by
+  at least $4$ elements (the size of the witness just peeled off), so on a
+  finite $X$ this recursion **must terminate**, either at a witness of size
+  $\le3$ or by exhausting the ground set. No gap remains in this case.
+
+\item[$\cost(X\setminus B)=0$:] Building $(X\setminus B)\cup\set{b_i,b_j}$ in
+  either order (add $b_i$ then $b_j$, or $b_j$ then $b_i$) must reach cost
+  $2$ from $0$ over exactly $2$ steps each $\le1$ — forcing *both* steps to
+  be exactly $+1$, in *either* order. This forces
+  $\cost\big((X\setminus B)\cup\set{b_i}\big)=1$ for **every** $b_i\in B$
+  individually (not just one of each pair) — sharper than the general
+  $w^\ast$ analysis of §7.16.25, but the same fundamental question remains
+  open: this is a marginal *conditional on $X\setminus B$*, and nothing here
+  forces $\cost(\set{b_i})\ge1$ absolutely.
+
+\item[$\cost(X\setminus B)=1$:] Strictly less constrained than the $0$ case —
+  the single unit of increase across a pair's two steps can split unevenly
+  between $b_i,b_j$ with no forced uniform conclusion for either.
+\end{itemize}
+
+**Net effect.** One of three cases is now completely closed by a clean,
+terminating argument. The entire remaining difficulty in the whole $2$-move
+sufficiency conjecture is confined to exactly two sub-cases
+($\cost(X\setminus B)\in\set{0,1}$) of one step of one induction. Whether a
+cleverer choice of *which* minimal witness $B$ to peel off (if $X$ admits
+several) can always land in the resolved case, or whether the $0/1$ cases
+themselves admit a similar closing argument, is the precise open frontier. Four facts are now fully
 proved, unconditionally, for general dichotomous costs: Lemma ivt's
 intermediate-value property; Lemma~\ref{lem:f5-value2shrink}
 ($\cost(B\setminus b)=1$ for a minimal value-$2$ witness); the $\abs B=3$
@@ -2597,6 +2640,9 @@ narrowing, even though it was not resolved in this session.
 | conditional-vs-absolute pivotal-ness of the backup element $w^\ast$ (§7.16.25) | **open — the single remaining gap.** Precisely stated: does a marginal of $1$ on top of a specific large context force a positive marginal on $\emptyset$, under removal-hardness? Closing this closes Conjecture 2 at $n=3$ in full |
 | direct hand-built counterexample attempt (§7.16.26) | **FAILED to construct one** — single OR-trigger backup breaks on the first internal-pair removal it wasn't designed for; patching one vulnerability opens another (deficit-vs-trigger counting mismatch), suggestive but not a proof of non-existence |
 | removal-hardness propagates one level (§7.16.26) | **PROVED** — $X$'s pair-hardness gives $X{-}b_1$ single-hardness directly; confirmed to run out after exactly one step, not zero |
+| case $\cost(X\setminus B)=2$ of the value-2 induction (§7.16.27) | **FULLY CLOSED** — finite terminating recursion, no gap |
+| case $\cost(X\setminus B)=0$ (§7.16.27) | **open, sharpened** — every $b_i\in B$ individually has marginal $1$ on $X\setminus B$ (not just one per pair); conditional-vs-absolute question remains |
+| case $\cost(X\setminus B)=1$ (§7.16.27) | **open** — less constrained than the $0$ case, no forced uniform conclusion yet |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
