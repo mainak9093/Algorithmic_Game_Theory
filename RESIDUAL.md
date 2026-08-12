@@ -2731,6 +2731,140 @@ named rather than folded into a single vague "rigidity not yet used" note.
 prose, and the Verdict paragraph updated to reflect it. `working.pdf` builds
 clean, 115 pages. RESIDUAL.md: this section.
 
+### 7.16.32 A genuinely new angle from the literature: Tao–Wu–Yu–Zhou's partial-EF algorithm, and the "permuted extension" route
+
+The user pointed at Tao, Wu, Yu, Zhou, *On the Existence of EFX (and
+Pareto-Optimal) Allocations for Binary Chores* (arXiv:2308.12177v1),
+`References/Reading_12.pdf`, flagging its "partial allocation" content as
+possibly relevant. It is — not through its EFX results (§§3–4, which need
+additive or cancelable structure we don't have), but through **Theorem 5.1 /
+Algorithm 3** (§5), which is exactly in our setting: *any* number of agents,
+*fully general* monotone cost functions with binary marginals (no
+additivity, no composition, nothing our non-composed case lacks). It builds,
+in polynomial time via an envy-graph + cycle-rotation process, a **partial**
+allocation that is *exactly* envy-free (zero subsidy, not just EFX) and
+leaves **at most $n-1$ items unallocated**. At $n=3$: an EF partial
+allocation $(X_1,X_2,X_3)$ with at most $2$ leftover items.
+
+This is a genuinely different starting point from everything tried in
+§§7.16.13–31 (all of which start from a *full* partition and search for
+moves). Here we start from a partial allocation that is *already* perfectly
+balanced, with a small bounded residue — turning the unbounded search that
+defeated six prior strategies into a question about at most $2$ leftover
+items on $3$ agents.
+
+**Lemma GG (free insertion, proved, any $n$).** If $(X_1,\dots,X_n)$ is an
+EF partial allocation and $e$ is unallocated with $c_i(e\mid X_i)=0$ for
+some agent $i$, then assigning $e$ to $i$ keeps the allocation EF with
+$p=0$.
+
+*Proof.* $c_i(X_i\cup e)=c_i(X_i)\le c_i(X_j)$ for all $j$ (unchanged, so
+$i$ still doesn't envy). For $j\ne i$: $c_j(X_j)\le c_j(X_i)\le
+c_j(X_i\cup e)$, the last step by monotonicity — so $j$'s non-envy of $i$
+only gets easier. $\blacksquare$
+
+This closes the $\abs R=1$ case outright whenever *some* agent has a free
+marginal for the leftover item. It does **not** use $n=3$ and holds for
+Theorem 5.1's full generality.
+
+**The hard case, and a real counterexample to the naive strategy.** When
+*every* agent has marginal cost $1$ for the leftover item $e$ on their own
+bundle (the case Lemma GG doesn't reach), keeping $X$ fixed and only placing
+$e$ can genuinely fail — not just fail to have zero subsidy, fail to have
+*any* $p\in\{0,1\}^3$ extension. Explicit witness, ground set
+$\{a,b,c,e\}$, $X_1=\{a\},X_2=\{b\},X_3=\{c\}$, $R=\{e\}$:
+$$c_i(S) = \mathbf 1[T_i\subseteq S],\qquad T_1=\{a,e\},\ T_2=\{b,e\},\
+T_3=\{c,e\}.$$
+Dichotomous, monotone, unit marginals (a threshold/AND gate — valid by
+inspection). All three agents are mutually tied ($c_i(X_i)=c_i(X_j)=0$ for
+every $i,j$), and $c_i(e\mid X_i)=1$ for all $i$ (subcase (b)), while
+$c_j(e\mid X_k)=0$ for every $j\ne k$ (the leftover is free to *anyone
+else's* bundle). Checking all $3$ choices of which bundle absorbs $e$,
+against all $8$ subsidy vectors, with agents kept at their own bundles:
+**every one fails.** (E.g. give $e$ to agent $1$: forces $p_1=1,p_2=p_3=0$
+for agent $1$'s own non-envy, but then agent $2$ — who sees cost $0$ for
+*both* $\{a,e\}$ and their own $\{b\}$ — envies agent $1$'s subsidised
+bundle.) This is the same tie/conditional-marginal obstruction documented
+throughout §7.16.13–31, now appearing in this much smaller setting.
+
+**The fix: permute who receives which bundle, not just where $e$ goes.**
+Assign $e$ to $X_1$ forming $Y_1=\{a,e\}$, $Y_2=\{b\}$, $Y_3=\{c\}$, but give
+$Y_1$ to agent $3$, $Y_2$ (i.e. $\{b\}$) to agent $1$, $Y_3$ (i.e. $\{c\}$)
+to agent $2$ — a $3$-cycle. Every agent's cost on their new bundle is $0$
+(no agent's held bundle contains their own trigger pair), so $p=0$ works.
+The extra freedom needed was *not* subsidy at all, but reassigning bundles
+among agents — something none of the local-search / removal-hardness
+machinery in §§7.16.21–31 considered, since that machinery only ever moved
+*elements*, never *bundle ownership*.
+
+**Computational test of the general claim.** Built
+`random_dichotomous` (reusing the exact generator from `update_4/rules.py`,
+which samples a uniformly-valid general monotone dichotomous cost by
+filling in $c(S)$ subset-by-subset in the range forced by monotonicity —
+not restricted to composed/additive/submodular costs) and tested the
+**Permuted-Extension Conjecture**: for every triple of general dichotomous
+costs, some EF partial allocation with $\abs R\le2$ admits an assignment of
+$R$ into the bundles, a permutation $\pi$ of agents to bundles, and
+$p\in\{0,1\}^3$, giving a full EF allocation. Three independent test
+harnesses, all in `scratchpad/`:
+
+| test | what it checks | trials | failures |
+|---|---|---|---|
+| `test_permuted_extension.py` | first EF partial found (smallest $\abs R$, brute force) extends | $100$ at $m{=}6$, $260$ at $m{=}7$, $25$ at $m{=}8$ | $0/385$ |
+| `test_all_partials.py` | *some* EF partial (any $\abs R\le2$) among *all* of them extends — the real existential claim | $40$ at $m{=}6$ | $0/40$ |
+| `test_r2_focus.py` | same, restricted to instances/partials with $\abs R$ *exactly* $2$ (the untouched hard case) | $150$ at $m{=}6$ | $0/150$ |
+
+Zero counterexamples across $\sim\!575$ random trials, including the
+strongest (existential-over-all-partials, $\abs R=2$-focused) version, and
+including a direct sanity check that the harness correctly finds the
+$3$-cycle rescue on the hand-built witness above. This is the strongest
+computational support any single-session angle has produced for closing
+$n=3$ in full generality (not just the composed family).
+
+**Partial proof mechanism (row-localisation, proved for its stated scope).**
+Fix which bundle $X_m$ absorbs $e$ (subcase (b), so $c_m(e\mid X_m)=1$).
+Only row $m$ of the $3\times3$ cost matrix is ever at risk: for $j\ne m$,
+column $m$'s entry changes by $\mu_{j,m}\in\{0,1\}$, but row $j$'s diagonal
+is untouched, and the original EF inequality $c_j(X_j)\le c_j(X_m)\le
+c_j(X_m\cup e)$ survives by monotonicity regardless of $\mu_{j,m}$ — so
+**agent $j\ne m$ never newly envies the augmented bundle** under the
+identity assignment. The *only* possible new envy is $m$'s own, and *only*
+when $m$ was exactly tied with some $j$ ($c_m(X_j)=c_m(X_m)$): then
+reassigning $m\to X_j$ costs $m$ literally nothing ($c_m(X_j)=c_m(X_m)$
+exactly), freeing $X_j$ or $Y_m$ for the remaining two agents. **What is
+not yet closed**: chaining this move when the freed slot creates a *second*
+tie needing a *second* costless reassignment (a tie-chain/tie-cycle
+argument, matching exactly the $3$-cycle that rescued the witness above).
+Attempted general argument: iterate "if $i$ is exactly tied with $j$,
+reassigning $i\to X_j$ is free" along the tie-graph; this closes whenever
+the tie-graph contains a Hamiltonian path/cycle covering the agents that
+need to move, which is what happened in the witness (all three mutually
+tied), but a case where the tie-graph is *sparser* than that has not been
+checked by hand — only by the computational tests above, which cover it.
+
+**What this would mean if completed.** The Permuted-Extension Conjecture,
+combined with Theorem 5.1 of Tao–Wu–Yu–Zhou, would prove **Conjecture 2 at
+$n=3$ in full generality** — not just the composed family (Theorem FF) —
+closing the project's central open question outright, superseding the
+entire (Q′)/Lemma E/removal-hardness line of §§7.16.10–31 (which would
+become unnecessary, not wrong: a different, successful route). It would
+also very plausibly extend to general $n$, since Theorem 5.1 itself holds
+for general $n$ (leaving $\le n-1$ items) — though the permutation/subsidy
+argument for $n>3$ has not been considered at all and is flagged as a
+separate, larger question, out of scope for this session.
+
+**Honest status.** Lemma GG is proved and general. The naive
+fixed-bundle-extension strategy is proved to fail (explicit witness). The
+permuted-extension fix is proved to work *on that witness*. The general
+Permuted-Extension Conjecture is *not* proved — the row-localisation
+argument handles the easy direction cleanly but the tie-chain closure step
+is identified, not completed — and rests, for now, on $\sim\!575$ clean
+random trials including the strong existential and $\abs R=2$-focused
+variants. This is not yet promoted to LaTeX (per the standing rule: only
+promote what closes). It is, however, the most promising and best-tested
+open lead in the entire session, and a genuinely different mechanism (bundle
+permutation, not element movement) from everything in §§7.16.13–31.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2834,6 +2968,11 @@ clean, 115 pages. RESIDUAL.md: this section.
 | any counterexample (when $\items=X$) now needs $\abs X\ge7$ (§7.16.31) | **PROVED**, combining the shadow bound and the $\abs X=6$ resolution |
 | $\abs X\ge7$, and the fully general $\items\supsetneq X$ case (§7.16.31) | **open** — both precisely named rather than left as one vague gap |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
+| Tao–Wu–Yu–Zhou Theorem 5.1 applies to our setting (§7.16.32) | **confirmed** — general $n$, general monotone dichotomous cost, gives an exact-EF partial allocation with $\le n-1$ unallocated items; a genuinely new starting point |
+| **Lemma GG** (free insertion: a $0$-marginal leftover item extends any EF partial allocation at $p=0$) | **PROVED**, unconditional, any $n$ (§7.16.32) |
+| naive fixed-bundle extension (place leftover, keep $X_i$'s owners, subsidise) | **REFUTED** — explicit $4$-item, $3$-agent AND-trigger witness with no valid $p\in\{0,1\}^3$ (§7.16.32) |
+| **permuted extension** (reassign bundle *ownership*, not just leftover placement) rescues that witness | **PROVED** on the witness — a genuinely new mechanism, not element movement |
+| **Permuted-Extension Conjecture** (some EF partial allocation with $\abs R\le2$ always permutes+subsidises to full EF at $n=3$) | **open — best lead of the session.** Would prove Conjecture 2 at $n=3$ in full generality if closed, superseding (Q′)/Lemma E entirely; row-localisation argument proves the easy direction, tie-chain closure step not completed by hand; $0$ failures across $\sim\!575$ random trials incl. the strong existential and $\abs R{=}2$-focused variants (§7.16.32) |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
