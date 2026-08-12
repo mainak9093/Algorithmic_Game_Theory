@@ -493,46 +493,60 @@ them}; every result in \Cref{sec:g2-r1,sec:g2-r2} is proved outright. The
 checks are reported because they were how the results were found, and
 because one of them delimits the argument in a way worth knowing.
 
-The enumeration is complete rather than sampled, by the following
-observation, which is what makes a bounded search decisive at all.
+\begin{remark}[A withdrawn lemma]
+\label{rem:g2-saturation-withdrawn}
+An earlier version of this section asserted a ``saturation'' lemma: that
+after normalising each row of a $3\times3$ cost table so that its diagonal
+entry is $0$, the off-diagonal entries could be restricted to
+$\set{0,1,2}$ without loss, so that enumerating such tables covered every
+unbounded table. \emph{That assertion is false and is withdrawn.} Only the
+first half of its reasoning is sound: since $\subsidy_j - \subsidy_k$ ranges
+over $\set{-1,0,1}$, feasibility depends on a difference $D_{ij}-D_{ik}$
+only through which of $\le-1$, $0$, $1$, $\ge2$ it falls into. The error is
+the inference that truncating entries to $\set{0,1,2}$ preserves those
+categories. It does not: the normalised row $(0,1,100)$ has
+$100 - 1 = 99$, of category $\ge 2$, whereas the truncated row $(0,1,2)$ has
+$2-1 = 1$, of category $1$. Realising each category somewhere is not the
+same as realising a given row's whole pattern of categories at once.
 
-\begin{lemma}[Saturation]
-\label{lem:g2-saturation}
-Let $D$ be a $3\times3$ table, $D_{ij}$ the cost to agent $i$ of candidate
-bundle $j$. Whether some permutation of bundles to agents and some
-$\subsidy \in \set{0,1}^3$ make the allocation envy-free depends on $D$ only
-through, for each row $i$ and pair of columns $j,k$, whether $D_{ij}-D_{ik}$
-is $\le -1$, exactly $0$, exactly $1$, or $\ge 2$. Hence if a base matrix
-$C$ has zero diagonal and off-diagonal entries in $\set{0,1,2}$, enumerating
-all such $C$ covers every case an unbounded cost table could produce.
-\end{lemma}
-\begin{proof}
-Agent $i$ holding column $j$ does not envy column $k$ exactly when
-$D_{ij}-\subsidy_j \le D_{ik}-\subsidy_k$, i.e.\ $D_{ij}-D_{ik} \le
-\subsidy_j-\subsidy_k$, and $\subsidy_j-\subsidy_k$ ranges only over
-$\set{-1,0,1}$; the four cases follow. Subtracting $C_{ii}$ from row $i$
-changes no within-row difference, so the diagonal may be taken to be zero,
-and entries in $\set{0,1,2}$ already realise differences across
-$\set{-2,\dots,2}$, hitting all four cases.
-\end{proof}
+The correct canonical form keeps the same four categories but needs a wider
+range. Normalise row $i$ by subtracting $C_{ii}$; envy-freeness of the
+partial allocation makes the remaining entries non-negative. Sort the three
+values of the row and replace each consecutive gap $g$ by $\min(g,2)$. Every
+pairwise difference keeps its category --- a gap of $0$, $1$ or $\ge2$ maps
+to $0$, $1$ or $2$, and a sum of two gaps is $\ge 2$ exactly when its image
+is --- and the entries now lie in $\set{0,1,2,3,4}$. So at $n=3$ the
+defensible bound is $4$, not $2$.
+\end{remark}
 
-With the two leftover items sent to distinct bundles, the doubly-stuck
-configuration is described by $6$ base entries $C_{ij} \in \set{0,1,2}$ and
-$12$ marginal bits $\mu_{i,e,j} = \cost_i(e \mid \bundle{j})$, $i \ne j$,
-$e \in \set{1,2}$, with $\mu_{i,e,i} = 1$ forced. Checking all
+Consequently the enumerations below must be read with care. The check for a
+single leftover item was run over off-diagonal entries in
+$\set{0,\dots,4}$ --- $5^6 \times 2^6 = 1{,}000{,}000$ combinations,
+no exceptions (\texttt{update\_12/prove\_r1.py}) --- and is therefore
+complete in the sense of Remark~\ref{rem:g2-saturation-withdrawn}. The check
+for two leftover items was run only over entries in $\set{0,1,2}$:
 $3^6 \times 2^{12} = 2{,}985{,}984$ combinations against all $6$ ordered
 choices of receiving bundles, all $6$ permutations and all $8$ subsidy
-vectors finds a valid completion every time, with no exceptions
-(\texttt{update\_12/prove\_r2.py}, about $20$ seconds). Separately,
-\texttt{update\_12/verify\_real.py} draws genuine random dichotomous cost
-triples rather than bounded abstract tables, isolates real doubly-stuck EF
-partial allocations (over $9{,}000$ with two leftover items and over
-$30{,}000$ with one, in $300$ trials), and confirms the same completions
-there.
+vectors, with no exceptions (\texttt{update\_12/prove\_r2.py}). At the
+corrected bound that enumeration is \emph{not} exhaustive, and it is
+recorded here as a bounded check only. Nothing rests on it:
+Theorem~\ref{thm:g2-r2} is proved from Lemma~\ref{lem:g2-stopping} and
+Lemma~\ref{lem:g2-expensive} without reference to any enumeration.
+
+Separately, \texttt{update\_12/verify\_real.py} draws genuine random
+dichotomous cost triples rather than bounded abstract tables, isolates real
+doubly-stuck EF partial allocations (over $9{,}000$ with two leftover items
+and over $30{,}000$ with one, in $300$ trials), and confirms the same
+completions there; being drawn from the true model, it is unaffected by the
+truncation issue above.
 
 Two negative findings from the same enumeration are more informative than
-the positive one, and they are what Remark~\ref{rem:g2-blackbox} reports: over
-abstract cost tables --- unconstrained by any algorithm --- the minimum-cost
+the positive one, and they are what Remark~\ref{rem:g2-blackbox} reports.
+Both are existence statements --- they exhibit a table on which something
+happens --- so unlike the positive checks they are unaffected by
+Remark~\ref{rem:g2-saturation-withdrawn}: a witness found inside a truncated
+range is still a witness. Over abstract cost tables ---
+unconstrained by any algorithm --- the minimum-cost
 total excess genuinely reaches $2$
 (\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
 (\texttt{update\_49/test\_excess\_r2.py}). This is why Theorem~\ref{thm:g2-r2}

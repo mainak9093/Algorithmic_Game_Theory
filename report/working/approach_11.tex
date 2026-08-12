@@ -18,13 +18,24 @@
 \label{sec:approach11-superseded-note}
 
 \begin{quote}
-\textbf{Superseded.} The results of this section are subsumed by
-\Cref{sec:approach12}, which proves the same conclusion at $n = 3$ without
-the exhaustive verification relied on below, and by
+\textbf{Superseded, and partly unsound.} The results of this section are
+subsumed by \Cref{sec:approach12}, which proves the same conclusion at
+$n = 3$ without the exhaustive verification relied on below, and by
 \Cref{sec:approach13}, which restates that proof in a self-contained form
 and extends it to two residue sizes at every $n$. This section is retained
 only as a record of the route by which those results were first obtained;
 neither of those sections depends on it.
+
+It should not be relied on directly. The ``saturation'' lemma stated below
+and used in both of this section's theorems is \textbf{false as stated}:
+truncating the normalised off-diagonal entries of a cost table to
+$\set{0,1,2}$ does not preserve the comparison categories the argument
+needs, so the enumerations it licenses are not exhaustive. The counterexample
+and the corrected canonical form are given in
+Remark~\ref{rem:g2-saturation-withdrawn}. The conclusions of this section are
+nonetheless true --- they are exactly what \Cref{sec:approach12} proves by a
+different and correct route --- but the derivations below do not establish
+them.
 \end{quote}
 \label{sec:approach11}
 

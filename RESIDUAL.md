@@ -2886,13 +2886,23 @@ in: $\le-1$ (always fine), $=0$ (needs $p_j\ge p_k$), $=1$ (forces
 $p_j=1,p_k=0$), $\ge2$ (infeasible for this pairing outright). Shifting each
 row of the *base* matrix $C$ so $C[i][i]=0$ doesn't change any of these
 differences (it's a common shift within the row), so WLOG $C[i][i]=0$,
-$C[i][j]\ge0$. Bounding the off-diagonal entries to $\{0,1,2\}$ already
-realises differences over $\{-2,\dots,2\}$ — hitting all four buckets — so
-an **exhaustive search over that bounded range is not a sample of the
-problem, it is the whole problem**: every combinatorial pattern of buckets
-that any real (unbounded) instance could produce is already present
-somewhere in the bounded search. (Cross-checked at bound $3$ and bound $4$
-too — identical zero-failure result, as the principle predicts.)
+$C[i][j]\ge0$.
+
+> **CORRECTION (see §7.16.37).** The next step, as originally written here,
+> was: *"bounding the off-diagonal entries to $\{0,1,2\}$ already realises
+> differences over $\{-2,\dots,2\}$, hitting all four buckets, so the
+> bounded search is the whole problem."* **That inference is FALSE.**
+> Realising each bucket *somewhere* is not the same as preserving a given
+> row's *entire* pattern of buckets: the normalised row $(0,1,100)$ has
+> $100-1=99$ in bucket $\ge2$, while its truncation $(0,1,2)$ has $2-1=1$ in
+> bucket $1$. The correct canonical form replaces each consecutive gap $g$ of
+> the sorted row by $\min(g,2)$, which preserves every bucket and confines
+> entries to $\{0,\dots,4\}$ — so the defensible bound at $n=3$ is **4, not
+> 2**. The $bs R=1$ enumeration was in fact run at bound $4$
+> ($1{,}000{,}000$ combinations) and is therefore complete; the $bs R=2$
+> enumeration was run only at bound $2$ and is **a bounded check, not an
+> exhaustive one**. Nothing depends on either: §7.16.35 proves both cases
+> structurally.
 
 **Lemma HH ($\abs R=1$, full closure, PROVED).** For any EF partial
 allocation with one leftover item $e$: if some agent has $c_i(e\mid X_i)=0$,
@@ -2924,7 +2934,8 @@ target pairs, $6$ permutations, $8$ subsidies: **zero failures**, runtime
 $18$s. Shape A (both leftovers into the *same* bundle) is never needed.
 
 **Real-instance confirmation, independent of the abstract argument.**
-The saturation principle is airtight, but as a belt-and-suspenders check,
+The saturation principle is flawed as stated (see the correction above and
+§7.16.37); the following check draws from the true model and is unaffected,
 `update_49/verify_r2_real.py` generates actual random dichotomous cost
 triples (the validated `random_dichotomous` generator from `update_4/rules.py`,
 not the abstract bounded model), finds genuine EF partial allocations with
@@ -3159,13 +3170,83 @@ so S = agents regardless. (iii) Empty bundles cause no issue.
 
 **Bug fixed.** `approach_12.tex` used `\Cref` on theorem-like environments,
 which share one counter here, so every Lemma/Example/Definition rendered as
-"Theorem". Replaced with explicit typed `ef`; `approach_13.tex` was already
+"Theorem". Replaced with explicit typed `
+ef`; `approach_13.tex` was already
 correct.
 
 **Audit limitation, stated honestly.** The computational audit exercises
 halting states reachable by two tie-breaking policies; it cannot enumerate all
 halting states. It is a check on the proof, not a component of it -- the proof
 itself covers every halting state satisfying the stopping conditions.
+
+### 7.16.37 Saturation lemma refuted; and Conjecture 2 proved for ALL n
+
+**(a) The saturation lemma is false as stated.** Flagged by the user's note
+`approach12_correction_only.md` and confirmed. The four-bucket observation is
+sound: feasibility of $p\in\{0,1\}^n$ depends on $D_{ij}-D_{ik}$ only through
+which of $\le-1,0,1,\ge2$ it lies in. The false step was concluding that
+normalised off-diagonal entries may be truncated to $\{0,1,2\}$. Witness:
+row $(0,1,100)$ has $100-1=99$ (bucket $\ge2$); truncated row $(0,1,2)$ has
+$2-1=1$ (bucket $1$). Realising each bucket somewhere $\ne$ preserving a
+row's whole pattern.
+
+**Correct canonical form.** Normalise row $i$ by subtracting $C_{ii}$
+(entries then $\ge0$ by partial-EF). Sort the row and replace each
+consecutive gap $g$ by $\min(g,2)$. Every pairwise bucket is preserved (a gap
+of $0/1/\ge2$ maps to $0/1/2$; a sum of two gaps is $\ge2$ iff its image is),
+and entries land in $\{0,\dots,4\}$. **Defensible bound at $n=3$ is 4.**
+Consequence: the $\abs R=1$ enumeration (run at bound $4$, $1{,}000{,}000$
+combinations) *is* complete; the $\abs R=2$ enumeration (run at bound $2$) is
+**a bounded check only**. Neither is load-bearing — §7.16.35 proves both
+cases structurally. Fixed in `approach_12.tex` (`rem:g2-saturation-withdrawn`),
+and `approach_11.tex` — where the lemma was genuinely load-bearing — now
+carries an explicit "superseded, and partly unsound" banner.
+
+**(b) Conjecture 2 is now PROVED FOR EVERY $n$.** The previously open range
+$2\le\abs R\le n-2$ is closed. Two ideas, both new:
+
+*The telescoping potential.* Given bundles $Y$ and assignment $\pi$, put
+$g_a=\cost_a(Y_{\pi(a)})-\cost_a(X_a)\ge0$. If $\varphi$ satisfies
+$w(x,y)\le\varphi(y)-\varphi(x)$ on every arc, then every cycle has weight
+$\le0$ (so the allocation is envy-freeable by Halpern–Shah (iii) — **global
+min-cost is not needed**) and every simple path has weight
+$\le\max\varphi-\min\varphi$. This dissolves the "alternating path" obstruction
+of §7.16.34 entirely: arcs into augmented-bundle holders are $\le-1$, not
+$\le0$.
+
+*The tail property.* At a halting state with residue $k\ge1$ the selected
+tail SCC $S$ has $\abs S\ge k+1$, and since **no arc leaves $S$**, for $a\in S$
+and $y\notin S$ we get $\cost_a(X_y)\ge\cost_a(X_a)+1$.
+
+**Construction.** Place the $k$ items in $k$ distinct bundles indexed by $S$;
+agents outside $S$ keep their own bundles; $S$-agents get $S$-bundles by a
+min-cost matching *within $S$*. Then (F1) $\cost_a(X_j\cup\{e\})\ge
+\cost_a(X_a)+1$ for $a,j\in S$ (arcs inside $S$ lie on cycles, so R2 forces
+marginal $1$; $j=a$ is R1); min-cost within $S$ is exactly $L_S+k$, pinning
+$g_a=1$ on augmented holders and $0$ elsewhere (including all of
+$N\setminus S$). Take $\varphi(a)=1$ iff $a\in S$ and $g_a=0$, else $0$. All
+nine arc cases check out, so $p\in\{0,1\}^n$; with $\min_a p_a=0$ (shift
+invariance) the total is $\le n-1$. $\blacksquare$
+
+**Why the earlier obstruction was illusory.** §7.16.34 tried to prove agents
+*outside* $S$ satisfy (F1) — which is genuinely false (an arc from outside
+into $S$ lies on no cycle, so R2 never fires). The fix is that they need not:
+leave them on their own bundles, and the tail property makes every arc from
+$S$ outward cost a full unit, forcing $\varphi\equiv0$ outside $S$
+consistently. The $n=3$ result is the special case $S=N$.
+
+**Verification** (a check, not part of the proof): implemented Algorithm 3
+for general $n$ (`update_12/probe_general_n.py`, `probe_biased.py`) and tested
+the construction over *every* choice of $k$ distinct $S$-bundles and *every*
+min-cost matching within $S$. At $n=4,5,6$, with a cost-biased generator to
+force large residues, residue sizes $1,2,3,4$ all occurred — including the
+whole previously-open range — with **zero failures** across $\sim28{,}000$
+(placement, matching) combinations.
+
+**Dependency note.** This leans harder on Algorithm 3's internals than the
+$n=3$ proof did: it uses the tail-SCC property, not merely the halting count.
+Legitimate, but it is the step a referee should scrutinise first. Not yet
+written to LaTeX (user asked for maths only at that stage).
 
 ### 7.17 Status
 
@@ -3275,7 +3356,7 @@ itself covers every halting state satisfying the stopping conditions.
 | naive fixed-bundle extension (place leftover, keep $X_i$'s owners, subsidise) | **REFUTED** — explicit $4$-item, $3$-agent AND-trigger witness with no valid $p\in\{0,1\}^3$ (§7.16.32) |
 | **permuted extension** (reassign bundle *ownership*, not just leftover placement) rescues that witness | **PROVED** on the witness — a genuinely new mechanism, not element movement |
 | **Permuted-Extension Conjecture** (some EF partial allocation with $\abs R\le2$ always permutes+subsidises to full EF at $n=3$) | ~~open~~ → **PROVED IN FULL** (Theorem JJ, §7.16.33) |
-| **saturation principle** (EF-with-subsidy feasibility only depends on 4 pairwise-difference buckets, so a bounded exhaustive search decides the unbounded problem) | **PROVED**, the mechanism that turns §7.16.32's open tie-chain case analysis into a finite, mechanically closed argument |
+| **saturation principle** (bounded exhaustive search decides the unbounded problem) | ~~PROVED~~ → **PARTLY FALSE, CORRECTED** (§7.16.37). The four-bucket observation is right; the truncation to $\{0,1,2\}$ is not — it does not preserve a row's full bucket pattern. Correct bound at $n=3$ is $\{0,\dots,4\}$. No result depends on it |
 | **Lemma HH** ($\abs R=1$, full closure, both subcases) | **PROVED**, exhaustive ($46{,}656$ combinations, $0$ failures) — not evidence, a complete finite proof |
 | **Theorem II** ($\abs R=2$ doubly-stuck case, via Shape B alone) | **PROVED**, exhaustive ($2{,}985{,}984$ combinations, $0$ failures) + confirmed on $15{,}957$ real doubly-stuck random instances, $0$ failures |
 | **Theorem JJ** (the greedy-peel + Lemma HH / Theorem II reduction is complete for any $\abs R\le2$) | **PROVED**, unconditional |
