@@ -2958,6 +2958,73 @@ as the closing theorem for general $n=3$, and rebuild `working.pdf`. The
 superseded route — worth keeping for the write-up's honesty about what was
 tried, not worth deleting.
 
+### 7.16.34 Replacing exhaustion with reasons: the excess argument, and where it stops
+
+The §7.16.33 closure was correct but rested on two exhaustive checks, which
+is unsatisfying and — more importantly — cannot scale past $n=3$. This pass
+found the actual mechanism for one of them and localised the obstruction for
+the other precisely.
+
+**The mechanism (Halpern–Shah + excess).** Two classical facts already in the
+report's preliminaries do all the work. `thm:hs-characterisation`: an
+allocation is envy-freeable iff its bundles are assigned to agents at
+minimum total cost. `thm:hs-minsubsidy`: when so, the pointwise-minimal
+subsidy is $p_i=\ell(i)$, the heaviest simple path from $i$ in the envy
+graph. So "try all $6$ permutations" is really "take the min-cost matching"
+(Hungarian, poly-time, defined for all $n$), and the whole question becomes
+a path bound.
+
+Define, for bundles $Y_j$ and assignment $\pi$: $\beta_a=\min_j\cost_a(Y_j)$
+and the **excess** $\varepsilon_a=\cost_a(Y_{\pi(a)})-\beta_a\ge0$. Two
+one-line lemmas: every arc out of $a$ has weight $\le\varepsilon_a$, so
+every simple path has weight $\le\sum_a\varepsilon_a$; and since
+$\sum_a\cost_a(Y_{\sigma(a)})=\sum_a\beta_a+\sum_a\varepsilon_a(\sigma)$,
+min-cost $=$ **min total excess**. Hence: *exhibit one assignment of total
+excess $\le1$ and Conjecture 2 follows for that instance, at any $n$.*
+
+**$\abs R=1$ is now genuinely PROVED, for all $n$, no search.** Put $e$ in any
+bundle $m$ (the choice is immaterial). For $a\ne m$: $\cost_a(Y_a)=
+\cost_a(X_a)\le\cost_a(X_j)\le\cost_a(Y_j)$ (partial-EF, then monotonicity),
+so $\varepsilon_a=0$. For $m$: $\cost_m(Y_m)\le\cost_m(X_m)+1\le
+\cost_m(X_j)+1\le\cost_m(Y_j)+1$ (unit marginal, partial-EF, monotonicity),
+so $\varepsilon_m\le1$. Identity has total excess $\le1$; min-cost is no
+worse; done. This **subsumes** Lemma GG (§7.16.32) rather than branching on
+it — the stuck/non-stuck case split disappears entirely. Verified:
+`update_49/test_excess_r1.py` gives max total excess $=1$, max longest path
+$=1$, zero failures.
+
+**$\abs R=2$ is NOT proved by this, and the shortfall is real.** The same
+argument with $e_1\to m_1$, $e_2\to m_2$ ($m_1\ne m_2$) gives
+$\varepsilon_{m_1},\varepsilon_{m_2}\le1$, others $0$, so total excess
+$\le2$ and $p\le2$ — one unit short. This is **not** loose estimation:
+`update_49/eps_only_r2.py` enumerates all bounded doubly-stuck tables and
+finds the min-cost total excess genuinely **attains $2$**, even after
+optimising over which pair of bundles receives the items. So the *path*
+bound $\ell\le\sum\varepsilon_a$ must be lossy exactly there — a simple path
+provably cannot collect both units — and the exhaustive check of §7.16.33
+confirms the outcome without exhibiting the reason.
+
+**Why this matters for scaling, stated exactly.** Chaining Theorem 5.1
+($\abs R\le n-1$) with the excess bound gives $p\le n-1$ per agent — which
+is precisely the guarantee `KMSTY24` already provides. So the argument as it
+stands **recovers the known baseline and nothing more**; the entire content
+of Conjecture 2 lives in the gap between $\abs R$ and $1$. The missing lemma,
+now stated in one line and equivalent to Conjecture 2 for every $n$:
+
+> Given an EF partial allocation with leftover set $R$, the items of $R$ can
+> be placed so that the min-cost assignment has **total excess at most $1$**,
+> independent of $\abs R$.
+
+Its $\abs R=1$ case is proved above; its $\abs R=2$ case is what §7.16.33
+verifies at $n=3$ without explaining. Crucially it **cannot** be proved by
+bounding total excess alone (that quantity reaches $2$); what is needed is
+the sharper statement that no simple path collects more than one unit.
+
+Recorded in LaTeX as the rewritten `approach_12.tex` (Step 3 replaced by the
+Halpern–Shah/excess machinery; `thm:g2-r1` now carries a real proof plus
+`cor:g2-anyn` for general $n$; `rem:g2-honest` states the gap). `working.pdf`
+builds clean at $124$ pages.
+
 ### 7.17 Status
 
 | statement | status |
@@ -3071,6 +3138,12 @@ tried, not worth deleting.
 | **Theorem II** ($\abs R=2$ doubly-stuck case, via Shape B alone) | **PROVED**, exhaustive ($2{,}985{,}984$ combinations, $0$ failures) + confirmed on $15{,}957$ real doubly-stuck random instances, $0$ failures |
 | **Theorem JJ** (the greedy-peel + Lemma HH / Theorem II reduction is complete for any $\abs R\le2$) | **PROVED**, unconditional |
 | **Corollary KK — Conjecture 2 holds at $n=3$, full generality, unconditional** | **PROVED** (§7.16.33) — closes the project's central open question; supersedes (Q′)/Lemma E/removal-hardness (§§7.16.10–31), not because they were wrong but because this route succeeded first |
+| min-cost assignment (not brute permutation search) is the right move — Halpern–Shah | **PROVED/identified** (§7.16.34) — `thm:hs-characterisation` + `thm:hs-minsubsidy` reduce everything to a path bound; poly-time and defined for all $n$ |
+| **excess machinery**: $\varepsilon_a=\cost_a(Y_{\pi(a)})-\beta_a$; path $\le\sum\varepsilon_a$; min-cost $=$ min total excess | **PROVED** (§7.16.34), two one-line lemmas, any $n$ |
+| **$\abs R=1$ absorbed, ANY $n$, no search** | **PROVED** (§7.16.34) — identity assignment has total excess $\le1$; subsumes Lemma GG and kills the stuck/non-stuck case split |
+| $\abs R=2$ via the same excess argument | **gives only $p\le2$** — and the shortfall is real, not loose: min-cost total excess genuinely attains $2$ (`update_49/eps_only_r2.py`) |
+| general-$n$ bound obtainable today from Theorem 5.1 $+$ excess | $p\le n-1$ — **exactly the known `KMSTY24` baseline**, so this route currently adds nothing beyond $n=3$ |
+| **THE missing lemma** (equivalent to Conjecture 2 at every $n$) | **open, sharply stated** (§7.16.34): place $R$ so the min-cost assignment has **total excess $\le1$**, independent of $\abs R$. Cannot be proved by bounding total excess alone; needs "no simple path collects $>1$ unit" |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
