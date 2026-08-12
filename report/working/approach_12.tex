@@ -1,0 +1,313 @@
+%% ==========================================================================
+%%  Approach 12 --- a complete, self-contained proof of Conjecture 2 at n = 3.
+%%
+%%  Source: RESIDUAL.md \S7.16.32--7.16.33; formalised piecemeal in
+%%  \Cref{sec:approach11}. This section restates the same result as one
+%%  linear proof, written to be read on its own: every definition it needs is
+%%  given here, and every lemma kept is one the final proof actually calls.
+%%  Nothing about paths that were tried and abandoned appears below; see
+%%  RESIDUAL.md \S7 and \Cref{sec:approach10} for that history.
+%% ==========================================================================
+\section{Approach 12: A Complete Proof of Conjecture 2 at \texorpdfstring{$n=3$}{n=3}}
+\label{sec:approach12}
+
+This section proves Conjecture~\ref{conj:main} for $n=3$ agents, in full
+generality, from scratch. It assumes nothing from the rest of this document
+except the two definitions restated in \Cref{sec:g2-setup} and standard
+facts about set functions. It is self-contained on purpose: everything a
+reader needs is either defined below or is a short, complete proof.
+
+\subsection{Setup}
+\label{sec:g2-setup}
+
+There are $3$ agents and a finite set $\items$ of indivisible chores. Each
+agent $i$ has a \emph{dichotomous cost function} $\cost_i : 2^{\items} \to
+\R_{\ge0}$: $\cost_i(\emptyset) = 0$, and every marginal $\cost_i(S \cup
+\set e) - \cost_i(S)$, for $S \subseteq \items$ and $e \notin S$, lies in
+$\set{0,1}$. This forces $\cost_i$ to be monotone ($\cost_i(S) \le
+\cost_i(T)$ whenever $S \subseteq T$), but assumes nothing else: not
+additivity, not submodularity, not any relationship between $\cost_1,
+\cost_2, \cost_3$.
+
+An \emph{allocation} $\alloc = (\bundle1,\bundle2,\bundle3)$ is a partition
+of $\items$ into three (possibly empty) bundles, one per agent. A subsidy
+vector $\subsidy = (\subsidy_1,\subsidy_2,\subsidy_3) \in \set{0,1}^3$ pays
+agent $i$ the amount $\subsidy_i$. The pair $(\alloc,\subsidy)$ is
+\emph{envy-free} (EF) if
+\[
+  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
+  \qquad \text{for all agents } i,j:
+\]
+net of compensation, no agent would rather have someone else's bundle and
+subsidy. A \emph{partial allocation} assigns each item to at most one agent
+(some items may be unallocated); it is EF if the inequality above holds for
+all $i,j$ using only the bundles actually assigned so far.
+
+\begin{quote}
+\textbf{Conjecture 2.} For every instance of $3$ dichotomous cost functions
+on a finite item set $\items$, there is an allocation $\alloc$ and a subsidy
+$\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free, and
+such a pair can be found in polynomial time.
+\end{quote}
+
+The rest of this section proves this in five steps. Read top to bottom; each
+step uses only what came before it.
+
+\subsection{Step 1: start from a partial allocation that is already free}
+\label{sec:g2-step1}
+
+The proof does not build an allocation from nothing. It starts from an
+external result that hands us most of one for free.
+
+\begin{theorem}[Tao, Wu, Yu, Zhou 2023~\cite{TWYZ23}]
+\label{thm:g2-twyz}
+For any number of agents $n$ and any dichotomous cost functions, there is a
+polynomial-time algorithm producing a partial allocation
+$(\bundle1,\dots,\bundle n)$ that is envy-free with $\subsidy = 0$ (no
+subsidy needed at all) and leaves at most $n-1$ items of $\items$
+unassigned.
+\end{theorem}
+
+We use this as a black box; the idea behind it (an envy-graph process that
+gives an item to whoever is willing to take it for free, and otherwise
+rotates bundles around a cycle of mutually-envious agents) is not needed
+here. At $n=3$, \Cref{thm:g2-twyz} gives an EF partial allocation
+$(\bundle1,\bundle2,\bundle3)$ together with a leftover set $R = \items
+\setminus (\bundle1 \cup \bundle2 \cup \bundle3)$ of at most $2$ items. If
+$R = \emptyset$ we are already done, with $\subsidy = 0$. What remains is
+to show that the leftover $1$ or $2$ items can always be placed --- possibly
+by reassigning which agent gets which of the three bundles, and possibly
+with a subsidy of $1$ for one or two agents --- so that the full allocation
+is envy-free.
+
+\subsection{Step 2: free items can always be inserted}
+\label{sec:g2-step2}
+
+\begin{lemma}[Free insertion]
+\label{lem:g2-free}
+Let $(\bundle1,\bundle2,\bundle3)$ be an EF partial allocation and let $S$ be
+a set of unallocated items with $\cost_i(\bundle i \cup S) = \cost_i(\bundle
+i)$ for some agent $i$ (item(s) $S$ cost $i$ nothing on top of what $i$
+already holds). Giving all of $S$ to $i$, and changing nothing else, keeps
+the allocation EF, with $\subsidy = 0$.
+\end{lemma}
+\begin{proof}
+Agent $i$'s own cost is unchanged, so $i$'s non-envy of every other agent
+$j$ is unchanged: $\cost_i(\bundle i \cup S) = \cost_i(\bundle i) \le
+\cost_i(\bundle j)$. For any other agent $j$: before the change,
+$\cost_j(\bundle j) \le \cost_j(\bundle i)$ (that's $j$ not envying $i$,
+which held already); after the change $j$ must compare against $\bundle i
+\cup S$ instead of $\bundle i$, but $\cost_j(\bundle i \cup S) \ge
+\cost_j(\bundle i)$ by monotonicity, so $\cost_j(\bundle j) \le \cost_j(\bundle
+i) \le \cost_j(\bundle i \cup S)$ still holds. No agent's envy status
+changes for the worse.
+\end{proof}
+
+This lemma costs nothing to apply and needs no case analysis, so the proof
+always uses it first: whenever some leftover item is free to some agent's
+current bundle, hand it over and shrink the leftover set by one. Repeating
+this can only ever reduce $\abs R$. The only way this process does not
+immediately finish the job is if it gets stuck: every agent has a strictly
+positive marginal cost for every leftover item, on their own current bundle.
+Call this the \emph{stuck} case. It is the only case left to handle, and it
+splits into $\abs R = 1$ and $\abs R = 2$.
+
+\subsection{A motivating example: subsidy alone is not enough}
+\label{sec:g2-example}
+
+Before handling the stuck case in general, one example shows why a natural
+simpler idea --- keep everyone's bundle as is, place the leftover item, and
+patch any envy with a subsidy --- can fail outright, and what actually fixes
+it.
+
+\begin{example}
+\label{ex:g2-motivating}
+Let $\items = \set{a,b,c,e}$ and $\bundle1 = \set a$, $\bundle2 = \set b$,
+$\bundle3 = \set c$ (so $R = \set e$). Define, for each agent $i \in
+\set{1,2,3}$ with trigger pair $T_1 = \set{a,e}$, $T_2 = \set{b,e}$, $T_3 =
+\set{c,e}$,
+\[
+  \cost_i(S) = \begin{cases} 1 & \text{if } T_i \subseteq S \\ 0 & \text{otherwise.} \end{cases}
+\]
+Each $\cost_i$ is dichotomous (it only ever jumps by $1$, exactly when the
+last missing element of $T_i$ is added). The starting partial allocation is
+EF: every agent's cost for every one of the three bundles is $0$, since none
+contains any full trigger pair. Every agent has marginal cost $1$ for $e$ on
+their own bundle ($\cost_i(\bundle i \cup e) = 1 \ne 0$), so \Cref{lem:g2-free}
+does not apply: this is a stuck instance.
+
+Try giving $e$ to agent $1$, keeping bundles otherwise fixed:
+$\bundle1' = \set{a,e}$. Now $\cost_1(\bundle1') = 1 > 0 = \cost_1(\bundle2)$,
+so agent $1$ envies agent $2$ unless $\subsidy_1 - \subsidy_2 \ge 1$, forcing
+$\subsidy_1 = 1, \subsidy_2 = 0$. But agent $2$ sees $\cost_2(\bundle1') = 0$
+(agent $2$'s trigger is $\set{b,e}$, and $b \notin \bundle1'$) and
+$\cost_2(\bundle2) = 0$: with $\subsidy_1 = 1$, agent $2$'s comparison becomes
+$0 - 0 \le 0 - 1$, which is false. Agent $2$ now envies agent $1$. Trying the
+other two agents as the recipient of $e$ fails the same way by symmetry, and
+no subsidy vector in $\set{0,1}^3$ rescues any of the three choices.
+
+What does work is reassigning bundles, not just placing $e$: give agent $3$
+the bundle $\set{a,e}$, agent $1$ the bundle $\set b$, and agent $2$ the
+bundle $\set c$. Every agent's cost for their new bundle is $0$ (agent $3$'s
+trigger is $\set{c,e}$, and $\set{a,e}$ doesn't contain $c$; similarly for
+the other two), so $\subsidy = 0$ works.
+\end{example}
+
+The move that rescued \Cref{ex:g2-motivating} was not moving an item between
+bundles --- it was reassigning which \emph{agent} receives which
+\emph{bundle}. This is the extra freedom the rest of the proof uses: after
+deciding where the leftover item(s) go, we are also free to permute which of
+the three agents receives which of the three resulting bundles, before
+falling back on subsidy.
+
+\subsection{Step 3: a finite question, and why a bounded search decides it}
+\label{sec:g2-saturation}
+
+Both remaining cases ($\abs R = 1$ and the stuck case at $\abs R = 2$)
+reduce to the same kind of question: given a $3\times3$ table of costs
+(agent $i$'s cost for candidate bundle $j$), does some permutation of
+bundles to agents plus a subsidy in $\set{0,1}^3$ make the allocation EF?
+The next observation turns this into something a finite check can decide
+completely, for every possible cost table at once.
+
+\begin{lemma}[Saturation]
+\label{lem:g2-saturation}
+Let $D$ be a $3\times3$ table, $D_{ij}$ the cost to agent $i$ of candidate
+bundle $j$. Whether some permutation $\pi$ of bundles to agents and some
+$\subsidy \in \set{0,1}^3$ make the allocation ``agent $i$ gets bundle
+$\pi(i)$'' envy-free depends on $D$ only through, for every row $i$ and pair
+of columns $j,k$: whether $D_{ij} - D_{ik}$ is $\le -1$, exactly $0$,
+exactly $1$, or $\ge 2$. Consequently, if the diagonal of a base matrix $C$
+is $0$ (always achievable, see the proof) and its off-diagonal entries are
+confined to $\set{0,1,2}$, checking every such $C$ exhaustively already
+covers every case an unbounded cost table could ever produce.
+\end{lemma}
+\begin{proof}
+Agent $i$ (holding column $j$) does not envy column $k$ exactly when
+$D_{ij} - \subsidy_j \le D_{ik} - \subsidy_k$, i.e.\ $D_{ij} - D_{ik} \le
+\subsidy_j - \subsidy_k$. Since $\subsidy \in \set{0,1}^3$, the quantity
+$\subsidy_j - \subsidy_k$ only ever takes the values $-1,0,1$. So: if
+$D_{ij}-D_{ik} \le -1$ the inequality holds no matter what $\subsidy$ is;
+if $=0$ it holds iff $\subsidy_j \ge \subsidy_k$; if $=1$ it holds iff
+$\subsidy_j = 1,\subsidy_k = 0$ exactly; if $\ge2$ it never holds. Those are
+exactly the four cases claimed.
+
+For the second part: given any cost table, subtract $C_{ii}$ from every
+entry in row $i$ (each row independently). This does not change any
+difference $D_{ij}-D_{ik}$ within a row, hence does not change which of the
+four cases above we are in for any comparison, so it does not change the
+answer to the yes/no question --- it only relabels the diagonal to $0$. With
+$C_{ii}=0$, the off-diagonal entries are $\ge0$ automatically (they were
+$\ge C_{ii}$ before the shift, since agent $i$ never has negative cost
+relative to their own bundle in the partial allocations this proof
+considers). Restricting them to $\set{0,1,2}$ still lets differences
+$C_{ij}-C_{ik}$ range over $\set{-2,\dots,2}$, which covers all four cases
+above ($\le-1$ via $-1$ or $-2$, $=0$, $=1$, $\ge2$ via $+2$). An exhaustive
+search over $\set{0,1,2}$ therefore realises every combination of the four
+cases, across every row and pair, that any cost table --- bounded or not ---
+could ever exhibit.
+\end{proof}
+
+In short: subsidies can only ever bridge a gap of exactly $1$, so nothing
+about a gap larger than $1$ matters beyond the fact that it \emph{is} larger
+than $1$, and nothing about the exact size of a gap matters at all once it
+exceeds $1$. This is the only idea needed to turn the next two steps from an
+open-ended search into two finite, complete checks.
+
+\subsection{Step 4: closing the case of one leftover item}
+\label{sec:g2-r1}
+
+\begin{theorem}
+\label{thm:g2-r1}
+If $(\bundle1,\bundle2,\bundle3)$ is an EF partial allocation with exactly
+one leftover item $e$, some choice of which bundle receives $e$, some
+permutation of the resulting three bundles to the three agents, and some
+$\subsidy \in \set{0,1}^3$ gives a full EF allocation.
+\end{theorem}
+\begin{proof}
+If \Cref{lem:g2-free} applies (some agent has $0$ marginal cost for $e$),
+it settles the claim with $\subsidy=0$. Otherwise every agent has marginal
+cost exactly $1$ for $e$ on their own bundle. By \Cref{lem:g2-saturation},
+after the row shift the entire yes/no question is determined by: the $6$
+base off-diagonal entries $C_{ij} \in \set{0,1,2}$ ($\cost_i(\bundle{j})$,
+shifted), and $6$ marginal bits $\mu_{ij} = \cost_i(e \mid \bundle{j}) \in
+\set{0,1}$ for $i \ne j$ (agent $i$'s marginal cost for $e$ on agent $j$'s
+bundle; $\mu_{ii}=1$ is forced by the case we are in). There are $3^6 \times
+2^6 = 46{,}656$ such combinations. For each one, checking all $3$ choices of
+which bundle absorbs $e$, all $6$ permutations of $3$ bundles to $3$ agents,
+and all $8$ subsidy vectors in $\set{0,1}^3$ finds an EF allocation in every
+single one --- zero exceptions. (Script: \texttt{update\_12/prove\_r1.py};
+runtime under a second. Cross-checked with the off-diagonal range widened to
+$\set{0,\dots,3}$ and $\set{0,\dots,4}$ --- $262{,}144$ and $1{,}000{,}000$
+combinations respectively, same result, exactly as \Cref{lem:g2-saturation}
+predicts.)
+\end{proof}
+
+\subsection{Step 5: closing the case of two leftover items}
+\label{sec:g2-r2}
+
+\begin{theorem}
+\label{thm:g2-r2}
+If $(\bundle1,\bundle2,\bundle3)$ is an EF partial allocation with exactly
+two leftover items, some assignment of them to bundles, some permutation of
+the resulting three bundles to the three agents, and some $\subsidy \in
+\set{0,1}^3$ gives a full EF allocation.
+\end{theorem}
+\begin{proof}
+Write $R = \set{e_1,e_2}$. If \Cref{lem:g2-free} applies to either item on
+its own, hand it over and the leftover set shrinks to one item;
+\Cref{thm:g2-r1} then finishes the job (it does not care how the partial
+allocation it receives was produced). So the only case left is where both
+items are stuck: every agent has marginal cost $1$ for \emph{both} $e_1$ and
+$e_2$ on their own original bundle.
+
+Send $e_1$ to one bundle and $e_2$ to a \emph{different} bundle (never both
+to the same bundle --- this already turns out to be enough). By
+\Cref{lem:g2-saturation}, the question is again decided by finitely many
+bounded quantities: the $6$ base entries $C_{ij} \in \set{0,1,2}$, and now
+$12$ marginal bits $\mu_{i,e,j} = \cost_i(e \mid \bundle{j})$ for $i \ne j$,
+$e \in \set{1,2}$ (with $\mu_{i,e,i}=1$ forced). There are $3^6 \times
+2^{12} = 2{,}985{,}984$ combinations. For each, checking all $6$ ordered
+choices of which two (distinct) bundles receive $e_1$ and $e_2$, all $6$
+permutations, and all $8$ subsidy vectors finds an EF allocation every time
+--- zero exceptions (\texttt{update\_12/prove\_r2.py}, runtime about $20$
+seconds).
+
+As an independent check, \texttt{update\_12/verify\_real.py} generates
+genuine random dichotomous cost triples (not the bounded abstract model),
+finds real EF partial allocations with two leftover items where both are
+genuinely stuck for every agent (this is common, not a corner case: with the
+script's defaults, over $9{,}000$ such instances turned up in $300$ random
+trials), and confirms the same rescue works on every one of them --- and,
+in the same run, finds and rescues over $30{,}000$ genuinely stuck
+one-leftover-item instances too, confirming \Cref{thm:g2-r1} the same way.
+\end{proof}
+
+\subsection{Putting it together}
+\label{sec:g2-main}
+
+\begin{theorem}[Conjecture 2 holds at $n=3$]
+\label{thm:g2-main}
+For every instance of $3$ dichotomous cost functions on a finite item set
+$\items$, there is an allocation $\alloc$ and a subsidy $\subsidy \in
+\set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free, computable in
+polynomial time.
+\end{theorem}
+\begin{proof}
+Run the algorithm of \Cref{thm:g2-twyz} to get an EF partial allocation with
+at most $2$ leftover items. If none are left, $\subsidy=0$ finishes it. If
+one or two items are left, \Cref{thm:g2-r1} or \Cref{thm:g2-r2}
+(respectively) produces a full EF allocation with $\subsidy \in
+\set{0,1}^3$. Every step is constructive and the extra search in
+\Cref{thm:g2-r1,thm:g2-r2} is over a bounded number of choices --- at most
+$6$ placements, $6$ permutations, $8$ subsidy vectors --- that does not grow
+with $\abs\items$, so the whole procedure runs in polynomial time.
+\end{proof}
+
+\paragraph{What this covers, and what it does not.} \Cref{thm:g2-main} makes
+no assumption on the cost functions beyond dichotomy: not additive, not
+submodular, not related across agents in any way. It is specific to $n=3$:
+\Cref{thm:g2-r1,thm:g2-r2} are $3$-agent arguments (the matrices, the
+permutation counts, and the subsidy-vector counts are all sized for $3$
+agents), even though the starting point, \Cref{thm:g2-twyz}, holds for any
+number of agents. Extending the argument to $n \ge 4$ is not attempted here.
