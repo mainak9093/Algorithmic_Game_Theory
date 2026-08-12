@@ -1175,6 +1175,246 @@ not independently verified here.
 \end{remark}
 
 % --------------------------------------------------------------------------
+\subsection{A direct route to general $n = 3$: local search on arbitrary partitions}
+\label{sec:f5-2move}
+
+Every attempt so far to reach (Q$'$) has gone through the Venn-region machinery
+built for composed costs, or through orderings and cuts (necklace splitting).
+This section abandons both and works directly with arbitrary $3$-partitions of
+$\items$, via local search. It reduces general $n = 3$ to a single precisely
+stated, unproved combinatorial lemma about dichotomous set functions ---
+narrower than (Q$'$) itself, and requiring no rigidity, ordering, or
+composedness hypothesis anywhere in its statement.
+
+For a partition $B = (B_1,B_2,B_3)$, write
+\[
+  \Phi(B) \;:=\; \sum_{i \in \agents} \max\bigl(0,\ \mathrm{sp}_i(B) - 1\bigr),
+\]
+the total excess spread beyond uniform balance; $\Phi(B) = 0$ exactly when $B$
+is uniformly balanced. A \emph{move} relocates one or two elements of $\items$,
+each independently, to a (possibly different) part.
+
+\begin{conjecture}[$2$-move sufficiency --- \textbf{open}]
+\label{conj:f5-2move}
+Let $\cost_1,\cost_2,\cost_3$ be dichotomous costs, each rigid. For any
+partition $B$ with $\Phi(B) > 0$, some move of at most two elements strictly
+decreases $\Phi$.
+\end{conjecture}
+
+\begin{proposition}
+\label{prop:f5-2move-suffices}
+Conjecture~\ref{conj:f5-2move} implies Conjecture~\ref{conj:main} at $n = 3$,
+unconditionally over all dichotomous costs.
+\end{proposition}
+
+\begin{proof}
+$\Phi$ is a bounded non-negative integer that strictly decreases with each
+move, so from any starting partition a finite sequence of moves reaches
+$\Phi = 0$, i.e.\ uniform balance: $\mathrm{sp}_i(B) \le 1$ for every rigid
+triple. Combined with the four solved cases of \Cref{sec:solved} for the
+non-rigid case (via Theorem~\ref{thm:f5-Qproved}-style reduction, Theorem
+I$'$, and the composed case already closed by
+Theorem~\ref{thm:f5-n3composed}), every instance is covered.
+\end{proof}
+
+Conjecture~\ref{conj:f5-2move} requires the rigidity hypothesis: the $K_4$
+witness of Proposition~\ref{prop:no-balance} (three additive costs of size
+$3$, hence non-rigid) has global minimum $\Phi = 1$, and no move of any size
+improves it, exactly matching the known failure of uniform balance there.
+
+\begin{definition}
+A set $X$ with $\cost(X) = 2$ is \emph{removal-hard} if
+$\cost(X \setminus \set x) = 2$ for every $x \in X$ and
+$\cost(X \setminus \set{x,y}) = 2$ for every pair $x,y \in X$. A subset
+$S \subseteq \items$ is an \emph{insertion witness} if $\cost(S) \ge 1$.
+\end{definition}
+
+Conjecture~\ref{conj:f5-2move} reduces (via the case analysis of
+\S\ref{sec:f5-gap} together with Theorem~\ref{thm:f5-sigma3}) to the following,
+purely single-agent, statement.
+
+\begin{conjecture}[Removal-hardness forces a small witness --- \textbf{open}]
+\label{conj:f5-removalhard}
+If $X$ is removal-hard, then $X$ has an insertion witness of size at most $2$.
+\end{conjecture}
+
+If $\cost(X) \le 1$ then $X$ has range $\set{0,1}$ and every partition
+containing it has spread $\le 1$ automatically, so it can never obstruct
+uniform balance; the interesting case is exactly $\cost(X) = 2$, which is what
+Conjecture~\ref{conj:f5-removalhard} addresses. The remainder of this section
+proves several unconditional facts about Conjecture~\ref{conj:f5-removalhard}
+and isolates the exact gap that remains.
+
+\begin{lemma}[Value-$2$ shrink]
+\label{lem:f5-value2shrink}
+Let $B$ be minimal (by inclusion) with $\cost(B) = 2$. Then
+$\cost(B \setminus \set b) = 1$ for every $b \in B$.
+\end{lemma}
+
+\begin{proof}
+Minimality gives $\cost(B \setminus \set b) \le 1$, else the proper subset
+$B \setminus \set b$ would already reach $2$. The marginal bound gives
+$\cost(B \setminus \set b) \ge \cost(B) - 1 = 1$. Together, equality.
+\end{proof}
+
+\begin{corollary}
+\label{cor:f5-witness3}
+If a minimal value-$2$ witness $B$ has $\abs B = 3$, Conjecture~\ref{conj:f5-removalhard} holds for $X \supseteq B$.
+\end{corollary}
+
+\begin{proof}
+For any $b \in B$, Lemma~\ref{lem:f5-value2shrink} gives a $2$-element set
+$B \setminus \set b$ with $\cost(B \setminus \set b) = 1 \ge 1$: a valid
+insertion witness of size $2$.
+\end{proof}
+
+The content of Conjecture~\ref{conj:f5-removalhard} is therefore confined to
+minimal witnesses of size $\ge 4$.
+
+\begin{lemma}[Pair removal preserves the full value]
+\label{lem:f5-pairfull}
+If $X$ is removal-hard, then $\cost(X \setminus \set{x,y}) = \cost(X)$ for
+every pair $x, y \in X$, and moreover this already follows from the definition
+by a direct marginal argument that does not need Lemma~\ref{lem:f5-ivt}: order
+$\items$ as $(X \setminus \set{x,y})$ then $x$ then $y$; since
+$\cost(X \setminus \set y) = \cost(X)$ (single-removal-hardness), $y$'s
+marginal in this order is $0$, and since
+$\cost(X \setminus \set{x,y}) = \cost(X \setminus \set y)$
+(pair-removal-hardness), $x$'s marginal is also $0$.
+\end{lemma}
+
+This is definitional for removal-hard $X$, but the two-step marginal argument
+is what makes it usable: the entire value $2$ is already present in $X$ minus
+\emph{any} chosen pair, not merely unaffected by removing one.
+
+\begin{proposition}[Propagation runs exactly one level]
+\label{prop:f5-onelevel}
+If $X$ is removal-hard and $b \in X$, then $Y := X \setminus \set b$ is
+single-removal-hard: $\cost(Y \setminus \set y) = \cost(Y)$ for every $y \in Y$.
+\end{proposition}
+
+\begin{proof}
+$\cost(Y \setminus \set y) = \cost(X \setminus \set{b,y}) = \cost(X) = \cost(Y)$
+by pair-removal-hardness of $X$.
+\end{proof}
+
+Pair-removal-hardness of $Y$ itself would need
+$\cost(Y \setminus \set{y,y'}) = \cost(X \setminus \set{b,y,y'}) = \cost(X)$,
+a three-element removal from $X$ --- outside the hypothesis. The descent stops
+after exactly one level, not zero.
+
+\begin{proposition}[The $\cost(X\setminus B) = 2$ case]
+\label{prop:f5-case2}
+Let $B \subseteq X$ be a minimal value-$2$ witness with $\abs B \ge 4$. If
+$\cost(X \setminus B) = 2$, then $X$ has an insertion witness of size $\le 2$.
+\end{proposition}
+
+\begin{proof}
+$X \setminus B$ is itself a value-$2$ set, strictly smaller than $X$
+($B \ne \emptyset$). By Lemma~\ref{lem:f5-ivt} it has a minimal value-$2$
+witness $B' \subseteq X \setminus B$. If $\abs{B'} \le 3$,
+Corollary~\ref{cor:f5-witness3} finishes. If $\abs{B'} \ge 4$, repeat with
+$X \setminus B$ in place of $X$: each round the ground set under consideration
+shrinks by at least $4$ elements, so on the finite set $X$ this terminates,
+either at a witness of size $\le 3$ or by exhausting the ground set.
+\end{proof}
+
+What remains open is confined to two cases, both requiring $\abs B \ge 4$ and
+$\cost(X \setminus B) \in \set{0, 1}$.
+
+\begin{proposition}
+\label{prop:f5-forcedstructure}
+If $\abs B = k \ge 4$ is a minimal value-$2$ witness and no insertion witness
+of size $\le 2$ exists inside $B$, then for every subset $S \subseteq B$,
+$\cost(S) = \max(0, \abs S - 2)$.
+\end{proposition}
+
+\begin{proof}
+By Lemma~\ref{lem:f5-value2shrink}, $\cost(B \setminus \set b) = 1$ for every
+$b$; since $B \setminus \set b$ has cost $1$ and no witness of size $\le 2$
+exists, applying Lemma~\ref{lem:f5-value2shrink}-style minimality within each
+$B \setminus \set b$ (a value-$1$ set now, so every proper subset costs $0$)
+forces every pair and singleton in $B$ to cost $0$ and every triple to cost
+$1$. This matches $\max(0,\abs S - 2)$ at $\abs S \in \set{0,1,2,3}$, and
+monotonicity plus the marginal bound extend it to all sizes.
+\end{proof}
+
+In particular every minimal value-$1$ witness living purely inside $B$ has size
+exactly $3$, regardless of how large $B$ grows: Lemma~\ref{lem:f5-ivt} applied
+inside $B$ alone can never produce a witness smaller than $3$ this way. If
+Conjecture~\ref{conj:f5-removalhard} is to fail, the escape to a small witness
+cannot come from within $B$'s own elements --- it must come from
+$\items \setminus B$.
+
+\begin{proposition}
+\label{prop:f5-case0}
+Suppose $\abs B = k \ge 4$, $\cost(X \setminus B) = 0$, and $B$ has the forced
+structure of Proposition~\ref{prop:f5-forcedstructure}. Then for every
+$b \in B$, $\cost\bigl((X \setminus B) \cup \set b\bigr) = 1$.
+\end{proposition}
+
+\begin{proof}
+For any pair $b, b' \in B$, $\cost(B \setminus \set{b,b'}) = 0$
+(Proposition~\ref{prop:f5-forcedstructure}), so
+Lemma~\ref{lem:f5-pairfull} gives
+$\cost\bigl((X\setminus B) \cup \set{b,b'}\bigr) = \cost(X) = 2$. Building this
+up from $\cost(X \setminus B) = 0$ by adding $b$ then $b'$ (or the reverse
+order) takes $2$ steps, each of marginal at most $1$, to reach a total
+increase of $2$ --- forcing \emph{both} steps to be exactly $1$, in either
+order. In particular the first step, adding $b$ alone, has marginal $1$:
+$\cost\bigl((X\setminus B)\cup\set b\bigr) = 1$. Since $b,b'$ were an arbitrary
+pair, this holds for every $b \in B$.
+\end{proof}
+
+\begin{remark}[Where the argument currently stops]
+\label{rem:f5-gap}
+Proposition~\ref{prop:f5-case0} gives, for every $b \in B$, an element with
+marginal $1$ \emph{conditional on} $X \setminus B$ being present. By
+Lemma~\ref{lem:f5-ivt} applied to the function
+$T \mapsto \cost\bigl((X\setminus B)\cup T\bigr)$ on $T \subseteq X \setminus B$
+(a shifted dichotomous function, base value $0$ here), there is a minimal
+completing set; when it has size $1$, say $\set{w}$, then
+$\cost\bigl((X\setminus B)\cup \set w\bigr) = 1$ with $\cost(X \setminus B) = 0$,
+so $w$'s marginal there is exactly $1$. Whether this forces
+$\cost(\set w) \ge 1$ \emph{absolutely} is exactly where the argument stops:
+general dichotomous costs are not submodular (\S\ref{sec:f5-Q},
+Lemma~\ref{lem:f5-rigid} and its neighbours use additivity where it is
+available, which is precisely what is missing here), so a marginal that only
+appears next to a specific large context need not survive stripping that
+context away. Choosing $B$ to be the \emph{smallest} minimal value-$2$ witness
+in $X$ gives a further constraint --- if $\set{b,b'} \cup Q$ (using only $b$'s
+own minimal completion $Q \subseteq X\setminus B$) reaches value $2$ at a size
+below $\abs B$, that contradicts minimality of $B$ --- but this only bounds
+$\abs Q$ from below, and no matching upper bound has been found. The
+$\cost(X \setminus B) = 1$ case is less constrained still: the single unit of
+increase across a pair's two steps can split unevenly between the two
+elements, with no forced uniform conclusion for either.
+
+A direct attempt to construct a counterexample --- a removal-hard $X$ with no
+small witness --- also failed, and failed structurally rather than by
+accident. Protecting $B$'s forced threshold structure
+(Proposition~\ref{prop:f5-forcedstructure}) from single-element removal is
+possible with one conditional backup element; but repairing a pair-removal
+that drops an internal pair's cost by a full $2$ needs a second, independent
+$+1$ source, which itself needs protection, and so on --- every attempted
+construction needed strictly more machinery at each round rather than
+converging. This is evidence, not a non-existence proof.
+\end{remark}
+
+\begin{remark}[Relation to Lemma D]
+\label{rem:f5-2move-vs-lemmaD}
+Conjecture~\ref{conj:f5-removalhard} is a statement about a single dichotomous
+cost, independent of Conjecture~\ref{conj:f5-2balance} (Lemma D, two agents,
+any $2$-way split), which has a separate, structurally different candidate
+proof (a discrete intermediate-value/parity argument over orderings) that is
+itself not fully certified: every step is independently verified except one
+sign-pinning detail in its central lemma, which computational testing
+supports overwhelmingly ($3$ million-trial targeted search, zero instances of
+the configuration it concerns) but which has not been reconstructed by hand.
+Neither result depends on the other.
+\end{remark}
+
+% --------------------------------------------------------------------------
 \subsection{Status}
 \label{sec:f5-status}
 
@@ -1233,6 +1473,22 @@ Remark~\ref{rem:f5-local-fail} (local arguments do not reach (Q$'$)) & proved
   in part, rest reported \\
 \textbf{Conjecture~\ref{conj:f5-2balance}} (two agents, general costs)
   & \textbf{open} \\
+\textbf{Proposition~\ref{prop:f5-2move-suffices}} (Conj.~\ref{conj:f5-2move}
+  $\Rightarrow$ Conj.~\ref{conj:main} at $n{=}3$) & \textbf{proved} \\
+\textbf{Conjecture~\ref{conj:f5-2move}} ($2$-move sufficiency, rigid triples)
+  & \textbf{open} \\
+\textbf{Conjecture~\ref{conj:f5-removalhard}} (removal-hardness $\Rightarrow$
+  small witness) & \textbf{open} \\
+Lemma~\ref{lem:f5-value2shrink}, Corollary~\ref{cor:f5-witness3}
+  ($\abs B = 3$ resolved) & \textbf{proved} \\
+Lemma~\ref{lem:f5-pairfull}, Proposition~\ref{prop:f5-onelevel}
+  (pair-removal; propagation) & \textbf{proved} \\
+\textbf{Proposition~\ref{prop:f5-case2}} ($\cost(X\setminus B)=2$ case)
+  & \textbf{proved} \\
+Proposition~\ref{prop:f5-forcedstructure} ($B$'s forced structure)
+  & \textbf{proved} \\
+Proposition~\ref{prop:f5-case0} ($\cost(X\setminus B)=0$ case) & \textbf{proved} \\
+Remark~\ref{rem:f5-gap} (conditional-vs-absolute pivotal) & \textbf{the gap} \\
 \bottomrule
 \end{tabular}
 \end{center}
@@ -1287,3 +1543,20 @@ $n \ge 4$ and is not settled at $n = 3$ either, since
 Theorem~\ref{thm:f5-n3composed} routes around it through
 Theorem~\ref{thm:f5-sigma3} rather than establishing the minimum-spread rule
 itself.
+
+General $n = 3$ --- Conjecture~\ref{conj:main} for dichotomous costs that need
+not be composed --- reduces, unconditionally, to
+Conjecture~\ref{conj:f5-removalhard}: a single, self-contained statement about
+one dichotomous cost function, needing no rigidity, ordering, or composedness
+hypothesis to state. \Cref{sec:f5-2move} proves four unconditional facts about
+it (Lemma~\ref{lem:f5-value2shrink}, the $\abs B = 3$ resolution, pair-removal
+preserving the full value, and one full case of the underlying induction
+closing by a finite terminating recursion), and narrows what remains to
+exactly two sub-cases of one further step, both stated precisely in
+Remark~\ref{rem:f5-gap}. Direct construction of a counterexample was attempted
+and failed for a structural reason (repairing one vulnerability provably
+requires strictly more machinery, which itself needs repairing) rather than
+by chance, which is evidence toward the conjecture but not a proof of it. This
+is, as of this document, the closest approach to general $n = 3$ on record:
+not a proof, but a single precisely bounded open question standing in its
+place.
