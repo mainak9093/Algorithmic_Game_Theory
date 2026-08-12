@@ -2895,14 +2895,13 @@ $C[i][j]\ge0$.
 > Realising each bucket *somewhere* is not the same as preserving a given
 > row's *entire* pattern of buckets: the normalised row $(0,1,100)$ has
 > $100-1=99$ in bucket $\ge2$, while its truncation $(0,1,2)$ has $2-1=1$ in
-> bucket $1$. The correct canonical form replaces each consecutive gap $g$ of
-> the sorted row by $\min(g,2)$, which preserves every bucket and confines
-> entries to $\{0,\dots,4\}$ — so the defensible bound at $n=3$ is **4, not
-> 2**. The $bs R=1$ enumeration was in fact run at bound $4$
-> ($1{,}000{,}000$ combinations) and is therefore complete; the $bs R=2$
-> enumeration was run only at bound $2$ and is **a bounded check, not an
-> exhaustive one**. Nothing depends on either: §7.16.35 proves both cases
-> structurally.
+> bucket $1$. **No replacement bound is claimed.** A gap-truncation repair was
+> attempted and is also wrong (see §7.16.38): the enumeration ranges over the
+> *base* matrix $C$, but feasibility depends on the *post-insertion* matrix
+> $D$, and a truncation faithful for base differences need not be faithful
+> once the insertion marginals are added. **Both** enumerations ($\abs R=1$
+> and $\abs R=2$) are therefore bounded exploratory checks, not exhaustive
+> ones. Nothing depends on either: §7.16.35 proves both cases structurally.
 
 **Lemma HH ($\abs R=1$, full closure, PROVED).** For any EF partial
 allocation with one leftover item $e$: if some agent has $c_i(e\mid X_i)=0$,
@@ -3036,14 +3035,14 @@ this entry claimed "a simple path cannot collect both units at once." That
 is false: `update_49/test_excess_r2.py` shows the longest path over
 min-cost assignments **genuinely reaches 2**. What is true is weaker — that
 *some* choice of placement and of min-cost tie-break avoids it. So at
-$bs R=2$ the placement is no longer immaterial (it is at $bs R=1$), and
+$\abs R=2$ the placement is no longer immaterial (it is at $\abs R=1$), and
 no rule for making the choice is known. This also rules out both obvious
 repairs: bounding total excess (reaches 2) and bounding path collection
 (reaches 2). A proof must supply a *choice rule* plus an argument that the
 rule keeps every path at weight 1.
 
 **Structural lead, not yet exploited.** Tao et al.'s algorithm halts with
-$bs R=2$ at $n=3$ only when its own stopping rule fires, and that forces
+$\abs R=2$ at $n=3$ only when its own stopping rule fires, and that forces
 an SCC containing *all three* agents in the exact-indifference graph: after
 relabelling, $\cost_1(X_1)=\cost_1(X_2)$, $\cost_2(X_2)=\cost_2(X_3)$,
 $\cost_3(X_3)=\cost_3(X_1)$, together with
@@ -3065,7 +3064,7 @@ quarantined in a separate `sec:g2-verification` that no proof cites).
 
 ### 7.16.35 The |R|=2 case is PROVED: exhaustion eliminated entirely
 
-§7.16.34 left $bs R=2$ resting on a finite check. It is now proved. The
+§7.16.34 left $\abs R=2$ resting on a finite check. It is now proved. The
 missing ingredient was not a sharper estimate but a **change of hypothesis**:
 the abstract enumeration was testing cost tables that Tao et al.'s algorithm
 *can never actually halt on*.
@@ -3073,8 +3072,8 @@ the abstract enumeration was testing cost tables that Tao et al.'s algorithm
 **What the algorithm must leave behind (Lemma `lem:g2-stopping`).** If
 Algorithm 3 halts at $n=3$ with two unallocated items, and $G$ is the
 indifference digraph ($i	o j$ iff $\cost_i(X_i)=\cost_i(X_j)$), then:
-(a) $G$ is **strongly connected** — the halting rule needs $bs R<bs S$
-for a tail SCC $S$, and $bs R=2$ forces $bs S=3$; (b)
+(a) $G$ is **strongly connected** — the halting rule needs $\abs R<\abs S$
+for a tail SCC $S$, and $\abs R=2$ forces $\abs S=3$; (b)
 $\cost_i(e\mid X_i)=1$ for all $i,e$ — its free-item rule did not fire;
 (c) $\cost_i(e\mid X_j)=1$ for **every** arc of $G$ — its rotation rule did
 not fire on cycle arcs, and in a strongly connected digraph every arc is on
@@ -3101,15 +3100,15 @@ $\le0$: no simple path exceeds $1$. Halpern–Shah then gives
 $p_i=\ell(i)\le1$. $lacksquare$
 
 **This closes Conjecture 2 at $n=3$ with no exhaustion anywhere.** Combined
-with §7.16.34's $bs R=1$ theorem (any $n$) and the trivial $bs R=0$
+with §7.16.34's $\abs R=1$ theorem (any $n$) and the trivial $\abs R=0$
 case, `thm:g2-main` is unconditional.
 
 **Partial progress for general $n$.** The proof never uses $n=3$ except
-through "$bs R=n-1$ leaves exactly one clean bundle". So it proves
+through "$\abs R=n-1$ leaves exactly one clean bundle". So it proves
 Conjecture 2 **at every $n$ whenever the algorithm leaves exactly $n-1$
 items**, and §7.16.34 does it whenever exactly $1$ is left. Open for
-$n\ge4$: the range $2\lebs R\le n-2$, which fails for two independent
-reasons — the halting rule only gives $bs S\gebs R+1$ so $G$ need not be
+$n\ge4$: the range $2\le\abs R\le n-2$, which fails for two independent
+reasons — the halting rule only gives $\abs S\ge\abs R+1$ so $G$ need not be
 strongly connected (Key Lemma loses its justification), and with $\ge2$ clean
 bundles a simple path can alternate (weight-$1$ arc into one clean holder,
 $\le0$ arc out, weight-$1$ arc into another). At $n=3$ that range is empty.
@@ -3190,15 +3189,15 @@ row $(0,1,100)$ has $100-1=99$ (bucket $\ge2$); truncated row $(0,1,2)$ has
 $2-1=1$ (bucket $1$). Realising each bucket somewhere $\ne$ preserving a
 row's whole pattern.
 
-**Correct canonical form.** Normalise row $i$ by subtracting $C_{ii}$
-(entries then $\ge0$ by partial-EF). Sort the row and replace each
-consecutive gap $g$ by $\min(g,2)$. Every pairwise bucket is preserved (a gap
-of $0/1/\ge2$ maps to $0/1/2$; a sum of two gaps is $\ge2$ iff its image is),
-and entries land in $\{0,\dots,4\}$. **Defensible bound at $n=3$ is 4.**
-Consequence: the $\abs R=1$ enumeration (run at bound $4$, $1{,}000{,}000$
-combinations) *is* complete; the $\abs R=2$ enumeration (run at bound $2$) is
-**a bounded check only**. Neither is load-bearing — §7.16.35 proves both
-cases structurally. Fixed in `approach_12.tex` (`rem:g2-saturation-withdrawn`),
+**Attempted repair, ALSO WRONG (see §7.16.38).** A gap-truncation canonical
+form (sort the row, replace each consecutive gap $g$ by $\min(g,2)$, giving
+entries in $\{0,\dots,4\}$) was proposed. It preserves the buckets of the
+*base* differences $C_{ij}-C_{ik}$, but the enumeration's feasibility question
+concerns the *post-insertion* differences $D_{ij}-D_{ik}$, and truncation is
+not faithful there. **No bounded-cost saturation theorem is claimed anywhere.**
+Both enumerations are bounded exploratory checks. Neither is load-bearing —
+§7.16.35 proves both cases structurally. Fixed in `approach_12.tex`
+(`rem:g2-saturation-withdrawn`),
 and `approach_11.tex` — where the lemma was genuinely load-bearing — now
 carries an explicit "superseded, and partly unsound" banner.
 
@@ -3247,6 +3246,45 @@ whole previously-open range — with **zero failures** across $\sim28{,}000$
 $n=3$ proof did: it uses the tail-SCC property, not merely the halting count.
 Legitimate, but it is the step a referee should scrutinise first. Not yet
 written to LaTeX (user asked for maths only at that stage).
+
+### 7.16.38 The repair to the saturation lemma was also wrong
+
+Second correction from the user, and correct. §7.16.37 withdrew the
+$\{0,1,2\}$ truncation and offered a replacement: sort each normalised row and
+replace each consecutive gap $g$ by $\min(g,2)$, giving entries in
+$\{0,\dots,4\}$. **That repair is also unsound.**
+
+**Why.** The enumeration ranges over the *base* matrix $C$; feasibility is
+decided by the *post-insertion* matrix $D_{ij}=C_{ij}+\delta_{ij}$, where
+$\delta$ are the insertion marginals. What must be preserved are the buckets
+of $D_{ij}-D_{ik}$, not of $C_{ij}-C_{ik}$; the truncation preserves only the
+latter. Witness: base differences $3$ and $4$ both truncate to $2$; under a
+perturbation of $-1$ the true values give $2$ and $3$ (both bucket $\ge2$),
+while the truncated value gives $2-1=1$ (bucket $1$).
+
+**This also kills the §7.16.37 salvage of $\abs R=1$.** With one leftover item
+the perturbation is already in $\{-1,0,1\}$, so the same failure applies; the
+claim that the bound-$4$ run was "therefore complete" was unjustified.
+(Faithfulness under a $\pm1$ perturbation would need gaps truncated at $3$,
+i.e. range $\{0,\dots,6\}$; the run used bound $4$.)
+
+**Resolution.** No bounded-cost saturation theorem is asserted anywhere in the
+report. Both enumerations — $\abs R=1$ and $\abs R=2$ — are recorded as
+bounded exploratory checks. Chasing the correct constant was declined
+deliberately: the appendix is not load-bearing, and each successive repair
+attempt has introduced a fresh error.
+
+**Main results unaffected.** `thm:g2-r1` is analytic; `thm:g2-r2` follows from
+`lem:g2-stopping` and `lem:g2-expensive`; the general-$n$ result of
+§7.16.37(b) uses the telescoping potential and the tail property. None
+references an enumeration. The real-instance checks
+(`update_12/verify_real.py`, `audit_full_pipeline.py`, `probe_general_n.py`)
+draw from the true model rather than truncated tables and are unaffected.
+
+**Process note.** Two successive repair attempts of this appendix were each
+wrong, both caught by the user rather than by me. The lesson recorded here:
+when a non-load-bearing appendix resists correction, delete the claim rather
+than patch it.
 
 ### 7.17 Status
 
@@ -3356,7 +3394,7 @@ written to LaTeX (user asked for maths only at that stage).
 | naive fixed-bundle extension (place leftover, keep $X_i$'s owners, subsidise) | **REFUTED** — explicit $4$-item, $3$-agent AND-trigger witness with no valid $p\in\{0,1\}^3$ (§7.16.32) |
 | **permuted extension** (reassign bundle *ownership*, not just leftover placement) rescues that witness | **PROVED** on the witness — a genuinely new mechanism, not element movement |
 | **Permuted-Extension Conjecture** (some EF partial allocation with $\abs R\le2$ always permutes+subsidises to full EF at $n=3$) | ~~open~~ → **PROVED IN FULL** (Theorem JJ, §7.16.33) |
-| **saturation principle** (bounded exhaustive search decides the unbounded problem) | ~~PROVED~~ → **PARTLY FALSE, CORRECTED** (§7.16.37). The four-bucket observation is right; the truncation to $\{0,1,2\}$ is not — it does not preserve a row's full bucket pattern. Correct bound at $n=3$ is $\{0,\dots,4\}$. No result depends on it |
+| **saturation principle** (bounded exhaustive search decides the unbounded problem) | ~~PROVED~~ → **FALSE, WITHDRAWN** (§7.16.37, §7.16.38). The four-bucket observation is right; the truncation to $\{0,1,2\}$ is not, and the proposed gap-truncation repair to $\{0,\dots,4\}$ is **also wrong** — it preserves *base*-matrix buckets, not *post-insertion* ones. **No bounded saturation theorem is claimed anywhere.** Both enumerations are bounded exploratory checks; no result depends on either |
 | **Lemma HH** ($\abs R=1$, full closure, both subcases) | **PROVED**, exhaustive ($46{,}656$ combinations, $0$ failures) — not evidence, a complete finite proof |
 | **Theorem II** ($\abs R=2$ doubly-stuck case, via Shape B alone) | **PROVED**, exhaustive ($2{,}985{,}984$ combinations, $0$ failures) + confirmed on $15{,}957$ real doubly-stuck random instances, $0$ failures |
 | **Theorem JJ** (the greedy-peel + Lemma HH / Theorem II reduction is complete for any $\abs R\le2$) | **PROVED**, unconditional |

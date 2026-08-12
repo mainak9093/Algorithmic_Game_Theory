@@ -509,29 +509,30 @@ $100 - 1 = 99$, of category $\ge 2$, whereas the truncated row $(0,1,2)$ has
 $2-1 = 1$, of category $1$. Realising each category somewhere is not the
 same as realising a given row's whole pattern of categories at once.
 
-The correct canonical form keeps the same four categories but needs a wider
-range. Normalise row $i$ by subtracting $C_{ii}$; envy-freeness of the
-partial allocation makes the remaining entries non-negative. Sort the three
-values of the row and replace each consecutive gap $g$ by $\min(g,2)$. Every
-pairwise difference keeps its category --- a gap of $0$, $1$ or $\ge2$ maps
-to $0$, $1$ or $2$, and a sum of two gaps is $\ge 2$ exactly when its image
-is --- and the entries now lie in $\set{0,1,2,3,4}$. So at $n=3$ the
-defensible bound is $4$, not $2$.
+No replacement bound is asserted here. A repair would have to preserve the
+categories not of the base differences $C_{ij}-C_{ik}$ but of the
+\emph{post-insertion} differences $D_{ij}-D_{ik}$, where $D$ is obtained from
+$C$ by adding the insertion marginals to the receiving columns; and a
+truncation that is faithful for the former need not be faithful for the
+latter, since a perturbation can move a truncated value across a category
+boundary that the untruncated value would not have crossed. \textbf{No
+bounded-cost saturation theorem is claimed in this document}, and none is
+needed: the finite computations below are exploratory checks, not steps in
+any proof.
 \end{remark}
 
-Consequently the enumerations below must be read with care. The check for a
-single leftover item was run over off-diagonal entries in
-$\set{0,\dots,4}$ --- $5^6 \times 2^6 = 1{,}000{,}000$ combinations,
-no exceptions (\texttt{update\_12/prove\_r1.py}) --- and is therefore
-complete in the sense of Remark~\ref{rem:g2-saturation-withdrawn}. The check
-for two leftover items was run only over entries in $\set{0,1,2}$:
-$3^6 \times 2^{12} = 2{,}985{,}984$ combinations against all $6$ ordered
-choices of receiving bundles, all $6$ permutations and all $8$ subsidy
-vectors, with no exceptions (\texttt{update\_12/prove\_r2.py}). At the
-corrected bound that enumeration is \emph{not} exhaustive, and it is
-recorded here as a bounded check only. Nothing rests on it:
-Theorem~\ref{thm:g2-r2} is proved from Lemma~\ref{lem:g2-stopping} and
-Lemma~\ref{lem:g2-expensive} without reference to any enumeration.
+Accordingly the enumerations below are reported as bounded checks and nothing
+more. For a single leftover item, off-diagonal entries in $\set{0,\dots,4}$
+give $5^6 \times 2^6 = 1{,}000{,}000$ combinations with no exceptions
+(\texttt{update\_12/prove\_r1.py}). For two leftover items, entries in
+$\set{0,1,2}$ give $3^6 \times 2^{12} = 2{,}985{,}984$ combinations, checked
+against all $6$ ordered choices of receiving bundles, all $6$ permutations
+and all $8$ subsidy vectors, again with no exceptions
+(\texttt{update\_12/prove\_r2.py}). Neither is exhaustive over all cost
+tables, and neither is used anywhere: Theorem~\ref{thm:g2-r1} is proved
+analytically, and Theorem~\ref{thm:g2-r2} is proved from
+Lemma~\ref{lem:g2-stopping} and Lemma~\ref{lem:g2-expensive}, in both cases
+without reference to any enumeration.
 
 Separately, \texttt{update\_12/verify\_real.py} draws genuine random
 dichotomous cost triples rather than bounded abstract tables, isolates real
