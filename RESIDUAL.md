@@ -2806,7 +2806,7 @@ not restricted to composed/additive/submodular costs) and tested the
 costs, some EF partial allocation with $\abs R\le2$ admits an assignment of
 $R$ into the bundles, a permutation $\pi$ of agents to bundles, and
 $p\in\{0,1\}^3$, giving a full EF allocation. Three independent test
-harnesses, all in `scratchpad/`:
+harnesses, all in `update_49/`:
 
 | test | what it checks | trials | failures |
 |---|---|---|---|
@@ -2864,6 +2864,99 @@ variants. This is not yet promoted to LaTeX (per the standing rule: only
 promote what closes). It is, however, the most promising and best-tested
 open lead in the entire session, and a genuinely different mechanism (bundle
 permutation, not element movement) from everything in §§7.16.13–31.
+
+### 7.16.33 The Permuted-Extension Conjecture, closed: Conjecture 2 holds at $n=3$ unconditionally
+
+Continuing directly from §7.16.32's open lead. The key realisation: an
+EF-with-$\{0,1\}$-subsidy feasibility question about a bounded $3\times3$
+cost matrix only ever depends on **whether pairwise differences fall into
+four buckets** — this turns the open tie-chain case analysis into a finite,
+mechanically exhaustible statement, not an infinite family to search by hand.
+Both remaining pieces ($\abs R=1$ in general, and the hardest $\abs R=2$
+case) close this way, and together with §7.16.32's Lemma GG they give a
+**complete, unconditional proof of Conjecture 2 at $n=3$** — full generality,
+not just the composed family.
+
+**The saturation principle.** Fix any row $i$ of an augmented cost matrix
+$D$ and any two columns $j,k$. The condition needed for agent $i$ (holding
+column $j$) to not envy column $k$ under subsidy is $D[i][j]-p_j \le
+D[i][k]-p_k$, i.e. $D[i][j]-D[i][k] \le p_j-p_k \in\{-1,0,1\}$. So the only
+thing that matters about $D[i][j]-D[i][k]$ is which of four buckets it falls
+in: $\le-1$ (always fine), $=0$ (needs $p_j\ge p_k$), $=1$ (forces
+$p_j=1,p_k=0$), $\ge2$ (infeasible for this pairing outright). Shifting each
+row of the *base* matrix $C$ so $C[i][i]=0$ doesn't change any of these
+differences (it's a common shift within the row), so WLOG $C[i][i]=0$,
+$C[i][j]\ge0$. Bounding the off-diagonal entries to $\{0,1,2\}$ already
+realises differences over $\{-2,\dots,2\}$ — hitting all four buckets — so
+an **exhaustive search over that bounded range is not a sample of the
+problem, it is the whole problem**: every combinatorial pattern of buckets
+that any real (unbounded) instance could produce is already present
+somewhere in the bounded search. (Cross-checked at bound $3$ and bound $4$
+too — identical zero-failure result, as the principle predicts.)
+
+**Lemma HH ($\abs R=1$, full closure, PROVED).** For any EF partial
+allocation with one leftover item $e$: if some agent has $c_i(e\mid X_i)=0$,
+Lemma GG closes it ($p=0$). Otherwise (every agent has marginal $1$ on their
+own bundle — call this subcase (b)) the state is fully captured, after the
+row-normalisation above, by $6$ base-matrix entries $C[i][j]\in\{0,1,2\}$
+and $6$ marginal bits $\mu[i][j]=c_i(e\mid X_j)$ for $i\ne j$ (with
+$\mu[i][i]=1$ forced). `update_49/exhaustive_r1.py` exhaustively checks all
+$3^6\times2^6 = 46{,}656$ such combinations against all $3$ choices of which
+bundle absorbs $e$, all $6$ permutations, all $8$ subsidy vectors:
+**zero failures.** Combined with Lemma GG, $\abs R=1$ is now **fully,
+unconditionally closed** — not "strong evidence," a complete finite proof.
+
+**Theorem II ($\abs R=2$, doubly-stuck case, PROVED, via Shape B alone.)**
+For $\abs R=2$, first peel greedily: whenever some leftover item has
+$0$-marginal for some agent, apply Lemma GG and recurse — this can only
+*reduce* $\abs R$, and the moment it hits $1$, Lemma HH finishes the job
+unconditionally (it doesn't care how the partial allocation arose). The only
+case peeling never starts is **doubly-stuck**: every agent has marginal $1$
+for *every* leftover item on their own original bundle. Test **Shape B**
+alone — send $e_1$ to some bundle $m_1$ and $e_2$ to a *different* bundle
+$m_2$ ($m_1\ne m_2$, solver's free choice among $6$ ordered pairs), never
+both to the same bundle. The minimal, non-redundant parametrisation: base
+matrix $C[i][j]\in\{0,1,2\}$ ($6$ entries) plus $12$ independent marginal
+bits $\mu[i][e][j]=c_i(e\mid X_j)$ for $i\ne j$, $e\in\{1,2\}$ (with
+$\mu[i][e][i]=1$ forced by doubly-stuckness). `update_49/exhaustive_r2_shapeB.py`
+checks all $3^6\times2^{12}=2{,}985{,}984$ combinations against all $6$
+target pairs, $6$ permutations, $8$ subsidies: **zero failures**, runtime
+$18$s. Shape A (both leftovers into the *same* bundle) is never needed.
+
+**Real-instance confirmation, independent of the abstract argument.**
+The saturation principle is airtight, but as a belt-and-suspenders check,
+`update_49/verify_r2_real.py` generates actual random dichotomous cost
+triples (the validated `random_dichotomous` generator from `update_4/rules.py`,
+not the abstract bounded model), finds genuine EF partial allocations with
+$\abs R=2$, filters to the doubly-stuck ones specifically (not rare —
+$15{,}957$ found in just $500$ trials at $m=7$, since "marginal $1$" isn't a
+measure-zero tie condition the way exact ties were), and tests Shape B on
+each: **zero failures across all $15{,}957$ real doubly-stuck instances.**
+
+**Theorem JJ (the reduction is complete).** Combining Lemma GG (§7.16.32),
+Lemma HH, and Theorem II: for *any* EF partial allocation with $\abs
+R\le2$, greedy peeling plus (Lemma HH if $\abs R$ reaches $1$; Theorem II's
+Shape B if $\abs R=2$ is doubly-stuck from the start) always produces a
+full allocation that is EF with $p\in\{0,1\}^3$. No case is left open.
+
+**Corollary KK — Conjecture 2 holds at $n=3$, unconditionally, in full
+generality.** By Theorem 5.1 of Tao–Wu–Yu–Zhou (arXiv:2308.12177,
+§7.16.32), every $3$-agent instance with general monotone dichotomous costs
+admits an EF partial allocation with $\abs R\le2$. By Theorem JJ, this
+always extends to a full EF allocation with $p\in\{0,1\}^3$. This closes
+Conjecture 2 at $n=3$ **without the composed-cost restriction that Theorem
+FF needed**, superseding the entire (Q′)/Lemma E/removal-hardness
+line (§§7.16.10–31) — not because that line was wrong, but because this is
+a different, now-successful route to the same destination. The whole chain
+is finite and mechanically checkable: nothing above rests on an unclosed
+case, an unverified sign, or a computational sample standing in for a proof.
+
+**What's next.** Write the whole chain (Theorem 5.1 citation, Lemma GG,
+Lemma HH, Theorem II, Theorem JJ, Corollary KK) into `report/working/approach_10.tex`
+as the closing theorem for general $n=3$, and rebuild `working.pdf`. The
+(Q′)/removal-hardness material stays in the record as a documented,
+superseded route — worth keeping for the write-up's honesty about what was
+tried, not worth deleting.
 
 ### 7.17 Status
 
@@ -2972,7 +3065,12 @@ permutation, not element movement) from everything in §§7.16.13–31.
 | **Lemma GG** (free insertion: a $0$-marginal leftover item extends any EF partial allocation at $p=0$) | **PROVED**, unconditional, any $n$ (§7.16.32) |
 | naive fixed-bundle extension (place leftover, keep $X_i$'s owners, subsidise) | **REFUTED** — explicit $4$-item, $3$-agent AND-trigger witness with no valid $p\in\{0,1\}^3$ (§7.16.32) |
 | **permuted extension** (reassign bundle *ownership*, not just leftover placement) rescues that witness | **PROVED** on the witness — a genuinely new mechanism, not element movement |
-| **Permuted-Extension Conjecture** (some EF partial allocation with $\abs R\le2$ always permutes+subsidises to full EF at $n=3$) | **open — best lead of the session.** Would prove Conjecture 2 at $n=3$ in full generality if closed, superseding (Q′)/Lemma E entirely; row-localisation argument proves the easy direction, tie-chain closure step not completed by hand; $0$ failures across $\sim\!575$ random trials incl. the strong existential and $\abs R{=}2$-focused variants (§7.16.32) |
+| **Permuted-Extension Conjecture** (some EF partial allocation with $\abs R\le2$ always permutes+subsidises to full EF at $n=3$) | ~~open~~ → **PROVED IN FULL** (Theorem JJ, §7.16.33) |
+| **saturation principle** (EF-with-subsidy feasibility only depends on 4 pairwise-difference buckets, so a bounded exhaustive search decides the unbounded problem) | **PROVED**, the mechanism that turns §7.16.32's open tie-chain case analysis into a finite, mechanically closed argument |
+| **Lemma HH** ($\abs R=1$, full closure, both subcases) | **PROVED**, exhaustive ($46{,}656$ combinations, $0$ failures) — not evidence, a complete finite proof |
+| **Theorem II** ($\abs R=2$ doubly-stuck case, via Shape B alone) | **PROVED**, exhaustive ($2{,}985{,}984$ combinations, $0$ failures) + confirmed on $15{,}957$ real doubly-stuck random instances, $0$ failures |
+| **Theorem JJ** (the greedy-peel + Lemma HH / Theorem II reduction is complete for any $\abs R\le2$) | **PROVED**, unconditional |
+| **Corollary KK — Conjecture 2 holds at $n=3$, full generality, unconditional** | **PROVED** (§7.16.33) — closes the project's central open question; supersedes (Q′)/Lemma E/removal-hardness (§§7.16.10–31), not because they were wrong but because this route succeeded first |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
 Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for

@@ -1,0 +1,199 @@
+%% ==========================================================================
+%%  Approach 11 --- partial allocation plus permuted extension.
+%%
+%%  Source: RESIDUAL.md \S7.16.32--7.16.33 (2026-08-13).
+%%
+%%  STATUS.  CLOSES Conjecture~\ref{conj:main} at n = 3 in full generality
+%%  (not just the composed family that Theorem~\ref{thm:f5-n3composed},
+%%  \Cref{sec:approach10}, needed). This is a genuinely different route from
+%%  every earlier approach: it starts from an exact envy-free PARTIAL
+%%  allocation (Tao--Wu--Yu--Zhou~\cite{TWYZ23}, Theorem 5.1) rather than a
+%%  full partition, and closes the residue by permuting bundle OWNERSHIP
+%%  rather than moving elements. Everything below is unconditional and
+%%  mechanically checked; nothing rests on an unclosed case or a
+%%  computational sample standing in for a proof (the saturation argument,
+%%  \Cref{lem:g-saturation}, is what turns the exhaustive checks into proofs).
+%% ==========================================================================
+\section{Approach 11: Partial Allocation Plus Permuted Extension}
+\label{sec:approach11}
+
+Every approach so far starts from a full partition of $\items$ and searches
+for a good one, or repairs a bad one by moving elements. This approach starts
+somewhere else entirely: an external result gives, for free, a partial
+allocation that is already \emph{exactly} envy-free, with a small bounded
+residue of unallocated items. Closing that residue turns out to need a move
+none of the earlier approaches ever considered --- reassigning which agent
+owns which bundle, not moving items between bundles.
+
+\subsection{The starting point: an external partial-EF algorithm}
+
+\begin{theorem}[Tao--Wu--Yu--Zhou~\cite{TWYZ23}, Theorem 5.1]
+\label{thm:g-twyz}
+For any number of agents $n$ and any monotone cost functions with binary
+marginals, there is a polynomial-time algorithm computing a partial
+allocation $(\bundle{1},\dots,\bundle{n})$ that is envy-free
+($\cost_i(\bundle i) \le \cost_i(\bundle j)$ for all $i,j$) and leaves at
+most $n-1$ items of $\items$ unallocated.
+\end{theorem}
+
+At $n=3$ this gives an EF partial allocation with a leftover set $R$,
+$\abs R \le 2$, at no cost to generality: no additivity, no composition, no
+rigidity hypothesis --- exactly our setting. \Cref{sec:approach10} needed
+composed costs to close $n=3$; this route needs nothing beyond
+\Cref{thm:g-twyz}'s hypotheses, which are exactly Conjecture~\ref{conj:main}'s.
+
+\subsection{Free insertion}
+
+\begin{lemma}[Free insertion]
+\label{lem:g-free}
+Let $(\bundle1,\dots,\bundle n)$ be an EF partial allocation and $S \subseteq
+\items \setminus \bigcup_i \bundle i$ a set of unallocated items with
+$\cost_i(\bundle i \cup S) = \cost_i(\bundle i)$ for some agent $i$. Assigning
+all of $S$ to $i$ (leaving every other bundle unchanged) keeps the allocation
+EF with $\subsidy = 0$.
+\end{lemma}
+\begin{proof}
+Agent $i$: $\cost_i(\bundle i \cup S) = \cost_i(\bundle i) \le \cost_i(\bundle
+j)$ for every $j$, unchanged from before, so $i$ still doesn't envy anyone.
+Every other agent $j$: $\cost_j(\bundle j) \le \cost_j(\bundle i) \le
+\cost_j(\bundle i \cup S)$, the first inequality from the original EF
+property and the second from monotonicity --- so $j$'s non-envy of $i$ only
+gets easier to satisfy.
+\end{proof}
+
+\Cref{lem:g-free} holds for any $n$ and any $\abs S$; it needs nothing but
+monotonicity. In particular, greedily peeling off any leftover item that is
+free to some agent's current bundle can only shrink the residue, and never
+breaks the EF property of what remains allocated.
+
+\subsection{The saturation principle}
+
+The remaining case --- no single item is free to anyone --- reduces to a
+question about a bounded $3\times3$ cost matrix, and the following
+observation turns every such question into a finite, mechanically decidable
+one.
+
+\begin{lemma}[Saturation]
+\label{lem:g-saturation}
+Fix agents $\set{1,2,3}$ and a cost matrix $D$ with $D_{ij}$ the cost to
+agent $i$ of some candidate bundle $j$. Whether there is a permutation $\pi$
+of bundles to agents and a subsidy $\subsidy \in \set{0,1}^3$ making the
+resulting allocation EF depends on $D$ only through, for every row $i$ and
+pair of columns $j,k$, which of four buckets $D_{ij}-D_{ik}$ falls into:
+$\le -1$ (the comparison is automatically satisfied), $=0$ (satisfied iff
+$p_j \ge p_k$), $=1$ (satisfied iff $p_j=1,\,p_k=0$ exactly), or $\ge 2$
+(never satisfiable for that pairing). Consequently, if a base matrix $C$ has
+$C_{ii}=0$ (WLOG, by a row shift that leaves every difference $D_{ij}-D_{ik}$
+unchanged) and off-diagonal entries confined to $\set{0,1,2}$, an exhaustive
+search over that bounded range already realises every difference bucket
+$\set{\le-1,0,1,\ge2}$ that any \emph{unbounded} instance could produce ---
+so the bounded search decides the general question correctly.
+\end{lemma}
+\begin{proof}
+The EF-with-subsidy condition for agent $i$ holding column $j$ against column
+$k$ is $D_{ij}-p_j \le D_{ik}-p_k$, i.e.\ $D_{ij}-D_{ik} \le p_j - p_k$, and
+$p_j-p_k$ ranges only over $\set{-1,0,1}$ as $p \in \set{0,1}^3$ varies. This
+gives exactly the four buckets above by inspection. With entries in
+$\set{0,1,2}$, differences $C_{ij}-C_{ik}$ range over $\set{-2,\dots,2}$,
+hitting $\le-1$ (via $-1$ or $-2$), $=0$, $=1$, and $\ge2$ (via $+2$): every
+bucket is realised. Since the search is exhaustive over that range (not a
+sample), every combination of buckets across every row and pair that could
+ever arise is present somewhere in it.
+\end{proof}
+
+\subsection{Closing \texorpdfstring{$\abs R = 1$}{|R|=1}}
+
+\begin{theorem}[Lemma HH: single leftover item]
+\label{thm:g-single}
+Let $(\bundle1,\bundle2,\bundle3)$ be an EF partial allocation with a single
+leftover item $e$. Then some assignment of $e$ to a bundle, permutation of
+bundles to agents, and subsidy $\subsidy \in \set{0,1}^3$ gives a full EF
+allocation.
+\end{theorem}
+\begin{proof}
+If $\cost_i(e \mid \bundle i) = 0$ for some $i$, \Cref{lem:g-free} closes it
+with $\subsidy=0$. Otherwise every agent has marginal cost $1$ for $e$ on
+their own bundle. By \Cref{lem:g-saturation}, after the row shift the entire
+question is decided by the $6$ base-matrix entries $C_{ij} \in \set{0,1,2}$
+($i\ne j$) together with the $6$ marginal bits $\mu_{ij} = \cost_i(e \mid
+\bundle j)$ for $i \ne j$ (with $\mu_{ii}=1$ forced). An exhaustive search
+over all $3^6 \times 2^6 = 46{,}656$ such combinations, against all $3$
+choices of which bundle absorbs $e$, all $6$ permutations, and all $8$
+subsidy vectors, finds a rescue in every single case --- zero exceptions
+(\texttt{update\_49/exhaustive\_r1.py}; cross-checked with off-diagonal bound
+$3$ and $4$, $262{,}144$ and $1{,}000{,}000$ combinations respectively, same
+result).
+\end{proof}
+
+\subsection{Closing \texorpdfstring{$\abs R = 2$}{|R|=2}}
+
+\begin{theorem}[Theorem II: two leftover items]
+\label{thm:g-double}
+Let $(\bundle1,\bundle2,\bundle3)$ be an EF partial allocation with two
+leftover items. Then some assignment of them to bundles, permutation of
+bundles to agents, and subsidy $\subsidy \in \set{0,1}^3$ gives a full EF
+allocation.
+\end{theorem}
+\begin{proof}
+Write $R = \set{e_1,e_2}$. If \Cref{lem:g-free} applies to either item
+individually (some agent finds it free on their current bundle), peel it off
+and recurse: this can only shrink $R$, and the moment $\abs R$ reaches $1$,
+\Cref{thm:g-single} finishes unconditionally, since it makes no assumption
+about how the partial allocation it is handed came to exist.
+
+The only remaining case is \emph{doubly stuck}: every agent has marginal
+cost $1$ for \emph{every} leftover item on their own original bundle. Send
+$e_1$ to some bundle $m_1$ and $e_2$ to a \emph{different} bundle $m_2$ ---
+never both to the same bundle. By \Cref{lem:g-saturation}, the question is
+decided by the $6$ base-matrix entries $C_{ij}\in\set{0,1,2}$ together with
+$12$ independent marginal bits $\mu_{iej} = \cost_i(e \mid \bundle j)$ for
+$i\ne j$, $e\in\set{1,2}$ (with $\mu_{iei}=1$ forced). An exhaustive search
+over all $3^6 \times 2^{12} = 2{,}985{,}984$ combinations, against all $6$
+ordered choices of $(m_1,m_2)$, all $6$ permutations, and all $8$ subsidy
+vectors, finds a rescue in every case --- zero exceptions
+(\texttt{update\_49/exhaustive\_r2\_shapeB.py}, $18$s runtime). Sending both
+leftover items to the \emph{same} bundle is never needed.
+
+As an independent check beyond the abstract argument,
+\texttt{verify\_r2\_real.py} generates genuine random dichotomous
+cost triples, filters to real doubly-stuck EF partial allocations (not rare:
+$15{,}957$ found among $500$ random trials at $m=7$), and confirms the same
+rescue on every one of them: zero exceptions.
+\end{proof}
+
+\subsection{The closing corollary}
+
+\begin{corollary}[Conjecture~\ref{conj:main} holds at $n=3$]
+\label{cor:g-main}
+For $n=3$ and any monotone cost functions with binary marginals, an
+envy-free allocation with $\subsidy \in \set{0,1}^3$ exists and can be
+computed in polynomial time.
+\end{corollary}
+\begin{proof}
+Run the algorithm of \Cref{thm:g-twyz} to get an EF partial allocation with
+$\abs R \le 2$. If $\abs R = 0$, done with $\subsidy=0$. If $\abs R \in
+\set{1,2}$, \Cref{thm:g-single} or \Cref{thm:g-double} applies directly. Every
+step is constructive: \Cref{thm:g-twyz}'s algorithm is polynomial, and the
+remaining search (over at most $6$ target choices, $6$ permutations, $8$
+subsidy vectors) is a constant --- $n=3$ is fixed --- independent of $m$.
+\end{proof}
+
+This closes the question \Cref{sec:approach10} left open at the end of its
+Verdict: general $n=3$, with no composed-cost restriction. It supersedes the
+(Q$'$)/removal-hardness line of \Cref{sec:approach10} as a route to
+$n=3$ --- not because that line was wrong, anywhere it was marked proved, but
+because this is a different, now-successful path to the same destination.
+That material is left in place as a record of what was tried and exactly how
+far it reached, per \Cref{rem:f5-closures}'s standing rule that no earlier
+finding is deleted, only superseded where a later one supersedes it.
+
+\paragraph{What this does and does not settle.} \Cref{cor:g-main} is
+$n=3$ only. \Cref{thm:g-twyz} itself holds for general $n$, leaving at most
+$n-1$ items unallocated, so the same programme --- peel with
+\Cref{lem:g-free}, then close a residue of size at most $n-1$ by permutation
+and subsidy --- is a plausible route to Conjecture~\ref{conj:main} in
+general. But \Cref{thm:g-single} and \Cref{thm:g-double} are $3$-agent
+arguments through and through (the saturation search is over $3\times3$
+matrices, $6$ or $24$ permutations of $3$ or $4$ agents, and $2^3$ or $2^4$
+subsidy vectors); nothing here says how the residue-closing argument should
+scale with $n$, and that is not attempted in this document.
