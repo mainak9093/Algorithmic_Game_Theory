@@ -2423,6 +2423,78 @@ instead produced a $w^\ast$ (or similar element) with genuine absolute
 positive cost, but no argument was found ruling out the alternative in
 general.
 
+### 7.16.26 A direct hand-built counterexample attempt, and why it fails
+
+Attempted to directly construct the counterexample the previous section
+could not rule out: a set $X$, fully removal-hard (single *and* pair), with
+$c(X)=2$ and no absolute $\le2$-witness anywhere — i.e. an explicit witness
+that Conjecture~\ref{conj:f5-2move} (informal name for the $2$-move
+sufficiency claim) is false.
+
+**Construction.** $B=\set{b_1,b_2,b_3,b_4}$ with the forced threshold
+$\cost_B(S)=\max(0,\abs{S\cap B}-2)$. Add $w^\ast$ with
+$\cost(S) = \min\!\big(2,\ \cost_B(S\cap B) + [\,w^\ast\in S \wedge
+\abs{S\cap\set{b_2,b_3,b_4}}\ge2\,]\big)$ — $w^\ast$ conditionally completes
+whichever single $b_i$ is missing, but $\cost(\set{w^\ast})=0$ absolutely
+(checked directly: the trigger needs two of $\set{b_2,b_3,b_4}$ present,
+which $\set{w^\ast}$ alone does not supply). Capping a monotone unit-step sum
+at a constant $K$ always preserves the unit-step property (if $g(S)<K$ then
+$g(S\cup x)\le K$ automatically, since marginals are $\le1$), so this
+construction is a valid dichotomous cost.
+
+**It fails pair-removal-hardness immediately.** $\cost(X - b_1 - w^\ast) =
+\cost(\set{b_2,b_3,b_4}) = \cost_B(\dots) + 0 = 1 \ne 2$: removing $b_1$ and
+$w^\ast$ together drops the cost, so this $X$ is not actually removal-hard by
+the full (single-and-pair) definition the theorem needs.
+
+**Patched — and immediately broken elsewhere.** Adding a second backup
+$w_2^\ast$ with an OR-trigger
+($[(w^\ast\in S \vee w_2^\ast\in S)\wedge\abs{S\cap\set{b_2,b_3,b_4}}\ge2]$)
+fixes $\set{b_1,w^\ast}$ and $\set{b_1,w_2^\ast}$ (whichever backup survives
+covers for the other). But now $\cost(X-b_1-b_2) = \cost_B(\set{b_3,b_4}) +
+[(\top)\wedge\abs{\set{b_3,b_4}\cap\set{b_2,b_3,b_4}}\ge2] = 0 + 1 = 1 \ne 2$:
+removing the *internal* pair $\set{b_1,b_2}$ breaks it, a vulnerability the
+first fix never touched.
+
+**Why this is not just bad luck — the deficit doubles but the fix cannot.**
+$\cost_B(\set{b_3,b_4})=0$ is two below the target of $2$, but any single
+OR-trigger is a $0/1$ indicator, contributing at most $+1$. No single
+backup mechanism of this kind can ever repair a pair-removal that drops
+$\cost_B$ by a full $2$ — repairing $\set{b_1,b_2}$ needs a *second*,
+independent $+1$ source, which (being itself a fresh trigger) needs its own
+protection against removal, on top of everything already patched. Each
+patch closes one class of vulnerability while the combinatorics of
+$\binom{4}{2}=6$ internal pairs (plus every cross-pair with each new backup
+element) keeps producing more. This was not carried through to a formal
+non-existence proof, but the obstruction is structural, not incidental: it
+is the same "protection budget" tension identified abstractly in
+§7.16.25's final gap, now seen concretely resisting an actual construction
+attempt.
+
+**Reading.** A genuine, serious, hands-on attempt to build the counterexample
+that would refute the $2$-move sufficiency conjecture failed, and failed in a
+way that points at *why* it's likely to keep failing (the deficit-vs-trigger
+counting mismatch) rather than a superficial bug in one specific
+construction. This is evidence, not proof, but it is evidence of a
+qualitatively different kind than the computational testing in earlier
+sections: a deliberate adversarial construction, pushed by hand to find the
+exact failure mode, rather than a search over random instances.
+
+**One genuine (partial) propagation result, found while revisiting the
+induction barrier.** §7.16.25 stated that removal-hardness cannot be handed
+down to a smaller instance. That is not quite right — it hands down by
+exactly one level. For $b_1\in X$, write $Y := X\setminus\set{b_1}$; then
+$\cost(Y)=2$ (single removal-hardness of $X$), and for any $y\in Y$,
+$\cost(Y\setminus\set y) = \cost(X\setminus\set{b_1,y}) = 2$ by *pair*
+removal-hardness of $X$ applied to $\set{b_1,y}$ — so $Y$ is itself
+single-removal-hard, inherited directly. What does **not** propagate is $Y$'s
+own pair-removal-hardness: that would need $\cost(Y\setminus\set{y,y'}) =
+\cost(X\setminus\set{b_1,y,y'})=2$, a $3$-element removal from $X$, outside
+the hypothesis entirely. So the descent runs out after exactly one step —
+consistent with, and a sharper version of, the barrier already identified,
+but confirming it is a *hard* stop after one level rather than an immediate
+one.
+
 **Honest summary of the mathematics reached.** Four facts are now fully
 proved, unconditionally, for general dichotomous costs: Lemma ivt's
 intermediate-value property; Lemma~\ref{lem:f5-value2shrink}
@@ -2523,6 +2595,8 @@ narrowing, even though it was not resolved in this session.
 | $\abs B=k$ forced internal structure is the threshold $\max(0,\abs{S\cap B}-2)$ (§7.16.25) | **PROVED** — internal witnesses stuck at size $3$ uniformly, escape must come from $X\setminus B$ |
 | pair-removal preserves the full value ($\cost(X)=\cost(X-x-y)$ for removal-hard $X$) (§7.16.25) | **PROVED**, unconditional, general |
 | conditional-vs-absolute pivotal-ness of the backup element $w^\ast$ (§7.16.25) | **open — the single remaining gap.** Precisely stated: does a marginal of $1$ on top of a specific large context force a positive marginal on $\emptyset$, under removal-hardness? Closing this closes Conjecture 2 at $n=3$ in full |
+| direct hand-built counterexample attempt (§7.16.26) | **FAILED to construct one** — single OR-trigger backup breaks on the first internal-pair removal it wasn't designed for; patching one vulnerability opens another (deficit-vs-trigger counting mismatch), suggestive but not a proof of non-existence |
+| removal-hardness propagates one level (§7.16.26) | **PROVED** — $X$'s pair-hardness gives $X{-}b_1$ single-hardness directly; confirmed to run out after exactly one step, not zero |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
