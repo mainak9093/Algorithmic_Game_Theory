@@ -1,6 +1,7 @@
 %% ==========================================================================
 %%  Approach 12 --- self-contained treatment of Conjecture 2 at n = 3.
-%%  |R|=1 is PROVED for all n; |R|=2 is NOT proved (thm:g2-r2), only verified.
+%%  BOTH cases PROVED, no exhaustion. |R|=1 holds for all n; |R|=2 uses the
+%%  stopping structure of TWYZ's algorithm and holds whenever |R|=n-1.
 %%
 %%  Source: RESIDUAL.md \S7.16.32--7.16.33; formalised piecemeal in
 %%  \Cref{sec:approach11}. This section restates the same result as one
@@ -9,7 +10,7 @@
 %%  Nothing about paths that were tried and abandoned appears below; see
 %%  RESIDUAL.md \S7 and \Cref{sec:approach10} for that history.
 %% ==========================================================================
-\section{Approach 12: Conjecture 2 at \texorpdfstring{$n=3$}{n=3} via Partial Allocations}
+\section{Approach 12: A Complete Proof of Conjecture 2 at \texorpdfstring{$n=3$}{n=3}}
 \label{sec:approach12}
 
 This section attacks Conjecture~\ref{conj:main} at $n=3$ in full generality,
@@ -19,15 +20,16 @@ envy-freeability quoted in \Cref{sec:g2-hs}, and one external theorem
 (\Cref{thm:g2-twyz}). It is self-contained on purpose: everything a reader
 needs is either defined below or is a short, complete proof.
 
-\paragraph{Status, stated up front.} The case of one leftover item is
-\emph{proved}, by an argument that never mentions $n$ and therefore holds
-for every number of agents (\Cref{thm:g2-r1}, \Cref{cor:g2-anyn}). The case
-of two leftover items is \emph{not} proved: it is \Cref{thm:g2-r2}, for
-which only a partial argument is given here, and the remaining step is
-supported by finite verification quarantined in
-\Cref{sec:g2-verification}. Consequently the headline statement,
-\Cref{thm:g2-main}, is conditional on \Cref{thm:g2-r2}. Nothing in this
-section other than \Cref{thm:g2-r2} depends on a computation.
+\paragraph{Status, stated up front.} Every statement below is proved. No
+step relies on a computation: \Cref{sec:g2-verification} records finite
+checks, but nothing cites it. The case of one leftover item
+(\Cref{thm:g2-r1}) is proved by an argument that never mentions $n$ and so
+holds for every number of agents (\Cref{cor:g2-anyn}). The case of two
+(\Cref{thm:g2-r2}) needs more: it uses the structure that
+\Cref{thm:g2-twyz}'s \emph{algorithm} must leave behind when it halts, not
+just the statement of that theorem, and it holds for every $n$ whenever the
+number of leftover items is $n-1$ (\Cref{rem:g2-beyond}). At $n=3$ those two
+results cover all cases, so \Cref{thm:g2-main} is unconditional.
 
 \subsection{Setup}
 \label{sec:g2-setup}
@@ -299,180 +301,178 @@ polynomial time.
 \subsection{Step 5: closing the case of two leftover items}
 \label{sec:g2-r2}
 
-\begin{proposition}[\textbf{not proved here}; established only by verification]
-\label{thm:g2-r2}
-If $(\bundle1,\bundle2,\bundle3)$ is an EF partial allocation with exactly
-two leftover items, some assignment of them to bundles, some permutation of
-the resulting three bundles to the three agents, and some $\subsidy \in
-\set{0,1}^3$ gives a full EF allocation.
-\end{proposition}
+This case needs one thing \Cref{thm:g2-r1} did not: the fact that the
+partial allocation was produced by \emph{a particular algorithm}. Used as a
+black box, \Cref{thm:g2-twyz} says only that at most two items are left. But
+its algorithm cannot stop with two items left at $n = 3$ unless the
+allocation it stops on has a very rigid shape, and that shape is exactly
+what closes the case.
 
-This is the one statement in this section without a proof. What follows is a
-genuine argument as far as it goes; it stops one unit short, and the gap is
-closed only by the finite verification of \Cref{sec:g2-verification}, which
-is reported separately precisely so that it is not mistaken for a proof.
-Everything downstream that depends on \Cref{thm:g2-r2} is marked
-accordingly.
+\begin{lemma}[What the algorithm leaves behind]
+\label{lem:g2-stopping}
+Suppose the algorithm of \Cref{thm:g2-twyz}, run on $3$ agents, halts with an
+EF partial allocation $(\bundle1,\bundle2,\bundle3)$ and two unallocated
+items $R = \set{e_1,e_2}$. Let $G$ be the digraph on the agents with an arc
+$i \to j$ ($i \ne j$) exactly when $\cost_i(\bundle i) = \cost_i(\bundle j)$.
+Then:
+\begin{enumerate}
+  \item[(a)] $G$ is strongly connected;
+  \item[(b)] $\cost_i(e \mid \bundle i) = 1$ for every agent $i$ and every
+        $e \in R$;
+  \item[(c)] $\cost_i(e \mid \bundle j) = 1$ for every arc $i \to j$ of $G$
+        and every $e \in R$.
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+The algorithm halts only at its final line, having failed each of its three
+update rules in turn.
 
-\begin{proof}[Partial argument]
-Write $R = \set{e_1,e_2}$. If \Cref{lem:g2-free} applies to either item on
-its own, hand it over and the leftover set shrinks to one item;
-\Cref{thm:g2-r1} then finishes the job (it does not care how the partial
-allocation it receives was produced). So the only case left is where both
-items are stuck: every agent has marginal cost $1$ for \emph{both} $e_1$ and
-$e_2$ on their own original bundle.
+(b) is the failure of the first rule, which would otherwise hand a
+zero-marginal item to an agent who accepts it for free.
 
-The excess argument of \Cref{thm:g2-r1} still applies, but it no longer
-gives enough. Sending $e_1$ to bundle $m_1$ and $e_2$ to a different bundle
-$m_2$ and repeating that proof verbatim, every agent other than $m_1,m_2$
-has $\varepsilon_a = 0$, while $\varepsilon_{m_1} \le 1$ and
-$\varepsilon_{m_2} \le 1$; so the identity assignment has total excess at
-most $2$, hence so does the minimum-cost assignment, hence $\subsidy \in
-\set{0,1,2}^n$. That is one unit short of the claim, and the shortfall is
-real rather than an artefact of loose estimation: the minimum-cost total
-excess genuinely attains $2$, and so does the longest path, for some choices
-of where the two items go and --- when several assignments tie for minimum
-cost --- of which one is taken (see \Cref{rem:g2-honest}). Unlike
-\Cref{thm:g2-r1}, where the placement is immaterial, here the choice matters
-and a bad choice really does fail.
+(a): the halting rule inspects a tail strongly connected component $S$ of
+$G$ and halts only when the number of unallocated items is smaller than
+$\abs S$. Two items are unallocated, so $\abs S \ge 3$, forcing $\abs S = 3$;
+thus $S$ is the whole agent set and $G$ is strongly connected.
 
-This is as far as the argument reaches. What is missing is a rule for
-choosing the placement and the tie-break, together with a proof that the
-rule keeps every simple path at weight one.
+(c) is the failure of the second rule, which would otherwise rotate bundles
+around a directed cycle whenever some arc $i \to j$ \emph{lying on a
+directed cycle} has $\cost_i(e \mid \bundle j) = 0$. In a strongly connected
+digraph every arc lies on a directed cycle, so by (a) that restriction is
+vacuous and the condition applies to every arc of $G$.
 \end{proof}
 
-\subsection{What is known about the missing rule}
-\label{sec:g2-lead}
+The single consequence we need is that, in this situation, \emph{any} bundle
+carrying a leftover item is strictly worse for \emph{everybody} than their
+own original bundle.
 
-The gap is not formless, and two constraints on any solution are already
-established.
-
-First, the extremal configuration is pinned down. Total excess $2$ with a
-path of weight $2$ requires, after relabelling, agents $a,b,c$ with
-$\varepsilon_a = \varepsilon_b = 1$, $\varepsilon_c = 0$, and a path
-$a \to b \to c$ whose two arcs both have weight exactly $1$ --- so
-$\pi(b)$ is a favourite bundle of $a$, and $\pi(c)$ is a favourite bundle of
-$b$. Applying minimum-cost optimality to the three-cycle rotation
-$a \mapsto \pi(b),\, b \mapsto \pi(c),\, c \mapsto \pi(a)$ gives
-$\cost_c(Y_{\pi(a)}) \ge \beta_c + 2$: the one contented agent must dislike
-the bundle released by $a$ by two full units. Any proof must exclude exactly
-this configuration, and may assume it.
-
-Second, there is unused structure in where the two leftover items come from.
-\Cref{thm:g2-twyz} is not an oracle: its algorithm halts with two items
-unallocated at $n=3$ only when its own stopping rule fires, and that rule
-forces a strongly connected component containing \emph{all three} agents in
-the graph whose arcs record exact indifference $\cost_i(\bundle i) =
-\cost_i(\bundle j)$. So after relabelling there is a cycle
+\begin{lemma}[Augmented bundles are strictly expensive]
+\label{lem:g2-expensive}
+Under \Cref{lem:g2-stopping}, for every agent $a$, every $j$, and every
+$e \in R$,
 \[
-  \cost_1(\bundle1) = \cost_1(\bundle2), \quad
-  \cost_2(\bundle2) = \cost_2(\bundle3), \quad
-  \cost_3(\bundle3) = \cost_3(\bundle1),
+  \cost_a(\bundle j \cup \set e) \;\ge\; \cost_a(\bundle a) + 1 .
 \]
-and the same stopping rule forces $\cost_1(e \mid \bundle2) =
-\cost_2(e \mid \bundle3) = \cost_3(e \mid \bundle1) = 1$ for both leftover
-items $e$. Rotating along that cycle therefore hands each agent a bundle
-they value exactly as their own, at the cost of one unit for each augmented
-bundle --- which recovers the bound $2$ again, but leaves the three
-\emph{reverse} marginals $\cost_1(e \mid \bundle3)$,
-$\cost_2(e \mid \bundle1)$, $\cost_3(e \mid \bundle2)$ entirely
-unconstrained. A rule that routes the items so as to be received through
-those unconstrained slots is the most promising route to closing
-\Cref{thm:g2-r2}, and is not attempted here.
+\end{lemma}
+\begin{proof}
+Write $\cost_a(\bundle j \cup \set e) = \cost_a(\bundle j) + \cost_a(e \mid
+\bundle j)$. Envy-freeness of the partial allocation gives $\cost_a(\bundle
+j) \ge \cost_a(\bundle a)$. If that inequality is strict the claim follows,
+since costs are integers and marginals are non-negative. If it is an
+equality, then either $j = a$, and $\cost_a(e \mid \bundle a) = 1$ by
+\Cref{lem:g2-stopping}(b); or $j \ne a$, in which case $a \to j$ is an arc of
+$G$ and $\cost_a(e \mid \bundle j) = 1$ by \Cref{lem:g2-stopping}(c). Either
+way the marginal is $1$.
+\end{proof}
 
-Using this structure means using \Cref{thm:g2-twyz}'s construction rather
-than only its statement, which is a real change in what the proof depends
-on. That is a cost worth paying if it removes a verification step, but it
-should be recorded as a change, not slipped in.
+\begin{theorem}
+\label{thm:g2-r2}
+Let $(\bundle1,\bundle2,\bundle3)$ be the EF partial allocation at which the
+algorithm of \Cref{thm:g2-twyz} halts with two unallocated items. Send the
+two items to two \emph{distinct} bundles --- any two --- and assign the three
+resulting bundles to the three agents by any minimum-cost matching. The
+result is envy-free with a subsidy in $\set{0,1}^3$.
+\end{theorem}
+\begin{proof}
+Write $Y_1,Y_2,Y_3$ for the bundles after placement: two of them are
+\emph{augmented} (one leftover item each) and one is \emph{clean}. Put
+$L := \sum_a \cost_a(\bundle a)$, and for an assignment $\pi$ put
+$g_a := \cost_a(Y_{\pi(a)}) - \cost_a(\bundle a)$, which is non-negative
+because $\cost_a(Y_{\pi(a)}) \ge \cost_a(\bundle{\pi(a)}) \ge
+\cost_a(\bundle a)$ by monotonicity and partial envy-freeness.
 
-\begin{remark}[What is proved, what is only verified, and what scaling needs]
-\label{rem:g2-honest}
-It is worth being exact about the status of each step, because the two are
-not interchangeable and only one of them scales.
+\emph{The minimum cost is exactly $L + 2$.} For the lower bound, under any
+$\pi$ the two agents holding augmented bundles have $g_a \ge 1$ by
+\Cref{lem:g2-expensive}, and the third has $g_a \ge 0$, so the total is at
+least $L+2$. For the upper bound, let $u,v$ index the augmented bundles and
+hand each bundle to its original owner: agents $u$ and $v$ pay
+$\cost_u(\bundle u) + 1$ and $\cost_v(\bundle v)+1$ by
+\Cref{lem:g2-stopping}(b), and the remaining agent $w$ pays
+$\cost_w(\bundle w)$, for a total of exactly $L+2$.
 
-\Cref{thm:g2-r1} is a proof. It explains \emph{why} one leftover item can
-always be absorbed: the item costs at most one unit, envy-freeness of the
-partial allocation makes every agent's own bundle their favourite, so the
-identity assignment wastes at most one unit in total, and a minimum-cost
-assignment wastes no more. That reasoning is indifferent to $n$, which is
-why it yields \Cref{cor:g2-anyn} for free.
+\emph{Hence at a minimum-cost $\pi$ the excesses are pinned.} We have
+$\sum_a g_a = 2$ with $g \ge 1$ on each of the two augmented-bundle holders,
+so those two have $g = 1$ exactly and the agent $c$ holding the clean bundle
+has $g_c = 0$.
 
-\Cref{thm:g2-r2} is not a proof in the same sense. What generalises is the
-bound $\subsidy \le \abs R$: with $\abs R$ leftover items placed in distinct
-bundles, at most $\abs R$ agents carry an excess of one apiece, so the total
-excess --- and hence the subsidy --- is at most $\abs R$. At $\abs R = 1$
-that is the theorem; at $\abs R = 2$ it gives $2$ where $1$ is wanted, and
-this is not slack in the estimate. Enumerating over all bounded cost tables
-in the doubly-stuck case, the minimum-cost total excess reaches $2$
-(\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
-(\texttt{update\_49/test\_excess\_r2.py}).
+\emph{Now read off the envy graph.} Let $a,b$ be the augmented-bundle
+holders. Recall $\edgew{}(x,y) = \cost_x(Y_{\pi(x)}) - \cost_x(Y_{\pi(y)})$.
+\begin{itemize}
+  \item $\edgew{}(a,b) = \bigl(\cost_a(\bundle a) + 1\bigr) -
+        \cost_a(Y_{\pi(b)}) \le 0$: the first term because $g_a = 1$, and
+        $\cost_a(Y_{\pi(b)}) \ge \cost_a(\bundle a) + 1$ by
+        \Cref{lem:g2-expensive}, the bundle $Y_{\pi(b)}$ being augmented.
+        Symmetrically $\edgew{}(b,a) \le 0$.
+  \item $\edgew{}(a,c) = \bigl(\cost_a(\bundle a)+1\bigr) -
+        \cost_a(Y_{\pi(c)}) \le 1$, since $Y_{\pi(c)}$ is clean and so costs
+        $a$ at least $\cost_a(\bundle a)$. Symmetrically
+        $\edgew{}(b,c) \le 1$.
+  \item $\edgew{}(c,x) = \cost_c(\bundle c) - \cost_c(Y_{\pi(x)}) \le 0$ for
+        both $x$, since $g_c = 0$ gives the first term and every bundle
+        costs $c$ at least $\cost_c(\bundle c)$.
+\end{itemize}
+So every arc has weight at most $0$ except the two arcs pointing \emph{into}
+$c$, which have weight at most $1$. A simple path enters $c$ at most once,
+every arc leaving $c$ has weight at most $0$, and every other arc available
+to it has weight at most $0$ as well. Hence no simple path has weight above
+$1$.
 
-That second fact deserves emphasis, because it rules out the tempting
-repair. One cannot argue that a simple path merely fails to collect both
-units: sometimes it collects both, and the resulting subsidy really is $2$.
-What the same enumeration shows is weaker and less structural --- that
-\emph{some} choice always avoids this, over the six ways of sending the two
-items to two distinct bundles and, when several assignments tie for minimum
-cost, over which of them is selected. So at $\abs R = 2$ the placement is no
-longer immaterial as it was in \Cref{thm:g2-r1}, and no rule for making that
-choice is known: the finite check reports that a good choice exists without
-identifying it.
+The assignment is minimum-cost, so $(Y,\pi)$ is envy-freeable
+(\Cref{thm:hs-characterisation}), and its minimal subsidy is
+$\subsidy_i = \pathw{}(i) \le 1$ (\Cref{thm:hs-minsubsidy}). Subsidies are
+non-negative integers, so $\subsidy \in \set{0,1}^3$.
+\end{proof}
 
-This localises the obstruction precisely, and it is the same obstruction
-that blocks general $n$. Combining \Cref{thm:g2-twyz} ($\abs R \le n-1$)
-with the excess bound gives a subsidy of at most $n-1$ per agent --- which
-is exactly the guarantee already available from~\cite{KMSTY24}, so the
-argument as it stands recovers the known baseline and nothing beyond it. The
-whole content of Conjecture~\ref{conj:main} sits in the gap between that
-bound and $1$. Stated as the missing lemma:
-
-\begin{quote}
-\textbf{Open.} Let $(\bundle1,\dots,\bundle n)$ be an envy-free partial
-allocation and let $R$ be its leftover set. Show that the items of $R$ can
-be placed so that the minimum-cost assignment of the resulting bundles has
-\emph{total excess at most $1$}, independent of $\abs R$.
-\end{quote}
-
-By \Cref{lem:g2-pathbound,lem:g2-mincost-excess} together with
-\Cref{thm:hs-characterisation,thm:hs-minsubsidy}, that single statement
-implies Conjecture~\ref{conj:main} in full, for every $n$. Its $\abs R = 1$
-case is \Cref{thm:g2-r1}; its $\abs R = 2$ case is what \Cref{thm:g2-r2}
-verifies at $n = 3$ without explaining.
-
-Two warnings about how it must be attacked, both forced by the enumeration
-above. It cannot be proved by bounding the total excess of an arbitrary
-minimum-cost assignment, since that quantity reaches $2$. Nor can it be
-proved by showing that paths never collect the full excess, since they
-sometimes do. What is needed is a \emph{rule for choosing} --- which bundles
-receive the leftover items, and how to break ties among minimum-cost
-assignments --- together with a proof that the rule keeps every simple path
-at weight one. At $\abs R = 1$ that rule is vacuous, which is exactly why
-that case fell to a three-line argument and this one has not.
+\begin{remark}[Why this does not follow from the black box]
+\label{rem:g2-blackbox}
+\Cref{thm:g2-r2} uses \Cref{thm:g2-twyz}'s \emph{construction}, not merely
+its statement, and it has to. Among abstract cost tables satisfying only
+``EF partial allocation, two leftover items, every agent's marginal on their
+own bundle equal to $1$'', the conclusion genuinely fails for some
+placements: there the minimum-cost total excess reaches $2$ and so does the
+longest path (\Cref{sec:g2-verification}). Such tables exist as tables; what
+\Cref{lem:g2-stopping} shows is that the algorithm never halts on one.
+Strong connectivity of $G$ is what excludes them, and it is available only
+because two unallocated items is the \emph{maximum} the algorithm may leave
+at $n = 3$ --- which is precisely what forces its tail component to be the
+whole agent set.
 \end{remark}
 
-\begin{remark}[The shape of the missing rule]
-\label{rem:g2-shape}
-One further constraint is worth recording for whoever attacks
-\Cref{rem:g2-honest}'s lemma. The two obvious candidate rules are already
-ruled out at $\abs R = 2$. Sending both leftover items to the \emph{same}
-bundle concentrates the damage on one agent, whose excess can then be $2$ on
-its own, so that is no better. And among assignments tied for minimum cost,
-the tie-break cannot be made arbitrarily --- some minimum-cost assignments
-give a path of weight $2$ while others, on the same instance, do not. Any
-successful rule must therefore look at the envy graph, not merely at total
-cost, which is precisely the information \Cref{lem:g2-mincost-excess}
-discards.
+\begin{remark}[How far this reaches beyond $n = 3$]
+\label{rem:g2-beyond}
+The proof of \Cref{thm:g2-r2} never uses $n = 3$ except through one fact:
+that the number of leftover items is one less than the number of agents, so
+that placing them in distinct bundles leaves exactly \emph{one} clean bundle.
+Everything then goes through verbatim for any $n$: the minimum cost is
+$L + (n-1)$, each of the $n-1$ agents holding an augmented bundle has
+$g_a = 1$, the single clean-bundle holder has $g = 0$, arcs between
+augmented holders are non-positive, arcs into the clean holder are at most
+$1$, and arcs out of it are non-positive --- so again no simple path exceeds
+$1$. This proves Conjecture~\ref{conj:main} for every $n$ on every instance
+where the algorithm of \Cref{thm:g2-twyz} leaves exactly $n-1$ items, just
+as \Cref{cor:g2-anyn} does when it leaves exactly one.
+
+What is \emph{not} covered for $n \ge 4$ is the intermediate range
+$2 \le \abs R \le n-2$. Two things fail there at once. The halting rule gives
+only $\abs S \ge \abs R + 1$, so $G$ need not be strongly connected on all
+agents and \Cref{lem:g2-expensive} loses its justification; and with two or
+more clean bundles a simple path can alternate --- an arc of weight $1$ into
+one clean holder, a non-positive arc out of it, then another arc of weight
+$1$ into a second clean holder --- so the path bound of $1$ is no longer
+forced. Closing that range is what a full proof of
+Conjecture~\ref{conj:main} now requires. At $n = 3$ the range is empty,
+which is why $n = 3$ closes here.
 \end{remark}
 
 \subsection{Putting it together}
 \label{sec:g2-main}
 
-\begin{theorem}[Conjecture 2 at $n=3$; \textbf{modulo \Cref{thm:g2-r2}}]
+\begin{theorem}[Conjecture 2 holds at $n=3$]
 \label{thm:g2-main}
-Assume \Cref{thm:g2-r2}. Then for every instance of $3$ dichotomous cost
-functions on a finite item set $\items$, there is an allocation $\alloc$ and
-a subsidy $\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is
-envy-free, computable in polynomial time.
+For every instance of $3$ dichotomous cost functions on a finite item set
+$\items$, there is an allocation $\alloc$ and a subsidy
+$\subsidy \in \set{0,1}^3$ such that $(\alloc,\subsidy)$ is envy-free,
+computable in polynomial time.
 \end{theorem}
 \begin{proof}
 Run the algorithm of \Cref{thm:g2-twyz} to get an EF partial allocation with
@@ -488,11 +488,10 @@ with $\abs\items$, so the whole procedure runs in polynomial time.
 \subsection{Verification (not part of any proof)}
 \label{sec:g2-verification}
 
-This section records finite checks. Nothing above depends on it except
-\Cref{thm:g2-r2}, which is stated as unproved for exactly that reason. The
-checks are evidence that \Cref{thm:g2-r2} is true and worth trying to prove;
-they are not an argument for why it is true, and they do not scale --- the
-state space they enumerate is specific to $n = 3$.
+This section records finite checks. \emph{Nothing above depends on any of
+them}; every result in \Cref{sec:g2-r1,sec:g2-r2} is proved outright. The
+checks are reported because they were how the results were found, and
+because one of them delimits the argument in a way worth knowing.
 
 The enumeration is complete rather than sampled, by the following
 observation, which is what makes a bounded search decisive at all.
@@ -532,16 +531,25 @@ $30{,}000$ with one, in $300$ trials), and confirms the same completions
 there.
 
 Two negative findings from the same enumeration are more informative than
-the positive one, and are what \Cref{sec:g2-lead} is built on: the
-minimum-cost total excess genuinely reaches $2$
+the positive one, and they are what \Cref{rem:g2-blackbox} reports: over
+abstract cost tables --- unconstrained by any algorithm --- the minimum-cost
+total excess genuinely reaches $2$
 (\texttt{update\_49/eps\_only\_r2.py}), and so does the longest path
-(\texttt{update\_49/test\_excess\_r2.py}). They are the reason no proof of
-\Cref{thm:g2-r2} can proceed by bounding either quantity alone.
+(\texttt{update\_49/test\_excess\_r2.py}). This is why \Cref{thm:g2-r2}
+cannot be proved from the statement of \Cref{thm:g2-twyz} alone and must
+appeal to its algorithm: the obstruction is real for tables in general and
+is removed only by \Cref{lem:g2-stopping}. A further enumeration restricted
+to tables satisfying \Cref{lem:g2-stopping}'s conclusions
+(\texttt{update\_49/check\_proof\_r2.py}) finds no failures, agreeing with
+the proof.
 
 \paragraph{What this covers, and what it does not.} \Cref{thm:g2-main} makes
 no assumption on the cost functions beyond dichotomy: not additive, not
-submodular, not related across agents in any way. It is specific to $n=3$:
-\Cref{thm:g2-r1,thm:g2-r2} are $3$-agent arguments (the matrices, the
-permutation counts, and the subsidy-vector counts are all sized for $3$
-agents), even though the starting point, \Cref{thm:g2-twyz}, holds for any
-number of agents. Extending the argument to $n \ge 4$ is not attempted here.
+submodular, not related across agents in any way, and no bound on the number
+of items. Neither of the two theorems it rests on is inherently a $3$-agent
+argument --- \Cref{cor:g2-anyn} holds at every $n$ when one item is left
+over, and \Cref{rem:g2-beyond} shows \Cref{thm:g2-r2} holds at every $n$
+when $n-1$ are. What is missing for $n \ge 4$ is the intermediate range
+$2 \le \abs R \le n-2$, and \Cref{rem:g2-beyond} gives the two independent
+reasons the present argument does not reach it. That range is empty at
+$n = 3$, which is exactly why $n = 3$ closes here and general $n$ does not.

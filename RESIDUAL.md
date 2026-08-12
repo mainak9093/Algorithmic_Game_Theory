@@ -3052,6 +3052,72 @@ now a **Proposition explicitly marked unproved**, the headline
 quarantined in a separate `sec:g2-verification` that no proof cites).
 `working.pdf` builds clean at $125$ pages.
 
+### 7.16.35 The |R|=2 case is PROVED: exhaustion eliminated entirely
+
+§7.16.34 left $bs R=2$ resting on a finite check. It is now proved. The
+missing ingredient was not a sharper estimate but a **change of hypothesis**:
+the abstract enumeration was testing cost tables that Tao et al.'s algorithm
+*can never actually halt on*.
+
+**What the algorithm must leave behind (Lemma `lem:g2-stopping`).** If
+Algorithm 3 halts at $n=3$ with two unallocated items, and $G$ is the
+indifference digraph ($i	o j$ iff $\cost_i(X_i)=\cost_i(X_j)$), then:
+(a) $G$ is **strongly connected** — the halting rule needs $bs R<bs S$
+for a tail SCC $S$, and $bs R=2$ forces $bs S=3$; (b)
+$\cost_i(e\mid X_i)=1$ for all $i,e$ — its free-item rule did not fire;
+(c) $\cost_i(e\mid X_j)=1$ for **every** arc of $G$ — its rotation rule did
+not fire on cycle arcs, and in a strongly connected digraph every arc is on
+a cycle.
+
+**Key Lemma (`lem:g2-expensive`).** Hence for every agent $a$, every $j$,
+every $e\in R$: $\cost_a(X_j\cup\{e\})\ge\cost_a(X_a)+1$. (Partial-EF gives
+$\cost_a(X_j)\ge\cost_a(X_a)$; if strict, done; if equal then $j=a$ or
+$a	o j$ is an arc, so the marginal is $1$ by (b)/(c).) *Any augmented bundle
+is strictly worse for everybody than their own original bundle.*
+
+**Theorem (`thm:g2-r2`).** Send the two items to any two **distinct**
+bundles, assign by any **min-cost** matching. Then $p\in\{0,1\}^3$.
+*Proof.* One bundle is clean, two augmented. With
+$g_a=\cost_a(Y_{\pi(a)})-\cost_a(X_a)\ge0$ and $L=\sum_a\cost_a(X_a)$: the
+min cost is exactly $L+2$ (lower bound from the Key Lemma on the two
+augmented holders; upper bound by giving each augmented bundle to its own
+owner, using (b)). So $\sum g_a=2$ with $g\ge1$ on both augmented holders —
+hence **both exactly $1$, and the clean holder $c$ has $g_c=0$**. Reading
+off arcs: augmented$	o$augmented $\le0$ (Key Lemma bounds the head);
+augmented$	o c$ $\le1$; $c	o$anything $\le0$. So the *only* positive arcs
+point into $c$, a simple path enters $c$ once, and everything after is
+$\le0$: no simple path exceeds $1$. Halpern–Shah then gives
+$p_i=\ell(i)\le1$. $lacksquare$
+
+**This closes Conjecture 2 at $n=3$ with no exhaustion anywhere.** Combined
+with §7.16.34's $bs R=1$ theorem (any $n$) and the trivial $bs R=0$
+case, `thm:g2-main` is unconditional.
+
+**Partial progress for general $n$.** The proof never uses $n=3$ except
+through "$bs R=n-1$ leaves exactly one clean bundle". So it proves
+Conjecture 2 **at every $n$ whenever the algorithm leaves exactly $n-1$
+items**, and §7.16.34 does it whenever exactly $1$ is left. Open for
+$n\ge4$: the range $2\lebs R\le n-2$, which fails for two independent
+reasons — the halting rule only gives $bs S\gebs R+1$ so $G$ need not be
+strongly connected (Key Lemma loses its justification), and with $\ge2$ clean
+bundles a simple path can alternate (weight-$1$ arc into one clean holder,
+$\le0$ arc out, weight-$1$ arc into another). At $n=3$ that range is empty.
+
+**Corrections this pass.** (i) §7.16.34 claimed a path "cannot collect both
+units" — false; it can, on abstract tables (`test_excess_r2.py`). (ii) The
+"cheapest target pair" rule was tested and **fails** on abstract tables
+(`rule_cheapest_pair.py`) — not needed, since the proof shows *every*
+distinct-bundle placement works once the stopping structure is in force. The
+failing tables are exactly the ones whose indifference graph is not strongly
+connected, confirming the mechanism. (iii) `check_proof_r2.py` re-runs the
+enumeration restricted to tables satisfying `lem:g2-stopping` and finds zero
+failures — a check on the reasoning, not a step in it.
+
+LaTeX: `approach_12.tex` rewritten — `thm:g2-main` now **unconditional**,
+verification demoted to a section nothing cites, `rem:g2-blackbox` records
+why the black-box form is insufficient, `rem:g2-beyond` states the general-$n$
+reach and the exact remaining range. Builds clean at 125 pages.
+
 ### 7.17 Status
 
 | statement | status |
