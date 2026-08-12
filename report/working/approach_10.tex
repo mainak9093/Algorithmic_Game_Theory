@@ -1230,13 +1230,48 @@ $S \subseteq \items$ is an \emph{insertion witness} if $\cost(S) \ge 1$.
 \end{definition}
 
 Conjecture~\ref{conj:f5-2move} reduces (via the case analysis of
-\S\ref{sec:f5-gap} together with Theorem~\ref{thm:f5-sigma3}) to the following,
-purely single-agent, statement.
+\S\ref{sec:f5-gap} together with Theorem~\ref{thm:f5-sigma3}) to the following
+single-agent statement, applied to $X$ equal to the overloaded bundle and
+$\cost$ equal to that agent's own cost function.
 
 \begin{conjecture}[Removal-hardness forces a small witness --- \textbf{open}]
 \label{conj:f5-removalhard}
-If $X$ is removal-hard, then $X$ has an insertion witness of size at most $2$.
+Let $\cost$ be \emph{rigid}. If $X$ is removal-hard, then $X$ has an insertion
+witness of size at most $2$.
 \end{conjecture}
+
+\begin{proposition}[The rigidity hypothesis is necessary]
+\label{prop:f5-removalhard-needsrigid}
+Without rigidity, Conjecture~\ref{conj:f5-removalhard} is false.
+\end{proposition}
+
+\begin{proof}
+Let $\items = \set{1,\dots,6}$ and $\cost(S) = \min(2, \max(0, \abs S - 2))$: a
+composed (threshold) cost, hence dichotomous. Then $\cost(\items) = 2$;
+$\cost(\items \setminus \set x) = \min(2,\max(0,3)) = 2$ for every $x$; and
+$\cost(\items \setminus \set{x,y}) = \min(2,\max(0,2)) = 2$ for every pair, so
+$\items$ is removal-hard. Every singleton and pair has $\cost = \min(2,\max(0,
+\abs S - 2)) = 0$, so there is no insertion witness of size $\le 2$. Yet
+$\cost$ is not rigid: the partition into three disjoint pairs gives
+$\cost = 0$ on each part, spread $0$.
+\end{proof}
+
+This mirrors exactly why Conjecture~\ref{conj:f5-2move} itself needs rigidity
+(the $K_4$ exclusion above): a purely size-dependent (composed) cost is easy to
+make non-rigid by choosing equal-size parts, and equal parts are exactly what
+defeats a counting-based cost. It is also consistent with, and does not
+threaten, Theorem~\ref{thm:f5-n3composed}: composed costs are already fully
+resolved by the divisibility/interleaved-greedy route of \S\ref{sec:f5-gap},
+independently of this section, so a non-rigid composed counterexample to the
+\emph{unconditional} form of Conjecture~\ref{conj:f5-removalhard} was never a
+threat to Conjecture~\ref{conj:main} at $n=3$ --- it only shows the rigidity
+hypothesis must be carried through explicitly, which an earlier version of
+this section failed to do, stating and partially proving
+Conjecture~\ref{conj:f5-removalhard} without it. That is corrected here; every
+lemma proved below uses only $\cost(X)=2$ and removal-hardness of $X$, so all
+of them remain valid verbatim under the added rigidity hypothesis --- rigidity
+has not yet been used constructively anywhere in this section, and doing so is
+the natural next step, taken up in Remark~\ref{rem:f5-rigidity-unused} below.
 
 If $\cost(X) \le 1$ then $X$ has range $\set{0,1}$ and every partition
 containing it has spread $\le 1$ automatically, so it can never obstruct
@@ -1244,6 +1279,72 @@ uniform balance; the interesting case is exactly $\cost(X) = 2$, which is what
 Conjecture~\ref{conj:f5-removalhard} addresses. The remainder of this section
 proves several unconditional facts about Conjecture~\ref{conj:f5-removalhard}
 and isolates the exact gap that remains.
+
+\begin{lemma}[Shadow bound]
+\label{lem:f5-shadow}
+If $X$ is removal-hard, $\cost(X) = 2$, and $\abs X = n$, then every subset
+$S \subseteq X$ with $\abs S = n - 3$ has $\cost(S) \ge 1$.
+\end{lemma}
+
+\begin{proof}
+Every subset $T \subseteq X$ of size $n-2$ equals $X \setminus \set{x,y}$ for
+the pair $\set{x,y} = X \setminus T$, hence $\cost(T) = 2$ by
+pair-removal-hardness. Now take $S$ of size $n-3$: pick any
+$x \in X \setminus S$ (three choices exist, since $\abs{X \setminus S} = 3$);
+then $S \cup \set x$ has size $n-2$, so $\cost(S \cup \set x) = 2$. The
+marginal bound gives $\cost(S) \ge \cost(S \cup \set x) - 1 = 1$.
+\end{proof}
+
+\begin{corollary}[Ground-set lower bound]
+\label{cor:f5-groundbound}
+Any counterexample to Conjecture~\ref{conj:f5-removalhard} has $\abs X \ge 6$.
+\end{corollary}
+
+\begin{proof}
+If $\abs X = n \le 5$, Lemma~\ref{lem:f5-shadow} gives $\cost(S) \ge 1$ for
+every $S$ of size $n - 3 \le 2$: an insertion witness of size $\le 2$.
+\end{proof}
+
+This is unconditional --- it uses only $\cost(X) = 2$ and removal-hardness,
+not rigidity --- and is genuinely new: no earlier argument in this section
+bounded $\abs X$ at all. The proof of Lemma~\ref{lem:f5-shadow} also gives a
+sharper fact worth recording: writing $X \setminus S = \set{p,q,r}$ for
+$\abs S = n-3$, the same computation applied to each of $p,q,r$ in turn shows
+$\cost(S \cup \set p) = \cost(S \cup \set q) = \cost(S \cup \set r) = 2$
+(all three are size-$(n-2)$ subsets), so the three marginals
+$\cost(S\cup\set p)-\cost(S)$, etc., are all equal to $2 - \cost(S)$ ---
+\emph{uniformly} $0$ or \emph{uniformly} $1$, never mixed. Whether
+$\cost(S)$ itself equals $1$ or $2$ depends on $X$'s specific structure and
+was not pinned down in general; if it is $2$, Lemma~\ref{lem:f5-shadow}'s
+argument applies again one level down (shadowing to size $n-4$), but if it is
+$1$ the shadow does not obviously continue, which is why
+Corollary~\ref{cor:f5-groundbound} stops at a lower bound rather than a full
+resolution.
+
+\begin{remark}[Rigidity has not yet been used constructively]
+\label{rem:f5-rigidity-unused}
+Every result in this section up to and including Lemma~\ref{lem:f5-shadow}
+uses only $\cost(X)=2$ and removal-hardness of $X$ --- rigidity, though now
+correctly required by Conjecture~\ref{conj:f5-removalhard}
+(Proposition~\ref{prop:f5-removalhard-needsrigid}), plays no role in any proof
+above. This is worth stating plainly: the entire argument so far would apply
+equally to non-rigid $X$, and Proposition~\ref{prop:f5-removalhard-needsrigid}
+shows it \emph{must} fail somewhere for non-rigid $X$ (its counterexample has
+$\abs X = 6$, exactly at the bound of Corollary~\ref{cor:f5-groundbound}, and
+satisfies every lemma proved above without contradiction --- consistent, since
+none of them yet uses rigidity to rule it out). Every hand-constructed "hard"
+cost structure attempted in this investigation, checked after the fact,
+turned out non-rigid: the composed counterexample above, and separately the
+explicit redundant-backup gadget used to test the whack-a-mole pattern
+(\S\ref{sec:f5-2move}'s earlier discussion), both admit a spread-$0$
+partition once checked. This is suggestive --- genuinely rigid, removal-hard,
+witness-free structures may be substantially harder to build than the
+unconditional versions this section has been analysing --- but no argument
+here yet shows rigidity forces a contradiction with removal-hardness plus the
+absence of a small witness. Incorporating rigidity directly into the shadow
+or induction arguments above, rather than only checking it after the fact
+against specific constructions, is the clearest remaining direction.
+\end{remark}
 
 \begin{lemma}[Value-$2$ shrink]
 \label{lem:f5-value2shrink}
@@ -1504,7 +1605,13 @@ Remark~\ref{rem:f5-local-fail} (local arguments do not reach (Q$'$)) & proved
 \textbf{Conjecture~\ref{conj:f5-2move}} ($2$-move sufficiency, rigid triples)
   & \textbf{open} \\
 \textbf{Conjecture~\ref{conj:f5-removalhard}} (removal-hardness $\Rightarrow$
-  small witness) & \textbf{open} \\
+  small witness, rigid $\cost$) & \textbf{open} \\
+\textbf{Proposition~\ref{prop:f5-removalhard-needsrigid}} (rigidity is
+  necessary) & \textbf{proved} \\
+Lemma~\ref{lem:f5-shadow}, Corollary~\ref{cor:f5-groundbound} (any
+  counterexample has $\abs X\ge6$) & \textbf{proved} \\
+Remark~\ref{rem:f5-rigidity-unused} (rigidity not yet used) & \textbf{the
+  frontier} \\
 Lemma~\ref{lem:f5-value2shrink}, Corollary~\ref{cor:f5-witness3}
   ($\abs B = 3$ resolved) & \textbf{proved} \\
 Lemma~\ref{lem:f5-pairfull}, Proposition~\ref{prop:f5-onelevel}

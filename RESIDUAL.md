@@ -2621,6 +2621,74 @@ confirmation of the whack-a-mole pattern found in §7.16.26 (removing one
 backup falls back to another) rather than a way past it, but it is a genuine
 new fact, not previously established.
 
+### 7.16.30 A genuinely new angle: found a real counterexample — and it reveals a hole in the setup
+
+Asked directly for a fresh angle rather than another variant of witness-size
+induction. Instead of working through the minimal witness $B$ at all,
+attacked $X$ (the removal-hard set itself) directly via its **up-set
+shadow structure** — and this immediately paid off twice: a genuine new
+unconditional lemma, and a genuine counterexample that exposes a hole in how
+the whole reduction was set up.
+
+**The shadow lemma (new, unconditional, no rigidity needed).** Every subset
+of $X$ of size $\abs X - 2$ equals $X$ minus some pair, hence has cost
+exactly $2$ (pair-removal-hardness, applied to *every* pair simultaneously —
+a completeness this session hadn't exploited before). For $S$ of size
+$\abs X - 3$: extend it by any one of the three missing elements to reach
+size $\abs X - 2$ (cost $2$), and the marginal bound forces
+$\cost(S) \ge 2 - 1 = 1$. **So every subset of size $\abs X - 3$ has cost
+$\ge 1$.** If $\abs X \le 5$, this size is $\le 2$, giving a small witness
+immediately — so **any counterexample has $\abs X \ge 6$**, a clean bound
+that didn't exist before, established with no reference to $B$ or the
+witness-induction machinery at all.
+
+**A sharper byproduct.** For $S$ of size $\abs X-3$ missing $\set{p,q,r}$,
+all three extensions $S\cup p,\ S\cup q,\ S\cup r$ have cost $2$ (same
+argument), so all three marginals of $p,q,r$ on $S$ are equal — uniformly
+$0$ (if $\cost(S)=2$, letting the shadow continue one level further) or
+uniformly $1$ (if $\cost(S)=1$, where it stops). Which one holds was not
+pinned down in general.
+
+**The counterexample.** Pushing $\abs X = 6$ directly: $X=\set{1,\dots,6}$,
+$\cost(S)=\min(2,\max(0,\abs S - 2))$ — a plain threshold/composed cost.
+Verified computationally (dichotomous, removal-hard, no $\le2$-witness — all
+directly checked): **this genuinely refutes `conj:f5-removalhard` exactly as
+stated in the LaTeX, which had no rigidity hypothesis.**
+
+**But it is not rigid** — partitioning into three disjoint pairs
+$\set{1,2},\set{3,4},\set{5,6}$ gives cost $(0,0,0)$, spread $0$. Checked
+whether this was a fluke by testing the earlier hand-built "redundant-OR"
+gadget from the whack-a-mole exploration (§7.16.23–24, §7.16.26) the same
+way: **also not rigid** — partition $\set{v_1,w_1,a,b},\set{v_2,w_2},
+\set{d,e}$ gives cost $(1,1,1)$, spread $0$ there too.
+
+**This is the real finding: rigidity was silently dropped somewhere in the
+reduction, and every "hard" construction tried in this entire session,
+once actually checked, turns out non-rigid.** `conj:f5-removalhard` was
+stated and built on for several passes without its most important
+hypothesis. This is now fixed: the conjecture requires $\cost$ rigid, the
+counterexample is recorded as a proposition showing why (mirroring exactly
+why `conj:f5-2move` needs the $K_4$ exclusion), and — crucially — every
+lemma already proved (value-2 shrink, the $\abs B=3/4$ cases, pair-removal,
+the shadow bound) used only $\cost(X)=2$ and removal-hardness, never
+rigidity, so all of them remain valid unchanged under the corrected,
+rigidity-including statement. **Rigidity has not yet been used
+constructively anywhere in this investigation** — only checked after the
+fact against specific failed constructions. That every attempted "hard"
+construction turns out non-rigid once checked is genuinely encouraging (it
+suggests rigid + removal-hard + witness-free may be a much more restrictive,
+possibly empty, combination than the unconditional versions analysed so
+far), but turning "rigidity keeps killing my attempted counterexamples" into
+an actual proof that it always does is the clear, concrete next step —
+distinct from, and possibly more tractable than, continuing to grind on the
+conditional-vs-absolute pivotal question in isolation.
+
+**Fixed in both records.** LaTeX: `conj:f5-removalhard` restated with
+rigidity, `prop:f5-removalhard-needsrigid` added with the full
+counterexample and proof, `lem:f5-shadow` and `cor:f5-groundbound` added,
+`rem:f5-rigidity-unused` records the state honestly. `working.pdf` builds
+clean at 115 pages. RESIDUAL.md: this section.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2716,6 +2784,10 @@ new fact, not previously established.
 | **CORRECTION**: forced threshold structure claimed for general $\abs B\ge4$ (§7.16.29) | **overclaim, fixed** — proof only works at $\abs B=4$ exactly; corrected in RESIDUAL.md and LaTeX (commit `8619279`) |
 | whether smallest minimal witness can always be taken $\abs B=4$ (§7.16.29) | **open, separate sub-question** — partial dichotomy found (redundant-vs-minimal), neither branch closed |
 | robustness of $B{-}b_i$'s completion to any single $\items\setminus B$ removal (§7.16.29) | **PROVED** — confirms, does not resolve, the whack-a-mole pattern |
+| **shadow lemma**: any counterexample has $\abs X\ge6$ (§7.16.30) | **PROVED**, unconditional, no rigidity needed — genuinely new angle, not derived via $B$ at all |
+| **MAJOR CORRECTION**: `conj:f5-removalhard` stated without rigidity (§7.16.30) | **refuted as stated** — explicit counterexample at $\abs X=6$ (threshold cost); fixed to require rigid $\cost$, mirroring the $K_4$ exclusion for `conj:f5-2move` |
+| every hand-built "hard" construction checked for rigidity this session (§7.16.30) | **ALL turn out non-rigid** — the trivial threshold counterexample AND the earlier redundant-OR gadget both admit a spread-$0$ partition once checked |
+| rigidity used constructively anywhere in the induction (§7.16.30) | **NOT YET** — only checked after the fact; incorporating it directly is the clear next step |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
