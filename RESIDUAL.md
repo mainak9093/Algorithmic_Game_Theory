@@ -2538,7 +2538,39 @@ sufficiency conjecture is confined to exactly two sub-cases
 ($\cost(X\setminus B)\in\set{0,1}$) of one step of one induction. Whether a
 cleverer choice of *which* minimal witness $B$ to peel off (if $X$ admits
 several) can always land in the resolved case, or whether the $0/1$ cases
-themselves admit a similar closing argument, is the precise open frontier. Four facts are now fully
+themselves admit a similar closing argument, is the precise open frontier.
+
+### 7.16.28 An extremal choice of $B$: real leverage, still not a closing argument
+
+Tried strengthening $B$'s definition from *a* minimal value-$2$ witness to
+the **smallest** minimal value-$2$ witness in all of $X$ (breaking ties
+arbitrarily), specifically to attack the $\cost(X\setminus B)=0$ case left
+open by §7.16.27.
+
+In that case, $A_1 := \set{b_1}\cup Q_1$ is the minimal witness for
+$\cost\big((X\setminus B)\cup\set{b_1}\big)=1$, for some $Q_1\subseteq
+X\setminus B$ (possibly empty — empty is exactly the win condition,
+$\cost(\set{b_1})\ge1$ absolutely). Consider the candidate set
+$\set{b_1,b_2}\cup Q_1$ (adding $b_2$ to $A_1$, using *only* $b_1$'s own
+helper set, not the rest of $X\setminus B$). If this reaches cost $2$, it is
+a value-$2$ witness of size $2+\abs{Q_1}$; if that is smaller than $\abs
+B=k$, it contradicts $B$'s extremality (being the *smallest* minimal
+witness, since this candidate would contain — via Lemma ivt applied to
+it — a minimal witness of size $\le 2+\abs{Q_1} < k$). So extremality forces:
+**either** $\cost(\set{b_1,b_2}\cup Q_1)\le1$, **or** $\abs{Q_1}\ge k-2$.
+
+This is genuine leverage — a real constraint that did not exist before
+choosing $B$ extremally — but it only bounds $\abs{Q_1}$ from below in the
+second branch, and says nothing when the first branch holds. It does not
+supply the missing *upper* bound on $\abs{Q_1}$ that would be needed to
+force $A_1$ itself down to size $\le2$ (i.e. $\abs{Q_1}\le1$) and close the
+argument. Tried extending the same idea to $A_1\cup A_2$ (combining $b_1$'s
+and $b_2$'s helper sets together) with the same result: real necessary
+conditions, no sufficient bound.
+
+**Assessment.** The extremal-witness idea is a legitimate additional tool —
+recorded here so a future attempt does not have to rediscover it — but by
+itself it narrows without closing. Four facts are now fully
 proved, unconditionally, for general dichotomous costs: Lemma ivt's
 intermediate-value property; Lemma~\ref{lem:f5-value2shrink}
 ($\cost(B\setminus b)=1$ for a minimal value-$2$ witness); the $\abs B=3$
@@ -2643,6 +2675,7 @@ narrowing, even though it was not resolved in this session.
 | case $\cost(X\setminus B)=2$ of the value-2 induction (§7.16.27) | **FULLY CLOSED** — finite terminating recursion, no gap |
 | case $\cost(X\setminus B)=0$ (§7.16.27) | **open, sharpened** — every $b_i\in B$ individually has marginal $1$ on $X\setminus B$ (not just one per pair); conditional-vs-absolute question remains |
 | case $\cost(X\setminus B)=1$ (§7.16.27) | **open** — less constrained than the $0$ case, no forced uniform conclusion yet |
+| extremal (smallest) choice of $B$ (§7.16.28) | **real leverage, not sufficient** — forces $\abs{Q_1}\ge k{-}2$ or a cost bound, but no matching upper bound found to close the argument |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
