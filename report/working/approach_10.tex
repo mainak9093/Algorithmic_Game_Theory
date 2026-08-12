@@ -1343,8 +1343,39 @@ unconditional versions this section has been analysing --- but no argument
 here yet shows rigidity forces a contradiction with removal-hardness plus the
 absence of a small witness. Incorporating rigidity directly into the shadow
 or induction arguments above, rather than only checking it after the fact
-against specific constructions, is the clearest remaining direction.
+against specific constructions, is the clearest remaining direction. The
+following proposition is a first, direct step in that direction.
 \end{remark}
+
+\begin{proposition}[$\abs X = 6$ resolved, when $\items = X$]
+\label{prop:f5-six-resolved}
+Suppose $\items = X$ (equivalently, the other two bundles in the current
+partition are empty) and $\abs X = 6$. If $X$ is removal-hard, $\cost(X)=2$,
+and $\cost$ is rigid, then $X$ has an insertion witness of size $\le 2$.
+\end{proposition}
+
+\begin{proof}
+Suppose not: every subset of size $\le 2$ costs $0$. Partition $X$ into three
+disjoint pairs (possible for any $6$-element set). Each pair costs $0$ by
+assumption, so this partition gives $\cost$-spread $0$ across the three parts
+--- contradicting rigidity, since $\items = X$ means this partition of $X$
+\emph{is} a partition of the full ground set.
+\end{proof}
+
+Combined with Corollary~\ref{cor:f5-groundbound} ($\abs X \ge 6$), this rules
+out $\abs X \le 6$ entirely (again when $\items = X$): any counterexample now
+needs $\abs X \ge 7$. The argument is specific to $\abs X = 6$: it uses that
+three parts of size $\le 2$ exactly cover $6$ elements
+($3 \times 2 = 6$), so every part can be forced to cost $0$ simultaneously.
+For $\abs X = 7$, three size-$\le 2$ parts cover at most $6$ elements, one
+short, and the remaining part (size $\ge 3$) is not forced to cost $0$ by the
+hypothesis --- so the same trick does not directly extend, and $\abs X \ge 7$
+remains open. The restriction $\items = X$ (no other elements in play) is
+also a genuine restriction: the general case, where the current partition's
+other two bundles are nonempty, needs the equal-cost partition to be
+exhibited over the \emph{whole} ground set $\items \supsetneq X$, and nothing
+here controls the cost of the other bundles' elements combined with a
+candidate partition of $X$.
 
 \begin{lemma}[Value-$2$ shrink]
 \label{lem:f5-value2shrink}
@@ -1612,6 +1643,8 @@ Lemma~\ref{lem:f5-shadow}, Corollary~\ref{cor:f5-groundbound} (any
   counterexample has $\abs X\ge6$) & \textbf{proved} \\
 Remark~\ref{rem:f5-rigidity-unused} (rigidity not yet used) & \textbf{the
   frontier} \\
+\textbf{Proposition~\ref{prop:f5-six-resolved}} ($\abs X{=}6$ resolved, when
+  $\items{=}X$) & \textbf{proved} \\
 Lemma~\ref{lem:f5-value2shrink}, Corollary~\ref{cor:f5-witness3}
   ($\abs B = 3$ resolved) & \textbf{proved} \\
 Lemma~\ref{lem:f5-pairfull}, Proposition~\ref{prop:f5-onelevel}
@@ -1683,16 +1716,27 @@ itself.
 General $n = 3$ --- Conjecture~\ref{conj:main} for dichotomous costs that need
 not be composed --- reduces, unconditionally, to
 Conjecture~\ref{conj:f5-removalhard}: a single, self-contained statement about
-one dichotomous cost function, needing no rigidity, ordering, or composedness
-hypothesis to state. \Cref{sec:f5-2move} proves four unconditional facts about
-it (Lemma~\ref{lem:f5-value2shrink}, the $\abs B = 3$ resolution, pair-removal
-preserving the full value, and one full case of the underlying induction
-closing by a finite terminating recursion), and narrows what remains to
-exactly two sub-cases of one further step, both stated precisely in
-Remark~\ref{rem:f5-gap}. Direct construction of a counterexample was attempted
-and failed for a structural reason (repairing one vulnerability provably
-requires strictly more machinery, which itself needs repairing) rather than
-by chance, which is evidence toward the conjecture but not a proof of it. This
+one dichotomous cost function, requiring only rigidity (an earlier version of
+this section stated it without that hypothesis; it is false without it,
+Proposition~\ref{prop:f5-removalhard-needsrigid}, and the correction is
+recorded exactly for that reason). \Cref{sec:f5-2move} proves several
+unconditional facts en route to it (Lemma~\ref{lem:f5-value2shrink}, the
+$\abs B \in \set{3,4}$ resolutions, pair-removal preserving the full value, a
+shadow bound forcing any counterexample to have $\abs X \ge 6$, and --- once
+rigidity is finally brought to bear, in the special case where the current
+partition's other two bundles are empty --- $\abs X = 6$ itself resolved via
+a direct rigidity violation), and narrows what remains open to $\abs X \ge 7$
+in that special case, or to $\abs B = 4$ with $\cost(X\setminus B) \in
+\set{0,1}$ in general (Remark~\ref{rem:f5-gap}), plus the entirely open
+$\abs B \ge 5$ question (Remark~\ref{rem:f5-forcedstructure-fails}). Direct
+construction of a counterexample was attempted twice --- once without
+rigidity (successful:
+Proposition~\ref{prop:f5-removalhard-needsrigid}'s witness) and once, after
+correcting for that, targeting the rigid case (failed, for a structural
+reason: repairing one vulnerability provably requires strictly more
+machinery, which itself needs repairing). Every hand-built "hard"
+construction checked for rigidity in this investigation turned out non-rigid,
+which is evidence toward the corrected conjecture but not a proof of it. This
 is, as of this document, the closest approach to general $n = 3$ on record:
-not a proof, but a single precisely bounded open question standing in its
-place.
+not a proof, but a small number of precisely bounded open questions standing
+in its place, narrower with each pass.

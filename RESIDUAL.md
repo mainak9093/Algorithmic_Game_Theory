@@ -2689,6 +2689,48 @@ counterexample and proof, `lem:f5-shadow` and `cor:f5-groundbound` added,
 `rem:f5-rigidity-unused` records the state honestly. `working.pdf` builds
 clean at 115 pages. RESIDUAL.md: this section.
 
+### 7.16.31 Immediately cashing in the "use rigidity constructively" challenge: $\abs X = 6$ resolved
+
+Took Remark~`rem:f5-rigidity-unused`'s own challenge (rigidity checked only
+after the fact so far — incorporate it directly) and closed the smallest
+open case immediately.
+
+**The trick.** In the special case $\items = X$ (the current partition's
+other two bundles are both empty — a genuine special case, not the fully
+general one), suppose $\abs X = 6$ and $X$ has no $\le2$-witness (every
+singleton and pair costs $0$, for contradiction). Partition $X$ into three
+disjoint pairs — always possible for a $6$-element set. Each pair costs $0$
+by the standing assumption, so this partition gives spread $0$ across all
+three parts. But $\items = X$ means this **is** a partition of the entire
+ground set — directly contradicting rigidity.
+
+**Why it stops at exactly $6$.** Three parts of size $\le 2$ cover at most
+$3\times2=6$ elements. For $\abs X = 7$, at least one part must have size
+$\ge3$, and nothing forces a size-$3$ part to cost $0$ — only $\le2$-subsets
+are pinned by the standing hypothesis. The trick is exact, not a template
+that keeps working.
+
+**Combined with the shadow bound (§7.16.30): $\abs X \le 5$ is impossible
+(shadow lemma) and $\abs X = 6$ is impossible (this trick) — so in the
+$\items=X$ special case, any counterexample now needs $\abs X \ge 7$.**
+This moved the frontier in one step, directly from the challenge just
+recorded, rather than from another round of witness-size induction.
+
+**What's still missing.** Two things, both flagged honestly rather than
+glossed: (1) $\abs X \ge 7$ — the "cover with size-$\le2$ parts" trick has
+no obvious extension, since larger equal-sized parts aren't forced to equal
+cost by anything proved so far; (2) the restriction to $\items = X$ — the
+fully general case, where the current partition's other two bundles are
+genuinely nonempty, needs an equal-cost partition exhibited over the *whole*
+ground set $\items \supsetneq X$, and this argument says nothing about how
+$X$'s structure interacts with elements outside it. Both are now precisely
+named rather than folded into a single vague "rigidity not yet used" note.
+
+**Recorded in both places.** LaTeX: `prop:f5-six-resolved`, with the scope
+(⁠$\items=X$⁠) stated in the proposition itself, not just the surrounding
+prose, and the Verdict paragraph updated to reflect it. `working.pdf` builds
+clean, 115 pages. RESIDUAL.md: this section.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2788,6 +2830,9 @@ clean at 115 pages. RESIDUAL.md: this section.
 | **MAJOR CORRECTION**: `conj:f5-removalhard` stated without rigidity (§7.16.30) | **refuted as stated** — explicit counterexample at $\abs X=6$ (threshold cost); fixed to require rigid $\cost$, mirroring the $K_4$ exclusion for `conj:f5-2move` |
 | every hand-built "hard" construction checked for rigidity this session (§7.16.30) | **ALL turn out non-rigid** — the trivial threshold counterexample AND the earlier redundant-OR gadget both admit a spread-$0$ partition once checked |
 | rigidity used constructively anywhere in the induction (§7.16.30) | **NOT YET** — only checked after the fact; incorporating it directly is the clear next step |
+| **$\abs X=6$ resolved, when $\items=X$** (§7.16.31) | **PROVED** — direct rigidity violation via a 3-pairs partition; closes the smallest open case immediately after the challenge was named |
+| any counterexample (when $\items=X$) now needs $\abs X\ge7$ (§7.16.31) | **PROVED**, combining the shadow bound and the $\abs X=6$ resolution |
+| $\abs X\ge7$, and the fully general $\items\supsetneq X$ case (§7.16.31) | **open** — both precisely named rather than left as one vague gap |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
