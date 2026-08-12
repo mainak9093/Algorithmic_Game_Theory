@@ -2584,6 +2584,43 @@ must also be *absolutely* pivotal, under a removal-hardness hypothesis. This
 is now a clean, self-contained, checkable mathematical statement — a real
 narrowing, even though it was not resolved in this session.
 
+### 7.16.29 A genuine correction, and one more structural fact
+
+**Correction (important, not stylistic).** Re-examined
+Proposition~\ref{prop:f5-forcedstructure} (LaTeX numbering; the "$B$'s forced
+threshold structure" claim from §7.16.25/7.16.27) and found it was stated for
+general $\abs B = k \ge 4$ when the proof only works at $k=4$. The argument
+needs $B\setminus\set b$'s proper subsets to be directly constrained by the
+global "no $\le2$-witness" hypothesis — true only when $\abs{B\setminus b}=3$,
+i.e. $k=4$ exactly. For $k\ge5$, $B\setminus b$ has size $\ge4$, and *its*
+size-$3$ subsets (triples of $B$) are not constrained by the hypothesis at
+all: a triple may cost $0$ or $1$ without contradiction. **So the forced
+threshold structure, and everything built on it (§7.16.27's $\cost(X\setminus
+B)=0$ analysis), is only established for $\abs B = 4$.** Whether the smallest
+minimal witness can always be taken to have size exactly $4$ — which would
+close this gap — is a separate, unresolved sub-question. Partial progress: if
+$B$ is chosen smallest and $A\subsetneq B\setminus\set{b_1}$ is a value-$1$
+witness with $b_1$'s marginal on $A$ equal to $1$, then $A\cup\set{b_1}$ is a
+smaller value-$2$ witness, contradicting minimality — forcing either $b_1$
+redundant given $A$ (need a different completing element), or
+$B\setminus\set{b_1}$ itself minimal (no smaller witness inside it). Neither
+branch was closed. **This has been corrected in the LaTeX** (`working.pdf`,
+commit `8619279`) rather than left as a silent overclaim.
+
+**One more structural fact, found while investigating the correction.** For
+$b_i \in B$ and any $q \in \items\setminus B$: applying
+Lemma~\ref{lem:f5-pairfull}-style reasoning to the pair $\set{b_i,q}$ gives
+$\cost\bigl((B\setminus\set{b_i}) \cup ((\items\setminus B)\setminus\set
+q)\bigr) = 2$ — completing $B\setminus\set{b_i}$ to value $2$ is robust to
+removing *any single* element of $\items \setminus B$. This does **not**
+contradict a size-$1$ completing witness $\set w$ existing (the natural first
+guess): $w$ alone can complete it via one path, while
+$(\items\setminus B)\setminus\set w$ completes it via a *different*, possibly
+large, path — both can be true simultaneously. This is a clean, independent
+confirmation of the whack-a-mole pattern found in §7.16.26 (removing one
+backup falls back to another) rather than a way past it, but it is a genuine
+new fact, not previously established.
+
 ### 7.17 Status
 
 | statement | status |
@@ -2676,6 +2713,9 @@ narrowing, even though it was not resolved in this session.
 | case $\cost(X\setminus B)=0$ (§7.16.27) | **open, sharpened** — every $b_i\in B$ individually has marginal $1$ on $X\setminus B$ (not just one per pair); conditional-vs-absolute question remains |
 | case $\cost(X\setminus B)=1$ (§7.16.27) | **open** — less constrained than the $0$ case, no forced uniform conclusion yet |
 | extremal (smallest) choice of $B$ (§7.16.28) | **real leverage, not sufficient** — forces $\abs{Q_1}\ge k{-}2$ or a cost bound, but no matching upper bound found to close the argument |
+| **CORRECTION**: forced threshold structure claimed for general $\abs B\ge4$ (§7.16.29) | **overclaim, fixed** — proof only works at $\abs B=4$ exactly; corrected in RESIDUAL.md and LaTeX (commit `8619279`) |
+| whether smallest minimal witness can always be taken $\abs B=4$ (§7.16.29) | **open, separate sub-question** — partial dichotomy found (redundant-vs-minimal), neither branch closed |
+| robustness of $B{-}b_i$'s completion to any single $\items\setminus B$ removal (§7.16.29) | **PROVED** — confirms, does not resolve, the whack-a-mole pattern |
 | $B(\sigma)$ Lipschitz-1 (the true, joint quantity) | **open** — must be an emergent 3-agent + re-optimised-cut phenomenon, not reducible to one agent or one cut |
 
 (F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
