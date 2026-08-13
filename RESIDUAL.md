@@ -3286,6 +3286,55 @@ wrong, both caught by the user rather than by me. The lesson recorded here:
 when a non-load-bearing appendix resists correction, delete the claim rather
 than patch it.
 
+### 7.16.39 Conjecture 2 for all n, written up as Approach 13
+
+The user supplied `conjecture2_general_n_full_proof.md`, an independent
+general-$n$ proof, audited here and found correct. It is **simpler than the
+min-cost/potential route of §7.16.37**: it uses the **identity assignment**
+(no bundle reassignment, no minimum-cost matching) and exhibits the subsidy
+explicitly, so it never invokes Halpern–Shah at all.
+
+**The construction.** At the terminal state ($r=\abs R\ge1$, tail SCC $S$,
+$r<\abs S$): pick $r$ distinct recipients $T\subseteq S$, give one leftover to
+each, and set $p=\mathbf 1_P$ where $P$ is the **backward equality closure**
+of $T$ — start with $T$, repeatedly adjoin any $i\notin S$ having an equality
+arc into the current set.
+
+**Why it works.** Three terminal facts (all from the algorithm's rules):
+(b) $\cost_i(e\mid X_i)=1$ for all $i$; (c) $\cost_i(e\mid X_j)=1$ on every
+equality arc inside $S$; (d) no equality arc leaves $S$. Plus the structural
+lemma $P\setminus T\subseteq N\setminus S$, which the original draft used
+implicitly in two cases and which is now stated explicitly. Budget:
+$\abs P\le r+(n-\abs S)\le n-1$ using $r<\abs S$.
+
+**Audit performed** (`update_12/audit_user_generaln_proof.py`): implements the
+construction exactly and checks the EF inequalities *directly* for every
+ordered pair, the budget, and the three terminal facts independently, over
+**every** choice of $T\subseteq S$ and **every** bijection $R\to T$. Results:
+$n=3,4,5,6$, residue sizes $1$–$5$ (the full range, including the
+intermediate range $2\le r\le n-2$), **zero problems**. The novel ingredient
+is genuinely exercised: $520$ cases where the closure strictly enlarged $T$
+(up to $3$ agents added), with $S\subsetneq N$ in most terminal states.
+
+**Errors found in the draft and fixed in the write-up.** (i) $P\setminus
+T\subseteq N\setminus S$ was never stated though two cases depend on it;
+(ii) Case 1a claimed "equal subsidy" for $i\in T$, $j\in S\setminus T$, which
+is false ($p_i=1$, $p_j=0$) — the inequality holds by partial-EF instead;
+(iii) the §8 dichotomy was stated unconditionally rather than under
+$i\notin P$; (iv) a missing $\le$ in a displayed inequality; (v) search-tool
+citation artifacts.
+
+**Written up** as `report/working/approach_13.tex`, replacing the previous
+$n=3$-only research-style section: self-contained, no enumeration anywhere,
+explicit typed cross-references. `approach_12.tex` (the $n=3$ section) now
+carries a forward pointer so the document does not contradict itself.
+`working.pdf` builds clean at $130$ pages.
+
+**Status: Conjecture 2 is proved for every $n$.** Standing dependency: the
+proof uses Algorithm 3's *internals* (rules R1–R3 and the tail-SCC property),
+not merely the statement of Theorem 5.1. This is recorded in
+`rem:g3-dependency` and is the first thing a referee should check.
+
 ### 7.17 Status
 
 | statement | status |

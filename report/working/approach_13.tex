@@ -1,398 +1,372 @@
 %% ==========================================================================
-%%  Approach 13 --- Envy-free allocations with unit subsidies via partial
-%%  allocations. Research-style writeup intended for the final report.
+%%  Approach 13 --- Conjecture 2 for an arbitrary number of agents.
 %%
-%%  Results: Theorem (one unallocated item, every n); Theorem (n-1
-%%  unallocated items, every n); Corollary (Conjecture 2 for n <= 3).
-%%  No step uses exhaustive computation.
+%%  Self-contained. External input: Theorem 5.1 of [TWYZ23] together with the
+%%  terminal behaviour of its Algorithm 3. Everything after the terminal
+%%  partial allocation is proved here. No enumeration is used anywhere.
 %%
-%%  NOTE ON REFERENCING: theorem-like environments share one counter here, so
-%%  \Cref renders all of them as "Theorem". Use explicit "Lemma~\ref{...}",
-%%  "Theorem~\ref{...}", "Corollary~\ref{...}" throughout this file.
+%%  REFERENCING: theorem-like environments share one counter in this report,
+%%  so \Cref renders all of them as "Theorem". Use explicit
+%%  "Lemma~\ref{...}", "Theorem~\ref{...}", "Corollary~\ref{...}".
 %% ==========================================================================
-\section{Approach 13: Unit Subsidies via Partial Allocations}
+\section{Approach 13: Unit Subsidies for an Arbitrary Number of Agents}
 \label{sec:approach13}
 
-Throughout this section $\agents = \set{1,\dots,n}$ is a set of agents and
-$\items$ a finite set of indivisible chores. Each agent $i$ has a
-dichotomous cost function $\cost_i : 2^{\items} \to \Z_{\ge 0}$ in the sense
-of Definition~\ref{def:dichcost}: $\cost_i(\emptyset) = 0$ and
-$\cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for all $S \subseteq
-\items$ and $e \in \items \setminus S$. We write
-$\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S)$. Every such
-$\cost_i$ is integer-valued and non-decreasing.
+This section proves Conjecture~\ref{conj:main} for every number of agents.
+All notation used is defined below; the only external input is
+Theorem~\ref{thm:g3-twyz} and the description of its algorithm in
+\Cref{sec:g3-terminal}.
+
+\subsection{Setting}
+\label{sec:g3-setting}
+
+Let $\agents = \set{1,\dots,n}$ be a set of agents and $\items$ a finite set
+of indivisible chores. Each agent $i \in \agents$ has a \emph{dichotomous}
+cost function $\cost_i : 2^{\items} \to \Z_{\ge 0}$, meaning
+\begin{equation}
+\label{eq:g3-dich}
+  \cost_i(\emptyset) = 0,
+  \qquad
+  \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}
+  \quad\text{for all } S \subseteq \items,\ e \in \items \setminus S .
+\end{equation}
+Write $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S)$.
+
+\begin{observation}
+\label{obs:g3-basic}
+Every dichotomous $\cost_i$ is integer valued and non-decreasing: for
+$S \subseteq T \subseteq \items$, $\cost_i(S) \le \cost_i(T)$. Consequently,
+for any $S,T$,
+\begin{equation}
+\label{eq:g3-gap}
+  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+\end{equation}
+\end{observation}
+\begin{proof}
+Enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope: $\cost_i(T) -
+\cost_i(S) = \sum_{u=1}^{q} \cost_i(f_u \mid S \cup \set{f_1,\dots,f_{u-1}})$,
+a sum of terms in $\set{0,1}$ by \eqref{eq:g3-dich}. Taking $S = \emptyset$
+and using $\cost_i(\emptyset)=0$ shows every value is a non-negative integer;
+the displayed sum is non-negative, giving monotonicity. Statement
+\eqref{eq:g3-gap} is then the integrality of $\cost_i(T) - \cost_i(S)$.
+\end{proof}
 
 A \emph{partial allocation} is a tuple $\alloc = (\bundle1,\dots,\bundle n)$
 of pairwise disjoint subsets of $\items$; its \emph{residue} is
-$R(\alloc) := \items \setminus \bigcup_i \bundle i$, and $\alloc$ is an
-allocation when $R(\alloc) = \emptyset$. A partial allocation is
-\emph{envy-free} if $\cost_i(\bundle i) \le \cost_i(\bundle j)$ for all
-$i,j \in \agents$. For $\subsidy \in \Z_{\ge0}^n$ the pair
-$(\alloc,\subsidy)$ is an \emph{envy-free solution} if
-$\cost_i(\bundle i) - \subsidy_i \le \cost_i(\bundle j) - \subsidy_j$ for all
-$i,j$.
+$R(\alloc) := \items \setminus \bigcup_{i} \bundle i$. It is an
+\emph{allocation} when $R(\alloc) = \emptyset$. A partial allocation is
+\emph{envy-free} if
+\begin{equation}
+\label{eq:g3-pef}
+  \cost_i(\bundle i) \le \cost_i(\bundle j) \qquad \text{for all } i,j \in \agents .
+\end{equation}
+For $\subsidy \in \Z_{\ge0}^n$, the pair $(\alloc,\subsidy)$ is an
+\emph{envy-free solution} if
+\begin{equation}
+\label{eq:g3-ef}
+  \cost_i(\bundle i) - \subsidy_i \le \cost_i(\bundle j) - \subsidy_j
+  \qquad \text{for all } i,j \in \agents .
+\end{equation}
+Conjecture~\ref{conj:main} asserts that for every instance there are an
+allocation $\alloc$ and a subsidy $\subsidy \in \set{0,1}^n$, with
+$\sum_i \subsidy_i \le n-1$, such that \eqref{eq:g3-ef} holds, computable in
+polynomial time.
 
-We use two facts from~\cite{HS19}, recorded as
-Theorem~\ref{thm:hs-characterisation} and
-Theorem~\ref{thm:hs-minsubsidy} in \Cref{sec:prelim}. In the cost
-formulation they read as follows. Given an allocation $\alloc$, its
-\emph{envy graph} is the complete digraph on $\agents$ with arc weights
-$\edgew{}(i,j) := \cost_i(\bundle i) - \cost_i(\bundle j)$. First, $\alloc$
-admits an envy-free solution for some $\subsidy \in \Z^n_{\ge0}$ if and only
-if $\alloc$ minimises $\sum_{i} \cost_i(\bundle{\sigma(i)})$ over all
-permutations $\sigma$ of its own bundles among the agents; equivalently, if
-and only if its envy graph has no positive-weight directed cycle. Second,
-when this holds, the pointwise-minimal such subsidy is
-$\subsidy_i = \pathw{\alloc}(i)$, the maximum weight of a simple directed
-path in the envy graph starting at $i$ (the empty path being allowed, so
-$\pathw{\alloc}(i) \ge 0$).
+\subsection{The terminal state of the external algorithm}
+\label{sec:g3-terminal}
 
-Finally we use the following, which is Theorem 5.1 of~\cite{TWYZ23}.
-
-\begin{theorem}[\cite{TWYZ23}]
+\begin{theorem}[\cite{TWYZ23}, Theorem 5.1]
 \label{thm:g3-twyz}
-For every $n$ and all dichotomous cost functions $\cost_1,\dots,\cost_n$
-there is a polynomial-time algorithm returning an envy-free partial
-allocation $\alloc$ with $\abs{R(\alloc)} \le n-1$.
+For every $n$ and all dichotomous $\cost_1,\dots,\cost_n$ there is a
+polynomial-time algorithm returning an envy-free partial allocation $\alloc$
+with $\abs{R(\alloc)} \le n-1$.
 \end{theorem}
 
-\subsection{A potential for the assignment of bundles}
-
-Fix pairwise disjoint bundles $Y_1,\dots,Y_n$ with
-$\bigcup_j Y_j = \items$, and let $\pi$ be a permutation of $\agents$, agent
-$a$ receiving $Y_{\pi(a)}$. Put
-\[
-  \beta_a \;:=\; \min_{j \in \agents} \cost_a(Y_j),
-  \qquad
-  \varepsilon_a(\pi) \;:=\; \cost_a(Y_{\pi(a)}) - \beta_a \;\ge\; 0 ,
-\]
-and call $\Xi(\pi) := \sum_{a \in \agents} \varepsilon_a(\pi)$ the
-\emph{total excess} of $\pi$.
-
-\begin{lemma}
-\label{lem:g3-mincost-excess}
-$\pi$ minimises $\sum_{a} \cost_a(Y_{\pi(a)})$ if and only if it minimises
-$\Xi(\pi)$.
-\end{lemma}
-
-\begin{proof}
-Summing the definition of $\varepsilon_a(\pi)$ over $a$ gives
-$\sum_a \cost_a(Y_{\pi(a)}) = \sum_a \beta_a + \Xi(\pi)$. The quantity
-$\sum_a \beta_a$ does not depend on $\pi$, so the two minimisation problems
-have the same minimisers.
-\end{proof}
-
-\begin{lemma}
-\label{lem:g3-pathbound}
-Let $\alloc$ be the allocation assigning $Y_{\pi(a)}$ to $a$. Every simple
-directed path in the envy graph of $\alloc$ has weight at most $\Xi(\pi)$.
-In particular $\pathw{\alloc}(a) \le \Xi(\pi)$ for every $a$.
-\end{lemma}
-
-\begin{proof}
-For any $a,b$,
-\[
-  \edgew{}(a,b) = \cost_a(Y_{\pi(a)}) - \cost_a(Y_{\pi(b)})
-  \le \cost_a(Y_{\pi(a)}) - \beta_a = \varepsilon_a(\pi),
-\]
-because $\beta_a \le \cost_a(Y_{\pi(b)})$ by definition of $\beta_a$. A
-simple path has at most one arc leaving each vertex, so its weight is at
-most $\sum_a \varepsilon_a(\pi) = \Xi(\pi)$. The empty path has weight $0
-\le \Xi(\pi)$.
-\end{proof}
-
-\begin{lemma}
-\label{lem:g3-minzero}
-Let $\alloc$ be an envy-freeable allocation and $\optsubsidy$ its
-pointwise-minimal subsidy. Then $\min_{a} \optsubsidy_a = 0$. Consequently,
-if $\optsubsidy \in \set{0,1}^n$ then $\sum_a \optsubsidy_a \le n-1$.
-\end{lemma}
-
-\begin{proof}
-The condition defining an envy-free solution,
-$\cost_a(\bundle a) - \subsidy_a \le \cost_a(\bundle b) - \subsidy_b$,
-depends on $\subsidy$ only through the differences $\subsidy_a - \subsidy_b$,
-so it is invariant under adding a constant to every coordinate. Let
-$\mu := \min_a \optsubsidy_a$ and suppose $\mu > 0$. Then
-$\optsubsidy - \mu \mathbf 1$ is non-negative and $(\alloc, \optsubsidy -
-\mu\mathbf 1)$ is again an envy-free solution, contradicting the pointwise
-minimality of $\optsubsidy$. Hence $\mu = 0$, and if
-$\optsubsidy \in \set{0,1}^n$ then at least one coordinate vanishes, so the
-sum is at most $n-1$.
-\end{proof}
-
-\begin{lemma}
-\label{lem:g3-criterion}
-Suppose some permutation $\sigma$ satisfies $\Xi(\sigma) \le 1$, and let
-$\pi$ minimise $\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation assigning
-$Y_{\pi(a)}$ to $a$ admits an envy-free solution with subsidy in
-$\set{0,1}^n$, and $\pi$ is computable in polynomial time given a value
-oracle.
-\end{lemma}
-
-\begin{proof}
-By Lemma~\ref{lem:g3-mincost-excess}, $\pi$ minimises $\Xi$, so
-$\Xi(\pi) \le \Xi(\sigma) \le 1$. Being cost-minimising among reassignments
-of its own bundles, the allocation admits an envy-free solution by
-Theorem~\ref{thm:hs-characterisation}, and by
-Theorem~\ref{thm:hs-minsubsidy} its minimal subsidy is
-$\subsidy_a = \pathw{}(a)$, which lies in $[0, \Xi(\pi)] \subseteq [0,1]$ by
-Lemma~\ref{lem:g3-pathbound}. Each $\pathw{}(a)$ is a difference of integers,
-hence $\subsidy \in \set{0,1}^n$. Computing $\pi$ is an assignment problem on
-$n$ agents and $n$ bundles, solvable in time polynomial in $n$ after $n^2$
-oracle calls.
-\end{proof}
-
-\subsection{Residues of size one}
-
-\begin{theorem}
-\label{thm:g3-r1}
-Let $\alloc = (\bundle1,\dots,\bundle n)$ be an envy-free partial allocation
-with $R(\alloc) = \set e$. For any $m \in \agents$, set $Y_m := \bundle m
-\cup \set e$ and $Y_j := \bundle j$ for $j \ne m$, and let $\pi$ minimise
-$\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation assigning $Y_{\pi(a)}$ to
-$a$ admits an envy-free solution with subsidy in $\set{0,1}^n$.
-\end{theorem}
-
-\begin{proof}
-By Lemma~\ref{lem:g3-criterion} it suffices to exhibit one permutation of
-total excess at most $1$; we show the identity is such a permutation.
-
-Let $a \ne m$. For every $j$,
-\[
-  \cost_a(Y_a) = \cost_a(\bundle a) \le \cost_a(\bundle j) \le \cost_a(Y_j),
-\]
-the first inequality by envy-freeness of $\alloc$ and the second because
-$\bundle j \subseteq Y_j$ and $\cost_a$ is non-decreasing. Hence
-$\beta_a = \cost_a(Y_a)$ and $\varepsilon_a(\mathrm{id}) = 0$.
-
-For $a = m$ and every $j$,
-\[
-  \cost_m(Y_m) = \cost_m(\bundle m) + \cost_m(e \mid \bundle m)
-  \le \cost_m(\bundle m) + 1 \le \cost_m(\bundle j) + 1 \le \cost_m(Y_j) + 1,
-\]
-using in turn that marginals lie in $\set{0,1}$, envy-freeness of $\alloc$,
-and monotonicity. Taking the minimum over $j$ gives $\cost_m(Y_m) \le
-\beta_m + 1$, i.e.\ $\varepsilon_m(\mathrm{id}) \le 1$.
-
-Therefore $\Xi(\mathrm{id}) \le 1$.
-\end{proof}
-
-\subsection{Residues of maximum size}
-
-Theorem~\ref{thm:g3-r1} uses only the envy-freeness of $\alloc$. The
-remaining case uses properties of the partial allocation returned by the
-algorithm of Theorem~\ref{thm:g3-twyz}, which we now record. That algorithm
-maintains an envy-free partial allocation and the digraph
+The algorithm of Theorem~\ref{thm:g3-twyz} maintains an envy-free partial
+allocation $X = (X_1,\dots,X_n)$ together with the \emph{equality graph}
 \begin{equation}
 \label{eq:g3-graph}
-  G \;=\; (\agents, E), \qquad
-  (i,j) \in E \iff i \ne j \text{ and } \cost_i(\bundle i) = \cost_i(\bundle j),
+  G = (\agents, E),
+  \qquad
+  (i,j) \in E \iff i \ne j \ \text{ and } \ \cost_i(X_i) = \cost_i(X_j),
 \end{equation}
-and it iterates three rules: (R1) if some $e \in R(\alloc)$ and some $i$
-satisfy $\cost_i(e \mid \bundle i) = 0$, give $e$ to $i$; (R2) if some
-$e \in R(\alloc)$ and some arc $(i,j) \in E$ lying on a directed cycle of
-$G$ satisfy $\cost_i(e \mid \bundle j) = 0$, rotate the bundles along that
-cycle and give $e$ to $i$; (R3) otherwise select a tail strongly connected
-component $S$ of $G$ --- one with no arc of $E$ leaving $S$ --- and, if
-$\abs{R(\alloc)} \ge \abs S$, give one residual item to each agent of $S$.
-The three rules are attempted in this order and the algorithm loops while
-$R(\alloc) \ne \emptyset$; the only exit with $R(\alloc) \ne \emptyset$ is
-the failure of the test in (R3). Hence if the algorithm halts with
-$R(\alloc) \ne \emptyset$, then (R1) and (R2) do not apply at the halting
-state and $\abs{R(\alloc)} < \abs S$ for the component $S$ selected by (R3).
+and repeats the following three rules in the stated order, halting only when
+no rule applies.
+\begin{enumerate}
+  \item[(R1)] If some $e \in R(X)$ and some $i \in \agents$ satisfy
+        $\cost_i(e \mid X_i) = 0$, assign $e$ to $i$.
+  \item[(R2)] If some $e \in R(X)$ and some arc $(i,j) \in E$ lying on a
+        directed cycle of $G$ satisfy $\cost_i(e \mid X_j) = 0$, rotate the
+        bundles along that cycle and assign $e$ to $i$.
+  \item[(R3)] Otherwise select a strongly connected component $S$ of $G$ with
+        no arc of $E$ leaving $S$. If $\abs{R(X)} \ge \abs S$, assign one
+        residual chore to each agent of $S$; otherwise halt.
+\end{enumerate}
+The loop runs while $R(X) \ne \emptyset$, and the only exit with
+$R(X) \ne \emptyset$ is the final clause of (R3).
+
+For the remainder of this section fix the following data. Let $X$ be the
+partial allocation at which the algorithm halts, let $R := R(X)$ and
+$r := \abs R$, and, if $r \ge 1$, let $S$ be the component selected by (R3)
+at the halting step. All of $\alloc$'s envy-freeness, $G$, $R$, $S$ refer to
+this terminal state.
 
 \begin{lemma}
-\label{lem:g3-stopping}
-Let $n \ge 2$, let $\alloc$ be the partial allocation at which the algorithm
-of Theorem~\ref{thm:g3-twyz} halts, and suppose $\abs{R(\alloc)} = n-1$.
-Then, with $G$ as in \eqref{eq:g3-graph}:
+\label{lem:g3-terminal}
+Suppose $r \ge 1$. Then
 \begin{enumerate}
-  \item[(a)] $G$ is strongly connected;
-  \item[(b)] $\cost_i(e \mid \bundle i) = 1$ for every $i \in \agents$ and
-        every $e \in R(\alloc)$;
-  \item[(c)] $\cost_i(e \mid \bundle j) = 1$ for every arc $(i,j) \in E$ and
-        every $e \in R(\alloc)$.
+  \item[(a)] $r < \abs S$;
+  \item[(b)] $\cost_i(e \mid X_i) = 1$ for every $i \in \agents$ and every
+        $e \in R$;
+  \item[(c)] $\cost_i(e \mid X_j) = 1$ for every arc $(i,j) \in E$ with
+        $i,j \in S$, and every $e \in R$;
+  \item[(d)] $\cost_i(X_i) < \cost_i(X_j)$ for every $i \in S$ and every
+        $j \in \agents \setminus S$.
 \end{enumerate}
 \end{lemma}
-
 \begin{proof}
-Since $\abs{R(\alloc)} = n-1 \ge 1$, the algorithm halted with
-$R(\alloc) \ne \emptyset$, so the description above applies.
+Since $r \ge 1$ the algorithm halted at the final clause of (R3), so neither
+(R1) nor (R2) applied at the halting state, and $\abs{R} < \abs S$, which is
+(a).
 
-(a) At the halting state the component $S$ selected by (R3) satisfies
-$\abs{R(\alloc)} < \abs S$, so $\abs S > n-1$, forcing $\abs S = n$. Thus
-$S = \agents$, and $S$ is a strongly connected subgraph of $G$ by
-construction, so $G$ is strongly connected.
+(b) If $\cost_i(e \mid X_i) = 0$ for some $i$ and some $e \in R$, rule (R1)
+would apply. By \eqref{eq:g3-dich} the marginal lies in $\set{0,1}$, hence
+equals $1$.
 
-(b) Rule (R1) does not apply, so $\cost_i(e \mid \bundle i) \ne 0$ for all
-$i$ and all $e \in R(\alloc)$; marginals lie in $\set{0,1}$.
+(c) Let $(i,j) \in E$ with $i,j \in S$. As $S$ is strongly connected there is
+a directed path in $G$ from $j$ to $i$; choosing one with no repeated vertex
+and appending the arc $(i,j)$ produces a directed cycle of $G$ containing
+$(i,j)$. Were $\cost_i(e \mid X_j) = 0$ for some $e \in R$, rule (R2) would
+apply to that arc and cycle. Hence the marginal is not $0$, so it is $1$.
 
-(c) Let $(i,j) \in E$. By (a) there is a directed path in $G$ from $j$ to
-$i$; choosing one with no repeated vertex and appending the arc $(i,j)$
-yields a directed cycle of $G$ through $(i,j)$. Since (R2) does not apply,
-$\cost_i(e \mid \bundle j) \ne 0$ for every $e \in R(\alloc)$.
+(d) Let $i \in S$ and $j \notin S$. No arc of $E$ leaves $S$, so
+$(i,j) \notin E$, i.e.\ $\cost_i(X_i) \ne \cost_i(X_j)$. Envy-freeness
+\eqref{eq:g3-pef} gives $\cost_i(X_i) \le \cost_i(X_j)$, whence the
+inequality is strict.
+\end{proof}
+
+\subsection{The completion}
+\label{sec:g3-construction}
+
+Assume $r \ge 1$ and write $R = \set{e_1,\dots,e_r}$. By
+Lemma~\ref{lem:g3-terminal}(a) we have $r < \abs S$, so we may fix $r$
+distinct agents
+\[
+  T = \set{t_1,\dots,t_r} \subseteq S ,
+\]
+and we do so arbitrarily. Define the allocation $\alloc = (A_1,\dots,A_n)$ by
+\begin{equation}
+\label{eq:g3-alloc}
+  A_i :=
+  \begin{cases}
+    X_{t_k} \cup \set{e_k}, & i = t_k \ \ (1 \le k \le r),\\[2pt]
+    X_i, & i \in \agents \setminus T .
+  \end{cases}
+\end{equation}
+Since the $t_k$ are distinct and every chore of $R$ is used exactly once,
+$\alloc$ is an allocation of $\items$. Members of $T$ are called
+\emph{recipients}.
+
+\begin{definition}[Subsidy set]
+\label{def:g3-P}
+Let $P \subseteq \agents$ be the smallest set satisfying
+\begin{enumerate}
+  \item[(P1)] $T \subseteq P$; and
+  \item[(P2)] if $i \in \agents \setminus S$ and $(i,j) \in E$ for some
+        $j \in P$, then $i \in P$.
+\end{enumerate}
+Equivalently, $P$ is obtained by initialising $P := T$ and repeatedly
+adjoining any $i \notin S$ having an arc of $E$ into the current set, until
+no further agent can be adjoined; the process terminates because $\agents$ is
+finite and $P$ only grows. Define
+\begin{equation}
+\label{eq:g3-subsidy}
+  \subsidy_i := \begin{cases} 1, & i \in P,\\ 0, & i \notin P.\end{cases}
+\end{equation}
+\end{definition}
+
+\begin{lemma}
+\label{lem:g3-Pstructure}
+$P \setminus T \subseteq \agents \setminus S$; that is, every agent of $P$
+that is not a recipient lies outside $S$.
+\end{lemma}
+\begin{proof}
+Let $P_0 := T$ and let $P_{u+1}$ be $P_u$ together with all $i \notin S$
+having an arc of $E$ into $P_u$; then $P = \bigcup_u P_u$. By induction on
+$u$, $P_u \setminus T \subseteq \agents \setminus S$: this holds for
+$P_0 \setminus T = \emptyset$, and every agent adjoined at any later step
+lies outside $S$ by construction.
+\end{proof}
+
+\begin{lemma}
+\label{lem:g3-budget}
+$\subsidy \in \set{0,1}^n$ and $\sum_{i} \subsidy_i = \abs P \le n-1$.
+\end{lemma}
+\begin{proof}
+That $\subsidy \in \set{0,1}^n$ and $\sum_i \subsidy_i = \abs P$ is immediate
+from \eqref{eq:g3-subsidy}. By Lemma~\ref{lem:g3-Pstructure},
+$P \subseteq T \cup (\agents \setminus S)$, and this union is disjoint
+because $T \subseteq S$, so
+$\abs P \le \abs T + \abs{\agents \setminus S} = r + n - \abs S$. By
+Lemma~\ref{lem:g3-terminal}(a), $r \le \abs S - 1$, hence
+$\abs P \le n - 1$.
 \end{proof}
 
 \begin{lemma}
 \label{lem:g3-expensive}
-In the situation of Lemma~\ref{lem:g3-stopping}, for every $a, j \in \agents$
-and every $e \in R(\alloc)$,
+Let $i \in S$, let $t \in T$ and let $e \in R$. Then
 \[
-  \cost_a(\bundle j \cup \set e) \;\ge\; \cost_a(\bundle a) + 1 .
+  \cost_i(X_t \cup \set e) \ \ge\ \cost_i(X_i) + 1 .
 \]
 \end{lemma}
-
 \begin{proof}
-Envy-freeness of $\alloc$ gives $\cost_a(\bundle j) \ge \cost_a(\bundle a)$,
-and both sides are integers. If $\cost_a(\bundle j) \ge \cost_a(\bundle a)+1$
-the claim follows from $\cost_a(\bundle j \cup \set e) \ge
-\cost_a(\bundle j)$. Otherwise $\cost_a(\bundle j) = \cost_a(\bundle a)$. If
-$j = a$ then $\cost_a(e \mid \bundle a) = 1$ by
-Lemma~\ref{lem:g3-stopping}(b); if $j \ne a$ then $(a,j) \in E$ by
-\eqref{eq:g3-graph} and $\cost_a(e \mid \bundle j) = 1$ by
-Lemma~\ref{lem:g3-stopping}(c). In both cases
-$\cost_a(\bundle j \cup \set e) = \cost_a(\bundle a) + 1$.
+Note $t \in T \subseteq S$. By \eqref{eq:g3-pef},
+$\cost_i(X_i) \le \cost_i(X_t)$.
+
+If $\cost_i(X_i) < \cost_i(X_t)$, then $\cost_i(X_t) \ge \cost_i(X_i) + 1$ by
+\eqref{eq:g3-gap}, and $\cost_i(X_t \cup \set e) \ge \cost_i(X_t)$ by
+Observation~\ref{obs:g3-basic}.
+
+Otherwise $\cost_i(X_i) = \cost_i(X_t)$. If $i = t$, then
+$\cost_i(X_t \cup \set e) = \cost_i(X_i) + \cost_i(e \mid X_i) =
+\cost_i(X_i) + 1$ by Lemma~\ref{lem:g3-terminal}(b). If $i \ne t$, then
+$(i,t) \in E$ by \eqref{eq:g3-graph} with $i,t \in S$, so
+$\cost_i(e \mid X_t) = 1$ by Lemma~\ref{lem:g3-terminal}(c), giving
+$\cost_i(X_t \cup \set e) = \cost_i(X_t) + 1 = \cost_i(X_i) + 1$.
 \end{proof}
+
+\subsection{Envy-freeness}
+\label{sec:g3-ef}
 
 \begin{theorem}
-\label{thm:g3-r2}
-Let $n \ge 2$, let $\alloc = (\bundle1,\dots,\bundle n)$ be the partial
-allocation at which the algorithm of Theorem~\ref{thm:g3-twyz} halts, and
-suppose $R(\alloc) = \set{e_1,\dots,e_{n-1}}$ has exactly $n-1$ elements. Choose
-distinct indices $m_1,\dots,m_{n-1}$ and set
-\[
-  Y_{m_t} := \bundle{m_t} \cup \set{e_t} \ \ (1 \le t \le n-1),
-  \qquad
-  Y_w := \bundle w \text{ for the remaining index } w .
-\]
-Let $\pi$ minimise $\sum_a \cost_a(Y_{\pi(a)})$. Then the allocation
-assigning $Y_{\pi(a)}$ to $a$ admits an envy-free solution with subsidy in
-$\set{0,1}^n$.
+\label{thm:g3-completion}
+Let $X$, $R$, $r \ge 1$ and $S$ be as in \Cref{sec:g3-terminal}, let $\alloc$
+be as in \eqref{eq:g3-alloc} and let $\subsidy$ be as in
+\eqref{eq:g3-subsidy}. Then $(\alloc,\subsidy)$ is an envy-free solution.
 \end{theorem}
-
 \begin{proof}
-Call $Y_{m_1},\dots,Y_{m_{n-1}}$ \emph{augmented} and $Y_w$ \emph{clean}.
-Put $L := \sum_{a} \cost_a(\bundle a)$ and, for a permutation $\sigma$,
-\[
-  g_a(\sigma) \;:=\; \cost_a(Y_{\sigma(a)}) - \cost_a(\bundle a).
-\]
-Since $\bundle{\sigma(a)} \subseteq Y_{\sigma(a)}$ and $\alloc$ is
-envy-free, $\cost_a(Y_{\sigma(a)}) \ge \cost_a(\bundle{\sigma(a)}) \ge
-\cost_a(\bundle a)$, so $g_a(\sigma) \ge 0$, and
-$\sum_a \cost_a(Y_{\sigma(a)}) = L + \sum_a g_a(\sigma)$.
+Fix $i,j \in \agents$; we verify
+$\cost_i(A_i) - \subsidy_i \le \cost_i(A_j) - \subsidy_j$. Throughout we use
+that $X_j \subseteq A_j$ for every $j$, so
+\begin{equation}
+\label{eq:g3-mono}
+  \cost_i(A_j) \ \ge\ \cost_i(X_j) \ \ge\ \cost_i(X_i)
+\end{equation}
+by Observation~\ref{obs:g3-basic} and \eqref{eq:g3-pef}. Note also that
+$T \subseteq P$, so $i \notin P$ implies $i \notin T$ and hence $A_i = X_i$;
+and $j \notin P$ implies $A_j = X_j$ and $\subsidy_j = 0$.
 
-\emph{The minimum of $\sum_a \cost_a(Y_{\sigma(a)})$ equals $L + n - 1$.}
-For the lower bound, fix $\sigma$. Exactly $n-1$ agents receive augmented
-bundles, and each such agent $a$ has $g_a(\sigma) \ge 1$ by
-Lemma~\ref{lem:g3-expensive}; the remaining agent has $g_a(\sigma) \ge 0$.
-Hence $\sum_a g_a(\sigma) \ge n-1$. For the upper bound, take $\sigma =
-\mathrm{id}$: for $t = 1,\dots,n-1$ agent $m_t$ pays
-$\cost_{m_t}(\bundle{m_t}) + \cost_{m_t}(e_t \mid \bundle{m_t}) =
-\cost_{m_t}(\bundle{m_t}) + 1$ by Lemma~\ref{lem:g3-stopping}(b), and agent
-$w$ pays $\cost_w(\bundle w)$; the total is $L + n - 1$.
-
-\emph{Consequently $g_a(\pi) = 1$ for each of the $n-1$ agents holding an
-augmented bundle, and $g_c(\pi) = 0$ for the agent $c := \pi^{-1}(w)$
-holding the clean bundle.} Indeed $\sum_a g_a(\pi) = n-1$ by the previous
-paragraph, while the $n-1$ agents holding augmented bundles contribute at
-least $1$ each and $g_c(\pi) \ge 0$; so all these inequalities are
-equalities.
-
-\emph{Arc weights.} Write $\edgew{}(x,y) = \cost_x(Y_{\pi(x)}) -
-\cost_x(Y_{\pi(y)})$ and let $a,b$ denote agents holding augmented bundles.
+\smallskip
+\noindent\textbf{Case 1: $i \in T$.}
+Then $\subsidy_i = 1$ and, by Lemma~\ref{lem:g3-terminal}(b),
+$\cost_i(A_i) = \cost_i(X_i) + 1$; hence
+$\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$. Note $i \in T \subseteq S$.
 \begin{itemize}
-  \item $\edgew{}(a,b) \le 0$. Indeed $\cost_a(Y_{\pi(a)}) =
-        \cost_a(\bundle a) + 1$ since $g_a(\pi) = 1$, while
-        $Y_{\pi(b)}$ is augmented, say $Y_{\pi(b)} = \bundle{\pi(b)} \cup
-        \set{e}$, so $\cost_a(Y_{\pi(b)}) \ge \cost_a(\bundle a) + 1$ by
-        Lemma~\ref{lem:g3-expensive}.
-  \item $\edgew{}(a,c) \le 1$. Indeed $\cost_a(Y_{\pi(c)}) =
-        \cost_a(\bundle w) \ge \cost_a(\bundle a)$ by envy-freeness of
-        $\alloc$, and $\cost_a(Y_{\pi(a)}) = \cost_a(\bundle a) + 1$.
-  \item $\edgew{}(c,y) \le 0$ for every $y$. Indeed $\cost_c(Y_{\pi(c)}) =
-        \cost_c(\bundle c)$ since $g_c(\pi) = 0$, while
-        $\cost_c(Y_{\pi(y)}) \ge \cost_c(\bundle{\pi(y)}) \ge
-        \cost_c(\bundle c)$ by monotonicity and envy-freeness of $\alloc$.
+  \item[(1a)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set{e}$
+    for some $e \in R$, so $\cost_i(A_j) \ge \cost_i(X_i) + 1$ by
+    Lemma~\ref{lem:g3-expensive}. Hence
+    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
+  \item[(1b)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$.
+    By Lemma~\ref{lem:g3-Pstructure}, $j \notin S$; since $i \in S$,
+    Lemma~\ref{lem:g3-terminal}(d) gives $\cost_i(X_i) < \cost_i(X_j)$, so
+    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by \eqref{eq:g3-gap}. Hence
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
+  \item[(1c)] $j \notin P$. Then $\subsidy_j = 0$ and $A_j = X_j$, so
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$ by
+    \eqref{eq:g3-pef}.
 \end{itemize}
-Thus every arc of the envy graph has weight at most $0$, except arcs whose
-head is $c$, which have weight at most $1$.
+In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) =
+\cost_i(A_i) - \subsidy_i$.
 
-\emph{Path bound.} Let $P$ be a simple directed path. At most one arc of $P$
-has head $c$, since $P$ visits $c$ at most once; every other arc of $P$ has
-weight at most $0$. Hence $P$ has weight at most $1$. In particular the
-envy graph has no positive-weight cycle, so by
-Theorem~\ref{thm:hs-characterisation} the allocation admits an envy-free
-solution, and by Theorem~\ref{thm:hs-minsubsidy} its minimal subsidy
-satisfies $0 \le \subsidy_a = \pathw{}(a) \le 1$ for every $a$. As
-$\pathw{}(a)$ is an integer, $\subsidy \in \set{0,1}^n$.
+\smallskip
+\noindent\textbf{Case 2: $i \in P \setminus T$.}
+Then $\subsidy_i = 1$ and $A_i = X_i$, so
+$\cost_i(A_i) - \subsidy_i = \cost_i(X_i) - 1$. For every $j$,
+$\subsidy_j \le 1$ and $\cost_i(A_j) \ge \cost_i(X_i)$ by
+\eqref{eq:g3-mono}, hence
+$\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) - 1 = \cost_i(A_i) - \subsidy_i$.
+
+\smallskip
+\noindent\textbf{Case 3: $i \notin P$.}
+Then $\subsidy_i = 0$ and $A_i = X_i$, so
+$\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$.
+\begin{itemize}
+  \item[(3a)] $j \notin P$. Then $\subsidy_j = 0$ and $A_j = X_j$, so
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$ by
+    \eqref{eq:g3-pef}.
+  \item[(3b)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set e$
+    for some $e \in R$. We claim $\cost_i(A_j) \ge \cost_i(X_i) + 1$.
+    If $i \in S$ this is Lemma~\ref{lem:g3-expensive}. If $i \notin S$,
+    suppose $\cost_i(X_i) = \cost_i(X_j)$; then $i \ne j$ (as $j \in T
+    \subseteq P$ and $i \notin P$), so $(i,j) \in E$ by
+    \eqref{eq:g3-graph}, and $j \in T \subseteq P$, so (P2) of
+    Definition~\ref{def:g3-P} places $i \in P$, contradicting $i \notin P$.
+    Hence $\cost_i(X_i) < \cost_i(X_j)$, so $\cost_i(X_j) \ge \cost_i(X_i)+1$
+    by \eqref{eq:g3-gap}, and $\cost_i(A_j) \ge \cost_i(X_j)$ by
+    Observation~\ref{obs:g3-basic}. In both cases
+    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
+  \item[(3c)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$.
+    We claim $\cost_i(X_j) \ge \cost_i(X_i) + 1$. If $i \notin S$, suppose
+    $\cost_i(X_i) = \cost_i(X_j)$; then $i \ne j$ (as $j \in P$ and
+    $i \notin P$), so $(i,j) \in E$, and (P2) places $i \in P$, a
+    contradiction; hence $\cost_i(X_i) < \cost_i(X_j)$ and \eqref{eq:g3-gap}
+    applies. If $i \in S$, then $j \notin S$ by
+    Lemma~\ref{lem:g3-Pstructure}, and Lemma~\ref{lem:g3-terminal}(d) gives
+    $\cost_i(X_i) < \cost_i(X_j)$, so again \eqref{eq:g3-gap} applies. Hence
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
+\end{itemize}
+In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) =
+\cost_i(A_i) - \subsidy_i$.
+
+\smallskip
+The three cases are exhaustive, since $\agents$ is the disjoint union of $T$,
+$P \setminus T$ and $\agents \setminus P$.
 \end{proof}
 
-\subsection{Three agents}
+\subsection{Conjecture 2 for every number of agents}
+\label{sec:g3-main}
 
-\begin{corollary}
+\begin{theorem}
 \label{thm:g3-main}
-Conjecture~\ref{conj:main} holds for $n \le 3$: for all dichotomous cost
-functions $\cost_1,\dots,\cost_n$ with $n \le 3$ there exist an allocation
-$\alloc$ and $\subsidy \in \set{0,1}^n$ with $\sum_a \subsidy_a \le n-1$ such
-that $(\alloc,\subsidy)$ is an envy-free solution, and both are computable in
-polynomial time.
-\end{corollary}
-
+Conjecture~\ref{conj:main} holds for every $n$: for all dichotomous cost
+functions $\cost_1,\dots,\cost_n$ on a finite chore set $\items$ there exist
+an allocation $\alloc$ and a subsidy $\subsidy \in \set{0,1}^n$ with
+$\sum_i \subsidy_i \le n-1$ such that $(\alloc,\subsidy)$ is an envy-free
+solution, and both can be computed in polynomial time.
+\end{theorem}
 \begin{proof}
-Run the algorithm of Theorem~\ref{thm:g3-twyz} to obtain an envy-free partial
-allocation $\alloc$ with $\abs{R(\alloc)} \le n-1 \le 2$.
+Run the algorithm of Theorem~\ref{thm:g3-twyz} and let $X$, $R$, $r$, $S$ be
+as in \Cref{sec:g3-terminal}.
 
-If $\abs{R(\alloc)} = 0$ then $\alloc$ is an allocation and
-$(\alloc, \mathbf 0)$ is an envy-free solution.
+If $r = 0$ then $X$ is an allocation satisfying \eqref{eq:g3-pef}, so
+$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$.
 
-If $\abs{R(\alloc)} = 1$, apply Theorem~\ref{thm:g3-r1}.
+If $r \ge 1$, form $T$, $\alloc$ and $\subsidy$ as in
+\Cref{sec:g3-construction}. Theorem~\ref{thm:g3-completion} shows
+$(\alloc,\subsidy)$ is an envy-free solution and
+Lemma~\ref{lem:g3-budget} gives $\subsidy \in \set{0,1}^n$ with
+$\sum_i \subsidy_i \le n-1$.
 
-If $\abs{R(\alloc)} = 2$ then $n = 3$ and $\abs{R(\alloc)} = n-1$, so
-Theorem~\ref{thm:g3-r2} applies.
-
-In each case the subsidy produced is the pointwise-minimal one, so
-Lemma~\ref{lem:g3-minzero} gives $\sum_a \subsidy_a \le n-1$. The
-construction is a minimum-cost assignment on at most three bundles preceded
-by a polynomial-time algorithm, so the total running time is polynomial.
+For the running time: the algorithm of Theorem~\ref{thm:g3-twyz} is
+polynomial and returns $X$, $R$ and $S$. Constructing $\alloc$ takes $r \le
+n-1$ assignments. The graph $G$ has $n$ vertices and is determined by the
+$n^2$ values $\cost_i(X_j)$, each one oracle call. Computing $P$ is a
+backward reachability search in $G$ from $T$, restricted to vertices outside
+$S$, which takes time $O(n^2)$. Hence the work after
+Theorem~\ref{thm:g3-twyz} is polynomial, and so is the whole procedure.
 \end{proof}
 
-\subsection{The range not covered}
-
-Theorem~\ref{thm:g3-r1} and Theorem~\ref{thm:g3-r2} hold for every $n$, at
-residue sizes $1$ and $n-1$ respectively; these coincide with the full range
-$\set{0,1,\dots,n-1}$ permitted by Theorem~\ref{thm:g3-twyz} exactly when
-$n \le 3$. For $n \ge 4$ the residue sizes $k$ with $2 \le k \le n-2$ are not
-covered, and neither proof extends to them, for the following two reasons.
-
-First, Lemma~\ref{lem:g3-stopping}(a) fails. At a halting state with
-$\abs{R(\alloc)} = k$ the selected component satisfies only $\abs S \ge k+1$,
-so $S$ may be a proper subset of $\agents$; arcs of $E$ with tail outside
-$S$ need not lie on any directed cycle, since $S$ has no outgoing arcs.
-Consequently Lemma~\ref{lem:g3-expensive} is unavailable for agents outside
-$S$, and with it the lower bound $\sum_a g_a(\sigma) \ge k$ in the proof of
-Theorem~\ref{thm:g3-r2}.
-
-Second, even granting that lower bound, the path bound fails. With $k$
-augmented bundles there are $n - k \ge 2$ clean bundles, so the envy graph
-may contain two distinct vertices $c_1 \ne c_2$ holding clean bundles. The
-argument of Theorem~\ref{thm:g3-r2} then bounds by $1$ every arc with head
-$c_1$ or $c_2$ and by $0$ every other arc, which permits a simple path
-$a_1 \to c_1 \to a_2 \to c_2$ of weight up to $2$: the arcs into $c_1$ and
-into $c_2$ each contribute at most $1$, and the arc $c_1 \to a_2$ contributes
-at most $0$, but nothing in the argument forces the two contributions of $1$
-to be non-simultaneous.
-
-The two obstructions are independent: removing the first restores the
-bound $\sum_a g_a(\sigma) \ge k$ but leaves the alternating path of the
-second available, and removing the second leaves the lower bound
-unjustified. For $2 \le k \le n-2$ it would suffice, for a given halting
-state, to exhibit either a placement of $R(\alloc)$ into bundles and a
-permutation of total excess at most $1$, in which case
-Lemma~\ref{lem:g3-criterion} applies directly; or a placement together with
-a minimum-cost permutation for which every simple path in the envy graph has
-weight at most $1$, in which case Theorem~\ref{thm:hs-characterisation} and
-Theorem~\ref{thm:hs-minsubsidy} apply as at the end of the proof of
-Theorem~\ref{thm:g3-r2}. Establishing either for every halting state with
-$2 \le \abs{R(\alloc)} \le n-2$ would, with Theorem~\ref{thm:g3-r1} and
-Theorem~\ref{thm:g3-r2}, prove Conjecture~\ref{conj:main} for all $n$.
+\begin{remark}
+\label{rem:g3-dependency}
+Theorem~\ref{thm:g3-main} uses Theorem~\ref{thm:g3-twyz} together with the
+three properties of its halting state recorded in
+Lemma~\ref{lem:g3-terminal}, which are read off the rules (R1)--(R3) of
+\Cref{sec:g3-terminal}; the statement of Theorem~\ref{thm:g3-twyz} alone does
+not supply them. Beyond \eqref{eq:g3-dich}, no assumption is made on the cost
+functions: they need not be additive or submodular, and no relation between
+different agents' cost functions is assumed. Envy-freeness is verified
+directly from \eqref{eq:g3-ef} in Theorem~\ref{thm:g3-completion}, and
+Lemma~\ref{lem:g3-terminal}(a) is used only in
+Lemma~\ref{lem:g3-budget}; the conclusion of
+Theorem~\ref{thm:g3-completion} holds whenever $r \le \abs S$.
+\end{remark}
