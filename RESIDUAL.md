@@ -3335,6 +3335,75 @@ proof uses Algorithm 3's *internals* (rules R1–R3 and the tail-SCC property),
 not merely the statement of Theorem 5.1. This is recorded in
 `rem:g3-dependency` and is the first thing a referee should check.
 
+### 7.16.40 Approach 14 (almost-balanced size-shift): reduction correct, proof program blocked
+
+Audited `approach_14_proposal.pdf`. Verdict: **the reduction is correct, the
+target is true as far as testing reaches, but the proposed proof program
+cannot be carried out** — and the blocker is already on record in this project.
+
+**(a) Proposition 1 of the note is correct.** With
+$\tilde v_i(S)=\abs S-\cost_i(S)$ one gets
+$\tilde w_B(i,j)=w^c_B(i,j)-(\abs{B_i}-\abs{B_j})$, i.e. the note's (1).
+Positive-EF gives $\tilde w\le q_i-q_j$, so
+$w^c_B(i,j)\le(q_i-q_j)+\abs{B_i}-\abs{B_j}=p_i-p_j$ with $p_i=q_i+d_i-\alpha$,
+$d_i=\abs{B_i}-k$. And $r_i=q_i+d_i\in\{0,1,2\}$ attains both $0$ and $2$ only
+via $\ell\in L,q_\ell=0$ and $h\in H,q_h=1$, which condition (iii) forbids.
+Hence $p\in\{0,1\}^n$. Verified line by line.
+
+**(b) RQ1 is not new — it is Target G-bal of Approach 6.** Approach 6 already
+defines `def:targetGbal` as "cardinality-balanced partition (sizes differ by
+$\le1$) whose optimal assignment gives $q$-spread $\le1$", with
+$q_i=\tilde\subsidy_i+\abs{B_i}$. Since $q_i-k=q^{\mathrm{goods}}_i+d_i=r_i$,
+RQ1's (i)+(ii)+(iii) is exactly $r$-spread $\le1$. So RQ1 $\Rightarrow$ Target
+G-bal $\Rightarrow$ Target G $\Rightarrow$ Conjecture 2, all already recorded.
+The note's Remark 1 ("no dummy chores needed") does not distinguish them:
+Target G-bal was already stated for sizes differing by $\le1$, not exact
+balance. What the note *does* add is the explicit compatibility condition
+(iii) and the exact path condition (6).
+
+**(c) RQ1 survives search.** New exhaustive-over-allocations search
+(`update_14/rq1_search.py`): for each random positive dichotomous instance,
+enumerate every almost-balanced allocation and every $q\in\{0,1\}^n$ and test
+(i)-(iii). Zero failures at $n=3$ ($m=4,5,6$) and $n=4$ ($m=5,6$), unbiased
+and biased generators. Consistent with Approach 6's $0/389{,}215$ for Target G.
+
+**(d) THE PROGRAM (Steps 1--4) IS BLOCKED — verified independently.** All four
+steps modify the BKNS/R3 incremental algorithm to maintain (I1)-(I3). Approach
+6 §"Item-by-item insertion is the wrong template here too" already refutes
+this, and both scripts were re-run this session:
+
+- `update_6/guidedR3_full.py`: full backtracking over **every** legal R3
+  execution (every item order, every Extend choice, every FindSink start;
+  $474$ nodes) on an explicit $n=m=3$ instance. Best reachable $q$-spread
+  $=\mathbf 2$.
+- `update_6/verify_reach_gap.py`: algorithm-free enumeration on the same
+  instance finds $q$-spread $=\mathbf 0$, via the balanced allocation
+  $\{0\},\{1\},\{2\}$ with goods subsidy $(0,0,0)$ — so **RQ1 holds there**.
+- **New, sharper (`update_14/reach_sizes.py`)**: the *only* final size profile
+  any legal R3 execution can reach on that instance is $(0,1,2)$. The
+  almost-balanced profile $(1,1,1)$ is **unreachable**.
+
+The instance: $\cost_1\equiv0$; $\cost_2=0$ on singletons, $1$ on larger sets;
+$\cost_3=1$ on singletons, $2$ on larger. Size-shifted,
+$\tilde v_3(S)=0$ for every $S\ne\items$ and $\tilde v_3(\items)=1$: agent 3 is
+"all-or-nothing", has marginal $0$ for every single item on the empty bundle,
+so an insertion algorithm never gives it a first item and its bundle stays
+empty.
+
+**Why this kills each step.** Step 1 restricts Extend to minimum-cardinality
+bundles — a restriction can only *shrink* the reachable set, and (I2) is
+already unreachable. Steps 2--3 likewise restrict choices. Step 4 was the
+fallback (weaken (I3) to the path condition (6)) but does not help either: the
+failure here is **(I2)**, not (I3), and weakening (I3) does not enlarge the set
+of reachable allocations. The obstruction is on *reachability of the
+allocation*, not on which invariant is tracked.
+
+**Status.** Approach 14's reduction is a correct and reusable statement;
+its target is open (= Target G-bal, open since Approach 6, $n\ge3$); its
+proposed route is closed. The live non-insertion route remains Approach 6's
+construct-and-repair. None of this affects Conjecture 2 itself, which is proved
+unconditionally for all $n$ by Approach 13 (§7.16.39).
+
 ### 7.17 Status
 
 | statement | status |
@@ -3453,11 +3522,23 @@ not merely the statement of Theorem 5.1. This is recorded in
 | **$\abs R=1$ absorbed, ANY $n$, no search** | **PROVED** (§7.16.34) — identity assignment has total excess $\le1$; subsumes Lemma GG and kills the stuck/non-stuck case split |
 | $\abs R=2$ via the same excess argument | **gives only $p\le2$** — and the shortfall is real, not loose: min-cost total excess genuinely attains $2$ (`update_49/eps_only_r2.py`) |
 | general-$n$ bound obtainable today from Theorem 5.1 $+$ excess | $p\le n-1$ — **exactly the known `KMSTY24` baseline**, so this route currently adds nothing beyond $n=3$ |
-| **THE missing lemma** (equivalent to Conjecture 2 at every $n$) | **open, sharply stated** (§7.16.34): place $R$ so the min-cost assignment has **total excess $\le1$**, independent of $\abs R$. Cannot be proved by bounding total excess alone; needs "no simple path collects $>1$ unit" |
+| **THE missing lemma of §7.16.34** (place $R$ so min-cost total excess $\le1$) | ~~open~~ → **SOLVED** for $\abs R\in\{1,n-1\}$ (§7.16.37) and then superseded entirely by §7.16.39; the excess-sum frame was the wrong one |
+| **`lem:g2-stopping`** (Algorithm 3 halting at $\abs R=n-1$ forces a strongly connected equality graph $+$ unit marginals on every arc) | **PROVED** (§7.16.35) — uses the algorithm's *construction*, not just Theorem 5.1's statement |
+| **`lem:g2-expensive`** (any augmented bundle costs every agent $\ge$ own $+1$) | **PROVED** (§7.16.35) |
+| **Conjecture 2 at $n=3$** | **PROVED UNCONDITIONALLY, no exhaustion anywhere** (§7.16.35); independently audited end-to-end (§7.16.36) |
+| total subsidy $\le n-1$ (second half of `conj:main`) | **GAP FOUND (§7.16.36), now PROVED** — needs $\min_a p_a=0$, from shift-invariance $+$ pointwise minimality |
+| **saturation lemma** | **REFUTED** (§7.16.37); the gap-truncation repair **also refuted** (§7.16.38) — preserves *base*-matrix buckets, not *post-insertion* ones. **No bounded saturation theorem is claimed.** Both enumerations exploratory only; no result depends on either |
+| **CONJECTURE 2, EVERY $n$** | **PROVED** — two independent routes: §7.16.37 (min-cost within $S$ $+$ telescoping potential) and §7.16.39 (identity assignment $+$ backward equality closure; simpler, no Halpern–Shah). Written up as `approach_13.tex` |
+| §7.16.39 route audited end-to-end | **0 problems** — every $T$, every bijection, $n=3..6$, residues $1..5$; closure strictly enlarges $T$ in $520$ cases |
+| **Approach 14** (almost-balanced size-shift, `approach_14_proposal.pdf`) | reduction **CORRECT**; target $=$ Approach 6's **Target G-bal**, still **open**; proposed Steps 1--4 **BLOCKED** (§7.16.40) |
+| Approach 14 Steps 1--4 (modify BKNS to maintain (I1)--(I3)) | **REFUTED** (§7.16.40) — on an explicit $n=m=3$ instance the *only* reachable size profile is $(0,1,2)$; almost-balanced $(1,1,1)$ is unreachable by **any** legal execution, though RQ1 holds there with spread $0$ |
 
-(F5\*) at $n = 3$ is **closed on the composed family** — Theorem FF, via
-Theorem EE and Lemma A — and open outside it, where it reduces to Lemma E for
-general dichotomous costs and thence to (Q′). Everything above is unconditional.
+**Overall status.** Conjecture 2 is **PROVED for every $n$** (§7.16.39,
+written up as `approach_13.tex`); $n=3$ additionally has a self-contained
+proof (§7.16.35, `approach_12.tex`). The older lines above — (F5\*), Lemma E,
+(Q′), the composed family — are superseded as *routes*, and are retained as a
+record of what was tried and how far each reached. Everything marked
+**PROVED** above is unconditional and uses no enumeration.
 
 ## 8. Scripts
 
