@@ -1,17 +1,66 @@
 # Algorithmic Game Theory — Fair Division with Subsidies
 
 Research notes and working material on **fair division of indivisible items with
-subsidies**, and the problem this project set out to settle: **negative
-dichotomous valuations** (chores).
+subsidies**, built around one problem statement: envy-free allocation of **chores**
+under negative dichotomous valuations.
 
-## Status — solved
+## Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations
 
-**Conjecture 2 is proved, for every number of agents $n$.** For every instance
-with negative dichotomous valuations there is an envy-free solution with a
-subsidy of $0$ or $1$ per agent — hence at most $n-1$ in total — computable in
-polynomial time in the value-oracle model, under no assumption on the cost
-functions beyond binary marginals (not additivity, not submodularity, and no
-bound on the number of chores). The bound is tight.
+Envy-freeness fails for indivisible items — the standard one-item, two-agent instance
+already has no envy-free allocation. One repair keeps envy-freeness **exact** and buys
+off the residual envy with money: each agent $i$ receives, alongside her bundle, a
+subsidy $p_i \ge 0$ from a third party. The question is how much money this takes.
+
+R3 (Barman et al.) settles this for **dichotomous** valuations, where every marginal
+$v(S \cup \{g\}) - v(S) \in \{0, 1\}$ — every item is a *good*. There, a subsidy of
+$0$ or $1$ per agent always suffices.
+
+This project asks the mirrored question: **negative dichotomous** valuations, where
+
+$$v(S) - v(S \cup \{g\}) \in \{0, 1\},$$
+
+so every item is a **chore** — taking on one more costs an agent either nothing or
+exactly one unit. No further structure is assumed: valuations need not be additive,
+submodular, or subadditive.
+
+**The objective.** Either prove the analogue of R3's guarantee in the chores setting —
+subsidy in $\{0,1\}$ per agent, $n-1$ in total, in polynomial time — or exhibit an
+instance showing the transfer fails.
+
+Two facts fixed the target before any work began, both argued in
+[`report/sections/introduction.tex`](report/sections/introduction.tex):
+
+- **A bounded subsidy already existed.** Negative dichotomous valuations are doubly
+  monotone under the two-sided normalisation, so R9's EF1 ⇒ EF-with-subsidy reduction
+  applies off the shelf and gives $n-1$ per agent, $n(n-1)/2$ total. That was the
+  baseline to beat, not the goal.
+- **The $n-1$ lower bound transfers.** With $n$ agents and $n-1$ unit chores, every
+  complete allocation forces a total subsidy of $n-1$ — so the target bound, once
+  proved, is tight.
+
+The gap between the two was a factor of $n$ in the total. In the report this problem
+statement is formalised as **Conjecture 2**.
+
+## Notation
+
+$N = [n]$ agents; $M$ items with $|M| = m$; valuation $v_i : 2^M \to \mathbb{R}$ with
+$v_i(\emptyset) = 0$; allocation $A = (A_1,\dots,A_n)$; subsidy vector
+$p \in \mathbb{R}^n_+$; entitlement weights $w_i > 0$; value matrix $V^A_{ij} = v_i(A_j)$;
+$V$ = max item value; $W = \sum_i w_i$.
+
+It is often cleaner to work in **cost form**, $c_i := -v_i$, so that $c_i$ is
+non-decreasing with marginals in $\{0,1\}$ and an envy-free solution reads
+$c_i(A_i) - p_i \le c_i(A_j) - p_j$.
+
+Source papers use their own letters — divergences are flagged in the glossary §10.
+
+## Status
+
+**The problem statement is solved, for every number of agents $n$.** For every instance
+with negative dichotomous valuations there is an envy-free solution with a subsidy of
+$0$ or $1$ per agent — hence at most $n-1$ in total — computable in polynomial time in
+the value-oracle model, under no assumption on the cost functions beyond binary
+marginals, and with no bound on the number of chores. The bound is tight.
 
 | Result | Where |
 |---|---|
@@ -19,17 +68,25 @@ bound on the number of chores). The bound is tight.
 | **General $n$** | [`report/working/approach_13.tex`](report/working/approach_13.tex) → `working.pdf` |
 | Full research log, every route tried | [`docs/RESIDUAL.md`](docs/RESIDUAL.md) §7.16 |
 
-The proof completes an envy-free **partial** allocation — taken from R12 (Tao
-et al.) — by placing the residual chores and then reassigning which agent
-receives which bundle. Two independent routes reach the general-$n$ result: a
-minimum-cost-within-$S$ argument with a telescoping potential, and a simpler
-one using the identity assignment plus a backward equality closure that never
-invokes Halpern–Shah.
+The proof completes an envy-free **partial** allocation — taken from R12 (Tao et al.) —
+by placing the residual chores and then reassigning which agent receives which bundle.
+Two independent routes reach the general-$n$ result: a minimum-cost-within-$S$ argument
+with a telescoping potential, and a simpler one using the identity assignment plus a
+backward equality closure that never invokes Halpern–Shah.
 
-**One dependency worth stating plainly:** the argument uses the *halting state*
-of R12's Algorithm 3 — its internal stopping rule — not merely the statement of
-its Theorem 5.1. That is legitimate but is the first thing a referee should
-check. It is flagged in the write-up itself.
+**One dependency worth stating plainly:** the argument uses the *halting state* of R12's
+Algorithm 3 — its internal stopping rule — not merely the statement of its Theorem 5.1.
+That is legitimate but is the first thing a referee should check. It is flagged in the
+write-up itself.
+
+This fills the remaining corner of the square:
+
+| | goods | chores |
+|---|---|---|
+| additive | R2 | R11 |
+| dichotomous | R3 | **this project** |
+
+each of the four giving one dollar per agent and $n-1$ in total.
 
 ## Contents
 
@@ -40,14 +97,14 @@ check. It is flagged in the write-up itself.
 | [`updates/`](updates/) | `update_1/` … `update_49/`, one folder per work session. Every claim in `report/working/` is machine-checked by scripts here. |
 | [`References/`](References/) | Source papers, `Reading_1.pdf` … `Reading_12.pdf`. |
 | [`graphify-out/`](graphify-out/) | Knowledge graph of the repository — see [Knowledge graph](#knowledge-graph) below. |
+| [`docs/map.md`](docs/map.md) | Paper map: one entry per reading (R1–R12) — what it does, what it improves on, what it leaves open — plus the dependency DAG and the bound tables. |
 | [`docs/glossary_fair_division_subsidies.md`](docs/glossary_fair_division_subsidies.md) | Project glossary — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
-| [`docs/paper_map_R1_to_R9.md`](docs/paper_map_R1_to_R9.md) | One entry per paper (R1–R9): what it does, what it improves on, what it leaves open. Includes the dependency DAG and the bound tables. R10–R12 arrived later and are covered in the report's introduction and bibliography rather than here. |
-| [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The original problem statement. |
+| [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The original problem statement, as first written. |
 
 ## The corpus
 
-The readings are **not** a chronology — they form a small DAG with one trunk,
-several branches, and papers answering adjacent questions. Publication order:
+The readings are **not** a chronology — they form a small DAG with one trunk, several
+branches, and papers answering adjacent questions. Publication order:
 
 | Reading | Year | Short name | Setting |
 |---|---|---|---|
@@ -64,74 +121,31 @@ several branches, and papers answering adjacent questions. Publication order:
 | R6 | 2025 | Klein Elmalem, Aziz et al. | weighted, monotone + subclasses, money |
 | R11 | 2026 | Lu–Mackenzie–Suzuki | additive **goods and chores**, money |
 
-Envy-freeness fails for indivisible goods, and the corpus splits on the repair:
+The corpus splits on the repair to envy-freeness:
 
 - **(A) Add money** — keep EF exact, buy off the envy with an outside subsidy $p$, and
   ask how much. → R1, R2, R3, R9, R11 (equal entitlements); R4, R6, R7 (unequal).
 - **(B) Weaken the notion** — no money; relax EF to EF1 / EFX / WEF$(x,1-x)$ / TWEF /
   WMEF and ask what still exists. → R5, R8, R10, R12.
 
-See [`docs/paper_map_R1_to_R9.md`](docs/paper_map_R1_to_R9.md) §0 for the full
-structure of R1–R9.
+See [`docs/map.md`](docs/map.md) §0 for the full structure and the dependency DAG.
 
-### The three later additions
+### The three papers that matter most here
 
-- **R10 — Bhaskar, Sricharan, Vaish**, *On Approximate Envy-Freeness for
-  Indivisible Chores and Mixed Resources* (APPROX/RANDOM 2021). Establishes that
-  money is genuinely needed here: deciding whether an exactly envy-free
-  allocation of chores exists is NP-complete already for binary additive costs.
-  Also gives polynomial-time EF1 for chores and for doubly monotone instances,
-  which is what supplies the input to R9's reduction.
-- **R11 — Lu, Mackenzie, Suzuki**, *Optimal Subsidy Bounds for Goods and Chores:
-  One Dollar Each Suffices* (2026). The additive goods-and-chores analogue of
-  R2, and it subsumes this project's binary-additive special case. It does
-  **not** cover the dichotomous (non-additive) class, which is why the main
-  question survived it — additive and dichotomous are incomparable classes.
-- **R12 — Tao, Wu, Yu, Zhou**, *On the Existence of EFX (and Pareto-Optimal)
-  Allocations for Binary Chores* (2023). The direct chores analogue of R5, and
-  **the paper this project's proof is built on**: its Theorem 5.1 gives a
-  polynomial-time envy-free *partial* allocation leaving at most $n-1$ chores
-  unassigned, with no subsidy at all. Completing that partial allocation is the
-  whole of our argument.
+- **R3 — Barman, Krishna, Narahari, Sadhukhan** (2022). The goods-side result this
+  project mirrors: dichotomous valuations admit a subsidy of $0$ or $1$ per agent.
+- **R12 — Tao, Wu, Yu, Zhou** (2023). **The paper the proof is built on.** Its
+  Theorem 5.1 gives a polynomial-time envy-free *partial* allocation leaving at most
+  $n-1$ chores unassigned, with no subsidy at all. Completing that partial allocation
+  is the whole of our argument.
+- **R11 — Lu, Mackenzie, Suzuki** (2026). The additive goods-and-chores analogue of R2.
+  It subsumes this project's binary-additive special case but **not** the dichotomous
+  class — additive and dichotomous are incomparable — which is why the main question
+  survived it.
 
-## Problem Statement 1 — negative dichotomous valuations
-
-R3 (Barman et al.) treats **dichotomous** valuations, where every marginal
-$v(S \cup \{g\}) - v(S) \in \{0, 1\}$ — every item is a *good*.
-
-This project asked the mirrored question: **negative dichotomous** valuations,
-where $v(S) - v(S \cup \{g\}) \in \{0, 1\}$, so every item is a **chore**.
-
-Two things fixed the target, both argued in
-[`report/sections/introduction.tex`](report/sections/introduction.tex):
-
-- **A bounded subsidy already existed.** Negative dichotomous valuations are
-  doubly monotone under the two-sided normalisation, so R9's EF1 ⇒
-  EF-with-subsidy reduction applies off the shelf and gives $n-1$ per agent,
-  $n(n-1)/2$ total. That was the baseline to beat, not the goal.
-- **The $n-1$ lower bound transfers.** With $n$ agents and $n-1$ unit chores,
-  every complete allocation forces a total subsidy of $n-1$ — so the target
-  bound, once proved, is tight.
-
-The open question was exactly R3's guarantee — subsidy in $\{0,1\}$ per agent,
-$n-1$ total, in polynomial time — a factor of $n$ below the R9 baseline. **That
-is now proved.** It fills the remaining corner of the square:
-
-| | goods | chores |
-|---|---|---|
-| additive | R2 | R11 |
-| dichotomous | R3 | **this project** |
-
-each of the four giving one dollar per agent and $n-1$ in total.
-
-## Notation
-
-$N = [n]$ agents; $M$ items with $|M| = m$; valuation $v_i : 2^M \to \mathbb{R}$ with
-$v_i(\emptyset) = 0$; allocation $A = (A_1,\dots,A_n)$; subsidy vector
-$p \in \mathbb{R}^n_+$; entitlement weights $w_i > 0$; value matrix $V^A_{ij} = v_i(A_j)$;
-$V$ = max item value; $W = \sum_i w_i$.
-
-Source papers use their own letters — divergences are flagged in the glossary §10.
+R10 (Bhaskar–Sricharan–Vaish, 2021) is the other late addition: it establishes that
+money is genuinely needed, since exact EF for chores is NP-complete already for binary
+additive costs, and it supplies the EF1 algorithm that R9's reduction consumes.
 
 ## Knowledge graph
 
@@ -147,8 +161,8 @@ graphify path "approach_12.tex" "prove_r1.py"
 graphify update .        # rebuild after code changes (AST-only, free)
 ```
 
-The current graph is an AST-only build, which covers the scripts; a semantic
-pass over the `.md` notes and PDFs can be added with `/graphify --update`.
+The current graph is an AST-only build, which covers the scripts; a semantic pass over
+the `.md` notes and PDFs can be added with `/graphify --update`.
 
 ## Building the report
 

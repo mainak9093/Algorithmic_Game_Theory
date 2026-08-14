@@ -1,5 +1,11 @@
 # Paper Map — Addendum: R10, R11
 
+> **MERGED, 2026-08-15.** §§1–2 and §3 are now in `docs/map.md` (the canonical file,
+> renamed from `paper_map_R1_to_R9.md`), which also gained a fresh §12 for R12. The
+> §3.3 warning below travelled with them and is restated in `map.md`'s footer — it is
+> still unverified. §4's test instance was never promoted and is still only here.
+> Retained as a session record; superseded, not deleted.
+
 **Status:** merge candidate. Sections 1–2 are drop-in §§ for `paper_map_R1_to_R9.md`;
 §3 lists edits to existing content in that file; §4 is a new test instance derived from R10
 and belongs in the PS1 note, not the paper map. On merge, retitle the canonical file

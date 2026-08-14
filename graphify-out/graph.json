@@ -570,18 +570,6 @@
       "norm_label": "build()"
     },
     {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L86",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress_main",
-      "community": 0,
-      "community_name": "cri_sweep.py",
-      "norm_label": "main()"
-    },
-    {
       "label": "cri_root_live()",
       "file_type": "code",
       "source_file": "updates/update_48/residual_attack.py",
@@ -594,30 +582,6 @@
       "norm_label": "cri_root_live()"
     },
     {
-      "label": "gen()",
-      "file_type": "code",
-      "source_file": "updates/update_48/spread_scale.py",
-      "source_location": "L77",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_48_spread_scale_gen",
-      "community": 0,
-      "community_name": "cri_sweep.py",
-      "norm_label": "gen()"
-    },
-    {
-      "label": "f_composed()",
-      "file_type": "code",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L73",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress_f_composed",
-      "community": 1,
-      "community_name": "residual_attack.py",
-      "norm_label": "f_composed()"
-    },
-    {
       "label": "analyse()",
       "file_type": "code",
       "source_file": "updates/update_48/minsum_stress.py",
@@ -626,7 +590,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_analyse",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "analyse()"
     },
     {
@@ -638,7 +602,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -650,7 +614,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_collect_residual",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "collect_residual()"
     },
     {
@@ -662,7 +626,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -674,7 +638,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_matching_good",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "matching_good()"
     },
     {
@@ -686,7 +650,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_min_spread_families",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "min_spread_families()"
     },
     {
@@ -698,7 +662,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_spread",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread()"
     },
     {
@@ -710,7 +674,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_check_candidate",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "check_candidate()"
     },
     {
@@ -722,7 +686,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_combinations_with_repl",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "combinations_with_repl()"
     },
     {
@@ -734,7 +698,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_composed",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "composed()"
     },
     {
@@ -746,7 +710,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_cost_family",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "cost_family()"
     },
     {
@@ -758,7 +722,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_exhaustive_hunt",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "exhaustive_hunt()"
     },
     {
@@ -770,7 +734,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_hand_construction",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "hand_construction()"
     },
     {
@@ -782,7 +746,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -794,7 +758,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_anchors",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "anchors()"
     },
     {
@@ -806,7 +770,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_classify",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "classify()"
     },
     {
@@ -818,7 +782,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_is_binary_additive",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "is_binary_additive()"
     },
     {
@@ -830,7 +794,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -842,7 +806,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_run_block",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "run_block()"
     },
     {
@@ -854,7 +818,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_show_costs",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "show_costs()"
     },
     {
@@ -866,7 +830,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_analyse",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "analyse()"
     },
     {
@@ -878,7 +842,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -890,7 +854,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_composed",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "composed()"
     },
     {
@@ -902,7 +866,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_gen_hardcore",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "gen_hardcore()"
     },
     {
@@ -914,7 +878,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_good_exists",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "good_exists()"
     },
     {
@@ -926,7 +890,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -938,7 +902,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_min_spread_families",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "min_spread_families()"
     },
     {
@@ -950,7 +914,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_rand_f",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "rand_f()"
     },
     {
@@ -962,7 +926,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_collect",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "collect()"
     },
     {
@@ -974,7 +938,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_features",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "features()"
     },
     {
@@ -986,7 +950,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -998,8 +962,20 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_find_spread_le",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "find_spread_le()"
+    },
+    {
+      "label": "gen()",
+      "file_type": "code",
+      "source_file": "updates/update_48/spread_scale.py",
+      "source_location": "L77",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_48_spread_scale_gen",
+      "community": 1,
+      "community_name": "gen",
+      "norm_label": "gen()"
     },
     {
       "label": "main()",
@@ -1010,7 +986,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -1022,7 +998,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_min_spread_exhaustive",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "min_spread_exhaustive()"
     },
     {
@@ -1034,7 +1010,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_spread_of",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_of()"
     },
     {
@@ -1046,7 +1022,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_all_families",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "all_families()"
     },
     {
@@ -1058,7 +1034,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_main",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "main()"
     },
     {
@@ -1070,8 +1046,56 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_profile",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "profile()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L95",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_main",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "psi()",
+      "file_type": "code",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_psi",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "psi()"
+    },
+    {
+      "label": "state()",
+      "file_type": "code",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L36",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_state",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "state()"
+    },
+    {
+      "label": "test()",
+      "file_type": "code",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L69",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_test",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "test()"
     },
     {
       "label": "any_good_overall()",
@@ -1326,6 +1350,186 @@
       "norm_label": "winners()"
     },
     {
+      "label": "analyse()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimal_S.py",
+      "source_location": "L26",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimal_s_analyse",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "analyse()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimal_S.py",
+      "source_location": "L44",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimal_s_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "analyse()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L68",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_analyse",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "analyse()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L81",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "matrix_realising()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L43",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_matrix_realising",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "matrix_realising()"
+    },
+    {
+      "label": "rand_dicho()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_rand_dicho",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "rand_dicho()"
+    },
+    {
+      "label": "subsets()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L24",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_subsets",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "subsets()"
+    },
+    {
+      "label": "total_subsidy()",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_total_subsidy",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "total_subsidy()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L61",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "U()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L28",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family_u",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "u()"
+    },
+    {
+      "label": "verify()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L34",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family_verify",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "verify()"
+    },
+    {
+      "label": "check_min_zero()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_check_min_zero",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "check_min_zero()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L61",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "report()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L45",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_report",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "report()"
+    },
+    {
+      "label": "singletons()",
+      "file_type": "code",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L41",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_singletons",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "singletons()"
+    },
+    {
       "label": "f_capped()",
       "file_type": "code",
       "source_file": "updates/update_44/counterexample_hunt.py",
@@ -1334,7 +1538,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_capped",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_capped()"
     },
     {
@@ -1346,7 +1550,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_disjoint",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_disjoint()"
     },
     {
@@ -1358,7 +1562,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_mixed",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_mixed()"
     },
     {
@@ -1370,7 +1574,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_nested",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_nested()"
     },
     {
@@ -1382,7 +1586,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_oneheavy",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_oneheavy()"
     },
     {
@@ -1394,7 +1598,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_threshold",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_threshold()"
     },
     {
@@ -1406,7 +1610,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_f_uniform",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_uniform()"
     },
     {
@@ -1418,7 +1622,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_main",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "main()"
     },
     {
@@ -1430,7 +1634,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_min_max_ell",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "min_max_ell()"
     },
     {
@@ -1442,7 +1646,7 @@
       "_origin": "ast",
       "id": "updates_update_44_n3_cases_best_allocations",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "best_allocations()"
     },
     {
@@ -1454,7 +1658,7 @@
       "_origin": "ast",
       "id": "updates_update_44_n3_cases_main",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "main()"
     },
     {
@@ -1466,7 +1670,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules_key",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "key()"
     },
     {
@@ -1478,7 +1682,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules_main",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "main()"
     },
     {
@@ -1490,7 +1694,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules_scan",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "scan()"
     },
     {
@@ -1502,8 +1706,20 @@
       "_origin": "ast",
       "id": "updates_update_46_cyclebound_check_main",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "main()"
+    },
+    {
+      "label": "f_composed()",
+      "file_type": "code",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L73",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress_f_composed",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "f_composed()"
     },
     {
       "label": "f_thresh()",
@@ -1514,8 +1730,140 @@
       "_origin": "ast",
       "id": "updates_update_48_depth_stress_f_thresh",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "f_thresh()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L86",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "arcs()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_arcs",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "arcs()"
+    },
+    {
+      "label": "c1()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L17",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c1",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "c1()"
+    },
+    {
+      "label": "c2()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c2",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "c2()"
+    },
+    {
+      "label": "c3()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c3",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "c3()"
+    },
+    {
+      "label": "dfs()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L101",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_dfs",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "dfs()"
+    },
+    {
+      "label": "invariant_ok()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L53",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_invariant_ok",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "invariant_ok()"
+    },
+    {
+      "label": "key()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L99",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_key",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "key()"
+    },
+    {
+      "label": "longest_paths()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L25",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_longest_paths",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "longest_paths()"
+    },
+    {
+      "label": "S()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L50",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_s",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "s()"
+    },
+    {
+      "label": "show()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_show",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "show()"
     },
     {
       "label": "conjecture_still_holds()",
@@ -3450,150 +3798,6 @@
       "norm_label": "structured_pool()"
     },
     {
-      "label": "analyse()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimal_S.py",
-      "source_location": "L26",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimal_s_analyse",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "analyse()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimal_S.py",
-      "source_location": "L44",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimal_s_main",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "analyse()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L68",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_analyse",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "analyse()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L81",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_main",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "matrix_realising()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L43",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_matrix_realising",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "matrix_realising()"
-    },
-    {
-      "label": "rand_dicho()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L28",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_rand_dicho",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "rand_dicho()"
-    },
-    {
-      "label": "subsets()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L24",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_subsets",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "subsets()"
-    },
-    {
-      "label": "total_subsidy()",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L51",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_total_subsidy",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "total_subsidy()"
-    },
-    {
-      "label": "check_min_zero()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_check_min_zero",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "check_min_zero()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L61",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_main",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "report()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L45",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_report",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "report()"
-    },
-    {
-      "label": "singletons()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L41",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_singletons",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "singletons()"
-    },
-    {
       "label": "ell_vec()",
       "file_type": "code",
       "source_file": "updates/update_18/localsearch_lemma.py",
@@ -3602,20 +3806,8 @@
       "_origin": "ast",
       "id": "updates_update_18_localsearch_lemma_ell_vec",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "ell_vec()"
-    },
-    {
-      "label": "moves()",
-      "file_type": "code",
-      "source_file": "updates/update_18/localsearch_lemma.py",
-      "source_location": "L83",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_18_localsearch_lemma_moves",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "moves()"
     },
     {
       "label": "main()",
@@ -3626,7 +3818,7 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_main",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "main()"
     },
     {
@@ -3638,7 +3830,7 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_psi3",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "psi3()"
     },
     {
@@ -3650,7 +3842,7 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_psi6",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "psi6()"
     },
     {
@@ -3662,7 +3854,7 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_state",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "state()"
     },
     {
@@ -3674,55 +3866,7 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_test",
       "community": 26,
-      "community_name": "moves",
-      "norm_label": "test()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L95",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_main",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "main()"
-    },
-    {
-      "label": "psi()",
-      "file_type": "code",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L51",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_psi",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "psi()"
-    },
-    {
-      "label": "state()",
-      "file_type": "code",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L36",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_state",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "state()"
-    },
-    {
-      "label": "test()",
-      "file_type": "code",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L69",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_test",
-      "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "test()"
     },
     {
@@ -3734,7 +3878,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_state",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "state()"
     },
     {
@@ -4984,126 +5128,6 @@
       "community": 39,
       "community_name": "chain_hunt.py",
       "norm_label": "top_good()"
-    },
-    {
-      "label": "arcs()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_arcs",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "arcs()"
-    },
-    {
-      "label": "c1()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c1",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "c1()"
-    },
-    {
-      "label": "c2()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L18",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c2",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "c2()"
-    },
-    {
-      "label": "c3()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c3",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "c3()"
-    },
-    {
-      "label": "dfs()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L101",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_dfs",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "dfs()"
-    },
-    {
-      "label": "invariant_ok()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L53",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_invariant_ok",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "invariant_ok()"
-    },
-    {
-      "label": "key()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L99",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_key",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "key()"
-    },
-    {
-      "label": "longest_paths()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L25",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_longest_paths",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "longest_paths()"
-    },
-    {
-      "label": "S()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L50",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_s",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "s()"
-    },
-    {
-      "label": "show()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L57",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_show",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "show()"
     },
     {
       "label": "arcs()",
@@ -7014,6 +7038,18 @@
       "norm_label": "tier_ok()"
     },
     {
+      "label": "moves()",
+      "file_type": "code",
+      "source_file": "updates/update_18/localsearch_lemma.py",
+      "source_location": "L83",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_18_localsearch_lemma_moves",
+      "community": 68,
+      "community_name": "moves",
+      "norm_label": "moves()"
+    },
+    {
       "label": "main()",
       "file_type": "code",
       "source_file": "updates/update_18/stress_potentials.py",
@@ -7022,7 +7058,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_main",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "main()"
     },
     {
@@ -7034,7 +7070,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_psi",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "psi()"
     },
     {
@@ -7046,7 +7082,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_setsplit_instances",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "setsplit_instances()"
     },
     {
@@ -7058,7 +7094,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_test",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "test()"
     },
     {
@@ -7372,42 +7408,6 @@
       "community": 75,
       "community_name": "commitment.py",
       "norm_label": "main()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tight_family.py",
-      "source_location": "L61",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tight_family_main",
-      "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "U()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tight_family.py",
-      "source_location": "L28",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tight_family_u",
-      "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "u()"
-    },
-    {
-      "label": "verify()",
-      "file_type": "code",
-      "source_file": "updates/update_17/tight_family.py",
-      "source_location": "L34",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_17_tight_family_verify",
-      "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "verify()"
     },
     {
       "label": "balanced()",
@@ -8741,17 +8741,6 @@
       "norm_label": "diagnostic: why does the first-chore criterion mismatch on 5 of 6272 cases?"
     },
     {
-      "label": "Large-|D| composed costs: the regime where balance can actually fail.",
-      "file_type": "rationale",
-      "source_file": "updates/update_48/spread_scale.py",
-      "source_location": "L78",
-      "_origin": "ast",
-      "id": "updates_update_48_spread_scale_rationale_78",
-      "community": 0,
-      "community_name": "cri_sweep.py",
-      "norm_label": "large-|d| composed costs: the regime where balance can actually fail."
-    },
-    {
       "label": "minsum_stress.py",
       "file_type": "code",
       "source_file": "updates/update_48/minsum_stress.py",
@@ -8759,7 +8748,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "minsum_stress.py"
     },
     {
@@ -8770,7 +8759,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "residual_attack.py"
     },
     {
@@ -8781,7 +8770,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "residual_hunt.py"
     },
     {
@@ -8792,7 +8781,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "residual_map.py"
     },
     {
@@ -8803,7 +8792,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_conjecture.py"
     },
     {
@@ -8814,7 +8803,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_hardcore.py"
     },
     {
@@ -8825,7 +8814,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_rule.py"
     },
     {
@@ -8836,7 +8825,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_scale.py"
     },
     {
@@ -8847,7 +8836,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "spread_which.py"
     },
     {
@@ -8858,7 +8847,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "stress the min-total-spread rule before believing it. spread_rule.py produced a..."
     },
     {
@@ -8869,7 +8858,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_rationale_54",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "minimisers of total spread and of binding count; are they all good?"
     },
     {
@@ -8880,7 +8869,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "what the residual instances look like, and what certifies them...."
     },
     {
@@ -8891,7 +8880,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_73",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "all families attaining the minimum spread, and that minimum."
     },
     {
@@ -8902,7 +8891,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_86",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "max-weight matching (= min total cost) of the family; is ell <= 1? ties matter,..."
     },
     {
@@ -8913,7 +8902,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "a targeted hunt for a residual instance: one no solved case covers...."
     },
     {
@@ -8924,7 +8913,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_117",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "every composed instance at this size, up to the cap on cost functions."
     },
     {
@@ -8935,7 +8924,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_58",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "c(s) = f(|s & d|), as a dict over all subsets."
     },
     {
@@ -8946,7 +8935,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_63",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "all (d, f) composed dichotomous costs on m items, as (label, dict)."
     },
     {
@@ -8957,7 +8946,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_81",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "full classification, printed."
     },
     {
@@ -8968,7 +8957,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_92",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "the construction the docstring describes, tested directly."
     },
     {
@@ -8979,7 +8968,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "what is actually left unproven? the residual of the four solved cases...."
     },
     {
@@ -8990,7 +8979,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_63",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "c(s) = sum of singletons, all singletons in {0,1}."
     },
     {
@@ -9001,7 +8990,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_74",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "return the membership flags and whether conjecture 2 holds."
     },
     {
@@ -9012,7 +9001,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "the candidate fifth theorem: minimum-spread family + maximum-weight matching...."
     },
     {
@@ -9023,7 +9012,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_rationale_49",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "minimum spread, whether a min-spread family's matching is good, and whether the..."
     },
     {
@@ -9034,7 +9023,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "(f5) tested where it actually bites: instances of minimum spread 2. (f5) every..."
     },
     {
@@ -9045,7 +9034,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "what selects the spread-2 families that work? spread_which.py settled the shape..."
     },
     {
@@ -9056,7 +9045,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "does (a) survive m >> n? the regime where minimum spread could exceed 2...."
     },
     {
@@ -9067,8 +9056,19 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_rationale_55",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "first partition of spread <= k, or none after exhausting all n^m."
+    },
+    {
+      "label": "Large-|D| composed costs: the regime where balance can actually fail.",
+      "file_type": "rationale",
+      "source_file": "updates/update_48/spread_scale.py",
+      "source_location": "L78",
+      "_origin": "ast",
+      "id": "updates_update_48_spread_scale_rationale_78",
+      "community": 1,
+      "community_name": "gen",
+      "norm_label": "large-|d| composed costs: the regime where balance can actually fail."
     },
     {
       "label": "Which spread-2 family works? The statement (F5) should actually have. (F5) has\u2026",
@@ -9078,7 +9078,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_rationale_1",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "which spread-2 family works? the statement (f5) should actually have. (f5) has..."
     },
     {
@@ -9089,7 +9089,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_rationale_53",
       "community": 1,
-      "community_name": "residual_attack.py",
+      "community_name": "gen",
       "norm_label": "per-agent spreads, and bundle sizes."
     },
     {
@@ -9465,6 +9465,237 @@
       "community": 100,
       "community_name": "eps_only_r2.py",
       "norm_label": "eps_only_r2.py"
+    },
+    {
+      "label": "potentials.py",
+      "file_type": "code",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_18_potentials",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "potentials.py"
+    },
+    {
+      "label": "Which lexicographic potential makes the local-search lemma true?\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_rationale_1",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "which lexicographic potential makes the local-search lemma true?..."
+    },
+    {
+      "label": "Canonical min-cost reassignment; return (ell, total cost).",
+      "file_type": "rationale",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L37",
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_rationale_37",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "canonical min-cost reassignment; return (ell, total cost)."
+    },
+    {
+      "label": "For each potential, count partitions with max ell >= 2 and no improving move.",
+      "file_type": "rationale",
+      "source_file": "updates/update_18/potentials.py",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "updates_update_18_potentials_rationale_70",
+      "community": 101,
+      "community_name": "potentials.py",
+      "norm_label": "for each potential, count partitions with max ell >= 2 and no improving move."
+    },
+    {
+      "label": "report/README.md",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "report_readme",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "report/readme.md"
+    },
+    {
+      "label": "Adding new thinking",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "report_readme_adding_new_thinking",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "adding new thinking"
+    },
+    {
+      "label": "Conventions",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L49",
+      "_origin": "ast",
+      "id": "report_readme_conventions",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "conventions"
+    },
+    {
+      "label": "Layout",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "report_readme_layout",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "layout"
+    },
+    {
+      "label": "`report/` \u2014 the LaTeX write-up",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "report_readme_report_the_latex_write_up",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "`report/` \u2014 the latex write-up"
+    },
+    {
+      "label": "Two documents, one preamble",
+      "file_type": "document",
+      "source_file": "report/README.md",
+      "source_location": "L6",
+      "_origin": "ast",
+      "id": "report_readme_two_documents_one_preamble",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "two documents, one preamble"
+    },
+    {
+      "label": "working/README.md",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "report_working_readme",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "working/readme.md"
+    },
+    {
+      "label": "Adding a new idea",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L75",
+      "_origin": "ast",
+      "id": "report_working_readme_adding_a_new_idea",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "adding a new idea"
+    },
+    {
+      "label": "Promoting a section into the report",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L82",
+      "_origin": "ast",
+      "id": "report_working_readme_promoting_a_section_into_the_report",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "promoting a section into the report"
+    },
+    {
+      "label": "The `\\ifworking` switch",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "report_working_readme_the_ifworking_switch",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "the `\\ifworking` switch"
+    },
+    {
+      "label": "Two documents",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L8",
+      "_origin": "ast",
+      "id": "report_working_readme_two_documents",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "two documents"
+    },
+    {
+      "label": "What is parked",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "report_working_readme_what_is_parked",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "what is parked"
+    },
+    {
+      "label": "`working/` \u2014 parked material",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "report_working_readme_working_parked_material",
+      "community": 103,
+      "community_name": "`working/` \u2014 parked material",
+      "norm_label": "`working/` \u2014 parked material"
+    },
+    {
+      "label": "glossary_fair_division_subsidies.md",
+      "file_type": "document",
+      "source_file": "docs/glossary_fair_division_subsidies.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_glossary_fair_division_subsidies",
+      "community": 104,
+      "community_name": "README.md",
+      "norm_label": "glossary_fair_division_subsidies.md"
+    },
+    {
+      "label": "map.md",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_map",
+      "community": 104,
+      "community_name": "README.md",
+      "norm_label": "map.md"
+    },
+    {
+      "label": "RESIDUAL.md",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_residual",
+      "community": 104,
+      "community_name": "README.md",
+      "norm_label": "residual.md"
+    },
+    {
+      "label": "README.md",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "readme",
+      "community": 104,
+      "community_name": "README.md",
+      "norm_label": "readme.md"
     },
     {
       "label": "conjecture2_general_n_full_proof.md",
@@ -9918,6 +10149,50 @@
       "norm_label": "returns dict name -> true if every allocation selected by that tie-break is..."
     },
     {
+      "label": "minimal_S.py",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimal_S.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_minimal_s",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "minimal_s.py"
+    },
+    {
+      "label": "minimum_subsidy.py",
+      "file_type": "code",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "minimum_subsidy.py"
+    },
+    {
+      "label": "tight_family.py",
+      "file_type": "code",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "tight_family.py"
+    },
+    {
+      "label": "tightness.py",
+      "file_type": "code",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_tightness",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "tightness.py"
+    },
+    {
       "label": "counterexample_hunt.py",
       "file_type": "code",
       "source_file": "updates/update_44/counterexample_hunt.py",
@@ -9925,7 +10200,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "counterexample_hunt.py"
     },
     {
@@ -9936,7 +10211,7 @@
       "_origin": "ast",
       "id": "updates_update_44_n3_cases",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "n3_cases.py"
     },
     {
@@ -9947,7 +10222,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "n3_rules.py"
     },
     {
@@ -9958,7 +10233,7 @@
       "_origin": "ast",
       "id": "updates_update_46_cyclebound_check",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "cyclebound_check.py"
     },
     {
@@ -9969,8 +10244,96 @@
       "_origin": "ast",
       "id": "updates_update_48_depth_stress",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "depth_stress.py"
+    },
+    {
+      "label": "How large must the PAID SET S be? (the quantity Conjecture 1 bounds) Correcting\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/minimal_S.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_minimal_s_rationale_1",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "how large must the paid set s be? (the quantity conjecture 1 bounds) correcting..."
+    },
+    {
+      "label": "(minS over good allocations, min total over all allocations, witness).",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/minimal_S.py",
+      "source_location": "L27",
+      "_origin": "ast",
+      "id": "updates_update_17_minimal_s_rationale_27",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "(mins over good allocations, min total over all allocations, witness)."
+    },
+    {
+      "label": "How much subsidy does a dichotomous chores instance actually NEED? Conjecture 1\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_rationale_1",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "how much subsidy does a dichotomous chores instance actually need? conjecture 1..."
+    },
+    {
+      "label": "sum of longest-path subsidies, or None if a positive cycle exists.",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/minimum_subsidy.py",
+      "source_location": "L52",
+      "_origin": "ast",
+      "id": "updates_update_17_minimum_subsidy_rationale_52",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "sum of longest-path subsidies, or none if a positive cycle exists."
+    },
+    {
+      "label": "The extremal family, verified: U_n needs total subsidy exactly n-1.\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family_rationale_1",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "the extremal family, verified: u_n needs total subsidy exactly n-1...."
+    },
+    {
+      "label": "Cost dicts for U_n: m = n-1 unit chores, all agents identical additive.",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/tight_family.py",
+      "source_location": "L29",
+      "_origin": "ast",
+      "id": "updates_update_17_tight_family_rationale_29",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "cost dicts for u_n: m = n-1 unit chores, all agents identical additive."
+    },
+    {
+      "label": "The n-1 bound of Conjecture 1 is TIGHT: an explicit extremal family.\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_rationale_1",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "the n-1 bound of conjecture 1 is tight: an explicit extremal family...."
+    },
+    {
+      "label": "(A): does every envy-freeable allocation have min_i ell(i) = 0?",
+      "file_type": "rationale",
+      "source_file": "updates/update_17/tightness.py",
+      "source_location": "L31",
+      "_origin": "ast",
+      "id": "updates_update_17_tightness_rationale_31",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "(a): does every envy-freeable allocation have min_i ell(i) = 0?"
     },
     {
       "label": "Track 2: an adversarial hunt for a COUNTEREXAMPLE to Conjecture 2. Every sweep\u2026",
@@ -9980,7 +10343,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_rationale_1",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "track 2: an adversarial hunt for a counterexample to conjecture 2. every sweep..."
     },
     {
@@ -9991,7 +10354,7 @@
       "_origin": "ast",
       "id": "updates_update_44_counterexample_hunt_rationale_105",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "minimum over all allocations of max_i ell; exhaustive."
     },
     {
@@ -10002,7 +10365,7 @@
       "_origin": "ast",
       "id": "updates_update_44_n3_cases_rationale_1",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "track 1, work item 1: map the residual at n = 3. by prop:zero-coordinate,..."
     },
     {
@@ -10013,7 +10376,7 @@
       "_origin": "ast",
       "id": "updates_update_44_n3_cases_rationale_48",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "all allocations with max ell <= 1, with their paid sets."
     },
     {
@@ -10024,7 +10387,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules_rationale_1",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "track 1, work item 2: does an explicit rule solve the n = 3 residual?..."
     },
     {
@@ -10035,7 +10398,7 @@
       "_origin": "ast",
       "id": "updates_update_45_n3_rules_rationale_53",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "return (has_ef, per-rule (all_good, some_good))."
     },
     {
@@ -10046,7 +10409,7 @@
       "_origin": "ast",
       "id": "updates_update_46_cyclebound_check_rationale_1",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "rechecking the cycle-closing bound (theorem 33 of the working draft)...."
     },
     {
@@ -10057,8 +10420,19 @@
       "_origin": "ast",
       "id": "updates_update_48_depth_stress_rationale_1",
       "community": 13,
-      "community_name": "counterexample_hunt.py",
+      "community_name": "minimum_subsidy.py",
       "norm_label": "stress conj:cri-depth where it is weakest: larger m, and the hard families...."
+    },
+    {
+      "label": "peel.py",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_2_peel",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "peel.py"
     },
     {
       "label": "dupsep.py",
@@ -10070,6 +10444,28 @@
       "community": 14,
       "community_name": "dupsep.py",
       "norm_label": "dupsep.py"
+    },
+    {
+      "label": "peel.py -- verification for the replica/peel reformulation of PS1. State: W =\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_2_peel_rationale_1",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "peel.py -- verification for the replica/peel reformulation of ps1. state: w =..."
+    },
+    {
+      "label": "Return (ell, has_positive_cycle) via Bellman-Ford on negated weights / direct\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "updates_update_2_peel_rationale_26",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "return (ell, has_positive_cycle) via bellman-ford on negated weights / direct..."
     },
     {
       "label": "dupsep.py -- verification for PS1_note_weighted_penalty_no_go.md (v1,\u2026",
@@ -12085,103 +12481,180 @@
       "norm_label": "round-robin start plus a few random-shuffle starts; report the best."
     },
     {
-      "label": "minimal_S.py",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimal_S.py",
+      "label": "0. The actual structure",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L14",
+      "_origin": "ast",
+      "id": "docs_map_0_the_actual_structure",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "0. the actual structure"
+    },
+    {
+      "label": "10. R10 \u2014 Bhaskar, Sricharan, Vaish, *On Approximate Envy-Freeness for Indivisible Chores and Mixed Resources* (APPROX/RANDOM 2021; arXiv 2012.06788v3, 27 Aug 2022)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L394",
+      "_origin": "ast",
+      "id": "docs_map_10_r10_bhaskar_sricharan_vaish_on_approximate_envy_freeness_for_indivisible_chores_and_mixed_resources_approx_random_2021_arxiv_2012_06788v3_27_aug_2022",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "10. r10 \u2014 bhaskar, sricharan, vaish, *on approximate envy-freeness for indivisible chores and mixed resources* (approx/random 2021; arxiv 2012.06788v3, 27 aug 2022)"
+    },
+    {
+      "label": "11. R11 \u2014 Lu, Mackenzie, Suzuki, *Optimal Subsidy Bounds for Goods and Chores: One Dollar Each Suffices* (arXiv 2607.10089v1, 11 Jul 2026)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L445",
+      "_origin": "ast",
+      "id": "docs_map_11_r11_lu_mackenzie_suzuki_optimal_subsidy_bounds_for_goods_and_chores_one_dollar_each_suffices_arxiv_2607_10089v1_11_jul_2026",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "11. r11 \u2014 lu, mackenzie, suzuki, *optimal subsidy bounds for goods and chores: one dollar each suffices* (arxiv 2607.10089v1, 11 jul 2026)"
+    },
+    {
+      "label": "12. R12 \u2014 Tao, Wu, Yu, Zhou, *On the Existence of EFX (and Pareto-Optimal) Allocations for Binary Chores* (arXiv 2308.12177v1, 23 Aug 2023; journal version in TCS 2025)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L497",
+      "_origin": "ast",
+      "id": "docs_map_12_r12_tao_wu_yu_zhou_on_the_existence_of_efx_and_pareto_optimal_allocations_for_binary_chores_arxiv_2308_12177v1_23_aug_2023_journal_version_in_tcs_2025",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "12. r12 \u2014 tao, wu, yu, zhou, *on the existence of efx (and pareto-optimal) allocations for binary chores* (arxiv 2308.12177v1, 23 aug 2023; journal version in tcs 2025)"
+    },
+    {
+      "label": "13. Bound tables",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L535",
+      "_origin": "ast",
+      "id": "docs_map_13_bound_tables",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "13. bound tables"
+    },
+    {
+      "label": "14. Where the corpus is thin",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L582",
+      "_origin": "ast",
+      "id": "docs_map_14_where_the_corpus_is_thin",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "14. where the corpus is thin"
+    },
+    {
+      "label": "1. R1 \u2014 Halpern & Shah, *Fair Division with Subsidy* (SAGT 2019)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L87",
+      "_origin": "ast",
+      "id": "docs_map_1_r1_halpern_shah_fair_division_with_subsidy_sagt_2019",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "1. r1 \u2014 halpern & shah, *fair division with subsidy* (sagt 2019)"
+    },
+    {
+      "label": "2. R2 \u2014 Brustle, Dippel, Narayan, Suzuki, Vetta, *One Dollar Each Eliminates Envy* (2019/EC 2020)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L117",
+      "_origin": "ast",
+      "id": "docs_map_2_r2_brustle_dippel_narayan_suzuki_vetta_one_dollar_each_eliminates_envy_2019_ec_2020",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "2. r2 \u2014 brustle, dippel, narayan, suzuki, vetta, *one dollar each eliminates envy* (2019/ec 2020)"
+    },
+    {
+      "label": "3. R3 \u2014 Barman, Krishna, Narahari, Sadhukhan, *Achieving Envy-Freeness with Limited Subsidies under Dichotomous Valuations* (2022)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L146",
+      "_origin": "ast",
+      "id": "docs_map_3_r3_barman_krishna_narahari_sadhukhan_achieving_envy_freeness_with_limited_subsidies_under_dichotomous_valuations_2022",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "3. r3 \u2014 barman, krishna, narahari, sadhukhan, *achieving envy-freeness with limited subsidies under dichotomous valuations* (2022)"
+    },
+    {
+      "label": "4. R5 \u2014 Bu, Song, Yu, *EFX Allocations Exist for Binary Valuations* (FAW 2023)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L171",
+      "_origin": "ast",
+      "id": "docs_map_4_r5_bu_song_yu_efx_allocations_exist_for_binary_valuations_faw_2023",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "4. r5 \u2014 bu, song, yu, *efx allocations exist for binary valuations* (faw 2023)"
+    },
+    {
+      "label": "5. R9 \u2014 Kawase, Makino, Sumita, Tamura, Yokoo, *Towards Optimal Subsidy Bounds for Envy-freeable Allocations* (2023 / AAAI 2024)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L199",
+      "_origin": "ast",
+      "id": "docs_map_5_r9_kawase_makino_sumita_tamura_yokoo_towards_optimal_subsidy_bounds_for_envy_freeable_allocations_2023_aaai_2024",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "5. r9 \u2014 kawase, makino, sumita, tamura, yokoo, *towards optimal subsidy bounds for envy-freeable allocations* (2023 / aaai 2024)"
+    },
+    {
+      "label": "6. R8 \u2014 Montanari, Schmidt-Kraepelin, Suksompong, Teh, *Weighted Envy-Freeness for Submodular Valuations* (AAAI 2024 / Soc. Choice Welf. 2025)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L236",
+      "_origin": "ast",
+      "id": "docs_map_6_r8_montanari_schmidt_kraepelin_suksompong_teh_weighted_envy_freeness_for_submodular_valuations_aaai_2024_soc_choice_welf_2025",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "6. r8 \u2014 montanari, schmidt-kraepelin, suksompong, teh, *weighted envy-freeness for submodular valuations* (aaai 2024 / soc. choice welf. 2025)"
+    },
+    {
+      "label": "7. R7 \u2014 Dai, Chen, Wu, Xu, Zhang, *Weighted Envy-Freeness in House Allocation* (2024)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L283",
+      "_origin": "ast",
+      "id": "docs_map_7_r7_dai_chen_wu_xu_zhang_weighted_envy_freeness_in_house_allocation_2024",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "7. r7 \u2014 dai, chen, wu, xu, zhang, *weighted envy-freeness in house allocation* (2024)"
+    },
+    {
+      "label": "8. R4 \u2014 Klein Elmalem, Gonen, Segal-Halevi, *Weighted Envy Freeness With Limited Subsidies* (2024)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L314",
+      "_origin": "ast",
+      "id": "docs_map_8_r4_klein_elmalem_gonen_segal_halevi_weighted_envy_freeness_with_limited_subsidies_2024",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "8. r4 \u2014 klein elmalem, gonen, segal-halevi, *weighted envy freeness with limited subsidies* (2024)"
+    },
+    {
+      "label": "9. R6 \u2014 Klein Elmalem, Aziz, Gonen, Huang, Kimura, Saha, Segal-Halevi, Sun, Suzuki, Yokoo, *Whoever Said Money Won't Solve All Your Problems?* (2025)",
+      "file_type": "document",
+      "source_file": "docs/map.md",
+      "source_location": "L348",
+      "_origin": "ast",
+      "id": "docs_map_9_r6_klein_elmalem_aziz_gonen_huang_kimura_saha_segal_halevi_sun_suzuki_yokoo_whoever_said_money_won_t_solve_all_your_problems_2025",
+      "community": 25,
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "9. r6 \u2014 klein elmalem, aziz, gonen, huang, kimura, saha, segal-halevi, sun, suzuki, yokoo, *whoever said money won't solve all your problems?* (2025)"
+    },
+    {
+      "label": "Paper Map \u2014 Readings 1\u201312",
+      "file_type": "document",
+      "source_file": "docs/map.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_17_minimal_s",
+      "id": "docs_map_paper_map_readings_1_12",
       "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "minimal_s.py"
-    },
-    {
-      "label": "minimum_subsidy.py",
-      "file_type": "code",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "minimum_subsidy.py"
-    },
-    {
-      "label": "tightness.py",
-      "file_type": "code",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_17_tightness",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "tightness.py"
-    },
-    {
-      "label": "How large must the PAID SET S be? (the quantity Conjecture 1 bounds) Correcting\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/minimal_S.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_17_minimal_s_rationale_1",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "how large must the paid set s be? (the quantity conjecture 1 bounds) correcting..."
-    },
-    {
-      "label": "(minS over good allocations, min total over all allocations, witness).",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/minimal_S.py",
-      "source_location": "L27",
-      "_origin": "ast",
-      "id": "updates_update_17_minimal_s_rationale_27",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "(mins over good allocations, min total over all allocations, witness)."
-    },
-    {
-      "label": "How much subsidy does a dichotomous chores instance actually NEED? Conjecture 1\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_rationale_1",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "how much subsidy does a dichotomous chores instance actually need? conjecture 1..."
-    },
-    {
-      "label": "sum of longest-path subsidies, or None if a positive cycle exists.",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/minimum_subsidy.py",
-      "source_location": "L52",
-      "_origin": "ast",
-      "id": "updates_update_17_minimum_subsidy_rationale_52",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "sum of longest-path subsidies, or none if a positive cycle exists."
-    },
-    {
-      "label": "The n-1 bound of Conjecture 1 is TIGHT: an explicit extremal family.\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_rationale_1",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "the n-1 bound of conjecture 1 is tight: an explicit extremal family...."
-    },
-    {
-      "label": "(A): does every envy-freeable allocation have min_i ell(i) = 0?",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/tightness.py",
-      "source_location": "L31",
-      "_origin": "ast",
-      "id": "updates_update_17_tightness_rationale_31",
-      "community": 25,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "(a): does every envy-freeable allocation have min_i ell(i) = 0?"
+      "community_name": "Paper Map \u2014 Readings 1\u201312",
+      "norm_label": "paper map \u2014 readings 1\u201312"
     },
     {
       "label": "p6_deep.py",
@@ -12191,19 +12664,8 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "p6_deep.py"
-    },
-    {
-      "label": "potentials.py",
-      "file_type": "code",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_18_potentials",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "potentials.py"
     },
     {
       "label": "Longest-path subsidies, or None if a positive cycle exists.",
@@ -12213,19 +12675,8 @@
       "_origin": "ast",
       "id": "updates_update_18_localsearch_lemma_rationale_44",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "longest-path subsidies, or none if a positive cycle exists."
-    },
-    {
-      "label": "Single-chore transfers (and optionally swaps) as new bundle tuples.",
-      "file_type": "rationale",
-      "source_file": "updates/update_18/localsearch_lemma.py",
-      "source_location": "L84",
-      "_origin": "ast",
-      "id": "updates_update_18_localsearch_lemma_rationale_84",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "single-chore transfers (and optionally swaps) as new bundle tuples."
     },
     {
       "label": "Push the two-component potential P6 to larger m. P6 = (max_i ell_i, sum_i\u2026",
@@ -12235,41 +12686,8 @@
       "_origin": "ast",
       "id": "updates_update_18_p6_deep_rationale_1",
       "community": 26,
-      "community_name": "moves",
+      "community_name": "p6_deep.py",
       "norm_label": "push the two-component potential p6 to larger m. p6 = (max_i ell_i, sum_i..."
-    },
-    {
-      "label": "Which lexicographic potential makes the local-search lemma true?\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_rationale_1",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "which lexicographic potential makes the local-search lemma true?..."
-    },
-    {
-      "label": "Canonical min-cost reassignment; return (ell, total cost).",
-      "file_type": "rationale",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L37",
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_rationale_37",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "canonical min-cost reassignment; return (ell, total cost)."
-    },
-    {
-      "label": "For each potential, count partitions with max ell >= 2 and no improving move.",
-      "file_type": "rationale",
-      "source_file": "updates/update_18/potentials.py",
-      "source_location": "L70",
-      "_origin": "ast",
-      "id": "updates_update_18_potentials_rationale_70",
-      "community": 26,
-      "community_name": "moves",
-      "norm_label": "for each potential, count partitions with max ell >= 2 and no improving move."
     },
     {
       "label": "layer_hunt.py",
@@ -14307,17 +14725,6 @@
       "norm_label": "c_i(s) = sum_j min(|s \u2229 b_j|, a_ij) for a random reference partition b and..."
     },
     {
-      "label": "peel.py",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_2_peel",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "peel.py"
-    },
-    {
       "label": "n3check.py",
       "file_type": "code",
       "source_file": "updates/update_5/n3check.py",
@@ -14349,28 +14756,6 @@
       "community": 4,
       "community_name": "routeA.py",
       "norm_label": "routea_adv.py"
-    },
-    {
-      "label": "peel.py -- verification for the replica/peel reformulation of PS1. State: W =\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_2_peel_rationale_1",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "peel.py -- verification for the replica/peel reformulation of ps1. state: w =..."
-    },
-    {
-      "label": "Return (ell, has_positive_cycle) via Bellman-Ford on negated weights / direct\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "updates_update_2_peel_rationale_26",
-      "community": 4,
-      "community_name": "routeA.py",
-      "norm_label": "return (ell, has_positive_cycle) via bellman-ford on negated weights / direct..."
     },
     {
       "label": "Verify the n=3 characterisation and the pairing claim underneath it. CLAIM 1.\u2026",
@@ -16364,17 +16749,6 @@
       "norm_label": "can the peels from w down to terminal f be ordered keeping legality?"
     },
     {
-      "label": "glossary_fair_division_subsidies.md",
-      "file_type": "document",
-      "source_file": "docs/glossary_fair_division_subsidies.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_glossary_fair_division_subsidies",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "glossary_fair_division_subsidies.md"
-    },
-    {
       "label": "10. Cross-paper conflicts to watch",
       "file_type": "document",
       "source_file": "docs/glossary_fair_division_subsidies.md",
@@ -16382,7 +16756,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_10_cross_paper_conflicts_to_watch",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "10. cross-paper conflicts to watch"
     },
     {
@@ -16393,7 +16767,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_1_the_model",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "1. the model"
     },
     {
@@ -16404,7 +16778,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_2_valuation_classes",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "2. valuation classes"
     },
     {
@@ -16415,7 +16789,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_3_fairness_notions_unweighted",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "3. fairness notions \u2014 unweighted"
     },
     {
@@ -16426,7 +16800,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_4_fairness_notions_weighted_unequal_entitlements",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "4. fairness notions \u2014 weighted (unequal entitlements)"
     },
     {
@@ -16437,7 +16811,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_5_subsidy_machinery",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "5. subsidy machinery"
     },
     {
@@ -16448,7 +16822,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_6_efficiency_and_welfare",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "6. efficiency and welfare"
     },
     {
@@ -16459,7 +16833,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_7_algorithms_and_mechanisms",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "7. algorithms and mechanisms"
     },
     {
@@ -16470,7 +16844,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_8_house_allocation_r7_only",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "8. house allocation ([r7] only)"
     },
     {
@@ -16481,7 +16855,7 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_9_standing_conjectures_and_settled_questions_named_in_the_corpus",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "9. standing conjectures and settled questions named in the corpus"
     },
     {
@@ -16492,382 +16866,8 @@
       "_origin": "ast",
       "id": "docs_glossary_fair_division_subsidies_glossary_fair_division_of_indivisible_goods_with_subsidies",
       "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
+      "community_name": "Glossary \u2014 Fair Division of Indivisible Goods with Subsidies",
       "norm_label": "glossary \u2014 fair division of indivisible goods with subsidies"
-    },
-    {
-      "label": "paper_map_R1_to_R9.md",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "paper_map_r1_to_r9.md"
-    },
-    {
-      "label": "0. The actual structure",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L14",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_0_the_actual_structure",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "0. the actual structure"
-    },
-    {
-      "label": "10. Bound tables",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L380",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_10_bound_tables",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "10. bound tables"
-    },
-    {
-      "label": "11. Where the corpus is thin",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L415",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_11_where_the_corpus_is_thin",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "11. where the corpus is thin"
-    },
-    {
-      "label": "1. R1 \u2014 Halpern & Shah, *Fair Division with Subsidy* (SAGT 2019)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L73",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_1_r1_halpern_shah_fair_division_with_subsidy_sagt_2019",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "1. r1 \u2014 halpern & shah, *fair division with subsidy* (sagt 2019)"
-    },
-    {
-      "label": "2. R2 \u2014 Brustle, Dippel, Narayan, Suzuki, Vetta, *One Dollar Each Eliminates Envy* (2019/EC 2020)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L103",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_2_r2_brustle_dippel_narayan_suzuki_vetta_one_dollar_each_eliminates_envy_2019_ec_2020",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "2. r2 \u2014 brustle, dippel, narayan, suzuki, vetta, *one dollar each eliminates envy* (2019/ec 2020)"
-    },
-    {
-      "label": "3. R3 \u2014 Barman, Krishna, Narahari, Sadhukhan, *Achieving Envy-Freeness with Limited Subsidies under Dichotomous Valuations* (2022)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L132",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_3_r3_barman_krishna_narahari_sadhukhan_achieving_envy_freeness_with_limited_subsidies_under_dichotomous_valuations_2022",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "3. r3 \u2014 barman, krishna, narahari, sadhukhan, *achieving envy-freeness with limited subsidies under dichotomous valuations* (2022)"
-    },
-    {
-      "label": "4. R5 \u2014 Bu, Song, Yu, *EFX Allocations Exist for Binary Valuations* (FAW 2023)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L157",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_4_r5_bu_song_yu_efx_allocations_exist_for_binary_valuations_faw_2023",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "4. r5 \u2014 bu, song, yu, *efx allocations exist for binary valuations* (faw 2023)"
-    },
-    {
-      "label": "5. R9 \u2014 Kawase, Makino, Sumita, Tamura, Yokoo, *Towards Optimal Subsidy Bounds for Envy-freeable Allocations* (2023 / AAAI 2024)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L185",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_5_r9_kawase_makino_sumita_tamura_yokoo_towards_optimal_subsidy_bounds_for_envy_freeable_allocations_2023_aaai_2024",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "5. r9 \u2014 kawase, makino, sumita, tamura, yokoo, *towards optimal subsidy bounds for envy-freeable allocations* (2023 / aaai 2024)"
-    },
-    {
-      "label": "6. R8 \u2014 Montanari, Schmidt-Kraepelin, Suksompong, Teh, *Weighted Envy-Freeness for Submodular Valuations* (AAAI 2024 / Soc. Choice Welf. 2025)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L222",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_6_r8_montanari_schmidt_kraepelin_suksompong_teh_weighted_envy_freeness_for_submodular_valuations_aaai_2024_soc_choice_welf_2025",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "6. r8 \u2014 montanari, schmidt-kraepelin, suksompong, teh, *weighted envy-freeness for submodular valuations* (aaai 2024 / soc. choice welf. 2025)"
-    },
-    {
-      "label": "7. R7 \u2014 Dai, Chen, Wu, Xu, Zhang, *Weighted Envy-Freeness in House Allocation* (2024)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L269",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_7_r7_dai_chen_wu_xu_zhang_weighted_envy_freeness_in_house_allocation_2024",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "7. r7 \u2014 dai, chen, wu, xu, zhang, *weighted envy-freeness in house allocation* (2024)"
-    },
-    {
-      "label": "8. R4 \u2014 Klein Elmalem, Gonen, Segal-Halevi, *Weighted Envy Freeness With Limited Subsidies* (2024)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L300",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_8_r4_klein_elmalem_gonen_segal_halevi_weighted_envy_freeness_with_limited_subsidies_2024",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "8. r4 \u2014 klein elmalem, gonen, segal-halevi, *weighted envy freeness with limited subsidies* (2024)"
-    },
-    {
-      "label": "9. R6 \u2014 Klein Elmalem, Aziz, Gonen, Huang, Kimura, Saha, Segal-Halevi, Sun, Suzuki, Yokoo, *Whoever Said Money Won't Solve All Your Problems?* (2025)",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L334",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_9_r6_klein_elmalem_aziz_gonen_huang_kimura_saha_segal_halevi_sun_suzuki_yokoo_whoever_said_money_won_t_solve_all_your_problems_2025",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "9. r6 \u2014 klein elmalem, aziz, gonen, huang, kimura, saha, segal-halevi, sun, suzuki, yokoo, *whoever said money won't solve all your problems?* (2025)"
-    },
-    {
-      "label": "Paper Map \u2014 Readings 1\u20139",
-      "file_type": "document",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "paper map \u2014 readings 1\u20139"
-    },
-    {
-      "label": "README.md",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "readme",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "readme.md"
-    },
-    {
-      "label": "A note on the PDFs",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L77",
-      "_origin": "ast",
-      "id": "readme_a_note_on_the_pdfs",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "a note on the pdfs"
-    },
-    {
-      "label": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "algorithmic game theory \u2014 fair division with subsidies"
-    },
-    {
-      "label": "Contents",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "readme_contents",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "contents"
-    },
-    {
-      "label": "Notation",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L68",
-      "_origin": "ast",
-      "id": "readme_notation",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "notation"
-    },
-    {
-      "label": "Problem Statement 1 \u2014 negative dichotomous valuations",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L44",
-      "_origin": "ast",
-      "id": "readme_problem_statement_1_negative_dichotomous_valuations",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "problem statement 1 \u2014 negative dichotomous valuations"
-    },
-    {
-      "label": "The corpus",
-      "file_type": "document",
-      "source_file": "README.md",
-      "source_location": "L18",
-      "_origin": "ast",
-      "id": "readme_the_corpus",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "the corpus"
-    },
-    {
-      "label": "report/README.md",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "report_readme",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "report/readme.md"
-    },
-    {
-      "label": "Adding new thinking",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L41",
-      "_origin": "ast",
-      "id": "report_readme_adding_new_thinking",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "adding new thinking"
-    },
-    {
-      "label": "Conventions",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L49",
-      "_origin": "ast",
-      "id": "report_readme_conventions",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "conventions"
-    },
-    {
-      "label": "Layout",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "report_readme_layout",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "layout"
-    },
-    {
-      "label": "`report/` \u2014 the LaTeX write-up",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "report_readme_report_the_latex_write_up",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "`report/` \u2014 the latex write-up"
-    },
-    {
-      "label": "Two documents, one preamble",
-      "file_type": "document",
-      "source_file": "report/README.md",
-      "source_location": "L6",
-      "_origin": "ast",
-      "id": "report_readme_two_documents_one_preamble",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "two documents, one preamble"
-    },
-    {
-      "label": "working/README.md",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "report_working_readme",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "working/readme.md"
-    },
-    {
-      "label": "Adding a new idea",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L75",
-      "_origin": "ast",
-      "id": "report_working_readme_adding_a_new_idea",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "adding a new idea"
-    },
-    {
-      "label": "Promoting a section into the report",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L82",
-      "_origin": "ast",
-      "id": "report_working_readme_promoting_a_section_into_the_report",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "promoting a section into the report"
-    },
-    {
-      "label": "The `\\ifworking` switch",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L92",
-      "_origin": "ast",
-      "id": "report_working_readme_the_ifworking_switch",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "the `\\ifworking` switch"
-    },
-    {
-      "label": "Two documents",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L8",
-      "_origin": "ast",
-      "id": "report_working_readme_two_documents",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "two documents"
-    },
-    {
-      "label": "What is parked",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L20",
-      "_origin": "ast",
-      "id": "report_working_readme_what_is_parked",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "what is parked"
-    },
-    {
-      "label": "`working/` \u2014 parked material",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "report_working_readme_working_parked_material",
-      "community": 6,
-      "community_name": "Paper Map \u2014 Readings 1\u20139",
-      "norm_label": "`working/` \u2014 parked material"
     },
     {
       "label": "PS1_note_next_routes.md",
@@ -17099,17 +17099,6 @@
       "community": 62,
       "community_name": "monotone_check.py",
       "norm_label": "the replica dual, as a function of the type set tau(s)."
-    },
-    {
-      "label": "RESIDUAL.md",
-      "file_type": "document",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "docs_residual",
-      "community": 63,
-      "community_name": "The residual of the solved cases, and the spread-2 line",
-      "norm_label": "residual.md"
     },
     {
       "label": "1. Four solved cases, never intersected",
@@ -17438,8 +17427,19 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "stress_potentials.py"
+    },
+    {
+      "label": "Single-chore transfers (and optionally swaps) as new bundle tuples.",
+      "file_type": "rationale",
+      "source_file": "updates/update_18/localsearch_lemma.py",
+      "source_location": "L84",
+      "_origin": "ast",
+      "id": "updates_update_18_localsearch_lemma_rationale_84",
+      "community": 68,
+      "community_name": "moves",
+      "norm_label": "single-chore transfers (and optionally swaps) as new bundle tuples."
     },
     {
       "label": "Stress the two surviving potentials, and look for a simpler one. potentials.py\u2026",
@@ -17449,7 +17449,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_rationale_1",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "stress the two surviving potentials, and look for a simpler one. potentials.py..."
     },
     {
@@ -17460,7 +17460,7 @@
       "_origin": "ast",
       "id": "updates_update_18_stress_potentials_rationale_97",
       "community": 68,
-      "community_name": "stress_potentials.py",
+      "community_name": "moves",
       "norm_label": "r10's certified-hard family: ef-free by construction."
     },
     {
@@ -18278,37 +18278,114 @@
       "norm_label": "step 5 --- prove the third set cannot exceed spread 2"
     },
     {
-      "label": "tight_family.py",
-      "file_type": "code",
-      "source_file": "updates/update_17/tight_family.py",
-      "source_location": "L1",
+      "label": "A note on the PDFs",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L175",
       "_origin": "ast",
-      "id": "updates_update_17_tight_family",
+      "id": "readme_a_note_on_the_pdfs",
       "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "tight_family.py"
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "a note on the pdfs"
     },
     {
-      "label": "The extremal family, verified: U_n needs total subsidy exactly n-1.\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/tight_family.py",
+      "label": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "file_type": "document",
+      "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_17_tight_family_rationale_1",
+      "id": "readme_algorithmic_game_theory_fair_division_with_subsidies",
       "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "the extremal family, verified: u_n needs total subsidy exactly n-1...."
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "algorithmic game theory \u2014 fair division with subsidies"
     },
     {
-      "label": "Cost dicts for U_n: m = n-1 unit chores, all agents identical additive.",
-      "file_type": "rationale",
-      "source_file": "updates/update_17/tight_family.py",
-      "source_location": "L29",
+      "label": "Building the report",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L167",
       "_origin": "ast",
-      "id": "updates_update_17_tight_family_rationale_29",
+      "id": "readme_building_the_report",
       "community": 78,
-      "community_name": "tight_family.py",
-      "norm_label": "cost dicts for u_n: m = n-1 unit chores, all agents identical additive."
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "building the report"
+    },
+    {
+      "label": "Contents",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "readme_contents",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "contents"
+    },
+    {
+      "label": "Knowledge graph",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L150",
+      "_origin": "ast",
+      "id": "readme_knowledge_graph",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "knowledge graph"
+    },
+    {
+      "label": "Notation",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "readme_notation",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "notation"
+    },
+    {
+      "label": "Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "readme_problem_statement_fair_envy_free_allocations_with_subsidy_for_negative_dichotomous_valuations",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "problem statement : fair envy free allocations with subsidy for negative dichotomous valuations"
+    },
+    {
+      "label": "Status",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L57",
+      "_origin": "ast",
+      "id": "readme_status",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "status"
+    },
+    {
+      "label": "The corpus",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L104",
+      "_origin": "ast",
+      "id": "readme_the_corpus",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "the corpus"
+    },
+    {
+      "label": "The three papers that matter most here",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L133",
+      "_origin": "ast",
+      "id": "readme_the_three_papers_that_matter_most_here",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "norm_label": "the three papers that matter most here"
     },
     {
       "label": "crux_evidence.py",
@@ -37274,6 +37351,182 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map",
+      "target": "docs_map_paper_map_readings_1_12",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L117",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_2_r2_brustle_dippel_narayan_suzuki_vetta_one_dollar_each_eliminates_envy_2019_ec_2020",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L14",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_0_the_actual_structure",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L146",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_3_r3_barman_krishna_narahari_sadhukhan_achieving_envy_freeness_with_limited_subsidies_under_dichotomous_valuations_2022",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L171",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_4_r5_bu_song_yu_efx_allocations_exist_for_binary_valuations_faw_2023",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L199",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_5_r9_kawase_makino_sumita_tamura_yokoo_towards_optimal_subsidy_bounds_for_envy_freeable_allocations_2023_aaai_2024",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L236",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_6_r8_montanari_schmidt_kraepelin_suksompong_teh_weighted_envy_freeness_for_submodular_valuations_aaai_2024_soc_choice_welf_2025",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L283",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_7_r7_dai_chen_wu_xu_zhang_weighted_envy_freeness_in_house_allocation_2024",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L314",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_8_r4_klein_elmalem_gonen_segal_halevi_weighted_envy_freeness_with_limited_subsidies_2024",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L348",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_9_r6_klein_elmalem_aziz_gonen_huang_kimura_saha_segal_halevi_sun_suzuki_yokoo_whoever_said_money_won_t_solve_all_your_problems_2025",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L394",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_10_r10_bhaskar_sricharan_vaish_on_approximate_envy_freeness_for_indivisible_chores_and_mixed_resources_approx_random_2021_arxiv_2012_06788v3_27_aug_2022",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L445",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_11_r11_lu_mackenzie_suzuki_optimal_subsidy_bounds_for_goods_and_chores_one_dollar_each_suffices_arxiv_2607_10089v1_11_jul_2026",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L497",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_12_r12_tao_wu_yu_zhou_on_the_existence_of_efx_and_pareto_optimal_allocations_for_binary_chores_arxiv_2308_12177v1_23_aug_2023_journal_version_in_tcs_2025",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L535",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_13_bound_tables",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L582",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_14_where_the_corpus_is_thin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/map.md",
+      "source_location": "L87",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_map_paper_map_readings_1_12",
+      "target": "docs_map_1_r1_halpern_shah_fair_division_with_subsidy_sagt_2019",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/n3_conjecture2_consolidated_findings.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -37621,149 +37874,6 @@
       "_origin": "ast",
       "source": "docs_n3_conjecture2_consolidated_findings_n_3_conjecture_2_consolidated_findings_before_the_general_dichotomous_attack",
       "target": "docs_n3_conjecture2_consolidated_findings_executive_status",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L1",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9",
-      "target": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L103",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_2_r2_brustle_dippel_narayan_suzuki_vetta_one_dollar_each_eliminates_envy_2019_ec_2020",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L132",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_3_r3_barman_krishna_narahari_sadhukhan_achieving_envy_freeness_with_limited_subsidies_under_dichotomous_valuations_2022",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L14",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_0_the_actual_structure",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L157",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_4_r5_bu_song_yu_efx_allocations_exist_for_binary_valuations_faw_2023",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L185",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_5_r9_kawase_makino_sumita_tamura_yokoo_towards_optimal_subsidy_bounds_for_envy_freeable_allocations_2023_aaai_2024",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L222",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_6_r8_montanari_schmidt_kraepelin_suksompong_teh_weighted_envy_freeness_for_submodular_valuations_aaai_2024_soc_choice_welf_2025",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L269",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_7_r7_dai_chen_wu_xu_zhang_weighted_envy_freeness_in_house_allocation_2024",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L300",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_8_r4_klein_elmalem_gonen_segal_halevi_weighted_envy_freeness_with_limited_subsidies_2024",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L334",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_9_r6_klein_elmalem_aziz_gonen_huang_kimura_saha_segal_halevi_sun_suzuki_yokoo_whoever_said_money_won_t_solve_all_your_problems_2025",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L380",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_10_bound_tables",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L415",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_11_where_the_corpus_is_thin",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/paper_map_R1_to_R9.md",
-      "source_location": "L73",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_paper_map_r1_to_r9_paper_map_readings_1_9",
-      "target": "docs_paper_map_r1_to_r9_1_r1_halpern_shah_fair_division_with_subsidy_sagt_2019",
       "confidence_score": 1.0
     },
     {
@@ -39827,7 +39937,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L18",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
@@ -39838,29 +39948,40 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
+      "source_location": "L150",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_knowledge_graph",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L167",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_building_the_report",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L175",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_a_note_on_the_pdfs",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
       "source_location": "L44",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "target": "readme_problem_statement_1_negative_dichotomous_valuations",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L6",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "target": "readme_contents",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "README.md",
-      "source_location": "L68",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
@@ -39871,11 +39992,44 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L77",
+      "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "target": "readme_a_note_on_the_pdfs",
+      "target": "readme_status",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_problem_statement_fair_envy_free_allocations_with_subsidy_for_negative_dichotomous_valuations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_contents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L133",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_the_corpus",
+      "target": "readme_the_three_papers_that_matter_most_here",
       "confidence_score": 1.0
     },
     {
@@ -51696,18 +51850,18 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L10",
+      "source_location": "L100",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
-      "target": "report_readme",
+      "target": "docs_map",
       "confidence_score": 1.0
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L11",
+      "source_location": "L101",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
@@ -51718,11 +51872,22 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L11",
+      "source_location": "L69",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
-      "target": "docs_paper_map_r1_to_r9",
+      "target": "docs_residual",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L95",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme",
+      "target": "report_readme",
       "confidence_score": 1.0
     },
     {
@@ -53826,5 +53991,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "ca94a5672f50c2163b338fa10e6da92c206a5a44"
+  "built_at_commit": "d4ed69087ab3e6816cf304955ca5818c234fb5b8"
 }

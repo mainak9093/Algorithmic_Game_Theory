@@ -1,13 +1,13 @@
-# Paper Map — Readings 1–9
+# Paper Map — Readings 1–12
 
 **Companion to `glossary_fair_division_subsidies.md`.** One entry per paper: what it
 does, what it improves on, and what it leaves open. Notation is the Project's (see
 glossary §0); bounds are restated in it, so they may not match the source's letters.
 
-**Read this first.** The file numbering `Reading_1 … Reading_9` is *not* a chronology and
+**Read this first.** The file numbering `Reading_1 … Reading_12` is *not* a chronology and
 *not* a linear improvement chain. The corpus is a small DAG with one trunk, three
-branches, and one paper that answers a different question entirely. §0 gives the shape;
-§§1–9 give the papers; §10 gives the bound tables.
+branches, and papers that answer adjacent questions. §0 gives the shape;
+§§1–12 give the papers; §13 gives the bound tables; §14 says where the corpus is thin.
 
 ---
 
@@ -19,21 +19,25 @@ Publication order, which is what the improvement relation follows:
 |---|---|---|---|
 | R1 | 2019 (SAGT) | Halpern–Shah | unweighted, additive, **money** |
 | R2 | 2019/20 (EC) | Brustle et al. | unweighted, additive + monotone, **money** |
+| R10 | 2021 (APPROX) / 2022 | Bhaskar–Sricharan–Vaish | unweighted, monotone **chores**, *no money* |
 | R3 | 2022 | Barman et al. | unweighted, **dichotomous**, money |
 | R5 | 2023 (FAW) | Bu–Song–Yu | unweighted, **binary**, *no money* |
+| R12 | 2023 | Tao–Wu–Yu–Zhou | unweighted, **binary chores**, *no money* |
 | R9 | 2023 (AAAI'24) | Kawase et al. | unweighted, **doubly monotone**, money |
 | R8 | 2024 (AAAI) / 2025 (SCW) | Montanari et al. | **weighted**, submodular, *no money* |
 | R7 | 2024 | Dai et al. | **weighted**, house allocation, money |
 | R4 | 2024 | Klein Elmalem et al. | **weighted**, additive, money |
 | R6 | 2025 | Klein Elmalem, Aziz et al. | **weighted**, monotone + subclasses, money |
+| R11 | 2026 | Lu–Mackenzie–Suzuki | unweighted, additive **mixed manna**, money |
 
 Envy-freeness fails for indivisible goods. There are exactly two repairs in this corpus,
 and the split is the main organizing fact:
 
 - **(A) Add money.** Keep EF exact; buy off the envy with an outside subsidy $p$. Ask
-  how much. → R1, R2, R3, R9 (equal entitlements); R4, R6, R7 (unequal).
+  how much. → R1, R2, R3, R9, R11 (equal entitlements); R4, R6, R7 (unequal).
 - **(B) Weaken the notion.** No money; relax EF to EF1 / EFX / WEF$(x,1-x)$ / TWEF /
-  WMEF and ask what still exists. → R5 (unweighted, EFX); R8 (weighted, submodular).
+  WMEF and ask what still exists. → R5 (unweighted, EFX); R8 (weighted, submodular);
+  R10, R12 (chores).
 
 The dependency graph:
 
@@ -42,19 +46,25 @@ The dependency graph:
                          │
                          ▼
                         R2 (proves both conjectures; opens monotone case)
-                    ┌────┼─────────────┐
-                    ▼    ▼             ▼
-                   R3   R9        [weights break everything]
-             (dichotomous) (doubly monotone,                │
-                            better constants)         ┌─────┴─────┐
-                                                      ▼           ▼
-                                                     R4 ───► R6   R7
-                                                  (additive) (general) (house alloc.)
+                    ┌────┼─────────────┬─────────────┐
+                    ▼    ▼             ▼             ▼
+                   R3   R9        [weights break    R11
+             (dichotomous) (doubly monotone,  everything]  (additive mixed
+                            better constants)      │        manna; same
+                                             ┌─────┴─────┐  constant as R2)
+                                             ▼           ▼
+                                            R4 ───► R6   R7
+                                         (additive) (general) (house alloc.)
 
-    separate branch, no money:      R5 (EFX, binary)      R8 (WEF relaxations, submodular)
+    separate branch, no money:  R5 (EFX, binary goods)   R8 (WEF relaxations, submodular)
+                                R10 (EF1, chores)        R12 (EFX, binary chores)
+                                          │                        │
+                                          └──── wire into (A) ─────┘
+                                     R10 supplies R9's EF1 input for chores;
+                                     R12's Theorem 5.1 is the starting point of PS1.
 ```
 
-Three relationships worth naming up front, because they are where the corpus is doing
+Four relationships worth naming up front, because they are where the corpus is doing
 real work rather than accumulating:
 
 1. **R2 answers R1's conjectures.** This is the one clean "paper $k+1$ closes paper $k$"
@@ -67,6 +77,10 @@ real work rather than accumulating:
    everything unweighted runs on — is *false* under entitlements. The weighted papers
    had to rebuild the foundation, and one of them (R7) found that under a cardinality
    constraint the foundation cannot be rebuilt at all.
+4. **The no-money branch is not inert for the subsidy question.** R10 and R12 carry no
+   subsidies at all, yet both are load-bearing here: R10 fixes the chores EF1 algorithm
+   that R9's reduction consumes, and R12's partial-EF theorem is what PS1's own proof is
+   built on. The branch labels describe the papers' results, not their usefulness.
 
 ---
 
@@ -377,7 +391,148 @@ the limited-budget algorithm. Cite R6 over R4 by default.
 
 ---
 
-## 10. Bound tables
+## 10. R10 — Bhaskar, Sricharan, Vaish, *On Approximate Envy-Freeness for Indivisible Chores and Mixed Resources* (APPROX/RANDOM 2021; arXiv 2012.06788v3, 27 Aug 2022)
+
+**No subsidies anywhere in this paper.** It is in the corpus because it supplies two things
+the subsidy line for chores needs and did not have: a hardness floor for the *zero*-subsidy
+question on exactly PS1's item class, and a correct EF1 algorithm for non-additive chores.
+
+**Setting.** $n$ agents, $m$ indivisible chores; monotone non-increasing valuations, and the
+doubly monotone class (each agent partitions $M$ into her own goods and chores). Also a mixed
+model with a divisible *bad cake*.
+
+**Results.**
+
+- **Theorem 2 (the one that matters here).** Deciding whether a chores instance admits an
+  **exact EF** allocation is **strongly NP-complete**, already for **binary additive** chores,
+  $v_{ij} \in \{0,-1\}$. Reduction from **Set Splitting**: $q=|U|$, $r=|F|$, $r'=\max\{q,r\}$;
+  build $m = r'+q$ chores ($r'$ dummies $+$ $q$ vertex chores) and $n = r'+2$ agents
+  ($r'$ edge agents $+$ 2 colour agents). Dummies are $-1$ for everyone; vertex chore $V_j$ is
+  $-1$ for edge agent $e_i$ iff $v_j \in E_i$, and $0$ for both colour agents. EF allocation
+  $\iff$ the hypergraph is 2-colourable with no monochromatic edge.
+  (The goods analogue — EF existence for binary goods — was already known NP-complete;
+  R10's contribution is *strong* hardness on the chores side.)
+- **Example 1 (a correction to the literature).** The natural chores adaptation of Lipton et al.'s
+  envy-cycle elimination — give the next chore to a sink, resolve arbitrary envy cycles — **fails
+  to return an EF1 allocation**, already for additive monotone non-increasing valuations
+  ($n=3$, $m=6$). This refutes a claim of Aziz et al. Bérczi et al. had shown failure for
+  non-monotone non-additive valuations; R10's counterexample is strictly stronger.
+  *Reason:* for chores the EF1 witness item is removed from the **envious** agent's bundle, so a
+  cycle swap can hand an agent a strictly better bundle containing no single chore large enough
+  to absorb the envy. **Which cycle you resolve matters for chores and does not for goods.**
+- **Theorem 3.** Resolving **top-trading envy cycles** — the subgraph of the envy graph keeping
+  only arcs into an agent's *weakly most preferred* bundle — repairs it: EF1 for **monotone**
+  chores, polynomial time. Every agent on a resolved top-trading cycle receives her favourite
+  bundle and is therefore envy-free in the next round, which is why EF1 survives.
+- **Theorem 4.** Two-phase extension (Lipton-style goods phase restricted to interested agents,
+  then a top-trading chores phase) gives EF1 for **doubly monotone** instances.
+- **Theorems 16–18.** EFM (envy-freeness for mixed goods) exists for doubly monotone indivisible
+  items $+$ bad cake; and, for indivisible chores $+$ good cake, in two special cases (identical
+  rankings; $m \le n+1$). Complements Bei et al. Peripheral to the subsidy line.
+
+**Improves on.** Lipton et al. (goods $\to$ chores analogue, now correct); Aziz et al. (repairs
+the refuted claim); Bei et al. (bad cake, doubly monotone items).
+
+**Leaves open.** EFM for indivisible chores $+$ good cake in general.
+
+**Why it matters to PS1.** Theorem 2 is what makes the subsidy question non-trivial: with no
+money, exact EF for chores is not merely sometimes impossible but NP-hard to decide, on the
+binary additive class that sits *inside* PS1's dichotomous class. Theorems 3–4 supply the EF1
+allocations that R9's reduction consumes.
+
+---
+
+## 11. R11 — Lu, Mackenzie, Suzuki, *Optimal Subsidy Bounds for Goods and Chores: One Dollar Each Suffices* (arXiv 2607.10089v1, 11 Jul 2026)
+
+**The current end of the trunk, and it lands next to PS1 without landing on it.** Setting: $n$
+agents, $m$ indivisible items, **additive** utilities normalised to $u_i(j) \in [-1,1]$; each
+item may be a good for some agents and a chore for others (fully mixed manna). Standard subsidy
+model.
+
+**Theorem 1.1.** Every such instance admits an envy-free outcome $(A,p)$ with $0 \le p_i \le 1$
+for every agent, computable in polynomial time. Hence total $\le n-1$. Tight, since the bound is
+already tight for goods only (R2).
+
+**Machinery — two iterated matching procedures.**
+
+- **IMWM** (goods style): rounds of maximum-weight matching on the bipartite agent–object graph,
+  ties broken toward maximum cardinality; agents may go unmatched in a round.
+- **IMWPM** (chores style): rounds of maximum-weight **perfect** matching; the object set is
+  padded with $0$-valued dummies to a multiple of $n$, so **every agent takes exactly one object
+  every round**. The output is therefore **balanced** (bundle sizes differ by at most one).
+
+**Proposition 3.1** (subjective goods only, $u_i(g) \le 1$, each item non-negative to someone):
+IMWM gives $p_i \le 1$. **Proposition 3.2** (objective chores only, $u_i(g) \ge -1$): **IMWPM
+gives $p_i \le 1$.** Both by the same telescoping argument: additivity splits any envy path's
+weight into per-round contributions, $w_A(P) = \sum_t w_{\mu^t}(P)$; optimality of the round-$t$
+matching against a rerouted alternative gives
+$w_{\mu^t}(P) \le \max_{g \in J^t} u_k(g) - \max_{g \in J^{t+1}} u_k(g)$ for the path's terminal
+agent $k$; the sum telescopes, and the final round is handled by a cyclic alternative matching,
+leaving $w_A(P) \le -u_k(\mu^T_1) \le 1$.
+
+**The general mixed case** (Theorem 1.1) needs more: a *conditional pairwise merging* routine
+(Algorithm 3) that bundles items into **meta-goods** which are unit-bounded, chore-maximal, and
+have pairwise disjoint interest sets, then three cases on $|Z_{\mathrm{rem}}|$ vs. $|G|$ —
+$|Z_{\mathrm{rem}}|=0$ runs IMWM directly; $|Z_{\mathrm{rem}}| \ge |G|$ reduces to objective
+chores and runs IMWPM; the sparse-chores middle case is the hard one and is built incrementally
+with equality paths and a payment-reduction step, closed by a flow argument.
+
+**Improves on.** R2 (goods only $\to$ mixed, same constant, and a much shorter proof of the
+goods case via Prop. 3.1); R9 on the additive part of doubly monotone, by a factor of $n$
+($n-1$ per agent $\to$ 1). Does **not** subsume R3 or R9 in general: both are non-additive.
+
+**Leaves open, in their own words (§6).** Everything non-additive. They state that additivity
+is load-bearing in two places — defining meta-goods, and getting telescoping envy-path bounds
+out of iterated matchings — and ask whether a constant per-agent bound holds for submodular or
+XOS valuations, noting this is open even for goods only.
+
+**Why it does not settle PS1.** R11 subsumes this project's *binary additive* special case, but
+additive and dichotomous are **incomparable** classes: dichotomous valuations need not be
+additive, and additive ones need not have binary marginals. The relation is exactly why R3 was
+not a corollary of R2. PS1 lives in the non-additive dichotomous cell, which R11 explicitly
+leaves open.
+
+---
+
+## 12. R12 — Tao, Wu, Yu, Zhou, *On the Existence of EFX (and Pareto-Optimal) Allocations for Binary Chores* (arXiv 2308.12177v1, 23 Aug 2023; journal version in TCS 2025)
+
+**The direct chores analogue of R5, and the paper PS1's proof is built on.** Setting: $n$ agents,
+$m$ indivisible chores, cost functions with **binary marginals**: $c(S \cup \{g\}) - c(S) \in
+\{0,1\}$. This is exactly PS1's class, in cost form. No subsidies.
+
+**Results, in increasing generality of the cost class.**
+
+- **Additive binary costs.** EFX **and** Pareto-optimal allocations exist and are computable in
+  polynomial time. The authors note this is the first general-$n$ setting admitting EFX $+$ PO
+  together; previously known only for three bivalued agents.
+- **Cancelable binary costs.** EFX allocations exist and can be computed, but EFX is
+  **incompatible with PO** on this class — so the pairing above does not extend.
+- **General binary-marginal costs — Theorem 5.1, the one PS1 uses.** A polynomial-time algorithm
+  computing a **partial** allocation that is **exactly envy-free** with **no subsidy at all**,
+  leaving at most $n-1$ chores unallocated.
+
+**Algorithm 3 (the construction behind Theorem 5.1).** Maintains an envy-free partial allocation
+and an *equality graph* whose arcs record $c_i(X_i) = c_i(X_j)$, and repeats three rules: (R1)
+hand an unassigned chore to any agent whose marginal for it is $0$; (R2) if an arc on a directed
+cycle has a zero marginal for an unassigned chore, rotate bundles along that cycle and assign it;
+(R3) otherwise take a strongly connected component $S$ with no outgoing arc and, if at least
+$|S|$ chores remain, give one to each agent of $S$ — else halt.
+
+**Why it matters to PS1 — and a caveat.** Theorem 5.1 hands PS1 an envy-free allocation of all
+but $n-1$ chores *for free*; completing it is the whole of PS1's argument. But PS1's proof for
+$|R| = n-1$ uses the **halting state** of Algorithm 3 — the fact that (R1) and (R2) have failed
+and (R3)'s component is the whole agent set — and not merely the statement of Theorem 5.1. That
+is a stronger dependency than a black-box citation, and it is flagged as such in the write-up.
+
+**Improves on.** R5 (goods $\to$ chores analogue); prior EFX $+$ PO results limited to three
+bivalued agents.
+
+**Leaves open.** EFX for general (non-cancelable, non-additive) binary-marginal chores; whether
+the $n-1$ residue of Theorem 5.1 can be reduced.
+
+---
+
+## 13. Bound tables
 
 **Unweighted, total subsidy, choosing the allocation.** ($V=1$ normalization.)
 
@@ -387,12 +542,24 @@ the limited-budget algorithm. Cite R6 over R4 by default.
 | additive | $1$/agent, $n-1$ total, tight | R2 | — |
 | dichotomous | $p_i \in \{0,1\}$, $n-1$ total, tight | R3 | — |
 | monotone | $2(n-1)$/agent, $2(n-1)^2$ total | R2 | **R9** |
-| doubly monotone (from EF1) | $n-1$/agent, $n(n-1)/2$ total | R9 | — |
+| doubly monotone (from EF1) | $n-1$/agent, $n(n-1)/2$ total | R9 | — (non-additive part only; see R11) |
 | monotone, $n\ge3$ | $n-1.5$/agent, $(n^2-n-1)/2$ total | R9 | — |
 | EF$k$ start | $k(n-1)$/agent, $k\,n(n-1)/2$ total | R9 | — |
+| additive, mixed goods and chores | $1$/agent, $n-1$ total, tight | R11 | — |
+| additive chores (objective) | $1$/agent, $n-1$ total, via IMWPM | R11 | — |
+| binary additive chores | $p_i \in \{0,1\}$, $n-1$ total | R11 $+$ integrality | — |
+| **negative dichotomous (chores)** | $p_i \in \{0,1\}$, $n-1$ total, tight | **PS1** (this project) | — |
+
+The last-but-one row is a corollary, not a theorem of R11: with $u_i(j) \in \{0,-1\}$ every
+arc weight is an integer, so $\ell_A(i) \in \mathbb{Z}_{\ge 0}$, and $\ell_A(i) \le 1$ forces
+$p \in \{0,1\}^n$.
 
 Lower bound throughout: $n-1$ total. The monotone gap ($n-1$ vs. $(n^2-n-1)/2$) is the
 main open quantitative question on this trunk.
+
+For chores, R9's doubly-monotone row ($n-1$ per agent) is now the best published bound only
+for the **non-additive** part of that class — R11 beats it by a factor of $n$ on the additive
+part, and PS1 beats it by a factor of $n$ on the dichotomous part.
 
 **Weighted, total subsidy** (R6 Table 1; $w_2$ = second-smallest weight):
 
@@ -412,12 +579,27 @@ goes, open.
 
 ---
 
-## 11. Where the corpus is thin
+## 14. Where the corpus is thin
 
 Candidates for what to read or attack next, stated as gaps rather than suggestions:
 
+- **~~Non-additive chores with subsidy.~~ Closed by this project.** This was the
+  corpus's defining asymmetry: on the goods side the dichotomous class is settled by R3
+  with $p \in \{0,1\}$; on the chores side nothing non-additive beat R9's $n-1$ per
+  agent. PS1 closes it — negative dichotomous valuations admit $p \in \{0,1\}^n$, for
+  every $n$, matching R3 exactly. See `RESIDUAL.md` §7.16 and
+  `report/working/approach_13.tex`. The four-corner square (additive/dichotomous ×
+  goods/chores) is now complete: R2, R3, R11, PS1.
 - **The monotone constant.** R9 gives $(n^2-n-1)/2$; the lower bound is $n-1$. Nothing
   in the corpus closes this.
+- **Everything non-additive beyond dichotomous.** R11 names this itself (§6): is there a
+  constant per-agent bound for submodular or XOS valuations? Open even for goods only.
+  PS1's technique does not obviously extend — it leans on binary marginals throughout.
+- **Reducing R12's residue.** Theorem 5.1 leaves up to $n-1$ chores unallocated. PS1
+  completes that residue rather than shrinking it — whether the residue itself can be
+  made smaller is not addressed anywhere in the corpus. (PS1's first route handled only
+  the two extremes $|R| = 1$ and $|R| = n-1$, which is why it closed $n = 3$, where the
+  intermediate range is empty; the final proof handles every residue size uniformly.)
 - **Weighted × doubly monotone.** R9's EF1 $\Rightarrow$ EF-with-subsidy reduction is
   unweighted. R6 is monotone-only. Nobody has run R9's argument against a weighted
   envy graph — and the reason is visible in the glossary (§5): weighted
@@ -434,4 +616,13 @@ Candidates for what to read or attack next, stated as gaps rather than suggestio
 
 ---
 
-*v1. Update alongside the glossary as papers are added.*
+*v2 — R10, R11, R12 merged in from `updates/update_3/paper_map_addendum_R10_R11.md`
+(R12 written fresh); §13/§14 updated for the PS1 result. File renamed from
+`paper_map_R1_to_R9.md`. Update alongside the glossary as papers are added.*
+
+**One claim carried over unverified.** The addendum flagged, and this file inherits, a
+dependency claim it never checked against R9's own text: that for *non-additive* doubly
+monotone instances, the EF1 input R9's Theorem 1 requires traces back to the Aziz et al.
+envy-cycle claim which R10's Example 1 refutes — in which case R10's Theorems 3–4 are
+what make R9's bound non-vacuous on PS1's class. Plausible and repeated in §0's DAG, but
+**verify against R9 before relying on it.***

@@ -30,7 +30,7 @@ Without latexmk: `pdflatex main && bibtex main && pdflatex main && pdflatex main
 | `main.tex` | The report. Structure only — title block and `\input` lines, with the parked inputs present but commented out in their intended order. |
 | `working.tex` | The full-draft driver. |
 | `preamble.tex` | Packages, theorem environments, notation macros, the `\ifdraft` and `\ifworking` switches. |
-| `references.bib` | Bibliography. Header comment records which entries are verified against a PDF and which came from `paper_map_R1_to_R9.md`. |
+| `references.bib` | Bibliography. Header comment records which entries are verified against a PDF and which came from `../docs/map.md`. |
 | `sections/abstract.tex` | Abstract. Scoped to what the report currently carries. |
 | `sections/introduction.tex` | §1 — the goods line, the chores turn, the lower bound, **Conjecture 2** (the target), scope, related work. |
 | `sections/preliminaries.tex` | §2 — notation, negative dichotomous valuations, envy graph, Halpern–Shah. |

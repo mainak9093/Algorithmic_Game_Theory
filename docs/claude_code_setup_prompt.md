@@ -35,7 +35,7 @@ directly and keep them updated):**
 - `glossary_fair_division_subsidies.md` — all notation conventions, term definitions,
   cross-paper symbol conflicts (e.g., R9 uses $w$ for a weight matrix, others for
   entitlements — project convention is fixed here).
-- `paper_map_R1_to_R9.md` — per-paper summaries, the lineage/subsumption relationships
+- `map.md` — per-paper summaries (R1–R12), the lineage/subsumption relationships
   between papers (e.g., R4 is subsumed by R6), bound tables, and open-gap analysis.
 
 These two files are the single source of truth for terminology and prior results. New
@@ -56,7 +56,7 @@ Algorithmic_Game_Theory\
 ├── Glossary\
 │   └── glossary_fair_division_subsidies.md
 ├── Paper_Map\
-│   └── paper_map_R1_to_R9.md
+│   └── map.md
 ├── Problem_Statements\
 │   └── PS1_negative_dichotomous_valuations.md
 ├── Notes_and_Findings\
