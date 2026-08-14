@@ -3400,11 +3400,68 @@ failure here is **(I2)**, not (I3), and weakening (I3) does not enlarge the set
 of reachable allocations. The obstruction is on *reachability of the
 allocation*, not on which invariant is tracked.
 
-**Status.** Approach 14's reduction is a correct and reusable statement;
-its target is open (= Target G-bal, open since Approach 6, $n\ge3$); its
-proposed route is closed. The live non-insertion route remains Approach 6's
-construct-and-repair. None of this affects Conjecture 2 itself, which is proved
-unconditionally for all $n$ by Approach 13 (§7.16.39).
+### 7.16.41 Second obstruction: EXTEND does not select by cardinality at all
+
+Independent of §7.16.40(d). BKNS's EXTEND rule selects a pair $(k,l)$ by
+$l\in M(q)$ and a genuine marginal-$1$ gain $v_k(g\mid A_l)=1$; **cardinality
+of $A_l$ never enters the selection.** Consequence: Step 1's restriction
+("assign the new good only to a minimum-cardinality bundle when unbalanced")
+can leave **zero** legal options at a single call, not merely a suboptimal
+choice — confirmed common ($9$–$57$ occurrences per few hundred trials,
+$n=3..5$; `update_14/extend_forced.py`, `extend_cardinality.py`), with a
+minimal standalone witness (`update_14/extend_witness.py`): $n=3$,
+$A=[\emptyset,\{0\},\{4\}]$, $p=(0,0,0)$, $M(q)=\{0,1,2\}$ — agent 0 holds
+the unique minimum-cardinality bundle and is in $M(q)$, but
+$v_0(3\mid\emptyset)=0$, so the only valid EXTEND option in the entire state
+grows agent 1's strictly larger bundle. This is a *per-call* obstruction,
+sharper than §7.16.40(d)'s whole-execution search: Step 1 is not even
+well-defined as stated, before Step 2's permutation question arises.
+
+### 7.16.42 CLOSURE: a single hand-verified step, no search required
+
+User-derived (whiteboard), transcribed and verified in
+`update_14/board_witness.py`. This is the decisive result: **Approach 14's
+proof program (Steps 1–4) is refuted by a single step, checkable by hand.**
+
+**The state.** $n=3$, goods side, bundles already at sizes $(2,2,1)$:
+$A_1=\{b_1,b_2\}$, $A_2=\{a_1,a_2\}$, $A_3=\{a_3\}$, with
+$\tilde v_1=(1,2,1)$, $\tilde v_2=(0,2,1)$, $\tilde v_3=(0,2,1)$ on
+$(A_1,A_2,A_3)$. The identity assignment is welfare-maximal (welfare $4$,
+tied for best), so envy-freeable, with Halpern–Shah subsidy $q=(1,0,1)$,
+$M(q)=\{1,3\}$. Agent $3$ holds the **unique** minimum-cardinality bundle and
+**is** in $M(q)$ — exactly what (I3) wants.
+
+**Insert item $c_1$.** Its marginal on $A_3$: $\tilde v_1(c_1\mid A_3)=1$,
+$\tilde v_2(c_1\mid A_3)=\tilde v_3(c_1\mid A_3)=0$. Only agent $1$ has a
+genuine EXTEND witness — **not** agent $3$, who holds $A_3$ and sits in
+$M(q)$.
+
+**The resulting partition is perfectly balanced — and still hopeless.**
+$A_1,A_2,A_3\cup\{c_1\}$ all have size $2$: (I2) is achieved. But **all six**
+assignments of these three fixed bundles to the three agents give subsidy
+spread exactly $2$ — including the most natural repair, "agent $3$ keeps
+growing its own bundle" ($q=(2,0,1)$, spread $2$). There is no good option
+among the six, not a bad tie-break among several.
+
+**Why this closes the program.** Cardinality balance (I2) is not sufficient:
+a partition can be exactly balanced and still admit no $\{0,1\}$-subsidy
+assignment. The failure is forced at the single EXTEND call that grows
+$A_3$ — no rule modification changes which agent has the marginal-$1$
+witness, since that is fixed by the valuations. Step 4 does not apply
+either: (I3) was never violated here (agent $3$ **was** in $M(q)$), so
+weakening it is irrelevant; the obstruction is that spread $2$ is
+unavoidable on this exact triple of bundles, independent of any subsidy
+compatibility condition.
+
+**Status: CLOSED.** Three independent, mutually reinforcing obstructions now
+stand against Steps 1–4 (§7.16.40(d)'s 474-node search, §7.16.41's frequency
+check, §7.16.42's hand-verified single step). The proposed proof program is
+definitively refuted. Approach 14's reduction (Proposition 1) remains a
+correct and reusable statement; its target (RQ1 = Target G-bal) remains open
+for $n\ge3$; its proposed route is closed for good. The live non-insertion
+route remains Approach 6's construct-and-repair. None of this affects
+Conjecture 2 itself, which is proved unconditionally for all $n$ by
+Approach 13 (§7.16.39). Full record: `approach_14.md`.
 
 ### 7.17 Status
 
@@ -3533,7 +3590,7 @@ unconditionally for all $n$ by Approach 13 (§7.16.39).
 | **CONJECTURE 2, EVERY $n$** | **PROVED** — two independent routes: §7.16.37 (min-cost within $S$ $+$ telescoping potential) and §7.16.39 (identity assignment $+$ backward equality closure; simpler, no Halpern–Shah). Written up as `approach_13.tex` |
 | §7.16.39 route audited end-to-end | **0 problems** — every $T$, every bijection, $n=3..6$, residues $1..5$; closure strictly enlarges $T$ in $520$ cases |
 | **Approach 14** (almost-balanced size-shift, `approach_14_proposal.pdf`) | reduction **CORRECT**; target $=$ Approach 6's **Target G-bal**, still **open**; proposed Steps 1--4 **BLOCKED** (§7.16.40) |
-| Approach 14 Steps 1--4 (modify BKNS to maintain (I1)--(I3)) | **REFUTED** (§7.16.40), two independent reasons — (i) on an explicit $n=m=3$ instance the *only* reachable size profile is $(0,1,2)$; almost-balanced $(1,1,1)$ is unreachable by **any** legal execution, though RQ1 holds there with spread $0$; (ii) BKNS's EXTEND rule selects by $M(q)$-membership and marginal-$1$ gain only, never by cardinality, so Step 1's restriction can leave **zero** legal options at a single call — confirmed common ($9$--$57$ occurrences per $\sim\!50$--$500$ trials across $n=3..5$) with a minimal standalone witness (`update_14/extend_witness.py`) |
+| **Approach 14 Steps 1--4** (modify BKNS to maintain (I1)--(I3)) | **CLOSED — definitively REFUTED** (§7.16.40(d), §7.16.41, §7.16.42). Three independent obstructions: (i) the only reachable size profile on a witness instance is $(0,1,2)$, not almost-balanced $(1,1,1)$; (ii) EXTEND selects by $M(q)$-membership and marginal-$1$ gain only, never cardinality, so Step 1 can face **zero** legal options at a single call; (iii) **hand-verified**: a perfectly balanced $(2,2,2)$ partition reachable by EXTEND's own rule admits **no** assignment (all $6$ checked) with subsidy spread $\le1$ — not a bad tie-break, no good option exists (`update_14/board_witness.py`) |
 
 **Overall status.** Conjecture 2 is **PROVED for every $n$** (§7.16.39,
 written up as `approach_13.tex`); $n=3$ additionally has a self-contained

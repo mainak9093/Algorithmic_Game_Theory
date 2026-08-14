@@ -1,8 +1,9 @@
 # Approach 14 — Almost-Balanced Positive Dichotomous Allocations
 
-Full record of the proposal in `approach_14_proposal.pdf`, its audit, and its status.
+**CLOSED.** Full record of the proposal in `approach_14_proposal.pdf`, its
+audit, and its final status.
 
-Cross-reference: `RESIDUAL.md` §7.16.40. Scripts: `update_14/`, `update_6/`.
+Cross-reference: `RESIDUAL.md` §7.16.40–41. Scripts: `update_14/`, `update_6/`.
 
 ---
 
@@ -12,7 +13,7 @@ Cross-reference: `RESIDUAL.md` §7.16.40. Scripts: `update_14/`, `update_6/`.
 |---|---|
 | Proposition 1 (RQ1 ⟹ Conjecture 2), the size-shift reduction | **CORRECT** — verified line by line |
 | Research Question 1 (RQ1) itself | **Open**; no counterexample found. **Not new** — equals Approach 6's *Target G-bal* |
-| Proposed proof program, Steps 1–3 (modify BKNS to maintain (I1)–(I3)) | **BLOCKED**, two independent reasons: (i) a global reachability obstruction over full executions, (ii) EXTEND's selection rule does not depend on cardinality at all, so Step 1's restriction can leave zero legal options at a single call |
+| Proposed proof program, Steps 1–4 (modify BKNS to maintain (I1)–(I3)) | **CLOSED — definitively refuted (§7).** A single hand-derived, fully verified step: EXTEND's own rule can only route the next item into the minimum-cardinality bundle via an agent who does *not* hold it; the resulting perfectly-balanced (2,2,2) partition then admits **no** assignment (all 6 checked) with subsidy spread ≤ 1 |
 | Step 4 (fall back to the path condition (6)) | **BLOCKED** — weakens (I3); the obstruction is in (I2), which precedes (I3) |
 | Effect on Conjecture 2 | **None.** Conjecture 2 is proved unconditionally for all `n` by Approach 13 |
 
@@ -332,11 +333,111 @@ bearing on it.
   (IMWPM warm start + repair + restart): proved sound, terminating, and
   complete at `n = 2`; completeness open for `n ≥ 3`.
 - Any future attempt must be able to **move an item out of a bundle it is
-  already in**. Insertion-only templates are excluded by §5.
+  already in**. Insertion-only templates are excluded by §5 and §7.
 
 ---
 
-## 7. Reproducing
+## 7. Final closure — a single hand-verified step, no search required
+
+Hand-derived on the whiteboard, transcribed and verified in
+`update_14/board_witness.py`. This is the third and sharpest obstruction to
+the Steps 1–4 program: where §5.1–5.4 needed a 474-node computer search and
+§5.5 needed random sampling, this one is checked by hand in six lines of
+arithmetic.
+
+### 7.1 The state
+
+Three agents, goods side (`ṽ_i`, size-shifted from chores), a partial
+allocation already sitting at bundle sizes `(2,2,1)`:
+
+```
+A1 = {b1, b2}     A2 = {a1, a2}     A3 = {a3}
+```
+
+with values
+
+| | `A1` | `A2` | `A3` |
+|---|---|---|---|
+| `ṽ_1` | 1 | 2 | 1 |
+| `ṽ_2` | 0 | 2 | 1 |
+| `ṽ_3` | 0 | 2 | 1 |
+
+The identity assignment (agent `i` keeps `A_i`) has welfare `4`, tied for
+best, hence envy-freeable. Its minimal subsidy by the Halpern–Shah
+longest-path formula is `q = (1, 0, 1)`, so `M(q) = {1, 3}`. Agent 3 holds
+the **unique** minimum-cardinality bundle and **is** in `M(q)` — exactly the
+situation (I3) is designed to produce.
+
+### 7.2 Inserting the next item
+
+A fresh item `c1` arrives, with marginal value on `A3`:
+
+```
+ṽ_1(c1 | A3) = 1        ṽ_2(c1 | A3) = 0        ṽ_3(c1 | A3) = 0
+```
+
+BKNS's EXTEND rule requires a genuine marginal-`1` witness. **Only agent 1
+qualifies** — not agent 3, who actually holds `A3` and sits in `M(q)`. So the
+only way `A3` can grow at all is via agent 1, regardless of any permutation
+choice Step 2 might make.
+
+### 7.3 The resulting partition is balanced — and still hopeless
+
+After insertion, the three bundles are `A1={b1,b2}`, `A2={a1,a2}`,
+`A3+c1={a3,c1}` — **sizes `(2,2,2)`, perfectly balanced**. Invariant (I2) is
+achieved. Checking all six ways to assign these three fixed bundles to the
+three agents:
+
+| assignment | welfare | `q` | spread |
+|---|---|---|---|
+| `1↦A1, 2↦A2, 3↦A3+c1` ("agent 3 keeps its own bundle") | 4 | `(2,0,1)` | **2** |
+| `1↦A1, 2↦A3+c1, 3↦A2` | 4 | `(2,1,0)` | **2** |
+| `1↦A2, 2↦A1, 3↦A3+c1` | 3 | `(0,2,1)` | **2** |
+| `1↦A2, 2↦A3+c1, 3↦A1` | 3 | `(0,1,2)` | **2** |
+| `1↦A3+c1, 2↦A1, 3↦A2` | 4 | `(1,2,0)` | **2** |
+| `1↦A3+c1, 2↦A2, 3↦A1` | 4 | `(1,0,2)` | **2** |
+
+**Every single one gives spread exactly 2.** This is not a bad tie-break
+among options that include a good one — there is no good option. In
+particular the row marked "agent 3 keeps its own bundle" is the most natural
+possible repair (nobody gets displaced by a permutation at all), and it
+fails identically to the rest: the obstruction is in the **values** of the
+three final bundles, not in which agent ends up holding which.
+
+### 7.4 Why this closes the program
+
+- Reaching cardinality balance (I2) is not sufficient, contrary to the
+  implicit hope behind Steps 1–3: a partition can be exactly balanced and
+  still admit no `{0,1}`-subsidy assignment at all.
+- The failure is forced at the **single EXTEND call** that grows `A3` — there
+  is no algorithmic choice anywhere in this step (which agent receives the
+  marginal-1 witness, which permutation follows) that avoids it, because the
+  eligibility of agent 1 (not agent 3) for the marginal-1 witness is fixed by
+  the valuations, not by any rule BKNS could be modified to prefer
+  differently.
+- Step 4 (weaken (I3) to the path condition) does not apply: (I3) was never
+  violated here — agent 3 **was** in `M(q)` — and the problem is not a path
+  from a large bundle to a small one, it is that spread `2` is unavoidable on
+  this exact triple of bundles.
+
+**This is the closing result for Approach 14's proof program.** Combined with
+§5 (whole-execution reachability) and §5.5 (frequency of forced-off-minimum
+EXTEND states), three independent and mutually reinforcing obstructions now
+stand against Steps 1–4, the last of which requires no search at all to
+verify. The program is **closed**.
+
+### 7.5 Reproducing
+
+```bash
+cd update_14
+python board_witness.py
+```
+
+Output confirms every claim in §7.1–7.3 by direct computation.
+
+---
+
+## 8. Reproducing (full script list)
 
 ```bash
 cd update_14
@@ -353,11 +454,12 @@ python extend_witness.py              # minimal standalone: EXTEND has zero
                                        # legal min-cardinality options here
 python extend_forced.py 3 5 400 1     # frequency of the forced-off-minimum states
 python extend_cardinality.py 3 5 200 1  # frequency of non-min-cardinality options existing
+python board_witness.py               # FINAL CLOSURE: single hand-verified step
 ```
 
 ---
 
-## 8. Relationship to Conjecture 2
+## 9. Relationship to Conjecture 2
 
 None of the above affects Conjecture 2, which is **proved unconditionally for
 every `n`** by Approach 13 (`report/working/approach_13.tex`, `RESIDUAL.md`

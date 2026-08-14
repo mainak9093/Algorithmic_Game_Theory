@@ -1,0 +1,221 @@
+%% ==========================================================================
+%%  Approach 14 --- almost-balanced size-shift route to the negative
+%%  dichotomous subsidy problem.
+%%
+%%  Source: approach_14_proposal.pdf; full audit and closure in
+%%  approach_14.md and RESIDUAL.md \S7.16.40--42.
+%%
+%%  STATUS.  CLOSED (negative). The size-shift reduction (Proposition 1 of
+%%  the proposal) is correct, and its target (Research Question 1) turns out
+%%  to be Approach~6's Target G-bal (\Cref{def:targetGbal}), restated in
+%%  different language --- still open. The proposal's proof PROGRAM (modify
+%%  the BKNS incremental algorithm to reach a good allocation) is refuted,
+%%  by three independent obstructions, the last of which is a single
+%%  hand-verified step requiring no search. Nothing here affects
+%%  Conjecture~\ref{conj:main}, already proved unconditionally for every $n$
+%%  by \Cref{sec:approach13}.
+%% ==========================================================================
+\section{Approach 14: Almost-Balanced Size-Shift (Closed, Negative)}
+\label{sec:approach14}
+
+\begin{quote}
+\textbf{Closed, negative result.} This section records that the proof
+\emph{program} proposed for Research Question~\ref{rq:g14-main} below cannot
+succeed, and why. It does not close Research Question~\ref{rq:g14-main}
+itself, which remains open and coincides with Approach~6's Target G-bal
+(\Cref{def:targetGbal}). Full detail, all scripts, and every numeric witness
+are in \texttt{approach\_14.md} at the repository root; this section gives
+the mathematical content only.
+\end{quote}
+
+\subsection{The proposal}
+\label{sec:g14-setup}
+
+For negative dichotomous cost functions $\cost_i$ (marginals in $\set{0,1}$,
+so $-\cost_i$ has marginals in $\set{0,-1}$), define the size-shifted
+valuation $\tilde v_i(S) := \abs S - \cost_i(S)$. Every $\tilde v_i$ is a
+positive dichotomous valuation. Writing
+$w^{\cost}_{\alloc}(i,j) := \cost_i(\bundle i) - \cost_i(\bundle j)$ and
+$\tilde w_{\alloc}(i,j) := \tilde v_i(\bundle j) - \tilde v_i(\bundle i)$, a
+direct computation gives
+\begin{equation}
+\label{eq:g14-shift}
+  w^{\cost}_{\alloc}(i,j) \;=\; \tilde w_{\alloc}(i,j) + \abs{\bundle i} - \abs{\bundle j}.
+\end{equation}
+
+Write $m = kn + r$ with $0 \le r < n$. An allocation $\alloc$ is
+\emph{almost balanced} if $\abs{\bundle i} \in \set{k,k+1}$ for every $i$;
+let $L$ be the agents with $\abs{\bundle i}=k$ and $H$ those with
+$\abs{\bundle i}=k+1$.
+
+\begin{definition}[Research Question 1]
+\label{rq:g14-main}
+For every positive dichotomous instance, is there an almost-balanced
+allocation $\alloc$ and $\subsidy \in \set{0,1}^n$ such that $(\alloc,\subsidy)$
+is envy-free and
+\[
+  \abs{\bundle i} > \abs{\bundle j} \implies \subsidy_i \le \subsidy_j
+  \qquad \text{(i.e. } \subsidy_h \le \subsidy_\ell \text{ for all } h \in H,\ \ell \in L \text{)?}
+\]
+\end{definition}
+
+\begin{proposition}
+\label{prop:g14-reduction}
+An affirmative answer to Question~\ref{rq:g14-main}, applied to
+$\tilde v_i = \abs\cdot - \cost_i$, implies Conjecture~\ref{conj:main}.
+\end{proposition}
+\begin{proof}
+Given such $(\alloc,\subsidy)$, set $d_i := \abs{\bundle i}-k \in \set{0,1}$
+and $r_i := \subsidy_i + d_i \in \set{0,1,2}$. If $r_i=0$ then $i\in L$,
+$\subsidy_i=0$; if $r_i=2$ then $i\in H$, $\subsidy_i=1$. Both values
+occurring would give $\ell\in L$ with $\subsidy_\ell=0$ and $h\in H$ with
+$\subsidy_h=1$, contradicting the hypothesis. So
+$\max_i r_i - \min_i r_i \le 1$; with $\alpha:=\min_i r_i$ and
+$p_i := r_i-\alpha \in \set{0,1}$, the shift-invariance of differences gives
+$p_i-p_j = (\subsidy_i-\subsidy_j)+(\abs{\bundle i}-\abs{\bundle j})$, and by
+\eqref{eq:g14-shift} and envy-freeness of $(\alloc,\subsidy)$,
+$w^{\cost}_{\alloc}(i,j) \le p_i-p_j$ for all $i,j$. Thus $(\alloc,p)$ is an
+envy-free solution of the original negative dichotomous instance with
+$p\in\set{0,1}^n$.
+\end{proof}
+
+\begin{remark}
+\label{rem:g14-notnew}
+Question~\ref{rq:g14-main} is not a new statement: it is Approach~6's
+\emph{Target G-bal} (\Cref{def:targetGbal}), which already requires a
+cardinality-balanced partition (sizes differing by at most $1$) whose
+optimal assignment gives $q$-spread at most $1$, where
+$q_i = \tilde\subsidy_i + \abs{\bundle i}$. Since $q_i - k = r_i$ in the
+notation above, the two statements coincide. Target G-bal was already known
+to imply Conjecture~\ref{conj:main} (\Cref{obs:Gbal-implies-G} and
+\Cref{prop:targetG-implies}) and remains open for $n \ge 3$; no
+counterexample is known, including under the additional exhaustive search
+performed for this section (\texttt{update\_14/rq1\_search.py}: zero
+failures over almost-balanced allocations and all
+$\subsidy\in\set{0,1}^n$, $n=3,4$).
+\end{remark}
+
+\subsection{The proposed proof program}
+\label{sec:g14-program}
+
+The proposal's route to Question~\ref{rq:g14-main} is to modify the BKNS
+incremental algorithm (which builds an envy-freeable allocation with
+$\subsidy\in\set{0,1}^n$ one item at a time via an \textsc{Extend} rule and a
+\textsc{FindSink} rule) so that it additionally maintains, throughout
+construction: (I1) envy-freeability with $\subsidy\in\set{0,1}^n$;
+(I2) bundle sizes differing by at most $1$; (I3) every minimum-cardinality
+agent lies in the maximally-subsidised set $M(\subsidy)$.
+
+This program does not succeed, for three independent reasons.
+
+\begin{proposition}[Whole-execution reachability]
+\label{prop:g14-reach}
+There is an explicit $3$-agent, $3$-item instance on which every legal
+execution of the BKNS algorithm --- every item order, every valid
+\textsc{Extend} choice, every \textsc{FindSink} starting point --- reaches
+final bundle sizes $(0,1,2)$ and none reaches the almost-balanced profile
+$(1,1,1)$, although some allocation on that instance achieves $q$-spread
+$0$.
+\end{proposition}
+\begin{proof}[Verification]
+Exhaustive backtracking over the full execution tree ($474$ nodes;
+\texttt{update\_6/guidedR3\_full.py}, cross-checked by
+\texttt{update\_14/reach\_sizes.py}) confirms the claim; an independent,
+algorithm-free enumeration (\texttt{update\_6/verify\_reach\_gap.py})
+confirms spread $0$ is achieved by the balanced allocation on the same
+instance. Restricting \textsc{Extend} to minimum-cardinality bundles (Step 1
+of the proposal) can only shrink the set of reachable allocations, and
+(I2) is already unreachable on this instance.
+\end{proof}
+
+\begin{proposition}[Extend ignores cardinality]
+\label{prop:g14-extend-ignores}
+BKNS's \textsc{Extend} rule selects a receiving pair $(k,l)$ by
+$l\in M(\subsidy)$ and a genuine marginal-$1$ gain
+$v_k(g\mid \bundle l)=1$; the cardinality of $\bundle l$ plays no role.
+Consequently there exist states in which the minimum-cardinality bundle lies
+in $M(\subsidy)$ but \emph{every} valid \textsc{Extend} option grows a
+strictly larger bundle.
+\end{proposition}
+\begin{proof}[Verification]
+A minimal instance is exhibited in \texttt{update\_14/extend\_witness.py}:
+$n=3$, partial allocation $\bundle{} = (\emptyset,\set 0,\set 4)$,
+$\subsidy=(0,0,0)$, so $M(\subsidy)=\set{0,1,2}$; agent $0$ holds the unique
+minimum-cardinality (empty) bundle and lies in $M(\subsidy)$, but
+$v_0(3\mid\emptyset)=0$, so the only valid \textsc{Extend} option in the
+entire state grows agent $1$'s strictly larger bundle. Frequency over random
+instances is checked in \texttt{extend\_forced.py} and
+\texttt{extend\_cardinality.py}: states where every valid option is off the
+minimum occur regularly ($9$--$57$ times per few hundred trials,
+$n=3,\dots,5$).
+\end{proof}
+
+\begin{theorem}[Closure: a balanced partition can still be hopeless]
+\label{thm:g14-closure}
+There is an explicit state, reachable by \textsc{Extend}'s own selection
+rule, at which the resulting bundles are exactly balanced in cardinality yet
+\emph{no} assignment of those bundles to the three agents achieves subsidy
+spread at most $1$.
+\end{theorem}
+\begin{proof}
+Take $n=3$ agents and bundles $\bundle 1=\set{b_1,b_2}$,
+$\bundle2=\set{a_1,a_2}$, $\bundle3=\set{a_3}$ with
+\[
+  \tilde v_1(\bundle1,\bundle2,\bundle3) = (1,2,1), \quad
+  \tilde v_2(\bundle1,\bundle2,\bundle3) = (0,2,1), \quad
+  \tilde v_3(\bundle1,\bundle2,\bundle3) = (0,2,1).
+\]
+The identity assignment has welfare $4$, tied for maximal, hence
+envy-freeable; its Halpern--Shah subsidy is $\subsidy=(1,0,1)$, so
+$M(\subsidy)=\set{1,3}$, and agent $3$ holds the unique minimum-cardinality
+bundle while lying in $M(\subsidy)$ --- exactly the configuration (I3) is
+designed to produce.
+
+Introduce a new item $c_1$ with $\tilde v_1(c_1\mid\bundle3)=1$ and
+$\tilde v_2(c_1\mid\bundle3)=\tilde v_3(c_1\mid\bundle3)=0$. By
+Proposition~\ref{prop:g14-extend-ignores}'s mechanism, the only valid
+\textsc{Extend} witness for growing $\bundle3$ is agent $1$, not agent $3$.
+After insertion the three bundles $\bundle1,\bundle2,\bundle3\cup\set{c_1}$
+all have size $2$: cardinality balance (I2) is achieved. Yet direct
+computation of all six assignments of these bundles to the three agents
+gives subsidy spread exactly $2$ in every case, including the assignment
+that leaves agent $3$ in place on its own enlarged bundle
+($\subsidy=(2,0,1)$). No assignment of this triple of bundles to these three
+agents achieves spread $\le 1$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:g14-closed}
+The proof program of \Cref{sec:g14-program} --- restricting
+\textsc{Extend}/\textsc{FindSink} choices to maintain (I1)--(I3) --- cannot
+succeed. Weakening (I3) to the path condition
+$\tilde d_{\alloc}(h,\ell)\le 0$ for $h\in H,\ell\in L$ (the proposal's
+Step~4) does not rescue it: in the witness of
+Theorem~\ref{thm:g14-closure}, (I3) is never violated, and the obstruction is
+that spread $2$ is unavoidable on the given triple of bundles independent of
+any subsidy-compatibility condition.
+\end{corollary}
+\begin{proof}
+Immediate from Theorem~\ref{thm:g14-closure}: the state it exhibits is
+reachable by \textsc{Extend}'s own rule (so no restriction of that rule can
+avoid it without also making the rule inapplicable), and the failure is not
+a choice among several outcomes but the total absence of a good outcome
+among all six assignments of the resulting bundles.
+\end{proof}
+
+\subsection{Status}
+\label{sec:g14-status}
+
+Proposition~\ref{prop:g14-reduction} is correct and reusable: any future
+route to Question~\ref{rq:g14-main} still yields Conjecture~\ref{conj:main}
+via the same size-shift argument. Question~\ref{rq:g14-main} itself remains
+open, coincides with Target G-bal, and is not attempted here beyond the
+search of Remark~\ref{rem:g14-notnew}. What is closed is the specific
+incremental-algorithm proof program: Proposition~\ref{prop:g14-reach},
+Proposition~\ref{prop:g14-extend-ignores}, and Theorem~\ref{thm:g14-closure}
+give three independent, mutually reinforcing obstructions, the last
+requiring no search to verify. Any future attempt at
+Question~\ref{rq:g14-main} must be able to move an item out of a bundle it
+already occupies; insertion-only templates are excluded by this section.
+None of this affects Conjecture~\ref{conj:main}, already proved
+unconditionally for every $n$ in \Cref{sec:approach13}.
