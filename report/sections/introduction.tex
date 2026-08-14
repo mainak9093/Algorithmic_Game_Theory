@@ -75,36 +75,6 @@ tolerate non-additive and even non-subadditive valuations, and it is the
 counterpart of the scheduling example used by~\cite{BKNS22} to motivate
 dichotomous valuations for goods.
 
-\paragraph{Why this is not a change of sign.}
-It is tempting to expect that a chores result follows from the corresponding
-goods result by negating the valuations. It does not, for three reasons that we
-record here because they shape everything that follows.
-
-First, money is one-signed. The subsidy vector is constrained to
-$\subsidy \in \R^n_{+}$, and negating an instance negates the valuations but
-leaves the subsidies where they are. The polyhedron of feasible subsidy vectors
-is therefore a genuinely different object in the two models, and no formal
-duality carries a bound across.
-
-Second, the obvious transformation is available only for two agents. Writing
-$\cost_i := -v_i$ for the cost form of a negative dichotomous valuation, the
-complement $\tilde{v}_i(S) := \cost_i(\items) - \cost_i(\items \setminus S)$ is
-again dichotomous in the sense of~\cite{BKNS22}, so the class is closed under
-complementation. But the complement transformation respects the allocation only
-when $\items \setminus A_j = A_i$, that is, only when $n = 2$\ifworking; see
-Remark~\ref{rem:complement}\fi. For $n \ge 3$ there is no such reduction, and that is
-where the content of the problem lies.
-
-Third, and most tellingly, envy flows the other way. Under goods, envy
-concentrates \emph{into} the agent holding the valuable items: many agents envy
-one, and the tight instance of~\cite{BKNS22} pays $n-1$ agents one dollar each
-so that they stop envying the single agent who received the good. Under chores,
-envy emanates \emph{out of} the agent carrying the load: one agent envies many.
-Since the minimum subsidy to an agent is the weight of the heaviest directed
-path leaving her in the envy graph~\cite[Theorem~2]{HS19}, the two situations
-are not interchangeable, and one should not assume in advance that the same
-bound is the right target.
-
 \paragraph{What is already known, and what is open.}
 Two facts delimit the problem before any work is done, and we state them
 explicitly so that the contribution can be measured against them.
@@ -160,28 +130,22 @@ $\set{0,1}$ per agent being asked for lies a factor of $n$ in the total, exactly
 the gap that~\cite{BKNS22} closed on the goods side. Our objective is to close it
 on the chores side or to exhibit an instance showing that it cannot be closed.
 
-\paragraph{Scope of this report.}
-Conjecture~\ref{conj:main} is open. This report sets up the problem and stops
-there: \Cref{sec:prelim} fixes the model and notation and records what transfers
-from the goods theory unchanged, and \Cref{sec:structure} isolates three
-structural facts about the chore problem --- an arc-update lemma
-(Lemma~\ref{lem:arcupdate}) reducing the entire goods/chore asymmetry to two
-lines, a two-tier characterisation of $\set{0,1}$ solutions
-(Proposition~\ref{prop:twotier}), and a size-shift transform
-(Theorem~\ref{thm:sizeshift}) exhibiting the chore problem as exactly the goods
-problem of~\cite{BKNS22} together with a cardinality-balancing requirement. The
-last of these is the precise sense in which Conjecture~\ref{conj:main} does not
-follow from~\cite{BKNS22} as a black box.
-
-Conjecture~\ref{conj:main} remains open. What stands in the way is recorded
-below: three techniques that settle the neighbouring corners of the square above,
-each of which fails here, and for each an explicit instance exhibiting the
-failure. Several special cases are settled; work towards the general statement is
-in progress and is not reported here.
+\paragraph{Our contribution.}
+We prove Conjecture~\ref{conj:main} for three agents: every instance with
+$n = 3$ and negative dichotomous valuations admits an envy-free solution with a
+subsidy of $0$ or $1$ per agent, computable in polynomial time
 \ifworking
-The remainder of this working draft, from \Cref{sec:results} onwards, carries
-that material.
+(\Cref{sec:approach12}).
+\else
+(Theorem~\ref{thm:n3-main}).
 \fi
+The proof completes an envy-free \emph{partial}
+allocation, taken from Tao et al.~\cite{TWYZ23}, by placing the residual chores
+and then reassigning which agent receives which bundle; the subsidy bound
+follows from a bound on the total excess of that reassignment. For general $n$
+the conjecture remains open. \Cref{sec:prelim} fixes the model and records what
+transfers from the goods theory unchanged\ifworking.\else; \Cref{sec:n3}
+contains the proof.\fi
 
 \paragraph{Related Work.}
 The subsidy line for goods is described above. Within it, the dichotomous

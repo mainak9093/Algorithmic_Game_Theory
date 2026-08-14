@@ -2,15 +2,15 @@
 %%  Achieving Envy-Freeness with Limited Subsidies
 %%  under Negative Dichotomous Valuations
 %%
-%%  THE REPORT.  Deliberately short: it sets up the problem and stops.
-%%  Introduction, notation and preliminaries, and the structure of the problem
-%%  we are solving.  Nothing else goes in until it is worth writing down.
+%%  THE REPORT.  Sets up the problem and proves Conjecture 1 for n = 3.
+%%  Scoped deliberately: only material the n = 3 proof actually uses is
+%%  included.
 %%
-%%  Everything proved so far but not yet report-worthy is PARKED, not deleted,
-%%  under working/ and is compiled by working.tex into working.pdf.  Nothing
-%%  has been lost; see working/README.md for the inventory.  To promote a
-%%  parked section into the report, move its file back to sections/ and
-%%  uncomment the corresponding line below.
+%%  Everything proved so far but not carried by this scope is PARKED, not
+%%  deleted, under working/ and is compiled by working.tex into working.pdf.
+%%  Nothing has been lost; see working/README.md for the inventory.  To
+%%  promote a parked section into the report, move its file back to sections/
+%%  and uncomment the corresponding line below.
 %%
 %%  Build:   latexmk -pdf main.tex        (the report)
 %%           latexmk -pdf working.tex     (the full draft, everything)
@@ -46,10 +46,17 @@
 
 \input{sections/introduction}       % 1  Introduction
 \input{sections/preliminaries}      % 2  Notation and Preliminaries
-\input{sections/structure}          % 3  Structure of the Problem
-\input{sections/obstructions}       % 4  Obstructions to the Natural Approaches
-\input{sections/replica}            % 5  The Replica Instance
-\input{sections/results}            % 6  What is Proved
+\input{sections/n3}                 % 3  The Conjecture for Three Agents
+
+% Not used by the n = 3 proof, hence out of scope for this report.
+% structure.tex carries the arc-update lemma, the two-tier characterisation
+% of {0,1} solutions, and the size-shift transform.  All three are proved and
+% correct; none is invoked by sections/n3.tex.  Re-enable if the report is
+% widened beyond n = 3.
+% \input{sections/structure}          %    Structure of the Chore Problem
+% \input{sections/obstructions}       %    Obstructions to the Natural Approaches
+% \input{sections/replica}            %    The Replica Instance
+% \input{sections/results}            %    What is Proved
 
 % --------------------------------------------------------------------------
 % PARKED.  These files live under working/ and are compiled by working.tex.
