@@ -24,3 +24,6 @@ __pycache__/
 *.out
 *.synctex.gz
 *.toc
+
+# graphify local build cache (regenerable; graph.json/graph.html/GRAPH_REPORT.md are kept)
+graphify-out/cache/

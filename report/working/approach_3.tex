@@ -1,12 +1,12 @@
 %% ==========================================================================
 %%  Approach 3 --- the replica transform and the peel reformulation
 %%
-%%  Source: update_2/PS1_note_replica_peel_transform.md (v1, 2026-08-02).
+%%  Source: updates/update_2/PS1_note_replica_peel_transform.md (v1, 2026-08-02).
 %%  The replica construction is the author's; the downstream development was
 %%  worked out in the session of that date.
 %%
 %%  STATUS.  Theorem H and its corollaries are proved.  The peel dead-end
-%%  computation is machine-verified (update_2/peel3.py reproduces every number
+%%  computation is machine-verified (updates/update_2/peel3.py reproduces every number
 %%  in this section exactly).  Conjecture H1 is REFUTED; Conjecture H1' is
 %%  OPEN and is the statement that would imply Conjecture 2.
 %%
@@ -541,7 +541,7 @@ instances --- there is \emph{no bad root}: from every root some sequence of peel
 and permutations reaches a terminal state with the invariant holding throughout.
 Extending to random instances at $n = 3$ with $m \le 6$, $n = 4$ with $m \le 4$
 and $n = 5$ with $m = 3$ gives $0$ bad roots as well
-(\texttt{update\_32/peel\_sweep.py}, \texttt{peel\_general.py}).
+(\texttt{updates/update\_32/peel\_sweep.py}, \texttt{peel\_general.py}).
 \end{observation}
 
 So Conjecture~\ref{conj:h1prime} is not refuted, and Approach~3 is alive. But
@@ -565,7 +565,7 @@ dead yet admit a balanced terminal is \emph{zero}. That is,
 \]
 The converse fails --- $132{,}958$ live states admit no balanced terminal --- so
 the condition is sufficient, not necessary
-(\texttt{update\_32/deadend\_char.py}).
+(\texttt{updates/update\_32/deadend\_char.py}).
 \end{observation}
 
 Admitting a balanced terminal is a degree-constrained bipartite feasibility
@@ -589,7 +589,7 @@ remaining question, and the answer so far is yes.
 Restricting the state graph to states that are both legal and balance-admitting,
 a terminal is still reachable from the root on every instance tested: $0$
 failures over $305$ instances at $n = 3$ ($m \le 6$), $n = 4$ ($m \le 4$) and
-$n = 5$ ($m = 3$) (\texttt{update\_32/balance\_rule.py}).
+$n = 5$ ($m = 3$) (\texttt{updates/update\_32/balance\_rule.py}).
 \end{observation}
 
 \begin{conjecture}[Balance-rule reachability]
@@ -657,7 +657,7 @@ balanced terminal that is itself legal, reached by a legal schedule. Both halves
 fail: over $349{,}188$ balance-admitting legal states, $76{,}220$ ($21.8\%$)
 admit \emph{no} legal balanced terminal at all, and of those that do, $3{,}669$
 admit no legal ordering of the peels down to one
-(\texttt{update\_33/why\_balance\_works.py}). Those states are live nonetheless
+(\texttt{updates/update\_33/why\_balance\_works.py}). Those states are live nonetheless
 --- the legal terminal they reach is \emph{unbalanced}. Balance is a certificate
 of liveness, not a description of the destination.
 
@@ -1132,7 +1132,7 @@ Proposition~\ref{prop:smax-closed-form}.
 Verified on $755{,}051$ peels with $0$ violations of the conclusion or of any
 step of the case split; the critical case --- $\mu_x = 1$ with $x$ leaving
 $S_{\max}$ --- arose $212{,}930$ times, so the theorem is not vacuous there
-(\texttt{update\_41/comparability.py}).
+(\texttt{updates/update\_41/comparability.py}).
 
 So a peel moves the canonical paid set along a \emph{chain} in the lattice.
 Two cautions. The jump is not bounded by one: over the same sweeps the symmetric
@@ -1267,7 +1267,7 @@ characterises liveness: over $151{,}374$ legal reachable states, $239$ of the
 $256$ dead states violate it. But it is not sufficient --- $17$ dead states
 satisfy it, the smallest at $n = 3$, $m = 4$ with
 $\workprofile = (\set{g_2},\set{g_2},\set{g_1,g_3,g_4})$ --- so it cannot serve
-as $\Phi$ (\texttt{update\_43/commitment.py}).
+as $\Phi$ (\texttt{updates/update\_43/commitment.py}).
 
 The figures above are from a sweep restricted to instances whose \emph{entire}
 reachable set was enumerated, $88$ of them with none truncated. An earlier run
@@ -1302,7 +1302,7 @@ Indeed the same signature occurs on both sides: the profile
 $(\text{shrinks},\, x \in S_{\max},\, \mu_x = 1)$ arises $102$ times on peels into
 a stuck state and $35$ times on peels away from one. Whatever distinguishes the
 schedules that avoid the stuck states is not visible in the state and the move
-(\texttt{update\_42/predecessors.py}).
+(\texttt{updates/update\_42/predecessors.py}).
 \end{remark}
 
 \paragraph{Qualifications.} First, Conjecture~\ref{conj:balance-rule} is

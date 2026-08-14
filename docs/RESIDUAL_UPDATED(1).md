@@ -35,7 +35,7 @@ refutes the method of Approach 5 without being residual at all.
 Over **550 random instances** across all seven generators, $n \le 6$, $m \le 8$:
 S1 covered 177, S2 38, S3 292 — and **S4 covered 550 of 550**. Residual: **0**.
 No sampler this project has ever used produces a residual instance
-(`update_48/residual_map.py`).
+(`updates/update_48/residual_map.py`).
 
 ## 3. Why — and how to construct one anyway
 
@@ -60,7 +60,7 @@ S1–S4 all fail. **The first residual instance ever exhibited.**
 
 Exhaustively over the *composed* family $\cost_i(S) = f_i(\lvert S\cap D_i\rvert)$
 at $n{=}3, m{=}4$: 52,390 instances, **46 residual**, Conjecture 2 holding on all
-(`update_48/residual_hunt.py`). Density elsewhere: 0.023% at $n{=}3,m{=}5$,
+(`updates/update_48/residual_hunt.py`). Density elsewhere: 0.023% at $n{=}3,m{=}5$,
 0.487% at $n{=}4,m{=}5$, 0 at $n{=}4,m{=}4$ and $n{=}3,m{=}6$.
 
 **Structure** — of the 46: 18 have one binary-additive agent, 24 have two, and
@@ -69,7 +69,7 @@ multiset of $\lvert D_i\rvert$ is always $(2,3,3)$ or $(3,3,3)$: the
 `prop:no-balance` discrepancy skeleton.
 
 **CRI reaches it.** 0 bad roots on all 46 — the frame works exactly where the
-four theorems fail (`update_48/residual_attack.py`).
+four theorems fail (`updates/update_48/residual_attack.py`).
 
 ## 4. `conj:cri-depth` is refuted
 
@@ -87,7 +87,7 @@ $\lvert R\rvert = 7$. It is false. Dead states with $\lvert R\rvert \ge 3$:
 All failures are on **composed** and **capped** — and capped had never been
 correctly generated before the 2026-08-09 generator fix. `CRI.md` §7 and
 `report/working/approach_9.tex` still present this as open and **are stale on
-that point** (`update_48/depth_stress.py`; the $n\ge4$ blocks did not finish).
+that point** (`updates/update_48/depth_stress.py`; the $n\ge4$ blocks did not finish).
 
 ## 5. The spread-2 line
 
@@ -157,7 +157,7 @@ So (F5\*) was re-run on a corpus **not selected for it**:
 > **2,574 instances, $n$ up to 6, $m$ up to 8, all 11 generators —
 > 0 failures, in the STRONG form: *every* minimiser of the total spread has a
 > good maximum-weight matching, not merely some.**
-> Control: 0 Conjecture 2 failures. (`update_48/minsum_stress.py`)
+> Control: 0 Conjecture 2 failures. (`updates/update_48/minsum_stress.py`)
 
 The sibling rule (minimise the number of agents attaining the maximum spread)
 also has 0 failures. Together with the 4,770 families of the selected sample,
@@ -1013,16 +1013,16 @@ Lemma D. Everything above is unconditional.
 
 | file | what it establishes |
 |---|---|
-| `update_48/residual_map.py` | the residual is empty under random generation; S4 covers 550/550 |
-| `update_48/residual_hunt.py` | the capping construction; the first 46 residual instances |
-| `update_48/residual_attack.py` | their structure; spread 2; CRI reaches them |
-| `update_48/depth_stress.py` | `conj:cri-depth` refuted |
-| `update_48/spread_conjecture.py` | ⚠ its broad test is **vacuous** — min spread was 0 or 1 on all 1,792 instances, so spread-2 was never exercised |
-| `update_48/spread_hardcore.py` | (F5) on 91 generated spread-2 instances |
-| `update_48/spread_scale.py` | (A) survives $m \gg n$ up to $m/n = 4.3$ |
-| `update_48/spread_which.py` | not every spread-2 family works |
-| `update_48/spread_rule.py` | the sufficient predicates; balance is not one |
-| `update_48/minsum_stress.py` | the broad stress test of (F5\*) |
+| `updates/update_48/residual_map.py` | the residual is empty under random generation; S4 covers 550/550 |
+| `updates/update_48/residual_hunt.py` | the capping construction; the first 46 residual instances |
+| `updates/update_48/residual_attack.py` | their structure; spread 2; CRI reaches them |
+| `updates/update_48/depth_stress.py` | `conj:cri-depth` refuted |
+| `updates/update_48/spread_conjecture.py` | ⚠ its broad test is **vacuous** — min spread was 0 or 1 on all 1,792 instances, so spread-2 was never exercised |
+| `updates/update_48/spread_hardcore.py` | (F5) on 91 generated spread-2 instances |
+| `updates/update_48/spread_scale.py` | (A) survives $m \gg n$ up to $m/n = 4.3$ |
+| `updates/update_48/spread_which.py` | not every spread-2 family works |
+| `updates/update_48/spread_rule.py` | the sufficient predicates; balance is not one |
+| `updates/update_48/minsum_stress.py` | the broad stress test of (F5\*) |
 
 ---
 

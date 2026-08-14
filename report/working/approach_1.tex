@@ -86,7 +86,7 @@ $\edgew{\alloc}(b,u) = -3$ closes a cycle of weight $-1 \le 0$, so
 $\pathw{\alloc}(u) = 2$ while the bound returns $3$. Checked against the true
 longest-path computation over $172{,}484$ (agent, allocation) pairs, the bound
 holds without exception but is exact on only $70.9\%$ of them, with slack up to
-$5$ (\texttt{update\_46/cyclebound\_check.py}). Evaluating $\pathw{\alloc}$
+$5$ (\texttt{updates/update\_46/cyclebound\_check.py}). Evaluating $\pathw{\alloc}$
 requires the longest-path computation; the bound costs $O(n)$ arc lookups and is
 used only where an upper estimate suffices ---
 Corollary~\ref{cor:onestep} and Theorem~\ref{thm:smallbundle}. Where it was

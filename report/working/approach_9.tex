@@ -1,7 +1,7 @@
 %% ==========================================================================
 %%  Approach 9 --- the conditioned-remainder induction.  OPEN.
 %%
-%%  Source: CRI.md (2026-08-09) and update_47/.  Every lemma here is proved and
+%%  Source: CRI.md (2026-08-09) and updates/update_47/.  Every lemma here is proved and
 %%  machine-checked.  conj:cri-depth, once the open statement here, is REFUTED
 %%  (prop:cri-depth-false, 2026-08-10).  The surviving route is the
 %%  witness-carrying invariant of sec:cri-witness, whose one open clause is
@@ -12,12 +12,12 @@
 %%  but the state space is replaced by one whose elements are partial
 %%  allocations under contracted cost functions.
 %%
-%%  Scripts: update_47/cri_anchor.py    (the lemmas)
-%%           update_47/cri_sweep.py     (0 bad roots; the refutations)
-%%           update_47/cri_stuck.py     (the contingency tables)
-%%           update_47/cri_where.py     (stuckness sits at |R| <= 2)
-%%           update_47/cri_lookahead.py (no dead state at |R| >= 3)
-%%           update_47/cri_witnesses.py (the minimal witness for each refutation)
+%%  Scripts: updates/update_47/cri_anchor.py    (the lemmas)
+%%           updates/update_47/cri_sweep.py     (0 bad roots; the refutations)
+%%           updates/update_47/cri_stuck.py     (the contingency tables)
+%%           updates/update_47/cri_where.py     (stuckness sits at |R| <= 2)
+%%           updates/update_47/cri_lookahead.py (no dead state at |R| >= 3)
+%%           updates/update_47/cri_witnesses.py (the minimal witness for each refutation)
 %% ==========================================================================
 \section{Approach 9: The Conditioned-Remainder Induction}
 \label{sec:approach9}
@@ -324,7 +324,7 @@ which some agent already carries conditioned cost $2$, none is dead.
 \label{sec:cri-evidence}
 
 Every sweep below enumerates its state space completely, with no cap, and draws
-from all seven generators of \texttt{update\_44/counterexample\_hunt.py} rather
+from all seven generators of \texttt{updates/update\_44/counterexample\_hunt.py} rather
 than the single uniform sampler used throughout \Cref{sec:approach3}.
 
 \begin{observation}[The sweep]
@@ -334,7 +334,7 @@ together with $438$ adversarial instances at $n = 3$ ($m \le 7$), $n = 4$
 ($m \le 6$) and $n = 5$ ($m \le 5$), there is \emph{no bad root}:
 Conjecture~\ref{conj:cri} holds on every one. Without the relabelling move there
 are $3$ bad roots, all in the exhaustive family
-(\texttt{update\_47/cri\_sweep.py}).
+(\texttt{updates/update\_47/cri\_sweep.py}).
 \end{observation}
 
 The dead states are confined to the end of the induction, and sharply so.
@@ -357,7 +357,7 @@ Correspondingly, playing an arbitrary legal assignment while $\abs{R} > 3$ and
 then searching the last three chores reached a terminal on all $10{,}045$
 instances tested, with the play above the threshold chosen at random so that the
 result is not an artefact of a tie-break
-(\texttt{update\_47/cri\_lookahead.py}).
+(\texttt{updates/update\_47/cri\_lookahead.py}).
 \end{observation}
 
 \begin{conjecture}[Depth --- \textbf{refuted}]
@@ -396,7 +396,7 @@ reaches a terminal state through legal states.
 \begin{proof}
 Complete enumeration of the state space over instances drawn from four families
 at $n = 3$ and $m \in \set{6,7,8}$ finds $657$ such states
-(\texttt{update\_48/depth\_stress.py}):
+(\texttt{updates/update\_48/depth\_stress.py}):
 \begin{center}\small
 \begin{tabular}{@{}lrrr@{}}
 \toprule

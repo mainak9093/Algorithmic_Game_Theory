@@ -1,7 +1,7 @@
 %% ==========================================================================
 %%  Approach 6 --- a pure goods reformulation, and a working algorithm.
 %%
-%%  Source: derived 2026-08-05.  Scripts: update_6/targetG.py, targetG_adv.py,
+%%  Source: derived 2026-08-05.  Scripts: updates/update_6/targetG.py, targetG_adv.py,
 %%  guidedR3.py, guidedR3_full.py, targetGbal.py, targetGbal_local.py,
 %%  imwpm_raw.py, final_algorithm.py.
 %%
@@ -526,7 +526,7 @@ Theorem~\ref{thm:n2-complete} along the same seam gives two statements:
 Together they give Conjecture~\ref{conj:main}, and at $n = 2$ both hold with
 $K = 3$ --- that is precisely the content of the two-agent proof.
 
-The measurement (\texttt{update\_22/window\_general.py}) first reproduces the
+The measurement (\texttt{updates/update\_22/window\_general.py}) first reproduces the
 proved case: at $n = 2$ the smallest $\uspread$ carried by a \emph{bad} balanced
 split is $4$, i.e.\ $\abs{h} \le 3$ suffices, matching Lemma~\ref{lem:window}
 exactly. That agreement is what licenses reading the rest of the table as
@@ -571,7 +571,7 @@ arbitrary partition.
 \label{obs:restarts-vestigial}
 Over $1{,}580$ random instances with $n \le 7$ and $m \le 9$, the IMWPM warm
 start followed by repair alone succeeded every time; the restart branch was
-never entered (\texttt{update\_22/restart\_necessity.py}).
+never entered (\texttt{updates/update\_22/restart\_necessity.py}).
 \end{observation}
 
 This matters for what a proof must establish, because the two readings of
@@ -613,7 +613,7 @@ triples at $m = 6$, random instances up to $n = 7$, $m = 10$,
 disjoint-interest instances built for maximal disagreement, and the named hard
 instances of Section~\ref{sec:construct-repair-evidence} --- the $q$-spread of
 the raw IMWPM partition, before any repair, never exceeded $2$
-(\texttt{update\_23/warmstart.py}, \texttt{imwpm\_bound.py}).
+(\texttt{updates/update\_23/warmstart.py}, \texttt{imwpm\_bound.py}).
 \end{observation}
 
 Two refinements make this sharper than it first appears. First, the bound is
@@ -826,7 +826,7 @@ $q$-spread equals $\max_i \pathw{\alloc}(i)$ exactly.
 
 Both identities were checked against direct computation on $745$ instances with
 no mismatch, and the last claim held on all $276$ instances with $n \mid m$
-(\texttt{update\_26/q\_formula.py}). Corollary~\ref{cor:q-imwpm} is worth
+(\texttt{updates/update\_26/q\_formula.py}). Corollary~\ref{cor:q-imwpm} is worth
 stating because it removes the apparent asymmetry between this section and the
 rest of the report: when $n$ divides $m$, Target~G at an IMWPM allocation
 \emph{is} Conjecture~\ref{conj:main} at that allocation, and
@@ -883,7 +883,7 @@ measurement returns something stronger.
 Over $746$ instances with $n \le 6$, $m \le 9$, every chores envy arc at the
 IMWPM allocation had weight at most $1$; the observed distribution of
 $\edgew{\alloc}(i,j)$ was $-3\,{:}\,3$, $-2\,{:}\,648$, $-1\,{:}\,3551$,
-$0\,{:}\,2356$, $1\,{:}\,300$ (\texttt{update\_27/arc\_bound.py}).
+$0\,{:}\,2356$, $1\,{:}\,300$ (\texttt{updates/update\_27/arc\_bound.py}).
 \end{observation}
 
 An arc bound of $1$ says $\cost_i(\bundle{i}) \le \cost_i(\bundle{j}) + 1$, which
@@ -945,7 +945,7 @@ weights telescope, giving $\max_i \pathw{\alloc}(i) \le \operatorname{spread}(\p
 Taking $\phi = -\pathw{\alloc}$ works trivially and is circular, so $\phi$ must
 come from the algorithm. Nine candidates read off the round structure were tried
 and none holds universally; the best, $\phi = -\cost_i(\bundle{i})$, held on
-$583$ of $657$ instances (\texttt{update\_28/potential\_search.py}). But that
+$583$ of $657$ instances (\texttt{updates/update\_28/potential\_search.py}). But that
 candidate is worth keeping, because the algebra behind it is exact.
 
 \begin{lemma}[Own-cost decomposition]
@@ -979,7 +979,7 @@ bundle is cheapest for the agent holding it''. That fails --- but only just.
 larger $m$, see Remark~\ref{rem:kappa-parts-refuted}]
 \label{obs:kappa-parts}
 Over $657$ instances with $n \le 6$, $m \le 9$
-(\texttt{update\_28/potential\_search.py} and the accompanying path sweep):
+(\texttt{updates/update\_28/potential\_search.py} and the accompanying path sweep):
 \begin{enumerate}
   \item[(i)] $\operatorname{spread}(\kappa) \le 2$ always, with distribution
     $0\,{:}\,200$, $1\,{:}\,454$, $2\,{:}\,3$;
@@ -1022,7 +1022,7 @@ everything costly), both parts fail:
 \end{align*}
 with distributions $\operatorname{spread}(\kappa)$ given by $0{:}58$, $1{:}44$,
 $2{:}18$, $3{:}31$, $4{:}5$ and path defect by $-4{:}4$, $-3{:}21$, $-2{:}14$,
-$-1{:}12$, $0{:}105$ (\texttt{update\_29/stress\_kappa.py}). So
+$-1{:}12$, $0{:}105$ (\texttt{updates/update\_29/stress\_kappa.py}). So
 Corollary~\ref{cor:constant-bound} yields at best $8$ at these sizes, and both of
 its inputs grow with $m$. It is withdrawn.
 \end{remark}
@@ -1091,7 +1091,7 @@ out of $a$ satisfied:
 \end{itemize}
 Consequently (CL) certifies only $\pathw{\alloc}(a) \le 3$ where the truth is
 $1$, and proving ``closing arc $\ge -1$'' is a strictly harder statement than
-proving $\pathw{\alloc} \le 1$ (\texttt{update\_30/closing\_arc.py}).
+proving $\pathw{\alloc} \le 1$ (\texttt{updates/update\_30/closing\_arc.py}).
 \end{proposition}
 
 So the route is worse than what it replaces, and the reason is instructive:

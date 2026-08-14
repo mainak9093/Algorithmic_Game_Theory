@@ -491,11 +491,11 @@ are $n = 2$ (all $m$) and $m \le n$.
 
 | file | what it establishes |
 |---|---|
-| `update_32/peel_sweep.py` | the exhaustive $n=m=3$ sweep, 0 bad roots |
-| `update_32/peel_general.py` | larger sizes; the three naive rules fail |
-| `update_32/deadend_char.py` | balance $\Rightarrow$ live, 1.19M states |
-| `update_32/balance_rule.py` | the rule reaches a terminal, 305 instances |
-| `update_33/why_balance_works.py` | refutes the "legal balanced terminal" mechanism |
-| `update_34/reachable_stuck.py` | the stuck-state count (note: its stuck test is too lenient — permutations make no progress) |
-| `update_35/stuck_profile.py` | the stuck-state characterisation |
-| `update_36/potential_set.py` | $\mathcal P(W)$, and $\mathcal P(\text{root}) = \{\emptyset,N\}$ |
+| `updates/update_32/peel_sweep.py` | the exhaustive $n=m=3$ sweep, 0 bad roots |
+| `updates/update_32/peel_general.py` | larger sizes; the three naive rules fail |
+| `updates/update_32/deadend_char.py` | balance $\Rightarrow$ live, 1.19M states |
+| `updates/update_32/balance_rule.py` | the rule reaches a terminal, 305 instances |
+| `updates/update_33/why_balance_works.py` | refutes the "legal balanced terminal" mechanism |
+| `updates/update_34/reachable_stuck.py` | the stuck-state count (note: its stuck test is too lenient — permutations make no progress) |
+| `updates/update_35/stuck_profile.py` | the stuck-state characterisation |
+| `updates/update_36/potential_set.py` | $\mathcal P(W)$, and $\mathcal P(\text{root}) = \{\emptyset,N\}$ |

@@ -143,7 +143,7 @@ question is decided by the $6$ base-matrix entries $C_{ij} \in \set{0,1,2}$
 over all $3^6 \times 2^6 = 46{,}656$ such combinations, against all $3$
 choices of which bundle absorbs $e$, all $6$ permutations, and all $8$
 subsidy vectors, finds a rescue in every single case --- zero exceptions
-(\texttt{update\_49/exhaustive\_r1.py}; cross-checked with off-diagonal bound
+(\texttt{updates/update\_49/exhaustive\_r1.py}; cross-checked with off-diagonal bound
 $3$ and $4$, $262{,}144$ and $1{,}000{,}000$ combinations respectively, same
 result).
 \end{proof}
@@ -174,7 +174,7 @@ $i\ne j$, $e\in\set{1,2}$ (with $\mu_{iei}=1$ forced). An exhaustive search
 over all $3^6 \times 2^{12} = 2{,}985{,}984$ combinations, against all $6$
 ordered choices of $(m_1,m_2)$, all $6$ permutations, and all $8$ subsidy
 vectors, finds a rescue in every case --- zero exceptions
-(\texttt{update\_49/exhaustive\_r2\_shapeB.py}, $18$s runtime). Sending both
+(\texttt{updates/update\_49/exhaustive\_r2\_shapeB.py}, $18$s runtime). Sending both
 leftover items to the \emph{same} bundle is never needed.
 
 As an independent check beyond the abstract argument,

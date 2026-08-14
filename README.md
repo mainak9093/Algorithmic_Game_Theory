@@ -7,10 +7,11 @@ subsidies**, and an open problem on **negative dichotomous valuations** (chores)
 
 | File | What it is |
 |---|---|
-| [`report/`](report/) | The LaTeX write-up. Two documents: `main.tex` → the report (problem setup only), `working.tex` → the full draft including everything proved so far. See [`report/README.md`](report/README.md). |
-| [`update_1/`](update_1/) | Working note and the verification scripts behind it. Every claim in `report/working/` is machine-checked here. |
-| [`glossary_fair_division_subsidies.md`](glossary_fair_division_subsidies.md) | Project glossary, v1 — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
-| [`paper_map_R1_to_R9.md`](paper_map_R1_to_R9.md) | One entry per paper (R1–R9): what it does, what it improves on, what it leaves open. Includes the dependency DAG and the bound tables. |
+| [`report/`](report/) | The LaTeX write-up. Two documents: `main.tex` → the report, `working.tex` → the full draft including everything proved so far. See [`report/README.md`](report/README.md). |
+| [`docs/`](docs/) | All project `.md` notes: `RESIDUAL.md` (the running research log), `CRI.md`, `BALANCE_RULE.md`, and the rest. See [`docs/glossary_fair_division_subsidies.md`](docs/glossary_fair_division_subsidies.md) and [`docs/paper_map_R1_to_R9.md`](docs/paper_map_R1_to_R9.md) below. |
+| [`updates/`](updates/) | `update_1/` … `update_49/`, one folder per work session. Every claim in `report/working/` is machine-checked here. |
+| [`docs/glossary_fair_division_subsidies.md`](docs/glossary_fair_division_subsidies.md) | Project glossary, v1 — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
+| [`docs/paper_map_R1_to_R9.md`](docs/paper_map_R1_to_R9.md) | One entry per paper (R1–R9): what it does, what it improves on, what it leaves open. Includes the dependency DAG and the bound tables. |
 | [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The open problem being worked on. |
 | [`References/`](References/) | Source papers, `Reading_1.pdf` … `Reading_9.pdf`. |
 
@@ -38,7 +39,7 @@ Envy-freeness fails for indivisible goods, and the corpus splits on the repair:
 - **(B) Weaken the notion** — no money; relax EF to EF1 / EFX / WEF$(x,1-x)$ / TWEF /
   WMEF and ask what still exists. → R5, R8.
 
-See [`paper_map_R1_to_R9.md`](paper_map_R1_to_R9.md) §0 for the full structure.
+See [`docs/paper_map_R1_to_R9.md`](docs/paper_map_R1_to_R9.md) §0 for the full structure.
 
 ## Problem Statement 1 — negative dichotomous valuations
 

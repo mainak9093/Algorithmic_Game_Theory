@@ -2,7 +2,7 @@
 
 **Nothing here is deleted, stale, or unverified.** Every result in this
 directory is proved and machine-checked against the scripts in
-[`../../update_1/`](../../update_1/). It is parked only because the report is
+[`../../updates/update_1/`](../../updates/update_1/). It is parked only because the report is
 deliberately short right now: it sets up the problem and stops.
 
 ## Two documents
@@ -36,22 +36,22 @@ The two results worth not re-deriving:
 - **The insertion template is dead.** A three-agent instance where every choice
   of receiving agent forces a subsidy of 2, though the full instance solves with
   0. Any correct proof must re-open already-allocated bundles.
-  (`approach_1.tex`, verified by `update_1/deadend.py`.)
+  (`approach_1.tex`, verified by `updates/update_1/deadend.py`.)
 - **Utilitarian optimality is the wrong restriction.** A three-agent, four-chore
   instance whose *unique* cost-minimising allocation needs subsidy 2 while a
   costlier one needs 0. A correct algorithm must be free to give up total cost.
-  (`approach_2.tex`, verified by `update_1/mswcex.py`.)
+  (`approach_2.tex`, verified by `updates/update_1/mswcex.py`.)
 
 - **No refinement of the utilitarian-optimal set can work.** The point above is
   not just about tie-breaking: on that instance the optimal set is a *singleton*,
   so any rule selecting inside it returns the bad allocation. This kills the
   cardinality-balance-then-cost-leximin refinement despite ~1050 clean random
-  trials. (`approach_2.tex`, verified by `update_4/checkD.py`.)
+  trials. (`approach_2.tex`, verified by `updates/update_4/checkD.py`.)
 - **Coverage cannot be encoded into the numbers.** No dichotomous reweighting of
   the replica instance separates coverage from non-coverage — exhaustive over all
   $990^3$ triples — and no weight inflation can steer R3's algorithm, because its
   repair subroutine runs exactly where every candidate's marginal is 0 and a
-  duplicate moves no arc. (`approach_4.tex`, verified by `update_4/dupsep.py`.)
+  duplicate moves no arc. (`approach_4.tex`, verified by `updates/update_4/dupsep.py`.)
 
 All four negative results share one shape: **a rule fixed ex ante against a
 quantity determined ex post.** What survives is procedures that decide late.
@@ -64,12 +64,12 @@ And the one worth building on:
   dynamically this defers every ownership decision to the last move touching a
   chore, which is exactly what the two negative results demand. Not known to
   work — the state space has dead ends, and the reduction is sufficient but not
-  known to be complete. (`approach_3.tex`, verified by `update_2/peel3.py`.)
+  known to be complete. (`approach_3.tex`, verified by `updates/update_2/peel3.py`.)
 
 **Pending:** the terms introduced in `approach_3.tex` — replica instance, type
 map, coverage allocation, peel process, workload profile, owner-candidate set,
 survivor, spectator-free peel, conditioned-remainder principle, deadlock — are
-flagged for promotion into `../../glossary_fair_division_subsidies.md`, which has
+flagged for promotion into `../../docs/glossary_fair_division_subsidies.md`, which has
 not been updated. Do that before this notation leaves `working/`.
 
 ## Adding a new idea

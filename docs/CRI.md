@@ -5,7 +5,7 @@
 > **⚠ SUPERSEDED IN PART, 2026-08-10.** The depth theorem of §7 —
 > `conj:cri-depth` — is **REFUTED**: 657 dead states with $\lvert R\rvert \ge 3$
 > on the composed and capped families at $m = 6,7,8$
-> (`update_48/depth_stress.py`). The caveat in §7 was correct and the corpus it
+> (`updates/update_48/depth_stress.py`). The caveat in §7 was correct and the corpus it
 > warned about was the one that broke it. **§7 below is retained as the record
 > of a refuted conjecture; do not read it as open.**
 >
@@ -207,7 +207,7 @@ cover only about 52% of states.
 ## 5. Evidence
 
 All sweeps enumerate the state space **completely** — no caps — and use all seven
-generators of `update_44/counterexample_hunt.py`, not `rand_dicho` alone as every
+generators of `updates/update_44/counterexample_hunt.py`, not `rand_dicho` alone as every
 peel-frame sweep did.
 
 | claim | scope | result |
@@ -238,7 +238,7 @@ peel-frame sweep did.
 **CRI itself is not among these.** Every entry below is a *local* statement one
 would like to prove CRI with; the conjecture survives all of them. Counts are not
 evidence, so each is given with its minimal instance, extracted and re-verified
-by `update_47/cri_witnesses.py`. Chores are $a,b,c,\dots$; every cost function
+by `updates/update_47/cri_witnesses.py`. Chores are $a,b,c,\dots$; every cost function
 shown is dichotomous.
 
 ### 6.1 The central witness — pointwise CRI, and the last rung
@@ -383,7 +383,7 @@ $n = 2$ (all $m$) and $m \le n$.
 
 ## 9. A corpus bug found on the way — affects earlier work
 
-`f_capped` and `f_threshold` in `update_44/counterexample_hunt.py` had the
+`f_capped` and `f_threshold` in `updates/update_44/counterexample_hunt.py` had the
 `rng.randrange(...)` **inside** the dict comprehension, so the cap / threshold was
 redrawn for every subset $S$. The result was neither a capping nor a threshold
 function, and had marginals of 2 and more — i.e. **outside the dichotomous class
@@ -398,12 +398,12 @@ generators should be re-read:**
 
 | file | what it computed | effect |
 |---|---|---|
-| `update_44/counterexample_hunt.py` | the adversarial counterexample hunt | searched a **larger** class than intended, so "no counterexample" still stands, but genuine capped/threshold coverage was much thinner than reported |
-| `update_44/n3_cases.py` | the $n=3$ residual map, paid/unpaid characterisation | statistics partly over non-dichotomous instances — **should be re-run** |
-| `update_45/n3_rules.py` | the LEXB refutation | the refutation stands (a counterexample is a counterexample only if it is in the class — **needs re-checking**) |
-| `update_46/cyclebound_check.py` | the cycle-closing bound | **unaffected**: `thm:cyclebound` assumes only envy-freeability, not dichotomous costs, so running it on a wider class is stronger evidence, not weaker |
+| `updates/update_44/counterexample_hunt.py` | the adversarial counterexample hunt | searched a **larger** class than intended, so "no counterexample" still stands, but genuine capped/threshold coverage was much thinner than reported |
+| `updates/update_44/n3_cases.py` | the $n=3$ residual map, paid/unpaid characterisation | statistics partly over non-dichotomous instances — **should be re-run** |
+| `updates/update_45/n3_rules.py` | the LEXB refutation | the refutation stands (a counterexample is a counterexample only if it is in the class — **needs re-checking**) |
+| `updates/update_46/cyclebound_check.py` | the cycle-closing bound | **unaffected**: `thm:cyclebound` assumes only envy-freeability, not dichotomous costs, so running it on a wider class is stronger evidence, not weaker |
 
-`update_47/cri_sweep.py` now asserts `is_dichotomous` on every generated
+`updates/update_47/cri_sweep.py` now asserts `is_dichotomous` on every generated
 instance, so this class of error cannot recur silently.
 
 **The fix is not only hygiene — it revealed which family is adversarial.**
@@ -421,13 +421,13 @@ future stress test should be weighted towards it.
 
 | file | what it establishes |
 |---|---|
-| `update_47/cri_anchor.py` | Lemmas 1–3, the additive collapse, the first-chore proposition, and that the peel dead ends are not CR states |
-| `update_47/cri_sweep.py` | the complete state-space analysis: 0 bad roots, 3 without relabelling, and the P1/P2 refutations |
-| `update_47/cri_stuck.py` | the contingency tables: balance does not transplant, $(\textsc{commit})$ is backwards, free assignment is sound |
-| `update_47/cri_where.py` | stuckness is confined to $\lvert R\rvert \le 2$; the four rules and their failures |
-| `update_47/cri_lookahead.py` | no dead state at $\lvert R\rvert \ge 3$; $K = 3$ look-ahead suffices |
-| `update_47/cri_witnesses.py` | the minimal instance for every refuted claim in §6, each re-verified |
-| `update_47/diag_first.py` | the diagnostic that surfaced the generator bug |
+| `updates/update_47/cri_anchor.py` | Lemmas 1–3, the additive collapse, the first-chore proposition, and that the peel dead ends are not CR states |
+| `updates/update_47/cri_sweep.py` | the complete state-space analysis: 0 bad roots, 3 without relabelling, and the P1/P2 refutations |
+| `updates/update_47/cri_stuck.py` | the contingency tables: balance does not transplant, $(\textsc{commit})$ is backwards, free assignment is sound |
+| `updates/update_47/cri_where.py` | stuckness is confined to $\lvert R\rvert \le 2$; the four rules and their failures |
+| `updates/update_47/cri_lookahead.py` | no dead state at $\lvert R\rvert \ge 3$; $K = 3$ look-ahead suffices |
+| `updates/update_47/cri_witnesses.py` | the minimal instance for every refuted claim in §6, each re-verified |
+| `updates/update_47/diag_first.py` | the diagnostic that surfaced the generator bug |
 
 ---
 

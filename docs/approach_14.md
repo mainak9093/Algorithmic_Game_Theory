@@ -3,7 +3,7 @@
 **CLOSED.** Full record of the proposal in `approach_14_proposal.pdf`, its
 audit, and its final status.
 
-Cross-reference: `RESIDUAL.md` §7.16.40–41. Scripts: `update_14/`, `update_6/`.
+Cross-reference: `RESIDUAL.md` §7.16.40–41. Scripts: `updates/update_14/`, `updates/update_6/`.
 
 ---
 
@@ -175,7 +175,7 @@ for sizes differing by `≤ 1`, not for exact balance.
 
 ## 4. Audit (c) — RQ1 survives search
 
-`update_14/rq1_search.py` generates positive dichotomous instances, enumerates
+`updates/update_14/rq1_search.py` generates positive dichotomous instances, enumerates
 **every** almost-balanced allocation and **every** `q ∈ {0,1}^n`, and tests
 (i)–(iii).
 
@@ -223,9 +223,9 @@ Size-shifted (`ṽ_i(S) = |S| − c_i(S)`):
 
 | Script | Result |
 |---|---|
-| `update_6/guidedR3_full.py` | Full backtracking over **every** legal R3 execution — every item order, every Extend choice, every FindSink start; **474 nodes**. Best reachable `q`-spread = **2**. Witness: bundles `[[1,2],[0],[]]`, `q = [2,1,0]` |
-| `update_6/verify_reach_gap.py` | Algorithm-free enumeration on the same instance: `q`-spread **0** achievable, via `[0],[1],[2]` with goods subsidy `(0,0,0)`. **So RQ1 holds on this instance** |
-| `update_14/reach_sizes.py` | **New, sharper.** The *only* final size profile any legal execution can reach is **`(0,1,2)`**. The almost-balanced profile `(1,1,1)` is **unreachable** |
+| `updates/update_6/guidedR3_full.py` | Full backtracking over **every** legal R3 execution — every item order, every Extend choice, every FindSink start; **474 nodes**. Best reachable `q`-spread = **2**. Witness: bundles `[[1,2],[0],[]]`, `q = [2,1,0]` |
+| `updates/update_6/verify_reach_gap.py` | Algorithm-free enumeration on the same instance: `q`-spread **0** achievable, via `[0],[1],[2]` with goods subsidy `(0,0,0)`. **So RQ1 holds on this instance** |
+| `updates/update_14/reach_sizes.py` | **New, sharper.** The *only* final size profile any legal execution can reach is **`(0,1,2)`**. The almost-balanced profile `(1,1,1)` is **unreachable** |
 
 ### 5.3 Root cause
 
@@ -259,7 +259,7 @@ Flagged by the user, checked against the actual BKNS rule, and confirmed. This
 is independent of §5.1–5.4 and stronger in one respect: it is a **per-call**
 obstruction, not a fact about a whole search tree.
 
-**The rule, as implemented (`update_6/guidedR3.py:extend_options`).** For a
+**The rule, as implemented (`updates/update_6/guidedR3.py:extend_options`).** For a
 new item `g`, EXTEND ranges over pairs `(k, l)` with `l ∈ M(q)` and
 `v_k(g | A_l) = 1` (a genuine marginal-1 gain), picks the welfare-maximising
 bundle permutation consistent with that pair, and offers it as a candidate.
@@ -275,7 +275,7 @@ though that agent is in `M(q)`, i.e. is exactly the agent the restriction
 wants to grow.
 
 **Frequency, checked directly (not via a full-execution search).**
-`update_14/extend_cardinality.py` builds partial allocations under random
+`updates/update_14/extend_cardinality.py` builds partial allocations under random
 choices and inspects `extend_options` at each step:
 
 | n | m | trials | states with a non-min-cardinality option present | states where **every** option is off the minimum |
@@ -293,7 +293,7 @@ at every `n` tested — including a witness at `n=5` with a *unique*
 minimum-cardinality bundle (`sizes=[1,1,1,1,0]`) where every valid option still
 ignores it.
 
-**Minimal recorded witness** (`update_14/extend_witness.py`, standalone,
+**Minimal recorded witness** (`updates/update_14/extend_witness.py`, standalone,
 reproduces without the search harness). `n=3`, partial allocation
 `A = [∅, {0}, {4}]`, `p=(0,0,0)`, so `M(q) = {0,1,2}` — all three agents tied,
 including agent 0, who holds the **unique** minimum-cardinality (empty)
@@ -340,7 +340,7 @@ bearing on it.
 ## 7. Final closure — a single hand-verified step, no search required
 
 Hand-derived on the whiteboard, transcribed and verified in
-`update_14/board_witness.py`. This is the third and sharpest obstruction to
+`updates/update_14/board_witness.py`. This is the third and sharpest obstruction to
 the Steps 1–4 program: where §5.1–5.4 needed a 474-node computer search and
 §5.5 needed random sampling, this one is checked by hand in six lines of
 arithmetic.

@@ -1,0 +1,544 @@
+# Graph Report - Algorithmic_Game_Theory  (2026-08-15)
+
+## Corpus Check
+- 182 files · ~396,036 words
+- Verdict: corpus is large enough that graph structure adds value.
+
+## Summary
+- 1686 nodes · 3006 edges · 101 communities (96 shown, 5 thin omitted)
+- Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 174 edges (avg confidence: 0.76)
+- Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `ca94a567`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
+
+## Community Hubs (Navigation)
+- cri_sweep.py
+- residual_attack.py
+- guidedR3.py
+- 7. Towards a proof at $n = 3$
+- routeA.py
+- 7. Towards a proof at $n = 3$
+- Paper Map — Readings 1–9
+- Conjecture_2_n3_Verification_Dossier.md
+- probe_n4.py
+- r11_gap.py
+- n3_conjecture2_consolidated_findings.md
+- conjecture2_general_n_full_proof.md
+- ruleD_adv.py
+- counterexample_hunt.py
+- dupsep.py
+- typeorder.py
+- Approach 14 — Almost-Balanced Positive Dichotomous Allocations
+- PS1 Working Note — The Replica Transform and the Peel Reformulation
+- full_ef_exists
+- exhaustive_r1.py
+- The conditioned-remainder induction — frame, machinery, and what remains
+- audit_full_pipeline.py
+- peel_general.py
+- targetGbal.py
+- targetGbal_stress.py
+- minimum_subsidy.py
+- moves
+- layer_hunt.py
+- investigate_mincost_r2.py
+- targetG_adv.py
+- fast.py
+- hardcases.py
+- structural.py
+- The Balance Rule — conjecture, machinery, and what remains
+- Target_T_n3_AI_Agent_Research.md
+- excess_theory.py
+- approach12_correction_only.md
+- Working note — negative dichotomous valuations (the chore analogue of R3)
+- n2proof_check.py
+- chain_hunt.py
+- warmstart.py
+- make
+- slack_transfer.py
+- which_move.py
+- reachable_stuck.py
+- lookahead_rule.py
+- Lemma D — Two-Way Balance for Two Arbitrary Dichotomous Agents
+- verify_real.py
+- rq1_search.py
+- layers.py
+- residual.py
+- setsplit_family.py
+- peel_sweep.py
+- incremental.py
+- verify_cex.py
+- nonadditive_residual.py
+- PS1 working note — the duplicate-penalty (item-weight) idea is a dead end
+- WHAT I NEED YOU TO DO
+- localsearch_lemma.py
+- why_balance_works.py
+- PS1 working note — routes after the encoding approaches closed
+- PS1 working note — FINDSINK, weight forcing, and the type-ordered restriction
+- monotone_check.py
+- The residual of the solved cases, and the spread-2 line
+- 17. What NOT to retry
+- matrix_interval.py
+- 23. AI-agent continuation protocol
+- chain_matrices.py
+- stress_potentials.py
+- mswcex.py
+- balance_lemma.py
+- global_optima.py
+- nostuck.py
+- matrix_modification.py
+- smax_dynamics.py
+- commitment.py
+- 5. The spread-2 line
+- 14. The most promising proof architecture
+- tight_family.py
+- crux_evidence.py
+- nostuck_balanced.py
+- solve
+- window_general.py
+- checkD.py
+- routeA_cex.py
+- 10. Constraint taxonomy
+- 20. What a successful proof of Target T would look like
+- 2. The established `n=3` machinery
+- prove_r1.py
+- board_witness.py
+- binadd.py
+- peel3.py
+- 6. Why Target T is exactly strong enough
+- prove_r2.py
+- counting_room.py
+- 0. Executive summary for an AI agent
+- CLAUDE.md
+- 11. Known obstructions and what they teach us
+- 5. The exact new target
+
+## God Nodes (most connected - your core abstractions)
+1. `7. Towards a proof at $n = 3$` - 64 edges
+2. `gen()` - 24 edges
+3. `peels()` - 23 edges
+4. `cr_legal()` - 22 edges
+5. `7. Towards a proof at $n = 3$` - 22 edges
+6. `rec()` - 19 edges
+7. `make()` - 19 edges
+8. `show_costs()` - 19 edges
+9. `profile()` - 16 edges
+10. `assignments()` - 16 edges
+
+## Surprising Connections (you probably didn't know these)
+- `gen_functions()` --calls--> `rec()`  [INFERRED]
+  updates/update_10/layer_hunt.py → updates/update_14/reach_sizes.py
+- `gen_functions()` --calls--> `rec()`  [INFERRED]
+  updates/update_10/layers.py → updates/update_14/reach_sizes.py
+- `sweep()` --calls--> `gen()`  [INFERRED]
+  updates/update_12/chain_hunt.py → updates/update_48/spread_scale.py
+- `greedy()` --calls--> `marg()`  [INFERRED]
+  updates/update_47/cri_where.py → updates/update_12/probe_n4.py
+- `strongly_connected()` --calls--> `reach()`  [INFERRED]
+  updates/update_49/check_proof_r2.py → updates/update_12/probe_n4.py
+
+## Import Cycles
+- None detected.
+
+## Communities (101 total, 5 thin omitted)
+
+### Community 0 - "cri_sweep.py"
+Cohesion: 0.06
+Nodes (79): a1_schedule(), a2_deadends(), a3_lemma2(), a4_lemma3(), a5_additive(), a6_first_chore(), arcs(), contracted() (+71 more)
+
+### Community 1 - "residual_attack.py"
+Cohesion: 0.07
+Nodes (61): f_composed(), analyse(), main(), Stress the min-total-spread rule before believing it. spread_rule.py produced a…, Minimisers of total spread and of binding count; are they all good?, collect_residual(), main(), matching_good() (+53 more)
+
+### Community 2 - "guidedR3.py"
+Cohesion: 0.07
+Nodes (53): main(), random_dichotomous(), Does BKNS EXTEND ever choose to grow a bundle that is NOT of minimum…, main(), random_dichotomous(), Sharper test: does there exist a partial-allocation state where EXTEND has at…, main(), Approach 14 / Step 1 obstruction, minimal recorded witness. State: n=3, partial… (+45 more)
+
+### Community 3 - "7. Towards a proof at $n = 3$"
+Cohesion: 0.03
+Nodes (64): 7.10.1 The complete constraint taxonomy, 7.10.2 The hypothesis keeps killing the conflicts, 7.10.3 ⚠ What (Q) does and does not buy, 7.10 Question (Q), and why the divisibility condition is the whole story, 7.11 Rigidity is the right notion, not additivity, 7.12 Compression, and why the residual looks the way it does, 7.13 Two sets can always be balanced — so the obstruction needs all three, 7.14 Attacking (R): two sets go to spread $0$ for free (+56 more)
+
+### Community 4 - "routeA.py"
+Cohesion: 0.07
+Nodes (46): arcs(), dfs(), invariant_ok(), key(), longest_paths(), peel.py -- verification for the replica/peel reformulation of PS1. State: W =…, Return (ell, has_positive_cycle) via Bellman-Ford on negated weights / direct…, S() (+38 more)
+
+### Community 5 - "7. Towards a proof at $n = 3$"
+Cohesion: 0.04
+Nodes (46): 1. Four solved cases, never intersected, 2. The residual is empty under random generation, 3. Why — and how to construct one anyway, 4. `conj:cri-depth` is refuted, 5. The spread-2 line, 6. What is refuted — do not retry, 7.10.1 The complete constraint taxonomy, 7.10.2 The hypothesis keeps killing the conflicts (+38 more)
+
+### Community 6 - "Paper Map — Readings 1–9"
+Cohesion: 0.04
+Nodes (41): 10. Cross-paper conflicts to watch, 1. The model, 2. Valuation classes, 3. Fairness notions — unweighted, 4. Fairness notions — weighted (unequal entitlements), 5. Subsidy machinery, 6. Efficiency and welfare, 7. Algorithms and mechanisms (+33 more)
+
+### Community 7 - "Conjecture_2_n3_Verification_Dossier.md"
+Cohesion: 0.05
+Nodes (38): 10. Residual colouring variables, 11. Theorem S: the established two-set precursor, 12. Target Theorem T, 13. Exact logical bridge from Target T to the residual composed case, 14. Completion of the n=3 proof, conditional on Target T, 15. The exact theorem chain, 16.1 Arbitrary dichotomous Lemma D, 16.2 Uniform balance of three arbitrary sets (+30 more)
+
+### Community 8 - "probe_n4.py"
+Cohesion: 0.13
+Nodes (29): backward_closure(), biased_dichotomous(), check_instance(), main(), AUDIT of conjecture2_general_n_full_proof.md (user's general-n proof). That…, P = T, then repeatedly add i not in S having an equality edge i->j, j in P., Returns list of problem strings (empty = all good)., biased_dichotomous() (+21 more)
+
+### Community 9 - "r11_gap.py"
+Cohesion: 0.10
+Nodes (28): check_own_telescoping(), defects(), imwpm_rounds(), main(), R11's Proposition 3.1, and the exact inequality that fails for dichotomous. R11…, (A) must be exact: sum of own marginals equals value of own bundle., imwpm_raw.imwpm, but recording each round's assignment and the bundles held at…, D_ij for every ordered pair, per (B'). (+20 more)
+
+### Community 10 - "n3_conjecture2_consolidated_findings.md"
+Cohesion: 0.06
+Nodes (32): 10. Two-set set-balancing theorem, 11. Composed costs and the compression theorem, 12. Target T — now proved, 13. Proof of Target T: exact residue reduction, 14. Consequence for residual composed costs, 15. Simultaneous spread-1 balancing is false, 16. Why the K4 set obstruction does not hurt Lemma E, 17. The important correction about “spread-zero must occur” (+24 more)
+
+### Community 11 - "conjecture2_general_n_full_proof.md"
+Cohesion: 0.06
+Nodes (31): 10. Completion theorem, 11. Polynomial-time construction, 12. Main theorem — Conjecture 2 for arbitrary n, 13. Why the n=3 proof was the special case, 14. What this does NOT prove, 15. Attribution boundary, 1. Definitions, 1a. `j∉T` (+23 more)
+
+### Community 12 - "ruleD_adv.py"
+Cohesion: 0.17
+Nodes (27): any_good_overall(), as_dict(), balanced(), check(), ellvec(), gen_functions(), main(), rand_dicho() (+19 more)
+
+### Community 13 - "counterexample_hunt.py"
+Cohesion: 0.16
+Nodes (24): f_capped(), f_disjoint(), f_mixed(), f_nested(), f_oneheavy(), f_threshold(), f_uniform(), main() (+16 more)
+
+### Community 14 - "dupsep.py"
+Cohesion: 0.13
+Nodes (19): conjecture_still_holds(), enumerate_dichotomous(), excluded(), graph(), Inst, P_family(), path_weights(), pfamily() (+11 more)
+
+### Community 15 - "typeorder.py"
+Cohesion: 0.12
+Nodes (22): ell(), imm(), partitions(), random_dichotomous(), rules.py -- candidate constructions for PS1, tested exhaustively on small…, iterated minimum-marginal perfect matching; pad with zero-cost dummy chores, run(), random_dichotomous() (+14 more)
+
+### Community 16 - "Approach 14 — Almost-Balanced Positive Dichotomous Allocations"
+Cohesion: 0.08
+Nodes (25): 0. Verdict, 1.1 Setting, 1.2 The size-shift transformation, 1.3 Research Question 1, 1.4 The exact weaker condition, and the IISc-style invariants, 1. The proposal, restated, 2. Audit (a) — Proposition 1 is correct, 3. Audit (b) — RQ1 is Approach 6's Target G-bal (+17 more)
+
+### Community 17 - "PS1 Working Note — The Replica Transform and the Peel Reformulation"
+Cohesion: 0.08
+Nodes (25): 0. Purpose and how to use this note, 10. Status ledger, 11. Next steps, in priority order, 12. Terms to promote into the canonical files, 13. Files, 14. Changelog, 1. Setup (recap only — canonical definitions live in the glossary), 2. The idea (+17 more)
+
+### Community 18 - "full_ef_exists"
+Cohesion: 0.17
+Nodes (18): all_ef_partials(), main(), find_ef_partial(), full_ef_exists(), main(), permuted_extension_works(), random_dichotomous(), Brute force: find R (|R|<=max_leftover) and an EF 3-partition of the rest. (+10 more)
+
+### Community 19 - "exhaustive_r1.py"
+Cohesion: 0.15
+Nodes (18): has_tie(), main(), main(), main(), main(), main(), Exhaustive, saturation-justified proof search for the |R|=1, subcase-(b) case…, C: dict (i,j)->int for i!=j, C[i][i]=0 implicit. mu: dict (i,j)->{0,1} for… (+10 more)
+
+### Community 20 - "The conditioned-remainder induction — frame, machinery, and what remains"
+Cohesion: 0.08
+Nodes (23): 10. Scripts, 11. The witness-carrying invariant, and the bridge to the spread line, 1. Why a new frame, 2. The CR frame, 3. Why the frame is different, not a rebranding, 4.1 The contraction, 4.2 The arc update, 4.3 The root, exactly (+15 more)
+
+### Community 21 - "audit_full_pipeline.py"
+Cohesion: 0.15
+Nodes (23): arc_on_cycle(), audit(), brute_force_subsidy_exists(), check_ef_with_subsidy(), envy_graph(), hs_longest_path(), is_ef_partial(), marginal() (+15 more)
+
+### Community 22 - "peel_general.py"
+Cohesion: 0.21
+Nodes (21): main(), The balance rule: can it be followed from the root all the way to a terminal?…, BFS restricted to states that are legal AND balance-admitting., rule_reaches_terminal(), admits_balanced(), live_set(), main(), Characterising the peel dead ends: is BALANCE the missing rule? peel_general.py… (+13 more)
+
+### Community 23 - "targetGbal.py"
+Cohesion: 0.25
+Nodes (20): main(), THE algorithm: IMWPM (warm start) + single-item-swap local search (repair),…, compute_p(), main(), q_spread(), Does raw IMWPM (R11's iterated max-weight PERFECT matching, no repair) already…, best_matching(), dump() (+12 more)
+
+### Community 24 - "targetGbal_stress.py"
+Cohesion: 0.19
+Nodes (20): full_unrestricted_check(), main(), Classify the 14 local-search failures found at m=5, n=3 in…, True unrestricted search over ALL partitions (not just balanced)., main(), Does multi-restart (shuffled starting order) recover the 14 round-robin local-…, shuffled_local_search(), balanced_partitions() (+12 more)
+
+### Community 25 - "minimum_subsidy.py"
+Cohesion: 0.21
+Nodes (18): analyse(), main(), How large must the PAID SET S be? (the quantity Conjecture 1 bounds) Correcting…, (minS over good allocations, min total over all allocations, witness)., analyse(), main(), matrix_realising(), rand_dicho() (+10 more)
+
+### Community 26 - "moves"
+Cohesion: 0.15
+Nodes (18): ell_vec(), moves(), Longest-path subsidies, or None if a positive cycle exists., Single-chore transfers (and optionally swaps) as new bundle tuples., main(), psi3(), psi6(), Push the two-component potential P6 to larger m. P6 = (max_i ell_i, sum_i… (+10 more)
+
+### Community 27 - "layer_hunt.py"
+Cohesion: 0.20
+Nodes (18): allocs(), analyse(), as_dict(), bot_trunc(), depth(), ellvec(), gen_functions(), goodset() (+10 more)
+
+### Community 28 - "investigate_mincost_r2.py"
+Cohesion: 0.17
+Nodes (16): main(), |R|=2, "doubly-stuck" case: every agent has marginal 1 for EVERY leftover item…, solver_can_rescue_shapeB(), build_D(), Cget(), ef_works(), build_D(), Cget() (+8 more)
+
+### Community 29 - "targetG_adv.py"
+Cohesion: 0.25
+Nodes (17): as_dict(), families(), is_dich(), main(), Target G against the adversary that killed uniform balance. Uniform balance…, report(), analyse(), chore_ell() (+9 more)
+
+### Community 30 - "fast.py"
+Cohesion: 0.19
+Nodes (7): ok(), rand_dicho(), True iff no positive cycle and all longest paths <= cap., solvable(), score(), ellvec(), main()
+
+### Community 31 - "hardcases.py"
+Cohesion: 0.25
+Nodes (16): analyse(), main(), own_cost_profile(), The instances that genuinely need a subsidy. twotier.py found that across…, analyse(), as_dict(), dump(), ellvec() (+8 more)
+
+### Community 32 - "structural.py"
+Cohesion: 0.22
+Nodes (17): allocs(), ellvec(), gen_functions(), good(), main(), rand_dicho(), Two candidate theorems that avoid the exchange obstruction entirely. (T1)…, m <= n corollary: min-cost one-chore-per-agent assignment is good. (+9 more)
+
+### Community 33 - "The Balance Rule — conjecture, machinery, and what remains"
+Cohesion: 0.12
+Nodes (16): 1. The target, 2. The peel frame, 3. The conjectures, 4.1 Potentials, 4.2 When is a peel legal?, 4.2b Structure: $\mathcal P(W)$ is a lattice, 4.3 Two sufficient conditions, 4.4 The root, exactly (+8 more)
+
+### Community 34 - "Target_T_n3_AI_Agent_Research.md"
+Cohesion: 0.12
+Nodes (16): 12. Why the obvious independent-greedy proof is insufficient, 13. A second useful structural lemma: in-region placement, 15. Alternative proof architecture: finite constraint classification, 16. Computational protocol for testing candidate lemmas, 18. Relationship to the original exchange target, 19. Exact logical dependency graph, 1. Definitions and notation, 21. The critical contradiction to aim for (+8 more)
+
+### Community 35 - "excess_theory.py"
+Cohesion: 0.17
+Nodes (9): CHECK (not proof) of the new logical argument for |R|=2. Restrict the abstract…, strongly_connected(), analyze(), longest_path(), Test the epsilon-excess theory: sum of excesses at min-cost assignment, and the…, arc w(a,b) = D[a][perm[a]] - D[a][perm[b]]; longest simple path from each node.…, RULE CANDIDATE: among the 6 ordered distinct target pairs, pick one whose…, Candidate RULE for R=2: among ALL placements of e1,e2 into bundles AND all… (+1 more)
+
+### Community 36 - "approach12_correction_only.md"
+Cohesion: 0.12
+Nodes (15): 1. Exact location that needs correction, 2. Why the Saturation statement is wrong as written, 3. What should be done with this section, 4. If the verification appendix is retained, 5. What does NOT need correction, 6. Recommended exact edit, 7. Final audit status, Approach 12 — Correction Only (+7 more)
+
+### Community 37 - "Working note — negative dichotomous valuations (the chore analogue of R3)"
+Cohesion: 0.12
+Nodes (15): 0. Setting, 10. Files, 1. The sign flip, precisely (mirror of R3 Prop. 5–6), 2. Theorem A (free insertion) — strictly simpler than R3's Lemma 7, 3. Theorem B (cycle-closing bound) and its corollary, 4.1 Theorem C — binary additive chores, tight, polynomial time, 4.2 Theorem D — identical costs, and $n = 2$, 4. Two proved cases (+7 more)
+
+### Community 38 - "n2proof_check.py"
+Cohesion: 0.22
+Nodes (14): constructive_walk(), existence(), gen_functions(), is_good(), main(), rand_dicho(), Machine verification of the n=2 completeness THEOREM and its constructive walk,…, Return (good split found, number of splits evaluated). (+6 more)
+
+### Community 39 - "chain_hunt.py"
+Cohesion: 0.24
+Nodes (14): chain_good(), dump(), ell_ok(), main(), matrix_realising(), rand_dicho(), Is the CHAIN CONJECTURE true at the sizes where things actually break? Every…, Is the level-k graph of cost matrix a good? (+6 more)
+
+### Community 40 - "warmstart.py"
+Cohesion: 0.21
+Nodes (13): disjoint_interest(), main(), Stress the structural claim: does IMWPM always start at q-spread <= 2?…, Number of improving moves repair consumes; None if it stalls., Agents caring about disjoint blocks -- maximal disagreement., steps_to_repair(), has_improving_move(), main() (+5 more)
+
+### Community 41 - "make"
+Cohesion: 0.23
+Nodes (12): make(), admissible(), arcs(), main(), Peel dynamics on the SET of admissible potentials, not on ell alone.…, All admissible paid sets S, as frozensets., run(), main() (+4 more)
+
+### Community 42 - "slack_transfer.py"
+Cohesion: 0.25
+Nodes (13): in_P(), lam(), main(), marginals(), Correcting prop:inarcs-only, and a third safety criterion. THE ERROR.…, Does the slack-transfer construction certify peel(x,j)?, slack_transfer_certifies(), combined_certifies() (+5 more)
+
+### Community 43 - "which_move.py"
+Cohesion: 0.26
+Nodes (12): canon(), main(), max_path_endpoints(), key3(), main(), Same rule coverage, but under the P3 criterion, which is weaker. which_move.py…, scan(), WHICH transfer witnesses the crux? Toward a constructive proof. The crux (hard… (+4 more)
+
+### Community 44 - "reachable_stuck.py"
+Cohesion: 0.23
+Nodes (12): free_greedy(), is_free(), main(), ok(), Is the root-reachable restricted subgraph free of stuck states? rem:balance-…, No arc into the peeled agent x rises: c_k(W_x) == c_k(s_x) for all k., Prefer a free legal balance-preserving peel; else any legal one., restricted_reachable() (+4 more)
+
+### Community 45 - "lookahead_rule.py"
+Cohesion: 0.26
+Nodes (12): is_stuck_cheap(), lookahead_run(), main(), peelable(), The stuck states are all one move from the end. Does one-step lookahead…, Cheap test justified by the characterisation: only 1-peelable states., Greedy under the lookahead rule. Returns 'ok', 'allstuck', or 'nomove'., ell_vec() (+4 more)
+
+### Community 46 - "Lemma D — Two-Way Balance for Two Arbitrary Dichotomous Agents"
+Cohesion: 0.15
+Nodes (12): 10. Consequence for the project, 1. Statement and discrepancy functions, 2. Edge increments, 3. Every maximal chain balances each individual agent, 4. Balanced intervals, 5. Adjacent transpositions preserve the winner, 6. Reversal flips the winner, 7. Final contradiction (+4 more)
+
+### Community 47 - "verify_real.py"
+Cohesion: 0.22
+Nodes (12): ef_partials_with_leftover(), is_stuck(), main(), random_dichotomous(), Independent, non-abstract check of approach_12.tex's proof: generates real…, A uniformly random dichotomous cost function on m items: c(S) is chosen, in…, All EF partial allocations (X1,X2,X3) leaving exactly `rsize` items unallocated., every agent has marginal cost 1 for every leftover item on their OWN bundle (+4 more)
+
+### Community 48 - "rq1_search.py"
+Cohesion: 0.24
+Nodes (12): _all_subsets(), almost_balanced_allocations(), biased_dichotomous(), main(), main_biased(), random_dichotomous(), Approach 14 / Research Question 1 (RQ1). For every POSITIVE dichotomous…, v(empty)=0, all marginals in {0,1}: uniformly random within those constraints. (+4 more)
+
+### Community 49 - "layers.py"
+Cohesion: 0.33
+Nodes (11): allocs(), ellvec(), gen_functions(), good(), is_dich(), layers_of(), main(), A novel angle: decompose each cost function into LAYERS. OBSERVATION. Every… (+3 more)
+
+### Community 50 - "residual.py"
+Cohesion: 0.32
+Nodes (11): analyse(), binary_additive(), ell_ok(), key(), main(), matrix_realising(), rand_dicho(), The residual class: instances with NO exactly envy-free allocation. By… (+3 more)
+
+### Community 51 - "setsplit_family.py"
+Cohesion: 0.27
+Nodes (11): analyse(), build(), costs_from_D(), ell_ok(), main(), r10_witness(), R10's Set-Splitting reduction as a FAMILY, and the form of its chain witnesses.…, R10's own EF construction, which only exists on YES instances: one dummy to… (+3 more)
+
+### Community 52 - "peel_sweep.py"
+Cohesion: 0.29
+Nodes (11): cand(), conj2_holds(), ell(), legal(), main(), The peel reachability sweep: the decisive experiment Approach 3 never ran.…, Does a good allocation exist at all (Conjecture 2 for this instance)?, Longest-path vector for the state graph; None if a positive cycle. (+3 more)
+
+### Community 53 - "incremental.py"
+Cohesion: 0.22
+Nodes (10): analyse(), good_fixed(), good_rematch(), incremental_ok(), main(), Can a good BALANCED allocation be built one chore at a time, staying good? This…, Is A|T good under the FIXED assignment (agent i holds bundles[i])?, Is A|T good under SOME assignment (re-matching allowed)? (+2 more)
+
+### Community 54 - "verify_cex.py"
+Cohesion: 0.36
+Nodes (9): as_dict(), ellvec(), good(), is_dich(), lvl(), main(), make_instance(), Verify the counterexample to claims (I) and (II) as a genuine dichotomous… (+1 more)
+
+### Community 55 - "nonadditive_residual.py"
+Cohesion: 0.40
+Nodes (9): analyse(), ell_ok(), is_additive(), main(), matrix_realising(), rand_dicho(), Step 1-2 of the plan: NON-ADDITIVE EF-free instances, and whether the additive-…, subsets() (+1 more)
+
+### Community 56 - "PS1 working note — the duplicate-penalty (item-weight) idea is a dead end"
+Cohesion: 0.20
+Nodes (9): 0. What the idea was, 1. The literal proposal is a no-op, 2. The separation programme (the idea, correctly stated), 3. The duplicate budget, 4. The strongest uniform penalty is a potential, hence useless, 5. No reweighting whatsoever separates, 6. Why it fails — holder-blindness, 7. Reproduction (+1 more)
+
+### Community 57 - "WHAT I NEED YOU TO DO"
+Cohesion: 0.22
+Nodes (8): 1. Set up the folder structure, 2. Create a `CLAUDE.md` at the project root, 3. Git bookkeeping, 4. LaTeX skeleton for professor review, 5. Ongoing workflow going forward, Claude Code Setup Prompt — Algorithmic Game Theory Project, PROJECT CONTEXT, WHAT I NEED YOU TO DO
+
+### Community 58 - "localsearch_lemma.py"
+Cohesion: 0.33
+Nodes (8): canonical(), local_search(), main(), Is Conjecture 2 provable by local search on a lexicographic potential?…, (stuck_transfer, stuck_with_swaps, any_good) over ALL partitions., Does descent from random starts reach max ell <= 1?, Assign bundles to agents by min total cost; return (Psi, ell)., test_lemma()
+
+### Community 59 - "why_balance_works.py"
+Cohesion: 0.36
+Nodes (8): balanced_terminals(), main(), ordering_exists(), Why does balance-admitting imply live? Decomposing conj:balance-rule.…, All terminals below W with balanced bundle sizes, as owner tuples., Can the peels from W down to terminal f be ordered keeping legality?, reachable_legal(), state_of()
+
+### Community 60 - "PS1 working note — routes after the encoding approaches closed"
+Cohesion: 0.22
+Nodes (8): 0. What is closed and what that leaves, 1. Route D — global selection by double refinement  ⭐ strongest lead, 2. Route M — iterated matching, and why the additive proof does not lift, 3. Route N — non-redundancy instead of coverage, 4. Route A — induction on agents rather than on items, 5. Route X — matroid exchange on the parallel-copy matroid, 6. Ranking, PS1 working note — routes after the encoding approaches closed
+
+### Community 61 - "PS1 working note — FINDSINK, weight forcing, and the type-ordered restriction"
+Cohesion: 0.22
+Nodes (8): 0. The proposal, 1. The diagnosis is right: only FINDSINK can create a duplicate, 2. The weight lever cannot reach that subroutine, 3. The ordering, on its own, is live — and looks free, 4. The proposed recipient rule is false, 5. Where this leaves things, 6. Reproduction, PS1 working note — FINDSINK, weight forcing, and the type-ordered restriction
+
+### Community 62 - "monotone_check.py"
+Cohesion: 0.53
+Nodes (8): is_monotone(), main(), marginals_in_01(), Is monotonicity of c_i enough for the replica dual v-hat to be dichotomous?…, The replica dual, as a function of the TYPE SET tau(S)., report(), subsets(), vhat()
+
+### Community 63 - "The residual of the solved cases, and the spread-2 line"
+Cohesion: 0.25
+Nodes (7): 1. Four solved cases, never intersected, 2. The residual is empty under random generation, 3. Why — and how to construct one anyway, 4. `conj:cri-depth` is refuted, 6. What is refuted — do not retry, 8. Scripts, The residual of the solved cases, and the spread-2 line
+
+### Community 64 - "17. What NOT to retry"
+Cohesion: 0.25
+Nodes (8): 17.1 "Any spread-2 family works", 17.2 Minimum spread alone, 17.3 Balanced bundle sizes, 17.4 Nonempty bundles, 17.5 CRI-depth, 17.6 Common pivotal item, 17.7 Merging two bundles and leaving the third fixed, 17. What NOT to retry
+
+### Community 65 - "matrix_interval.py"
+Cohesion: 0.36
+Nodes (7): is_interval(), levels_good(), main(), Claim (I) as a pure matrix statement, searched exhaustively. REDUCTION. For a…, Return the list of booleans: good at level k, for k = 1..K., Explicit dichotomous witness for a matrix, as a sanity check: bundles A_j of…, realise()
+
+### Community 66 - "23. AI-agent continuation protocol"
+Cohesion: 0.29
+Nodes (7): 23. AI-agent continuation protocol, Do not restart, First, Main task, Preferred representation, Then treat these as established, Verification requirement
+
+### Community 67 - "chain_matrices.py"
+Cohesion: 0.43
+Nodes (6): levels(), main(), Characterise the chain-good MATRICES, exhaustively. The induction needs to know…, Is there ONE bipartition valid at every level? Return it or None., single_S(), tier_ok()
+
+### Community 68 - "stress_potentials.py"
+Cohesion: 0.43
+Nodes (6): main(), psi(), Stress the two surviving potentials, and look for a simpler one. potentials.py…, R10's certified-hard family: EF-free by construction., setsplit_instances(), test()
+
+### Community 69 - "mswcex.py"
+Cohesion: 0.38
+Nodes (6): ellvec(), is_dichotomous(), main(), Isolate and check the instance found by `msw.py 4 3 3000 11` (trial 2460), on…, c(empty)=0, monotone, every marginal in {0,1}., Longest-path subsidies; None iff a positive-weight cycle exists.
+
+### Community 70 - "balance_lemma.py"
+Cohesion: 0.48
+Nodes (6): analyse(), canon(), comp(), key(), main(), Two questions raised by global_optima.py. (1) THE BALANCE LEMMA. The optima of…
+
+### Community 71 - "global_optima.py"
+Cohesion: 0.43
+Nodes (6): analyse(), canon(), main(), objective(), Which GLOBAL optimum is always good? (existence without local search) Approach…, Return dict name -> (all_good, some_good) plus whether any allocation is good.
+
+### Community 72 - "nostuck.py"
+Cohesion: 0.43
+Nodes (6): good_fixed(), good_rematch(), main(), (NS): is greedy insertion ever stuck? This would settle BOTH clauses. (INC)…, Check (NS) at every good partial allocation., scan()
+
+### Community 73 - "matrix_modification.py"
+Cohesion: 0.38
+Nodes (6): analyse(), ell_vec(), main(), BDNSV20's modified-valuation trick, transplanted to the MATRIX level. WHERE…, Longest-path weights; None if a positive cycle exists., Return (ell true, ell modified, sizes) for the given bundles.
+
+### Community 74 - "smax_dynamics.py"
+Cohesion: 0.43
+Nodes (6): any_balanced(), canonical_support(), main(), Dynamics of S_max, and the canonical-support conjecture. Two questions, both…, Is there a balanced terminal f with f(j) in Smax whenever S_j meets Smax?, smax()
+
+### Community 75 - "commitment.py"
+Cohesion: 0.38
+Nodes (6): committed_ok(), live_set_legal(), main(), Phase B2: drop balance, and test the commitment predicate as Phi. conj:h1 --…, (COMMIT): every agent's already-decided bundle costs it at most 1., Reachable LEGAL states from the root, and which can reach a terminal.
+
+### Community 76 - "5. The spread-2 line"
+Cohesion: 0.33
+Nodes (6): 5. The spread-2 line, It survived the test designed to kill it, The rule that does select, What fails — and it reshapes the statement, What holds, ⚠ What is still missing
+
+### Community 77 - "14. The most promising proof architecture"
+Cohesion: 0.33
+Nodes (6): 14. The most promising proof architecture, Step 1 --- Remove multiples of three, Step 2 --- Choose the relaxed set, Step 3 --- Solve the two-set subsystem, Step 4 --- Characterise the remaining freedom, Step 5 --- Prove the third set cannot exceed spread 2
+
+### Community 78 - "tight_family.py"
+Cohesion: 0.47
+Nodes (5): main(), The extremal family, verified: U_n needs total subsidy exactly n-1.…, Cost dicts for U_n: m = n-1 unit chores, all agents identical additive., U(), verify()
+
+### Community 79 - "crux_evidence.py"
+Cohesion: 0.47
+Nodes (4): balanced(), main(), How much evidence does the HARD HALF of the descent lemma actually have?…, scan()
+
+### Community 80 - "nostuck_balanced.py"
+Cohesion: 0.53
+Nodes (5): balanced(), good_fixed(), main(), (NSB): no-stuck WITHIN the balanced region. Both clauses, if it holds. (NS)…, scan()
+
+### Community 81 - "solve"
+Cohesion: 0.33
+Nodes (5): main(), What exactly would a proof of conj:algorithm-succeeds have to prove? The…, IMWPM warm start, repaired by local search; on failure, restart from shuffled…, repair(), solve()
+
+### Community 82 - "window_general.py"
+Cohesion: 0.47
+Nodes (5): canon_good(), main(), Does the n=2 window lemma generalise? The route to proving the algorithm works.…, (min uspread of a BAD balanced partition, min uspread overall, min uspread of a…, scan()
+
+### Community 83 - "checkD.py"
+Cohesion: 0.47
+Nodes (5): ellvec(), main(), maxsub(), Test Conjecture D (double refinement, PS1_note_next_routes.md Route D) against…, Longest-path subsidies; None iff a positive-weight cycle exists.
+
+### Community 84 - "routeA_cex.py"
+Cohesion: 0.60
+Nodes (5): arcs(), ellvec(), main(), The counterexample to uniform balance, isolated, plus an analysis of what the…, show()
+
+### Community 85 - "10. Constraint taxonomy"
+Cohesion: 0.40
+Nodes (5): 10. Constraint taxonomy, Four active regions, One active region, Three active regions, Two active regions
+
+### Community 86 - "20. What a successful proof of Target T would look like"
+Cohesion: 0.40
+Nodes (5): 20. What a successful proof of Target T would look like, Lemma T1 --- Residue reduction, Lemma T2 --- Two-set normal form, Lemma T3 --- Extension lemma, Theorem T
+
+### Community 87 - "2. The established `n=3` machinery"
+Cohesion: 0.40
+Nodes (5): 2.1 Normalised minimum-cost assignment, 2.2 Goodness criterion at `n=3`, 2.3 Lemma A, 2.4 Consequence, 2. The established `n=3` machinery
+
+### Community 88 - "prove_r1.py"
+Cohesion: 0.50
+Nodes (4): can_rescue(), Proves Theorem g2-r1 (approach_12.tex, Step 4): the "one leftover item" case.…, C[(i,j)] = cost_i(X_j) for i != j, diagonal 0 implicit. mu[(i,j)] = cost_i(e |…, run()
+
+### Community 89 - "board_witness.py"
+Cohesion: 0.60
+Nodes (4): longest_path(), main(), q_of(), Approach 14, final closure witness (hand-derived on the whiteboard, verified…
+
+### Community 92 - "6. Why Target T is exactly strong enough"
+Cohesion: 0.50
+Nodes (4): 6. Why Target T is exactly strong enough, Case A: at least two `|D_i|` are divisible by 3, Case B: exactly one `|D_i|` is divisible by 3, Case C: no `|D_i|` is divisible by 3
+
+### Community 93 - "prove_r2.py"
+Cohesion: 0.67
+Nodes (3): can_rescue(), Proves Theorem g2-r2 (approach_12.tex, Step 5): the "two leftover items, doubly…, run()
+
+### Community 94 - "counting_room.py"
+Cohesion: 0.67
+Nodes (3): analyse(), main(), Is there ROOM for a non-local argument? Counting the good allocations. Every…
+
+### Community 95 - "0. Executive summary for an AI agent"
+Cohesion: 0.67
+Nodes (3): 0. Executive summary for an AI agent, Target T: The Three-Set `(1,1,2)` Discrepancy Theorem, Why Target T matters
+
+## Knowledge Gaps
+- **427 isolated node(s):** `graphify`, `Contents`, `The corpus`, `Problem Statement 1 — negative dichotomous valuations`, `Notation` (+422 more)
+  These have ≤1 connection - possible missing edges or undocumented components.
+- **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+
+## Suggested Questions
+_Questions this graph is uniquely positioned to answer:_
+
+- **Why does `rec()` connect `guidedR3.py` to `structural.py`, `routeA.py`, `n2proof_check.py`, `ruleD_adv.py`, `dupsep.py`, `layers.py`, `targetGbal.py`, `layer_hunt.py`, `targetG_adv.py`?**
+  _High betweenness centrality (0.091) - this node is a cross-community bridge._
+- **Why does `gen_functions()` connect `targetGbal.py` to `guidedR3.py`?**
+  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+- **Why does `S()` connect `routeA.py` to `ruleD_adv.py`, `tight_family.py`, `typeorder.py`, `dupsep.py`, `targetG_adv.py`?**
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
+- **Are the 19 inferred relationships involving `gen()` (e.g. with `sweep()` and `main()`) actually correct?**
+  _`gen()` has 19 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 15 inferred relationships involving `peels()` (e.g. with `reachable_legal()` and `free_greedy()`) actually correct?**
+  _`peels()` has 15 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 2 inferred relationships involving `cr_legal()` (e.g. with `build()` and `cri_root_live()`) actually correct?**
+  _`cr_legal()` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **What connects `graphify`, `Contents`, `The corpus` to the rest of the system?**
+  _427 weakly-connected nodes found - possible documentation gaps or missing edges._

@@ -35,7 +35,7 @@ refutes the method of Approach 5 without being residual at all.
 Over **550 random instances** across all seven generators, $n \le 6$, $m \le 8$:
 S1 covered 177, S2 38, S3 292 — and **S4 covered 550 of 550**. Residual: **0**.
 No sampler this project has ever used produces a residual instance
-(`update_48/residual_map.py`).
+(`updates/update_48/residual_map.py`).
 
 ## 3. Why — and how to construct one anyway
 
@@ -60,7 +60,7 @@ S1–S4 all fail. **The first residual instance ever exhibited.**
 
 Exhaustively over the *composed* family $\cost_i(S) = f_i(\lvert S\cap D_i\rvert)$
 at $n{=}3, m{=}4$: 52,390 instances, **46 residual**, Conjecture 2 holding on all
-(`update_48/residual_hunt.py`). Density elsewhere: 0.023% at $n{=}3,m{=}5$,
+(`updates/update_48/residual_hunt.py`). Density elsewhere: 0.023% at $n{=}3,m{=}5$,
 0.487% at $n{=}4,m{=}5$, 0 at $n{=}4,m{=}4$ and $n{=}3,m{=}6$.
 
 **Structure** — of the 46: 18 have one binary-additive agent, 24 have two, and
@@ -69,7 +69,7 @@ multiset of $\lvert D_i\rvert$ is always $(2,3,3)$ or $(3,3,3)$: the
 `prop:no-balance` discrepancy skeleton.
 
 **CRI reaches it.** 0 bad roots on all 46 — the frame works exactly where the
-four theorems fail (`update_48/residual_attack.py`).
+four theorems fail (`updates/update_48/residual_attack.py`).
 
 ## 4. `conj:cri-depth` is refuted
 
@@ -87,7 +87,7 @@ $\lvert R\rvert = 7$. It is false. Dead states with $\lvert R\rvert \ge 3$:
 All failures are on **composed** and **capped** — and capped had never been
 correctly generated before the 2026-08-09 generator fix. `CRI.md` §7 and
 `report/working/approach_9.tex` still present this as open and **are stale on
-that point** (`update_48/depth_stress.py`; the $n\ge4$ blocks did not finish).
+that point** (`updates/update_48/depth_stress.py`; the $n\ge4$ blocks did not finish).
 
 ## 5. The spread-2 line
 
@@ -157,7 +157,7 @@ So (F5\*) was re-run on a corpus **not selected for it**:
 > **2,574 instances, $n$ up to 6, $m$ up to 8, all 11 generators —
 > 0 failures, in the STRONG form: *every* minimiser of the total spread has a
 > good maximum-weight matching, not merely some.**
-> Control: 0 Conjecture 2 failures. (`update_48/minsum_stress.py`)
+> Control: 0 Conjecture 2 failures. (`updates/update_48/minsum_stress.py`)
 
 The sibling rule (minimise the number of agents attaining the maximum spread)
 also has 0 failures. Together with the 4,770 families of the selected sample,
@@ -2798,7 +2798,7 @@ machinery in §§7.16.21–31 considered, since that machinery only ever moved
 *elements*, never *bundle ownership*.
 
 **Computational test of the general claim.** Built
-`random_dichotomous` (reusing the exact generator from `update_4/rules.py`,
+`random_dichotomous` (reusing the exact generator from `updates/update_4/rules.py`,
 which samples a uniformly-valid general monotone dichotomous cost by
 filling in $c(S)$ subset-by-subset in the range forced by monotonicity —
 not restricted to composed/additive/submodular costs) and tested the
@@ -2806,7 +2806,7 @@ not restricted to composed/additive/submodular costs) and tested the
 costs, some EF partial allocation with $\abs R\le2$ admits an assignment of
 $R$ into the bundles, a permutation $\pi$ of agents to bundles, and
 $p\in\{0,1\}^3$, giving a full EF allocation. Three independent test
-harnesses, all in `update_49/`:
+harnesses, all in `updates/update_49/`:
 
 | test | what it checks | trials | failures |
 |---|---|---|---|
@@ -2909,7 +2909,7 @@ Lemma GG closes it ($p=0$). Otherwise (every agent has marginal $1$ on their
 own bundle — call this subcase (b)) the state is fully captured, after the
 row-normalisation above, by $6$ base-matrix entries $C[i][j]\in\{0,1,2\}$
 and $6$ marginal bits $\mu[i][j]=c_i(e\mid X_j)$ for $i\ne j$ (with
-$\mu[i][i]=1$ forced). `update_49/exhaustive_r1.py` exhaustively checks all
+$\mu[i][i]=1$ forced). `updates/update_49/exhaustive_r1.py` exhaustively checks all
 $3^6\times2^6 = 46{,}656$ such combinations against all $3$ choices of which
 bundle absorbs $e$, all $6$ permutations, all $8$ subsidy vectors:
 **zero failures.** Combined with Lemma GG, $\abs R=1$ is now **fully,
@@ -2927,7 +2927,7 @@ $m_2$ ($m_1\ne m_2$, solver's free choice among $6$ ordered pairs), never
 both to the same bundle. The minimal, non-redundant parametrisation: base
 matrix $C[i][j]\in\{0,1,2\}$ ($6$ entries) plus $12$ independent marginal
 bits $\mu[i][e][j]=c_i(e\mid X_j)$ for $i\ne j$, $e\in\{1,2\}$ (with
-$\mu[i][e][i]=1$ forced by doubly-stuckness). `update_49/exhaustive_r2_shapeB.py`
+$\mu[i][e][i]=1$ forced by doubly-stuckness). `updates/update_49/exhaustive_r2_shapeB.py`
 checks all $3^6\times2^{12}=2{,}985{,}984$ combinations against all $6$
 target pairs, $6$ permutations, $8$ subsidies: **zero failures**, runtime
 $18$s. Shape A (both leftovers into the *same* bundle) is never needed.
@@ -2935,8 +2935,8 @@ $18$s. Shape A (both leftovers into the *same* bundle) is never needed.
 **Real-instance confirmation, independent of the abstract argument.**
 The saturation principle is flawed as stated (see the correction above and
 §7.16.37); the following check draws from the true model and is unaffected,
-`update_49/verify_r2_real.py` generates actual random dichotomous cost
-triples (the validated `random_dichotomous` generator from `update_4/rules.py`,
+`updates/update_49/verify_r2_real.py` generates actual random dichotomous cost
+triples (the validated `random_dichotomous` generator from `updates/update_4/rules.py`,
 not the abstract bounded model), finds genuine EF partial allocations with
 $\abs R=2$, filters to the doubly-stuck ones specifically (not rare —
 $15{,}957$ found in just $500$ trials at $m=7$, since "marginal $1$" isn't a
@@ -3000,14 +3000,14 @@ so $\varepsilon_a=0$. For $m$: $\cost_m(Y_m)\le\cost_m(X_m)+1\le
 so $\varepsilon_m\le1$. Identity has total excess $\le1$; min-cost is no
 worse; done. This **subsumes** Lemma GG (§7.16.32) rather than branching on
 it — the stuck/non-stuck case split disappears entirely. Verified:
-`update_49/test_excess_r1.py` gives max total excess $=1$, max longest path
+`updates/update_49/test_excess_r1.py` gives max total excess $=1$, max longest path
 $=1$, zero failures.
 
 **$\abs R=2$ is NOT proved by this, and the shortfall is real.** The same
 argument with $e_1\to m_1$, $e_2\to m_2$ ($m_1\ne m_2$) gives
 $\varepsilon_{m_1},\varepsilon_{m_2}\le1$, others $0$, so total excess
 $\le2$ and $p\le2$ — one unit short. This is **not** loose estimation:
-`update_49/eps_only_r2.py` enumerates all bounded doubly-stuck tables and
+`updates/update_49/eps_only_r2.py` enumerates all bounded doubly-stuck tables and
 finds the min-cost total excess genuinely **attains $2$**, even after
 optimising over which pair of bundles receives the items. So the *path*
 bound $\ell\le\sum\varepsilon_a$ must be lossy exactly there — a simple path
@@ -3032,7 +3032,7 @@ the sharper statement that no simple path collects more than one unit.
 
 **CORRECTION to the first draft of this section.** An earlier version of
 this entry claimed "a simple path cannot collect both units at once." That
-is false: `update_49/test_excess_r2.py` shows the longest path over
+is false: `updates/update_49/test_excess_r2.py` shows the longest path over
 min-cost assignments **genuinely reaches 2**. What is true is weaker — that
 *some* choice of placement and of min-cost tie-break avoids it. So at
 $\abs R=2$ the placement is no longer immaterial (it is at $\abs R=1$), and
@@ -3130,7 +3130,7 @@ reach and the exact remaining range. Builds clean at 125 pages.
 
 ### 7.16.36 Independent audit of the n=3 proof, and one real gap found
 
-Full end-to-end audit (`update_12/audit_full_pipeline.py`), written to assume
+Full end-to-end audit (`updates/update_12/audit_full_pipeline.py`), written to assume
 nothing from the proof: implements **Tao et al.'s Algorithm 3 verbatim**, runs
 it on random dichotomous instances, checks the halting lemma's claims
 *independently*, applies the construction, and verifies the output is EF with
@@ -3235,7 +3235,7 @@ $S$ outward cost a full unit, forcing $\varphi\equiv0$ outside $S$
 consistently. The $n=3$ result is the special case $S=N$.
 
 **Verification** (a check, not part of the proof): implemented Algorithm 3
-for general $n$ (`update_12/probe_general_n.py`, `probe_biased.py`) and tested
+for general $n$ (`updates/update_12/probe_general_n.py`, `probe_biased.py`) and tested
 the construction over *every* choice of $k$ distinct $S$-bundles and *every*
 min-cost matching within $S$. At $n=4,5,6$, with a cost-biased generator to
 force large residues, residue sizes $1,2,3,4$ all occurred — including the
@@ -3278,7 +3278,7 @@ attempt has introduced a fresh error.
 `lem:g2-stopping` and `lem:g2-expensive`; the general-$n$ result of
 §7.16.37(b) uses the telescoping potential and the tail property. None
 references an enumeration. The real-instance checks
-(`update_12/verify_real.py`, `audit_full_pipeline.py`, `probe_general_n.py`)
+(`updates/update_12/verify_real.py`, `audit_full_pipeline.py`, `probe_general_n.py`)
 draw from the true model rather than truncated tables and are unaffected.
 
 **Process note.** Two successive repair attempts of this appendix were each
@@ -3307,7 +3307,7 @@ lemma $P\setminus T\subseteq N\setminus S$, which the original draft used
 implicitly in two cases and which is now stated explicitly. Budget:
 $\abs P\le r+(n-\abs S)\le n-1$ using $r<\abs S$.
 
-**Audit performed** (`update_12/audit_user_generaln_proof.py`): implements the
+**Audit performed** (`updates/update_12/audit_user_generaln_proof.py`): implements the
 construction exactly and checks the EF inequalities *directly* for every
 ordered pair, the budget, and the three terminal facts independently, over
 **every** choice of $T\subseteq S$ and **every** bijection $R\to T$. Results:
@@ -3364,7 +3364,7 @@ balance. What the note *does* add is the explicit compatibility condition
 (iii) and the exact path condition (6).
 
 **(c) RQ1 survives search.** New exhaustive-over-allocations search
-(`update_14/rq1_search.py`): for each random positive dichotomous instance,
+(`updates/update_14/rq1_search.py`): for each random positive dichotomous instance,
 enumerate every almost-balanced allocation and every $q\in\{0,1\}^n$ and test
 (i)-(iii). Zero failures at $n=3$ ($m=4,5,6$) and $n=4$ ($m=5,6$), unbiased
 and biased generators. Consistent with Approach 6's $0/389{,}215$ for Target G.
@@ -3374,14 +3374,14 @@ steps modify the BKNS/R3 incremental algorithm to maintain (I1)-(I3). Approach
 6 §"Item-by-item insertion is the wrong template here too" already refutes
 this, and both scripts were re-run this session:
 
-- `update_6/guidedR3_full.py`: full backtracking over **every** legal R3
+- `updates/update_6/guidedR3_full.py`: full backtracking over **every** legal R3
   execution (every item order, every Extend choice, every FindSink start;
   $474$ nodes) on an explicit $n=m=3$ instance. Best reachable $q$-spread
   $=\mathbf 2$.
-- `update_6/verify_reach_gap.py`: algorithm-free enumeration on the same
+- `updates/update_6/verify_reach_gap.py`: algorithm-free enumeration on the same
   instance finds $q$-spread $=\mathbf 0$, via the balanced allocation
   $\{0\},\{1\},\{2\}$ with goods subsidy $(0,0,0)$ — so **RQ1 holds there**.
-- **New, sharper (`update_14/reach_sizes.py`)**: the *only* final size profile
+- **New, sharper (`updates/update_14/reach_sizes.py`)**: the *only* final size profile
   any legal R3 execution can reach on that instance is $(0,1,2)$. The
   almost-balanced profile $(1,1,1)$ is **unreachable**.
 
@@ -3408,8 +3408,8 @@ of $A_l$ never enters the selection.** Consequence: Step 1's restriction
 ("assign the new good only to a minimum-cardinality bundle when unbalanced")
 can leave **zero** legal options at a single call, not merely a suboptimal
 choice — confirmed common ($9$–$57$ occurrences per few hundred trials,
-$n=3..5$; `update_14/extend_forced.py`, `extend_cardinality.py`), with a
-minimal standalone witness (`update_14/extend_witness.py`): $n=3$,
+$n=3..5$; `updates/update_14/extend_forced.py`, `extend_cardinality.py`), with a
+minimal standalone witness (`updates/update_14/extend_witness.py`): $n=3$,
 $A=[\emptyset,\{0\},\{4\}]$, $p=(0,0,0)$, $M(q)=\{0,1,2\}$ — agent 0 holds
 the unique minimum-cardinality bundle and is in $M(q)$, but
 $v_0(3\mid\emptyset)=0$, so the only valid EXTEND option in the entire state
@@ -3420,7 +3420,7 @@ well-defined as stated, before Step 2's permutation question arises.
 ### 7.16.42 CLOSURE: a single hand-verified step, no search required
 
 User-derived (whiteboard), transcribed and verified in
-`update_14/board_witness.py`. This is the decisive result: **Approach 14's
+`updates/update_14/board_witness.py`. This is the decisive result: **Approach 14's
 proof program (Steps 1–4) is refuted by a single step, checkable by hand.**
 
 **The state.** $n=3$, goods side, bundles already at sizes $(2,2,1)$:
@@ -3579,7 +3579,7 @@ Approach 13 (§7.16.39). Full record: `approach_14.md`.
 | min-cost assignment (not brute permutation search) is the right move — Halpern–Shah | **PROVED/identified** (§7.16.34) — `thm:hs-characterisation` + `thm:hs-minsubsidy` reduce everything to a path bound; poly-time and defined for all $n$ |
 | **excess machinery**: $\varepsilon_a=\cost_a(Y_{\pi(a)})-\beta_a$; path $\le\sum\varepsilon_a$; min-cost $=$ min total excess | **PROVED** (§7.16.34), two one-line lemmas, any $n$ |
 | **$\abs R=1$ absorbed, ANY $n$, no search** | **PROVED** (§7.16.34) — identity assignment has total excess $\le1$; subsumes Lemma GG and kills the stuck/non-stuck case split |
-| $\abs R=2$ via the same excess argument | **gives only $p\le2$** — and the shortfall is real, not loose: min-cost total excess genuinely attains $2$ (`update_49/eps_only_r2.py`) |
+| $\abs R=2$ via the same excess argument | **gives only $p\le2$** — and the shortfall is real, not loose: min-cost total excess genuinely attains $2$ (`updates/update_49/eps_only_r2.py`) |
 | general-$n$ bound obtainable today from Theorem 5.1 $+$ excess | $p\le n-1$ — **exactly the known `KMSTY24` baseline**, so this route currently adds nothing beyond $n=3$ |
 | **THE missing lemma of §7.16.34** (place $R$ so min-cost total excess $\le1$) | ~~open~~ → **SOLVED** for $\abs R\in\{1,n-1\}$ (§7.16.37) and then superseded entirely by §7.16.39; the excess-sum frame was the wrong one |
 | **`lem:g2-stopping`** (Algorithm 3 halting at $\abs R=n-1$ forces a strongly connected equality graph $+$ unit marginals on every arc) | **PROVED** (§7.16.35) — uses the algorithm's *construction*, not just Theorem 5.1's statement |
@@ -3590,7 +3590,7 @@ Approach 13 (§7.16.39). Full record: `approach_14.md`.
 | **CONJECTURE 2, EVERY $n$** | **PROVED** — two independent routes: §7.16.37 (min-cost within $S$ $+$ telescoping potential) and §7.16.39 (identity assignment $+$ backward equality closure; simpler, no Halpern–Shah). Written up as `approach_13.tex` |
 | §7.16.39 route audited end-to-end | **0 problems** — every $T$, every bijection, $n=3..6$, residues $1..5$; closure strictly enlarges $T$ in $520$ cases |
 | **Approach 14** (almost-balanced size-shift, `approach_14_proposal.pdf`) | reduction **CORRECT**; target $=$ Approach 6's **Target G-bal**, still **open**; proposed Steps 1--4 **BLOCKED** (§7.16.40) |
-| **Approach 14 Steps 1--4** (modify BKNS to maintain (I1)--(I3)) | **CLOSED — definitively REFUTED** (§7.16.40(d), §7.16.41, §7.16.42). Three independent obstructions: (i) the only reachable size profile on a witness instance is $(0,1,2)$, not almost-balanced $(1,1,1)$; (ii) EXTEND selects by $M(q)$-membership and marginal-$1$ gain only, never cardinality, so Step 1 can face **zero** legal options at a single call; (iii) **hand-verified**: a perfectly balanced $(2,2,2)$ partition reachable by EXTEND's own rule admits **no** assignment (all $6$ checked) with subsidy spread $\le1$ — not a bad tie-break, no good option exists (`update_14/board_witness.py`) |
+| **Approach 14 Steps 1--4** (modify BKNS to maintain (I1)--(I3)) | **CLOSED — definitively REFUTED** (§7.16.40(d), §7.16.41, §7.16.42). Three independent obstructions: (i) the only reachable size profile on a witness instance is $(0,1,2)$, not almost-balanced $(1,1,1)$; (ii) EXTEND selects by $M(q)$-membership and marginal-$1$ gain only, never cardinality, so Step 1 can face **zero** legal options at a single call; (iii) **hand-verified**: a perfectly balanced $(2,2,2)$ partition reachable by EXTEND's own rule admits **no** assignment (all $6$ checked) with subsidy spread $\le1$ — not a bad tie-break, no good option exists (`updates/update_14/board_witness.py`) |
 
 **Overall status.** Conjecture 2 is **PROVED for every $n$** (§7.16.39,
 written up as `approach_13.tex`); $n=3$ additionally has a self-contained
@@ -3603,13 +3603,13 @@ record of what was tried and how far each reached. Everything marked
 
 | file | what it establishes |
 |---|---|
-| `update_48/residual_map.py` | the residual is empty under random generation; S4 covers 550/550 |
-| `update_48/residual_hunt.py` | the capping construction; the first 46 residual instances |
-| `update_48/residual_attack.py` | their structure; spread 2; CRI reaches them |
-| `update_48/depth_stress.py` | `conj:cri-depth` refuted |
-| `update_48/spread_conjecture.py` | ⚠ its broad test is **vacuous** — min spread was 0 or 1 on all 1,792 instances, so spread-2 was never exercised |
-| `update_48/spread_hardcore.py` | (F5) on 91 generated spread-2 instances |
-| `update_48/spread_scale.py` | (A) survives $m \gg n$ up to $m/n = 4.3$ |
-| `update_48/spread_which.py` | not every spread-2 family works |
-| `update_48/spread_rule.py` | the sufficient predicates; balance is not one |
-| `update_48/minsum_stress.py` | the broad stress test of (F5\*) |
+| `updates/update_48/residual_map.py` | the residual is empty under random generation; S4 covers 550/550 |
+| `updates/update_48/residual_hunt.py` | the capping construction; the first 46 residual instances |
+| `updates/update_48/residual_attack.py` | their structure; spread 2; CRI reaches them |
+| `updates/update_48/depth_stress.py` | `conj:cri-depth` refuted |
+| `updates/update_48/spread_conjecture.py` | ⚠ its broad test is **vacuous** — min spread was 0 or 1 on all 1,792 instances, so spread-2 was never exercised |
+| `updates/update_48/spread_hardcore.py` | (F5) on 91 generated spread-2 instances |
+| `updates/update_48/spread_scale.py` | (A) survives $m \gg n$ up to $m/n = 4.3$ |
+| `updates/update_48/spread_which.py` | not every spread-2 family works |
+| `updates/update_48/spread_rule.py` | the sufficient predicates; balance is not one |
+| `updates/update_48/minsum_stress.py` | the broad stress test of (F5\*) |

@@ -90,7 +90,7 @@ notation above, the two statements coincide. Target G-bal was already known
 to imply Conjecture~\ref{conj:main} (\Cref{obs:Gbal-implies-G} and
 \Cref{prop:targetG-implies}) and remains open for $n \ge 3$; no
 counterexample is known, including under the additional exhaustive search
-performed for this section (\texttt{update\_14/rq1\_search.py}: zero
+performed for this section (\texttt{updates/update\_14/rq1\_search.py}: zero
 failures over almost-balanced allocations and all
 $\subsidy\in\set{0,1}^n$, $n=3,4$).
 \end{remark}
@@ -119,9 +119,9 @@ $0$.
 \end{proposition}
 \begin{proof}[Verification]
 Exhaustive backtracking over the full execution tree ($474$ nodes;
-\texttt{update\_6/guidedR3\_full.py}, cross-checked by
-\texttt{update\_14/reach\_sizes.py}) confirms the claim; an independent,
-algorithm-free enumeration (\texttt{update\_6/verify\_reach\_gap.py})
+\texttt{updates/update\_6/guidedR3\_full.py}, cross-checked by
+\texttt{updates/update\_14/reach\_sizes.py}) confirms the claim; an independent,
+algorithm-free enumeration (\texttt{updates/update\_6/verify\_reach\_gap.py})
 confirms spread $0$ is achieved by the balanced allocation on the same
 instance. Restricting \textsc{Extend} to minimum-cardinality bundles (Step 1
 of the proposal) can only shrink the set of reachable allocations, and
@@ -138,7 +138,7 @@ in $M(\subsidy)$ but \emph{every} valid \textsc{Extend} option grows a
 strictly larger bundle.
 \end{proposition}
 \begin{proof}[Verification]
-A minimal instance is exhibited in \texttt{update\_14/extend\_witness.py}:
+A minimal instance is exhibited in \texttt{updates/update\_14/extend\_witness.py}:
 $n=3$, partial allocation $\bundle{} = (\emptyset,\set 0,\set 4)$,
 $\subsidy=(0,0,0)$, so $M(\subsidy)=\set{0,1,2}$; agent $0$ holds the unique
 minimum-cardinality (empty) bundle and lies in $M(\subsidy)$, but

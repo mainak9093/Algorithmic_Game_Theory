@@ -2,7 +2,7 @@
 %%  Approach 5 --- agent induction, and the balance invariant it would need.
 %%
 %%  Source: attempted 2026-08-03 at the author's request, starting from Route A
-%%  of update_4/PS1_note_next_routes.md.  Scripts: update_5/routeA.py,
+%%  of updates/update_4/PS1_note_next_routes.md.  Scripts: updates/update_5/routeA.py,
 %%  routeA_adv.py, routeA_cex.py.
 %%
 %%  STATUS.  The natural invariant is REFUTED at n=3, m=4 with binary additive
@@ -276,7 +276,7 @@ are among those carrying the largest own cost.
 additivity, and the containment turns out to be an artefact of additive
 instances. Re-tested on $553$ instances that are both envy-free-free
 \emph{and} non-additive, it fails on $141$ of them
-(\texttt{update\_15/nonadditive\_residual.py}). Own costs of different agents
+(\texttt{updates/update\_15/nonadditive\_residual.py}). Own costs of different agents
 are measured by different functions, so there was never a reason to expect the
 comparison to mean anything; the earlier $164/164$ simply reflected a sample
 that was effectively additive. What survives is
