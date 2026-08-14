@@ -3533,7 +3533,7 @@ unconditionally for all $n$ by Approach 13 (§7.16.39).
 | **CONJECTURE 2, EVERY $n$** | **PROVED** — two independent routes: §7.16.37 (min-cost within $S$ $+$ telescoping potential) and §7.16.39 (identity assignment $+$ backward equality closure; simpler, no Halpern–Shah). Written up as `approach_13.tex` |
 | §7.16.39 route audited end-to-end | **0 problems** — every $T$, every bijection, $n=3..6$, residues $1..5$; closure strictly enlarges $T$ in $520$ cases |
 | **Approach 14** (almost-balanced size-shift, `approach_14_proposal.pdf`) | reduction **CORRECT**; target $=$ Approach 6's **Target G-bal**, still **open**; proposed Steps 1--4 **BLOCKED** (§7.16.40) |
-| Approach 14 Steps 1--4 (modify BKNS to maintain (I1)--(I3)) | **REFUTED** (§7.16.40) — on an explicit $n=m=3$ instance the *only* reachable size profile is $(0,1,2)$; almost-balanced $(1,1,1)$ is unreachable by **any** legal execution, though RQ1 holds there with spread $0$ |
+| Approach 14 Steps 1--4 (modify BKNS to maintain (I1)--(I3)) | **REFUTED** (§7.16.40), two independent reasons — (i) on an explicit $n=m=3$ instance the *only* reachable size profile is $(0,1,2)$; almost-balanced $(1,1,1)$ is unreachable by **any** legal execution, though RQ1 holds there with spread $0$; (ii) BKNS's EXTEND rule selects by $M(q)$-membership and marginal-$1$ gain only, never by cardinality, so Step 1's restriction can leave **zero** legal options at a single call — confirmed common ($9$--$57$ occurrences per $\sim\!50$--$500$ trials across $n=3..5$) with a minimal standalone witness (`update_14/extend_witness.py`) |
 
 **Overall status.** Conjecture 2 is **PROVED for every $n$** (§7.16.39,
 written up as `approach_13.tex`); $n=3$ additionally has a self-contained

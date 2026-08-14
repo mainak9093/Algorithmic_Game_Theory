@@ -12,8 +12,8 @@ Cross-reference: `RESIDUAL.md` §7.16.40. Scripts: `update_14/`, `update_6/`.
 |---|---|
 | Proposition 1 (RQ1 ⟹ Conjecture 2), the size-shift reduction | **CORRECT** — verified line by line |
 | Research Question 1 (RQ1) itself | **Open**; no counterexample found. **Not new** — equals Approach 6's *Target G-bal* |
-| Proposed proof program, Steps 1–3 (modify BKNS to maintain (I1)–(I3)) | **BLOCKED** — explicit reachability obstruction, re-verified |
-| Step 4 (fall back to the path condition (6)) | **BLOCKED** — fails for a *different* reason than Steps 1–3 |
+| Proposed proof program, Steps 1–3 (modify BKNS to maintain (I1)–(I3)) | **BLOCKED**, two independent reasons: (i) a global reachability obstruction over full executions, (ii) EXTEND's selection rule does not depend on cardinality at all, so Step 1's restriction can leave zero legal options at a single call |
+| Step 4 (fall back to the path condition (6)) | **BLOCKED** — weakens (I3); the obstruction is in (I2), which precedes (I3) |
 | Effect on Conjecture 2 | **None.** Conjecture 2 is proved unconditionally for all `n` by Approach 13 |
 
 The proposal is a correct and reusable *reduction* whose *target* is an
@@ -252,6 +252,76 @@ The obstruction is on **reachability of the allocation**, not on which
 invariant is tracked. That is what makes it fatal to the whole program rather
 than to one step of it.
 
+### 5.5 A second, sharper obstruction: EXTEND does not select by cardinality at all
+
+Flagged by the user, checked against the actual BKNS rule, and confirmed. This
+is independent of §5.1–5.4 and stronger in one respect: it is a **per-call**
+obstruction, not a fact about a whole search tree.
+
+**The rule, as implemented (`update_6/guidedR3.py:extend_options`).** For a
+new item `g`, EXTEND ranges over pairs `(k, l)` with `l ∈ M(q)` and
+`v_k(g | A_l) = 1` (a genuine marginal-1 gain), picks the welfare-maximising
+bundle permutation consistent with that pair, and offers it as a candidate.
+**Cardinality of `A_l` never enters the selection.** The rule is driven
+entirely by (a) membership in `M(q)` and (b) the marginal-1 requirement.
+
+**Consequence.** Step 1 proposes restricting EXTEND to "assign the new good
+only to a minimum-cardinality bundle whenever the allocation is not currently
+balanced." Since cardinality plays no role in which `(k,l)` pairs are valid to
+begin with, this restriction can leave **zero** legal options in states where
+the minimum-cardinality bundle's holder has no marginal-1 gain for `g` — even
+though that agent is in `M(q)`, i.e. is exactly the agent the restriction
+wants to grow.
+
+**Frequency, checked directly (not via a full-execution search).**
+`update_14/extend_cardinality.py` builds partial allocations under random
+choices and inspects `extend_options` at each step:
+
+| n | m | trials | states with a non-min-cardinality option present | states where **every** option is off the minimum |
+|---|---|---|---|---|
+| 3 | 5 | 200 | 23 | — |
+| 3 | 5 | 400 | — | 57 |
+| 4 | 5 | 300 | — | 18 |
+| 3 | 6 | 500 | — | 55 |
+| 5 | 6 | 200 | — | 16 |
+
+(`extend_forced.py` computes the last column: states where the min-cardinality
+bundle has *no* valid EXTEND option at all, so Step 1's restriction is not
+merely suboptimal there, it is **empty**.) This is common, not a corner case,
+at every `n` tested — including a witness at `n=5` with a *unique*
+minimum-cardinality bundle (`sizes=[1,1,1,1,0]`) where every valid option still
+ignores it.
+
+**Minimal recorded witness** (`update_14/extend_witness.py`, standalone,
+reproduces without the search harness). `n=3`, partial allocation
+`A = [∅, {0}, {4}]`, `p=(0,0,0)`, so `M(q) = {0,1,2}` — all three agents tied,
+including agent 0, who holds the **unique** minimum-cardinality (empty)
+bundle. Inserting item `g=3`:
+
+```
+v_0(3 | ∅) = 0     ← agent 0 gets no marginal-1 gain from g; NOT a valid EXTEND target
+```
+
+The only valid EXTEND option in the entire state is **agent 1 growing its
+own bundle `{0}`** (size 1) — strictly larger than agent 0's. Step 1's
+restricted rule has nothing to select.
+
+**Relation to §5.1–5.4.** That analysis showed a *global* fact: over an entire
+execution, bundle sizes can be driven to a profile that never rebalances.
+This analysis shows the *local* mechanism produces that outcome: at essentially
+every step where sizes have already diverged, EXTEND's eligibility criterion
+(marginal-1 gain within `M(q)`) is simply uncorrelated with which bundle is
+smallest, so there is no reason to expect — and typically no way to force —
+the next item to go to the small bundle. The two facts reinforce each other:
+§5.1–5.4 shows the damage is not repaired later; this shows the damage is
+actively easy to inflict at almost every step, and sometimes forced.
+
+**Does this reopen Step 4 differently?** No. Step 4 weakens invariant (I3),
+which concerns subsidy compatibility given a fixed near-balanced size profile.
+This obstruction is about **(I2)** — whether a near-balanced size profile is
+even reachable — and precedes (I3) in the construction. Weakening (I3) has no
+bearing on it.
+
 ---
 
 ## 6. What remains
@@ -277,6 +347,12 @@ python reach_sizes.py                 # reachable size profiles (needs ../update
 cd ../update_6
 python guidedR3_full.py               # all legal R3 executions, 474 nodes
 python verify_reach_gap.py            # algorithm-free: spread 0 achievable
+
+cd ../update_14
+python extend_witness.py              # minimal standalone: EXTEND has zero
+                                       # legal min-cardinality options here
+python extend_forced.py 3 5 400 1     # frequency of the forced-off-minimum states
+python extend_cardinality.py 3 5 200 1  # frequency of non-min-cardinality options existing
 ```
 
 ---
