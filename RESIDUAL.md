@@ -3337,6 +3337,8 @@ not merely the statement of Theorem 5.1. This is recorded in
 
 ### 7.16.40 Approach 14 (almost-balanced size-shift): reduction correct, proof program blocked
 
+**Full standalone record: `approach_14.md`** (proposal restated, audit, obstruction instance, reproduction commands). Summary below.
+
 Audited `approach_14_proposal.pdf`. Verdict: **the reduction is correct, the
 target is true as far as testing reaches, but the proposed proof program
 cannot be carried out** — and the blocker is already on record in this project.
