@@ -75,9 +75,9 @@ tolerate non-additive and even non-subadditive valuations, and it is the
 counterpart of the scheduling example used by~\cite{BKNS22} to motivate
 dichotomous valuations for goods.
 
-\paragraph{What is already known, and what is open.}
-Two facts delimit the problem before any work is done, and we state them
-explicitly so that the contribution can be measured against them.
+\paragraph{The baseline and the lower bound.}
+Two facts delimit the problem, and we state them explicitly so that the
+contribution can be measured against them.
 
 On the one hand, existence of a bounded subsidy is not in question. Negative
 dichotomous valuations are doubly monotone --- every item is a chore for every
@@ -116,6 +116,7 @@ heaviest outgoing path already has weight $k$.
 
 So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}.
 
+\ifworking
 \begin{conjecture}
 \label{conj:main}
 For every instance with negative dichotomous valuations there is an envy-free
@@ -123,28 +124,33 @@ solution $(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$, hence with total
 subsidy at most $n-1$; and it can be computed in polynomial time given
 value-oracle access.
 \end{conjecture}
+\else
+\begin{theorem}[Main result]
+\label{conj:main}
+For every instance with negative dichotomous valuations there is an envy-free
+solution $(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$, hence with total
+subsidy at most $n-1$; and it can be computed in polynomial time given
+value-oracle access.
+\end{theorem}
+\fi
 
-Example~\ref{ex:lowerbound} shows Conjecture~\ref{conj:main} would be tight.
+Example~\ref{ex:lowerbound} shows this bound is tight.
 Between the $n-1$ per agent that~\cite{KMSTY24} already gives and the
-$\set{0,1}$ per agent being asked for lies a factor of $n$ in the total, exactly
-the gap that~\cite{BKNS22} closed on the goods side. Our objective is to close it
-on the chores side or to exhibit an instance showing that it cannot be closed.
+$\set{0,1}$ per agent asked for lies a factor of $n$ in the total, exactly
+the gap that~\cite{BKNS22} closed on the goods side.
 
 \paragraph{Our contribution.}
-We prove Conjecture~\ref{conj:main} for three agents: every instance with
-$n = 3$ and negative dichotomous valuations admits an envy-free solution with a
-subsidy of $0$ or $1$ per agent, computable in polynomial time
-\ifworking
-(\Cref{sec:approach12}).
-\else
-(Theorem~\ref{thm:n3-main}).
-\fi
-The proof completes an envy-free \emph{partial}
-allocation, taken from Tao et al.~\cite{TWYZ23}, by placing the residual chores
-and then reassigning which agent receives which bundle; the subsidy bound
-follows from a bound on the total excess of that reassignment. For general $n$
-the conjecture remains open. \Cref{sec:prelim} fixes the model and records what
-transfers from the goods theory unchanged\ifworking.\else; \Cref{sec:n3}
+We establish the statement above, for every number of agents\ifworking\
+(\Cref{sec:approach13})\else\ (Theorem~\ref{thm:m-main})\fi. The proof takes as
+input an envy-free \emph{partial} allocation --- the algorithm of Tao et
+al.~\cite{TWYZ23} produces one in polynomial time, leaving at most $n-1$ chores
+unassigned --- and completes it: the residual chores are assigned to distinct
+agents inside the strongly connected component at which that algorithm halts,
+and the paid set is the backward closure of those recipients under the equality
+relation $\cost_i(X_i) = \cost_i(X_j)$. Envy-freeness of the completion is
+verified directly, so no appeal to the characterisation of envy-freeable
+allocations is required. \Cref{sec:prelim} fixes the model and records what
+transfers from the goods theory unchanged\ifworking.\else; \Cref{sec:main}
 contains the proof.\fi
 
 \paragraph{Related Work.}
@@ -178,8 +184,8 @@ exist and can be computed in polynomial time for general binary valuations, thus
 extending the matroid-rank result of Babaioff et al.~\cite{BEF21}. Under binary
 valuations one therefore has a clean dichotomy on the goods side: either pay
 $0$ or $1$ per agent and obtain exact envy-freeness~\cite{BKNS22}, or pay
-nothing and obtain EFX~\cite{BSY23}. Whether either branch survives the passage
-to chores is open; this paper addresses the first.
+nothing and obtain EFX~\cite{BSY23}. This paper establishes the first branch for
+chores.
 
 \paragraph{The chores side.}
 Work on indivisible chores has largely developed alongside rather than inside
@@ -199,8 +205,7 @@ binary \emph{additive} costs an allocation that is simultaneously EFX and Pareto
 optimal always exists and is computable in polynomial time. So on the chores
 side the second half of the binary dichotomy --- pay nothing, obtain EFX --- is
 established at least for additive costs, while the first half, pay $0$ or $1$
-per agent and obtain exact envy-freeness, is what Conjecture~\ref{conj:main}
-asks for. That money is genuinely needed here is not obvious a priori but is
+per agent and obtain exact envy-freeness, is what this paper establishes. That money is genuinely needed here is not obvious a priori but is
 known: Bhaskar et al.~\cite{BSV21} show that deciding whether an exactly
 envy-free allocation of chores exists is NP-complete already for binary additive
 costs, and give a polynomial-time EF1 algorithm for chores and for doubly
@@ -225,20 +230,17 @@ four corners are
  & goods & chores \\
 \midrule
 additive     & \cite{BDNSV20} & \cite{LMS26} \\
-dichotomous  & \cite{BKNS22}  & \textbf{Conjecture~\ref{conj:main}} \\
+dichotomous  & \cite{BKNS22}  & \textbf{this paper} \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 \noindent
-each of the three settled corners giving one dollar per agent and $n-1$ in
-total. The present question is the fourth. Note also that~\cite{LMS26} does not
-displace~\cite{KMSTY24} as the baseline of \Cref{sec:intro}: for valuations that
-are dichotomous but not additive, $n-1$ per agent from~\cite{KMSTY24} remains the
-best published bound.
+each of the four giving one dollar per agent and $n-1$ in total. Note also
+that~\cite{LMS26} does not displace~\cite{KMSTY24} for the class studied here:
+for valuations that are dichotomous but not additive, the $n-1$ per agent
+of~\cite{KMSTY24} was the best previously known bound, and it is that bound
+which the present result improves by a factor of $n$.
 
-We are not aware of any treatment of envy-freeness with subsidy for chores under
-dichotomous costs. This is the outcome of a literature search rather than a
-proof of novelty --- \cite{LMS26} appeared in July 2026, which is a reminder of
-how quickly the surrounding corners are being filled in --- and it should be
-repeated before the paper is circulated.
+We are not aware of any prior treatment of envy-freeness with subsidy for chores
+under dichotomous costs.

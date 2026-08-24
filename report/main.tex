@@ -46,9 +46,14 @@
 
 \input{sections/introduction}       % 1  Introduction
 \input{sections/preliminaries}      % 2  Notation and Preliminaries
-\input{sections/n3}                 % 3  The Conjecture for Three Agents
+\input{sections/main_result}        % 3  Unit Subsidies (the main theorem, all n)
 
-% Not used by the n = 3 proof, hence out of scope for this report.
+% Superseded by sections/main_result.tex, which proves the same statement for
+% every n.  n3.tex is the earlier, n = 3 only argument; it is correct and is
+% kept, but including both would state the result twice.
+% \input{sections/n3}                 %    The Conjecture for Three Agents
+
+% Not used by the main proof, hence out of scope for this report.
 % structure.tex carries the arc-update lemma, the two-tier characterisation
 % of {0,1} solutions, and the size-shift transform.  All three are proved and
 % correct; none is invoked by sections/n3.tex.  Re-enable if the report is

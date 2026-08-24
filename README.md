@@ -1,4 +1,4 @@
-# Algorithmic Game Theory — Fair Division with Subsidies
+# Algorithmic Game Theory
 
 Research notes and working material on **fair division of indivisible items with
 subsidies**, built around one problem statement: envy-free allocation of **chores**
@@ -64,8 +64,9 @@ marginals, and with no bound on the number of chores. The bound is tight.
 
 | Result | Where |
 |---|---|
-| $n = 3$, self-contained proof | [`report/sections/n3.tex`](report/sections/n3.tex) → §3 of `main.pdf` |
-| **General $n$** | [`report/working/approach_13.tex`](report/working/approach_13.tex) → `working.pdf` |
+| **The proof, general $n$** | [`report/sections/main_result.tex`](report/sections/main_result.tex) → §3 of `main.pdf` |
+| Earlier $n = 3$ only argument | [`report/sections/n3.tex`](report/sections/n3.tex) — correct, superseded, not built into `main.pdf` |
+| Full draft incl. all 14 approaches | [`report/working/`](report/working/) → `working.pdf` |
 | Full research log, every route tried | [`docs/RESIDUAL.md`](docs/RESIDUAL.md) §7.16 |
 
 The proof completes an envy-free **partial** allocation — taken from R12 (Tao et al.) —

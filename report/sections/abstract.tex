@@ -2,7 +2,7 @@
 %%  Abstract
 %%
 %%  Scoped to what the report carries: the model, what transfers from the
-%%  goods theory, and the n = 3 result.  Lead with the result.
+%%  goods theory, and the main theorem (all n).  Lead with the result.
 %% ==========================================================================
 \begin{abstract}
 We study the problem of allocating indivisible \emph{chores} among agents in a
@@ -15,8 +15,8 @@ marginal disutility for any chore is either zero or one:
 $v_i(S) - v_i(S \cup \set{g}) \in \set{0,1}$ for every agent $i$, every
 $S \subseteq \items$ and every $g \in \items \setminus S$. This is the exact
 mirror of the dichotomous goods model of Barman et al.~\cite{BKNS22}, who prove
-that there a per-agent subsidy of $0$ or $1$ always suffices, and we conjecture
-that the same guarantee holds for chores.
+that there a per-agent subsidy of $0$ or $1$ always suffices. We prove that the
+same guarantee holds for chores.
 
 Existing work already gives a bounded subsidy: negative dichotomous valuations
 are doubly monotone under the two-sided normalisation, so the reduction of
@@ -27,15 +27,20 @@ The Halpern--Shah characterisation of envy-freeable
 allocations~\cite{HS19} transfers verbatim, since it assumes nothing about the
 sign or the structure of the valuations, and it delivers an \emph{integral}
 minimum subsidy vector here; the matching lower bound of $n-1$ transfers as
-well, so the conjectured bound would be tight.
+well, so the bound in question is tight.
 
-We prove the conjecture for three agents: every instance with $n = 3$ admits an
-envy-free solution with a subsidy of $0$ or $1$ per agent, hence at most $2$ in
-total, computable in polynomial time in the value-oracle model, and under no
-assumption on the cost functions beyond binary marginals --- not additivity, not
-submodularity, and no bound on the number of chores. The proof completes an
-envy-free \emph{partial} allocation, taken from Tao et al.~\cite{TWYZ23}, by
-placing the residual chores and reassigning which agent receives which bundle;
-the subsidy bound follows from a bound on the total excess of that
-reassignment.
+We prove that bound, for every number of agents: every negative dichotomous
+instance admits an envy-free solution with a subsidy of $0$ or $1$ per agent,
+hence at most $n-1$ in total, computable in polynomial time in the value-oracle
+model, and under no assumption on the cost functions beyond binary marginals ---
+not additivity, not submodularity, no relation between different agents' cost
+functions, and no bound on the number of chores. The proof takes an envy-free
+\emph{partial} allocation, produced by the algorithm of Tao et
+al.~\cite{TWYZ23} and leaving at most $n-1$ chores unassigned, and completes it:
+the residual chores go to distinct agents inside the strongly connected
+component at which that algorithm halts, and the paid set is the backward
+closure of those recipients under the relation ``agent $i$ values her own bundle
+exactly as she values agent $j$'s''. Envy-freeness of the completion is verified
+directly, so the argument does not appeal to the characterisation of
+envy-freeable allocations.
 \end{abstract}
