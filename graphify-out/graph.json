@@ -38,7 +38,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a1_schedule",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a1_schedule()"
     },
     {
@@ -50,7 +50,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a2_deadends",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a2_deadends()"
     },
     {
@@ -62,7 +62,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a3_lemma2",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a3_lemma2()"
     },
     {
@@ -74,7 +74,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a4_lemma3",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a4_lemma3()"
     },
     {
@@ -86,7 +86,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a5_additive",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a5_additive()"
     },
     {
@@ -98,7 +98,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_a6_first_chore",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a6_first_chore()"
     },
     {
@@ -110,7 +110,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_arcs",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "arcs()"
     },
     {
@@ -122,7 +122,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_contracted",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "contracted()"
     },
     {
@@ -134,7 +134,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -146,7 +146,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_witness",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "witness()"
     },
     {
@@ -158,7 +158,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_build",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "build()"
     },
     {
@@ -170,7 +170,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_lookahead_ok",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "lookahead_ok()"
     },
     {
@@ -182,7 +182,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -194,7 +194,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_search",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "search()"
     },
     {
@@ -206,7 +206,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_admits_balanced_completion",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "admits_balanced_completion()"
     },
     {
@@ -218,7 +218,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_analyse",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "analyse()"
     },
     {
@@ -230,7 +230,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_beta_table",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "beta_table()"
     },
     {
@@ -242,7 +242,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_bundles",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "bundles()"
     },
     {
@@ -254,7 +254,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_contracted_own",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "contracted_own()"
     },
     {
@@ -266,7 +266,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -278,7 +278,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_no_free_assignment",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "no_free_assignment()"
     },
     {
@@ -290,7 +290,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_report",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "report()"
     },
     {
@@ -302,7 +302,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_table",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "table()"
     },
     {
@@ -314,7 +314,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_analyse",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "analyse()"
     },
     {
@@ -326,7 +326,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_assignments",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "assignments()"
     },
     {
@@ -338,7 +338,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_cr_legal",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cr_legal()"
     },
     {
@@ -350,7 +350,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_exhaustive_n3m3",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "exhaustive_n3m3()"
     },
     {
@@ -362,7 +362,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_is_dichotomous",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "is_dichotomous()"
     },
     {
@@ -374,7 +374,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -386,7 +386,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_profile",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "profile()"
     },
     {
@@ -398,7 +398,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_relabels",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "relabels()"
     },
     {
@@ -410,7 +410,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_run_block",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "run_block()"
     },
     {
@@ -422,7 +422,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_free_assignments",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "free_assignments()"
     },
     {
@@ -434,7 +434,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_greedy",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "greedy()"
     },
     {
@@ -446,7 +446,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -458,7 +458,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_where",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "where()"
     },
     {
@@ -470,7 +470,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_build",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "build()"
     },
     {
@@ -482,7 +482,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_find_state",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "find_state()"
     },
     {
@@ -494,7 +494,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -506,7 +506,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_show_costs",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "show_costs()"
     },
     {
@@ -518,7 +518,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_show_state",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "show_state()"
     },
     {
@@ -530,7 +530,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_w1_no_relabelling",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "w1_no_relabelling()"
     },
     {
@@ -542,7 +542,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_why_stuck",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "why_stuck()"
     },
     {
@@ -554,7 +554,7 @@
       "_origin": "ast",
       "id": "updates_update_47_diag_first_main",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "main()"
     },
     {
@@ -566,8 +566,20 @@
       "_origin": "ast",
       "id": "updates_update_48_depth_stress_build",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "build()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L86",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress_main",
+      "community": 0,
+      "community_name": "cri_witnesses.py",
+      "norm_label": "main()"
     },
     {
       "label": "cri_root_live()",
@@ -578,8 +590,20 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_cri_root_live",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_root_live()"
+    },
+    {
+      "label": "f_composed()",
+      "file_type": "code",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L73",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress_f_composed",
+      "community": 1,
+      "community_name": "cri_sweep.py",
+      "norm_label": "f_composed()"
     },
     {
       "label": "analyse()",
@@ -590,7 +614,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_analyse",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "analyse()"
     },
     {
@@ -602,7 +626,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -614,7 +638,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_collect_residual",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "collect_residual()"
     },
     {
@@ -626,7 +650,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -638,7 +662,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_matching_good",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "matching_good()"
     },
     {
@@ -650,7 +674,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_min_spread_families",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "min_spread_families()"
     },
     {
@@ -662,7 +686,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_spread",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread()"
     },
     {
@@ -674,7 +698,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_check_candidate",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "check_candidate()"
     },
     {
@@ -686,7 +710,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_combinations_with_repl",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "combinations_with_repl()"
     },
     {
@@ -698,7 +722,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_composed",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "composed()"
     },
     {
@@ -710,7 +734,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_cost_family",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "cost_family()"
     },
     {
@@ -722,7 +746,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_exhaustive_hunt",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "exhaustive_hunt()"
     },
     {
@@ -734,7 +758,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_hand_construction",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "hand_construction()"
     },
     {
@@ -746,7 +770,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -758,7 +782,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_anchors",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "anchors()"
     },
     {
@@ -770,7 +794,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_classify",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "classify()"
     },
     {
@@ -782,7 +806,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_is_binary_additive",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "is_binary_additive()"
     },
     {
@@ -794,7 +818,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -806,7 +830,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_run_block",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "run_block()"
     },
     {
@@ -818,7 +842,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_show_costs",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "show_costs()"
     },
     {
@@ -830,7 +854,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_analyse",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "analyse()"
     },
     {
@@ -842,7 +866,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -854,7 +878,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_composed",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "composed()"
     },
     {
@@ -866,7 +890,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_gen_hardcore",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "gen_hardcore()"
     },
     {
@@ -878,7 +902,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_good_exists",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "good_exists()"
     },
     {
@@ -890,7 +914,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -902,7 +926,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_min_spread_families",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "min_spread_families()"
     },
     {
@@ -914,7 +938,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_rand_f",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "rand_f()"
     },
     {
@@ -926,7 +950,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_collect",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "collect()"
     },
     {
@@ -938,7 +962,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_features",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "features()"
     },
     {
@@ -950,7 +974,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -962,7 +986,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_find_spread_le",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "find_spread_le()"
     },
     {
@@ -974,7 +998,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_gen",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "gen()"
     },
     {
@@ -986,7 +1010,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -998,7 +1022,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_min_spread_exhaustive",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "min_spread_exhaustive()"
     },
     {
@@ -1010,7 +1034,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_spread_of",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_of()"
     },
     {
@@ -1022,7 +1046,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_all_families",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "all_families()"
     },
     {
@@ -1034,7 +1058,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_main",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "main()"
     },
     {
@@ -1046,7 +1070,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_profile",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "profile()"
     },
     {
@@ -1530,6 +1554,30 @@
       "norm_label": "singletons()"
     },
     {
+      "label": "analyse()",
+      "file_type": "code",
+      "source_file": "updates/update_31/counting_room.py",
+      "source_location": "L39",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_31_counting_room_analyse",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "analyse()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_31/counting_room.py",
+      "source_location": "L56",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_31_counting_room_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
       "label": "f_capped()",
       "file_type": "code",
       "source_file": "updates/update_44/counterexample_hunt.py",
@@ -1710,18 +1758,6 @@
       "norm_label": "main()"
     },
     {
-      "label": "f_composed()",
-      "file_type": "code",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L73",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress_f_composed",
-      "community": 13,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "f_composed()"
-    },
-    {
       "label": "f_thresh()",
       "file_type": "code",
       "source_file": "updates/update_48/depth_stress.py",
@@ -1732,18 +1768,6 @@
       "community": 13,
       "community_name": "minimum_subsidy.py",
       "norm_label": "f_thresh()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L86",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress_main",
-      "community": 13,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "main()"
     },
     {
       "label": "arcs()",
@@ -2692,6 +2716,114 @@
       "community": 19,
       "community_name": "exhaustive_r1.py",
       "norm_label": "main()"
+    },
+    {
+      "label": "allocs()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L83",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_allocs",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "allocs()"
+    },
+    {
+      "label": "ellvec()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L67",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_ellvec",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "ellvec()"
+    },
+    {
+      "label": "gen_functions()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L35",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_gen_functions",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "gen_functions()"
+    },
+    {
+      "label": "good()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L88",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_good",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "good()"
+    },
+    {
+      "label": "is_dich()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_is_dich",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "is_dich()"
+    },
+    {
+      "label": "layers_of()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L97",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_layers_of",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "layers_of()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L103",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_main",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "subsets()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L31",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_subsets",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "subsets()"
+    },
+    {
+      "label": "trunc()",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L93",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_10_layers_trunc",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "trunc()"
     },
     {
       "label": "main()",
@@ -6138,114 +6270,6 @@
       "norm_label": "_split()"
     },
     {
-      "label": "allocs()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L83",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_allocs",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "allocs()"
-    },
-    {
-      "label": "ellvec()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L67",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_ellvec",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "ellvec()"
-    },
-    {
-      "label": "gen_functions()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L35",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_gen_functions",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "gen_functions()"
-    },
-    {
-      "label": "good()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L88",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_good",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "good()"
-    },
-    {
-      "label": "is_dich()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L57",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_is_dich",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "is_dich()"
-    },
-    {
-      "label": "layers_of()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L97",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_layers_of",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "layers_of()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L103",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_main",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "subsets()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L31",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_subsets",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "subsets()"
-    },
-    {
-      "label": "trunc()",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L93",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_10_layers_trunc",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "trunc()"
-    },
-    {
       "label": "analyse()",
       "file_type": "code",
       "source_file": "updates/update_13/residual.py",
@@ -8300,30 +8324,6 @@
     {
       "label": "analyse()",
       "file_type": "code",
-      "source_file": "updates/update_31/counting_room.py",
-      "source_location": "L39",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_31_counting_room_analyse",
-      "community": 94,
-      "community_name": "counting_room.py",
-      "norm_label": "analyse()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_31/counting_room.py",
-      "source_location": "L56",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_31_counting_room_main",
-      "community": 94,
-      "community_name": "counting_room.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "analyse()",
-      "file_type": "code",
       "source_file": "updates/update_3/setsplit.py",
       "source_location": "L20",
       "_callable": true,
@@ -8341,7 +8341,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_anchor.py"
     },
     {
@@ -8352,7 +8352,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_lookahead.py"
     },
     {
@@ -8363,19 +8363,8 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_stuck.py"
-    },
-    {
-      "label": "cri_sweep.py",
-      "file_type": "code",
-      "source_file": "updates/update_47/cri_sweep.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_47_cri_sweep",
-      "community": 0,
-      "community_name": "cri_sweep.py",
-      "norm_label": "cri_sweep.py"
     },
     {
       "label": "cri_where.py",
@@ -8385,7 +8374,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_where.py"
     },
     {
@@ -8396,7 +8385,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "cri_witnesses.py"
     },
     {
@@ -8407,7 +8396,7 @@
       "_origin": "ast",
       "id": "updates_update_47_diag_first",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "diag_first.py"
     },
     {
@@ -8418,7 +8407,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "anchors for the cri machinery, run through the real functions of cri_sweep.py...."
     },
     {
@@ -8429,7 +8418,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_121",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "w'(i,k) - w(i,k) = beta_i(a_k)[k!=x] - beta_i(a_i)[i!=x]."
     },
     {
@@ -8440,7 +8429,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_166",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "additive costs: third-party arcs must not move (the additive collapse)."
     },
     {
@@ -8451,7 +8440,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_201",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "from the root, assign a to x is legal iff beta_x(empty) <= beta_k(empty)."
     },
     {
@@ -8462,7 +8451,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_45",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "thm:obstruction: m = {a1,a2,g} = {0,1,2}."
     },
     {
@@ -8473,7 +8462,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_56",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "c^r(t) = c(t u r) - c(r) for t inside m \\\\ r."
     },
     {
@@ -8484,7 +8473,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_anchor_rationale_96",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "envy graph of w_i = a_i u r == envy graph of a under c^r."
     },
     {
@@ -8495,7 +8484,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "how much foresight does cri need? cri_where.py found the sharpest structural..."
     },
     {
@@ -8506,7 +8495,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_rationale_103",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "exhaustive completion search from `own`."
     },
     {
@@ -8517,7 +8506,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_rationale_39",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "legal set, successor maps, reachable set, live set."
     },
     {
@@ -8528,7 +8517,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_lookahead_rationale_73",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "play a random legal assignment while |r| > k, then search the last k. random..."
     },
     {
@@ -8539,7 +8528,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "what do the stuck cr states look like? cri_sweep.py settles phase 0: cri..."
     },
     {
@@ -8550,7 +8539,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_rationale_105",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "true if no assignment satisfies the cr free-assignment hypothesis."
     },
     {
@@ -8561,7 +8550,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_rationale_72",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "c^r_i(a_i) for each i."
     },
     {
@@ -8572,7 +8561,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_rationale_78",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "some completion of the undecided chores has sizes differing by <= 1."
     },
     {
@@ -8583,19 +8572,8 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_stuck_rationale_94",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "beta_i(t) = marginal of chore a to agent i on t, conditioned on r - a."
-    },
-    {
-      "label": "Phase 0 of the CONDITIONED-REMAINDER INDUCTION (CRI): is it false? THE FRAME. A\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_47/cri_sweep.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_47_cri_sweep_rationale_1",
-      "community": 0,
-      "community_name": "cri_sweep.py",
-      "norm_label": "phase 0 of the conditioned-remainder induction (cri): is it false? the frame. a..."
     },
     {
       "label": "Successors under the CR move: give one undecided chore to one agent.",
@@ -8605,7 +8583,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_rationale_109",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "successors under the cr move: give one undecided chore to one agent."
     },
     {
@@ -8616,7 +8594,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_rationale_122",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "a -> a o sigma. undecided chores are untouched."
     },
     {
@@ -8627,7 +8605,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_rationale_130",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "complete analysis over all (n+1)^m states. nothing is sampled or capped. the..."
     },
     {
@@ -8638,7 +8616,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_rationale_84",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "every marginal in {0,1}. guard, not decoration: f_capped and f_threshold..."
     },
     {
@@ -8649,7 +8627,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_sweep_rationale_97",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "w_i = a_i union r. own[j] in 0..n-1 is the owner, own[j] == n undecided."
     },
     {
@@ -8660,7 +8638,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "where in the induction does cri get stuck, and does a rule avoid it?..."
     },
     {
@@ -8671,7 +8649,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_rationale_42",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "all (a,x) meeting the cr free-assignment hypothesis."
     },
     {
@@ -8682,7 +8660,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_rationale_58",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "|r| histogram at stuck states, over reachable legal states."
     },
     {
@@ -8693,7 +8671,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_where_rationale_89",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "follow a rule from the root; 'ok' / 'stuck'."
     },
     {
@@ -8704,7 +8682,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "the exact witnesses for every claim in the cr line that failed. cri itself is..."
     },
     {
@@ -8715,7 +8693,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_rationale_209",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "first (cs, state, n, m) over the blocks satisfying pred(ctx)."
     },
     {
@@ -8726,7 +8704,7 @@
       "_origin": "ast",
       "id": "updates_update_47_cri_witnesses_rationale_86",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "print every candidate assignment and the reason it is illegal."
     },
     {
@@ -8737,8 +8715,30 @@
       "_origin": "ast",
       "id": "updates_update_47_diag_first_rationale_1",
       "community": 0,
-      "community_name": "cri_sweep.py",
+      "community_name": "cri_witnesses.py",
       "norm_label": "diagnostic: why does the first-chore criterion mismatch on 5 of 6272 cases?"
+    },
+    {
+      "label": "cri_sweep.py",
+      "file_type": "code",
+      "source_file": "updates/update_47/cri_sweep.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_47_cri_sweep",
+      "community": 1,
+      "community_name": "cri_sweep.py",
+      "norm_label": "cri_sweep.py"
+    },
+    {
+      "label": "depth_stress.py",
+      "file_type": "code",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress",
+      "community": 1,
+      "community_name": "cri_sweep.py",
+      "norm_label": "depth_stress.py"
     },
     {
       "label": "minsum_stress.py",
@@ -8748,7 +8748,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "minsum_stress.py"
     },
     {
@@ -8759,7 +8759,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "residual_attack.py"
     },
     {
@@ -8770,7 +8770,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "residual_hunt.py"
     },
     {
@@ -8781,7 +8781,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "residual_map.py"
     },
     {
@@ -8792,7 +8792,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_conjecture.py"
     },
     {
@@ -8803,7 +8803,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_hardcore.py"
     },
     {
@@ -8814,7 +8814,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_rule.py"
     },
     {
@@ -8825,7 +8825,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_scale.py"
     },
     {
@@ -8836,8 +8836,30 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "spread_which.py"
+    },
+    {
+      "label": "Phase 0 of the CONDITIONED-REMAINDER INDUCTION (CRI): is it false? THE FRAME. A\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_47/cri_sweep.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_47_cri_sweep_rationale_1",
+      "community": 1,
+      "community_name": "cri_sweep.py",
+      "norm_label": "phase 0 of the conditioned-remainder induction (cri): is it false? the frame. a..."
+    },
+    {
+      "label": "Stress conj:cri-depth where it is weakest: larger m, and the hard families.\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_48/depth_stress.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_48_depth_stress_rationale_1",
+      "community": 1,
+      "community_name": "cri_sweep.py",
+      "norm_label": "stress conj:cri-depth where it is weakest: larger m, and the hard families...."
     },
     {
       "label": "Stress the min-total-spread rule before believing it. spread_rule.py produced a\u2026",
@@ -8847,7 +8869,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "stress the min-total-spread rule before believing it. spread_rule.py produced a..."
     },
     {
@@ -8858,7 +8880,7 @@
       "_origin": "ast",
       "id": "updates_update_48_minsum_stress_rationale_54",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "minimisers of total spread and of binding count; are they all good?"
     },
     {
@@ -8869,7 +8891,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "what the residual instances look like, and what certifies them...."
     },
     {
@@ -8880,7 +8902,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_73",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "all families attaining the minimum spread, and that minimum."
     },
     {
@@ -8891,7 +8913,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_attack_rationale_86",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "max-weight matching (= min total cost) of the family; is ell <= 1? ties matter,..."
     },
     {
@@ -8902,7 +8924,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "a targeted hunt for a residual instance: one no solved case covers...."
     },
     {
@@ -8913,7 +8935,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_117",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "every composed instance at this size, up to the cap on cost functions."
     },
     {
@@ -8924,7 +8946,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_58",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "c(s) = f(|s & d|), as a dict over all subsets."
     },
     {
@@ -8935,7 +8957,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_63",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "all (d, f) composed dichotomous costs on m items, as (label, dict)."
     },
     {
@@ -8946,7 +8968,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_81",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "full classification, printed."
     },
     {
@@ -8957,7 +8979,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_hunt_rationale_92",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "the construction the docstring describes, tested directly."
     },
     {
@@ -8968,7 +8990,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "what is actually left unproven? the residual of the four solved cases...."
     },
     {
@@ -8979,7 +9001,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_63",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "c(s) = sum of singletons, all singletons in {0,1}."
     },
     {
@@ -8990,7 +9012,7 @@
       "_origin": "ast",
       "id": "updates_update_48_residual_map_rationale_74",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "return the membership flags and whether conjecture 2 holds."
     },
     {
@@ -9001,7 +9023,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "the candidate fifth theorem: minimum-spread family + maximum-weight matching...."
     },
     {
@@ -9012,7 +9034,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_conjecture_rationale_49",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "minimum spread, whether a min-spread family's matching is good, and whether the..."
     },
     {
@@ -9023,7 +9045,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_hardcore_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "(f5) tested where it actually bites: instances of minimum spread 2. (f5) every..."
     },
     {
@@ -9034,7 +9056,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_rule_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "what selects the spread-2 families that work? spread_which.py settled the shape..."
     },
     {
@@ -9045,7 +9067,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "does (a) survive m >> n? the regime where minimum spread could exceed 2...."
     },
     {
@@ -9056,7 +9078,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_rationale_55",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "first partition of spread <= k, or none after exhausting all n^m."
     },
     {
@@ -9067,7 +9089,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_scale_rationale_78",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "large-|d| composed costs: the regime where balance can actually fail."
     },
     {
@@ -9078,7 +9100,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_rationale_1",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "which spread-2 family works? the statement (f5) should actually have. (f5) has..."
     },
     {
@@ -9089,7 +9111,7 @@
       "_origin": "ast",
       "id": "updates_update_48_spread_which_rationale_53",
       "community": 1,
-      "community_name": "gen",
+      "community_name": "cri_sweep.py",
       "norm_label": "per-agent spreads, and bundle sizes."
     },
     {
@@ -9525,7 +9547,7 @@
       "label": "Adding new thinking",
       "file_type": "document",
       "source_file": "report/README.md",
-      "source_location": "L41",
+      "source_location": "L53",
       "_origin": "ast",
       "id": "report_readme_adding_new_thinking",
       "community": 102,
@@ -9536,7 +9558,7 @@
       "label": "Conventions",
       "file_type": "document",
       "source_file": "report/README.md",
-      "source_location": "L49",
+      "source_location": "L60",
       "_origin": "ast",
       "id": "report_readme_conventions",
       "community": 102,
@@ -9547,7 +9569,7 @@
       "label": "Layout",
       "file_type": "document",
       "source_file": "report/README.md",
-      "source_location": "L26",
+      "source_location": "L34",
       "_origin": "ast",
       "id": "report_readme_layout",
       "community": 102,
@@ -9569,7 +9591,7 @@
       "label": "Two documents, one preamble",
       "file_type": "document",
       "source_file": "report/README.md",
-      "source_location": "L6",
+      "source_location": "L12",
       "_origin": "ast",
       "id": "report_readme_two_documents_one_preamble",
       "community": 102,
@@ -9588,70 +9610,125 @@
       "norm_label": "working/readme.md"
     },
     {
-      "label": "Adding a new idea",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L75",
-      "_origin": "ast",
-      "id": "report_working_readme_adding_a_new_idea",
-      "community": 103,
-      "community_name": "`working/` \u2014 parked material",
-      "norm_label": "adding a new idea"
-    },
-    {
-      "label": "Promoting a section into the report",
-      "file_type": "document",
-      "source_file": "report/working/README.md",
-      "source_location": "L82",
-      "_origin": "ast",
-      "id": "report_working_readme_promoting_a_section_into_the_report",
-      "community": 103,
-      "community_name": "`working/` \u2014 parked material",
-      "norm_label": "promoting a section into the report"
-    },
-    {
       "label": "The `\\ifworking` switch",
       "file_type": "document",
       "source_file": "report/working/README.md",
-      "source_location": "L92",
+      "source_location": "L78",
       "_origin": "ast",
       "id": "report_working_readme_the_ifworking_switch",
-      "community": 103,
-      "community_name": "`working/` \u2014 parked material",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
       "norm_label": "the `\\ifworking` switch"
     },
     {
       "label": "Two documents",
       "file_type": "document",
       "source_file": "report/working/README.md",
-      "source_location": "L8",
+      "source_location": "L17",
       "_origin": "ast",
       "id": "report_working_readme_two_documents",
-      "community": 103,
-      "community_name": "`working/` \u2014 parked material",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
       "norm_label": "two documents"
+    },
+    {
+      "label": "What actually closed it",
+      "file_type": "document",
+      "source_file": "report/working/README.md",
+      "source_location": "L70",
+      "_origin": "ast",
+      "id": "report_working_readme_what_actually_closed_it",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "what actually closed it"
     },
     {
       "label": "What is parked",
       "file_type": "document",
       "source_file": "report/working/README.md",
-      "source_location": "L20",
+      "source_location": "L30",
       "_origin": "ast",
       "id": "report_working_readme_what_is_parked",
-      "community": 103,
-      "community_name": "`working/` \u2014 parked material",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
       "norm_label": "what is parked"
     },
     {
-      "label": "`working/` \u2014 parked material",
+      "label": "`working/` \u2014 the closed chores-only trail",
       "file_type": "document",
       "source_file": "report/working/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "report_working_readme_working_parked_material",
+      "id": "report_working_readme_working_the_closed_chores_only_trail",
+      "community": 102,
+      "community_name": "`report/` \u2014 the LaTeX write-up",
+      "norm_label": "`working/` \u2014 the closed chores-only trail"
+    },
+    {
+      "label": "RESIDUAL_GENERAL_BINARY.md",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary",
       "community": 103,
-      "community_name": "`working/` \u2014 parked material",
-      "norm_label": "`working/` \u2014 parked material"
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "residual_general_binary.md"
+    },
+    {
+      "label": "0. Context",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L10",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary_0_context",
+      "community": 103,
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "0. context"
+    },
+    {
+      "label": "1. What transfers from the closed result without re-proof",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L24",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary_1_what_transfers_from_the_closed_result_without_re_proof",
+      "community": 103,
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "1. what transfers from the closed result without re-proof"
+    },
+    {
+      "label": "2. What does *not* transfer, and must be re-derived",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary_2_what_does_not_transfer_and_must_be_re_derived",
+      "community": 103,
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "2. what does *not* transfer, and must be re-derived"
+    },
+    {
+      "label": "3. Status table",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L56",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary_3_status_table",
+      "community": 103,
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "3. status table"
+    },
+    {
+      "label": "General binary valuations (goods and chores) \u2014 running research log",
+      "file_type": "document",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "community": 103,
+      "community_name": "General binary valuations (goods and chores) \u2014 running research log",
+      "norm_label": "general binary valuations (goods and chores) \u2014 running research log"
     },
     {
       "label": "glossary_fair_division_subsidies.md",
@@ -10193,6 +10270,17 @@
       "norm_label": "tightness.py"
     },
     {
+      "label": "counting_room.py",
+      "file_type": "code",
+      "source_file": "updates/update_31/counting_room.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_31_counting_room",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "counting_room.py"
+    },
+    {
       "label": "counterexample_hunt.py",
       "file_type": "code",
       "source_file": "updates/update_44/counterexample_hunt.py",
@@ -10235,17 +10323,6 @@
       "community": 13,
       "community_name": "minimum_subsidy.py",
       "norm_label": "cyclebound_check.py"
-    },
-    {
-      "label": "depth_stress.py",
-      "file_type": "code",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress",
-      "community": 13,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "depth_stress.py"
     },
     {
       "label": "How large must the PAID SET S be? (the quantity Conjecture 1 bounds) Correcting\u2026",
@@ -10336,6 +10413,17 @@
       "norm_label": "(a): does every envy-freeable allocation have min_i ell(i) = 0?"
     },
     {
+      "label": "Is there ROOM for a non-local argument? Counting the good allocations. Every\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_31/counting_room.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_31_counting_room_rationale_1",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "is there room for a non-local argument? counting the good allocations. every..."
+    },
+    {
       "label": "Track 2: an adversarial hunt for a COUNTEREXAMPLE to Conjecture 2. Every sweep\u2026",
       "file_type": "rationale",
       "source_file": "updates/update_44/counterexample_hunt.py",
@@ -10411,17 +10499,6 @@
       "community": 13,
       "community_name": "minimum_subsidy.py",
       "norm_label": "rechecking the cycle-closing bound (theorem 33 of the working draft)...."
-    },
-    {
-      "label": "Stress conj:cri-depth where it is weakest: larger m, and the hard families.\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_48/depth_stress.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_48_depth_stress_rationale_1",
-      "community": 13,
-      "community_name": "minimum_subsidy.py",
-      "norm_label": "stress conj:cri-depth where it is weakest: larger m, and the hard families...."
     },
     {
       "label": "peel.py",
@@ -11447,6 +11524,17 @@
       "norm_label": "investigate: among the 1755 |r|=1 \"needs-permutation\" cases (bound=2), is it..."
     },
     {
+      "label": "layers.py",
+      "file_type": "code",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_10_layers",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "layers.py"
+    },
+    {
       "label": "extend_cardinality.py",
       "file_type": "code",
       "source_file": "updates/update_14/extend_cardinality.py",
@@ -11588,6 +11676,28 @@
       "community": 2,
       "community_name": "guidedR3.py",
       "norm_label": "verify_reach_gap.py"
+    },
+    {
+      "label": "A novel angle: decompose each cost function into LAYERS. OBSERVATION. Every\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_10_layers_rationale_1",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "a novel angle: decompose each cost function into layers. observation. every..."
+    },
+    {
+      "label": "The nested upward-closed families F_t as a list of sets of subsets.",
+      "file_type": "rationale",
+      "source_file": "updates/update_10/layers.py",
+      "source_location": "L98",
+      "_origin": "ast",
+      "id": "updates_update_10_layers_rationale_98",
+      "community": 2,
+      "community_name": "guidedR3.py",
+      "norm_label": "the nested upward-closed families f_t as a list of sets of subsets."
     },
     {
       "label": "Does BKNS EXTEND ever choose to grow a bundle that is NOT of minimum\u2026",
@@ -12847,7 +12957,7 @@
       "label": "7.10.1 The complete constraint taxonomy",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L521",
+      "source_location": "L528",
       "_origin": "ast",
       "id": "docs_residual_7_10_1_the_complete_constraint_taxonomy",
       "community": 3,
@@ -12858,7 +12968,7 @@
       "label": "7.10.2 The hypothesis keeps killing the conflicts",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L567",
+      "source_location": "L574",
       "_origin": "ast",
       "id": "docs_residual_7_10_2_the_hypothesis_keeps_killing_the_conflicts",
       "community": 3,
@@ -12869,7 +12979,7 @@
       "label": "7.10.3 \u26a0 What (Q) does and does not buy",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L601",
+      "source_location": "L608",
       "_origin": "ast",
       "id": "docs_residual_7_10_3_what_q_does_and_does_not_buy",
       "community": 3,
@@ -12880,7 +12990,7 @@
       "label": "7.10 Question (Q), and why the divisibility condition is the whole story",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L452",
+      "source_location": "L459",
       "_origin": "ast",
       "id": "docs_residual_7_10_question_q_and_why_the_divisibility_condition_is_the_whole_story",
       "community": 3,
@@ -12891,7 +13001,7 @@
       "label": "7.11 Rigidity is the right notion, not additivity",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L624",
+      "source_location": "L631",
       "_origin": "ast",
       "id": "docs_residual_7_11_rigidity_is_the_right_notion_not_additivity",
       "community": 3,
@@ -12902,7 +13012,7 @@
       "label": "7.12 Compression, and why the residual looks the way it does",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L673",
+      "source_location": "L680",
       "_origin": "ast",
       "id": "docs_residual_7_12_compression_and_why_the_residual_looks_the_way_it_does",
       "community": 3,
@@ -12913,7 +13023,7 @@
       "label": "7.13 Two sets can always be balanced \u2014 so the obstruction needs all three",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L724",
+      "source_location": "L731",
       "_origin": "ast",
       "id": "docs_residual_7_13_two_sets_can_always_be_balanced_so_the_obstruction_needs_all_three",
       "community": 3,
@@ -12924,7 +13034,7 @@
       "label": "7.14 Attacking (R): two sets go to spread $0$ for free",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L777",
+      "source_location": "L784",
       "_origin": "ast",
       "id": "docs_residual_7_14_attacking_r_two_sets_go_to_spread_0_for_free",
       "community": 3,
@@ -12935,7 +13045,7 @@
       "label": "7.15.1 Transporting $D_3$ inside a fixed two-set solution",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L869",
+      "source_location": "L876",
       "_origin": "ast",
       "id": "docs_residual_7_15_1_transporting_d_3_inside_a_fixed_two_set_solution",
       "community": 3,
@@ -12946,7 +13056,7 @@
       "label": "7.15 The greedy levelling lemma, and exactly where three sets break",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L832",
+      "source_location": "L839",
       "_origin": "ast",
       "id": "docs_residual_7_15_the_greedy_levelling_lemma_and_exactly_where_three_sets_break",
       "community": 3,
@@ -12957,7 +13067,7 @@
       "label": "7.16.10 What general $n=3$ reduces to",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1452",
+      "source_location": "L1459",
       "_origin": "ast",
       "id": "docs_residual_7_16_10_what_general_n_3_reduces_to",
       "community": 3,
@@ -12968,7 +13078,7 @@
       "label": "7.16.11 Audit of the $n=3$ chain (against the user's verification dossier)",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1485",
+      "source_location": "L1492",
       "_origin": "ast",
       "id": "docs_residual_7_16_11_audit_of_the_n_3_chain_against_the_user_s_verification_dossier",
       "community": 3,
@@ -12979,7 +13089,7 @@
       "label": "7.16.12 Second pass: `n3_conjecture2_consolidated_findings.md`",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1550",
+      "source_location": "L1557",
       "_origin": "ast",
       "id": "docs_residual_7_16_12_second_pass_n3_conjecture2_consolidated_findings_md",
       "community": 3,
@@ -12990,7 +13100,7 @@
       "label": "7.16.13 Attacking (Q\u2032) directly: an unbounded rigid non-composed family, and a failed hunt for a counterexample",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1614",
+      "source_location": "L1621",
       "_origin": "ast",
       "id": "docs_residual_7_16_13_attacking_q_directly_an_unbounded_rigid_non_composed_family_and_a_failed_hunt_for_a_counterexample",
       "community": 3,
@@ -13001,7 +13111,7 @@
       "label": "7.16.14 The direct attempt on (Q\u2032): where it breaks, precisely",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1686",
+      "source_location": "L1693",
       "_origin": "ast",
       "id": "docs_residual_7_16_14_the_direct_attempt_on_q_where_it_breaks_precisely",
       "community": 3,
@@ -13012,7 +13122,7 @@
       "label": "7.16.15 Lemma D is proved \u2014 audit of the user's `lemma_D_full_proof_verified.md`",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1748",
+      "source_location": "L1755",
       "_origin": "ast",
       "id": "docs_residual_7_16_15_lemma_d_is_proved_audit_of_the_user_s_lemma_d_full_proof_verified_md",
       "community": 3,
@@ -13023,7 +13133,7 @@
       "label": "7.16.16 (Q\u2032): the counterexample search, now with fully general costs",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1859",
+      "source_location": "L1866",
       "_origin": "ast",
       "id": "docs_residual_7_16_16_q_the_counterexample_search_now_with_fully_general_costs",
       "community": 3,
@@ -13034,7 +13144,7 @@
       "label": "7.16.17 A new, more structured target: contiguous 2-cut partitions (necklace splitting)",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1876",
+      "source_location": "L1883",
       "_origin": "ast",
       "id": "docs_residual_7_16_17_a_new_more_structured_target_contiguous_2_cut_partitions_necklace_splitting",
       "community": 3,
@@ -13045,7 +13155,7 @@
       "label": "7.16.18 A genuine attempt at the two-dimensional proof: the Lipschitz law, and where it stalls",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1940",
+      "source_location": "L1947",
       "_origin": "ast",
       "id": "docs_residual_7_16_18_a_genuine_attempt_at_the_two_dimensional_proof_the_lipschitz_law_and_where_it_stalls",
       "community": 3,
@@ -13056,7 +13166,7 @@
       "label": "7.16.19 The simplest completion is ruled out: same-cut degradation genuinely reaches 2",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2001",
+      "source_location": "L2008",
       "_origin": "ast",
       "id": "docs_residual_7_16_19_the_simplest_completion_is_ruled_out_same_cut_degradation_genuinely_reaches_2",
       "community": 3,
@@ -13067,7 +13177,7 @@
       "label": "7.16.1 (Q) is PROVED",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L967",
+      "source_location": "L974",
       "_origin": "ast",
       "id": "docs_residual_7_16_1_q_is_proved",
       "community": 3,
@@ -13078,7 +13188,7 @@
       "label": "7.16.20 What actually repairs the damage, and a reformulation",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2045",
+      "source_location": "L2052",
       "_origin": "ast",
       "id": "docs_residual_7_16_20_what_actually_repairs_the_damage_and_a_reformulation",
       "community": 3,
@@ -13089,7 +13199,7 @@
       "label": "7.16.21 Consolidation: a direct local-search route, precisely scoped and partially proved",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2090",
+      "source_location": "L2097",
       "_origin": "ast",
       "id": "docs_residual_7_16_21_consolidation_a_direct_local_search_route_precisely_scoped_and_partially_proved",
       "community": 3,
@@ -13100,7 +13210,7 @@
       "label": "7.16.22 Pinning down the no-single-pivotal case: the mechanism is not a single-cost fact",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2176",
+      "source_location": "L2183",
       "_origin": "ast",
       "id": "docs_residual_7_16_22_pinning_down_the_no_single_pivotal_case_the_mechanism_is_not_a_single_cost_fact",
       "community": 3,
@@ -13111,7 +13221,7 @@
       "label": "7.16.23 The actual mechanism, found: removal-hardness forces a small insertion-witness",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2206",
+      "source_location": "L2213",
       "_origin": "ast",
       "id": "docs_residual_7_16_23_the_actual_mechanism_found_removal_hardness_forces_a_small_insertion_witness",
       "community": 3,
@@ -13122,7 +13232,7 @@
       "label": "7.16.24 Confirming the mechanism directly: a pure AND-gadget is forced to be removal-easy",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2268",
+      "source_location": "L2275",
       "_origin": "ast",
       "id": "docs_residual_7_16_24_confirming_the_mechanism_directly_a_pure_and_gadget_is_forced_to_be_removal_easy",
       "community": 3,
@@ -13133,7 +13243,7 @@
       "label": "7.16.25 Working the induction with pure mathematics: the value-$2$ minimal witness",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2310",
+      "source_location": "L2317",
       "_origin": "ast",
       "id": "docs_residual_7_16_25_working_the_induction_with_pure_mathematics_the_value_2_minimal_witness",
       "community": 3,
@@ -13144,7 +13254,7 @@
       "label": "7.16.26 A direct hand-built counterexample attempt, and why it fails",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2426",
+      "source_location": "L2433",
       "_origin": "ast",
       "id": "docs_residual_7_16_26_a_direct_hand_built_counterexample_attempt_and_why_it_fails",
       "community": 3,
@@ -13155,7 +13265,7 @@
       "label": "7.16.27 Splitting on $\\cost(X\\setminus B)$: one full case closes, two remain",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2498",
+      "source_location": "L2505",
       "_origin": "ast",
       "id": "docs_residual_7_16_27_splitting_on_cost_x_setminus_b_one_full_case_closes_two_remain",
       "community": 3,
@@ -13166,7 +13276,7 @@
       "label": "7.16.28 An extremal choice of $B$: real leverage, still not a closing argument",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2543",
+      "source_location": "L2550",
       "_origin": "ast",
       "id": "docs_residual_7_16_28_an_extremal_choice_of_b_real_leverage_still_not_a_closing_argument",
       "community": 3,
@@ -13177,7 +13287,7 @@
       "label": "7.16.29 A genuine correction, and one more structural fact",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2587",
+      "source_location": "L2594",
       "_origin": "ast",
       "id": "docs_residual_7_16_29_a_genuine_correction_and_one_more_structural_fact",
       "community": 3,
@@ -13188,7 +13298,7 @@
       "label": "7.16.2 What Theorem Z\u2032 does and does not settle",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1104",
+      "source_location": "L1111",
       "_origin": "ast",
       "id": "docs_residual_7_16_2_what_theorem_z_does_and_does_not_settle",
       "community": 3,
@@ -13199,7 +13309,7 @@
       "label": "7.16.30 A genuinely new angle: found a real counterexample \u2014 and it reveals a hole in the setup",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2624",
+      "source_location": "L2631",
       "_origin": "ast",
       "id": "docs_residual_7_16_30_a_genuinely_new_angle_found_a_real_counterexample_and_it_reveals_a_hole_in_the_setup",
       "community": 3,
@@ -13210,7 +13320,7 @@
       "label": "7.16.31 Immediately cashing in the \"use rigidity constructively\" challenge: $\\abs X = 6$ resolved",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2692",
+      "source_location": "L2699",
       "_origin": "ast",
       "id": "docs_residual_7_16_31_immediately_cashing_in_the_use_rigidity_constructively_challenge_abs_x_6_resolved",
       "community": 3,
@@ -13221,7 +13331,7 @@
       "label": "7.16.32 A genuinely new angle from the literature: Tao\u2013Wu\u2013Yu\u2013Zhou's partial-EF algorithm, and the \"permuted extension\" route",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2734",
+      "source_location": "L2741",
       "_origin": "ast",
       "id": "docs_residual_7_16_32_a_genuinely_new_angle_from_the_literature_tao_wu_yu_zhou_s_partial_ef_algorithm_and_the_permuted_extension_route",
       "community": 3,
@@ -13232,7 +13342,7 @@
       "label": "7.16.33 The Permuted-Extension Conjecture, closed: Conjecture 2 holds at $n=3$ unconditionally",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2868",
+      "source_location": "L2875",
       "_origin": "ast",
       "id": "docs_residual_7_16_33_the_permuted_extension_conjecture_closed_conjecture_2_holds_at_n_3_unconditionally",
       "community": 3,
@@ -13243,7 +13353,7 @@
       "label": "7.16.34 Replacing exhaustion with reasons: the excess argument, and where it stops",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2971",
+      "source_location": "L2978",
       "_origin": "ast",
       "id": "docs_residual_7_16_34_replacing_exhaustion_with_reasons_the_excess_argument_and_where_it_stops",
       "community": 3,
@@ -13254,7 +13364,7 @@
       "label": "7.16.35 The |R|=2 case is PROVED: exhaustion eliminated entirely",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3065",
+      "source_location": "L3072",
       "_origin": "ast",
       "id": "docs_residual_7_16_35_the_r_2_case_is_proved_exhaustion_eliminated_entirely",
       "community": 3,
@@ -13265,7 +13375,7 @@
       "label": "7.16.36 Independent audit of the n=3 proof, and one real gap found",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3131",
+      "source_location": "L3138",
       "_origin": "ast",
       "id": "docs_residual_7_16_36_independent_audit_of_the_n_3_proof_and_one_real_gap_found",
       "community": 3,
@@ -13276,7 +13386,7 @@
       "label": "7.16.37 Saturation lemma refuted; and Conjecture 2 proved for ALL n",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3181",
+      "source_location": "L3188",
       "_origin": "ast",
       "id": "docs_residual_7_16_37_saturation_lemma_refuted_and_conjecture_2_proved_for_all_n",
       "community": 3,
@@ -13287,7 +13397,7 @@
       "label": "7.16.38 The repair to the saturation lemma was also wrong",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3250",
+      "source_location": "L3257",
       "_origin": "ast",
       "id": "docs_residual_7_16_38_the_repair_to_the_saturation_lemma_was_also_wrong",
       "community": 3,
@@ -13298,7 +13408,7 @@
       "label": "7.16.39 Conjecture 2 for all n, written up as Approach 13",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3289",
+      "source_location": "L3296",
       "_origin": "ast",
       "id": "docs_residual_7_16_39_conjecture_2_for_all_n_written_up_as_approach_13",
       "community": 3,
@@ -13309,7 +13419,7 @@
       "label": "7.16.3 Superseded: the earlier $d_i=4$ draft",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1122",
+      "source_location": "L1129",
       "_origin": "ast",
       "id": "docs_residual_7_16_3_superseded_the_earlier_d_i_4_draft",
       "community": 3,
@@ -13320,7 +13430,7 @@
       "label": "7.16.40 Approach 14 (almost-balanced size-shift): reduction correct, proof program blocked",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3338",
+      "source_location": "L3345",
       "_origin": "ast",
       "id": "docs_residual_7_16_40_approach_14_almost_balanced_size_shift_reduction_correct_proof_program_blocked",
       "community": 3,
@@ -13331,7 +13441,7 @@
       "label": "7.16.41 Second obstruction: EXTEND does not select by cardinality at all",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3403",
+      "source_location": "L3410",
       "_origin": "ast",
       "id": "docs_residual_7_16_41_second_obstruction_extend_does_not_select_by_cardinality_at_all",
       "community": 3,
@@ -13342,7 +13452,7 @@
       "label": "7.16.42 CLOSURE: a single hand-verified step, no search required",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3420",
+      "source_location": "L3427",
       "_origin": "ast",
       "id": "docs_residual_7_16_42_closure_a_single_hand_verified_step_no_search_required",
       "community": 3,
@@ -13353,7 +13463,7 @@
       "label": "7.16.4 Interleaved greedy: two sets within one, the third within three",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1199",
+      "source_location": "L1206",
       "_origin": "ast",
       "id": "docs_residual_7_16_4_interleaved_greedy_two_sets_within_one_the_third_within_three",
       "community": 3,
@@ -13364,7 +13474,7 @@
       "label": "7.16.5 One case of $n=3$ closed outright",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1250",
+      "source_location": "L1257",
       "_origin": "ast",
       "id": "docs_residual_7_16_5_one_case_of_n_3_closed_outright",
       "community": 3,
@@ -13375,7 +13485,7 @@
       "label": "7.16.6 What is left of $n = 3$",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1275",
+      "source_location": "L1282",
       "_origin": "ast",
       "id": "docs_residual_7_16_6_what_is_left_of_n_3",
       "community": 3,
@@ -13386,7 +13496,7 @@
       "label": "7.16.7 The tie-break lemma, and the Target Theorem",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1302",
+      "source_location": "L1309",
       "_origin": "ast",
       "id": "docs_residual_7_16_7_the_tie_break_lemma_and_the_target_theorem",
       "community": 3,
@@ -13397,7 +13507,7 @@
       "label": "7.16.8 Conjecture 2 at $n=3$ for composed costs",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1380",
+      "source_location": "L1387",
       "_origin": "ast",
       "id": "docs_residual_7_16_8_conjecture_2_at_n_3_for_composed_costs",
       "community": 3,
@@ -13408,7 +13518,7 @@
       "label": "7.16.9 Why Theorem FF does not extend: rigid non-composed costs exist",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1416",
+      "source_location": "L1423",
       "_origin": "ast",
       "id": "docs_residual_7_16_9_why_theorem_ff_does_not_extend_rigid_non_composed_costs_exist",
       "community": 3,
@@ -13419,7 +13529,7 @@
       "label": "7.16 (Q) closed when no private region is active",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L909",
+      "source_location": "L916",
       "_origin": "ast",
       "id": "docs_residual_7_16_q_closed_when_no_private_region_is_active",
       "community": 3,
@@ -13430,7 +13540,7 @@
       "label": "7.17 Status",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3466",
+      "source_location": "L3473",
       "_origin": "ast",
       "id": "docs_residual_7_17_status",
       "community": 3,
@@ -13441,7 +13551,7 @@
       "label": "7.1 Normalisation",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L202",
+      "source_location": "L209",
       "_origin": "ast",
       "id": "docs_residual_7_1_normalisation",
       "community": 3,
@@ -13452,7 +13562,7 @@
       "label": "7.2 A criterion for goodness",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L216",
+      "source_location": "L223",
       "_origin": "ast",
       "id": "docs_residual_7_2_a_criterion_for_goodness",
       "community": 3,
@@ -13463,7 +13573,7 @@
       "label": "7.3 Lemma A \u2014 $\\Sigma \\le 3$ needs no family minimality",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L238",
+      "source_location": "L245",
       "_origin": "ast",
       "id": "docs_residual_7_3_lemma_a_sigma_le_3_needs_no_family_minimality",
       "community": 3,
@@ -13474,7 +13584,7 @@
       "label": "7.4 Lemma A already re-proves `thm:balanced-class`",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L267",
+      "source_location": "L274",
       "_origin": "ast",
       "id": "docs_residual_7_4_lemma_a_already_re_proves_thm_balanced_class",
       "community": 3,
@@ -13485,7 +13595,7 @@
       "label": "7.5 The reduction",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L275",
+      "source_location": "L282",
       "_origin": "ast",
       "id": "docs_residual_7_5_the_reduction",
       "community": 3,
@@ -13496,7 +13606,7 @@
       "label": "7.6 If Lemma E fails: the one bad pattern at $\\Sigma = 4$",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L288",
+      "source_location": "L295",
       "_origin": "ast",
       "id": "docs_residual_7_6_if_lemma_e_fails_the_one_bad_pattern_at_sigma_4",
       "community": 3,
@@ -13507,7 +13617,7 @@
       "label": "7.7 The exchange lemmas",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L304",
+      "source_location": "L311",
       "_origin": "ast",
       "id": "docs_residual_7_7_the_exchange_lemmas",
       "community": 3,
@@ -13518,7 +13628,7 @@
       "label": "7.8 Is Lemma E true? A concrete reason to doubt it",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L355",
+      "source_location": "L362",
       "_origin": "ast",
       "id": "docs_residual_7_8_is_lemma_e_true_a_concrete_reason_to_doubt_it",
       "community": 3,
@@ -13529,7 +13639,7 @@
       "label": "7.9 Attacking Lemma E: the individual minimum, and additive rigidity",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L397",
+      "source_location": "L404",
       "_origin": "ast",
       "id": "docs_residual_7_9_attacking_lemma_e_the_individual_minimum_and_additive_rigidity",
       "community": 3,
@@ -13540,7 +13650,7 @@
       "label": "7. Towards a proof at $n = 3$",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L197",
+      "source_location": "L204",
       "_origin": "ast",
       "id": "docs_residual_7_towards_a_proof_at_n_3",
       "community": 3,
@@ -15627,37 +15737,92 @@
       "norm_label": "return (b,q) satisfying (i)-(iii), or none."
     },
     {
-      "label": "layers.py",
-      "file_type": "code",
-      "source_file": "updates/update_10/layers.py",
+      "label": "working_general_binary/README.md",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_10_layers",
+      "id": "report_working_general_binary_readme",
       "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "layers.py"
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "working_general_binary/readme.md"
     },
     {
-      "label": "A novel angle: decompose each cost function into LAYERS. OBSERVATION. Every\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_10/layers.py",
+      "label": "Adding a new idea",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_adding_a_new_idea",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "adding a new idea"
+    },
+    {
+      "label": "Build",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_build",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "build"
+    },
+    {
+      "label": "Layout",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_layout",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "layout"
+    },
+    {
+      "label": "Promoting a result",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_promoting_a_result",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "promoting a result"
+    },
+    {
+      "label": "Reusable machinery from the closed paper",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L44",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_reusable_machinery_from_the_closed_paper",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "reusable machinery from the closed paper"
+    },
+    {
+      "label": "What is closed, and what this is not",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "report_working_general_binary_readme_what_is_closed_and_what_this_is_not",
+      "community": 49,
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "what is closed, and what this is not"
+    },
+    {
+      "label": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "file_type": "document",
+      "source_file": "report/working_general_binary/README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_10_layers_rationale_1",
+      "id": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
       "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "a novel angle: decompose each cost function into layers. observation. every..."
-    },
-    {
-      "label": "The nested upward-closed families F_t as a list of sets of subsets.",
-      "file_type": "rationale",
-      "source_file": "updates/update_10/layers.py",
-      "source_location": "L98",
-      "_origin": "ast",
-      "id": "updates_update_10_layers_rationale_98",
-      "community": 49,
-      "community_name": "layers.py",
-      "norm_label": "the nested upward-closed families f_t as a list of sets of subsets."
+      "community_name": "`working_general_binary/` \u2014 scratch area for the general-binary extension",
+      "norm_label": "`working_general_binary/` \u2014 scratch area for the general-binary extension"
     },
     {
       "label": "RESIDUAL_UPDATED(1).md",
@@ -17104,7 +17269,7 @@
       "label": "1. Four solved cases, never intersected",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L13",
+      "source_location": "L20",
       "_origin": "ast",
       "id": "docs_residual_1_four_solved_cases_never_intersected",
       "community": 63,
@@ -17115,7 +17280,7 @@
       "label": "2. The residual is empty under random generation",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L33",
+      "source_location": "L40",
       "_origin": "ast",
       "id": "docs_residual_2_the_residual_is_empty_under_random_generation",
       "community": 63,
@@ -17126,7 +17291,7 @@
       "label": "3. Why \u2014 and how to construct one anyway",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L40",
+      "source_location": "L47",
       "_origin": "ast",
       "id": "docs_residual_3_why_and_how_to_construct_one_anyway",
       "community": 63,
@@ -17137,7 +17302,7 @@
       "label": "4. `conj:cri-depth` is refuted",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L74",
+      "source_location": "L81",
       "_origin": "ast",
       "id": "docs_residual_4_conj_cri_depth_is_refuted",
       "community": 63,
@@ -17148,7 +17313,7 @@
       "label": "6. What is refuted \u2014 do not retry",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L185",
+      "source_location": "L192",
       "_origin": "ast",
       "id": "docs_residual_6_what_is_refuted_do_not_retry",
       "community": 63,
@@ -17159,7 +17324,7 @@
       "label": "8. Scripts",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3602",
+      "source_location": "L3609",
       "_origin": "ast",
       "id": "docs_residual_8_scripts",
       "community": 63,
@@ -17170,7 +17335,7 @@
       "label": "The residual of the solved cases, and the spread-2 line",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1",
+      "source_location": "L8",
       "_origin": "ast",
       "id": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
       "community": 63,
@@ -18149,7 +18314,7 @@
       "label": "5. The spread-2 line",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L92",
+      "source_location": "L99",
       "_origin": "ast",
       "id": "docs_residual_5_the_spread_2_line",
       "community": 76,
@@ -18160,7 +18325,7 @@
       "label": "It survived the test designed to kill it",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L146",
+      "source_location": "L153",
       "_origin": "ast",
       "id": "docs_residual_it_survived_the_test_designed_to_kill_it",
       "community": 76,
@@ -18171,7 +18336,7 @@
       "label": "The rule that does select",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L122",
+      "source_location": "L129",
       "_origin": "ast",
       "id": "docs_residual_the_rule_that_does_select",
       "community": 76,
@@ -18182,7 +18347,7 @@
       "label": "What fails \u2014 and it reshapes the statement",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L113",
+      "source_location": "L120",
       "_origin": "ast",
       "id": "docs_residual_what_fails_and_it_reshapes_the_statement",
       "community": 76,
@@ -18193,7 +18358,7 @@
       "label": "What holds",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L103",
+      "source_location": "L110",
       "_origin": "ast",
       "id": "docs_residual_what_holds",
       "community": 76,
@@ -18204,7 +18369,7 @@
       "label": "\u26a0 What is still missing",
       "file_type": "document",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L172",
+      "source_location": "L179",
       "_origin": "ast",
       "id": "docs_residual_what_is_still_missing",
       "community": 76,
@@ -18281,55 +18446,55 @@
       "label": "A note on the PDFs",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L175",
+      "source_location": "L193",
       "_origin": "ast",
       "id": "readme_a_note_on_the_pdfs",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "a note on the pdfs"
     },
     {
-      "label": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "label": "Algorithmic Game Theory",
       "file_type": "document",
       "source_file": "README.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "id": "readme_algorithmic_game_theory",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
-      "norm_label": "algorithmic game theory \u2014 fair division with subsidies"
+      "community_name": "Algorithmic Game Theory",
+      "norm_label": "algorithmic game theory"
     },
     {
-      "label": "Building the report",
+      "label": "Building",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L167",
+      "source_location": "L182",
       "_origin": "ast",
-      "id": "readme_building_the_report",
+      "id": "readme_building",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
-      "norm_label": "building the report"
+      "community_name": "Algorithmic Game Theory",
+      "norm_label": "building"
     },
     {
       "label": "Contents",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L91",
+      "source_location": "L104",
       "_origin": "ast",
       "id": "readme_contents",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "contents"
     },
     {
       "label": "Knowledge graph",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L150",
+      "source_location": "L165",
       "_origin": "ast",
       "id": "readme_knowledge_graph",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "knowledge graph"
     },
     {
@@ -18340,7 +18505,7 @@
       "_origin": "ast",
       "id": "readme_notation",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "notation"
     },
     {
@@ -18351,7 +18516,7 @@
       "_origin": "ast",
       "id": "readme_problem_statement_fair_envy_free_allocations_with_subsidy_for_negative_dichotomous_valuations",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "problem statement : fair envy free allocations with subsidy for negative dichotomous valuations"
     },
     {
@@ -18362,30 +18527,41 @@
       "_origin": "ast",
       "id": "readme_status",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "status"
     },
     {
       "label": "The corpus",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L104",
+      "source_location": "L119",
       "_origin": "ast",
       "id": "readme_the_corpus",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "the corpus"
     },
     {
       "label": "The three papers that matter most here",
       "file_type": "document",
       "source_file": "README.md",
-      "source_location": "L133",
+      "source_location": "L148",
       "_origin": "ast",
       "id": "readme_the_three_papers_that_matter_most_here",
       "community": 78,
-      "community_name": "Algorithmic Game Theory \u2014 Fair Division with Subsidies",
+      "community_name": "Algorithmic Game Theory",
       "norm_label": "the three papers that matter most here"
+    },
+    {
+      "label": "What's next",
+      "file_type": "document",
+      "source_file": "README.md",
+      "source_location": "L92",
+      "_origin": "ast",
+      "id": "readme_what_s_next",
+      "community": 78,
+      "community_name": "Algorithmic Game Theory",
+      "norm_label": "what's next"
     },
     {
       "label": "crux_evidence.py",
@@ -19191,26 +19367,70 @@
       "norm_label": "proves theorem g2-r2 (approach_12.tex, step 5): the \"two leftover items, doubly..."
     },
     {
-      "label": "counting_room.py",
-      "file_type": "code",
-      "source_file": "updates/update_31/counting_room.py",
+      "label": "PS2_general_binary.md",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_31_counting_room",
+      "id": "docs_ps2_general_binary",
       "community": 94,
-      "community_name": "counting_room.py",
-      "norm_label": "counting_room.py"
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "ps2_general_binary.md"
     },
     {
-      "label": "Is there ROOM for a non-local argument? Counting the good allocations. Every\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_31/counting_room.py",
+      "label": "Objective",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "docs_ps2_general_binary_objective",
+      "community": 94,
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "objective"
+    },
+    {
+      "label": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_31_counting_room_rationale_1",
+      "id": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
       "community": 94,
-      "community_name": "counting_room.py",
-      "norm_label": "is there room for a non-local argument? counting the good allocations. every..."
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "problem statement 2 \u2014 general binary valuations (goods and chores)"
+    },
+    {
+      "label": "Relationship to the existing corpus",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L40",
+      "_origin": "ast",
+      "id": "docs_ps2_general_binary_relationship_to_the_existing_corpus",
+      "community": 94,
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "relationship to the existing corpus"
+    },
+    {
+      "label": "The model",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L20",
+      "_origin": "ast",
+      "id": "docs_ps2_general_binary_the_model",
+      "community": 94,
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "the model"
+    },
+    {
+      "label": "Where this sits",
+      "file_type": "document",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L7",
+      "_origin": "ast",
+      "id": "docs_ps2_general_binary_where_this_sits",
+      "community": 94,
+      "community_name": "Problem Statement 2 \u2014 General Binary Valuations (Goods and Chores)",
+      "norm_label": "where this sits"
     },
     {
       "label": "0. Executive summary for an AI agent",
@@ -19260,12 +19480,23 @@
       "label": "graphify",
       "file_type": "document",
       "source_file": "CLAUDE.md",
-      "source_location": "L1",
+      "source_location": "L39",
       "_origin": "ast",
       "id": "claude_graphify",
       "community": 96,
       "community_name": "CLAUDE.md",
       "norm_label": "graphify"
+    },
+    {
+      "label": "Project state \u2014 two independent investigations",
+      "file_type": "document",
+      "source_file": "CLAUDE.md",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "claude_project_state_two_independent_investigations",
+      "community": 96,
+      "community_name": "CLAUDE.md",
+      "norm_label": "project state \u2014 two independent investigations"
     },
     {
       "label": "11. Known obstructions and what they teach us",
@@ -35376,6 +35607,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "claude",
+      "target": "claude_project_state_two_independent_investigations",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "CLAUDE.md",
+      "source_location": "L39",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "claude",
       "target": "claude_graphify",
       "confidence_score": 1.0
     },
@@ -37879,8 +38121,63 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
+      "source_file": "docs/PS2_general_binary.md",
       "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_ps2_general_binary",
+      "target": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
+      "target": "docs_ps2_general_binary_the_model",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
+      "target": "docs_ps2_general_binary_objective",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L40",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
+      "target": "docs_ps2_general_binary_relationship_to_the_existing_corpus",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/PS2_general_binary.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_ps2_general_binary_problem_statement_2_general_binary_valuations_goods_and_chores",
+      "target": "docs_ps2_general_binary_where_this_sits",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L8",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual",
@@ -37891,7 +38188,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L103",
+      "source_location": "L110",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_5_the_spread_2_line",
@@ -37902,7 +38199,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L113",
+      "source_location": "L120",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_5_the_spread_2_line",
@@ -37913,7 +38210,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L122",
+      "source_location": "L129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_5_the_spread_2_line",
@@ -37924,7 +38221,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L146",
+      "source_location": "L153",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_5_the_spread_2_line",
@@ -37935,7 +38232,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L172",
+      "source_location": "L179",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_5_the_spread_2_line",
@@ -37946,7 +38243,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1104",
+      "source_location": "L1111",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -37957,7 +38254,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1122",
+      "source_location": "L1129",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -37968,7 +38265,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1199",
+      "source_location": "L1206",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -37979,7 +38276,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1250",
+      "source_location": "L1257",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -37990,7 +38287,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1275",
+      "source_location": "L1282",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38001,7 +38298,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1302",
+      "source_location": "L1309",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38012,7 +38309,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1380",
+      "source_location": "L1387",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38023,7 +38320,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1416",
+      "source_location": "L1423",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38034,7 +38331,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1452",
+      "source_location": "L1459",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38045,7 +38342,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1485",
+      "source_location": "L1492",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38056,7 +38353,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1550",
+      "source_location": "L1557",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38067,7 +38364,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1614",
+      "source_location": "L1621",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38078,7 +38375,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1686",
+      "source_location": "L1693",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38089,7 +38386,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1748",
+      "source_location": "L1755",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38100,7 +38397,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1859",
+      "source_location": "L1866",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38111,7 +38408,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1876",
+      "source_location": "L1883",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38122,7 +38419,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L1940",
+      "source_location": "L1947",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38133,7 +38430,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2001",
+      "source_location": "L2008",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38144,18 +38441,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L202",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_7_towards_a_proof_at_n_3",
-      "target": "docs_residual_7_1_normalisation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2045",
+      "source_location": "L2052",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38166,7 +38452,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2090",
+      "source_location": "L209",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_7_towards_a_proof_at_n_3",
+      "target": "docs_residual_7_1_normalisation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L2097",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38177,18 +38474,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L216",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_7_towards_a_proof_at_n_3",
-      "target": "docs_residual_7_2_a_criterion_for_goodness",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2176",
+      "source_location": "L2183",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38199,7 +38485,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2206",
+      "source_location": "L2213",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38210,7 +38496,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2268",
+      "source_location": "L223",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_7_towards_a_proof_at_n_3",
+      "target": "docs_residual_7_2_a_criterion_for_goodness",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L2275",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38221,7 +38518,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2310",
+      "source_location": "L2317",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38232,18 +38529,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L238",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_7_towards_a_proof_at_n_3",
-      "target": "docs_residual_7_3_lemma_a_sigma_le_3_needs_no_family_minimality",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2426",
+      "source_location": "L2433",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38254,7 +38540,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2498",
+      "source_location": "L245",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_7_towards_a_proof_at_n_3",
+      "target": "docs_residual_7_3_lemma_a_sigma_le_3_needs_no_family_minimality",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L2505",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38265,7 +38562,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2543",
+      "source_location": "L2550",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38276,7 +38573,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2587",
+      "source_location": "L2594",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38287,7 +38584,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2624",
+      "source_location": "L2631",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38298,18 +38595,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L267",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_7_towards_a_proof_at_n_3",
-      "target": "docs_residual_7_4_lemma_a_already_re_proves_thm_balanced_class",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2692",
+      "source_location": "L2699",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38320,7 +38606,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2734",
+      "source_location": "L274",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_7_towards_a_proof_at_n_3",
+      "target": "docs_residual_7_4_lemma_a_already_re_proves_thm_balanced_class",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L2741",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38331,7 +38628,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L275",
+      "source_location": "L282",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38342,7 +38639,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2868",
+      "source_location": "L2875",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38353,7 +38650,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L288",
+      "source_location": "L295",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38364,7 +38661,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L2971",
+      "source_location": "L2978",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38375,18 +38672,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L304",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_7_towards_a_proof_at_n_3",
-      "target": "docs_residual_7_7_the_exchange_lemmas",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3065",
+      "source_location": "L3072",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38397,7 +38683,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3131",
+      "source_location": "L311",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_7_towards_a_proof_at_n_3",
+      "target": "docs_residual_7_7_the_exchange_lemmas",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L3138",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38408,7 +38705,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3181",
+      "source_location": "L3188",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38419,7 +38716,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3250",
+      "source_location": "L3257",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38430,7 +38727,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3289",
+      "source_location": "L3296",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38441,7 +38738,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3338",
+      "source_location": "L3345",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38452,7 +38749,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3403",
+      "source_location": "L3410",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38463,7 +38760,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3420",
+      "source_location": "L3427",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38474,7 +38771,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3466",
+      "source_location": "L3473",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38485,7 +38782,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L355",
+      "source_location": "L362",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38496,7 +38793,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L397",
+      "source_location": "L404",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38507,7 +38804,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L452",
+      "source_location": "L459",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38518,7 +38815,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L521",
+      "source_location": "L528",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38529,7 +38826,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L567",
+      "source_location": "L574",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38540,7 +38837,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L601",
+      "source_location": "L608",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38551,7 +38848,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L624",
+      "source_location": "L631",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38562,7 +38859,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L673",
+      "source_location": "L680",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38573,7 +38870,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L724",
+      "source_location": "L731",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38584,7 +38881,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L777",
+      "source_location": "L784",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38595,7 +38892,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L832",
+      "source_location": "L839",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38606,7 +38903,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L869",
+      "source_location": "L876",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38617,7 +38914,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L909",
+      "source_location": "L916",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38628,7 +38925,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L967",
+      "source_location": "L974",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_7_towards_a_proof_at_n_3",
@@ -38638,19 +38935,63 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L13",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
-      "target": "docs_residual_1_four_solved_cases_never_intersected",
+      "source": "docs_residual_general_binary",
+      "target": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "target": "docs_residual_general_binary_0_context",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L24",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "target": "docs_residual_general_binary_1_what_transfers_from_the_closed_result_without_re_proof",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L41",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "target": "docs_residual_general_binary_2_what_does_not_transfer_and_must_be_re_derived",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL_GENERAL_BINARY.md",
+      "source_location": "L56",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_general_binary_general_binary_valuations_goods_and_chores_running_research_log",
+      "target": "docs_residual_general_binary_3_status_table",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L185",
+      "source_location": "L192",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
@@ -38661,7 +39002,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L197",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
+      "target": "docs_residual_1_four_solved_cases_never_intersected",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L204",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
@@ -38672,18 +39024,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L33",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
-      "target": "docs_residual_2_the_residual_is_empty_under_random_generation",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/RESIDUAL.md",
-      "source_location": "L3602",
+      "source_location": "L3609",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
@@ -38698,6 +39039,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
+      "target": "docs_residual_2_the_residual_is_empty_under_random_generation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/RESIDUAL.md",
+      "source_location": "L47",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
       "target": "docs_residual_3_why_and_how_to_construct_one_anyway",
       "confidence_score": 1.0
     },
@@ -38705,7 +39057,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L74",
+      "source_location": "L81",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
@@ -38716,7 +39068,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/RESIDUAL.md",
-      "source_location": "L92",
+      "source_location": "L99",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_residual_the_residual_of_the_solved_cases_and_the_spread_2_line",
@@ -39930,7 +40282,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
-      "target": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "target": "readme_algorithmic_game_theory",
       "confidence_score": 1.0
     },
     {
@@ -39940,7 +40292,18 @@
       "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
+      "target": "readme_contents",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L119",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_the_corpus",
       "confidence_score": 1.0
     },
@@ -39948,10 +40311,10 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L150",
+      "source_location": "L165",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_knowledge_graph",
       "confidence_score": 1.0
     },
@@ -39959,21 +40322,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L167",
+      "source_location": "L182",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "target": "readme_building_the_report",
+      "source": "readme_algorithmic_game_theory",
+      "target": "readme_building",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L175",
+      "source_location": "L193",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_a_note_on_the_pdfs",
       "confidence_score": 1.0
     },
@@ -39984,7 +40347,7 @@
       "source_location": "L44",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_notation",
       "confidence_score": 1.0
     },
@@ -39995,7 +40358,7 @@
       "source_location": "L57",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_status",
       "confidence_score": 1.0
     },
@@ -40006,7 +40369,7 @@
       "source_location": "L7",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
+      "source": "readme_algorithmic_game_theory",
       "target": "readme_problem_statement_fair_envy_free_allocations_with_subsidy_for_negative_dichotomous_valuations",
       "confidence_score": 1.0
     },
@@ -40014,18 +40377,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L91",
+      "source_location": "L92",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "readme_algorithmic_game_theory_fair_division_with_subsidies",
-      "target": "readme_contents",
+      "source": "readme_algorithmic_game_theory",
+      "target": "readme_what_s_next",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L133",
+      "source_location": "L148",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme_the_corpus",
@@ -40047,7 +40410,18 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/README.md",
-      "source_location": "L26",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_readme_report_the_latex_write_up",
+      "target": "report_readme_two_documents_one_preamble",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/README.md",
+      "source_location": "L34",
       "weight": 1.0,
       "_origin": "ast",
       "source": "report_readme_report_the_latex_write_up",
@@ -40058,7 +40432,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/README.md",
-      "source_location": "L41",
+      "source_location": "L53",
       "weight": 1.0,
       "_origin": "ast",
       "source": "report_readme_report_the_latex_write_up",
@@ -40069,7 +40443,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/README.md",
-      "source_location": "L49",
+      "source_location": "L60",
       "weight": 1.0,
       "_origin": "ast",
       "source": "report_readme_report_the_latex_write_up",
@@ -40079,12 +40453,78 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
-      "source_file": "report/README.md",
-      "source_location": "L6",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L1",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "report_readme_report_the_latex_write_up",
-      "target": "report_readme_two_documents_one_preamble",
+      "source": "report_working_general_binary_readme",
+      "target": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L20",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_build",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_layout",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L44",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_reusable_machinery_from_the_closed_paper",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_promoting_a_result",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L64",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_adding_a_new_idea",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working_general_binary/README.md",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_general_binary_readme_working_general_binary_scratch_area_for_the_general_binary_extension",
+      "target": "report_working_general_binary_readme_what_is_closed_and_what_this_is_not",
       "confidence_score": 1.0
     },
     {
@@ -40095,39 +40535,17 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "report_working_readme",
-      "target": "report_working_readme_working_parked_material",
+      "target": "report_working_readme_working_the_closed_chores_only_trail",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/working/README.md",
-      "source_location": "L20",
+      "source_location": "L17",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "report_working_readme_working_parked_material",
-      "target": "report_working_readme_what_is_parked",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "report/working/README.md",
-      "source_location": "L75",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "report_working_readme_working_parked_material",
-      "target": "report_working_readme_adding_a_new_idea",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "report/working/README.md",
-      "source_location": "L8",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "report_working_readme_working_parked_material",
+      "source": "report_working_readme_working_the_closed_chores_only_trail",
       "target": "report_working_readme_two_documents",
       "confidence_score": 1.0
     },
@@ -40135,21 +40553,32 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/working/README.md",
-      "source_location": "L82",
+      "source_location": "L30",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "report_working_readme_working_parked_material",
-      "target": "report_working_readme_promoting_a_section_into_the_report",
+      "source": "report_working_readme_working_the_closed_chores_only_trail",
+      "target": "report_working_readme_what_is_parked",
       "confidence_score": 1.0
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "report/working/README.md",
-      "source_location": "L92",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "report_working_readme_working_parked_material",
+      "source": "report_working_readme_working_the_closed_chores_only_trail",
+      "target": "report_working_readme_what_actually_closed_it",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "report/working/README.md",
+      "source_location": "L78",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "report_working_readme_working_the_closed_chores_only_trail",
       "target": "report_working_readme_the_ifworking_switch",
       "confidence_score": 1.0
     },
@@ -51850,7 +52279,18 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L100",
+      "source_location": "L108",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme",
+      "target": "report_readme",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L115",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
@@ -51861,7 +52301,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L101",
+      "source_location": "L116",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
@@ -51872,7 +52312,7 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L69",
+      "source_location": "L70",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
@@ -51883,18 +52323,29 @@
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "README.md",
-      "source_location": "L95",
+      "source_location": "L97",
       "weight": 1.0,
       "_origin": "ast",
       "source": "readme",
-      "target": "report_readme",
+      "target": "docs_ps2_general_binary",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "references",
+      "confidence": "EXTRACTED",
+      "source_file": "README.md",
+      "source_location": "L99",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "readme",
+      "target": "docs_residual_general_binary",
       "confidence_score": 1.0
     },
     {
       "relation": "references",
       "confidence": "EXTRACTED",
       "source_file": "report/README.md",
-      "source_location": "L21",
+      "source_location": "L27",
       "weight": 1.0,
       "_origin": "ast",
       "source": "report_readme",
@@ -53991,5 +54442,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "d4ed69087ab3e6816cf304955ca5818c234fb5b8"
+  "built_at_commit": "270078c93e4a2e1e982f16297bc5f5fbf7c98ee3"
 }

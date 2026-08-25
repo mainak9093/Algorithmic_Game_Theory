@@ -89,18 +89,32 @@ This fills the remaining corner of the square:
 
 each of the four giving one dollar per agent and $n-1$ in total.
 
+## What's next
+
+A second, independent investigation is starting: **general binary**
+valuations, every marginal in $\{-1,0,1\}$ — goods and chores together,
+rather than chores only. Problem statement:
+[`docs/PS2_general_binary.md`](docs/PS2_general_binary.md). It has its own
+scratch area, [`report/working_general_binary/`](report/working_general_binary/),
+its own research log, [`docs/RESIDUAL_GENERAL_BINARY.md`](docs/RESIDUAL_GENERAL_BINARY.md),
+and its own scripts folder, `updates_general_binary/` — kept separate from
+everything above on purpose, so the closed result and the open question can
+never be confused for each other. Nothing above this section is affected.
+
 ## Contents
 
 | Path | What it is |
 |---|---|
-| [`report/`](report/) | The LaTeX write-up. Two documents: `main.tex` → the report (scoped to the $n=3$ proof), `working.tex` → the full draft, including the general-$n$ proof and every parked approach. See [`report/README.md`](report/README.md). |
-| [`docs/`](docs/) | All project notes. [`RESIDUAL.md`](docs/RESIDUAL.md) is the running research log and the authoritative status record; also `CRI.md`, `BALANCE_RULE.md`, `approach_14.md`, and the standalone proof/audit notes. |
-| [`updates/`](updates/) | `update_1/` … `update_49/`, one folder per work session. Every claim in `report/working/` is machine-checked by scripts here. |
+| [`report/`](report/) | The LaTeX write-up of the closed result. Two documents: `main.tex` → the report (the general-$n$ proof), `working.tex` → the full draft, including every parked approach that came before it. See [`report/README.md`](report/README.md). |
+| [`report/working_general_binary/`](report/working_general_binary/) | Scratch area for the new, open investigation — independent of `report/`'s two documents above. |
+| [`docs/`](docs/) | All project notes. [`RESIDUAL.md`](docs/RESIDUAL.md) is the closed chores-only research log; [`RESIDUAL_GENERAL_BINARY.md`](docs/RESIDUAL_GENERAL_BINARY.md) is the new one. Also `CRI.md`, `BALANCE_RULE.md`, `approach_14.md`, `PS2_general_binary.md`, and the standalone proof/audit notes. |
+| [`updates/`](updates/) | `update_1/` … `update_49/`, one folder per work session on the closed result. Every claim in `report/working/` is machine-checked by scripts here. |
+| `updates_general_binary/` | The same convention, for the new investigation. Created on first use. |
 | [`References/`](References/) | Source papers, `Reading_1.pdf` … `Reading_12.pdf`. |
 | [`graphify-out/`](graphify-out/) | Knowledge graph of the repository — see [Knowledge graph](#knowledge-graph) below. |
-| [`docs/map.md`](docs/map.md) | Paper map: one entry per reading (R1–R12) — what it does, what it improves on, what it leaves open — plus the dependency DAG and the bound tables. |
-| [`docs/glossary_fair_division_subsidies.md`](docs/glossary_fair_division_subsidies.md) | Project glossary — every definition restated in a single fixed notation, with provenance tags back to the source readings. |
-| [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The original problem statement, as first written. |
+| [`docs/map.md`](docs/map.md) | Paper map: one entry per reading (R1–R12) — what it does, what it improves on, what it leaves open — plus the dependency DAG and the bound tables. Shared by both investigations. |
+| [`docs/glossary_fair_division_subsidies.md`](docs/glossary_fair_division_subsidies.md) | Project glossary — every definition restated in a single fixed notation, with provenance tags back to the source readings. Shared by both investigations. |
+| [`Problem Statement 1.txt`](Problem%20Statement%201.txt) | The original (closed) problem statement, as first written. |
 
 ## The corpus
 
@@ -165,12 +179,15 @@ graphify update .        # rebuild after code changes (AST-only, free)
 The current graph is an AST-only build, which covers the scripts; a semantic pass over
 the `.md` notes and PDFs can be added with `/graphify --update`.
 
-## Building the report
+## Building
 
 ```bash
 cd report
-latexmk -pdf main.tex       # the report: setup + the n = 3 proof
-latexmk -pdf working.tex    # the full draft: everything, incl. general n
+latexmk -pdf main.tex       # the report: the closed result, proved for every n
+latexmk -pdf working.tex    # the full draft: same, plus the full 14-approach trail
+
+cd working_general_binary
+latexmk -pdf working_general_binary.tex   # the new, open investigation
 ```
 
 ## A note on the PDFs

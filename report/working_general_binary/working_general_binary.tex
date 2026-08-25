@@ -1,0 +1,48 @@
+%% ==========================================================================
+%%  SCRATCH DRAFT --- general binary valuations (goods and chores).
+%%
+%%  This is NOT part of the closed chores-only paper.  It shares
+%%  ../preamble.tex (packages, theorem environments, notation macros) so
+%%  nothing drifts, but it is otherwise a fully independent document: no
+%%  \input from ../sections/ or ../working/, and nothing here is \input by
+%%  main.tex or working.tex.
+%%
+%%  What this is for: a compiled, cross-referenced, readable draft of the
+%%  general-binary investigation, from the first idea onward, without
+%%  touching the closed paper's build. See README.md in this directory for
+%%  the promotion path once a result exists.
+%%
+%%  Build:  latexmk -pdf working_general_binary.tex
+%% ==========================================================================
+\documentclass[11pt]{article}
+\input{../preamble}
+
+\begin{document}
+
+\title{\bfseries General Binary Valuations (Goods and Chores)\\[0.35em]
+       \large\normalfont\itshape Scratch draft --- not for circulation}
+
+\author{Mainak}
+\date{}
+
+\maketitle
+
+\begin{center}
+\fbox{\begin{minipage}{0.87\textwidth}
+\small
+\textbf{What this document is.} A scratch working draft for the
+general-binary extension (every marginal in $\set{-1,0,1}$: each item may be
+a good for some agents and a chore for others), independent of
+\texttt{main.tex} and \texttt{working.tex}. Nothing here is promoted into
+either of those documents without an explicit decision once a result exists.
+See \texttt{docs/PS2\_general\_binary.md} for the problem statement and
+\texttt{docs/RESIDUAL\_GENERAL\_BINARY.md} for the running research log.
+\end{minipage}}
+\end{center}
+
+\medskip
+
+% -------- content accumulates below as sections/ideas are added -----------
+\input{ideas}
+
+\end{document}

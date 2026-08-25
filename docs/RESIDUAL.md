@@ -1,3 +1,10 @@
+> **CLOSED — chores-only record (2026-08-24).** This log tracks the
+> negative-binary (chores) result, which is **proved for every $n$**:
+> `report/main.tex` → `sections/main_result.tex`, §7.16.35–39 below for the
+> full chain. **Do not append new entries here.** New work on the
+> general-binary extension (marginals in $\set{-1,0,1}$, goods and chores
+> together) goes in `docs/RESIDUAL_GENERAL_BINARY.md`.
+
 # The residual of the solved cases, and the spread-2 line
 
 *Status as of 2026-08-10. Companion to `BALANCE_RULE.md` (the peel frame) and

@@ -1,14 +1,20 @@
 # `report/` — the LaTeX write-up
 
-Working paper: *Achieving Envy-Freeness with Limited Subsidies under Negative
-Dichotomous Valuations*.
+**Two independent investigations share this directory.** The negative-binary
+(chores-only) result below is closed. A second, open investigation — general
+binary valuations, goods and chores together — lives in
+[`working_general_binary/`](working_general_binary/) and does not touch
+anything described here; see that directory's own `README.md`.
+
+Paper: *Achieving Envy-Freeness with Limited Subsidies under Negative
+Dichotomous Valuations*. **Proved for every $n$** — see §3 of `main.pdf`.
 
 ## Two documents, one preamble
 
 | Build | Produces | Contains |
 |---|---|---|
-| `latexmk -pdf main.tex` | `main.pdf` (11 pp.) | **The report.** Introduction, notation and preliminaries, structure of the problem. Deliberately stops there. |
-| `latexmk -pdf working.tex` | `working.pdf` (22 pp.) | **The full draft.** The report's sections, then everything proved so far but not yet report-worthy. |
+| `latexmk -pdf main.tex` | `main.pdf` (14 pp.) | **The report.** Introduction, notation and preliminaries, and the main theorem for every $n$. |
+| `latexmk -pdf working.tex` | `working.pdf` (132 pp.) | **The full draft.** The report's sections, then the complete 14-approach trail — everything tried, proved, and refuted along the way. |
 
 Both share `preamble.tex` and `references.bib`, so notation and citations can
 never drift apart. `working.tex` includes the report's own sections first, so
@@ -19,7 +25,9 @@ different documents, not two builds of one.
 Nothing is deleted. Everything parked is under [`working/`](working/) and is
 still compiled, cross-referenced and verified; see
 [`working/README.md`](working/README.md) for the inventory and for how to
-promote a section back into the report.
+promote a section back into the report. **This trail is closed** — the main
+theorem is proved, so nothing further gets promoted into `main.tex` for this
+topic absent the user explicitly reopening it.
 
 Without latexmk: `pdflatex main && bibtex main && pdflatex main && pdflatex main`.
 
@@ -27,30 +35,34 @@ Without latexmk: `pdflatex main && bibtex main && pdflatex main && pdflatex main
 
 | Path | Holds |
 |---|---|
-| `main.tex` | The report. Structure only — title block and `\input` lines, with the parked inputs present but commented out in their intended order. |
-| `working.tex` | The full-draft driver. |
-| `preamble.tex` | Packages, theorem environments, notation macros, the `\ifdraft` and `\ifworking` switches. |
+| `main.tex` | The report. Title block and `\input` lines; parked/out-of-scope inputs present but commented out, with a note on why each is excluded. |
+| `working.tex` | The full-draft driver: the report's sections, then all 14 parked approaches. |
+| `preamble.tex` | Packages, theorem environments, notation macros, the `\ifdraft` and `\ifworking` switches. Shared with `working_general_binary/`. |
 | `references.bib` | Bibliography. Header comment records which entries are verified against a PDF and which came from `../docs/map.md`. |
-| `sections/abstract.tex` | Abstract. Scoped to what the report currently carries. |
-| `sections/introduction.tex` | §1 — the goods line, the chores turn, the lower bound, **Conjecture 2** (the target), scope, related work. |
-| `sections/preliminaries.tex` | §2 — notation, negative dichotomous valuations, envy graph, Halpern–Shah. |
-| `sections/structure.tex` | §3 — arc-update lemma, two-tier characterisation, size-shift transform. |
-| `working/` | Parked material and the ideas log. Not part of the report. |
+| `sections/abstract.tex` | Abstract. States the general-$n$ result. |
+| `sections/introduction.tex` | §1 — the goods line, the chores turn, the lower bound, the target statement, related work. |
+| `sections/preliminaries.tex` | §2 — notation, negative dichotomous valuations, envy graph, Halpern–Shah (sign-agnostic — reusable for the general-binary extension without re-derivation). |
+| `sections/main_result.tex` | §3 of `main.tex` only — **the main theorem**, for every $n$: the terminal state of the partial-allocation algorithm, the completion, envy-freeness, and the theorem itself. |
+| `sections/n3.tex` | An earlier, $n=3$-only argument. Correct, superseded by `main_result.tex`; `\input` by neither document (would restate the result twice in `main.tex`; `working.tex` gets the same content via `working/approach_13.tex`, its original, unpolished form). |
+| `sections/structure.tex` | `\input` by `working.tex` only (arc-update lemma, two-tier characterisation, size-shift transform — proved, correct, not used by the final proof). Commented out of `main.tex`. |
+| `sections/obstructions.tex`, `replica.tex`, `results.tex` | Proved/refuted material, `\input` by neither document currently; re-enable if useful. |
+| `working/` | Parked material: the full 14-approach trail and the ideas log. Closed, not part of the report. |
+| `working_general_binary/` | **A different, open investigation.** Not part of this paper. See its own `README.md`. |
 | `figures/` | Figures, referenced by filename alone (`\graphicspath` is set). |
 
 ## Adding new thinking
 
-New ideas go in [`working/ideas.tex`](working/ideas.tex) — one dated
-`\subsection*` per idea, newest at the bottom, in the three-part shape *what the
-idea is / why it might work / what would kill it*. A template sits at the end of
-that file. Ideas graduate to their own file under `working/` once proved, and
-from there into `sections/` once worth reporting.
+For the closed chores topic: don't — see above. For the general-binary
+extension: [`working_general_binary/ideas.tex`](working_general_binary/ideas.tex),
+one dated `\subsection*` per idea, newest at the bottom, in the three-part
+shape *what the idea is / why it might work / what would kill it*.
 
 ## Conventions
 
-- **Notation** is fixed by `../glossary_fair_division_subsidies.md`. Macros in
-  `preamble.tex` implement it. If a symbol is missing, add it to the glossary
-  first, then add the macro — do not introduce a competing symbol here.
+- **Notation** is fixed by `../docs/glossary_fair_division_subsidies.md`.
+  Macros in `preamble.tex` implement it. If a symbol is missing, add it to
+  the glossary first, then add the macro — do not introduce a competing
+  symbol here. This file is shared by both investigations.
 - **Theorem numbering** runs a single counter across
   Definition/Theorem/Lemma/Proposition/Observation, as in R3. `claim` has its
   own counter.
@@ -65,7 +77,7 @@ from there into `sections/` once worth reporting.
   `\draftfalse` in `preamble.tex` for a clean copy. Grep for the outstanding
   work:
   ```bash
-  grep -rn '\\todo{\|\\verify{' sections/ working/ main.tex working.tex
+  grep -rn '\\todo{\|\\verify{' sections/ working/ working_general_binary/ main.tex working.tex
   ```
 - **Style** deliberately mirrors Reading_3: Palatino body text, bold
   unpunctuated `Proof` heads, `alpha` citation labels, coloured links.

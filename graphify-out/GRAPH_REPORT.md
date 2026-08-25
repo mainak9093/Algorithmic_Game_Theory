@@ -1,22 +1,22 @@
-# Graph Report - Algorithmic_Game_Theory  (2026-08-15)
+# Graph Report - Algorithmic_Game_Theory  (2026-08-26)
 
 ## Corpus Check
-- 182 files · ~400,839 words
+- 185 files · ~401,063 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 1693 nodes · 3014 edges · 105 communities (100 shown, 5 thin omitted)
+- 1714 nodes · 3034 edges · 105 communities (100 shown, 5 thin omitted)
 - Extraction: 94% EXTRACTED · 6% INFERRED · 0% AMBIGUOUS · INFERRED: 174 edges (avg confidence: 0.76)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `d4ed6908`
+- Built from commit: `270078c9`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
+- cri_witnesses.py
 - cri_sweep.py
-- gen
 - guidedR3.py
 - 7. Towards a proof at $n = 3$
 - routeA.py
@@ -64,7 +64,7 @@
 - Lemma D — Two-Way Balance for Two Arbitrary Dichotomous Agents
 - verify_real.py
 - rq1_search.py
-- layers.py
+- `working_general_binary/` — scratch area for the general-binary extension
 - residual.py
 - setsplit_family.py
 - peel_sweep.py
@@ -93,7 +93,7 @@
 - commitment.py
 - 5. The spread-2 line
 - 14. The most promising proof architecture
-- Algorithmic Game Theory — Fair Division with Subsidies
+- Algorithmic Game Theory
 - crux_evidence.py
 - nostuck_balanced.py
 - solve
@@ -109,14 +109,14 @@
 - peel3.py
 - 6. Why Target T is exactly strong enough
 - prove_r2.py
-- counting_room.py
+- Problem Statement 2 — General Binary Valuations (Goods and Chores)
 - 0. Executive summary for an AI agent
 - CLAUDE.md
 - 11. Known obstructions and what they teach us
 - 5. The exact new target
 - potentials.py
 - `report/` — the LaTeX write-up
-- `working/` — parked material
+- General binary valuations (goods and chores) — running research log
 
 ## God Nodes (most connected - your core abstractions)
 1. `7. Towards a proof at $n = 3$` - 64 edges
@@ -133,31 +133,31 @@
 ## Surprising Connections (you probably didn't know these)
 - `gen_functions()` --calls--> `rec()`  [INFERRED]
   updates/update_10/layer_hunt.py → updates/update_14/reach_sizes.py
-- `gen_functions()` --calls--> `rec()`  [INFERRED]
-  updates/update_10/layers.py → updates/update_14/reach_sizes.py
 - `sweep()` --calls--> `gen()`  [INFERRED]
   updates/update_12/chain_hunt.py → updates/update_48/spread_scale.py
 - `greedy()` --calls--> `marg()`  [INFERRED]
   updates/update_47/cri_where.py → updates/update_12/probe_n4.py
 - `strongly_connected()` --calls--> `reach()`  [INFERRED]
   updates/update_49/check_proof_r2.py → updates/update_12/probe_n4.py
+- `gen_functions()` --calls--> `rec()`  [INFERRED]
+  updates/update_1/gen.py → updates/update_14/reach_sizes.py
 
 ## Import Cycles
 - None detected.
 
 ## Communities (105 total, 5 thin omitted)
 
-### Community 0 - "cri_sweep.py"
+### Community 0 - "cri_witnesses.py"
 Cohesion: 0.06
 Nodes (76): a1_schedule(), a2_deadends(), a3_lemma2(), a4_lemma3(), a5_additive(), a6_first_chore(), arcs(), contracted() (+68 more)
 
-### Community 1 - "gen"
-Cohesion: 0.08
-Nodes (62): analyse(), main(), Stress the min-total-spread rule before believing it. spread_rule.py produced a…, Minimisers of total spread and of binding count; are they all good?, collect_residual(), main(), matching_good(), min_spread_families() (+54 more)
+### Community 1 - "cri_sweep.py"
+Cohesion: 0.07
+Nodes (65): Phase 0 of the CONDITIONED-REMAINDER INDUCTION (CRI): is it false? THE FRAME. A…, f_composed(), Stress conj:cri-depth where it is weakest: larger m, and the hard families.…, analyse(), main(), Stress the min-total-spread rule before believing it. spread_rule.py produced a…, Minimisers of total spread and of binding count; are they all good?, collect_residual() (+57 more)
 
 ### Community 2 - "guidedR3.py"
-Cohesion: 0.07
-Nodes (53): main(), random_dichotomous(), Does BKNS EXTEND ever choose to grow a bundle that is NOT of minimum…, main(), random_dichotomous(), Sharper test: does there exist a partial-allocation state where EXTEND has at…, main(), Approach 14 / Step 1 obstruction, minimal recorded witness. State: n=3, partial… (+45 more)
+Cohesion: 0.06
+Nodes (64): allocs(), ellvec(), gen_functions(), good(), is_dich(), layers_of(), main(), A novel angle: decompose each cost function into LAYERS. OBSERVATION. Every… (+56 more)
 
 ### Community 3 - "7. Towards a proof at $n = 3$"
 Cohesion: 0.03
@@ -343,9 +343,9 @@ Nodes (12): ef_partials_with_leftover(), is_stuck(), main(), random_dichotomous(
 Cohesion: 0.24
 Nodes (12): _all_subsets(), almost_balanced_allocations(), biased_dichotomous(), main(), main_biased(), random_dichotomous(), Approach 14 / Research Question 1 (RQ1). For every POSITIVE dichotomous…, v(empty)=0, all marginals in {0,1}: uniformly random within those constraints. (+4 more)
 
-### Community 49 - "layers.py"
-Cohesion: 0.33
-Nodes (11): allocs(), ellvec(), gen_functions(), good(), is_dich(), layers_of(), main(), A novel angle: decompose each cost function into LAYERS. OBSERVATION. Every… (+3 more)
+### Community 49 - "`working_general_binary/` — scratch area for the general-binary extension"
+Cohesion: 0.25
+Nodes (7): Adding a new idea, Build, Layout, Promoting a result, Reusable machinery from the closed paper, What is closed, and what this is not, `working_general_binary/` — scratch area for the general-binary extension
 
 ### Community 50 - "residual.py"
 Cohesion: 0.32
@@ -459,9 +459,9 @@ Nodes (6): 5. The spread-2 line, It survived the test designed to kill it, The r
 Cohesion: 0.33
 Nodes (6): 14. The most promising proof architecture, Step 1 --- Remove multiples of three, Step 2 --- Choose the relaxed set, Step 3 --- Solve the two-set subsystem, Step 4 --- Characterise the remaining freedom, Step 5 --- Prove the third set cannot exceed spread 2
 
-### Community 78 - "Algorithmic Game Theory — Fair Division with Subsidies"
-Cohesion: 0.20
-Nodes (10): A note on the PDFs, Algorithmic Game Theory — Fair Division with Subsidies, Building the report, Contents, Knowledge graph, Notation, Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations, Status (+2 more)
+### Community 78 - "Algorithmic Game Theory"
+Cohesion: 0.18
+Nodes (11): A note on the PDFs, Algorithmic Game Theory, Building, Contents, Knowledge graph, Notation, Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations, Status (+3 more)
 
 ### Community 79 - "crux_evidence.py"
 Cohesion: 0.47
@@ -515,9 +515,9 @@ Nodes (4): 6. Why Target T is exactly strong enough, Case A: at least two `|D_i|
 Cohesion: 0.67
 Nodes (3): can_rescue(), Proves Theorem g2-r2 (approach_12.tex, Step 5): the "two leftover items, doubly…, run()
 
-### Community 94 - "counting_room.py"
-Cohesion: 0.67
-Nodes (3): analyse(), main(), Is there ROOM for a non-local argument? Counting the good allocations. Every…
+### Community 94 - "Problem Statement 2 — General Binary Valuations (Goods and Chores)"
+Cohesion: 0.33
+Nodes (5): Objective, Problem Statement 2 — General Binary Valuations (Goods and Chores), Relationship to the existing corpus, The model, Where this sits
 
 ### Community 95 - "0. Executive summary for an AI agent"
 Cohesion: 0.67
@@ -528,32 +528,32 @@ Cohesion: 0.32
 Nodes (7): main(), psi(), Which lexicographic potential makes the local-search lemma true?…, Canonical min-cost reassignment; return (ell, total cost)., For each potential, count partitions with max ell >= 2 and no improving move., state(), test()
 
 ### Community 102 - "`report/` — the LaTeX write-up"
-Cohesion: 0.29
-Nodes (5): Adding new thinking, Conventions, Layout, `report/` — the LaTeX write-up, Two documents, one preamble
+Cohesion: 0.17
+Nodes (10): Adding new thinking, Conventions, Layout, `report/` — the LaTeX write-up, Two documents, one preamble, The `\ifworking` switch, Two documents, What actually closed it (+2 more)
 
-### Community 103 - "`working/` — parked material"
+### Community 103 - "General binary valuations (goods and chores) — running research log"
 Cohesion: 0.33
-Nodes (6): Adding a new idea, Promoting a section into the report, The `\ifworking` switch, Two documents, What is parked, `working/` — parked material
+Nodes (5): 0. Context, 1. What transfers from the closed result without re-proof, 2. What does *not* transfer, and must be re-derived, 3. Status table, General binary valuations (goods and chores) — running research log
 
 ## Knowledge Gaps
-- **433 isolated node(s):** `graphify`, `Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations`, `Notation`, `Status`, `Contents` (+428 more)
+- **448 isolated node(s):** `Project state — two independent investigations`, `graphify`, `Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations`, `Notation`, `Status` (+443 more)
   These have ≤1 connection - possible missing edges or undocumented components.
 - **5 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `rec()` connect `guidedR3.py` to `structural.py`, `routeA.py`, `n2proof_check.py`, `ruleD_adv.py`, `dupsep.py`, `layers.py`, `targetGbal.py`, `layer_hunt.py`, `targetG_adv.py`?**
-  _High betweenness centrality (0.091) - this node is a cross-community bridge._
+- **Why does `rec()` connect `guidedR3.py` to `structural.py`, `routeA.py`, `n2proof_check.py`, `ruleD_adv.py`, `dupsep.py`, `targetGbal.py`, `layer_hunt.py`, `targetG_adv.py`?**
+  _High betweenness centrality (0.088) - this node is a cross-community bridge._
 - **Why does `gen_functions()` connect `targetGbal.py` to `guidedR3.py`?**
-  _High betweenness centrality (0.051) - this node is a cross-community bridge._
+  _High betweenness centrality (0.049) - this node is a cross-community bridge._
 - **Why does `S()` connect `dupsep.py` to `routeA.py`, `ruleD_adv.py`, `minimum_subsidy.py`, `typeorder.py`, `targetG_adv.py`?**
-  _High betweenness centrality (0.038) - this node is a cross-community bridge._
+  _High betweenness centrality (0.037) - this node is a cross-community bridge._
 - **Are the 19 inferred relationships involving `gen()` (e.g. with `sweep()` and `main()`) actually correct?**
   _`gen()` has 19 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 15 inferred relationships involving `peels()` (e.g. with `reachable_legal()` and `free_greedy()`) actually correct?**
   _`peels()` has 15 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `cr_legal()` (e.g. with `build()` and `cri_root_live()`) actually correct?**
   _`cr_legal()` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **What connects `graphify`, `Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations`, `Notation` to the rest of the system?**
-  _433 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **What connects `Project state — two independent investigations`, `graphify`, `Problem Statement : Fair Envy Free Allocations with subsidy for Negative Dichotomous Valuations` to the rest of the system?**
+  _448 weakly-connected nodes found - possible documentation gaps or missing edges._
