@@ -37,6 +37,17 @@ subsidy $\subsidy \in \set{0,1}^n$, hence $\le n-1$ total, in polynomial
 time — for this general class, or exhibit an instance showing the guarantee
 fails.
 
+## One structural caveat
+
+General binary is **not** a subclass of the doubly monotone valuations of R9
+(Kawase et al.), even though both of its boundary cases are. A single agent's
+marginal for one item may change sign with the rest of her bundle: on
+$M = \set{a,b,g}$ with $v(S) = \abs{S}$ for $\abs{S} \le 2$ and $v(M) = 1$,
+every marginal is in $\set{-1,0,1}$ while $g$ has marginal $+1$ on $\emptyset$
+and $-1$ on $\set{a,b}$. Consequence: R9's $n-1$-per-agent reduction from EF1,
+which supplied the bounded baseline in PS1, is **not** available here. See
+`report/working_general_binary/framing.tex`, Lemma 10.
+
 ## Relationship to the existing corpus
 
 Not the same question as R11 (Lu–Mackenzie–Suzuki, 2026), which settles

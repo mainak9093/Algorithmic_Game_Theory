@@ -75,6 +75,7 @@ determines almost every result in this corpus.
 | **Supermodular** | reverse inequality | increasing returns; [R6 §4] |
 | **Additive** | $v_i(S) = \sum_{g\in S} v_i(g)$ | the workhorse assumption of [R1], [R2], [R4] |
 | **Dichotomous** | every marginal is $0$ or $1$: $v_i(S\cup\{g\}) - v_i(S) \in \{0,1\}$ | *no* additivity, submodularity, or even subadditivity assumed — this is the point of [R3] and [R5] |
+| **General binary** | every marginal is $-1$, $0$, or $1$: $v_i(S\cup\{g\}) - v_i(S) \in \{-1,0,1\}$ | goods and chores together: an item may be a good for one agent and a chore for another, and a single agent's marginal for an item may change sign with $S$. Strictly wider than **Dichotomous** and than its negative mirror ($\{0,-1\}$, the setting of the closed result); **not** contained in **Doubly monotone**, so [R9]'s bound does not apply to it. The setting of `PS2_general_binary.md`. |
 | **Matroid-rank / binary submodular** | dichotomous **and** submodular | equivalently $v_i$ is the rank function of a matroid on $M$; the setting of [R8] |
 | **Binary additive** | additive with $v_i(g) \in \{0,1\}$ | strictly inside matroid-rank |
 | **Bi-valued** | $v_i(g)$ takes one of two values | a tractable special case in house allocation [R7 §5] |
@@ -124,8 +125,8 @@ valuations. Do not silently swap them.
 **EFX (envy-freeness up to any good).** For all $i,j$ and **every** $g \in A_j$,
 $v_i(A_i) \ge v_i(A_j\setminus\{g\})$. Strictly stronger than EF1 ("any" vs. "some").
 General existence is a major open problem; known for $n=2$, for $n=3$ under restricted
-valuations, and for matroid-rank valuations. [R5] extends existence to general binary
-(dichotomous, not necessarily submodular) valuations. [R5 §1]
+valuations, and for matroid-rank valuations. [R5] extends existence to dichotomous goods
+(binary marginals, not necessarily submodular) valuations. [R5 §1]
 
 > Caution: the literature distinguishes **EFX$_0$** (remove *any* good, including
 > zero-marginal ones) from **EFX$_+$** (remove only positively-valued goods). These
@@ -392,8 +393,8 @@ existence plus polynomial-time computation. [R7 §5]
   $n(n-1)/2$ in the doubly monotone model and $(n^2-n-1)/2$ for monotone with $n\ge 3$.
 - **Chakraborty et al.'s open direction** (find envy-based notions that survive
   non-additive valuations in the weighted setting): answered by [R8] with TWEF and WMEF.
-- **Existence of EFX in general**: still open. [R5] settles the general binary
-  (dichotomous) case.
+- **Existence of EFX in general**: still open. [R5] settles the dichotomous goods
+  (binary-marginal, goods-only) case.
 - **Minimum-subsidy computation**: NP-hard in general, and even in the binary additive
   case under non-wastefulness [R1 Cor. 1]; hard to approximate for super-constant $n$
   (Caragiannis–Ioannidis). [R6 §1.2] gives a poly-time exact minimum for the

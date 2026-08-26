@@ -37,6 +37,17 @@ statement.
   restricted to $\set{0,-1}$) and is available as a known, proved lemma —
   useful wherever an argument can localize to the chore-only part of an
   instance.
+- **Some agent is unpaid** (`prop:zero-coordinate`): the minimal subsidy of an
+  envy-freeable allocation has at least one zero coordinate, because the
+  shifted vector $\subsidy - (\min_i \subsidy_i)\mathbf{1}$ is again
+  envy-free and pointwise no larger. The argument reads only arc weights, so
+  it is sign-agnostic and holds here. Consequence: per-agent $\le 1$ still
+  implies total $\le n-1$, so the two forms of the conjecture coincide.
+- **Both known theorems are boundary cases.** Restricting every marginal to
+  $\set{0,1}$ recovers [R3, Theorem 4] (Barman–Krishna–Narahari–Sadhukhan);
+  restricting to $\set{0,-1}$ recovers the closed result. The conjecture is
+  exactly their common generalization, and the $n-1$ lower bound is inherited
+  from *either* boundary case, so if it holds it is tight.
 
 ## 2. What does *not* transfer, and must be re-derived
 
@@ -46,6 +57,17 @@ statement.
   $\set{0,1}$ after negation). Whether an analogous partial-allocation
   algorithm exists for mixed marginals is open and is the first thing to
   check against the literature (`docs/map.md`) before assuming it.
+- **[R9]'s $n-1$-per-agent baseline does not transfer off the shelf.** In the
+  chores case, negative dichotomous valuations are doubly monotone, so
+  Kawase et al.'s EF1-to-EF reduction applied directly and supplied a bounded
+  starting point. General binary is **not** contained in the doubly monotone
+  class: with $M = \set{a,b,g}$, $v(S) = \abs{S}$ for $\abs{S} \le 2$ and
+  $v(M) = 1$, every marginal lies in $\set{-1,0,1}$, yet $g$ has marginal
+  $+1$ on $\emptyset$ and $-1$ on $\set{a,b}$ — the same item is a good and
+  a chore for the *same* agent. Both boundary classes are doubly monotone;
+  their union is not. So this investigation starts without a bounded baseline,
+  unlike the chores one. Proof: `report/working_general_binary/framing.tex`,
+  Lemma 10.
 - The literature corpus (`docs/map.md`) already contains one goods-and-chores
   result — R11 (Lu–Mackenzie–Suzuki, 2026) — but for the *additive* class, not
   dichotomous. Dichotomous and additive are incomparable classes (this is
@@ -55,9 +77,25 @@ statement.
 
 ## 3. Status table
 
-| Claim | Status |
-|---|---|
-| — | *(empty — first entry goes here)* |
+| Claim | Status | Where |
+|---|---|---|
+| Envy-free solution with $\subsidy \in \set{0,1}^n$ for every general binary instance, in polynomial time | **open** — the target | `framing.tex` Conjecture 3 |
+| Integrality: marginals in $\set{-1,0,1}$ give integral arc weights and integral minimal subsidy | **proved** | `framing.tex` Observation 5 |
+| Halpern–Shah characterisation and minimal-subsidy formula apply verbatim (sign-agnostic) | **proved** (cited, [R1]) | `framing.tex` Theorems 6, 7 |
+| Minimal subsidy has a zero coordinate, so per-agent $\le 1 \Rightarrow$ total $\le n-1$ | **proved** | `framing.tex` Proposition 8 |
+| $n-1$ is tight if the conjecture holds (inherited from either boundary case) | **proved** | `framing.tex` Example 9 |
+| General binary $\not\subseteq$ doubly monotone, so [R9]'s bound does not apply | **proved** (explicit witness) | `framing.tex` Lemma 10 |
+
+## 4. Formal statement of record
+
+The framing above is written up, with proofs and citations, in
+`report/working_general_binary/framing.tex` (compiled into
+`working_general_binary.pdf` via that directory's driver). That file — not
+this log — is the statement of record for the model, the conjecture, and the
+transferred facts; approach sections should cite its numbered results rather
+than re-derive them. This log records the trail.
+
+No approach has been attempted yet.
 
 ---
 

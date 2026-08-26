@@ -1,0 +1,257 @@
+%% ==========================================================================
+%%  The model and the conjecture --- general binary valuations.
+%%
+%%  Framing only: the class, the conjecture, what carries over from the two
+%%  theorems it generalizes, and the lower bound.  No approach, no algorithm,
+%%  no analysis of where a proof would run into trouble.
+%%
+%%  SELF-CONTAINED.  This document does not \input report/sections/, so every
+%%  definition it needs is restated here and every external result is cited
+%%  rather than \ref'd.
+%%
+%%  REFERENCING: theorem-like environments share one counter in ../preamble.tex,
+%%  so \Cref renders all of them as "Theorem".  Use explicit
+%%  "Lemma~\ref{...}", "Observation~\ref{...}", etc.
+%% ==========================================================================
+\section{The Model and the Conjecture}
+\label{sec:gb-framing}
+
+% --------------------------------------------------------------------------
+\subsection{General binary valuations}
+\label{sec:gb-model}
+
+Let $\agents = \set{1,\dots,n}$ be a set of agents and $\items$ a finite set of
+$m$ indivisible items. Each agent $i \in \agents$ has a valuation
+$v_i : 2^{\items} \to \R$ with $v_i(\emptyset) = 0$.
+
+\begin{definition}[General binary valuation]
+\label{def:gb-class}
+A valuation $v_i$ is \emph{general binary} if every marginal lies in
+$\set{-1,0,1}$:
+\[
+  v_i(S \cup \set g) - v_i(S) \;\in\; \set{-1,0,1}
+  \qquad\text{for every } S \subseteq \items \text{ and every } g \in \items \setminus S .
+\]
+\end{definition}
+
+Nothing further is assumed: $v_i$ need not be additive, submodular,
+subadditive, or monotone, and no relation is assumed between the valuations of
+different agents. Two consequences of the definition are worth stating
+explicitly, since both are excluded in the special cases this class
+generalizes.
+
+\begin{itemize}
+  \item A single item may be a \emph{good} for one agent and a \emph{chore} for
+    another: $v_i(g \mid S) = 1$ while $v_j(g \mid T) = -1$.
+  \item For a \emph{single} agent, an item's marginal may be positive on one
+    set and negative on another: $v_i(g \mid S) = 1$ and $v_i(g \mid T) = -1$
+    for $S \ne T$. Such an item is neither a good nor a chore for that agent
+    (Lemma~\ref{lem:gb-not-doubly-monotone}).
+\end{itemize}
+
+We write $v_i(g \mid S) := v_i(S \cup \set g) - v_i(S)$ for a marginal.
+
+An \emph{allocation} $\alloc = (\bundle1,\dots,\bundle n)$ is a tuple of
+pairwise disjoint subsets of $\items$, assigned one per agent; it is
+\emph{complete} if $\bigcup_i \bundle i = \items$. A subsidy vector is
+$\subsidy \in \R^n_{+}$, and agents have quasi-linear utilities.
+
+\begin{definition}[Envy-free solution]
+\label{def:gb-efsolution}
+An allocation $\alloc$ and a subsidy vector $\subsidy$ constitute an
+\emph{envy-free solution} $(\alloc,\subsidy)$ if
+\[
+  v_i(\bundle i) + \subsidy_i \;\ge\; v_i(\bundle j) + \subsidy_j
+  \qquad\text{for all } i,j \in \agents .
+\]
+An allocation is \emph{envy-freeable} if some $\subsidy \in \R^n_+$ makes
+$(\alloc,\subsidy)$ an envy-free solution.
+\end{definition}
+
+For an allocation $\alloc$, the \emph{envy graph} $\envygraph{\alloc}$ is the
+complete weighted digraph on $\agents$ in which the arc $(i,j)$ carries weight
+\begin{equation}
+\label{eq:gb-arc}
+  \edgew{\alloc}(i,j) \;:=\; v_i(\bundle j) - v_i(\bundle i),
+\end{equation}
+and $\pathw{\alloc}(i)$ denotes the maximum weight of a directed path in
+$\envygraph{\alloc}$ starting at $i$, the empty path of weight $0$ included.
+
+% --------------------------------------------------------------------------
+\subsection{The conjecture}
+\label{sec:gb-conjecture}
+
+\begin{conjecture}
+\label{conj:gb-main}
+For every instance $\langle \agents, \items, \set{v_i}_{i \in \agents}\rangle$
+in which every $v_i$ is general binary, there exist a complete allocation
+$\alloc$ and a subsidy vector $\subsidy \in \set{0,1}^n$, with
+$\sum_{i \in \agents} \subsidy_i \le n-1$, such that $(\alloc,\subsidy)$ is an
+envy-free solution. Moreover $\alloc$ and $\subsidy$ can be computed in
+polynomial time given value-oracle access to the $v_i$.
+\end{conjecture}
+
+Conjecture~\ref{conj:gb-main} is the common generalization of two theorems.
+
+\begin{observation}[The two boundary cases are known]
+\label{obs:gb-boundary}
+Restricting Definition~\ref{def:gb-class} to marginals in $\set{0,1}$ gives the
+\emph{dichotomous} class, for which Conjecture~\ref{conj:gb-main} is Theorem~4
+of Barman, Krishna, Narahari and Sadhukhan~\cite{BKNS22}. Restricting it to
+marginals in $\set{-1,0}$ gives the \emph{negative dichotomous} class, for
+which Conjecture~\ref{conj:gb-main} is the main theorem of the companion
+document \texttt{report/main.tex}, proved for every $n$.
+\end{observation}
+
+Both boundary results are stated at the same generality as
+Definition~\ref{def:gb-class} within their own sign restriction --- neither
+assumes additivity, submodularity or subadditivity --- so
+Conjecture~\ref{conj:gb-main} adds exactly one thing to what is known: the two
+signs may occur in the same instance.
+
+% --------------------------------------------------------------------------
+\subsection{What transfers}
+\label{sec:gb-transfers}
+
+The following facts hold for general binary valuations and may be used without
+re-derivation.
+
+\begin{observation}[Integrality]
+\label{obs:gb-integrality}
+Let $v_i$ be general binary. Then $v_i(S) \in \Z$ and $\abs{v_i(S)} \le \abs S$
+for every $S \subseteq \items$; every arc weight $\edgew{\alloc}(i,j)$ is an
+integer; and for every envy-freeable allocation $\alloc$ the minimal subsidy
+vector satisfies $\optsubsidy \in \Z^n_{\ge 0}$.
+\end{observation}
+
+\begin{proof}
+Fix $i$ and enumerate $S = \set{g_1,\dots,g_k}$. Telescoping from
+$v_i(\emptyset) = 0$ writes
+$v_i(S) = \sum_{u=1}^{k} v_i\bigl(g_u \mid \set{g_1,\dots,g_{u-1}}\bigr)$, a
+sum of $k$ terms each in $\set{-1,0,1}$ by Definition~\ref{def:gb-class};
+hence $v_i(S) \in \Z$ and $\abs{v_i(S)} \le k$. Each arc weight
+\eqref{eq:gb-arc} is a difference of integers, so the weight of any directed
+path is an integer. By Theorem~\ref{thm:gb-hs-minsubsidy},
+$\optsubsidy_i = \pathw{\alloc}(i)$ is a maximum of such weights together with
+$0$, hence a non-negative integer.
+\end{proof}
+
+Observation~\ref{obs:gb-integrality} is what makes
+Conjecture~\ref{conj:gb-main} a statement about a \emph{bound} rather than
+about rounding: once $\optsubsidy$ is known to be integral, proving
+$\optsubsidy_i \le 1$ for every $i$ is the same as proving
+$\optsubsidy \in \set{0,1}^n$.
+
+The two structural results of Halpern and Shah~\cite{HS19} transfer verbatim.
+Their proofs use only the arc weights \eqref{eq:gb-arc} and permutations of the
+bundles; no additivity, no monotonicity and no sign condition on $v_i$ enters,
+which is also the generality at which~\cite{BKNS22} invokes them.
+
+\begin{theorem}[\cite{HS19}]
+\label{thm:gb-hs-characterisation}
+For any allocation $\alloc = (\bundle1,\dots,\bundle n)$ the following are
+equivalent.
+\begin{enumerate}
+  \item[(i)] $\alloc$ is envy-freeable.
+  \item[(ii)] $\alloc$ maximises utilitarian welfare across all reassignments
+    of its own bundles: $\sum_{i} v_i(\bundle i) \ge \sum_{i} v_i(A_{\sigma(i)})$
+    for every permutation $\sigma$ of $\agents$.
+  \item[(iii)] $\envygraph{\alloc}$ has no positive-weight directed cycle.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[\cite{HS19}]
+\label{thm:gb-hs-minsubsidy}
+For any envy-freeable allocation $\alloc$, the subsidy vector $\optsubsidy$
+given by $\optsubsidy_i := \pathw{\alloc}(i)$ realises an envy-free solution
+$(\alloc,\optsubsidy)$, and $\optsubsidy_i \le \subsidy_i$ for every $i$ and
+every $\subsidy$ with $(\alloc,\subsidy)$ an envy-free solution.
+\end{theorem}
+
+\begin{proposition}[Some agent is unpaid]
+\label{prop:gb-zero-coordinate}
+For every envy-freeable allocation $\alloc$ there is an agent $h$ with
+$\optsubsidy_h = 0$. Consequently, if $\optsubsidy \in \set{0,1}^n$ then
+$\sum_{i \in \agents} \optsubsidy_i \le n-1$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:gb-hs-characterisation}(iii) the graph
+$\envygraph{\alloc}$ has no positive-weight cycle, so a walk of maximum weight
+may be taken simple and $\pathw{\alloc}$ is finite; it is non-negative because
+the empty path qualifies. Choose a path $P$ attaining
+$\max_{i} \pathw{\alloc}(i)$ and let $h$ be its final vertex. If
+$\pathw{\alloc}(h) > 0$ there is a positive-weight walk $Q$ leaving $h$, and
+$P$ followed by $Q$ is a walk from $P$'s start of weight
+$\edgew{\alloc}(P) + \edgew{\alloc}(Q) > \edgew{\alloc}(P)$, contradicting the
+maximality of $P$ among walks. Hence $\pathw{\alloc}(h) = 0$. The second claim
+follows because at most $n-1$ coordinates of $\optsubsidy$ can then equal $1$.
+\end{proof}
+
+Proposition~\ref{prop:gb-zero-coordinate} means the bound on the total in
+Conjecture~\ref{conj:gb-main} is not an independent requirement but a
+consequence of the per-agent one, so the conjecture is the single-clause
+statement
+\[
+  \exists\, \alloc \ :\quad \max_{i \in \agents} \pathw{\alloc}(i) \;\le\; 1 .
+\]
+
+% --------------------------------------------------------------------------
+\subsection{Tightness}
+\label{sec:gb-tightness}
+
+\begin{example}[The $n-1$ lower bound]
+\label{ex:gb-lowerbound}
+Take $n$ agents and a single item $g$ with $v_i(\set g) = 1$ for every $i$.
+Every $v_i$ is general binary. Under any complete allocation one agent holds
+$g$ and the other $n-1$ hold nothing; each of those $n-1$ agents envies the
+holder by exactly $1$, so every envy-free solution assigns each of them a
+subsidy at least $1$ more than the holder's. The minimum total is therefore
+$n-1$.
+\end{example}
+
+The same bound is forced from the opposite sign: $n$ agents and $m = n-1$ items
+with $v_i(S) = -\abs S$ for every $i$ leaves some agent empty-handed under any
+complete allocation, and each of the $n-1$ loaded agents envies that agent by
+$1$. Either way, if Conjecture~\ref{conj:gb-main} holds then its bound is
+tight.
+
+% --------------------------------------------------------------------------
+\subsection{General binary is not a doubly monotone class}
+\label{sec:gb-not-doubly-monotone}
+
+Recall that an instance is \emph{doubly monotone} when, for each agent $i$ and
+each item $g$, either $v_i(g \mid S) \ge 0$ for every $S$ (the item is a
+\emph{good} for $i$) or $v_i(g \mid S) \le 0$ for every $S$ (a \emph{chore}
+for $i$). Both boundary classes of Observation~\ref{obs:gb-boundary} are
+doubly monotone; their common generalization is not.
+
+\begin{lemma}
+\label{lem:gb-not-doubly-monotone}
+There is a general binary valuation that is not doubly monotone.
+\end{lemma}
+
+\begin{proof}
+Let $\items = \set{a,b,g}$ and define
+\[
+  v(S) := \begin{cases} \abs S & \text{if } \abs S \le 2,\\ 1 & \text{if } S = \items. \end{cases}
+\]
+Then $v(\emptyset) = 0$, and every marginal lies in $\set{-1,0,1}$: adding an
+item to a set of size $0$ or $1$ raises the value by exactly $1$, and adding
+the third item to a set of size $2$ lowers it from $2$ to $1$. So $v$ is
+general binary. But $v(g \mid \emptyset) = 1 > 0$ while
+$v(g \mid \set{a,b}) = 1 - 2 = -1 < 0$, so $g$ is neither a good nor a chore
+for this agent.
+\end{proof}
+
+\begin{remark}
+\label{rem:gb-no-baseline}
+Lemma~\ref{lem:gb-not-doubly-monotone} has a concrete consequence for what may
+be assumed. The reduction of Kawase, Makino, Sumita, Tamura and
+Yokoo~\cite{KMSTY24}, which converts any EF1 allocation into an envy-free one
+and yields $n-1$ per agent, is stated for doubly monotone valuations under a
+two-sided normalisation. It therefore applies to each boundary class of
+Observation~\ref{obs:gb-boundary} separately --- and did supply the baseline
+against which the negative dichotomous result was measured --- but it does
+\emph{not} apply to general binary instances off the shelf.
+\end{remark}

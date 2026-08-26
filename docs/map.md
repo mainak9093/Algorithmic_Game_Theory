@@ -174,7 +174,7 @@ about the envy graph under dichotomous valuations, not just an inequality.
 Included in the Project as the natural companion: under binary valuations, *either*
 you pay 0-or-1 per agent and get exact EF (R3), *or* you pay nothing and get EFX (R5).
 
-**Result.** EFX allocations always exist for **general binary** valuations (marginals in
+**Result.** EFX allocations always exist for **dichotomous goods** valuations (marginals in
 $\{0,1\}$, not necessarily submodular), and can be computed in polynomial time.
 
 **Improves on.** Babaioff–Ezra–Feige (2021), who proved EFX existence for binary
@@ -507,7 +507,7 @@ $m$ indivisible chores, cost functions with **binary marginals**: $c(S \cup \{g\
   together; previously known only for three bivalued agents.
 - **Cancelable binary costs.** EFX allocations exist and can be computed, but EFX is
   **incompatible with PO** on this class — so the pairing above does not extend.
-- **General binary-marginal costs — Theorem 5.1, the one PS1 uses.** A polynomial-time algorithm
+- **Unrestricted binary-marginal costs (chores only) — Theorem 5.1, the one PS1 uses.** A polynomial-time algorithm
   computing a **partial** allocation that is **exactly envy-free** with **no subsidy at all**,
   leaving at most $n-1$ chores unallocated.
 

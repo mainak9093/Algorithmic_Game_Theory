@@ -1,6 +1,6 @@
 {
-  "0": "cri_witnesses.py",
-  "1": "cri_sweep.py",
+  "0": "cri_sweep.py",
+  "1": "gen",
   "2": "guidedR3.py",
   "3": "7. Towards a proof at $n = 3$",
   "4": "routeA.py",
@@ -103,5 +103,7 @@
   "101": "potentials.py",
   "102": "`report/` — the LaTeX write-up",
   "103": "General binary valuations (goods and chores) — running research log",
-  "104": "README.md"
+  "104": "README.md",
+  "105": "layers.py",
+  "106": "counting_room.py"
 }
