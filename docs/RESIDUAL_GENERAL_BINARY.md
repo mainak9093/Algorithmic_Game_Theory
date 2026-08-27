@@ -108,7 +108,12 @@ statement.
 | First-excursion repair: every spread-2 state reached from balance in one insertion can be closed next step | **refuted** (Mainak) — a valid *balanced* state reaches the §8 dead state in one valid insertion; kills "spread $\le 2$", "unique max bundle" and "one step from balance" as invariants | `approach_15.md` §26 |
 | Any invariant that is a property of the current state alone | **refuted** — the missing object is a *choice*, not a state property | `approach_15.md` §26 |
 | Subsidy-pattern table: for valid $A$ with minimal $\subsidy\in\set{0,1}^n$, $w(i,j)\le \subsidy_i-\subsidy_j$; every positive arc runs paid $\to$ unpaid with weight exactly 1 | **proved** (Mainak); characterises valid states but does *not* separate safe from dead | `approach_15.md` §28 |
-| **(SR-forced)** every maximal run of the steering rule "never leave balance without cause" ends complete | **open — the current target**; 0 dead ends in 22,200 instances, and non-vacuous (86 forced departures occur) | `approach_15.md` §27 |
+| **(SR-forced)** every maximal run of the steering rule "never leave balance without cause" ends complete | 0 dead ends in 22,200 instances, non-vacuous (86 forced departures) | `approach_15.md` §27 |
+| At a forced state, is every valid successor safe? | **refuted** — 1,319 forced states have a dead successor; but the ones growing a **minimum-size bundle** never do | `approach_15.md` §30 |
+| **(SR+)** = balanced move, else minimum-size-bundle move, else anything | 0 dead ends everywhere; in **both pure classes steps 2 and 3 never fire** | `approach_15.md` §30 |
+| A single insertion preserves balance iff it grows a minimum-size bundle | **proved** (one line) | `approach_15.md` §31 |
+| **(BAL-STEP)** from a valid balanced allocation, every unallocated item can be inserted into some minimum-size bundle, with a reassignment, landing valid | **open — the current target.** Holds in the strong EVERY-ITEM form in both pure classes (0 failures, ~71,000 balanced states each); with §23 it is **equivalent to all of (S1)** | `approach_15.md` §32 |
+| **Free-insertion lemma**: $v_x(g\mid A_x)\ge 0$ and $v_i(g\mid A_x)\le 0$ for all $i$ $\Rightarrow$ no path weight rises, so $\subsidy$ cannot rise | **proved**; on chores it is exactly [R12]'s rule (R1). First version was wrong and the machine check caught it | `approach_15.md` §33 |
 
 ## 4. Formal statement of record
 

@@ -37,6 +37,9 @@ here.
 | **K** | A literature search against primary sources finds **nothing covering (S1)**, and confirms PS2 is open on R11's own account | §22 |
 | **L** | **No property of a state can be the invariant.** A valid *balanced* state reaches a dead state in one valid insertion, so "spread $\le 2$", "unique maximum bundle", and "one step from balance" all fail. The missing object is a **choice**, not a state property | **proved** (Mainak), §26 |
 | **M** | That fatal departure was **gratuitous** — 8 balanced continuations existed. The rule *never leave balance without cause* forbids it, and **no (SR)-run dead-ended** in 22,200 instances | §27 |
+| **N** | Forced states **do** have dead successors (1,319 of them), so (SR) leaves a live choice — but the successors growing a **minimum-size bundle** were never dead. With that tie-break, **(SR+) never dead-ends**, and in **both pure classes the fallback never fires at all** | §30 |
+| **O** | **(S1) $\iff$ (BAL-STEP) for either pure class** — one lemma about a single insertion into a balanced allocation. It holds in the strong **EVERY-ITEM** form, so items may be inserted in *any order* | §31, §32 |
+| **P** | **Free-insertion lemma**: if $v_x(g \mid A_x) \ge 0$ and $v_i(g \mid A_x) \le 0$ for all $i$, no path weight rises, so $\optsubsidy$ cannot rise. On chores this *is* Tao–Wu–Yu–Zhou's rule (R1), recovered from the path-increment calculation | **proved**, §33 |
 
 **H is where the pass lands.** B rules out any algorithm that places items one
 at a time and can never revisit a bad state, and retroactively explains why our
@@ -54,11 +57,18 @@ finish it, since some maximisers there still need subsidy 2.
 Then L changes the shape of the answer. Every invariant tried so far is a
 property of the current allocation, and L shows no such property can work: a
 valid balanced state reaches a dead state in one valid insertion. What the
-problem wants is a rule for *choosing* the move — and M gives one that no
+problem wants is a rule for *choosing* the move — and M, N give one that no
 experiment has broken.
 
+**O is where the pass now stands.** For the two pure classes the whole of (S1)
+collapses to a single lemma about **one insertion into a balanced
+allocation** — no reachability, no excursions, no algorithm history — and P
+proves the part of that lemma where nothing can go up, recovering
+Tao–Wu–Yu–Zhou's rule (R1) as the special case. §33 names the one residual
+configuration, which is what their rule (R2) exists to rotate away.
+
 Sections 10, 16 and 20 record earlier formulations of the target, superseded by
-§18, §24 and §27 respectively. All are kept, because in each case the
+§18, §24 and §27/§32 respectively. All are kept, because in each case the
 refutation is itself the finding.
 
 ---
@@ -935,7 +945,152 @@ the missing invariant, and leaves (SR) as the candidate.
 
 ---
 
-## 29. Reproducing
+## 30. (SR-forced) does not reduce cleanly — but (SR+) does the job
+
+The obvious reduction of (SR-forced) fails. Call a valid incomplete state
+**forced** when it has valid successors but no valid *balanced* one. Since (SR)
+only leaves balance at a forced state, and no balanced state is dead, one would
+hope: *at a forced state every valid successor is safe*. **False.**
+
+| class | $n{=}3,m{=}4$ | $n{=}4,m{=}4$ |
+|---|---|---|
+| forced states with a **dead** successor | 957 (chores) | 362 (chores) |
+
+So (SR) really does leave a live choice at forced states, and that choice can
+be fatal. What rescues it is one column of the same sweep:
+
+> **among every forced state found, in every class and at every size, the
+> successors that grow a MINIMUM-SIZE bundle were never dead — 0 out of all of
+> them.**
+
+That is the missing tie-break, and it is the exact dual of BKNS's rule: goods
+to a maximally subsidised agent, chores to the emptiest bundle.
+
+> **(SR+)** From a valid state: **(1)** if some move lands on a valid
+> *balanced* state, take one; **(2)** else if some valid move grows a
+> *minimum-size* bundle, take one of those; **(3)** else take any valid move.
+
+Tested in the strong form — does *every* maximal (SR+)-run end complete:
+
+| $n,m$ | class | dead ends | steps used (1 / 2 / 3) |
+|---|---|---|---|
+| 3,3 | goods | **0** | 73,360 / 0 / 0 |
+| 3,3 | chores | **0** | 73,539 / 0 / 0 |
+| 3,3 | general | **0** | 58,042 / 18 / 147 |
+| 3,4 | goods / chores | **0** | 29,676 / 0 / 0 and 29,428 / 0 / 0 |
+| 3,4 | general | **0** | 22,095 / 0 / 2 |
+| 4,4 | goods / chores | **0** | 22,688 / 0 / 0 and 22,558 / 0 / 0 |
+| 4,4 | general | **0** | 14,742 / 0 / 11 |
+
+**No dead end anywhere**, and the headline is the zero column: **in both pure
+classes step (1) is the only step ever used.** Balance is never abandoned at
+all. Only general binary needs a fallback, on about 0.3% of states.
+
+## 31. Balance-preservation is exactly "grow a smallest bundle"
+
+**Proposition.** Let $A$ be balanced. A single insertion preserves balance if
+and only if it grows a bundle of minimum size.
+
+*Proof.* Balanced means the sizes lie in $\{k,k+1\}$ for some $k$. Growing a
+size-$k$ bundle leaves them in $\{k,k+1\}$. Growing a size-$(k+1)$ bundle
+creates $k+2$; if some bundle still has size $k$ the spread is 2, and if none
+does then all sizes were $k+1$ and every bundle was of minimum size. $\square$
+
+So the two descriptions of step (1) coincide, and (SR+) in the pure classes is
+simply: **insert into a smallest bundle, then reassign bundles to agents.**
+
+## 32. (S1) reduces to a single-step lemma, and the lemma is order-free
+
+With §31, everything in the pure classes rests on one statement:
+
+> **(BAL-STEP)** Let $A$ be a valid balanced partial allocation and $g$ an
+> unallocated item. Then some minimum-size bundle can be grown by $g$ and the
+> resulting bundles reassigned to the agents so that the new state is valid.
+
+Since the empty allocation is valid and balanced, (BAL-STEP) applied $m$ times
+gives (S1) outright. Three strengths were measured, because they give different
+algorithms:
+
+| | goods | chores | general |
+|---|---|---|---|
+| **SOME-ITEM** — some unallocated $g$ works | **0 / 0 / 0** | **0 / 0 / 0** | 52 / 0 / 0 |
+| **EVERY-ITEM** — every $g$ works | **0 / 0 / 0** | **0 / 0 / 0** | 131 / 52 / 18 |
+| **EVERY-MIN** — every $g$, every smallest bundle | 0 / 12 / 0 | 0 / 8 / 0 | 131 / 73 / 18 |
+
+(failures at $n{=}3,m{=}3$ / $3,4$ / $4,4$; roughly 71,000 valid balanced
+states per pure class)
+
+**In both pure classes (BAL-STEP) holds in the EVERY-ITEM form.** That is much
+stronger than needed: the algorithm may take the items **in any order**, and
+only the recipient among the smallest bundles, plus the reassignment, has to be
+chosen. EVERY-MIN does fail occasionally, so *which* smallest bundle is chosen
+does matter.
+
+Combining with the duality of §23:
+
+> **(S1)** $\iff$ **(BAL-STEP) for either one of the two pure classes.**
+
+That is the concrete target. It is a statement about a **single insertion into
+a balanced allocation**, with no reachability, no excursions and no algorithm
+history in it.
+
+## 33. A proved fragment of (BAL-STEP), and where it stops
+
+The path-increment lemma of §3, applied to a single insertion, gives the cases
+in full. Adding $g$ to $A_x$ changes a directed path's weight by
+
+| the path | change |
+|---|---|
+| avoids $x$ | $0$ |
+| ends at $x$, predecessor $i$ | $+\,v_i(g \mid A_x)$ |
+| starts at $x$ | $-\,v_x(g \mid A_x)$ |
+| passes through $x$, predecessor $i$ | $v_i(g \mid A_x) - v_x(g \mid A_x)$ |
+
+**Lemma (free insertion).** If $v_x(g \mid A_x) \ge 0$ and
+$v_i(g \mid A_x) \le 0$ for every agent $i$, then no path weight increases;
+hence $\optsubsidy' \le \optsubsidy$ pointwise and validity is preserved.
+
+*Proof.* The four rows are all $\le 0$ under the hypothesis: the second because
+$v_i \le 0$, the third because $v_x \ge 0$, the fourth because
+$v_i \le 0 \le v_x$. $\square$
+
+Verified with zero violations over 9,369–26,103 hypothesis instances per class
+per size, and the hypothesis is far from vacuous — outside it, most insertions
+*do* raise some path.
+
+The lemma specialises neatly:
+
+- **chores** ($v_i \le 0$ automatically): the condition is
+  $v_x(g \mid A_x) = 0$, i.e. *the chore is free for its recipient* — which is
+  exactly Tao–Wu–Yu–Zhou's rule **(R1)**, recovered here from the
+  path-increment calculation;
+- **goods** ($v_x \ge 0$ automatically): the condition is $v_i(g \mid A_x) = 0$
+  for all $i$ — the item is worthless to everybody at that bundle.
+
+**Where it stops.** The lemma covers only the case where nothing can rise. In
+the chores class the residual case is $v_x(g \mid A_x) = -1$: arcs out of $x$
+then rise by 1, so a path through $x$ with predecessor $i$ gains
+$1 + v_i(g \mid A_x)$, which is $+1$ whenever the chore is free for $i$ at
+$A_x$. Keeping the subsidy at 1 then needs both
+
+- $\optsubsidy_x = 0$ — so paths *starting* at $x$ have room to grow by one, and
+- every weight-1 path entering $x$ does so from an agent $j$ with
+  $v_j(g \mid A_x) = -1$.
+
+That is precisely the configuration Tao–Wu–Yu–Zhou's rule **(R2)** rotates
+away, which is the concrete reason to expect their machinery to supply the
+missing step — now with balance to maintain as well.
+
+*A correction worth recording.* The first version of the free-insertion lemma
+stated the hypothesis as "the recipient's marginal is maximal among the agents,
+and nobody gains". That is **false**: it permits $v_x(g \mid A_x) = -1$ when
+every marginal is $-1$, and then arcs out of $x$ rise. The machine check
+returned 7,043 violations in the chores class immediately, which is what the
+check is for; the hypothesis above is the repaired one.
+
+---
+
+## 34. Reproducing
 
 All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 
@@ -963,6 +1118,9 @@ All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 | `verify_spread2_tight.py` | independent re-check that the constant 2 cannot be lowered to 1 |
 | `balanced_duality.py` | verifies the size-shift duality of §23 and the dummy-padding lemma |
 | `steering_rule.py` | tests (SR-exists) and (SR-forced), and the subsidy-pattern table of §28 |
+| `forced_states.py` | profiles forced states; refutes the clean reduction and finds the minimum-bundle tie-break (§30) |
+| `steering_plus.py` | tests (SR+) in the strong form and counts which step fires (§30) |
+| `bal_step.py` | measures (BAL-STEP) in the SOME-ITEM, EVERY-ITEM and EVERY-MIN strengths (§32) |
 
 Every negative claim in this document (facts **B** and **C**) has a dedicated
 independent verifier that reimplements the envy-graph machinery, so that a bug
