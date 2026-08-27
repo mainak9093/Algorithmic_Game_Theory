@@ -102,6 +102,13 @@ statement.
 | The constant 2 in (S2) is tight — no balanced allocation works on an explicit $n=3,m=3$ instance | **proved** (hand-checkable witness) | `approach_15.md` §19 |
 | A welfare-maximiser over any permutation-closed family of allocations is envy-freeable | **proved** (two lines) — removes the envy-freeability half of (S2) | `approach_15.md` §19 |
 | Global welfare maximisation fails: a **dichotomous goods** instance where every welfare-maximal allocation needs subsidy 2, though 0 is achievable | **proved** (explicit witness) | `approach_15.md` §19 |
+| (S1)-goods $\iff$ (S1)-chores, via the size-shift being an envy-graph isometry on equal-cardinality allocations plus dummy padding | **proved** | `approach_15.md` §23 |
+| Welfare-maximality *inside* the spread-2 family is not a selection rule — some maximisers there still need subsidy 2 | **refuted** (witness: 4 of 10 maximisers invalid); corrects the gap as first stated | `approach_15.md` §24 |
+| Literature: nothing found covering (S1); PS2 open on [R11]'s own account (their §6) | **searched** against primary sources 2026-08-27 | `approach_15.md` §22, `map.md` §13 |
+| First-excursion repair: every spread-2 state reached from balance in one insertion can be closed next step | **refuted** (Mainak) — a valid *balanced* state reaches the §8 dead state in one valid insertion; kills "spread $\le 2$", "unique max bundle" and "one step from balance" as invariants | `approach_15.md` §26 |
+| Any invariant that is a property of the current state alone | **refuted** — the missing object is a *choice*, not a state property | `approach_15.md` §26 |
+| Subsidy-pattern table: for valid $A$ with minimal $\subsidy\in\set{0,1}^n$, $w(i,j)\le \subsidy_i-\subsidy_j$; every positive arc runs paid $\to$ unpaid with weight exactly 1 | **proved** (Mainak); characterises valid states but does *not* separate safe from dead | `approach_15.md` §28 |
+| **(SR-forced)** every maximal run of the steering rule "never leave balance without cause" ends complete | **open — the current target**; 0 dead ends in 22,200 instances, and non-vacuous (86 forced departures occur) | `approach_15.md` §27 |
 
 ## 4. Formal statement of record
 

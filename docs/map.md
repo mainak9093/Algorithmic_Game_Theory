@@ -29,6 +29,7 @@ Publication order, which is what the improvement relation follows:
 | R4 | 2024 | Klein Elmalem et al. | **weighted**, additive, money |
 | R6 | 2025 | Klein Elmalem, Aziz et al. | **weighted**, monotone + subclasses, money |
 | R11 | 2026 | Lu–Mackenzie–Suzuki | unweighted, additive **mixed manna**, money |
+| R13 | 2026 | Cookson–Shah–Verma | unweighted, additive goods, **balancedness constraint**, *no money* |
 
 Envy-freeness fails for indivisible goods. There are exactly two repairs in this corpus,
 and the split is the main organizing fact:
@@ -613,6 +614,35 @@ Candidates for what to read or attack next, stated as gaps rather than suggestio
 - **R8 × subsidies.** R8 designs notions that exist without money; R6 shows WEF-ability
   is incompatible with WWEF1 and WEF$(x,y)$ for $x+y<2$. Nobody has asked what subsidy
   buys you TWEF or WMEF, or whether R6's impossibility extends to them.
+
+---
+
+
+## 13. R13 — Cookson, Shah, Verma, *Fair and Efficient Balanced Allocations for Additive Valuations* (arXiv 2608.06325v1, 6 Aug 2026)
+
+**Added 2026-08-27 while checking the novelty of (S1) (`approach_15.md` §22).** Setting: $n$
+agents, $m$ indivisible **goods**, **non-negative additive** valuations, under the
+**balancedness** constraint — every agent receives between $\lfloor m/n \rfloor$ and
+$\lceil m/n \rceil$ goods, i.e. bundle sizes differ by at most one. This is the same notion of
+balance used in `approach_15.md`.
+
+**Theorem 1.** Every such instance admits a balanced allocation that is **EF1** and **fPO among
+balanced fractional allocations**. Generalises Kawase–Mahara (AAAI 2026), who had it only for
+personalised bivalued valuations or at most two valuation types. Proof runs the KKM lemma over a
+weighted-welfare duality, with a new *price interlacing lemma*.
+
+**Why it is here, and why it does not touch PS1 or PS2.** It is the state of the art on
+balancedness as a constraint, which is the invariant `approach_15.md` §14–15 arrives at from the
+subsidy side. But it uses **no money at all**, targets **EF1** rather than exact envy-freeness,
+and assumes **additive** valuations. So it neither implies nor is implied by (S1). Its value to
+this project is terminological and contextual: it fixes the standard meaning of *balanced*, and
+it confirms that the balancedness literature and the subsidy literature have not yet met.
+
+**Also worth recording from it.** Cookson–Shah–Verma (2025) show constrained maximum Nash
+welfare is only $	frac12$-EF1 under balancedness, and that under balancedness no approximation of
+EF1 is compatible with *unconstrained* PO. That is the same phenomenon `approach_15.md` §19 hits
+from the subsidy side: **global welfare maximisation and balance pull against each other**, and
+the constrained optimum is the object that behaves.
 
 ---
 

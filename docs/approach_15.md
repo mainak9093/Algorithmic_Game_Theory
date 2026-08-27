@@ -17,8 +17,10 @@ sweep of all 20,337,240 instances at $n=3$, $m=3$ over the full valuation
 class: the minimum over allocations of the largest required subsidy never
 exceeded 1.
 
-Nine structural facts now delimit how it could be proved, and the pass ends
-with the target sharpened to a single bounded quantity (§20).
+Thirteen structural facts now delimit how it could be proved. The pass ends at
+the **steering rule (SR)** of §27 — the target having been corrected twice
+along the way, in §24 and again in §26, each time by data or argument recorded
+here.
 
 | | Finding | Status |
 |---|---|---|
@@ -31,6 +33,10 @@ with the target sharpened to a single bounded quantity (§20).
 | **G** | Balance is maintainable in **both** pure classes and **not** in the mixed one. This is why both known proofs work and neither extends | §15 |
 | **H** | **(S2)** Every general binary instance admits a valid allocation of bundle-size spread $\le 2$ — verified **exhaustively** at $n{=}3,m{=}3$ and never violated up to $n,m \le 6$. The constant is **tight** and does not grow with $m$ | §18; tightness **proved** §19 |
 | **I** | **Welfare maximisation is not the rule** — there is a *dichotomous goods* instance where every globally welfare-maximal allocation needs subsidy 2 while subsidy 0 is achievable | **proved**, §19 |
+| **J** | **The two halves of (S1) are one statement.** The size-shift $c_i(S) = \|S\| - v_i(S)$ is an isometry of the envy graph exactly on equal-cardinality allocations; with dummy padding this makes (S1)-goods and (S1)-chores equivalent | **proved**, §23 |
+| **K** | A literature search against primary sources finds **nothing covering (S1)**, and confirms PS2 is open on R11's own account | §22 |
+| **L** | **No property of a state can be the invariant.** A valid *balanced* state reaches a dead state in one valid insertion, so "spread $\le 2$", "unique maximum bundle", and "one step from balance" all fail. The missing object is a **choice**, not a state property | **proved** (Mainak), §26 |
+| **M** | That fatal departure was **gratuitous** — 8 balanced continuations existed. The rule *never leave balance without cause* forbids it, and **no (SR)-run dead-ended** in 22,200 instances | §27 |
 
 **H is where the pass lands.** B rules out any algorithm that places items one
 at a time and can never revisit a bad state, and retroactively explains why our
@@ -39,13 +45,21 @@ architecture, because the states it exhibits are avoidable (E). What B really
 shows is that a correct algorithm needs a **steering rule**. F supplies a
 candidate (balance), G explains why neither known proof can supply it, and H
 turns the whole thing into an existence statement with no algorithm in it:
-**spread at most 2**. Combined with the lemma of §19 — a welfare-maximiser
-inside any permutation-closed family is envy-freeable for free — the remaining
-gap is a single bounded quantity, stated in §20.
+**spread at most 2**. The lemma of §19 — a welfare-maximiser inside any
+permutation-closed family is envy-freeable for free — reduces (S2) to a
+subsidy bound alone. §20 overstated what remained and §24 corrects it:
+welfare-maximality inside the spread-2 family narrows the search but does not
+finish it, since some maximisers there still need subsidy 2.
 
-Sections 10 and 16 record the two earlier formulations of the target and are
-superseded by §18; both are kept because the refutations are themselves
-findings.
+Then L changes the shape of the answer. Every invariant tried so far is a
+property of the current allocation, and L shows no such property can work: a
+valid balanced state reaches a dead state in one valid insertion. What the
+problem wants is a rule for *choosing* the move — and M gives one that no
+experiment has broken.
+
+Sections 10, 16 and 20 record earlier formulations of the target, superseded by
+§18, §24 and §27 respectively. All are kept, because in each case the
+refutation is itself the finding.
 
 ---
 
@@ -679,7 +693,249 @@ sharp as posed.
 
 ---
 
-## 21. Reproducing
+## 22. Literature search — what is and is not covered
+
+Done properly this time, against the primary sources rather than from memory.
+
+**The main conjecture (PS2) is open, on the authors' own account.** R11
+(Lu–Mackenzie–Suzuki, arXiv 2607.10089) proves exactly the $1$-per-agent bound
+for goods and chores together — but for **additive** utilities normalised to
+$[-1,1]$. Their §6 says the restriction is essential: *"Our techniques rely
+heavily on additivity both to define meta-goods and to obtain telescoping
+envy-path bounds from iterated matchings. This approach does not directly
+extend to richer valuation classes."* They then pose as open: *"for mixed goods
+and chores with bounded marginal values, does a constant per-agent subsidy bound
+still hold for submodular or XOS valuations? Note that this question is open
+even in the goods-only setting."* General binary is non-additive, so PS2 sits
+outside their theorem, and the frontier they name is the one this investigation
+is on. (`docs/map.md` §11 already recorded this correctly.)
+
+**(S1) is not covered.** The three nearest results each miss it for a definite
+reason.
+
+| Result | Gives balance? | Class | Why it does not give (S1) |
+|---|---|---|---|
+| Brustle et al., Thm 1.3 (R2) | **yes** | **additive** | Balance is free because Algorithm 1 is an iterated maximum-weight matching giving every agent one item per round. But the subsidy bound leans on additivity throughout — Claim 4.4 is "by additivity" verbatim. Dichotomous non-additive is an incomparable class |
+| Brustle et al., Thm 1.4 (R2) | **no** | monotone | Goes via the envy-cycles EF1 algorithm, not matching; bound is $2(n-1)$ per agent, and no balance is claimed |
+| Barman–Krishna–Narahari–Sadhukhan, Thm 4 (R3) | **no** | **dichotomous** | The right class, but ALG inserts goods one at a time with no size control; their §5 notes the output need not even be EF1 |
+
+So exactly one of *balance* and *non-additive dichotomous* is available at a
+time, and (S1) asks for both. Balancedness as a constraint is itself
+well-studied — Cookson–Shah–Verma (arXiv 2608.06325) obtain balanced EF1 +
+fPO for additive goods, extending Kawase–Mahara — but that literature carries
+**no money at all**, and uses EF1 rather than exact envy-freeness.
+
+**Conclusion.** No result located in this search gives a balanced allocation
+with subsidy at most 1 per agent for dichotomous valuations that are not
+additive. (S1) appears to be new, and §23 shows its two halves are one
+statement.
+
+## 23. The two halves of (S1) are the same statement
+
+(S1) was posed as two conjectures, one for goods and one for chores. They are
+equivalent, which is why every experiment reported them behaving identically.
+
+**Theorem (balanced size-shift duality).** Let $v_i$ be dichotomous (every
+marginal in $\{0,1\}$) and set $c_i(S) := |S| - v_i(S)$. Then each $c_i$ is a
+dichotomous **cost** function, and for every allocation $A$,
+$$w^v_A(i,j) \;=\; \bigl(|A_j| - |A_i|\bigr) \;+\; w^c_A(i,j),$$
+where $w^c_A(i,j) = c_i(A_i) - c_i(A_j)$ is the chores-form arc weight. In
+particular, if all bundles of $A$ have the **same** cardinality then the two
+envy graphs are identical, so $A$ is envy-freeable and needs subsidy at most 1
+per agent for $v$ if and only if the same holds for $c$.
+
+*Proof.* The marginal of $c_i$ at $g \notin S$ is
+$(|S|+1-v_i(S \cup g)) - (|S|-v_i(S)) = 1 - v_i(g \mid S) \in \{0,1\}$, so
+$c_i$ is a dichotomous cost function. For the identity,
+$$w^v_A(i,j) = v_i(A_j) - v_i(A_i)
+ = \bigl(|A_j| - c_i(A_j)\bigr) - \bigl(|A_i| - c_i(A_i)\bigr)
+ = (|A_j| - |A_i|) + w^c_A(i,j).$$
+When all $|A_i|$ agree the bracket vanishes for every pair, so the two graphs
+coincide edge by edge; identical graphs have identical cycles and identical
+longest paths, and Halpern–Shah reads both off the graph alone. $\square$
+
+**Lemma (dummy padding).** Adjoining items whose marginal is $0$ for every
+agent changes no $v_i$, hence no arc weight, hence nothing about
+envy-freeability or subsidy — and for the same reason such items may be
+redistributed among the agents freely.
+
+**Corollary.** (S1)-goods and (S1)-chores are equivalent, for all $m$.
+
+*Proof.* Given a goods instance with $m$ items, pad with $s < n$ dummies so
+that $n \mid m+s$. A valid **exactly** balanced allocation of the padded
+instance transfers, by the Theorem, between $v$ and $c$. Take one; by the
+Lemma redistribute the dummies so no agent holds more than one, which moves no
+arc weight; delete them. Each bundle loses $0$ or $1$ item, so sizes differ by
+at most one and the allocation is balanced for the original instance, with the
+envy graph untouched. The same argument runs in the chores direction. $\square$
+
+Verified in `balanced_duality.py`: zero violations of the arc-weight identity;
+on equal-cardinality allocations the two envy graphs and the two minimal
+subsidies agreed in every case, and on unequal-cardinality allocations they
+differed in every case; dummies never moved an arc weight.
+
+This is the precise sense in which the transform recorded as **F7** (§ *"the
+size-shift does not extend"*) fails in general but works here: it is an
+isometry of the envy graph exactly on the equal-cardinality allocations, which
+is the regime (S1) lives in and general binary does not.
+
+## 24. Correction — the gap in §20 was misstated
+
+§20 said the remaining gap was to show that *the* longest envy path of a
+spread-2 welfare-maximiser has weight at most 1. **That is false**, and the
+data already in this document refutes it: `canonical_allocation.py` reports
+"ALL maximisers valid" at 3967/4000 rather than 4000/4000. An explicit witness,
+
+$$v_1 = (0,0,0,1,0,-1,0,0), \quad v_2 = (0,1,0,0,1,2,0,1), \quad
+v_3 = (0,1,0,1,1,2,1,1)$$
+
+(indexed by subset bitmask, $n=m=3$), has ten welfare-maximisers inside the
+spread-$\le 2$ family, of which **four require subsidy 2** and the rest are
+valid — two of them with subsidy $0$. Welfare-maximality inside the family is
+therefore *not* a selection rule; it narrows the search but does not finish it.
+
+What survives is the weaker and still-unfalsified statement: **some** welfare
+maximiser in the family is valid, in 100% of instances across every class and
+size tested. So the honest form of the gap is either
+
+- **(a)** find the tie-break among spread-2 welfare-maximisers that always
+  lands on a valid one; or
+- **(b)** prove (S2) directly, without routing through welfare-maximality.
+
+The lemma of §19 still stands and still does real work in both: it supplies
+envy-freeability for free, so only the subsidy bound is ever at issue.
+
+---
+
+## 26. The first-excursion repair theorem is false (Mainak)
+
+A natural target after §24 was a *local repair* theorem: a balanced state
+plus one insertion reaching spread 2 is a very rigid object, so perhaps every
+such first excursion can be closed on the next insertion. Mainak refuted it,
+and the refutation is worth recording in full because it also disposes of two
+weaker candidates.
+
+**The rigidity is real.** If $A$ is balanced (spread $\le 1$, so sizes lie in
+$\{k, k+1\}$) and one item is inserted, the resulting spread is 2 only if the
+item went into a bundle of size $k+1$ while some bundle still has size $k$.
+Only one bundle grew, and no bundle had size $k+2$ before, so **the maximum
+bundle after a first excursion is unique**. Arbitrary spread-2 states with
+several maximum bundles are therefore irrelevant to the local question.
+
+**But the Fact B dead state is itself a first excursion.** In the pure-chore
+witness of §8 ($v_1 = v_2 = -|S|$, and $v_3$ with $b$ free), take
+$$A = (\emptyset, \emptyset, \{a\}).$$
+Its sizes are $0,0,1$, so it is balanced; agents 1 and 2 hold nothing and
+value $\{a\}$ at $-1$, so neither envies agent 3, while agent 3 values her own
+bundle at $-1$ against $0$ for the empty ones. The minimal subsidy is
+$(0,0,1)$, so $A$ is valid. Inserting $c$ into agent 3 gives
+$(\emptyset,\emptyset,\{a,c\})$ — valid, sizes $0,0,2$, unique maximum — and
+that is exactly the dead state of §8, from which all eighteen continuations
+fail.
+
+So a **valid balanced state can reach a dead state by one valid insertion**,
+and none of the following is a sufficient invariant:
+
+- valid and spread $\le 2$;
+- valid and spread $\le 2$ and a unique maximum bundle;
+- reachable from a valid balanced state by one valid insertion.
+
+All three hold at the dead state. Note also that the witness lives entirely
+inside the *pure chores* class, so this is not a mixed-sign phenomenon.
+
+**What the bounded-excursion data does and does not say.** It never said every
+departure from balance can be closed. It said only that *some* sequence of
+choices completes, with shallow excursions. Those are different statements, and
+this witness separates them: from $(\emptyset,\emptyset,\{a\})$ the choice
+"give $c$ to agent 3" is fatal, while the instance is in fact solvable by
+$(\{a\},\{c\},\{b\})$, which rebuilds the bundles. **The algorithm must choose
+correctly before entering an excursion**; no property of the state it lands in
+will save it.
+
+## 27. But the departure was gratuitous — the steering rule
+
+One fact turns §26 from a dead end into a narrowing. At
+$(\emptyset,\emptyset,\{a\})$, balance did **not** have to be abandoned:
+
+| continuation | count |
+|---|---|
+| valid successors that stay **balanced** | **8** |
+| valid successors that break balance | 2 (both to sizes $0,0,2$) |
+
+and the two unbalanced landings are $(\emptyset,\emptyset,\{a,b\})$ and the
+fatal $(\emptyset,\emptyset,\{a,c\})$. So the move into the dead state was
+**gratuitous, not forced**. The witness refutes "every first excursion is
+repairable"; it says nothing against the rule that never leaves balance
+without cause:
+
+> **(SR) Steering rule.** From a valid state, if some move lands on a valid
+> **balanced** state, take one of those. Otherwise take any valid move.
+
+(SR) forbids the fatal move outright, and the dead state is not (SR)-reachable
+at all.
+
+Two strengths of claim are worth separating, because only the second is what a
+proof needs:
+
+- **(SR-exists)** following (SR), a complete valid state is still reachable;
+- **(SR-forced)** *every* maximal (SR)-run ends complete — i.e. no
+  (SR)-reachable state is dead, so the rule cannot be executed badly.
+
+| $n,m$ | class | instances | (SR-exists) failures | (SR-forced) dead ends |
+|---|---|---|---|---|
+| 3,3 | goods / chores / general | 6,000 each | 0 / 0 / 0 | **0 / 0 / 0** |
+| 3,4 | goods / chores / general | 900 each | 0 / 0 / 0 | **0 / 0 / 0** |
+| 4,4 | goods / chores / general | 500 each | 0 / 0 / 0 | **0 / 0 / 0** |
+
+**(SR-forced) held everywhere** — 22,200 instances, no dead end, no
+tie-breaking required.
+
+The test is not vacuous: forced departures do occur along (SR)-runs, 86 of
+46,372 reachable states in 15 of 4,000 general binary instances at $n=3,m=3$,
+and 2 more at $n=3,m=4$. In **both pure classes there were none at all**, which
+is Fact G again: there, (SR) never leaves balance, and (S1) is precisely the
+claim that this suffices.
+
+> **Conjecture (SR-forced).** Every maximal (SR)-run from the empty allocation
+> ends at a complete valid allocation.
+
+It implies the main conjecture, it is strictly stronger than the reachability
+statement of §13 — which only promised *some* good route — and unlike every
+invariant refuted in §26 it is not a property of a state but of a *choice*,
+which is what §26 shows the problem demands.
+
+## 28. The subsidy-pattern table
+
+A packaging of the definition that is worth having explicitly (Mainak).
+
+**Proposition.** Let $A$ be valid with minimal subsidy $p \in \{0,1\}^n$. Then
+$w_A(i,j) \le p_i - p_j$ for all $i,j$, so
+
+| | $p_j = 0$ | $p_j = 1$ |
+|---|---|---|
+| $p_i = 0$ | $w \le 0$ | $w \le -1$ |
+| $p_i = 1$ | $w \le 1$ | $w \le 0$ |
+
+Consequently **every positive arc runs from a paid agent to an unpaid one and
+has weight exactly 1**.
+
+*Proof.* $(A,p)$ envy-free means $v_i(A_i) + p_i \ge v_i(A_j) + p_j$, i.e.
+$w_A(i,j) = v_i(A_j) - v_i(A_i) \le p_i - p_j$. The table is the four cases,
+and integrality (`framing.tex` Observation 5) makes a positive weight bounded
+by 1 equal to 1. $\square$
+
+Verified over every valid state in the sampled instances: zero violations, and
+zero positive arcs that were not paid-to-unpaid of weight exactly 1.
+
+The proposition characterises valid states — $A$ is valid iff its agents admit
+a paid/unpaid two-colouring obeying the table — but as Mainak notes it does
+**not** separate safe from dead ones: the §8 dead state satisfies it. Together
+with §26 this closes off the envy graph plus the size profile as a source of
+the missing invariant, and leaves (SR) as the candidate.
+
+---
+
+## 29. Reproducing
 
 All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 
@@ -705,6 +961,8 @@ All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 | `existence_spread.py exhaustive` | the exhaustive $n=3,m=3$ test of (S1) and (S2) |
 | `existence_spread.py sampled <n> <m> <k>` | the same at larger sizes, one size per invocation |
 | `verify_spread2_tight.py` | independent re-check that the constant 2 cannot be lowered to 1 |
+| `balanced_duality.py` | verifies the size-shift duality of §23 and the dummy-padding lemma |
+| `steering_rule.py` | tests (SR-exists) and (SR-forced), and the subsidy-pattern table of §28 |
 
 Every negative claim in this document (facts **B** and **C**) has a dedicated
 independent verifier that reimplements the envy-graph machinery, so that a bug
