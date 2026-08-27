@@ -85,6 +85,18 @@ statement.
 | Minimal subsidy has a zero coordinate, so per-agent $\le 1 \Rightarrow$ total $\le n-1$ | **proved** | `framing.tex` Proposition 8 |
 | $n-1$ is tight if the conjecture holds (inherited from either boundary case) | **proved** | `framing.tex` Example 9 |
 | General binary $\not\subseteq$ doubly monotone, so [R9]'s bound does not apply | **proved** (explicit witness) | `framing.tex` Lemma 10 |
+| Path-increment lemma: one insertion moves a path by $v_i(g\mid Y_x) - v_x(g\mid Y_x)$, so $\le 1$ in either pure class and $\le 2$ only when two agents disagree in sign about the same set | **proved** | `approach_15.md` §3 |
+| BKNS's positive insertion step survives the signed model; a recipient with marginal $+1$ preserves envy-freeability and every path bound whatever other agents think of the item | **proved**, and search-confirmed (0 failures in 2,994,329 exhaustive states) | `approach_15.md` §4, §7 |
+| The insertion lemma is **false** for chore insertion: a state with minimal $p\in\set{0,1}^3$ admits no recipient and no reassignment absorbing one more chore | **refuted** (witness verified independently) | `approach_15.md` §8 |
+| Signed-binary decomposition $v = u - c$ into two positive dichotomous parts | **proved** (Mainak), verified on all 495 valuations at $m=3$ | `approach_15.md` §6 |
+| The certificate bridge built on that decomposition ($q_i + r_i \le 1$) | **refuted** — lossy; $u$ and $c$ disagree about which allocations are envy-freeable | `approach_15.md` §6, §9 |
+| Conjecture survives exhaustive search: all 20,337,240 instances at $n=3$, $m=3$ | **search-verified** (max subsidy exactly 1) | `approach_15.md` §9 |
+| Residual Completion Problem: complete from a state whose residual items have no $+1$ recipient, keeping $p\in\set{0,1}^n$ | **refuted** — dead states exist, already inside the pure chores class | `approach_15.md` §12 |
+| The incremental architecture: is a complete valid allocation always reachable from the empty one? | **not refuted** — reachable in every instance tested; stuck states exist but are avoidable | `approach_15.md` §13 |
+| Safety criterion: balanced ($\mathrm{spread}\le 1$) **or** a $+1$ move available $\Rightarrow$ safe | **search-verified**, 0 counterexamples in $>1.5$M valid states | `approach_15.md` §14 |
+| Balance is maintainable in goods (0 failures) and chores (0 failures) but **not** in general binary (81/34226) | **proved by separation** — why both known proofs work and neither extends | `approach_15.md` §15 |
+| Forced departures from balance: depth $\le 2$, spread never exceeds 2, never dead-end | **search-verified** | `approach_15.md` §15 |
+| **Bounded-excursion conjecture** — valid throughout, spread $\le 2$, balance restored within 2 insertions; implies the main conjecture | **open — the current target** | `approach_15.md` §16 |
 
 ## 4. Formal statement of record
 
@@ -95,7 +107,39 @@ this log — is the statement of record for the model, the conjecture, and the
 transferred facts; approach sections should cite its numbered results rather
 than re-derive them. This log records the trail.
 
-No approach has been attempted yet.
+## 5. Approach 15 — establishing the facts (2026-08-27)
+
+First substantive pass, recorded in full in `approach_15.md`; scripts in
+`updates_general_binary/update_1/`. Summary of what changed:
+
+- The conjecture survived every search, including an **exhaustive** sweep of
+  all 20,337,240 instances at $n=3$, $m=3$ over the whole class.
+- The **positive** half of BKNS's mechanism transfers to the signed model
+  intact; the **negative** half is impossible as a single-item step, so no
+  algorithm that places items one at a time and never disturbs earlier
+  placements can work. Our chores theorem being one-shot is therefore forced,
+  not incidental.
+- The frontier is now the **residual completion problem** (`approach_15.md`
+  §10): complete an envy-free solution whose unallocated items have no $+1$
+  recipient, in one shot, with the freedom to rebuild bundles.
+
+**Second half of the pass — the residual completion problem, attacked and
+refuted.** Dead states exist: valid partial allocations from which no
+completion keeps $\subsidy \in \set{0,1}^n$, already inside the pure chores
+class, so the problem is not about mixing signs. But the architecture it was
+meant to serve survives, because those states are avoidable — a complete valid
+allocation was reachable from the empty one in every instance tested.
+
+That turns the question into a search for the steering rule, and the data
+names one: **every dead state is unbalanced and has no $+1$ move**, so
+balanced-or-$+1$ implies safe, with no counterexample in over 1.5 million
+valid states. Balance is maintainable in both pure classes and not in the
+mixed one, which is a precise account of why BKNS's proof and ours each work
+and neither extends.
+
+Open: the **bounded-excursion conjecture** (`approach_15.md` §16), and whether
+Tao-Wu-Yu-Zhou's Algorithm 3 can close an excursion, despite the
+local-to-global sign-flip gap.
 
 ---
 
