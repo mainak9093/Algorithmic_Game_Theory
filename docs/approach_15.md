@@ -17,7 +17,8 @@ sweep of all 20,337,240 instances at $n=3$, $m=3$ over the full valuation
 class: the minimum over allocations of the largest required subsidy never
 exceeded 1.
 
-Seven structural facts now delimit how it could be proved.
+Nine structural facts now delimit how it could be proved, and the pass ends
+with the target sharpened to a single bounded quantity (§20).
 
 | | Finding | Status |
 |---|---|---|
@@ -28,15 +29,23 @@ Seven structural facts now delimit how it could be proved.
 | **E** | The Residual Completion Problem of §10 is **false**; but the incremental architecture it was meant to rescue is **not** refuted — a complete valid allocation was reachable in every instance tested | §12, §13 |
 | **F** | **Balanced or a +1 move available $\Rightarrow$ safe.** Every dead end is unbalanced *and* has no $+1$ move. Zero counterexamples in over 1.5 million valid states | §14 |
 | **G** | Balance is maintainable in **both** pure classes and **not** in the mixed one. This is why both known proofs work and neither extends | §15 |
+| **H** | **(S2)** Every general binary instance admits a valid allocation of bundle-size spread $\le 2$ — verified **exhaustively** at $n{=}3,m{=}3$ and never violated up to $n,m \le 6$. The constant is **tight** and does not grow with $m$ | §18; tightness **proved** §19 |
+| **I** | **Welfare maximisation is not the rule** — there is a *dichotomous goods* instance where every globally welfare-maximal allocation needs subsidy 2 while subsidy 0 is achievable | **proved**, §19 |
 
-**F and G are the load-bearing ones.** B rules out any algorithm that places
-items one at a time and can never revisit a bad state, and it retroactively
-explains why our own chores theorem had to be one-shot. But B does *not* kill
-the incremental architecture, because the states it exhibits turn out to be
-avoidable (E): what B really shows is that a correct algorithm needs a
-**steering rule**, not that none exists. F supplies a candidate rule and G
-explains why the two known proofs cannot supply it. Section 16 states the
-resulting target; §10, which proposed the previous one, is superseded.
+**H is where the pass lands.** B rules out any algorithm that places items one
+at a time and can never revisit a bad state, and retroactively explains why our
+own chores theorem had to be one-shot — but it does *not* kill the incremental
+architecture, because the states it exhibits are avoidable (E). What B really
+shows is that a correct algorithm needs a **steering rule**. F supplies a
+candidate (balance), G explains why neither known proof can supply it, and H
+turns the whole thing into an existence statement with no algorithm in it:
+**spread at most 2**. Combined with the lemma of §19 — a welfare-maximiser
+inside any permutation-closed family is envy-freeable for free — the remaining
+gap is a single bounded quantity, stated in §20.
+
+Sections 10 and 16 record the two earlier formulations of the target and are
+superseded by §18; both are kept because the refutations are themselves
+findings.
 
 ---
 
@@ -556,7 +565,121 @@ under `report/`.
 
 ---
 
-## 17. Reproducing
+## 18. The target sharpened — a spread-bounded existence statement
+
+§16's bounded-excursion conjecture mixed an existence claim with an
+algorithmic one. Separating them leaves a statement with no algorithm in it at
+all, and that statement is what all the evidence actually supports:
+
+> **(S2) Spread-2 conjecture.** Every general binary instance admits an
+> envy-freeable allocation whose minimal subsidy lies in $\{0,1\}^n$ and whose
+> bundle-size spread $\max_i |A_i| - \min_i |A_i|$ is at most $2$.
+
+> **(S1) Balanced pure conjecture.** Every dichotomous goods instance, and
+> every negative dichotomous instance, admits such an allocation that is
+> **balanced** — spread at most $1$.
+
+(S2) implies the main conjecture and is strictly more structured, which is what
+makes it the better induction target. Testing both, with $K$ the spread bound
+and the entry counting instances admitting **no** valid allocation at that
+bound:
+
+| $n,m$ | coverage | goods $K{=}1$ | chores $K{=}1$ | general $K{=}1$ | general $K{=}2$ |
+|---|---|---|---|---|---|
+| 3, 3 | **exhaustive** (20,337,240; 9,880 per pure class) | 0 | 0 | 98,931 | **0** |
+| 3, 4 | 15,000 sampled | 0 | 0 | 0 | **0** |
+| 4, 4 | 6,000 | 0 | 0 | 11 | **0** |
+| 3, 5 | 4,000 | 0 | 0 | 0 | **0** |
+| 5, 5 | 1,200 | 0 | 0 | 52 | **0** |
+| 3, 6 | 1,500 | 0 | 0 | 0 | **0** |
+| 6, 6 | 400 | 0 | 0 | 12 | **0** |
+
+**(S2) never failed once**, and the constant does not grow with $m$ — spread 2
+still sufficed at $m=6$. **(S1) never failed either**: in both pure classes a
+balanced allocation always exists, at every size tested.
+
+Two further readings of the table. First, the $K=1$ failures for general binary
+cluster at $n = m$ — 98,931 at $(3,3)$, 11 at $(4,4)$, 52 at $(5,5)$, 12 at
+$(6,6)$, and none at $(3,4)$, $(3,5)$, $(3,6)$ — which is where balance is most
+rigid, since every agent must hold exactly one item. Second, (S1) restricted to
+goods does **not** follow from what is on record: BKNS's Theorem 4 says nothing
+about bundle sizes, and their concluding section notes their allocation need not
+even be EF1; Brustle et al.'s balanced guarantee is for *additive* valuations,
+an incomparable class. A literature check is needed before claiming it is new,
+but it is not a corollary of either.
+
+## 19. What is proved, not merely verified
+
+Three results in this pass are proofs rather than search outcomes.
+
+**Lemma (permutation-closed families).** Let $\mathcal F$ be any family of
+allocations closed under permuting the bundles among the agents, and let
+$A \in \mathcal F$ maximise $\sum_i v_i(A_i)$ over $\mathcal F$. Then $A$ is
+envy-freeable.
+
+*Proof.* Every permutation $A_\sigma$ lies in $\mathcal F$, so
+$\sum_i v_i(A_i) \ge \sum_i v_i(A_{\sigma(i)})$ for all $\sigma$, which is
+Halpern–Shah condition (ii). $\square$
+
+Permuting bundles leaves the multiset of bundle sizes unchanged, so
+"allocations of spread at most $K$" is such a family for every $K$. **This
+removes half of (S2)**: the envy-freeability is automatic, and only the subsidy
+bound remains to be proved.
+
+**Proposition (the constant 2 is tight).** There is a general binary instance
+in which no balanced allocation admits a subsidy of at most 1 per agent.
+
+*Proof.* Take $n=3$, $m=3$, with $a,b$ unit chores for everyone and $c$ a unit
+chore for agent 1 but a unit good for agents 2 and 3:
+$v_1(S) = -|S|$ and $v_i(S) = -|S \cap \{a,b\}| + [c \in S]$ for $i \in
+\{2,3\}$. All marginals lie in $\{-1,0,1\}$. A balanced allocation gives each
+agent exactly one item, so exactly one agent holds $c$ and at least one of
+agents 2, 3 does not; call her $i$. She values her own bundle at $-1$ and the
+bundle holding $c$ at $+1$, so the arc from $i$ to that holder has weight
+$1-(-1) = 2$ and $\optsubsidy_i \ge 2$. This is independent of who holds $c$,
+so all six balanced allocations fail. Meanwhile $A = (\{a\},\{b,c\},\emptyset)$
+has spread 2 and minimal subsidy $(1,0,0)$. $\square$
+
+Checked against all 27 allocations in `verify_spread2_tight.py`: eight are
+valid, and every one of them has spread 2 or 3.
+
+**Proposition (welfare maximisation is not the rule).** There is a
+*dichotomous goods* instance in which every globally welfare-maximal allocation
+leaves some agent needing subsidy 2, although subsidy 0 is achievable.
+
+*Proof.* $n=3$, $m=3$; agent 1 values every bundle at 0; agents 2 and 3 have
+$v(S) = \max(0, |S|-1)$, whose marginals are all in $\{0,1\}$. The unique
+welfare optimum, value 2, is to give all three items to agent 2 or to agent 3.
+Say agent 2 holds them; then $w(3,2) = v_3(\{a,b,c\}) - v_3(\emptyset) = 2$, so
+the path $1 \to 3 \to 2$ has weight 2 and $\optsubsidy_1 = 2$. Yet
+$(\{a\},\{b\},\{c\})$ gives every agent value 0 and subsidy $(0,0,0)$.
+$\square$
+
+This is worth stating because it kills the most natural canonical rule, and it
+does so **inside the pure goods class**, where BKNS's theorem holds. It also
+explains why the spread bound helps rather than hurts: maximising welfare
+concentrates items on one agent and manufactures a length-2 envy path, whereas
+the spread constraint forces the items apart. Maximising welfare *inside* the
+spread-2 family never failed in any experiment — 100% across every class and
+size in `canonical_allocation.py` — though it needs a tie-break, since not every
+maximiser in that family is valid.
+
+## 20. Where this leaves the problem
+
+The remaining gap is a single bounded quantity. By §19's lemma, a
+welfare-maximiser over the spread-$\le 2$ allocations is envy-freeable for
+free, so (S2) reduces to:
+
+> show that its longest envy path has weight at most 1
+
+with the path-increment lemma (§3) as the tool and the two pure cases (§18,
+(S1)) as the boundary conditions the argument must reproduce. The constant 2
+cannot be improved (§19) and does not grow with $m$ (§18), so the statement is
+sharp as posed.
+
+---
+
+## 21. Reproducing
 
 All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 
@@ -576,6 +699,12 @@ All scripts in `updates_general_binary/update_1/`, runnable from that folder.
 | `test_balance_invariant.py` | can balance always be maintained — produces fact **G** |
 | `invariant_battery.py` | measures safe-sufficiency and maintainability for five candidate invariants side by side |
 | `excursion_depth.py` | how deep and how wide the forced departures from balance are (§15) |
+| `bounded_excursion.py [small\|wide]` | both halves of the bounded-excursion conjecture: existence and reachability within a spread bound |
+| `canonical_allocation.py [small\|wide]` | welfare-maximal allocations inside spread-bounded families; refutes global welfare maximisation |
+| `gwm_refutation.py [goods\|general]` | finds and verifies the welfare-maximisation failure of §19 |
+| `existence_spread.py exhaustive` | the exhaustive $n=3,m=3$ test of (S1) and (S2) |
+| `existence_spread.py sampled <n> <m> <k>` | the same at larger sizes, one size per invocation |
+| `verify_spread2_tight.py` | independent re-check that the constant 2 cannot be lowered to 1 |
 
 Every negative claim in this document (facts **B** and **C**) has a dedicated
 independent verifier that reimplements the envy-graph machinery, so that a bug

@@ -96,7 +96,12 @@ statement.
 | Safety criterion: balanced ($\mathrm{spread}\le 1$) **or** a $+1$ move available $\Rightarrow$ safe | **search-verified**, 0 counterexamples in $>1.5$M valid states | `approach_15.md` §14 |
 | Balance is maintainable in goods (0 failures) and chores (0 failures) but **not** in general binary (81/34226) | **proved by separation** — why both known proofs work and neither extends | `approach_15.md` §15 |
 | Forced departures from balance: depth $\le 2$, spread never exceeds 2, never dead-end | **search-verified** | `approach_15.md` §15 |
-| **Bounded-excursion conjecture** — valid throughout, spread $\le 2$, balance restored within 2 insertions; implies the main conjecture | **open — the current target** | `approach_15.md` §16 |
+| Bounded-excursion conjecture — valid throughout, spread $\le 2$, balance restored within 2 insertions | superseded by (S2) below, which drops the algorithmic half | `approach_15.md` §16 |
+| **(S2)** every general binary instance admits a valid allocation of bundle-size spread $\le 2$; implies the main conjecture | **open — the current target**; verified exhaustively at $n=3,m=3$ (20,337,240 instances) and never violated up to $n,m\le 6$ | `approach_15.md` §18 |
+| **(S1)** every dichotomous-goods and every negative-dichotomous instance admits a valid **balanced** allocation | **open**; never violated. Does not follow from [R3] (silent on bundle sizes) nor from [R2] (additive only) — needs a literature check | `approach_15.md` §18 |
+| The constant 2 in (S2) is tight — no balanced allocation works on an explicit $n=3,m=3$ instance | **proved** (hand-checkable witness) | `approach_15.md` §19 |
+| A welfare-maximiser over any permutation-closed family of allocations is envy-freeable | **proved** (two lines) — removes the envy-freeability half of (S2) | `approach_15.md` §19 |
+| Global welfare maximisation fails: a **dichotomous goods** instance where every welfare-maximal allocation needs subsidy 2, though 0 is achievable | **proved** (explicit witness) | `approach_15.md` §19 |
 
 ## 4. Formal statement of record
 
