@@ -60,7 +60,8 @@ Source papers use their own letters — divergences are flagged in the glossary 
 with negative dichotomous valuations there is an envy-free solution with a subsidy of
 $0$ or $1$ per agent — hence at most $n-1$ in total — computable in polynomial time in
 the value-oracle model, under no assumption on the cost functions beyond binary
-marginals, and with no bound on the number of chores. The bound is tight.
+marginals, and with no bound on the number of chores. The allocation is moreover
+EF1. The bound is tight.
 
 | Result | Where |
 |---|---|

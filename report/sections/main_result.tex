@@ -327,6 +327,46 @@ In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) = \cost_i(A_i) -
 \end{proof}
 
 % --------------------------------------------------------------------------
+\subsection{The completion is EF1}
+\label{sec:m-ef1}
+
+\begin{corollary}
+\label{cor:ef1}
+The complete allocation $\alloc$ of \eqref{eq:m-alloc} is EF1 in the sense of
+Definition~\ref{def:ef1}. More precisely, every non-recipient
+$i \in \agents \setminus T$ envies nobody in $\alloc$, and for every recipient
+$t_k \in T$ the removal of the single residual chore $e_k$ from her own bundle
+eliminates all of her envy at once.
+\end{corollary}
+
+\begin{proof}
+By \eqref{eq:m-alloc} we have $X_j \subseteq A_j$ for every $j \in \agents$.
+
+Let $i \in \agents \setminus T$, so that $A_i = X_i$. For every $j \in \agents$,
+\[
+  \cost_i(A_i) = \cost_i(X_i) \le \cost_i(X_j) \le \cost_i(A_j),
+\]
+the first inequality by envy-freeness \eqref{eq:m-pef} of $X$ and the second by
+monotonicity (Observation~\ref{obs:m-gap}) applied to $X_j \subseteq A_j$. So
+$i$ envies nobody, and Definition~\ref{def:ef1} is met at $i$ with
+$X = \emptyset$.
+
+Let $i = t_k \in T$, so that $A_i = X_i \cup \set{e_k}$ and hence
+$A_i \setminus \set{e_k} = X_i$. For every $j \in \agents$,
+\[
+  \cost_i\bigl(A_i \setminus \set{e_k}\bigr) = \cost_i(X_i)
+  \le \cost_i(X_j) \le \cost_i(A_j),
+\]
+by the same two steps. The bundles of $\alloc$ are pairwise disjoint, so
+$e_k \notin A_j$ for $j \ne i$ and therefore
+$\cost_i(A_j) = \cost_i(A_j \setminus \set{e_k})$; Definition~\ref{def:ef1} is
+met at $i$ with $X = \set{e_k}$.
+
+Since one and the same chore works against every $j$ simultaneously, $\alloc$
+is EF1.
+\end{proof}
+
+% --------------------------------------------------------------------------
 \subsection{The main theorem}
 \label{sec:m-main}
 
@@ -336,8 +376,9 @@ For every $n$ and every instance $\langle \agents, \items,
 \set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
 exist a complete allocation $\alloc$ and a subsidy vector
 $\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
-that $(\alloc,\subsidy)$ is an envy-free solution. Both are computable in
-polynomial time given value-oracle access.
+that $(\alloc,\subsidy)$ is an envy-free solution. The allocation $\alloc$ is
+moreover EF1. Both $\alloc$ and $\subsidy$ are computable in polynomial time
+given value-oracle access.
 \end{theorem}
 
 \begin{proof}
@@ -346,13 +387,14 @@ Definition~\ref{def:dichcost}. Run the algorithm of Theorem~\ref{thm:m-twyz}
 and let $X$, $R$, $r$ and $S$ be as fixed in \Cref{sec:m-terminal}.
 
 If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
-$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$.
+$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$;
+being envy-free it is EF1, taking $X = \emptyset$ in Definition~\ref{def:ef1}.
 
 If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
 \Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
 Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
 solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
-$\sum_i \subsidy_i \le n-1$.
+$\sum_i \subsidy_i \le n-1$. Corollary~\ref{cor:ef1} gives that $\alloc$ is EF1.
 
 For the running time, the algorithm of Theorem~\ref{thm:m-twyz} is polynomial
 and returns $X$, $R$ and $S$. Constructing $\alloc$ from \eqref{eq:m-alloc}

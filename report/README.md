@@ -13,8 +13,8 @@ Dichotomous Valuations*. **Proved for every $n$** — see §3 of `main.pdf`.
 
 | Build | Produces | Contains |
 |---|---|---|
-| `latexmk -pdf main.tex` | `main.pdf` (14 pp.) | **The report.** Introduction, notation and preliminaries, and the main theorem for every $n$. |
-| `latexmk -pdf working.tex` | `working.pdf` (132 pp.) | **The full draft.** The report's sections, then the complete 14-approach trail — everything tried, proved, and refuted along the way. |
+| `latexmk -pdf main.tex` | `main.pdf` (15 pp.) | **The report.** Introduction, notation and preliminaries, and the main theorem for every $n$. |
+| `latexmk -pdf working.tex` | `working.pdf` (133 pp.) | **The full draft.** The report's sections, then the complete 14-approach trail — everything tried, proved, and refuted along the way. |
 
 Both share `preamble.tex` and `references.bib`, so notation and citations can
 never drift apart. `working.tex` includes the report's own sections first, so

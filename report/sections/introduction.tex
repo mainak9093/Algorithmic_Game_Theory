@@ -89,7 +89,7 @@ one, therefore applies off the shelf and yields a subsidy of at most $n-1$ per
 agent and $n(n-1)/2$ in total~\cite[Theorem~1]{KMSTY24}. Two details make the
 containment work and are easy to get wrong. Their normalisation is two-sided, so
 it bounds chore disutility as well as value; and the EF1 they require is the
-two-sided form\ifworking\ of \Cref{def:ef1}\fi, which removes one item from
+two-sided form of Definition~\ref{def:ef1}, which removes one item from
 \emph{either} bundle, not the goods-only form
 of~\cite{HS19} --- the two differ precisely when chores are present. An EF1
 allocation is guaranteed to exist and to be computable in polynomial time for
@@ -109,9 +109,25 @@ empty-handed. Under the balanced allocation, in which $n-1$ agents hold one
 chore each and one agent holds nothing, each of the $n-1$ loaded agents envies
 the empty agent by exactly $1$ and no other envy is present, so the minimum
 subsidy assigns $1$ to each loaded agent and $0$ to the empty one, for a total of
-$n-1$. No allocation does better: any complete allocation gives some agent a
-bundle of size $k \ge 1$ while some other agent is empty, and that agent's
-heaviest outgoing path already has weight $k$.
+$n-1$.
+
+No allocation does better. Let $\alloc = (\bundle1,\dots,\bundle n)$ be any
+complete allocation and write $s_i = \abs{\bundle i}$. There are $n-1$ chores,
+so $\sum_{i \in \agents} s_i = n-1$ and some agent $h$ receives none:
+$s_h = 0$. Suppose $\subsidy \in \R^n_{+}$ makes $\alloc$ envy-free, which in
+cost form reads
+\[
+  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
+  \qquad \text{for all } i,j \in \agents .
+\]
+Comparing each agent $i$ with $h$ and using $\cost_i(S) = \abs S$,
+\[
+  s_i - \subsidy_i \;=\; \cost_i(\bundle i) - \subsidy_i
+  \;\le\; \cost_i(\bundle h) - \subsidy_h \;=\; -\subsidy_h ,
+\]
+so $\subsidy_i \ge s_i + \subsidy_h \ge s_i$ for every $i$, the last step
+because $\subsidy_h \ge 0$. Summing over the agents,
+$\sum_{i \in \agents} \subsidy_i \ge \sum_{i \in \agents} s_i = n-1$.
 \end{example}
 
 So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}.
