@@ -1,0 +1,471 @@
+\section{Unit Subsidies for Negative Dichotomous Valuations}
+\label{sec:main}
+
+This section proves the main theorem: for every number of agents $n$ and every
+negative dichotomous instance there is an allocation admitting an envy-free
+solution with a subsidy of $0$ or $1$ per agent, at most $n-1$ in total,
+computable in polynomial time. Beyond Definition~\ref{def:dichcost} nothing is
+assumed of the cost functions --- not additivity, not submodularity, not any
+relation between different agents' cost functions --- and the number of chores
+is unrestricted.
+
+The argument takes as input an envy-free \emph{partial} allocation produced by
+the algorithm of Tao, Wu, Yu and Zhou~\cite{TWYZ23}, and completes it. That
+algorithm, its Theorem~5.1, and the three update rules recorded in
+\Cref{sec:m-terminal} are due to~\cite{TWYZ23} and are restated here for
+reference; the completion of \Cref{sec:m-completion} onwards, and every lemma
+and theorem after Lemma~\ref{lem:m-terminal}, are ours.
+
+We work in cost form throughout, so an envy-free solution
+(Definition~\ref{def:efsolution}) is the requirement
+\begin{equation}
+\label{eq:m-ef}
+  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
+  \qquad \text{for all } i,j \in \agents ,
+\end{equation}
+and a partial allocation is envy-free (Definition~\ref{def:ef}) when
+\begin{equation}
+\label{eq:m-pef}
+  \cost_i(\bundle i) \;\le\; \cost_i(\bundle j)
+  \qquad \text{for all } i,j \in \agents .
+\end{equation}
+For $S \subseteq \items$ and $e \in \items \setminus S$ write
+$\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
+marginal, and for a partial allocation $\alloc$ write
+$R(\alloc) := \items \setminus \bigcup_{i \in \agents} \bundle i$ for its
+\emph{residue}.
+
+\begin{observation}
+\label{obs:m-gap}
+For every $i \in \agents$ and all $S,T \subseteq \items$,
+\[
+  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+\]
+Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+\end{observation}
+
+\begin{proof}
+By Observation~\ref{obs:integrality} every $\cost_i$ is integer valued, so a
+strict inequality between two of its values is a gap of at least $1$. For
+monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+Definition~\ref{def:dichcost}, hence non-negative.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{The terminal state of the partial-allocation algorithm}
+\label{sec:m-terminal}
+
+\begin{theorem}[\cite{TWYZ23}, Theorem~5.1]
+\label{thm:m-twyz}
+For every $n$ and all dichotomous cost functions $\cost_1,\dots,\cost_n$ there
+is a polynomial-time algorithm returning a partial allocation $X$ that is
+envy-free in the sense of \eqref{eq:m-pef} and satisfies
+$\abs{R(X)} \le n-1$.
+\end{theorem}
+
+The proof below uses not only the statement of Theorem~\ref{thm:m-twyz} but the
+state in which the algorithm of~\cite{TWYZ23} halts, so we record that
+algorithm. It maintains a partial allocation $X = (X_1,\dots,X_n)$, envy-free
+throughout, together with the \emph{equality graph}
+\begin{equation}
+\label{eq:m-graph}
+  G = (\agents, E),
+  \qquad
+  (i,j) \in E \iff i \ne j \ \text{ and } \ \cost_i(X_i) = \cost_i(X_j),
+\end{equation}
+and repeats the following three rules in the stated order, halting only when
+none applies.
+\begin{enumerate}
+  \item[(R1)] If some $e \in R(X)$ and some $i \in \agents$ satisfy
+        $\cost_i(e \mid X_i) = 0$, assign $e$ to $i$.
+  \item[(R2)] If some $e \in R(X)$ and some arc $(i,j) \in E$ lying on a
+        directed cycle of $G$ satisfy $\cost_i(e \mid X_j) = 0$, rotate the
+        bundles along that cycle and assign $e$ to $i$.
+  \item[(R3)] Otherwise select a strongly connected component $S$ of $G$ with
+        no arc of $E$ leaving $S$. If $\abs{R(X)} \ge \abs S$, assign one
+        residual chore to each agent of $S$; otherwise halt.
+\end{enumerate}
+The loop runs while $R(X) \ne \emptyset$, so the only exit with
+$R(X) \ne \emptyset$ is the final clause of (R3).
+
+For the remainder of this section fix the following data: let $X$ be the
+partial allocation at which the algorithm halts, let $R := R(X)$ and
+$r := \abs R$, and, when $r \ge 1$, let $S$ be the component selected by (R3)
+at the halting step, with $G$ and $E$ as in \eqref{eq:m-graph} evaluated at
+that state.
+
+\begin{lemma}
+\label{lem:m-terminal}
+Suppose $r \ge 1$. Then
+\begin{enumerate}
+  \item[(a)] $r < \abs S$;
+  \item[(b)] $\cost_i(e \mid X_i) = 1$ for every $i \in \agents$ and every
+        $e \in R$;
+  \item[(c)] $\cost_i(e \mid X_j) = 1$ for every arc $(i,j) \in E$ with
+        $i,j \in S$ and every $e \in R$;
+  \item[(d)] $\cost_i(X_i) < \cost_i(X_j)$ for every $i \in S$ and every
+        $j \in \agents \setminus S$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+Since $r \ge 1$, the algorithm halted at the final clause of (R3); hence
+neither (R1) nor (R2) applied at the halting state, and $\abs R < \abs S$,
+which is (a).
+
+(b) If $\cost_i(e \mid X_i) = 0$ for some $i \in \agents$ and some $e \in R$,
+rule (R1) would apply. Marginals lie in $\set{0,1}$ by
+Definition~\ref{def:dichcost}, so the value is $1$.
+
+(c) Let $(i,j) \in E$ with $i,j \in S$. Since $S$ is strongly connected there
+is a directed path in $G$ from $j$ to $i$; taking one with no repeated vertex
+and appending the arc $(i,j)$ yields a directed cycle of $G$ through $(i,j)$.
+If $\cost_i(e \mid X_j) = 0$ for some $e \in R$, rule (R2) would apply to that
+arc and that cycle. Hence the marginal is not $0$, so it is $1$.
+
+(d) Let $i \in S$ and $j \in \agents \setminus S$. No arc of $E$ leaves $S$, so
+$(i,j) \notin E$, i.e.\ $\cost_i(X_i) \ne \cost_i(X_j)$ by \eqref{eq:m-graph}.
+Envy-freeness \eqref{eq:m-pef} gives $\cost_i(X_i) \le \cost_i(X_j)$, so the
+inequality is strict.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{The completion}
+\label{sec:m-completion}
+
+Assume $r \ge 1$ and write $R = \set{e_1,\dots,e_r}$. By
+Lemma~\ref{lem:m-terminal}(a), $r < \abs S$, so we may fix $r$ distinct agents
+\[
+  T = \set{t_1,\dots,t_r} \subseteq S ,
+\]
+chosen arbitrarily. Define $\alloc = (A_1,\dots,A_n)$ by
+\begin{equation}
+\label{eq:m-alloc}
+  A_i :=
+  \begin{cases}
+    X_{t_k} \cup \set{e_k}, & i = t_k \ \ (1 \le k \le r),\\[2pt]
+    X_i, & i \in \agents \setminus T .
+  \end{cases}
+\end{equation}
+The $t_k$ are distinct and each chore of $R$ is used exactly once, so the
+bundles of $\alloc$ are pairwise disjoint and cover $\items$: $\alloc$ is a
+complete allocation. Members of $T$ are called \emph{recipients}.
+
+\begin{definition}[Subsidy set]
+\label{def:m-P}
+Let $P \subseteq \agents$ be the smallest set satisfying
+\begin{enumerate}
+  \item[(P1)] $T \subseteq P$; and
+  \item[(P2)] if $i \in \agents \setminus S$ and $(i,j) \in E$ for some
+        $j \in P$, then $i \in P$.
+\end{enumerate}
+Equivalently, $P$ is obtained by initialising $P := T$ and repeatedly adjoining
+any $i \in \agents \setminus S$ having an arc of $E$ into the current set,
+until no further agent can be adjoined; the process terminates because
+$\agents$ is finite and $P$ only grows. Define
+\begin{equation}
+\label{eq:m-subsidy}
+  \subsidy_i := \begin{cases} 1, & i \in P,\\ 0, & i \in \agents \setminus P.\end{cases}
+\end{equation}
+\end{definition}
+
+The complete procedure is summarised in
+Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is Algorithm~3 of
+\cite{TWYZ23}; our contribution is the completion and subsidy construction in the subsequent lines.
+
+\begin{algorithm}[H]
+\caption{EF1 allocation with at most one unit of subsidy per agent for negative dichotomous valuations}
+\label{alg:main}
+\begin{algorithmic}[1]
+\Require Agents $N=[n]$, chores $M$, and value-oracle access to negative
+dichotomous valuations $\{v_i\}_{i\in N}$.
+\Ensure A complete allocation $\mathcal{A}$ that is EF1, together with a
+subsidy vector $p\in\{0,1\}^n$ such that $(\mathcal{A},p)$ is envy-free and
+$\sum_{i\in N}p_i\le n-1$.
+
+\State Set $c_i=-v_i$ for every $i\in N$.
+\State Run Algorithm~3 of \cite{TWYZ23} on $\{c_i\}_{i\in N}$.
+\State Let $X=(X_1,\ldots,X_n)$ be its terminal partial allocation and
+      let $R=M\setminus\bigcup_{i\in N}X_i$.
+
+\If{$R=\varnothing$}
+    \State \Return $(X,\mathbf{0})$.
+\EndIf
+
+\State Let $S$ be the tail strongly connected component selected at the
+      terminating application of Rule (R3).
+\State Write $R=\{e_1,\ldots,e_r\}$.
+\State Choose arbitrary distinct agents
+      $T=\{t_1,\ldots,t_r\}\subseteq S$.
+      \Comment{$r<|S|$ by Lemma~\ref{lem:m-terminal}(a)}
+
+\For{$k=1,\ldots,r$}
+    \State $A_{t_k}\gets X_{t_k}\cup\{e_k\}$.
+\EndFor
+\For{$i\in N\setminus T$}
+    \State $A_i\gets X_i$.
+\EndFor
+
+\State Construct the equality graph $G=(N,E)$ on the agents, where
+\Statex \qquad $(i,j)\in E \iff i\neq j$ and $c_i(X_i)=c_i(X_j)$.
+
+\State Initialise $P\gets T$.
+\While{there exist $i\in N\setminus S$ and $j\in P$
+       with $(i,j)\in E$ and $i\notin P$}
+    \State $P\gets P\cup\{i\}$.
+\EndWhile
+
+\For{$i\in N$}
+    \State $p_i\gets \mathbf{1}[i\in P]$.
+\EndFor
+
+\State $\mathcal{A}\gets(A_1,\ldots,A_n)$.
+\State \Return $(\mathcal{A},p)$.
+\end{algorithmic}
+\end{algorithm}
+\begin{lemma}
+\label{lem:m-Pstructure}
+$P \setminus T \subseteq \agents \setminus S$: every agent of $P$ that is not a
+recipient lies outside $S$.
+\end{lemma}
+
+\begin{proof}
+Let $P_0 := T$ and let $P_{u+1}$ be $P_u$ together with every
+$i \in \agents \setminus S$ having an arc of $E$ into $P_u$, so that
+$P = \bigcup_{u \ge 0} P_u$. We show $P_u \setminus T \subseteq \agents
+\setminus S$ by induction on $u$. For $u = 0$ the set $P_0 \setminus T$ is
+empty. For the step, every agent adjoined in passing from $P_u$ to $P_{u+1}$
+lies in $\agents \setminus S$ by construction.
+\end{proof}
+
+\begin{lemma}
+\label{lem:m-budget}
+$\subsidy \in \set{0,1}^n$ and $\sum_{i \in \agents} \subsidy_i = \abs P \le n-1$.
+\end{lemma}
+
+\begin{proof}
+That $\subsidy \in \set{0,1}^n$ with $\sum_i \subsidy_i = \abs P$ is immediate
+from \eqref{eq:m-subsidy}. By Lemma~\ref{lem:m-Pstructure},
+$P \subseteq T \cup (\agents \setminus S)$, and this union is disjoint because
+$T \subseteq S$; hence
+$\abs P \le \abs T + \abs{\agents \setminus S} = r + n - \abs S$. By
+Lemma~\ref{lem:m-terminal}(a), $r \le \abs S - 1$, so $\abs P \le n-1$.
+\end{proof}
+
+\begin{lemma}
+\label{lem:m-expensive}
+Let $i \in S$, let $t \in T$ and let $e \in R$. Then
+\[
+  \cost_i\bigl(X_t \cup \set e\bigr) \;\ge\; \cost_i(X_i) + 1 .
+\]
+\end{lemma}
+
+\begin{proof}
+Note $t \in T \subseteq S$. Envy-freeness \eqref{eq:m-pef} gives
+$\cost_i(X_i) \le \cost_i(X_t)$.
+
+If $\cost_i(X_i) < \cost_i(X_t)$, then $\cost_i(X_t) \ge \cost_i(X_i) + 1$ by
+Observation~\ref{obs:m-gap}, and $\cost_i(X_t \cup \set e) \ge \cost_i(X_t)$ by
+monotonicity, again Observation~\ref{obs:m-gap}.
+
+Otherwise $\cost_i(X_i) = \cost_i(X_t)$. If $i = t$ then
+$\cost_i(X_t \cup \set e) = \cost_i(X_i) + \cost_i(e \mid X_i) = \cost_i(X_i)+1$
+by Lemma~\ref{lem:m-terminal}(b). If $i \ne t$ then $(i,t) \in E$ by
+\eqref{eq:m-graph}, with $i,t \in S$, so $\cost_i(e \mid X_t) = 1$ by
+Lemma~\ref{lem:m-terminal}(c) and therefore
+$\cost_i(X_t \cup \set e) = \cost_i(X_t) + 1 = \cost_i(X_i) + 1$.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{Envy-freeness of the completion}
+\label{sec:m-ef}
+
+\begin{theorem}
+\label{thm:m-completion}
+Let $X$, $R$, $S$ be as in \Cref{sec:m-terminal} with $r \ge 1$, let $\alloc$
+be as in \eqref{eq:m-alloc} and let $\subsidy$ be as in \eqref{eq:m-subsidy}.
+Then $(\alloc,\subsidy)$ is an envy-free solution.
+\end{theorem}
+
+\begin{proof}
+Fix $i,j \in \agents$; we verify \eqref{eq:m-ef}, that is
+$\cost_i(A_i) - \subsidy_i \le \cost_i(A_j) - \subsidy_j$. Throughout,
+$X_j \subseteq A_j$ for every $j$ by \eqref{eq:m-alloc}, so by monotonicity
+(Observation~\ref{obs:m-gap}) and \eqref{eq:m-pef},
+\begin{equation}
+\label{eq:m-mono}
+  \cost_i(A_j) \;\ge\; \cost_i(X_j) \;\ge\; \cost_i(X_i) .
+\end{equation}
+Note also that $T \subseteq P$, so $i \notin P$ implies $i \notin T$ and hence
+$A_i = X_i$; likewise $j \notin P$ implies $A_j = X_j$ and $\subsidy_j = 0$.
+Since $\agents$ is the disjoint union of $T$, $P \setminus T$ and
+$\agents \setminus P$, the following three cases are exhaustive.
+
+\smallskip
+\noindent\textbf{Case 1: $i \in T$.} Then $\subsidy_i = 1$ and, by
+Lemma~\ref{lem:m-terminal}(b), $\cost_i(A_i) = \cost_i(X_i) + \cost_i(e \mid X_i)
+= \cost_i(X_i) + 1$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$. Also
+$i \in T \subseteq S$.
+\begin{itemize}
+  \item[(1a)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set{e}$ for
+    some $e \in R$, so $\cost_i(A_j) \ge \cost_i(X_i) + 1$ by
+    Lemma~\ref{lem:m-expensive}. Hence
+    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
+  \item[(1b)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$. By
+    Lemma~\ref{lem:m-Pstructure}, $j \notin S$; since $i \in S$,
+    Lemma~\ref{lem:m-terminal}(d) gives $\cost_i(X_i) < \cost_i(X_j)$, hence
+    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by Observation~\ref{obs:m-gap}. Hence
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
+  \item[(1c)] $j \in \agents \setminus P$. Then $\subsidy_j = 0$ and
+    $A_j = X_j$, so $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$
+    by \eqref{eq:m-pef}.
+\end{itemize}
+
+\smallskip
+\noindent\textbf{Case 2: $i \in P \setminus T$.} Then $\subsidy_i = 1$ and
+$A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i) - 1$. For every $j$
+we have $\subsidy_j \le 1$ and $\cost_i(A_j) \ge \cost_i(X_i)$ by
+\eqref{eq:m-mono}, hence
+$\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) - 1 = \cost_i(A_i) - \subsidy_i$.
+
+\smallskip
+\noindent\textbf{Case 3: $i \in \agents \setminus P$.} Then $\subsidy_i = 0$
+and $A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$.
+\begin{itemize}
+  \item[(3a)] $j \in \agents \setminus P$. Then $\subsidy_j = 0$ and
+    $A_j = X_j$, so $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$
+    by \eqref{eq:m-pef}.
+  \item[(3b)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set e$ for
+    some $e \in R$; we claim $\cost_i(A_j) \ge \cost_i(X_i) + 1$. If $i \in S$
+    this is Lemma~\ref{lem:m-expensive}. If $i \notin S$, suppose
+    $\cost_i(X_i) = \cost_i(X_j)$. Then $i \ne j$, since $j \in T \subseteq P$
+    while $i \notin P$; so $(i,j) \in E$ by \eqref{eq:m-graph}, and $j \in P$,
+    so (P2) of Definition~\ref{def:m-P} places $i \in P$ --- contradicting
+    $i \notin P$. Hence $\cost_i(X_i) < \cost_i(X_j)$, so
+    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by Observation~\ref{obs:m-gap}, and
+    $\cost_i(A_j) \ge \cost_i(X_j)$ by monotonicity. In either case
+    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
+  \item[(3c)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$; we
+    claim $\cost_i(X_j) \ge \cost_i(X_i) + 1$. If $i \notin S$, suppose
+    $\cost_i(X_i) = \cost_i(X_j)$. Then $i \ne j$, since $j \in P$ while
+    $i \notin P$; so $(i,j) \in E$, and (P2) places $i \in P$, a contradiction.
+    Hence $\cost_i(X_i) < \cost_i(X_j)$. If instead $i \in S$, then $j \notin S$
+    by Lemma~\ref{lem:m-Pstructure}, and Lemma~\ref{lem:m-terminal}(d) gives
+    $\cost_i(X_i) < \cost_i(X_j)$. In either case
+    Observation~\ref{obs:m-gap} yields $\cost_i(X_j) \ge \cost_i(X_i) + 1$, so
+    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
+\end{itemize}
+
+\smallskip
+In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) = \cost_i(A_i) -
+\subsidy_i$ in Cases 1 and 3, and the inequality was shown directly in Case 2.
+\end{proof}
+
+\subsection{The EF1 property of the completion}
+\begin{corollary}\label{cor:ef1}
+The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion}
+is EF1 in the sense of Definition~\ref{def:ef1chores}, hence also in the
+sense of Definition~\ref{def:ef1}. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
+$\mathcal{A}$, while for every recipient $t_k\in T$, removing the residual
+chore $e_k$ assigned to $t_k$ eliminates all of $t_k$'s envy.
+\end{corollary}
+
+\begin{proof}
+Recall that the partial allocation
+$X=(X_1,\ldots,X_n)$ is envy-free, and that
+$X_j\subseteq A_j$ for every $j\in N$. First, let $i\in N\setminus T$. Then $A_i=X_i$. Hence, for every
+$j\in N$, envy-freeness of $X$ and monotonicity of $c_i$ give
+\[
+c_i(A_i)
+=
+c_i(X_i)
+\le
+c_i(X_j)
+\le
+c_i(A_j).
+\]
+Thus $i$ does not envy any agent in $\mathcal{A}$. Now let $i=t_k\in T$. By construction,
+\[
+A_i=X_i\cup\{e_k\},
+\]
+and hence
+\[
+A_i\setminus\{e_k\}=X_i.
+\]
+Therefore, for every $j\in N$,
+\[
+c_i(A_i\setminus\{e_k\})
+=
+c_i(X_i)
+\le
+c_i(X_j)
+\le
+c_i(A_j),
+\]
+where the first inequality follows from envy-freeness of $X$ and the
+second from monotonicity.
+
+Thus, for every recipient, removing the single newly assigned chore
+from her own bundle eliminates her envy towards every other agent.
+Consequently, $\mathcal{A}$ is EF1.
+\end{proof}
+% --------------------------------------------------------------------------
+\subsection{The main theorem}
+\label{sec:m-main}
+
+\begin{theorem}
+\label{thm:m-main}
+For every $n$ and every instance $\langle \agents, \items,
+\set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
+exist a complete allocation $\alloc$ and a subsidy vector
+$\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
+that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1.
+Both $\mathcal{A}$ and $p$ are computable in polynomial time given
+value-oracle access.
+\end{theorem}
+
+\begin{proof}
+Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
+Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{TWYZ23} and retain
+its terminal partial allocation $X$, the residue $R$ with $r = \abs R$, and
+the tail strongly connected component $S$ selected at the terminating
+application of rule (R3), all as fixed in \Cref{sec:m-terminal}. The
+statement of Theorem~\ref{thm:m-twyz} alone does not supply $S$.
+
+If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
+$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$. Since every envy-free allocation is EF1, $X$ is also EF1.
+
+If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
+\Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
+Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
+solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
+$\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
+
+For the running time, Algorithm~3 of~\cite{TWYZ23} is polynomial and yields
+$X$, $R$ and the tail component $S$ of its terminating (R3) step. Constructing $\alloc$ from \eqref{eq:m-alloc}
+takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
+vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
+each. Computing $P$ is a backward reachability search in $G$ from $T$
+restricted to vertices outside $S$, which takes $O(n^2)$ time. Hence the work
+after Theorem~\ref{thm:m-twyz} is polynomial, and so is the whole procedure.
+\end{proof}
+
+By Example~\ref{ex:lowerbound} the bound of Theorem~\ref{thm:m-main} is tight:
+there are instances on which every complete allocation requires total subsidy
+at least $n-1$.
+
+\begin{remark}
+\label{rem:m-scope}
+Theorem~\ref{thm:m-main} uses Theorem~\ref{thm:m-twyz} together with the four
+properties of its halting state recorded in Lemma~\ref{lem:m-terminal}, which
+are read off the rules (R1)--(R3) of~\cite{TWYZ23} restated in
+\Cref{sec:m-terminal}; the statement of Theorem~\ref{thm:m-twyz} alone does not
+supply them. Envy-freeness is verified directly from \eqref{eq:m-ef} in
+Theorem~\ref{thm:m-completion}, so the argument does not invoke
+Theorem~\ref{thm:hs-characterisation} or Theorem~\ref{thm:hs-minsubsidy}, and
+the subsidy exhibited need not be the pointwise-minimal one. Part (a) of
+Lemma~\ref{lem:m-terminal} is used only in Lemma~\ref{lem:m-budget}: the
+conclusion of Theorem~\ref{thm:m-completion} holds whenever $r \le \abs S$.
+\end{remark}

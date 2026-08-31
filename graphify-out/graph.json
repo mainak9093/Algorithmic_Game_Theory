@@ -12,8 +12,8 @@
       "_callable_class": true,
       "_origin": "ast",
       "id": "updates_update_4_dupsep_inst",
-      "community": 127,
-      "community_name": "Inst",
+      "community": 14,
+      "community_name": "dupsep.py",
       "norm_label": "inst"
     },
     {
@@ -26,7 +26,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_chores",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "chores"
     },
     {
@@ -950,7 +950,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_all_partial",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "all_partial()"
     },
     {
@@ -962,7 +962,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_allocated",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "allocated()"
     },
     {
@@ -974,7 +974,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_analyse",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "analyse()"
     },
     {
@@ -986,7 +986,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_main",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "main()"
     },
     {
@@ -998,7 +998,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_min_subsidy",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "min_subsidy()"
     },
     {
@@ -1010,7 +1010,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_pool_for",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "pool_for()"
     },
     {
@@ -1022,7 +1022,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_run",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "run()"
     },
     {
@@ -1034,7 +1034,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_sizes",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "sizes()"
     },
     {
@@ -1046,20 +1046,20 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_spread",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "spread()"
     },
     {
-      "label": "longest_paths()",
+      "label": "arc_weights()",
       "file_type": "code",
       "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L125",
+      "source_location": "L108",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_longest_paths",
+      "id": "updates_general_binary_update_1_gb_valuations_arc_weights",
       "community": 107,
-      "community_name": "longest_paths",
-      "norm_label": "longest_paths()"
+      "community_name": "arc_weights",
+      "norm_label": "arc_weights()"
     },
     {
       "label": "complete_assignments()",
@@ -1350,6 +1350,18 @@
       "norm_label": "sizes()"
     },
     {
+      "label": "bundles_from_assignment()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L89",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_bundles_from_assignment",
+      "community": 110,
+      "community_name": "bundles_from_assignment",
+      "norm_label": "bundles_from_assignment()"
+    },
+    {
       "label": "all_marginals_in()",
       "file_type": "code",
       "source_file": "updates_general_binary/update_1/test_mixed_insertion.py",
@@ -1358,7 +1370,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_all_marginals_in",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "all_marginals_in()"
     },
     {
@@ -1370,7 +1382,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_insertion_works",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "insertion_works()"
     },
     {
@@ -1382,7 +1394,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_item_is_universal_good",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "item_is_universal_good()"
     },
     {
@@ -1394,7 +1406,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_main",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "main()"
     },
     {
@@ -1406,7 +1418,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_min_subsidy",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "min_subsidy()"
     },
     {
@@ -1418,7 +1430,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_run",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "run()"
     },
     {
@@ -1430,7 +1442,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_safe_recipient_works",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "safe_recipient_works()"
     },
     {
@@ -1442,7 +1454,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_within_bound",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "within_bound()"
     },
     {
@@ -1566,18 +1578,6 @@
       "norm_label": "spread()"
     },
     {
-      "label": "bundles_from_assignment()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L89",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_bundles_from_assignment",
-      "community": 112,
-      "community_name": "bundles_from_assignment",
-      "norm_label": "bundles_from_assignment()"
-    },
-    {
       "label": "partial_assignments()",
       "file_type": "code",
       "source_file": "updates_general_binary/update_1/gb_valuations.py",
@@ -1586,7 +1586,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_gb_valuations_partial_assignments",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "partial_assignments()"
     },
     {
@@ -1598,7 +1598,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_greedy_choice",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "greedy_choice()"
     },
     {
@@ -1610,7 +1610,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_insertion_options",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "insertion_options()"
     },
     {
@@ -1622,7 +1622,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_main",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "main()"
     },
     {
@@ -1634,7 +1634,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_min_subsidy",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "min_subsidy()"
     },
     {
@@ -1646,7 +1646,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_run",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "run()"
     },
     {
@@ -1658,164 +1658,8 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_within_bound",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "within_bound()"
-    },
-    {
-      "label": "pool_for()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/canonical_allocation.py",
-      "source_location": "L151",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_canonical_allocation_pool_for",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "pool_for()"
-    },
-    {
-      "label": "pool_for()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/existence_spread.py",
-      "source_location": "L133",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_existence_spread_pool_for",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "pool_for()"
-    },
-    {
-      "label": "best_over_allocations()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L157",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_best_over_allocations",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "best_over_allocations()"
-    },
-    {
-      "label": "enumerate_class()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L79",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_enumerate_class",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "enumerate_class()"
-    },
-    {
-      "label": "enumerate_general_binary()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L47",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_enumerate_general_binary",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "enumerate_general_binary()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L180",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_main",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "main()"
-    },
-    {
-      "label": "masks_by_popcount()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L42",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_masks_by_popcount",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "masks_by_popcount()"
-    },
-    {
-      "label": "min_subsidy()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L147",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_min_subsidy",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "min_subsidy()"
-    },
-    {
-      "label": "describe()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L47",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_describe",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "describe()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L124",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_main",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "main()"
-    },
-    {
-      "label": "report_instance()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L57",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_report_instance",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "report_instance()"
-    },
-    {
-      "label": "sweep_exhaustive()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L63",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_sweep_exhaustive",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "sweep_exhaustive()"
-    },
-    {
-      "label": "sweep_random()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L91",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_sweep_random",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "sweep_random()"
     },
     {
       "label": "all_states()",
@@ -1826,7 +1670,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_all_states",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "all_states()"
     },
     {
@@ -1838,7 +1682,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_allocated",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "allocated()"
     },
     {
@@ -1850,7 +1694,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_analyse",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "analyse()"
     },
     {
@@ -1862,7 +1706,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_main",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "main()"
     },
     {
@@ -1874,7 +1718,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_min_subsidy",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "min_subsidy()"
     },
     {
@@ -1886,7 +1730,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_pool_for",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "pool_for()"
     },
     {
@@ -1898,7 +1742,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_run",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "run()"
     },
     {
@@ -1910,7 +1754,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_valid",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "valid()"
     },
     {
@@ -1922,7 +1766,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_main",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "main()"
     },
     {
@@ -1934,8 +1778,20 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_min_subsidy",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "min_subsidy()"
+    },
+    {
+      "label": "pool_for()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/existence_spread.py",
+      "source_location": "L133",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_existence_spread_pool_for",
+      "community": 114,
+      "community_name": "longest_paths",
+      "norm_label": "pool_for()"
     },
     {
       "label": "spread_of()",
@@ -1946,7 +1802,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_spread_of",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "spread_of()"
     },
     {
@@ -1958,7 +1814,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_sweep_general",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "sweep_general()"
     },
     {
@@ -1970,8 +1826,20 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_sweep_n3m3",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "sweep_n3m3()"
+    },
+    {
+      "label": "longest_paths()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L125",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_longest_paths",
+      "community": 114,
+      "community_name": "longest_paths",
+      "norm_label": "longest_paths()"
     },
     {
       "label": "build_table()",
@@ -1982,7 +1850,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_build_table",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "build_table()"
     },
     {
@@ -1994,7 +1862,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_check",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "check()"
     },
     {
@@ -2006,7 +1874,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_main",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "main()"
     },
     {
@@ -2018,7 +1886,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_sweep",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "sweep()"
     },
     {
@@ -2030,7 +1898,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_worst_subsidy_fast",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "worst_subsidy_fast()"
     },
     {
@@ -2320,6 +2188,18 @@
       "community": 117,
       "community_name": "canonical_allocation.py",
       "norm_label": "min_subsidy()"
+    },
+    {
+      "label": "pool_for()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/canonical_allocation.py",
+      "source_location": "L151",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_canonical_allocation_pool_for",
+      "community": 117,
+      "community_name": "canonical_allocation.py",
+      "norm_label": "pool_for()"
     },
     {
       "label": "run()",
@@ -2776,150 +2656,6 @@
       "community": 121,
       "community_name": "peel3.py",
       "norm_label": "tow()"
-    },
-    {
-      "label": "arcs()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L22",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_arcs",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "arcs()"
-    },
-    {
-      "label": "c1()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L17",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c1",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "c1()"
-    },
-    {
-      "label": "c2()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L18",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c2",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "c2()"
-    },
-    {
-      "label": "c3()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L19",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_c3",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "c3()"
-    },
-    {
-      "label": "dfs()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L101",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_dfs",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "dfs()"
-    },
-    {
-      "label": "invariant_ok()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L53",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_invariant_ok",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "invariant_ok()"
-    },
-    {
-      "label": "key()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L99",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_key",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "key()"
-    },
-    {
-      "label": "longest_paths()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L25",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_longest_paths",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "longest_paths()"
-    },
-    {
-      "label": "S()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L50",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_s",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "s()"
-    },
-    {
-      "label": "show()",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L57",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_2_peel_show",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "show()"
-    },
-    {
-      "label": "witness()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L88",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_witness",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "witness()"
-    },
-    {
-      "label": "witness()",
-      "file_type": "code",
-      "source_file": "updates/update_4/typeorder.py",
-      "source_location": "L124",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_typeorder_witness",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "witness()"
     },
     {
       "label": "as_dict()",
@@ -3498,114 +3234,6 @@
       "norm_label": "v_unit_cost()"
     },
     {
-      "label": ".allocations()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L69",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_allocations",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".allocations()"
-    },
-    {
-      "label": ".check_cost()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L40",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_check_cost",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".check_cost()"
-    },
-    {
-      "label": ".coverage()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L76",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_coverage",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".coverage()"
-    },
-    {
-      "label": ".d()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L66",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_d",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".d()"
-    },
-    {
-      "label": ".dupfree()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L56",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_dupfree",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".dupfree()"
-    },
-    {
-      "label": ".__init__()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L32",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_init",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".__init__()"
-    },
-    {
-      "label": ".show()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L79",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_show",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".show()"
-    },
-    {
-      "label": ".tau()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L50",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_tau",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".tau()"
-    },
-    {
-      "label": ".vhat()",
-      "file_type": "code",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L53",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_inst_vhat",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": ".vhat()"
-    },
-    {
       "label": "spread()",
       "file_type": "code",
       "source_file": "updates/update_48/residual_attack.py",
@@ -3870,25 +3498,61 @@
       "norm_label": "singletons()"
     },
     {
-      "label": "canon_good()",
+      "label": "canon()",
       "file_type": "code",
-      "source_file": "updates/update_22/window_general.py",
-      "source_location": "L45",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L40",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_22_window_general_canon_good",
+      "id": "updates_update_19_which_move_canon",
       "community": 13,
       "community_name": "minimum_subsidy.py",
-      "norm_label": "canon_good()"
+      "norm_label": "canon()"
     },
     {
       "label": "main()",
       "file_type": "code",
-      "source_file": "updates/update_22/window_general.py",
-      "source_location": "L82",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L144",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_22_window_general_main",
+      "id": "updates_update_19_which_move_main",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "max_path_endpoints()",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L52",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_max_path_endpoints",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "max_path_endpoints()"
+    },
+    {
+      "label": "key3()",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move_p3.py",
+      "source_location": "L31",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_p3_key3",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "key3()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move_p3.py",
+      "source_location": "L106",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_p3_main",
       "community": 13,
       "community_name": "minimum_subsidy.py",
       "norm_label": "main()"
@@ -3896,14 +3560,38 @@
     {
       "label": "scan()",
       "file_type": "code",
-      "source_file": "updates/update_22/window_general.py",
-      "source_location": "L57",
+      "source_file": "updates/update_19/which_move_p3.py",
+      "source_location": "L36",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_22_window_general_scan",
+      "id": "updates_update_19_which_move_p3_scan",
       "community": 13,
       "community_name": "minimum_subsidy.py",
       "norm_label": "scan()"
+    },
+    {
+      "label": "scan()",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L90",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_scan",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "scan()"
+    },
+    {
+      "label": "transfer()",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L80",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_transfer",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "transfer()"
     },
     {
       "label": "f_capped()",
@@ -4182,78 +3870,6 @@
       "norm_label": "test()"
     },
     {
-      "label": "ell()",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_rules_ell",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "ell()"
-    },
-    {
-      "label": "imm()",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L44",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_rules_imm",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "imm()"
-    },
-    {
-      "label": "partitions()",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L36",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_rules_partitions",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "partitions()"
-    },
-    {
-      "label": "random_dichotomous()",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L25",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_rules_random_dichotomous",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "random_dichotomous()"
-    },
-    {
-      "label": "run()",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L70",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_rules_run",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "run()"
-    },
-    {
-      "label": "path_weights()",
-      "file_type": "code",
-      "source_file": "updates/update_4/typeorder.py",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_4_typeorder_path_weights",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "path_weights()"
-    },
-    {
       "label": "main()",
       "file_type": "code",
       "source_file": "updates/update_18/potentials.py",
@@ -4418,7 +4034,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_all_partial",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "all_partial()"
     },
     {
@@ -4430,7 +4046,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_allocated",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "allocated()"
     },
     {
@@ -4442,7 +4058,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_balanced",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "balanced()"
     },
     {
@@ -4454,7 +4070,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_main",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "main()"
     },
     {
@@ -4466,7 +4082,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_pool_for",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "pool_for()"
     },
     {
@@ -4478,7 +4094,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_run",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "run()"
     },
     {
@@ -4490,7 +4106,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_sizes",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "sizes()"
     },
     {
@@ -4502,7 +4118,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_valid",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "valid()"
     },
     {
@@ -4514,8 +4130,44 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_works",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "works()"
+    },
+    {
+      "label": "enumerate_class()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L79",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_enumerate_class",
+      "community": 134,
+      "community_name": "enumerate_general_binary",
+      "norm_label": "enumerate_class()"
+    },
+    {
+      "label": "enumerate_general_binary()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L47",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_enumerate_general_binary",
+      "community": 134,
+      "community_name": "enumerate_general_binary",
+      "norm_label": "enumerate_general_binary()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L180",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_main",
+      "community": 134,
+      "community_name": "enumerate_general_binary",
+      "norm_label": "main()"
     },
     {
       "label": "analyse()",
@@ -4626,6 +4278,114 @@
       "norm_label": "graph()"
     },
     {
+      "label": ".allocations()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L69",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_allocations",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".allocations()"
+    },
+    {
+      "label": ".check_cost()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L40",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_check_cost",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".check_cost()"
+    },
+    {
+      "label": ".coverage()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L76",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_coverage",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".coverage()"
+    },
+    {
+      "label": ".d()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L66",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_d",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".d()"
+    },
+    {
+      "label": ".dupfree()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L56",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_dupfree",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".dupfree()"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L32",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_init",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".show()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L79",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_show",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".show()"
+    },
+    {
+      "label": ".tau()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L50",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_tau",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".tau()"
+    },
+    {
+      "label": ".vhat()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L53",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_inst_vhat",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": ".vhat()"
+    },
+    {
       "label": "P_family()",
       "file_type": "code",
       "source_file": "updates/update_4/dupsep.py",
@@ -4722,6 +4482,198 @@
       "norm_label": "unit()"
     },
     {
+      "label": "witness()",
+      "file_type": "code",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L88",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_witness",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "witness()"
+    },
+    {
+      "label": "arcs()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L22",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_arcs",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "arcs()"
+    },
+    {
+      "label": "c1()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L17",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c1",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "c1()"
+    },
+    {
+      "label": "c2()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L18",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c2",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "c2()"
+    },
+    {
+      "label": "c3()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L19",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_c3",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "c3()"
+    },
+    {
+      "label": "dfs()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L101",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_dfs",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "dfs()"
+    },
+    {
+      "label": "invariant_ok()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L53",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_invariant_ok",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "invariant_ok()"
+    },
+    {
+      "label": "key()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L99",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_key",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "key()"
+    },
+    {
+      "label": "longest_paths()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L25",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_longest_paths",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "longest_paths()"
+    },
+    {
+      "label": "S()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L50",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_s",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "s()"
+    },
+    {
+      "label": "show()",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_2_peel_show",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "show()"
+    },
+    {
+      "label": "ell()",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_rules_ell",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "ell()"
+    },
+    {
+      "label": "imm()",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L44",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_rules_imm",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "imm()"
+    },
+    {
+      "label": "partitions()",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L36",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_rules_partitions",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "partitions()"
+    },
+    {
+      "label": "random_dichotomous()",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L25",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_rules_random_dichotomous",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "random_dichotomous()"
+    },
+    {
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L70",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_rules_run",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "run()"
+    },
+    {
       "label": "random_dichotomous()",
       "file_type": "code",
       "source_file": "updates/update_4/stress.py",
@@ -4730,7 +4682,7 @@
       "_origin": "ast",
       "id": "updates_update_4_stress_random_dichotomous",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "random_dichotomous()"
     },
     {
@@ -4742,7 +4694,7 @@
       "_origin": "ast",
       "id": "updates_update_4_stress_run",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "run()"
     },
     {
@@ -4754,7 +4706,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_additive",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "additive()"
     },
     {
@@ -4766,7 +4718,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_chores_arcs",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": ".arcs()"
     },
     {
@@ -4778,7 +4730,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_chores_ell",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": ".ell()"
     },
     {
@@ -4790,7 +4742,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_chores_init",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": ".__init__()"
     },
     {
@@ -4802,7 +4754,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_chores_legal",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": ".legal()"
     },
     {
@@ -4814,8 +4766,20 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_free_search",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "free_search()"
+    },
+    {
+      "label": "path_weights()",
+      "file_type": "code",
+      "source_file": "updates/update_4/typeorder.py",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_typeorder_path_weights",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "path_weights()"
     },
     {
       "label": "_round()",
@@ -4826,7 +4790,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_round",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "_round()"
     },
     {
@@ -4838,8 +4802,176 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_type_ordered_search",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "type_ordered_search()"
+    },
+    {
+      "label": "witness()",
+      "file_type": "code",
+      "source_file": "updates/update_4/typeorder.py",
+      "source_location": "L124",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_4_typeorder_witness",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "witness()"
+    },
+    {
+      "label": "as_dict()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L16",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_as_dict",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "as_dict()"
+    },
+    {
+      "label": "families()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L30",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_families",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "families()"
+    },
+    {
+      "label": "is_dich()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L20",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_is_dich",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "is_dich()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L63",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_main",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "main()"
+    },
+    {
+      "label": "report()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L51",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_report",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "report()"
+    },
+    {
+      "label": "analyse()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L101",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_analyse",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "analyse()"
+    },
+    {
+      "label": "chore_ell()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L89",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_chore_ell",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "chore_ell()"
+    },
+    {
+      "label": "ell_from_W()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L74",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_ell_from_w",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "ell_from_w()"
+    },
+    {
+      "label": "gen_functions()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L37",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_gen_functions",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "gen_functions()"
+    },
+    {
+      "label": "goods_ell()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L94",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_goods_ell",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "goods_ell()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L125",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_main",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "main()"
+    },
+    {
+      "label": "rand_dicho()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L59",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_rand_dicho",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "rand_dicho()"
+    },
+    {
+      "label": "subsets()",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L33",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_subsets",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "subsets()"
     },
     {
       "label": "mk_cost()",
@@ -6736,162 +6868,6 @@
       "community": 28,
       "community_name": "investigate_mincost_r2.py",
       "norm_label": "muget()"
-    },
-    {
-      "label": "as_dict()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L16",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_as_dict",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "as_dict()"
-    },
-    {
-      "label": "families()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L30",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_families",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "families()"
-    },
-    {
-      "label": "is_dich()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L20",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_is_dich",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "is_dich()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L63",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_main",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "report()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L51",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_report",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "report()"
-    },
-    {
-      "label": "analyse()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L101",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_analyse",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "analyse()"
-    },
-    {
-      "label": "chore_ell()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L89",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_chore_ell",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "chore_ell()"
-    },
-    {
-      "label": "ell_from_W()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L74",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_ell_from_w",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "ell_from_w()"
-    },
-    {
-      "label": "gen_functions()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L37",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_gen_functions",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "gen_functions()"
-    },
-    {
-      "label": "goods_ell()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L94",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_goods_ell",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "goods_ell()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L125",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_main",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "rand_dicho()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L59",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_rand_dicho",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "rand_dicho()"
-    },
-    {
-      "label": "subsets()",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L33",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_subsets",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "subsets()"
     },
     {
       "label": "c_add()",
@@ -9642,18 +9618,6 @@
       "norm_label": "twyz()"
     },
     {
-      "label": "arc_weights()",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L108",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_arc_weights",
-      "community": 70,
-      "community_name": "arc_weights",
-      "norm_label": "arc_weights()"
-    },
-    {
       "label": "all_partial()",
       "file_type": "code",
       "source_file": "updates_general_binary/update_1/steering_rule.py",
@@ -9662,7 +9626,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_all_partial",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "all_partial()"
     },
     {
@@ -9674,7 +9638,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_allocated",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "allocated()"
     },
     {
@@ -9686,7 +9650,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_analyse",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "analyse()"
     },
     {
@@ -9698,7 +9662,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_check_subsidy_table",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "check_subsidy_table()"
     },
     {
@@ -9710,7 +9674,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_main",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "main()"
     },
     {
@@ -9722,7 +9686,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_min_subsidy",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "min_subsidy()"
     },
     {
@@ -9734,7 +9698,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_pool_for",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "pool_for()"
     },
     {
@@ -9746,7 +9710,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_sizes",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "sizes()"
     },
     {
@@ -9758,7 +9722,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_spread",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "spread()"
     },
     {
@@ -9770,7 +9734,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_sr_successors",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "sr_successors()"
     },
     {
@@ -9782,7 +9746,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_successors",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "successors()"
     },
     {
@@ -9794,7 +9758,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_valid_p",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "valid_p()"
     },
     {
@@ -10458,100 +10422,52 @@
       "norm_label": "solve()"
     },
     {
-      "label": "canon()",
+      "label": "canon_good()",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L40",
+      "source_file": "updates/update_22/window_general.py",
+      "source_location": "L45",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_19_which_move_canon",
+      "id": "updates_update_22_window_general_canon_good",
       "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "canon()"
+      "community_name": "window_general.py",
+      "norm_label": "canon_good()"
     },
     {
       "label": "main()",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L144",
+      "source_file": "updates/update_22/window_general.py",
+      "source_location": "L82",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_19_which_move_main",
+      "id": "updates_update_22_window_general_main",
       "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "main()"
-    },
-    {
-      "label": "max_path_endpoints()",
-      "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L52",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_max_path_endpoints",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "max_path_endpoints()"
-    },
-    {
-      "label": "key3()",
-      "file_type": "code",
-      "source_file": "updates/update_19/which_move_p3.py",
-      "source_location": "L31",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_p3_key3",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "key3()"
-    },
-    {
-      "label": "main()",
-      "file_type": "code",
-      "source_file": "updates/update_19/which_move_p3.py",
-      "source_location": "L106",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_p3_main",
-      "community": 82,
-      "community_name": "which_move.py",
+      "community_name": "window_general.py",
       "norm_label": "main()"
     },
     {
       "label": "scan()",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move_p3.py",
-      "source_location": "L36",
+      "source_file": "updates/update_22/window_general.py",
+      "source_location": "L57",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_19_which_move_p3_scan",
+      "id": "updates_update_22_window_general_scan",
       "community": 82,
-      "community_name": "which_move.py",
+      "community_name": "window_general.py",
       "norm_label": "scan()"
     },
     {
-      "label": "scan()",
+      "label": "best_over_allocations()",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L90",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L157",
       "_callable": true,
       "_origin": "ast",
-      "id": "updates_update_19_which_move_scan",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "scan()"
-    },
-    {
-      "label": "transfer()",
-      "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L80",
-      "_callable": true,
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_transfer",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "transfer()"
+      "id": "updates_general_binary_update_1_gb_valuations_best_over_allocations",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "best_over_allocations()"
     },
     {
       "label": "marginals_within()",
@@ -10562,8 +10478,92 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_gb_valuations_marginals_within",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "marginals_within()"
+    },
+    {
+      "label": "masks_by_popcount()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L42",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_masks_by_popcount",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "masks_by_popcount()"
+    },
+    {
+      "label": "min_subsidy()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L147",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_min_subsidy",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "min_subsidy()"
+    },
+    {
+      "label": "describe()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L47",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_describe",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "describe()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L124",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_main",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "main()"
+    },
+    {
+      "label": "report_instance()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L57",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_report_instance",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "report_instance()"
+    },
+    {
+      "label": "sweep_exhaustive()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L63",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_sweep_exhaustive",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "sweep_exhaustive()"
+    },
+    {
+      "label": "sweep_random()",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L91",
+      "_callable": true,
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_sweep_random",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "sweep_random()"
     },
     {
       "label": "climb()",
@@ -10574,7 +10574,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_climb",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "climb()"
     },
     {
@@ -10586,7 +10586,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_main",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "main()"
     },
     {
@@ -10598,7 +10598,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_neighbours",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "neighbours()"
     },
     {
@@ -10610,7 +10610,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_objective",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "objective()"
     },
     {
@@ -10622,7 +10622,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_opposed_pair",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "opposed_pair()"
     },
     {
@@ -10634,7 +10634,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_random_general_binary",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "random_general_binary()"
     },
     {
@@ -10646,7 +10646,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_seed_opposed",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "seed_opposed()"
     },
     {
@@ -10658,7 +10658,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_seed_unit_chores",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "seed_unit_chores()"
     },
     {
@@ -10670,7 +10670,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_seed_unit_good",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "seed_unit_good()"
     },
     {
@@ -12435,7 +12435,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "bounded_excursion.py"
     },
     {
@@ -12446,7 +12446,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_rationale_1",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "approach 15: testing the bounded-excursion conjecture directly. the conjecture..."
     },
     {
@@ -12457,19 +12457,19 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bounded_excursion_rationale_75",
       "community": 107,
-      "community_name": "longest_paths",
+      "community_name": "arc_weights",
       "norm_label": "(e1, e2) for this instance at width k."
     },
     {
-      "label": "l(i) for every i: the maximum weight of a simple directed path starting at i in\u2026",
+      "label": "w[i][j] = v_i(A_j) - v_i(A_i).",
       "file_type": "rationale",
       "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L126",
+      "source_location": "L109",
       "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_126",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_109",
       "community": 107,
-      "community_name": "longest_paths",
-      "norm_label": "l(i) for every i: the maximum weight of a simple directed path starting at i in..."
+      "community_name": "arc_weights",
+      "norm_label": "w[i][j] = v_i(a_j) - v_i(a_i)."
     },
     {
       "label": "test_decomposition.py",
@@ -12951,8 +12951,19 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "test_mixed_insertion.py"
+    },
+    {
+      "label": "assign[k] = agent holding item k, or None if item k is unallocated.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L90",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_90",
+      "community": 110,
+      "community_name": "bundles_from_assignment",
+      "norm_label": "assign[k] = agent holding item k, or none if item k is unallocated."
     },
     {
       "label": "Approach 15, the decisive experiment for the one route still standing.\u2026",
@@ -12962,7 +12973,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_rationale_1",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "approach 15, the decisive experiment for the one route still standing...."
     },
     {
@@ -12973,7 +12984,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_rationale_60",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "every marginal of item g lies in {0,1}, at every set."
     },
     {
@@ -12984,7 +12995,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_rationale_78",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "some recipient and reassignment keeps the minimal subsidy in {0,1}^n."
     },
     {
@@ -12995,7 +13006,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_mixed_insertion_rationale_90",
       "community": 110,
-      "community_name": "test_mixed_insertion.py",
+      "community_name": "bundles_from_assignment",
       "norm_label": "f2's prediction, sharpened: does a recipient x with a non-negative own marginal..."
     },
     {
@@ -13050,7 +13061,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "test_insertion.py"
     },
     {
@@ -13061,19 +13072,8 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_gb_valuations_rationale_104",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "every partial allocation: each item to an agent, or unallocated."
-    },
-    {
-      "label": "assign[k] = agent holding item k, or None if item k is unallocated.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L90",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_90",
-      "community": 112,
-      "community_name": "bundles_from_assignment",
-      "norm_label": "assign[k] = agent holding item k, or none if item k is unallocated."
     },
     {
       "label": "Approach 15, secondary experiment: does the ONE-ITEM-AT-A-TIME insertion lemma\u2026",
@@ -13083,7 +13083,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_rationale_1",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "approach 15, secondary experiment: does the one-item-at-a-time insertion lemma..."
     },
     {
@@ -13094,7 +13094,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_rationale_63",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "every (recipient, permutation) whose result is envy-freeable with minimal..."
     },
     {
@@ -13105,30 +13105,8 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_test_insertion_rationale_85",
       "community": 112,
-      "community_name": "bundles_from_assignment",
+      "community_name": "test_insertion.py",
       "norm_label": "maximise the marginal for the recipient; tie-break to minimal subsidy."
-    },
-    {
-      "label": "gb_valuations.py",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "gb_valuations.py"
-    },
-    {
-      "label": "hunt_counterexample.py",
-      "file_type": "code",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "hunt_counterexample.py"
     },
     {
       "label": "reachability.py",
@@ -13138,107 +13116,8 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "reachability.py"
-    },
-    {
-      "label": "Approach 15, shared machinery: enumerate general binary valuations and compute\u2026",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_1",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "approach 15, shared machinery: enumerate general binary valuations and compute..."
-    },
-    {
-      "label": "The minimal subsidy vector of an allocation, or None if it is not envy-freeable.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L148",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_148",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "the minimal subsidy vector of an allocation, or none if it is not envy-freeable."
-    },
-    {
-      "label": "min over complete allocations of max_i p*_i, together with a witnessing\u2026",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L158",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_158",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "min over complete allocations of max_i p*_i, together with a witnessing..."
-    },
-    {
-      "label": "All masks over m items, ordered by |S| then numerically.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L43",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_43",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "all masks over m items, ordered by |s| then numerically."
-    },
-    {
-      "label": "Every general binary valuation on m items, as a tuple indexed by mask.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L48",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_48",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "every general binary valuation on m items, as a tuple indexed by mask."
-    },
-    {
-      "label": "General binary valuations whose marginals all lie in `allowed`.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L80",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_80",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "general binary valuations whose marginals all lie in `allowed`."
-    },
-    {
-      "label": "Approach 15, primary experiment: try to BREAK the general binary conjecture.\u2026",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_1",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "approach 15, primary experiment: try to break the general binary conjecture...."
-    },
-    {
-      "label": "Readable valuation table: value on each subset, by mask.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L48",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_48",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "readable valuation table: value on each subset, by mask."
-    },
-    {
-      "label": "Every multiset of n valuations from `pool`.",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
-      "source_location": "L64",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_64",
-      "community": 113,
-      "community_name": "enumerate_general_binary",
-      "norm_label": "every multiset of n valuations from `pool`."
     },
     {
       "label": "Approach 15: is the conjecture provable by ANY incremental algorithm?\u2026",
@@ -13248,7 +13127,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_rationale_1",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "approach 15: is the conjecture provable by any incremental algorithm?..."
     },
     {
@@ -13259,7 +13138,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_rationale_61",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "every partial allocation, as a tuple of bundle masks."
     },
     {
@@ -13270,7 +13149,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_reachability_rationale_80",
       "community": 113,
-      "community_name": "enumerate_general_binary",
+      "community_name": "reachability.py",
       "norm_label": "bfs from the empty state. returns (a complete valid state exists, a complete..."
     },
     {
@@ -13281,7 +13160,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "existence_spread.py"
     },
     {
@@ -13292,7 +13171,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "hunt_n3m3.py"
     },
     {
@@ -13303,7 +13182,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_rationale_1",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "approach 15: the target as a pure existence statement. everything measured so..."
     },
     {
@@ -13314,7 +13193,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_rationale_53",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "exhaustive n=3, m=3: does a valid allocation of spread <= k exist?"
     },
     {
@@ -13325,8 +13204,19 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_existence_spread_rationale_94",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "`pool` is either a list of valuations or a callable drawing one."
+    },
+    {
+      "label": "l(i) for every i: the maximum weight of a simple directed path starting at i in\u2026",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L126",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_126",
+      "community": 114,
+      "community_name": "longest_paths",
+      "norm_label": "l(i) for every i: the maximum weight of a simple directed path starting at i in..."
     },
     {
       "label": "Approach 15: the exhaustive n=3, m=3 general binary sweep, specialised for\u2026",
@@ -13336,7 +13226,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_rationale_1",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "approach 15: the exhaustive n=3, m=3 general binary sweep, specialised for..."
     },
     {
@@ -13347,7 +13237,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_rationale_129",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "fast path must agree with the readable implementation."
     },
     {
@@ -13358,7 +13248,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_rationale_43",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "table[v][k] = (v(b_0), v(b_1), v(b_2)) for allocation k."
     },
     {
@@ -13369,7 +13259,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_n3m3_rationale_48",
       "community": 114,
-      "community_name": "existence_spread.py",
+      "community_name": "longest_paths",
       "norm_label": "max_i p*_i for one allocation, given each agent's row of the three bundle..."
     },
     {
@@ -13679,39 +13569,6 @@
       "community": 121,
       "community_name": "peel3.py",
       "norm_label": "clean fixed-point computation over the full peel state space of the theorem e..."
-    },
-    {
-      "label": "peel.py",
-      "file_type": "code",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_2_peel",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "peel.py"
-    },
-    {
-      "label": "peel.py -- verification for the replica/peel reformulation of PS1. State: W =\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_2_peel_rationale_1",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "peel.py -- verification for the replica/peel reformulation of ps1. state: w =..."
-    },
-    {
-      "label": "Return (ell, has_positive_cycle) via Bellman-Ford on negated weights / direct\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_2/peel.py",
-      "source_location": "L26",
-      "_origin": "ast",
-      "id": "updates_update_2_peel_rationale_26",
-      "community": 122,
-      "community_name": "S",
-      "norm_label": "return (ell, has_positive_cycle) via bellman-ford on negated weights / direct..."
     },
     {
       "label": "routeA.py",
@@ -14110,17 +13967,6 @@
       "norm_label": "algorithm 3, transcribed. returns (agent, trace) on termination, or (none,..."
     },
     {
-      "label": "negative dichotomous chore instance + its replica (n-1 copies per chore)",
-      "file_type": "rationale",
-      "source_file": "updates/update_4/dupsep.py",
-      "source_location": "L30",
-      "_origin": "ast",
-      "id": "updates_update_4_dupsep_rationale_30",
-      "community": 127,
-      "community_name": "Inst",
-      "norm_label": "negative dichotomous chore instance + its replica (n-1 copies per chore)"
-    },
-    {
       "label": "spread_conjecture.py",
       "file_type": "code",
       "source_file": "updates/update_48/spread_conjecture.py",
@@ -14253,15 +14099,26 @@
       "norm_label": "tightness.py"
     },
     {
-      "label": "window_general.py",
+      "label": "which_move.py",
       "file_type": "code",
-      "source_file": "updates/update_22/window_general.py",
+      "source_file": "updates/update_19/which_move.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_22_window_general",
+      "id": "updates_update_19_which_move",
       "community": 13,
       "community_name": "minimum_subsidy.py",
-      "norm_label": "window_general.py"
+      "norm_label": "which_move.py"
+    },
+    {
+      "label": "which_move_p3.py",
+      "file_type": "code",
+      "source_file": "updates/update_19/which_move_p3.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_p3",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "which_move_p3.py"
     },
     {
       "label": "counterexample_hunt.py",
@@ -14407,26 +14264,48 @@
       "norm_label": "(a): does every envy-freeable allocation have min_i ell(i) = 0?"
     },
     {
-      "label": "Does the n=2 window lemma generalise? The route to proving the algorithm works.\u2026",
+      "label": "Same rule coverage, but under the P3 criterion, which is weaker. which_move.py\u2026",
       "file_type": "rationale",
-      "source_file": "updates/update_22/window_general.py",
+      "source_file": "updates/update_19/which_move_p3.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_22_window_general_rationale_1",
+      "id": "updates_update_19_which_move_p3_rationale_1",
       "community": 13,
       "community_name": "minimum_subsidy.py",
-      "norm_label": "does the n=2 window lemma generalise? the route to proving the algorithm works...."
+      "norm_label": "same rule coverage, but under the p3 criterion, which is weaker. which_move.py..."
     },
     {
-      "label": "(min uspread of a BAD balanced partition, min uspread overall, min uspread of a\u2026",
+      "label": "WHICH transfer witnesses the crux? Toward a constructive proof. The crux (hard\u2026",
       "file_type": "rationale",
-      "source_file": "updates/update_22/window_general.py",
-      "source_location": "L58",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_22_window_general_rationale_58",
+      "id": "updates_update_19_which_move_rationale_1",
       "community": 13,
       "community_name": "minimum_subsidy.py",
-      "norm_label": "(min uspread of a bad balanced partition, min uspread overall, min uspread of a..."
+      "norm_label": "which transfer witnesses the crux? toward a constructive proof. the crux (hard..."
+    },
+    {
+      "label": "Return (ell vector, perm) for the min-cost assignment.",
+      "file_type": "rationale",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L41",
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_rationale_41",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "return (ell vector, perm) for the min-cost assignment."
+    },
+    {
+      "label": "Slots that end a maximum-weight path from some argmax-ell agent. Agent i holds\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_19/which_move.py",
+      "source_location": "L53",
+      "_origin": "ast",
+      "id": "updates_update_19_which_move_rationale_53",
+      "community": 13,
+      "community_name": "minimum_subsidy.py",
+      "norm_label": "slots that end a maximum-weight path from some argmax-ell agent. agent i holds..."
     },
     {
       "label": "Track 2: an adversarial hunt for a COUNTEREXAMPLE to Conjecture 2. Every sweep\u2026",
@@ -14561,39 +14440,6 @@
       "norm_label": "r10's certified-hard family: ef-free by construction."
     },
     {
-      "label": "rules.py",
-      "file_type": "code",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_4_rules",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "rules.py"
-    },
-    {
-      "label": "rules.py -- candidate constructions for PS1, tested exhaustively on small\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_4_rules_rationale_1",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "rules.py -- candidate constructions for ps1, tested exhaustively on small..."
-    },
-    {
-      "label": "iterated minimum-marginal perfect matching; pad with zero-cost dummy chores",
-      "file_type": "rationale",
-      "source_file": "updates/update_4/rules.py",
-      "source_location": "L45",
-      "_origin": "ast",
-      "id": "updates_update_4_rules_rationale_45",
-      "community": 131,
-      "community_name": "rules.py",
-      "norm_label": "iterated minimum-marginal perfect matching; pad with zero-cost dummy chores"
-    },
-    {
       "label": "potentials.py",
       "file_type": "code",
       "source_file": "updates/update_18/potentials.py",
@@ -14689,7 +14535,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "bal_step.py"
     },
     {
@@ -14700,7 +14546,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_rationale_1",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "approach 15: (s1) reduces to a single-step lemma, and this measures its..."
     },
     {
@@ -14711,8 +14557,30 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_bal_step_rationale_85",
       "community": 134,
-      "community_name": "bal_step.py",
+      "community_name": "enumerate_general_binary",
       "norm_label": "grow bundle x by g, then try every reassignment; land valid+balanced."
+    },
+    {
+      "label": "Every general binary valuation on m items, as a tuple indexed by mask.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_48",
+      "community": 134,
+      "community_name": "enumerate_general_binary",
+      "norm_label": "every general binary valuation on m items, as a tuple indexed by mask."
+    },
+    {
+      "label": "General binary valuations whose marginals all lie in `allowed`.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L80",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_80",
+      "community": 134,
+      "community_name": "enumerate_general_binary",
+      "norm_label": "general binary valuations whose marginals all lie in `allowed`."
     },
     {
       "label": "balance_lemma.py",
@@ -14781,6 +14649,17 @@
       "norm_label": "u_i = vhat_i + (number of duplicate copies whose type lies in p)"
     },
     {
+      "label": "negative dichotomous chore instance + its replica (n-1 copies per chore)",
+      "file_type": "rationale",
+      "source_file": "updates/update_4/dupsep.py",
+      "source_location": "L30",
+      "_origin": "ast",
+      "id": "updates_update_4_dupsep_rationale_30",
+      "community": 14,
+      "community_name": "dupsep.py",
+      "norm_label": "negative dichotomous chore instance + its replica (n-1 copies per chore)"
+    },
+    {
       "label": "longest-path weight out of each vertex; [INF]*n if a positive cycle exists",
       "file_type": "rationale",
       "source_file": "updates/update_4/dupsep.py",
@@ -14792,6 +14671,28 @@
       "norm_label": "longest-path weight out of each vertex; [inf]*n if a positive cycle exists"
     },
     {
+      "label": "peel.py",
+      "file_type": "code",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_2_peel",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "peel.py"
+    },
+    {
+      "label": "rules.py",
+      "file_type": "code",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_4_rules",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "rules.py"
+    },
+    {
       "label": "stress.py",
       "file_type": "code",
       "source_file": "updates/update_4/stress.py",
@@ -14799,7 +14700,7 @@
       "_origin": "ast",
       "id": "updates_update_4_stress",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "stress.py"
     },
     {
@@ -14810,8 +14711,74 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "typeorder.py"
+    },
+    {
+      "label": "targetG.py",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "targetg.py"
+    },
+    {
+      "label": "targetG_adv.py",
+      "file_type": "code",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "targetg_adv.py"
+    },
+    {
+      "label": "peel.py -- verification for the replica/peel reformulation of PS1. State: W =\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_2_peel_rationale_1",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "peel.py -- verification for the replica/peel reformulation of ps1. state: w =..."
+    },
+    {
+      "label": "Return (ell, has_positive_cycle) via Bellman-Ford on negated weights / direct\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_2/peel.py",
+      "source_location": "L26",
+      "_origin": "ast",
+      "id": "updates_update_2_peel_rationale_26",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "return (ell, has_positive_cycle) via bellman-ford on negated weights / direct..."
+    },
+    {
+      "label": "rules.py -- candidate constructions for PS1, tested exhaustively on small\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_4_rules_rationale_1",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "rules.py -- candidate constructions for ps1, tested exhaustively on small..."
+    },
+    {
+      "label": "iterated minimum-marginal perfect matching; pad with zero-cost dummy chores",
+      "file_type": "rationale",
+      "source_file": "updates/update_4/rules.py",
+      "source_location": "L45",
+      "_origin": "ast",
+      "id": "updates_update_4_rules_rationale_45",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "iterated minimum-marginal perfect matching; pad with zero-cost dummy chores"
     },
     {
       "label": "random stress test: is a legal TYPE-ORDERED peel schedule always available?",
@@ -14821,7 +14788,7 @@
       "_origin": "ast",
       "id": "updates_update_4_stress_rationale_1",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "random stress test: is a legal type-ordered peel schedule always available?"
     },
     {
@@ -14832,7 +14799,7 @@
       "_origin": "ast",
       "id": "updates_update_4_stress_rationale_7",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "random monotone c with c(empty)=0 and all marginals in {0,1}"
     },
     {
@@ -14843,7 +14810,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_rationale_1",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "typeorder.py -- two independent checks on the 'type-ordered + weight-inflated..."
     },
     {
@@ -14854,7 +14821,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_rationale_102",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "exists any legal peel schedule (no ordering constraint)? bfs over states."
     },
     {
@@ -14865,7 +14832,7 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_rationale_130",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "c_i(s) = |s \u2229 t_i| (binary additive chores)"
     },
     {
@@ -14876,8 +14843,52 @@
       "_origin": "ast",
       "id": "updates_update_4_typeorder_rationale_55",
       "community": 15,
-      "community_name": "typeorder.py",
+      "community_name": "S",
       "norm_label": "exists a legal schedule that finishes chore j_1, then j_2, ...?"
+    },
+    {
+      "label": "Target G against the adversary that killed uniform balance. Uniform balance\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_6/targetG_adv.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_adv_rationale_1",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "target g against the adversary that killed uniform balance. uniform balance..."
+    },
+    {
+      "label": "Target G: turn the chore problem into a pure GOODS problem. The size-shift\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_rationale_1",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "target g: turn the chore problem into a pure goods problem. the size-shift..."
+    },
+    {
+      "label": "Returns (conj1_ok, targetG_ok, best_spread).",
+      "file_type": "rationale",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L102",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_rationale_102",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "returns (conj1_ok, targetg_ok, best_spread)."
+    },
+    {
+      "label": "Min subsidy for the size-shifted GOODS instance vtilde_i(S)=|S|-c_i(S).",
+      "file_type": "rationale",
+      "source_file": "updates/update_6/targetG.py",
+      "source_location": "L95",
+      "_origin": "ast",
+      "id": "updates_update_6_targetg_rationale_95",
+      "community": 15,
+      "community_name": "S",
+      "norm_label": "min subsidy for the size-shifted goods instance vtilde_i(s)=|s|-c_i(s)."
     },
     {
       "label": "approach_14.md",
@@ -17140,70 +17151,124 @@
       "norm_label": "same check for the |r|=2 doubly-stuck case: does the minimum total cost..."
     },
     {
-      "label": "targetG.py",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG.py",
+      "label": "ARXIV_SUBMISSION.md",
+      "file_type": "document",
+      "node_kind": "page",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_6_targetg",
+      "id": "docs_arxiv_submission",
       "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "targetg.py"
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "arxiv_submission.md"
     },
     {
-      "label": "targetG_adv.py",
-      "file_type": "code",
-      "source_file": "updates/update_6/targetG_adv.py",
+      "label": "1. The upload bundle",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L9",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_1_the_upload_bundle",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "1. the upload bundle"
+    },
+    {
+      "label": "2. Preflight results (memo item 11)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L33",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_2_preflight_results_memo_item_11",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "2. preflight results (memo item 11)"
+    },
+    {
+      "label": "3. arXiv metadata (memo item 12)",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_3_arxiv_metadata_memo_item_12",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "3. arxiv metadata (memo item 12)"
+    },
+    {
+      "label": "4. Handoff \u2014 for the guide, not done here",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L91",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "4. handoff \u2014 for the guide, not done here"
+    },
+    {
+      "label": "5. Memo items already closed",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L140",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_5_memo_items_already_closed",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "5. memo items already closed"
+    },
+    {
+      "label": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_6_targetg_adv",
+      "id": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
       "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "targetg_adv.py"
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "arxiv submission \u2014 bundle, metadata, and handoff"
     },
     {
-      "label": "Target G against the adversary that killed uniform balance. Uniform balance\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_6/targetG_adv.py",
-      "source_location": "L1",
+      "label": "Item 10 \u2014 upload-day literature sweep",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L121",
       "_origin": "ast",
-      "id": "updates_update_6_targetg_adv_rationale_1",
+      "id": "docs_arxiv_submission_item_10_upload_day_literature_sweep",
       "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "target g against the adversary that killed uniform balance. uniform balance..."
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "item 10 \u2014 upload-day literature sweep"
     },
     {
-      "label": "Target G: turn the chore problem into a pure GOODS problem. The size-shift\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L1",
+      "label": "Item 7 \u2014 bibliographic entries",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L105",
       "_origin": "ast",
-      "id": "updates_update_6_targetg_rationale_1",
+      "id": "docs_arxiv_submission_item_7_bibliographic_entries",
       "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "target g: turn the chore problem into a pure goods problem. the size-shift..."
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "item 7 \u2014 bibliographic entries"
     },
     {
-      "label": "Returns (conj1_ok, targetG_ok, best_spread).",
-      "file_type": "rationale",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L102",
+      "label": "Item 9 \u2014 title-page contact",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L93",
       "_origin": "ast",
-      "id": "updates_update_6_targetg_rationale_102",
+      "id": "docs_arxiv_submission_item_9_title_page_contact",
       "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "returns (conj1_ok, targetg_ok, best_spread)."
-    },
-    {
-      "label": "Min subsidy for the size-shifted GOODS instance vtilde_i(S)=|S|-c_i(S).",
-      "file_type": "rationale",
-      "source_file": "updates/update_6/targetG.py",
-      "source_location": "L95",
-      "_origin": "ast",
-      "id": "updates_update_6_targetg_rationale_95",
-      "community": 29,
-      "community_name": "targetG_adv.py",
-      "norm_label": "min subsidy for the size-shifted goods instance vtilde_i(s)=|s|-c_i(s)."
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "item 9 \u2014 title-page contact"
     },
     {
       "label": "7.10.1 The complete constraint taxonomy",
@@ -22415,19 +22480,8 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "steering_rule.py"
-    },
-    {
-      "label": "w[i][j] = v_i(A_j) - v_i(A_i).",
-      "file_type": "rationale",
-      "source_file": "updates_general_binary/update_1/gb_valuations.py",
-      "source_location": "L109",
-      "_origin": "ast",
-      "id": "updates_general_binary_update_1_gb_valuations_rationale_109",
-      "community": 70,
-      "community_name": "arc_weights",
-      "norm_label": "w[i][j] = v_i(a_j) - v_i(a_i)."
     },
     {
       "label": "Approach 15: the first-excursion repair theorem is dead; is the STEERING rule\u2026",
@@ -22437,7 +22491,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_rationale_1",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "approach 15: the first-excursion repair theorem is dead; is the steering rule..."
     },
     {
@@ -22448,7 +22502,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_rationale_113",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "(sr): prefer balanced landings; fall back to any if none exist."
     },
     {
@@ -22459,7 +22513,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_rationale_148",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "w(i,j) <= p_i - p_j; positive arcs run paid -> unpaid with weight 1."
     },
     {
@@ -22470,7 +22524,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_steering_rule_rationale_96",
       "community": 70,
-      "community_name": "arc_weights",
+      "community_name": "steering_rule.py",
       "norm_label": "insertion moves: add one item to one bundle, then reassign bundles."
     },
     {
@@ -23289,70 +23343,59 @@
       "norm_label": "imwpm warm start, repaired by local search; on failure, restart from shuffled..."
     },
     {
-      "label": "which_move.py",
+      "label": "window_general.py",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move.py",
+      "source_file": "updates/update_22/window_general.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_19_which_move",
+      "id": "updates_update_22_window_general",
       "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "which_move.py"
+      "community_name": "window_general.py",
+      "norm_label": "window_general.py"
     },
     {
-      "label": "which_move_p3.py",
+      "label": "Does the n=2 window lemma generalise? The route to proving the algorithm works.\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_22/window_general.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_update_22_window_general_rationale_1",
+      "community": 82,
+      "community_name": "window_general.py",
+      "norm_label": "does the n=2 window lemma generalise? the route to proving the algorithm works...."
+    },
+    {
+      "label": "(min uspread of a BAD balanced partition, min uspread overall, min uspread of a\u2026",
+      "file_type": "rationale",
+      "source_file": "updates/update_22/window_general.py",
+      "source_location": "L58",
+      "_origin": "ast",
+      "id": "updates_update_22_window_general_rationale_58",
+      "community": 82,
+      "community_name": "window_general.py",
+      "norm_label": "(min uspread of a bad balanced partition, min uspread overall, min uspread of a..."
+    },
+    {
+      "label": "gb_valuations.py",
       "file_type": "code",
-      "source_file": "updates/update_19/which_move_p3.py",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_19_which_move_p3",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "which_move_p3.py"
+      "id": "updates_general_binary_update_1_gb_valuations",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "gb_valuations.py"
     },
     {
-      "label": "Same rule coverage, but under the P3 criterion, which is weaker. which_move.py\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_19/which_move_p3.py",
+      "label": "hunt_counterexample.py",
+      "file_type": "code",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
       "source_location": "L1",
       "_origin": "ast",
-      "id": "updates_update_19_which_move_p3_rationale_1",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "same rule coverage, but under the p3 criterion, which is weaker. which_move.py..."
-    },
-    {
-      "label": "WHICH transfer witnesses the crux? Toward a constructive proof. The crux (hard\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L1",
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_rationale_1",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "which transfer witnesses the crux? toward a constructive proof. the crux (hard..."
-    },
-    {
-      "label": "Return (ell vector, perm) for the min-cost assignment.",
-      "file_type": "rationale",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L41",
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_rationale_41",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "return (ell vector, perm) for the min-cost assignment."
-    },
-    {
-      "label": "Slots that end a maximum-weight path from some argmax-ell agent. Agent i holds\u2026",
-      "file_type": "rationale",
-      "source_file": "updates/update_19/which_move.py",
-      "source_location": "L53",
-      "_origin": "ast",
-      "id": "updates_update_19_which_move_rationale_53",
-      "community": 82,
-      "community_name": "which_move.py",
-      "norm_label": "slots that end a maximum-weight path from some argmax-ell agent. agent i holds..."
+      "id": "updates_general_binary_update_1_hunt_counterexample",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "hunt_counterexample.py"
     },
     {
       "label": "hunt_targeted.py",
@@ -23362,8 +23405,52 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "hunt_targeted.py"
+    },
+    {
+      "label": "Approach 15, shared machinery: enumerate general binary valuations and compute\u2026",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_1",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "approach 15, shared machinery: enumerate general binary valuations and compute..."
+    },
+    {
+      "label": "The minimal subsidy vector of an allocation, or None if it is not envy-freeable.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L148",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_148",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "the minimal subsidy vector of an allocation, or none if it is not envy-freeable."
+    },
+    {
+      "label": "min over complete allocations of max_i p*_i, together with a witnessing\u2026",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L158",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_158",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "min over complete allocations of max_i p*_i, together with a witnessing..."
+    },
+    {
+      "label": "All masks over m items, ordered by |S| then numerically.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/gb_valuations.py",
+      "source_location": "L43",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_gb_valuations_rationale_43",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "all masks over m items, ordered by |s| then numerically."
     },
     {
       "label": "True iff every marginal of v lies in `allowed` (a set of ints).",
@@ -23373,8 +23460,41 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_gb_valuations_rationale_69",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "true iff every marginal of v lies in `allowed` (a set of ints)."
+    },
+    {
+      "label": "Approach 15, primary experiment: try to BREAK the general binary conjecture.\u2026",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L1",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_1",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "approach 15, primary experiment: try to break the general binary conjecture...."
+    },
+    {
+      "label": "Readable valuation table: value on each subset, by mask.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L48",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_48",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "readable valuation table: value on each subset, by mask."
+    },
+    {
+      "label": "Every multiset of n valuations from `pool`.",
+      "file_type": "rationale",
+      "source_file": "updates_general_binary/update_1/hunt_counterexample.py",
+      "source_location": "L64",
+      "_origin": "ast",
+      "id": "updates_general_binary_update_1_hunt_counterexample_rationale_64",
+      "community": 83,
+      "community_name": "gb_valuations.py",
+      "norm_label": "every multiset of n valuations from `pool`."
     },
     {
       "label": "Approach 15: a targeted counterexample hunt, where uniform sampling is useless.\u2026",
@@ -23384,7 +23504,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_1",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "approach 15: a targeted counterexample hunt, where uniform sampling is useless...."
     },
     {
@@ -23395,7 +23515,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_106",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "every single-subset perturbation of v that stays in the class."
     },
     {
@@ -23406,7 +23526,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_130",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "hill climb on f; returns (best value, best instance)."
     },
     {
@@ -23417,7 +23537,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_46",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "one uniformly-structured random general binary valuation, built by walking the..."
     },
     {
@@ -23428,7 +23548,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_67",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "two valuations that disagree in sign about the same items, the shape fact f2..."
     },
     {
@@ -23439,7 +23559,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_77",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "the tight lower-bound instance on the goods side: one item everybody wants,..."
     },
     {
@@ -23450,7 +23570,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_87",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "the mirrored tight instance: n-1 items are unit chores for everybody, the rest..."
     },
     {
@@ -23461,7 +23581,7 @@
       "_origin": "ast",
       "id": "updates_general_binary_update_1_hunt_targeted_rationale_99",
       "community": 83,
-      "community_name": "hunt_targeted.py",
+      "community_name": "gb_valuations.py",
       "norm_label": "one item wanted by half the agents and refused by the other half."
     },
     {
@@ -47197,6 +47317,105 @@
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission",
+      "target": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L105",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "target": "docs_arxiv_submission_item_7_bibliographic_entries",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L121",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "target": "docs_arxiv_submission_item_10_upload_day_literature_sweep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "target": "docs_arxiv_submission_item_9_title_page_contact",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L140",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_5_memo_items_already_closed",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_2_preflight_results_memo_item_11",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_3_arxiv_metadata_memo_item_12",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L9",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_1_the_upload_bundle",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L91",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
       "source_file": "docs/BALANCE_RULE.md",
       "source_location": "L1",
       "weight": 1.0,
@@ -69451,5 +69670,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "672e9c3fdc0ddcbac7d8d8ae8c4ab83050bb5f0c"
+  "built_at_commit": "bcf97654e5496f2b75055946d2023c0b8e9f49c9"
 }

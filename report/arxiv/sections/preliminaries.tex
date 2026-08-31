@@ -1,0 +1,318 @@
+\section{Notation and Preliminaries}
+\label{sec:prelim}
+
+We study the allocation of $m$ indivisible items among $n$ agents, with
+subsidies. Write $\agents = [n]$ for the set of agents and $\items$ for the set
+of items, $\abs{\items} = m$. Each agent $i \in \agents$ has a valuation
+$v_i : 2^{\items} \to \R$ with $v_i(\emptyset) = 0$, and we represent an
+instance by the tuple $\langle \agents, \items, \set{v_i}_{i \in \agents}
+\rangle$. Algorithms operate in the standard \emph{value-oracle} model: for each
+$v_i$ we assume only an oracle that returns $v_i(S)$ for a queried set
+$S \subseteq \items$, and running time is measured in $n$, $m$ and the number of
+oracle calls.
+
+An \emph{allocation} $\alloc = (\bundle{1}, \dots, \bundle{n})$ is an ordered
+tuple of pairwise disjoint \emph{bundles}, with $\bundle{i}$ assigned to agent
+$i$. The allocation is \emph{complete} if $\bigcup_{i \in \agents} \bundle{i} =
+\items$ and \emph{partial} otherwise. The ordering matters throughout: much of
+the theory below concerns permuting a fixed family of bundles among the agents,
+and for a permutation $\sigma \in \mathbb{S}_n$ we write
+$\alloc_\sigma := (A_{\sigma(1)}, \dots, A_{\sigma(n)})$ for the allocation in
+which agent $i$ receives $A_{\sigma(i)}$. The utilitarian welfare of $\alloc$
+is $\SW(\alloc) = \sum_{i \in \agents} v_i(\bundle{i})$.
+
+\begin{definition}[Envy-Freeness]
+\label{def:ef}
+An allocation $\alloc = (\bundle{1},\dots,\bundle{n})$ is \emph{envy-free} (EF)
+iff $v_i(\bundle{i}) \ge v_i(\bundle{j})$ for all agents $i, j \in \agents$.
+\end{definition}
+
+Envy-free allocations of indivisible items need not exist, so we allow a third
+party to supplement the allocation with money. Agents have quasi-linear
+utilities: agent $i$ receiving bundle $\bundle{i}$ and subsidy $\subsidy_i$
+enjoys utility $v_i(\bundle{i}) + \subsidy_i$, with money entering linearly and
+at the same exchange rate for every agent.
+
+\begin{definition}[Envy-Free Solution]
+\label{def:efsolution}
+An allocation $\alloc = (\bundle{1},\dots,\bundle{n})$ and a subsidy vector
+$\subsidy = (\subsidy_1,\dots,\subsidy_n) \in \R^n_{+}$ constitute an
+\emph{envy-free solution} $(\alloc, \subsidy)$ iff
+$v_i(\bundle{i}) + \subsidy_i \ge v_i(\bundle{j}) + \subsidy_j$ for all
+$i, j \in \agents$.
+\end{definition}
+
+An allocation $\alloc$ is \emph{envy-freeable} if some $\subsidy \in \R^n_+$
+makes $(\alloc,\subsidy)$ an envy-free solution; this is a property of the
+allocation alone. Following~\cite{BKNS22} we write
+$\Mset(\subsidy) := \set{i \in \agents \mid \subsidy_i \ge \subsidy_j \text{ for
+all } j \in \agents}$ for the set of maximally subsidised agents.
+
+We will occasionally need the standard relaxation of envy-freeness. Note that
+two inequivalent forms of it appear in this literature: the goods-only form
+of~\cite{HS19}, which removes one item from the envied bundle, and the two-sided
+form used by~\cite{KMSTY24}, which removes one item from \emph{either} bundle.
+They coincide when all items are goods and differ once chores are present, and
+only the two-sided form supports the doubly monotone results. We adopt the
+two-sided form.
+
+\begin{definition}[EF1, two-sided form]
+\label{def:ef1}
+An allocation $\alloc$ is \emph{envy-free up to one item} (EF1) iff for all
+$i, j \in \agents$ there exists $X \subseteq \bundle{i} \cup \bundle{j}$ with
+$\abs{X} \le 1$ such that
+$v_i(\bundle{i} \setminus X) \ge v_i(\bundle{j} \setminus X)$.
+\end{definition}
+
+Every instance in this paper is an all-chore instance, and there
+Definition~\ref{def:ef1} takes a simpler form: the item removed can always
+be taken from the envious agent's own bundle. We record that specialisation,
+since it is the form the results below establish.
+
+\begin{definition}[EF1 for chores]
+\label{def:ef1chores}
+A complete allocation $\alloc$ of chores is \emph{EF1} iff for all
+$i, j \in \agents$, either $i$ does not envy $j$, that is
+$\cost_i(\bundle i) \le \cost_i(\bundle j)$, or there is a chore
+$e \in \bundle i$ with
+\[
+  \cost_i\bigl(\bundle i \setminus \set e\bigr) \;\le\; \cost_i(\bundle j).
+\]
+\end{definition}
+
+Definition~\ref{def:ef1chores} is exactly Definition~\ref{def:ef1} on an
+all-chore instance. Taking $X = \emptyset$ in the first case and
+$X = \set e \subseteq \bundle i$ in the second gives one direction; for the
+converse, a removed item lying in $\bundle j$ only lowers
+$\cost_i(\bundle j)$'s counterpart on the wrong side of the inequality, so
+nothing is gained by removing from the envied bundle when every item is a
+chore.
+
+% --------------------------------------------------------------------------
+\subsection{Negative Dichotomous Valuations}
+\label{sec:negdich}
+
+\begin{definition}[Negative Dichotomous Valuation]
+\label{def:negdich}
+A valuation $v_i : 2^{\items} \to \R$ with $v_i(\emptyset) = 0$ is
+\emph{negative dichotomous} iff
+\[
+  v_i(S) - v_i(S \cup \set{g}) \;\in\; \set{0,1}
+  \qquad \text{for every } S \subseteq \items \text{ and every }
+  g \in \items \setminus S,
+\]
+equivalently iff every marginal $\margplus{i}{S}{g} :=
+v_i(S \cup \set{g}) - v_i(S)$ lies in $\set{-1,0}$.
+\end{definition}
+
+Every item is thus a chore for every agent: $v_i$ is non-increasing, so
+$v_i(S) \ge v_i(T)$ whenever $S \subseteq T$. We stress that nothing further is
+assumed --- the valuations need not be additive, submodular, or subadditive ---
+which is the generality at which~\cite{BKNS22} works on the goods side.
+
+It is often more convenient to work with the non-negative \emph{cost form}
+\[
+  \cost_i \;:=\; -\,v_i, \qquad\text{so}\qquad
+  \cost_i(\emptyset) = 0, \quad
+  \cost_i(S) \le \cost_i(T) \text{ for } S \subseteq T, \quad
+  \cost_i(S \cup \set{g}) - \cost_i(S) \in \set{0,1}.
+\]
+\begin{definition}[Dichotomous cost function]
+\label{def:dichcost}
+A set function $\cost : 2^{\items} \to \R$ is \emph{dichotomous} if
+$\cost(\emptyset) = 0$ and every marginal $\cost(S \cup \set{g}) - \cost(S)$
+lies in $\set{0,1}$.
+\end{definition}
+
+Monotonicity is not a separate hypothesis: marginals in $\set{0,1}$ are
+non-negative, so a dichotomous $\cost$ is automatically non-decreasing. We
+nonetheless list it above because it is the property most often used directly.
+
+\ifworking
+\begin{remark}[Three adjectives that are routinely confused]
+\label{rem:terminology}
+\emph{Monotone} means only $\cost(S) \le \cost(T)$ for $S \subseteq T$, with no
+bound whatever on how large an increment can be; it is far weaker than
+\Cref{def:dichcost} and, on its own, supports almost none of the arguments
+below. \emph{Dichotomous} adds the binary-marginal condition and is the class of
+this paper. \emph{Binary additive} is the strictly smaller class
+$\cost_i(S) = \abs{S \cap D_i}$ for a set $D_i$ of disliked chores, i.e.\
+additive with per-item costs in $\set{0,1}$; it is the case settled
+by~\cite{LMS26}.
+
+A warning about the literature: several papers say ``binary valuations'' for
+what is called dichotomous here --- \cite{BSY23} and~\cite{TWYZ23} both do ---
+and reserve ``binary additive'' for the additive subclass. When a bound is
+quoted, check which is meant, since the classes are not the same and the gap
+between them is where this paper lives.
+\end{remark}
+\fi
+
+The correspondence $v_i \leftrightarrow \cost_i$ is a bijection between negative
+dichotomous valuations and dichotomous cost functions in the sense
+of~\cite{BKNS22}: the class we study is exactly the pointwise negation of the
+class they study. In cost form an envy-free solution is the requirement
+$\cost_i(\bundle{i}) - \subsidy_i \le \cost_i(\bundle{j}) - \subsidy_j$ for all
+$i,j$, read as ``my own burden net of my compensation is no worse than what I
+perceive of yours''. We use whichever of $v_i$ and $\cost_i$ is clearer locally
+and always state which.
+
+\ifworking
+The negation, however, does not carry results across, for the reasons given in
+\Cref{sec:intro}. The following remark isolates the one case in which a
+transformation does exist, and shows why it is uninformative.
+
+\begin{remark}[Complementation, and why it stops at $n = 2$]
+\label{rem:complement}
+For a negative dichotomous $v_i$ with cost form $\cost_i$, define the
+\emph{complement} $\tilde{v}_i(S) := \cost_i(\items) - \cost_i(\items \setminus
+S)$. Then $\tilde{v}_i(\emptyset) = 0$ and, for $g \notin S$, writing
+$T := \items \setminus (S \cup \set{g})$,
+\[
+  \tilde{v}_i(S \cup \set{g}) - \tilde{v}_i(S)
+  \;=\; \cost_i(\items \setminus S) - \cost_i(T)
+  \;=\; \cost_i(T \cup \set{g}) - \cost_i(T) \;\in\; \set{0,1},
+\]
+so $\tilde{v}_i$ is dichotomous in the sense of~\cite{BKNS22}. The class is
+therefore closed under complementation, without any submodularity assumption.
+Now let $n = 2$ and let $\alloc = (\bundle{1},\bundle{2})$ be complete, so that
+$\items \setminus \bundle{2} = \bundle{1}$ and $\items \setminus \bundle{1} =
+\bundle{2}$. Then $-\cost_i(\bundle{i}) = \tilde{v}_i(\bundle{j}) -
+\cost_i(\items)$ and $-\cost_i(\bundle{j}) = \tilde{v}_i(\bundle{i}) -
+\cost_i(\items)$, so $(\alloc, \subsidy)$ is an envy-free solution for the chores
+instance $\set{v_i}$ if and only if $((\bundle{2},\bundle{1}), \subsidy)$ is an
+envy-free solution for the goods instance $\set{\tilde{v}_i}$: swap the bundles
+and leave each subsidy attached to its agent. Two-agent chore division is thus
+exactly two-agent goods division, and~\cite{BKNS22} settles it. The step
+$\items \setminus \bundle{j} = \bundle{i}$ has no analogue for $n \ge 3$, where
+the complement of one bundle is a union of several others, and no reduction of
+this kind is available.
+\end{remark}
+\fi
+
+% --------------------------------------------------------------------------
+\subsection{The Envy Graph and the Halpern--Shah Characterisation}
+\label{sec:envygraph}
+
+For an allocation $\alloc$, the \emph{envy graph} $\envygraph{\alloc}$ is the
+complete weighted directed graph on vertex set $\agents$ in which the arc
+$(i,j)$ carries weight
+\[
+  \edgew{\alloc}(i,j) \;:=\; v_i(\bundle{j}) - v_i(\bundle{i})
+  \;=\; \cost_i(\bundle{i}) - \cost_i(\bundle{j}),
+\]
+the envy that agent $i$ has towards agent $j$. The weight of a directed path
+$P$ is $\edgew{\alloc}(P) = \sum_{(i,j) \in P} \edgew{\alloc}(i,j)$, and
+$\pathw{\alloc}(i)$ denotes the maximum weight of any path in
+$\envygraph{\alloc}$ starting at $i$, the empty path of weight $0$ included.
+
+The two results below are the engine of the entire subsidy line. Both are stated
+by Halpern and Shah~\cite{HS19} for additive valuations, but their proofs use
+only the arc weights and permutations of the bundles --- neither additivity nor
+monotonicity nor any sign condition on $v_i$ enters --- and~\cite{BKNS22} invokes
+them in exactly this generality for (non-additive) dichotomous valuations. They
+therefore apply verbatim to negative dichotomous valuations, and we use them
+without further comment.
+
+\begin{theorem}[\cite{HS19}]
+\label{thm:hs-characterisation}
+For any allocation $\alloc = (\bundle{1},\dots,\bundle{n})$, the following are
+equivalent.
+\begin{enumerate}
+  \item[(i)] $\alloc$ is envy-freeable.
+  \item[(ii)] $\alloc$ maximises utilitarian welfare across all reassignments of
+    its own bundles among the agents: for every permutation $\sigma$ over
+    $\agents$, $\sum_{i \in \agents} v_i(\bundle{i}) \ge
+    \sum_{i \in \agents} v_i(A_{\sigma(i)})$.
+  \item[(iii)] The envy graph $\envygraph{\alloc}$ has no positive-weight
+    directed cycle.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[\cite{HS19}]
+\label{thm:hs-minsubsidy}
+For any envy-freeable allocation $\alloc$, the subsidy vector $\optsubsidy$
+given by $\optsubsidy_i := \pathw{\alloc}(i)$ realises an envy-free solution
+$(\alloc, \optsubsidy)$, and $\optsubsidy_i \le \subsidy_i$ for every
+$i \in \agents$ and every $\subsidy$ such that $(\alloc,\subsidy)$ is an
+envy-free solution. It can be computed in strongly polynomial time by running
+an all-pairs longest-path computation on $\envygraph{\alloc}$.
+\end{theorem}
+
+Condition~(ii) of Theorem~\ref{thm:hs-characterisation} has the standing consequence
+that an envy-freeable allocation can always be manufactured from an arbitrary
+one: fix the bundles and reassign them according to a maximum-weight perfect
+matching between agents and bundles. What is at issue is never the existence of
+an envy-freeable allocation, only the size of the subsidy that
+Theorem~\ref{thm:hs-minsubsidy} then charges for it.
+
+Specialising to our model gives the following, which we use throughout.
+
+\begin{observation}[Integrality]
+\label{obs:integrality}
+Let $\set{v_i}_{i \in \agents}$ be negative dichotomous. Then $v_i(S) \in
+\Z_{\le 0}$ for every $i$ and every $S \subseteq \items$; every arc weight
+$\edgew{\alloc}(i,j)$ is an integer; and for every envy-freeable allocation
+$\alloc$ the minimum subsidy vector satisfies $\optsubsidy \in \Z^n_{\ge 0}$.
+\end{observation}
+
+\begin{proof}
+Fix $i$ and $S = \set{g_1,\dots,g_k}$. Telescoping from $v_i(\emptyset) = 0$
+along any ordering of $S$ writes $v_i(S)$ as a sum of $k$ marginals, each of
+which lies in $\set{-1,0}$ by Definition~\ref{def:negdich}; hence $v_i(S) \in \Z$ and
+$-k \le v_i(S) \le 0$. Consequently each arc weight
+$\edgew{\alloc}(i,j) = v_i(\bundle{j}) - v_i(\bundle{i})$ is a difference of
+integers, and the weight of any directed path, being a finite sum of arc
+weights, is an integer. By Theorem~\ref{thm:hs-minsubsidy},
+$\optsubsidy_i = \pathw{\alloc}(i)$ is the maximum such weight over paths
+starting at $i$, and it is non-negative because the empty path has weight $0$.
+\end{proof}
+
+Observation~\ref{obs:integrality} is what makes the target statement --- a subsidy vector in
+$\set{0,1}^n$ --- a statement about a \emph{bound} rather than about rounding:
+once $\optsubsidy$ is known to be integral, showing $\optsubsidy_i \le 1$ for
+every $i$ is the same as showing $\optsubsidy \in \set{0,1}^n$. The same
+observation underlies the corresponding step in~\cite{BKNS22}, where the arc
+weights of a dichotomous instance are likewise integers.
+
+A second normalisation costs nothing and removes a clause from the target.
+
+\begin{proposition}[Some agent is always unpaid]
+\label{prop:zero-coordinate}
+For every envy-freeable allocation $\alloc$ there is an agent $h$ with
+$\optsubsidy_h = 0$. Consequently, if $\optsubsidy \in \set{0,1}^n$ then
+$\sum_{i \in \agents} \optsubsidy_i \le n-1$.
+\end{proposition}
+
+\begin{proof}
+By Theorem~\ref{thm:hs-characterisation}(iii) the envy graph $\envygraph{\alloc}$
+has no positive-weight cycle, so a walk of maximum weight may be taken simple
+and $\pathw{\alloc}$ is finite; it is non-negative because the empty path
+qualifies. Choose a path $P$ attaining $\max_{i} \pathw{\alloc}(i)$ and let $h$
+be its final vertex. If $\pathw{\alloc}(h) > 0$ there is a positive-weight walk
+$Q$ leaving $h$, and $P$ followed by $Q$ is a walk from $P$'s start of weight
+$\edgew{\alloc}(P) + \edgew{\alloc}(Q) > \edgew{\alloc}(P)$, contradicting the
+maximality of $P$ among walks. Hence $\pathw{\alloc}(h) = 0$. The second claim is immediate: at
+most $n-1$ coordinates of $\optsubsidy$ can equal $1$.
+\end{proof}
+
+Proposition~\ref{prop:zero-coordinate} justifies the word ``hence'' in the
+target statement of \Cref{sec:intro}: the bound on the \emph{total} is not an
+independent requirement but a consequence of the per-agent one. For the
+pointwise-minimal subsidy the target is therefore the single-clause statement
+\[
+  \exists\, \alloc \ :\quad \max_{i \in \agents} \pathw{\alloc}(i) \;\le\; 1 .
+\]
+
+\ifworking
+Two cautions are worth recording alongside it. First, the bound cannot be improved: the family of
+Example~\ref{ex:lowerbound} attains $n-1$ for every $n$, verified exhaustively
+for $n \le 7$. Second, the conjecture is \emph{not} the assertion that the
+utilitarian-optimal subsidy is at most $n-1$. Minimising the total over all
+allocations can do strictly better than any allocation with
+$\optsubsidy \in \set{0,1}^n$, by concentrating the subsidy on a single agent:
+there are instances at $n = 4$ whose cheapest envy-free solution costs $2$, borne
+entirely by one agent, while every allocation with $\optsubsidy \in \set{0,1}^4$
+costs $3$. The $\set{0,1}$ shape is a genuine restriction, not a normalisation of
+the total.
+\fi

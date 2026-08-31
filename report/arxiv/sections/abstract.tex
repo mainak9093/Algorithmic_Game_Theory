@@ -1,0 +1,42 @@
+\begin{abstract}
+We study the problem of allocating indivisible \emph{chores} among agents in a
+fair manner, with subsidies. Envy-free allocations of indivisible items are not
+guaranteed to exist, but envy-freeness can be achieved by additionally providing
+some subsidy to the agents; in the chores setting this subsidy is naturally read
+as compensation paid to the agents who absorb the workload. We study the subsidy
+required under \emph{negative dichotomous} valuations, i.e., among agents whose
+marginal disutility for any chore is either zero or one:
+$v_i(S) - v_i(S \cup \set{g}) \in \set{0,1}$ for every agent $i$, every
+$S \subseteq \items$ and every $g \in \items \setminus S$. This is the exact
+mirror of the dichotomous goods model of Barman et al.~\cite{BKNS22}, who prove
+that a per-agent subsidy of $0$ or $1$ always suffices. We prove that the
+same guarantee holds for chores.
+
+Existing work already gives a bounded subsidy: negative dichotomous valuations
+are doubly monotone under the two-sided normalisation, so the reduction of
+Kawase et al.~\cite{KMSTY24} yields $n-1$ per agent and $n(n-1)/2$ in total. The
+question is whether the far stronger $\set{0,1}$ guarantee of~\cite{BKNS22}
+survives the passage from goods to chores, a factor of $n$ below that baseline.
+The Halpern--Shah characterisation of envy-freeable
+allocations~\cite{HS19} transfers verbatim, since it assumes nothing about the
+sign or the structure of the valuations, and it delivers an \emph{integral}
+minimum subsidy vector here; the matching lower bound of $n-1$ transfers as
+well, so the bound in question is tight.
+
+We prove that bound, for every number of agents: every negative dichotomous
+instance admits an envy-free solution with a subsidy of $0$ or $1$ per agent,
+hence at most $n-1$ in total, computable in polynomial time in the value-oracle
+model. The allocation we construct is moreover EF1 before any subsidy is
+paid, so the money is what upgrades it from EF1 to exact envy-freeness. All
+of this holds under no assumption on the cost functions beyond binary marginals ---
+not additivity, not submodularity, no relation between different agents' cost
+functions, and no bound on the number of chores. The proof takes an envy-free
+\emph{partial} allocation, produced by the algorithm of Tao et
+al.~\cite{TWYZ23} and leaving at most $n-1$ chores unassigned, and completes it:
+the residual chores go to distinct agents inside the strongly connected
+component at which that algorithm halts, and the paid set is the backward
+closure of those recipients under the relation ``agent $i$ values her own bundle
+exactly as she values agent $j$'s''. Envy-freeness of the completion is verified
+directly, so the argument does not appeal to the characterisation of
+envy-freeable allocations.
+\end{abstract}

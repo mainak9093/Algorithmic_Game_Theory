@@ -1,0 +1,44 @@
+\documentclass[11pt]{article}
+\input{preamble}
+\begin{document}
+
+\makeatletter
+\renewcommand\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+\makeatother
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+
+
+\title{\textsc{Achieving Envy-Freeness with Limited Subsidies\\
+       under Negative Dichotomous Valuations}}
+
+\author[1]{Mainak Sarkar\footnote{Contact: }}
+\author[1]{Soumyarup Sadhukhan\footnote{Contact: soumyarup.sadhukhan@gmail.com}}
+\affil[1]{\small Indian Institute of Technology Kanpur}
+
+\date{}
+
+
+\maketitle
+\renewcommand{\thefootnote}{\arabic{footnote}}
+\setcounter{footnote}{0}
+
+% --------------------------------------------------------------------------
+\input{sections/abstract}
+
+\input{sections/introduction}       % 1  Introduction
+\input{sections/preliminaries}      % 2  Notation and Preliminaries
+\input{sections/main_result}        % 3  Unit Subsidies 
+
+
+
+
+\bibliographystyle{alpha}
+\bibliography{references}
+
+
+\appendix
+
+
+
+\end{document}
