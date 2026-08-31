@@ -1,30 +1,7 @@
-%% ==========================================================================
-%%  Achieving Envy-Freeness with Limited Subsidies
-%%  under Negative Dichotomous Valuations
-%%
-%%  THE REPORT.  Sets up the problem and proves Conjecture 1 for n = 3.
-%%  Scoped deliberately: only material the n = 3 proof actually uses is
-%%  included.
-%%
-%%  Everything proved so far but not carried by this scope is PARKED, not
-%%  deleted, under working/ and is compiled by working.tex into working.pdf.
-%%  Nothing has been lost; see working/README.md for the inventory.  To
-%%  promote a parked section into the report, move its file back to sections/
-%%  and uncomment the corresponding line below.
-%%
-%%  Build:   latexmk -pdf main.tex        (the report)
-%%           latexmk -pdf working.tex     (the full draft, everything)
-%% ==========================================================================
 \documentclass[11pt]{article}
 \input{preamble}
-% \workingfalse is the default set in preamble.tex; the report omits the
-% parked sections and suppresses the sentences that point at them.
-
-% --------------------------------------------------------------------------
 \begin{document}
 
-% Title block: footnote symbols rather than numbers for affiliations,
-% following R3.  \date{} suppresses the date, also as in R3.
 \makeatletter
 \renewcommand\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
 \makeatother
@@ -46,49 +23,17 @@
 
 \input{sections/introduction}       % 1  Introduction
 \input{sections/preliminaries}      % 2  Notation and Preliminaries
-\input{sections/main_result}        % 3  Unit Subsidies (the main theorem, all n)
+\input{sections/main_result}        % 3  Unit Subsidies 
 
-% Superseded by sections/main_result.tex, which proves the same statement for
-% every n.  n3.tex is the earlier, n = 3 only argument; it is correct and is
-% kept, but including both would state the result twice.
-% \input{sections/n3}                 %    The Conjecture for Three Agents
 
-% Not used by the main proof, hence out of scope for this report.
-% structure.tex carries the arc-update lemma, the two-tier characterisation
-% of {0,1} solutions, and the size-shift transform.  All three are proved and
-% correct; none is invoked by sections/n3.tex.  Re-enable if the report is
-% widened beyond n = 3.
-% \input{sections/structure}          %    Structure of the Chore Problem
-% \input{sections/obstructions}       %    Obstructions to the Natural Approaches
-% \input{sections/replica}            %    The Replica Instance
-% \input{sections/results}            %    What is Proved
 
-% --------------------------------------------------------------------------
-% PARKED.  These files live under working/ and are compiled by working.tex.
-% They are not deleted and not stale --- every result in them is proved and
-% machine-checked.  Move a file back to sections/ and uncomment its line here
-% when it has earned a place in the report.
-%
-% \input{working/results}           %    Our Results (overview + conjectures)
-% \input{working/solved_cases}      %    Binary additive, identical costs, n=2
-% \input{working/approach_1}        %    Item-by-item insertion  -- NEGATIVE
-% \input{working/approach_2}        %    Utilitarian-optimal     -- NEGATIVE
-% \input{working/approach_3}        %    Replica transform + peel -- OPEN
-% \input{working/approach_4}        %    Encoding coverage       -- NEGATIVE
-% \input{working/approach_5}        %    Agent induction         -- NEGATIVE
-% \input{working/approach_6}        %    Pure goods reformulation -- OPEN, best lead
-% \input{working/experiments}       %    Computational evidence
-% \input{working/conclusion}        %    Conclusion and future work
-% --------------------------------------------------------------------------
 
-% --------------------------------------------------------------------------
 \bibliographystyle{alpha}
 \bibliography{references}
 
-% --------------------------------------------------------------------------
+
 \appendix
-% Deferred proofs go here, one file per appendix, mirroring R3's
-% Appendix A / B / C layout.
-% \input{sections/appendix_a}
+
+
 
 \end{document}

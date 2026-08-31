@@ -1,20 +1,3 @@
-%% ==========================================================================
-%%  Unit Subsidies for Negative Dichotomous Valuations
-%%
-%%  The main theorem, for an arbitrary number of agents.  Promoted from
-%%  working/approach_13.tex.  Report form: no motivation, no status
-%%  paragraphs, no computational verification, no discussion of routes not
-%%  taken.  Every claim is proved.
-%%
-%%  ATTRIBUTION.  Theorem~\ref{thm:m-twyz} and the algorithm described in
-%%  \Cref{sec:m-terminal} are due to Tao, Wu, Yu and Zhou~\cite{TWYZ23}; they
-%%  are restated here, not claimed.  Everything from
-%%  \Cref{sec:m-completion} onwards is new.
-%%
-%%  REFERENCING: theorem-like environments share one counter in this
-%%  preamble, so \Cref renders all of them as "Theorem".  Use explicit
-%%  "Lemma~\ref{...}", "Theorem~\ref{...}", "Definition~\ref{...}".
-%% ==========================================================================
 \section{Unit Subsidies for Negative Dichotomous Valuations}
 \label{sec:main}
 
@@ -326,46 +309,52 @@ In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) = \cost_i(A_i) -
 \subsidy_i$ in Cases 1 and 3, and the inequality was shown directly in Case 2.
 \end{proof}
 
-% --------------------------------------------------------------------------
-\subsection{The completion is EF1}
-\label{sec:m-ef1}
-
-\begin{corollary}
-\label{cor:ef1}
-The complete allocation $\alloc$ of \eqref{eq:m-alloc} is EF1 in the sense of
-Definition~\ref{def:ef1}. More precisely, every non-recipient
-$i \in \agents \setminus T$ envies nobody in $\alloc$, and for every recipient
-$t_k \in T$ the removal of the single residual chore $e_k$ from her own bundle
-eliminates all of her envy at once.
+\subsection{The EF1 property of the completion}
+\begin{corollary}\label{cor:ef1}
+The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion} is EF1. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
+$\mathcal{A}$, while for every recipient $t_k\in T$, removing the residual
+chore $e_k$ assigned to $t_k$ eliminates all of $t_k$'s envy.
 \end{corollary}
 
 \begin{proof}
-By \eqref{eq:m-alloc} we have $X_j \subseteq A_j$ for every $j \in \agents$.
-
-Let $i \in \agents \setminus T$, so that $A_i = X_i$. For every $j \in \agents$,
+Recall that the partial allocation
+$X=(X_1,\ldots,X_n)$ is envy-free, and that
+$X_j\subseteq A_j$ for every $j\in N$. First, let $i\in N\setminus T$. Then $A_i=X_i$. Hence, for every
+$j\in N$, envy-freeness of $X$ and monotonicity of $c_i$ give
 \[
-  \cost_i(A_i) = \cost_i(X_i) \le \cost_i(X_j) \le \cost_i(A_j),
+c_i(A_i)
+=
+c_i(X_i)
+\le
+c_i(X_j)
+\le
+c_i(A_j).
 \]
-the first inequality by envy-freeness \eqref{eq:m-pef} of $X$ and the second by
-monotonicity (Observation~\ref{obs:m-gap}) applied to $X_j \subseteq A_j$. So
-$i$ envies nobody, and Definition~\ref{def:ef1} is met at $i$ with
-$X = \emptyset$.
-
-Let $i = t_k \in T$, so that $A_i = X_i \cup \set{e_k}$ and hence
-$A_i \setminus \set{e_k} = X_i$. For every $j \in \agents$,
+Thus $i$ does not envy any agent in $\mathcal{A}$. Now let $i=t_k\in T$. By construction,
 \[
-  \cost_i\bigl(A_i \setminus \set{e_k}\bigr) = \cost_i(X_i)
-  \le \cost_i(X_j) \le \cost_i(A_j),
+A_i=X_i\cup\{e_k\},
 \]
-by the same two steps. The bundles of $\alloc$ are pairwise disjoint, so
-$e_k \notin A_j$ for $j \ne i$ and therefore
-$\cost_i(A_j) = \cost_i(A_j \setminus \set{e_k})$; Definition~\ref{def:ef1} is
-met at $i$ with $X = \set{e_k}$.
+and hence
+\[
+A_i\setminus\{e_k\}=X_i.
+\]
+Therefore, for every $j\in N$,
+\[
+c_i(A_i\setminus\{e_k\})
+=
+c_i(X_i)
+\le
+c_i(X_j)
+\le
+c_i(A_j),
+\]
+where the first inequality follows from envy-freeness of $X$ and the
+second from monotonicity.
 
-Since one and the same chore works against every $j$ simultaneously, $\alloc$
-is EF1.
+Thus, for every recipient, removing the single newly assigned chore
+from her own bundle eliminates her envy towards every other agent.
+Consequently, $\mathcal{A}$ is EF1.
 \end{proof}
-
 % --------------------------------------------------------------------------
 \subsection{The main theorem}
 \label{sec:m-main}
@@ -376,9 +365,9 @@ For every $n$ and every instance $\langle \agents, \items,
 \set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
 exist a complete allocation $\alloc$ and a subsidy vector
 $\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
-that $(\alloc,\subsidy)$ is an envy-free solution. The allocation $\alloc$ is
-moreover EF1. Both $\alloc$ and $\subsidy$ are computable in polynomial time
-given value-oracle access.
+that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1.
+Both $\mathcal{A}$ and $p$ are computable in polynomial time given
+value-oracle access.
 \end{theorem}
 
 \begin{proof}
@@ -394,7 +383,7 @@ If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
 \Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
 Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
 solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
-$\sum_i \subsidy_i \le n-1$. Corollary~\ref{cor:ef1} gives that $\alloc$ is EF1.
+$\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
 
 For the running time, the algorithm of Theorem~\ref{thm:m-twyz} is polynomial
 and returns $X$, $R$ and $S$. Constructing $\alloc$ from \eqref{eq:m-alloc}

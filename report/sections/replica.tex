@@ -1,15 +1,4 @@
-%% ==========================================================================
-%%  5  The Replica Instance
-%%
-%%  MAIN REPORT ONLY -- not included by working.tex.  Labels prefixed `main:'.
-%%
-%%  Carries the Approach 3 material that the main report needs (the replica
-%%  construction, the transform, and coverage-is-the-entire-gap), and then the
-%%  third obstruction, which is Approach 4: enforcing coverage by pricing.
-%%
-%%  Condensed from working/approach_3.tex (sec:replica, thm:replica,
-%%  cor:coverage) and working/approach_4.tex (thm:w1, sec:holderblind).
-%% ==========================================================================
+
 \section{The Replica Instance}
 \label{sec:replica}
 
@@ -122,20 +111,3 @@ marginals outside $\set{0,1}$, which leaves the dichotomous class and forfeits
 the very theorem the staging was meant to invoke.
 
 % --------------------------------------------------------------------------
-\subsection{What the three failures have in common}
-\label{sec:main-expost}
-
-Each of the three techniques fixes a rule before the quantity it must respond to
-has been determined. Insertion fixes an owner before the consequences of that
-grouping are visible, and cannot later re-split a bundle. A selection rule fixes
-its criterion before knowing which allocation the criterion will pick out. A
-price fixes a charge before knowing who will hold the duplicate being charged
-for. In each case the rule is settled \emph{ex ante} against a quantity
-determined \emph{ex post}.
-
-What survives is the requirement that a correct procedure decide late: it must be
-free to move already-allocated chores between bundles, and free to give up total
-cost while doing so. Enforcing coverage \emph{structurally} rather than by price
-meets that requirement --- if the copies of a chore simply cannot be placed on the
-same agent, coverage holds by construction and no charge is needed --- and it is
-the direction the constructions in progress take.

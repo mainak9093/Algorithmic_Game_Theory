@@ -109,25 +109,30 @@ empty-handed. Under the balanced allocation, in which $n-1$ agents hold one
 chore each and one agent holds nothing, each of the $n-1$ loaded agents envies
 the empty agent by exactly $1$ and no other envy is present, so the minimum
 subsidy assigns $1$ to each loaded agent and $0$ to the empty one, for a total of
-$n-1$.
-
-No allocation does better. Let $\alloc = (\bundle1,\dots,\bundle n)$ be any
-complete allocation and write $s_i = \abs{\bundle i}$. There are $n-1$ chores,
-so $\sum_{i \in \agents} s_i = n-1$ and some agent $h$ receives none:
-$s_h = 0$. Suppose $\subsidy \in \R^n_{+}$ makes $\alloc$ envy-free, which in
-cost form reads
+$n-1$. No allocation does better: consider any complete allocation $\mathcal{A}=(A_1,\ldots,A_n)$, and write $s_i=|A_i|$. Since there are only $n-1$ chores, $\sum_{i=1}^n s_i=n-1$, and therefore at least one agent, say $h$, receives no chore: $s_h=0$. Suppose that a subsidy vector $p\in\mathbb{R}_+^n$ makes the allocation envy-free. In cost form, envy-freeness requires
 \[
-  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
-  \qquad \text{for all } i,j \in \agents .
+c_i(A_i)-p_i
+\le
+c_i(A_j)-p_j
+\qquad
+\text{for all } i,j.
 \]
-Comparing each agent $i$ with $h$ and using $\cost_i(S) = \abs S$,
+Comparing every agent $i$ with the empty-bundle agent $h$, we obtain
+\[s_i-p_i=c_i(A_i)-p_i\le c_i(A_h)-p_h=-p_h.\]
+Hence
 \[
-  s_i - \subsidy_i \;=\; \cost_i(\bundle i) - \subsidy_i
-  \;\le\; \cost_i(\bundle h) - \subsidy_h \;=\; -\subsidy_h ,
+p_i\ge s_i+p_h\ge s_i
+\qquad
+\text{for every } i.
 \]
-so $\subsidy_i \ge s_i + \subsidy_h \ge s_i$ for every $i$, the last step
-because $\subsidy_h \ge 0$. Summing over the agents,
-$\sum_{i \in \agents} \subsidy_i \ge \sum_{i \in \agents} s_i = n-1$.
+Summing over all agents gives
+\[
+\sum_{i=1}^n p_i
+\ge
+\sum_{i=1}^n s_i
+=
+n-1.
+\]
 \end{example}
 
 So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}.
