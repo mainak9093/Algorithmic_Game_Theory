@@ -171,6 +171,60 @@ $\agents$ is finite and $P$ only grows. Define
 \end{equation}
 \end{definition}
 
+The complete procedure is summarised in
+Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is Algorithm~3 of
+\cite{TWYZ23}; our contribution is the completion and subsidy construction in the subsequent lines.
+
+\begin{algorithm}[H]
+\caption{EF1 allocation with at most one unit of subsidy per agent for negative dichotomous valuations}
+\label{alg:main}
+\begin{algorithmic}[1]
+\Require Agents $N=[n]$, chores $M$, and value-oracle access to negative
+dichotomous valuations $\{v_i\}_{i\in N}$.
+\Ensure A complete allocation $\mathcal{A}$ that is EF1, together with a
+subsidy vector $p\in\{0,1\}^n$ such that $(\mathcal{A},p)$ is envy-free and
+$\sum_{i\in N}p_i\le n-1$.
+
+\State Set $c_i=-v_i$ for every $i\in N$.
+\State Run Algorithm~3 of \cite{TWYZ23} on $\{c_i\}_{i\in N}$.
+\State Let $X=(X_1,\ldots,X_n)$ be its terminal partial allocation and
+      let $R=M\setminus\bigcup_{i\in N}X_i$.
+
+\If{$R=\varnothing$}
+    \State \Return $(X,\mathbf{0})$.
+\EndIf
+
+\State Let $S$ be the tail strongly connected component selected at the
+      terminating application of Rule (R3).
+\State Write $R=\{e_1,\ldots,e_r\}$.
+\State Choose arbitrary distinct agents
+      $T=\{t_1,\ldots,t_r\}\subseteq S$.
+      \Comment{$r<|S|$ by Lemma~\ref{lem:m-terminal}(a)}
+
+\For{$k=1,\ldots,r$}
+    \State $A_{t_k}\gets X_{t_k}\cup\{e_k\}$.
+\EndFor
+\For{$i\in N\setminus T$}
+    \State $A_i\gets X_i$.
+\EndFor
+
+\State Construct the equality graph $G=(N,E)$ on the agents, where
+\Statex \qquad $(i,j)\in E \iff i\neq j$ and $c_i(X_i)=c_i(X_j)$.
+
+\State Initialise $P\gets T$.
+\While{there exist $i\in N\setminus S$ and $j\in P$
+       with $(i,j)\in E$ and $i\notin P$}
+    \State $P\gets P\cup\{i\}$.
+\EndWhile
+
+\For{$i\in N$}
+    \State $p_i\gets \mathbf{1}[i\in P]$.
+\EndFor
+
+\State $\mathcal{A}\gets(A_1,\ldots,A_n)$.
+\State \Return $(\mathcal{A},p)$.
+\end{algorithmic}
+\end{algorithm}
 \begin{lemma}
 \label{lem:m-Pstructure}
 $P \setminus T \subseteq \agents \setminus S$: every agent of $P$ that is not a
@@ -311,7 +365,9 @@ In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) = \cost_i(A_i) -
 
 \subsection{The EF1 property of the completion}
 \begin{corollary}\label{cor:ef1}
-The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion} is EF1. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
+The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion}
+is EF1 in the sense of Definition~\ref{def:ef1chores}, hence also in the
+sense of Definition~\ref{def:ef1}. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
 $\mathcal{A}$, while for every recipient $t_k\in T$, removing the residual
 chore $e_k$ assigned to $t_k$ eliminates all of $t_k$'s envy.
 \end{corollary}
@@ -372,12 +428,14 @@ value-oracle access.
 
 \begin{proof}
 Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
-Definition~\ref{def:dichcost}. Run the algorithm of Theorem~\ref{thm:m-twyz}
-and let $X$, $R$, $r$ and $S$ be as fixed in \Cref{sec:m-terminal}.
+Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{TWYZ23} and retain
+its terminal partial allocation $X$, the residue $R$ with $r = \abs R$, and
+the tail strongly connected component $S$ selected at the terminating
+application of rule (R3), all as fixed in \Cref{sec:m-terminal}. The
+statement of Theorem~\ref{thm:m-twyz} alone does not supply $S$.
 
 If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
-$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$;
-being envy-free it is EF1, taking $X = \emptyset$ in Definition~\ref{def:ef1}.
+$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$. Since every envy-free allocation is EF1, $X$ is also EF1.
 
 If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
 \Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
@@ -385,8 +443,8 @@ Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
 solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
 $\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
 
-For the running time, the algorithm of Theorem~\ref{thm:m-twyz} is polynomial
-and returns $X$, $R$ and $S$. Constructing $\alloc$ from \eqref{eq:m-alloc}
+For the running time, Algorithm~3 of~\cite{TWYZ23} is polynomial and yields
+$X$, $R$ and the tail component $S$ of its terminating (R3) step. Constructing $\alloc$ from \eqref{eq:m-alloc}
 takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
 vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
 each. Computing $P$ is a backward reachability search in $G$ from $T$

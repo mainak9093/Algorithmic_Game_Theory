@@ -18,6 +18,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage{newpxtext}
 \usepackage{microtype}
+\usepackage{authblk}
 
 % ---------- mathematics ---------------------------------------------------
 % Order matters: amsmath must be loaded before newpxmath.
@@ -28,6 +29,8 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 \graphicspath{{figures/}}
+\usepackage{float}          % [H] placement, so Algorithm 1 cannot
+                            % float away from its definition
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \floatname{algorithm}{Algorithm}
@@ -154,3 +157,10 @@
 \newcommand{\abs}[1]{\left\lvert#1\right\rvert}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{}
+\rhead{}
+\renewcommand{\headrulewidth}{0pt}   % header is empty; no bare rule

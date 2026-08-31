@@ -64,6 +64,30 @@ $\abs{X} \le 1$ such that
 $v_i(\bundle{i} \setminus X) \ge v_i(\bundle{j} \setminus X)$.
 \end{definition}
 
+Every instance in this paper is an all-chore instance, and there
+Definition~\ref{def:ef1} takes a simpler form: the item removed can always
+be taken from the envious agent's own bundle. We record that specialisation,
+since it is the form the results below establish.
+
+\begin{definition}[EF1 for chores]
+\label{def:ef1chores}
+A complete allocation $\alloc$ of chores is \emph{EF1} iff for all
+$i, j \in \agents$, either $i$ does not envy $j$, that is
+$\cost_i(\bundle i) \le \cost_i(\bundle j)$, or there is a chore
+$e \in \bundle i$ with
+\[
+  \cost_i\bigl(\bundle i \setminus \set e\bigr) \;\le\; \cost_i(\bundle j).
+\]
+\end{definition}
+
+Definition~\ref{def:ef1chores} is exactly Definition~\ref{def:ef1} on an
+all-chore instance. Taking $X = \emptyset$ in the first case and
+$X = \set e \subseteq \bundle i$ in the second gives one direction; for the
+converse, a removed item lying in $\bundle j$ only lowers
+$\cost_i(\bundle j)$'s counterpart on the wrong side of the inequality, so
+nothing is gained by removing from the envied bundle when every item is a
+chore.
+
 % --------------------------------------------------------------------------
 \subsection{Negative Dichotomous Valuations}
 \label{sec:negdich}

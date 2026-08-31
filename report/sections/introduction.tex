@@ -142,7 +142,8 @@ So the target statement is precisely the analogue of~\cite[Theorem~4]{BKNS22}.
 \label{conj:main}
 For every instance with negative dichotomous valuations there is an envy-free
 solution $(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$, hence with total
-subsidy at most $n-1$; and it can be computed in polynomial time given
+subsidy at most $n-1$; the allocation $\alloc$ is moreover EF1 on its own,
+before any subsidy is paid; and both can be computed in polynomial time given
 value-oracle access.
 \end{conjecture}
 \else
@@ -150,7 +151,8 @@ value-oracle access.
 \label{conj:main}
 For every instance with negative dichotomous valuations there is an envy-free
 solution $(\alloc, \subsidy)$ with $\subsidy \in \set{0,1}^n$, hence with total
-subsidy at most $n-1$; and it can be computed in polynomial time given
+subsidy at most $n-1$; the allocation $\alloc$ is moreover EF1 on its own,
+before any subsidy is paid; and both can be computed in polynomial time given
 value-oracle access.
 \end{theorem}
 \fi
@@ -162,7 +164,10 @@ the gap that~\cite{BKNS22} closed on the goods side.
 
 \paragraph{Our contribution.}
 We establish the statement above, for every number of agents\ifworking\
-(\Cref{sec:approach13})\else\ (Theorem~\ref{thm:m-main})\fi. The proof takes as
+(\Cref{sec:approach13})\else\ (Theorem~\ref{thm:m-main})\fi. The allocation
+produced is EF1 in the sense of Definition~\ref{def:ef1chores} before any money
+changes hands, and the subsidy is what raises it to exact envy-freeness. The
+proof takes as
 input an envy-free \emph{partial} allocation --- the algorithm of Tao et
 al.~\cite{TWYZ23} produces one in polynomial time, leaving at most $n-1$ chores
 unassigned --- and completes it: the residual chores are assigned to distinct
@@ -226,7 +231,15 @@ binary \emph{additive} costs an allocation that is simultaneously EFX and Pareto
 optimal always exists and is computable in polynomial time. So on the chores
 side the second half of the binary dichotomy --- pay nothing, obtain EFX --- is
 established at least for additive costs, while the first half, pay $0$ or $1$
-per agent and obtain exact envy-freeness, is what this paper establishes. That money is genuinely needed here is not obvious a priori but is
+per agent and obtain exact envy-freeness, is what this paper establishes.
+The restriction to additive costs there cannot simply be dropped: Lin et
+al.~\cite{LLTZ26} exhibit instances with $18$ agents and $53$ chores, one
+with binary XOS costs and one with binary supermodular costs, in which no
+complete EFX allocation exists at all; the binary submodular case remains
+open. So EFX can fail outright inside the binary-marginal chore domain,
+whereas the allocation constructed below is always EF1, and becomes exactly
+envy-free once at most one unit of subsidy per agent is paid.
+That money is genuinely needed here is not obvious a priori but is
 known: Bhaskar et al.~\cite{BSV21} show that deciding whether an exactly
 envy-free allocation of chores exists is NP-complete already for binary additive
 costs, and give a polynomial-time EF1 algorithm for chores and for doubly

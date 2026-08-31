@@ -9,7 +9,7 @@ marginal disutility for any chore is either zero or one:
 $v_i(S) - v_i(S \cup \set{g}) \in \set{0,1}$ for every agent $i$, every
 $S \subseteq \items$ and every $g \in \items \setminus S$. This is the exact
 mirror of the dichotomous goods model of Barman et al.~\cite{BKNS22}, who prove
-that there a per-agent subsidy of $0$ or $1$ always suffices. We prove that the
+that a per-agent subsidy of $0$ or $1$ always suffices. We prove that the
 same guarantee holds for chores.
 
 Existing work already gives a bounded subsidy: negative dichotomous valuations
@@ -26,7 +26,9 @@ well, so the bound in question is tight.
 We prove that bound, for every number of agents: every negative dichotomous
 instance admits an envy-free solution with a subsidy of $0$ or $1$ per agent,
 hence at most $n-1$ in total, computable in polynomial time in the value-oracle
-model, and under no assumption on the cost functions beyond binary marginals ---
+model. The allocation we construct is moreover EF1 before any subsidy is
+paid, so the money is what upgrades it from EF1 to exact envy-freeness. All
+of this holds under no assumption on the cost functions beyond binary marginals ---
 not additivity, not submodularity, no relation between different agents' cost
 functions, and no bound on the number of chores. The proof takes an envy-free
 \emph{partial} allocation, produced by the algorithm of Tao et
