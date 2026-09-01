@@ -93,6 +93,64 @@ makes the loaded agent envy the empty one by exactly $2$, and the theorem caps
 the subsidy at $1$ per agent. The bound therefore *forces* a split, and every
 split wastes a unit of cost.
 
+### 3.1 The witness worked out in full
+
+Every line below is machine-checked by `worked_example.py`; it is written out
+so the example can be presented from the page.
+
+**The cost function.** Both agents share $\cost(S) = \min(\lvert S\rvert, 2)$:
+
+| $\lvert S\rvert$ | 0 | 1 | 2 | 3 |
+|---|---|---|---|---|
+| $\cost(S)$ | 0 | 1 | 2 | 2 |
+
+*In the class:* $\cost(\emptyset)=0$; marginals are $+1$ onto an empty bundle,
+$+1$ onto a singleton, $0$ onto a pair — all in $\{0,1\}$; monotone.
+*Not additive:* an additive $\cost$ would give $\cost(\{a,b,c\}) = 3$.
+
+*Reading:* the first two chores hurt, the third is free to whoever is already
+doing two. ("Once I'm in the office all day anyway, one more task costs me
+nothing.")
+
+**The envy condition.** For $n=2$, $(A,p)$ is envy-free iff
+$\cost_1(A_1) - p_1 \le \cost_1(A_2) - p_2$ and symmetrically, which for
+identical $\cost$ collapses to the single equation
+$$p_1 - p_2 \;=\; \cost(A_1) - \cost(A_2).$$
+So the subsidy *gap* is forced to equal the cost gap — no freedom at all.
+
+**All eight allocations.**
+
+| $A_1$ | $A_2$ | costs | forced $p_1-p_2$ | possible with $p\in\{0,1\}^2$? | PO? |
+|---|---|---|---|---|---|
+| $\{a,b,c\}$ | $\emptyset$ | $(2,0)$ | $2$ | **no** | **yes** |
+| $\emptyset$ | $\{a,b,c\}$ | $(0,2)$ | $-2$ | **no** | **yes** |
+| $\{a,b\}$ | $\{c\}$ | $(2,1)$ | $1$ | yes | no |
+| $\{a,c\}$ | $\{b\}$ | $(2,1)$ | $1$ | yes | no |
+| $\{b,c\}$ | $\{a\}$ | $(2,1)$ | $1$ | yes | no |
+| $\{a\}$ | $\{b,c\}$ | $(1,2)$ | $-1$ | yes | no |
+| $\{b\}$ | $\{a,c\}$ | $(1,2)$ | $-1$ | yes | no |
+| $\{c\}$ | $\{a,b\}$ | $(1,2)$ | $-1$ | yes | no |
+
+**The two halves of the contradiction.**
+
+*The efficient allocations are unaffordable.* Give everything to agent 1: she
+values her bundle at $2$, agent 2's empty bundle at $0$, so she envies by
+exactly $2$ and needs $p_1 \ge 2$. The theorem caps subsidies at $1$. Same by
+symmetry for the other. So both PO allocations are ruled out.
+
+*The affordable allocations are inefficient.* Every remaining allocation splits
+the chores $2$–$1$, with costs $(2,1)$ or $(1,2)$. Each is dominated by
+concentration: $(2,1)$ is dominated by $(2,0)$ — the agent holding one chore
+drops to zero while the other is unchanged, because the chore she gives up is
+absorbed for free by someone already holding two. Likewise $(1,2)$ by $(0,2)$.
+
+**Totals.** Cheapest PO allocation costs $2$ in total; cheapest feasible
+allocation costs $3$. The per-agent bound of $1$ costs society one unit of
+disutility, a $50\%$ overhead on this instance.
+
+**Conclusion.** $2$ allocations are PO, $6$ are feasible, and the two sets are
+disjoint. No algorithm can return an allocation that is both.
+
 ## 4. Finding C — a general family, not a small-case artefact
 
 Sweeping $\cost(S) = \min(\lvert S\rvert, t)$ with identical agents over
@@ -161,6 +219,7 @@ All scripts in `updates_pareto/update_1/`, runnable from that folder.
 | `stress_q2.py [big]` | pushes the incompatibility question and the additive control at larger sizes |
 | `exhaustive_n3m3.py [n3\|n2]` | exhaustive settlement at $m=3$ and $n \in \{2,3\}$, plus PO densities |
 | `find_incompat.py` | extracts the incompatibility witnesses with a full allocation table |
+| `worked_example.py` | prints the witness inequality by inequality (section 3.1) |
 | `saturating_family.py` | sweeps $\cost(S)=\min(\lvert S\rvert,t)$ to show the family generalises |
 | `verify_counterexample.py` | independent re-check of the finding-A witness |
 | `verify_incompatibility.py` | independent re-check of the finding-B witness |
