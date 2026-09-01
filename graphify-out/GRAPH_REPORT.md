@@ -1,7 +1,7 @@
 # Graph Report - Algorithmic_Game_Theory  (2026-09-01)
 
 ## Corpus Check
-- 213 files · ~377,758 words
+- 213 files · ~377,960 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `bcf97654`
+- Built from commit: `9e100896`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -293,7 +293,7 @@ Nodes (16): main(), |R|=2, "doubly-stuck" case: every agent has marginal 1 for E
 
 ### Community 29 - "arXiv submission — bundle, metadata, and handoff"
 Cohesion: 0.20
-Nodes (9): 1. The upload bundle, 2. Preflight results (memo item 11), 3. arXiv metadata (memo item 12), 4. Handoff — for the guide, not done here, 5. Memo items already closed, arXiv submission — bundle, metadata, and handoff, Item 10 — upload-day literature sweep, Item 7 — bibliographic entries (+1 more)
+Nodes (9): 1. The upload bundle, 2. Preflight results (memo item 11), 3. arXiv metadata (memo item 12), 4. Items 7 and 9 — now done (2026-09-01), 5. Item 10 — upload-day literature sweep, 6. Memo items — status, arXiv submission — bundle, metadata, and handoff, Item 7 — bibliographic entries (+1 more)
 
 ### Community 30 - "fast.py"
 Cohesion: 0.19

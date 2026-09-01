@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{TWYZ23}
+\begin{thebibliography}{TWYZ25}
 
 \bibitem[BCE{\etalchar{+}}16]{BCE16}
 Felix Brandt, Vincent Conitzer, Ulle Endriss, J{\'e}r{\^o}me Lang, and Ariel~D. Procaccia.
@@ -18,7 +18,9 @@ Moshe Babaioff, Tomer Ezra, and Uriel Feige.
 
 \bibitem[BKNS22]{BKNS22}
 Siddharth Barman, Anand Krishna, Y.~Narahari, and Soumyarup Sadhukhan.
-\newblock Achieving envy-freeness with limited subsidies under dichotomous valuations, 2022.
+\newblock Achieving envy-freeness with limited subsidies under dichotomous valuations.
+\newblock In {\em Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}, pages 60--66, 2022.
+\newblock arXiv:2201.07419.
 
 \bibitem[BMS05]{BMS05}
 Anna Bogomolnaia, Herv{\'e} Moulin, and Richard Stong.
@@ -33,7 +35,7 @@ Umang Bhaskar, A.~R. Sricharan, and Rohit Vaish.
 \bibitem[BSY23]{BSY23}
 Xiaolin Bu, Jiaxin Song, and Ziqi Yu.
 \newblock {EFX} allocations exist for binary valuations.
-\newblock In {\em Proceedings of the International Conference on Frontiers of Algorithmic Wisdom (FAW)}, 2023.
+\newblock In {\em Frontiers of Algorithmics -- 17th International Joint Conference, IJTCS-FAW 2023}, volume 13933 of {\em Lecture Notes in Computer Science}, pages 252--262. Springer, 2023.
 
 \bibitem[Bud11]{Bud11}
 Eric Budish.
@@ -68,10 +70,11 @@ Daniel Halpern and Nisarg Shah.
 \newblock Fair division with subsidy.
 \newblock In {\em Proceedings of the 12th International Symposium on Algorithmic Game Theory (SAGT)}, volume 11801 of {\em Lecture Notes in Computer Science}, pages 374--389. Springer, 2019.
 
-\bibitem[KMS{\etalchar{+}}24]{KMSTY24}
+\bibitem[KMS{\etalchar{+}}25]{KMSTY24}
 Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, and Makoto Yokoo.
 \newblock Towards optimal subsidy bounds for envy-freeable allocations.
-\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, 2024.
+\newblock {\em Artificial Intelligence}, 348:104406, 2025.
+\newblock Preliminary version in AAAI 2024; arXiv:2308.11230.
 
 \bibitem[LLTZ26]{LLTZ26}
 Zehan Lin, Shengxin Liu, Biaoshuai Tao, and Shengwei Zhou.
@@ -96,10 +99,11 @@ Vishnu~V. Narayan, Mashbat Suzuki, and Adrian Vetta.
 \newblock Two birds with one stone: Fairness and welfare via transfers.
 \newblock In {\em International Symposium on Algorithmic Game Theory (SAGT)}, pages 376--390. Springer, 2021.
 
-\bibitem[TWYZ23]{TWYZ23}
+\bibitem[TWYZ25]{TWYZ23}
 Biaoshuai Tao, Xiaowei Wu, Ziqi Yu, and Shengwei Zhou.
-\newblock On the existence of {EFX} (and pareto-optimal) allocations for binary chores, 2023.
-\newblock Journal version in Theoretical Computer Science, 2025.
+\newblock On the existence of {EFX} (and pareto-optimal) allocations for binary chores.
+\newblock {\em Theoretical Computer Science}, 1042:115248, 2025.
+\newblock Preliminary version: arXiv:2308.12177.
 
 \bibitem[Var74]{Var74}
 Hal Varian.

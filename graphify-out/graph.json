@@ -17199,28 +17199,40 @@
       "norm_label": "3. arxiv metadata (memo item 12)"
     },
     {
-      "label": "4. Handoff \u2014 for the guide, not done here",
+      "label": "4. Items 7 and 9 \u2014 now done (2026-09-01)",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "docs/ARXIV_SUBMISSION.md",
       "source_location": "L91",
       "_origin": "ast",
-      "id": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "id": "docs_arxiv_submission_4_items_7_and_9_now_done_2026_09_01",
       "community": 29,
       "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
-      "norm_label": "4. handoff \u2014 for the guide, not done here"
+      "norm_label": "4. items 7 and 9 \u2014 now done (2026-09-01)"
     },
     {
-      "label": "5. Memo items already closed",
+      "label": "5. Item 10 \u2014 upload-day literature sweep",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L140",
+      "source_location": "L136",
       "_origin": "ast",
-      "id": "docs_arxiv_submission_5_memo_items_already_closed",
+      "id": "docs_arxiv_submission_5_item_10_upload_day_literature_sweep",
       "community": 29,
       "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
-      "norm_label": "5. memo items already closed"
+      "norm_label": "5. item 10 \u2014 upload-day literature sweep"
+    },
+    {
+      "label": "6. Memo items \u2014 status",
+      "file_type": "document",
+      "node_kind": "heading",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L155",
+      "_origin": "ast",
+      "id": "docs_arxiv_submission_6_memo_items_status",
+      "community": 29,
+      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
+      "norm_label": "6. memo items \u2014 status"
     },
     {
       "label": "arXiv submission \u2014 bundle, metadata, and handoff",
@@ -17235,23 +17247,11 @@
       "norm_label": "arxiv submission \u2014 bundle, metadata, and handoff"
     },
     {
-      "label": "Item 10 \u2014 upload-day literature sweep",
-      "file_type": "document",
-      "node_kind": "heading",
-      "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L121",
-      "_origin": "ast",
-      "id": "docs_arxiv_submission_item_10_upload_day_literature_sweep",
-      "community": 29,
-      "community_name": "arXiv submission \u2014 bundle, metadata, and handoff",
-      "norm_label": "item 10 \u2014 upload-day literature sweep"
-    },
-    {
       "label": "Item 7 \u2014 bibliographic entries",
       "file_type": "document",
       "node_kind": "heading",
       "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L105",
+      "source_location": "L104",
       "_origin": "ast",
       "id": "docs_arxiv_submission_item_7_bibliographic_entries",
       "community": 29,
@@ -47329,22 +47329,11 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L105",
+      "source_location": "L104",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "source": "docs_arxiv_submission_4_items_7_and_9_now_done_2026_09_01",
       "target": "docs_arxiv_submission_item_7_bibliographic_entries",
-      "confidence_score": 1.0
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L121",
-      "weight": 1.0,
-      "_origin": "ast",
-      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
-      "target": "docs_arxiv_submission_item_10_upload_day_literature_sweep",
       "confidence_score": 1.0
     },
     {
@@ -47354,7 +47343,7 @@
       "source_location": "L93",
       "weight": 1.0,
       "_origin": "ast",
-      "source": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "source": "docs_arxiv_submission_4_items_7_and_9_now_done_2026_09_01",
       "target": "docs_arxiv_submission_item_9_title_page_contact",
       "confidence_score": 1.0
     },
@@ -47362,11 +47351,22 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "docs/ARXIV_SUBMISSION.md",
-      "source_location": "L140",
+      "source_location": "L136",
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
-      "target": "docs_arxiv_submission_5_memo_items_already_closed",
+      "target": "docs_arxiv_submission_5_item_10_upload_day_literature_sweep",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "docs/ARXIV_SUBMISSION.md",
+      "source_location": "L155",
+      "weight": 1.0,
+      "_origin": "ast",
+      "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
+      "target": "docs_arxiv_submission_6_memo_items_status",
       "confidence_score": 1.0
     },
     {
@@ -47410,7 +47410,7 @@
       "weight": 1.0,
       "_origin": "ast",
       "source": "docs_arxiv_submission_arxiv_submission_bundle_metadata_and_handoff",
-      "target": "docs_arxiv_submission_4_handoff_for_the_guide_not_done_here",
+      "target": "docs_arxiv_submission_4_items_7_and_9_now_done_2026_09_01",
       "confidence_score": 1.0
     },
     {
@@ -69670,5 +69670,5 @@
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "bcf97654e5496f2b75055946d2023c0b8e9f49c9"
+  "built_at_commit": "9e10089691b0cabeed3e23344d7c33360cd62524"
 }

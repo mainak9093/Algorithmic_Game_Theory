@@ -88,37 +88,52 @@ tight $n-1$ total, polynomial time, EF1):
 
 ---
 
-## 4. Handoff — for the guide, not done here
+## 4. Items 7 and 9 — now done (2026-09-01)
 
 ### Item 9 — title-page contact
 
-`report/main.tex` still has
+Filled with the address the user supplied:
 
 ```latex
-\author[1]{Mainak Sarkar\footnote{Contact: }}
+\author[1]{Mainak Sarkar\footnote{Contact: mainaks23@iitk.ac.in}}
 ```
 
-with an **empty** contact, which renders as a bare "\*Contact:" footnote on
-page 1 beside Soumyarup's address. Fill in the IITK address, or delete the
-`\footnote{...}` entirely — the memo allows either. Left untouched by request.
+Same institutional affiliation as Soumyarup (`\affil[1]{Indian Institute of
+Technology Kanpur}`, already shared). Verified in the rendered PDF, page 1.
 
 ### Item 7 — bibliographic entries
 
-Left untouched by request. The verified replacements, for when you update
-`report/references.bib`:
+Applied to `report/references.bib`. All four are additions/replacements of
+metadata only — no key was renamed, so every `\cite{...}` in the manuscript
+still resolves without any other edit.
 
-| Key | Current | Replace with |
+| Key | Was | Now |
 |---|---|---|
-| `TWYZ23` | `@misc`, arXiv 2308.12177, with a note | *Theoretical Computer Science* **1042**, article 115248, 2025 |
-| `KMSTY24` | AAAI 2024 | consider *Artificial Intelligence* **348**, article 104406, 2025 |
-| `BKNS22` | `@misc`, arXiv 2201.07419 | IJCAI 2022, pages **60–66** |
-| `BSY23` | FAW 2023, no volume | IJTCS-FAW 2023, LNCS **13933**, pages 252–262, Springer |
-| `LMS26` | arXiv 2607.10089 | already correct, no change needed |
+| `TWYZ23` | `@misc`, arXiv 2308.12177, with a note | `@article`, *Theoretical Computer Science* **1042**, article 115248, 2025; arXiv id kept as a note |
+| `KMSTY24` | `@inproceedings`, AAAI 2024 | `@article`, *Artificial Intelligence* **348**, article 104406, 2025; AAAI + arXiv kept as a note |
+| `BKNS22` | `@misc`, arXiv 2201.07419 | `@inproceedings`, IJCAI 2022, pages **60–66**; arXiv id kept as a note |
+| `BSY23` | `@inproceedings`, FAW 2023, no volume | IJTCS-FAW 2023, *LNCS* **13933**, pages 252–262, Springer |
+| `LMS26` | arXiv 2607.10089 | unchanged, already correct |
 
 The TWYZ, BKNS and BSY details were read off the reference lists of
 arXiv 2607.10089 and arXiv 2608.10572; the Kawase figures are the memo's.
 
-### Item 10 — upload-day literature sweep
+**One side effect worth knowing about, not an error.** The `alpha` bibliography
+style derives its bracketed label from the entry's actual year, so updating the
+year field changed the *visible* citation label even though the BibTeX key
+(hence every `\cite{TWYZ23}` etc. in the source) did not change:
+`[TWYZ23]` → **`[TWYZ25]`**, `[KMS+24]` → **`[KMS+25]`**. This is correct
+behaviour — the label now reflects the true publication year — and was checked
+against the full reference list for collisions: none found, all labels
+distinct.
+
+Rebuilt and verified: `main.pdf` 16 pp., `working.pdf` 133 pp., both clean, no
+undefined references or citations, zero overfull boxes. The `report/arxiv/`
+bundle was regenerated to match (§1–2 above); its own `main.pdf` is now kept in
+the repo rather than deleted by the preflight cleanup, so it doesn't disappear
+again.
+
+## 5. Item 10 — upload-day literature sweep
 
 Run on the day of upload, not before. What was already cleared on 2026-09-01:
 
@@ -137,7 +152,9 @@ watch for is any new paper claiming a per-agent subsidy bound for
 
 ---
 
-## 5. Memo items already closed
+## 6. Memo items — status
+
+All twelve items are now closed.
 
 | Item | Where |
 |---|---|
@@ -147,6 +164,9 @@ watch for is any new paper claiming a per-agent subsidy bound for
 | 4 corrected lower bound kept | `introduction.tex`, Example 1 |
 | 5 Algorithm 1 no longer splits Definition 16 | `float` package, `[H]` |
 | 6 Lin et al. in Related Work | `introduction.tex`, `LLTZ26` |
+| 7 bibliographic entries updated | §4 above, 2026-09-01 |
 | 8 Algorithm 3 supplies the terminal state | `main_result.tex`, proof of Theorem 20 |
+| 9 title-page contact filled | §4 above, 2026-09-01 |
+| 10 upload-day literature sweep | §5 above — **run again on the actual upload day**, this is not a substitute |
 | 11 preflight | §2 above |
 | 12 metadata | §3 above |
