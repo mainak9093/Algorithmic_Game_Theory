@@ -1,0 +1,373 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, citecolor=blue, urlcolor=blue}
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{example}[definition]{Example}
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{lemma}[definition]{Lemma}
+\newtheorem{remark}[definition]{Remark}
+\newtheorem{corollary}[definition]{Corollary}
+
+\newcommand{\N}{N}
+\newcommand{\Mset}{M}
+
+\title{Pareto Optimality Is Incompatible with a Bounded Per-Agent Subsidy:\\
+       A Minimal Example}
+\author{Mainak Sarkar}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+We exhibit a two-agent, three-chore instance with binary marginal costs in
+which \emph{no} complete allocation is simultaneously (i) envy-free once each
+agent is paid a subsidy of at most one unit, and (ii) Pareto optimal. The two
+properties are not merely hard to achieve together on this instance --- they
+are mutually exclusive: the set of allocations satisfying the subsidy
+guarantee and the set of Pareto optimal allocations are disjoint. We use the
+standard definition of Pareto optimality of Chakraborty, Igarashi, Suksompong
+and Zick~\cite{CISZ21}, translated from goods to chores by the usual sign
+flip, and we spell out one point where the two settings genuinely differ ---
+allocations must be taken complete for the chores version of the definition
+to be non-vacuous.
+\end{abstract}
+
+\section{Summary, for the impatient reader}
+\label{sec:summary}
+
+\begin{itemize}[leftmargin=1.4em]
+  \item Two agents share the cost function $c(S) = \min(|S|,2)$ on three
+        chores: the first two chores hurt, the third is free once you already
+        hold two.
+  \item Concentrating all three chores on one agent is the \emph{cheapest}
+        outcome in total (cost $2$), because the third chore is absorbed for
+        free. Splitting the chores always costs $3$ in total.
+  \item But concentration creates an envy gap of exactly $2$: the loaded
+        agent needs a subsidy of $2$ to stop envying the agent holding
+        nothing. A guarantee capping the subsidy at $1$ per agent forbids
+        this.
+  \item Every allocation that respects the cap is a split, and every split is
+        Pareto dominated by concentrating the chores.
+  \item Conclusion: on this instance, \textbf{no allocation is both Pareto
+        optimal and feasible under the $\{0,1\}$-subsidy guarantee}. This is
+        not an artifact of a bad tie-break; the two requirements are
+        logically incompatible here.
+\end{itemize}
+
+\section{The setting}
+\label{sec:setting}
+
+There are $\N = \{1,\dots,n\}$ agents and $\Mset$ a finite set of indivisible
+\emph{chores}. Each agent $i$ has a cost function $c_i : 2^{\Mset} \to
+\mathbb{Z}_{\ge 0}$ with $c_i(\emptyset) = 0$. We say $c_i$ has \emph{binary
+marginals} if
+\[
+  c_i(S \cup \{e\}) - c_i(S) \in \{0,1\}
+  \qquad \text{for every } S \subseteq \Mset \text{ and every } e \notin S.
+\]
+No further structure is assumed: $c_i$ need not be additive, submodular, or
+subadditive, and different agents' cost functions need not be related.
+
+A \emph{complete allocation} $A = (A_1,\dots,A_n)$ partitions $\Mset$ among
+the agents. A subsidy vector $p \in \mathbb{R}^n_{\ge 0}$ makes $(A,p)$
+\emph{envy-free} if
+\[
+  c_i(A_i) - p_i \;\le\; c_i(A_j) - p_j \qquad \text{for all } i,j \in \N .
+\]
+
+We are interested in the following guarantee, which caps the subsidy paid to
+any single agent:
+\begin{definition}[The $\{0,1\}$-subsidy property]
+\label{def:S}
+A complete allocation $A$ is \emph{$S$-feasible} if there exists
+$p \in \{0,1\}^n$ making $(A,p)$ envy-free.
+\end{definition}
+Definition~\ref{def:S} is the property that a subsidy of at most one unit per
+agent suffices to eliminate all envy under $A$. This note asks whether an
+$S$-feasible allocation can always be chosen to be Pareto optimal as well.
+
+\section{Pareto optimality}
+\label{sec:po}
+
+\subsection{The standard definition, for goods}
+
+We use the definition of Chakraborty, Igarashi, Suksompong and
+Zick~\cite[Sec.~2]{CISZ21}, stated for their setting of \emph{goods}, where
+each agent has a value function $v_i : 2^{\Mset} \to \mathbb{R}_{\ge 0}$
+(higher is better):
+
+\begin{quote}
+\emph{An allocation $A'$ is said to Pareto dominate an allocation $A$ if
+$v_i(A_i') \ge v_i(A_i)$ for all agents $i \in \N$ and $v_j(A_j') > v_j(A_j)$
+for some agent $j \in \N$. An allocation is Pareto optimal (or PO for short)
+if it is not Pareto dominated by any other allocation.}
+\end{quote}
+
+\subsection{The chores version}
+
+Our setting is \emph{chores}, so we work with costs rather than values. The
+standard translation between the two is $v_i = -c_i$: a chore is something an
+agent does not want, so cost is disutility. Substituting $v_i = -c_i$ into the
+inequalities above,
+\[
+  v_i(A_i') \ge v_i(A_i)
+  \iff -c_i(A_i') \ge -c_i(A_i)
+  \iff c_i(A_i') \le c_i(A_i),
+\]
+and the strict inequality flips the same way. The chores form of the
+definition is therefore \emph{the same statement}, not an independent one:
+
+\begin{definition}[Pareto domination, chores form]
+\label{def:podom}
+Allocation $B$ \emph{Pareto dominates} allocation $A$ if
+$c_i(B_i) \le c_i(A_i)$ for every $i \in \N$, with strict inequality for at
+least one $j \in \N$. An allocation is \emph{Pareto optimal (PO)} if no
+allocation Pareto dominates it.
+\end{definition}
+
+\subsection{Why allocations must be taken complete}
+\label{sec:completeness}
+
+Chakraborty et al.\ allow \emph{incomplete} allocations --- some items may go
+unassigned --- and Pareto optimality is defined over all allocations,
+complete or not. For goods this costs nothing: withholding a good from every
+agent can only make everyone worse off (assuming positive value), so an
+incomplete allocation is automatically dominated by completing it, and hence
+can never be PO. Chakraborty et al.\ note exactly this in their proof of
+Theorem~4.2.
+
+For chores the same argument runs backward. Withholding a chore makes
+\emph{every} agent weakly better off. If incomplete allocations were allowed
+to compete as dominators, \emph{every} complete allocation would be dominated
+by the empty allocation (assign nothing to anybody), and the notion of Pareto
+optimality would collapse to nothing being PO except the empty allocation
+itself --- a vacuous statement that says nothing about how to divide the
+chores that must, in fact, be divided.
+
+We therefore adopt the standard convention of the chore fair-division
+literature and restrict Definition~\ref{def:podom} to \emph{complete}
+allocations throughout: an allocation is a partition of $\Mset$, and
+domination is checked only against other partitions of $\Mset$. This is not a
+weaker or different notion of Pareto optimality; it is the same definition,
+applied to the domain on which it is non-vacuous for chores.
+
+\section{The instance}
+\label{sec:instance}
+
+\begin{example}
+\label{ex:main}
+Let $n = 2$ agents and $\Mset = \{a,b,c\}$, three chores. Both agents share
+the same cost function
+\[
+  c(S) \;=\; \min(|S|,\,2).
+\]
+\end{example}
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+$|S|$ & $0$ & $1$ & $2$ & $3$ \\
+\midrule
+$c(S)$ & $0$ & $1$ & $2$ & $2$ \\
+\bottomrule
+\end{tabular}
+\caption{The shared cost function. The first two chores cost one unit each;
+the third is free once the agent already holds two.}
+\label{tab:cost}
+\end{table}
+
+\begin{proposition}
+\label{prop:inclass}
+The cost function of Example~\ref{ex:main} has binary marginals, is
+monotone, satisfies $c(\emptyset)=0$, and is \emph{not} additive.
+\end{proposition}
+
+\begin{proof}
+$c(\emptyset) = \min(0,2) = 0$. Monotonicity is immediate from the definition
+of $\min$. For the marginals: adding a chore to the empty bundle gives
+$c(\{e\}) - c(\emptyset) = 1 - 0 = 1$; adding a chore to a singleton gives
+$c(S) - c(\{e'\}) = 2 - 1 = 1$; adding a chore to a bundle of size two gives
+$c(\Mset) - c(S) = 2 - 2 = 0$. Every marginal is in $\{0,1\}$.
+
+If $c$ were additive, we would need $c(\{a,b,c\}) = c(\{a\}) + c(\{b\}) +
+c(\{c\}) = 1+1+1 = 3$. But $c(\{a,b,c\}) = \min(3,2) = 2 \ne 3$, so $c$ is not
+additive.
+\end{proof}
+
+\section{The eight allocations}
+\label{sec:eight}
+
+With $n=2$ and $|\Mset|=3$, there are $2^3 = 8$ complete allocations. Because
+both agents share the same cost function, the envy-free-with-subsidy
+condition simplifies sharply.
+
+\begin{lemma}[Forced subsidy gap]
+\label{lem:gap}
+For $n=2$ agents with a shared cost function $c$, an allocation $A$ admits an
+envy-free subsidy vector $p$ if and only if
+\[
+  p_1 - p_2 \;=\; c(A_1) - c(A_2).
+\]
+\end{lemma}
+
+\begin{proof}
+Envy-freeness requires both $c(A_1) - p_1 \le c(A_2) - p_2$ (agent $1$ does
+not envy agent $2$) and $c(A_2) - p_2 \le c(A_1) - p_1$ (agent $2$ does not
+envy agent $1$). Rearranging, the first gives $p_1 - p_2 \ge c(A_1) - c(A_2)$
+and the second gives $p_1 - p_2 \le c(A_1) - c(A_2)$. Together these force
+equality.
+\end{proof}
+
+Lemma~\ref{lem:gap} leaves no freedom at all: once $A$ is fixed, the
+\emph{difference} $p_1 - p_2$ is determined exactly. Since $p \in
+\{0,1\}^2$, the achievable differences are only $\{-1,0,1\}$; the allocation
+is $S$-feasible (Definition~\ref{def:S}) exactly when $|c(A_1)-c(A_2)| \le 1$.
+
+\begin{table}[h]
+\centering
+\begin{tabular}{@{}llccccl@{}}
+\toprule
+$A_1$ & $A_2$ & $(c(A_1),c(A_2))$ & $p_1-p_2$ forced & $S$-feasible? & PO? & dominated by \\
+\midrule
+$\emptyset$   & $\{a,b,c\}$ & $(0,2)$ & $-2$ & \textbf{no} & \textbf{yes} & --- \\
+$\{a\}$       & $\{b,c\}$   & $(1,2)$ & $-1$ & yes & no & $(\emptyset,\{a,b,c\})$ \\
+$\{b\}$       & $\{a,c\}$   & $(1,2)$ & $-1$ & yes & no & $(\emptyset,\{a,b,c\})$ \\
+$\{c\}$       & $\{a,b\}$   & $(1,2)$ & $-1$ & yes & no & $(\emptyset,\{a,b,c\})$ \\
+$\{a,b\}$     & $\{c\}$     & $(2,1)$ & $1$  & yes & no & $(\{a,b,c\},\emptyset)$ \\
+$\{a,c\}$     & $\{b\}$     & $(2,1)$ & $1$  & yes & no & $(\{a,b,c\},\emptyset)$ \\
+$\{b,c\}$     & $\{a\}$     & $(2,1)$ & $1$  & yes & no & $(\{a,b,c\},\emptyset)$ \\
+$\{a,b,c\}$   & $\emptyset$ & $(2,0)$ & $2$  & \textbf{no} & \textbf{yes} & --- \\
+\bottomrule
+\end{tabular}
+\caption{All eight complete allocations of Example~\ref{ex:main}. Exactly two
+are Pareto optimal (the concentrated ones); exactly six are $S$-feasible (the
+splits). The two sets do not overlap.}
+\label{tab:eight}
+\end{table}
+
+\section{The two Pareto optimal allocations}
+\label{sec:po-two}
+
+\begin{proposition}
+\label{prop:po}
+The allocations $(\{a,b,c\},\emptyset)$ and $(\emptyset,\{a,b,c\})$ are
+Pareto optimal, and no other allocation is.
+\end{proposition}
+
+\begin{proof}
+Let $A = (\{a,b,c\},\emptyset)$, with costs $(2,0)$. Suppose $B$ dominates
+$A$: then $c(B_1) \le 2$ and $c(B_2) \le 0$, with at least one strict. Costs
+are non-negative, so $c(B_2) \le 0$ forces $c(B_2) = 0$, and the only subset
+with cost $0$ is $\emptyset$ (Table~\ref{tab:cost}), so $B_2 = \emptyset$.
+Completeness then forces $B_1 = \{a,b,c\}$. So $B = A$: no allocation other
+than $A$ itself satisfies the domination inequalities, and $A$ is PO. The
+argument for $(\emptyset,\{a,b,c\})$ is symmetric.
+
+For every other allocation, Table~\ref{tab:eight} exhibits an explicit
+dominator. Take $(\{a,b\},\{c\})$, with costs $(2,1)$, as a representative
+case: $c(\{a,b\}) = 2 = c(\{a,b,c\})$, while $c(\{c\}) = 1 > 0 = c(\emptyset)$.
+So $(\{a,b,c\},\emptyset)$ dominates it --- agent $1$ is unaffected because her
+bundle is already saturated, and agent $2$ strictly improves. The same pattern
+verifies every other row. Hence no allocation outside
+$\{(\{a,b,c\},\emptyset), (\emptyset,\{a,b,c\})\}$ is PO.
+\end{proof}
+
+\begin{remark}[The two PO allocations do not dominate each other]
+\label{rem:incomparable}
+It is worth checking directly that $(\{a,b,c\},\emptyset)$, with costs
+$(2,0)$, does \emph{not} Pareto dominate $(\emptyset,\{a,b,c\})$, with costs
+$(0,2)$ --- and vice versa. Domination of $(0,2)$ by $(2,0)$ would require
+$2 \le 0$ (agent $1$'s cost) \emph{and} $0 \le 2$ (agent $2$'s cost); the
+first fails. Domination in the other direction would require $0 \le 2$
+\emph{and} $2 \le 0$; again the second fails. So neither dominates the other.
+This is not a contradiction: Pareto optimality is a partial order, not a
+ranking, and $(2,0)$ and $(0,2)$ are simply two incomparable points on the
+Pareto frontier --- moving from one to the other helps one agent while
+hurting the other, which is a trade-off, not an improvement. Both are
+undominated by anything, including each other, which is exactly what makes
+both of them Pareto optimal simultaneously.
+\end{remark}
+
+\section{The incompatibility}
+\label{sec:incompat}
+
+\begin{corollary}[Main observation]
+\label{cor:main}
+On the instance of Example~\ref{ex:main}, no complete allocation is both
+$S$-feasible (Definition~\ref{def:S}) and Pareto optimal
+(Definition~\ref{def:podom}).
+\end{corollary}
+
+\begin{proof}
+By Proposition~\ref{prop:po}, the Pareto optimal allocations are exactly
+$(\{a,b,c\},\emptyset)$ and $(\emptyset,\{a,b,c\})$, with forced subsidy gaps
+$p_1-p_2 = \pm 2$ (Lemma~\ref{lem:gap} and Table~\ref{tab:eight}). Neither gap
+is achievable by any $p \in \{0,1\}^2$, whose achievable gaps are
+$\{-1,0,1\}$. So neither PO allocation is $S$-feasible. Every other
+allocation is $S$-feasible (Table~\ref{tab:eight}) but, by
+Proposition~\ref{prop:po}, is not PO. Hence the two sets --- $S$-feasible
+allocations and Pareto optimal allocations --- are disjoint.
+\end{proof}
+
+\begin{remark}[Why: efficiency and fairness pull in opposite directions]
+The two facts behind Corollary~\ref{cor:main} are two sides of the same
+feature of $c$. Because $c$ saturates at $|S|=2$, the third chore is
+\emph{free} to an agent who already holds two: moving it onto that agent
+costs nothing and relieves whoever else was holding it, which is exactly what
+makes concentration efficient (Pareto optimal). But that same saturation
+means the loaded agent's cost jumps straight from $0$ to $2$ relative to the
+empty agent, an envy gap the $\{0,1\}$-subsidy guarantee cannot fund. The
+guarantee therefore forces a split; every split leaves one chore un-absorbed
+that someone else would have taken for free, which is exactly the source of
+the domination in Table~\ref{tab:eight}.
+\end{remark}
+
+\begin{remark}[The efficiency cost of the guarantee]
+The cheapest Pareto optimal allocation has total cost $c(A_1)+c(A_2) = 2$.
+The cheapest $S$-feasible allocation has total cost $3$ (every split costs
+$2+1$ in some order). Enforcing the $\{0,1\}$-subsidy guarantee therefore
+costs society one extra unit of total disutility on this instance --- a
+$50\%$ overhead relative to the efficient outcome.
+\end{remark}
+
+\section{Further observations (informal)}
+\label{sec:further}
+
+The following two points were checked computationally and are recorded here
+for context; they are not needed for Corollary~\ref{cor:main}, which is
+already fully self-contained on the three-chore instance above.
+
+\begin{itemize}[leftmargin=1.4em]
+  \item \textbf{The phenomenon is not an artifact of $n=2,m=3$.} The same
+        construction, $c(S) = \min(|S|,t)$ with all agents sharing $c$,
+        produces analogous instances --- no $S$-feasible allocation is
+        Pareto optimal --- for a range of $(n,m,t)$ with $t=2$ and
+        $m \ge n+1$, checked exhaustively for $n \in \{2,3,4\}$.
+  \item \textbf{Additivity seems to be exactly what is missing.} In every
+        instance checked (exhaustive search at small sizes, and random
+        sampling at larger sizes) where every agent's cost function is
+        additive, an $S$-feasible allocation that is also Pareto optimal was
+        always found. Proposition~\ref{prop:inclass} confirms that the
+        instance above is emphatically not additive; that non-additivity
+        appears to be essential to the incompatibility.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{CISZ21}
+Mithun Chakraborty, Ayumi Igarashi, Warut Suksompong, and Yair Zick.
+\emph{Weighted Envy-Freeness in Indivisible Item Allocation}.
+ACM Transactions on Economics and Computation, 9(3):1--18, 2021.
+\end{thebibliography}
+
+\end{document}
