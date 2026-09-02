@@ -57,9 +57,10 @@ Duncan~Karl Foley.
 \newblock Resource allocation and the public sector.
 \newblock {\em Yale Economic Essays}, 7(1):45--98, 1967.
 
-\bibitem[GIK{\etalchar{+}}21]{GIK21}
+\bibitem[GIK{\etalchar{+}}24]{goko2024fair}
 Hiromichi Goko, Ayumi Igarashi, Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, Yu~Yokoi, and Makoto Yokoo.
-\newblock Fair and truthful mechanism with limited subsidy, 2021.
+\newblock A fair and truthful mechanism with limited subsidy.
+\newblock {\em Games and Economic Behavior}, 144:49--70, 2024.
 
 \bibitem[GSW25]{GSW25}
 Jugal Garg, Eklavya Sharma, and Xiaowei Wu.
@@ -79,6 +80,7 @@ Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, and Makoto Yokoo.
 \bibitem[LLTZ26]{LLTZ26}
 Zehan Lin, Shengxin Liu, Biaoshuai Tao, and Shengwei Zhou.
 \newblock Non-existence of {EFX} chore allocations for monotone cost functions with binary marginals, 2026.
+\newblock arXiv:2608.10572.
 
 \bibitem[LMMS04]{LMMS04}
 Richard~J. Lipton, Evangelos Markakis, Elchanan Mossel, and Amin Saberi.
@@ -88,6 +90,7 @@ Richard~J. Lipton, Evangelos Markakis, Elchanan Mossel, and Amin Saberi.
 \bibitem[LMS26]{LMS26}
 Xinhang Lu, Simon Mackenzie, and Mashbat Suzuki.
 \newblock Optimal subsidy bounds for goods and chores: One dollar each suffices, 2026.
+\newblock arXiv:2607.10089.
 
 \bibitem[Mas87]{Mas87}
 Eric~S. Maskin.
@@ -109,5 +112,15 @@ Biaoshuai Tao, Xiaowei Wu, Ziqi Yu, and Shengwei Zhou.
 Hal Varian.
 \newblock Equity, envy, and efficiency.
 \newblock {\em Journal of Economic Theory}, 9(1):63--91, 1974.
+
+\bibitem[WXZ25]{wu2025revisiting}
+Xiaowei Wu, Quan Xue, and Shengwei Zhou.
+\newblock Revisiting proportional allocation with subsidy: Simplification and improvements.
+\newblock In {\em IJCAI}, pages 4082--4090, 2025.
+
+\bibitem[WZ24]{wu2024tree}
+Xiaowei Wu and Shengwei Zhou.
+\newblock Tree splitting based rounding scheme for weighted proportional allocations with subsidy.
+\newblock In {\em International Conference on Web and Internet Economics}, pages 295--313. Springer, 2024.
 
 \end{thebibliography}

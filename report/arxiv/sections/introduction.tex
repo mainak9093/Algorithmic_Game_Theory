@@ -13,17 +13,10 @@ indivisible items an envy-free allocation need not exist, as the standard
 one-item two-agent instance shows, and a large body of work therefore studies
 relaxations such as envy-freeness up to one good (EF1)~\cite{Bud11,LMMS04}.
 
-A second and complementary line of work retains \emph{exact} envy-freeness and
-buys off the residual envy with money. Each agent $i$ receives, in addition to
-her bundle, a subsidy $\subsidy_i \ge 0$ supplied by a third party, and one asks
-for an allocation together with a subsidy vector under which every agent weakly
-prefers her own bundle-plus-subsidy to that of every other agent. The question
-is how much money this requires. Maskin~\cite{Mas87} answered it for
-unit-demand agents with $m = n$: under the scaling in which no agent values any
+A second and complementary line of work retains exact envy-freeness by allowing monetary subsidies. Each agent $i$ receives, in addition to her allocated bundle, a subsidy $p_i\ge 0$ supplied by a third
+party, and the objective is to bound the amount of subsidy required to obtain an envy-free outcome. Maskin~\cite{Mas87} answered it for unit-demand agents with $m = n$: under the scaling in which no agent values any
 single item above $1$, a total subsidy of $n-1$ suffices. Halpern and
-Shah~\cite{HS19} moved to the multi-demand setting with arbitrary $m$, gave the
-characterisation of \emph{envy-freeable} allocations that the whole line now
-runs on, showed that a subsidy of $(n-1)m$ is necessary and sufficient in the
+Shah~\cite{HS19} moved to the multi-demand setting with arbitrary $m$, gave a characterization of \emph{envy-freeable} allocations that has subsequently played a central role in this literature, showed that a subsidy of $(n-1)m$ is necessary and sufficient in the
 worst case when the allocation is handed to us, and conjectured that $n-1$
 suffices when we may choose the allocation. Brustle et
 al.~\cite{BDNSV20} proved that conjecture in the stronger per-agent form --- one
@@ -31,9 +24,7 @@ dollar to each agent suffices for additive valuations, with the allocation
 simultaneously EF1 and balanced --- and showed that for general monotone
 valuations $2(n-1)$ per agent suffices, so that the total subsidy is
 $O(n^2)$ and, remarkably, \emph{independent of the number of items}. Barman
-et al.~\cite{BKNS22} then improved the monotone bound by a factor of $n$ on the
-dichotomous subclass: when every marginal
-$v_i(S \cup \set{g}) - v_i(S)$ lies in $\set{0,1}$, there is an allocation whose
+et al.~\cite{BKNS22} then obtained a linear-factor improvement over the general monotone bound on the dichotomous subclass: when every marginal $v_i(S \cup \set{g}) - v_i(S)$ lies in $\set{0,1}$, there is an allocation whose
 accompanying subsidy is exactly $0$ or $1$ for each agent, hence at most $n-1$
 in total, computable in polynomial time in the value-oracle model. Their bound
 assumes neither additivity nor submodularity nor even subadditivity, and it is
@@ -41,17 +32,10 @@ tight: with $n$ agents and a single unit-valued good, $n-1$ agents must each be
 paid $1$.
 
 \paragraph{Chores.}
-Every result above is about \emph{goods}. This paper asks the mirrored question,
-in which every item is a \emph{chore}: an object that an agent would rather not
-hold, so that acquiring it weakly decreases her utility. Chores are not an
-exotic variant. Shift rotations, on-call duty, teaching and refereeing load,
-committee service, maintenance tasks and the liabilities attached to an estate
-are all allocation problems in which the items are burdens rather than prizes,
-and in all of them money is already the standard instrument of repair --- as
-overtime pay, hardship allowance, or a course-release budget. If anything the
-subsidy model is more natural for chores than for goods, since compensating
-somebody for taking on unwanted work needs less justification than paying
-somebody for the privilege of not receiving a prize.
+We consider the corresponding problem for indivisible chores, where receiving an additional item weakly decreases an agent's utility. Chore-allocation problems arise naturally in applications such as
+shift assignment, on-call duties, teaching and refereeing loads, committee service, maintenance tasks, and the allocation of
+liabilities. Monetary compensation is also a natural instrument in such settings, where it may be interpreted as compensation for
+undertaking an undesirable task or additional workload.
 
 Concretely, we study \emph{negative dichotomous} valuations: for every agent
 $i$, every $S \subseteq \items$ and every $g \in \items \setminus S$,
@@ -76,27 +60,20 @@ counterpart of the scheduling example used by~\cite{BKNS22} to motivate
 dichotomous valuations for goods.
 
 \paragraph{The baseline and the lower bound.}
-Two facts delimit the problem, and we state them explicitly so that the
-contribution can be measured against them.
-
-On the one hand, existence of a bounded subsidy is not in question. Negative
-dichotomous valuations are doubly monotone --- every item is a chore for every
+Two observations provide useful benchmarks for the problem, and we state them explicitly so that the contribution can be measured against them. On one hand, existence of a bounded subsidy is not in question. Negative dichotomous valuations are doubly monotone --- every item is a chore for every
 agent, which is a special case of every item being a good or a chore for each
 agent --- and they satisfy the normalisation
 $\abs{v_i(S \cup \set{e}) - v_i(S)} \le 1$ that~\cite[\S2]{KMSTY24} imposes. The
 reduction of Kawase et al., which converts any EF1 allocation into an envy-free
-one, therefore applies off the shelf and yields a subsidy of at most $n-1$ per
-agent and $n(n-1)/2$ in total~\cite[Theorem~1]{KMSTY24}. Two details make the
-containment work and are easy to get wrong. Their normalisation is two-sided, so
+one, therefore applies directly and yields a subsidy of at most $n-1$ per
+agent and $n(n-1)/2$ in total~\cite[Theorem~1]{KMSTY24}. Two details concerning this application are worth noting. Their normalisation is two-sided, so
 it bounds chore disutility as well as value; and the EF1 they require is the
 two-sided form of Definition~\ref{def:ef1}, which removes one item from
 \emph{either} bundle, not the goods-only form
 of~\cite{HS19} --- the two differ precisely when chores are present. An EF1
 allocation is guaranteed to exist and to be computable in polynomial time for
 doubly monotone valuations, so the reduction has an input; for that
-step~\cite[\S2]{KMSTY24} cites~\cite{LMMS04} and~\cite{BSV21}, and the citation
-matters, because the envy-cycle argument of~\cite{LMMS04} does \emph{not} port
-to chores unaltered and it is~\cite{BSV21} that supplies the repair.
+step~\cite[\S2]{KMSTY24} cites~\cite{LMMS04} and~\cite{BSV21}. In particular, while ~\cite{LMMS04} concerns goods, ~\cite{BSV21} provides the corresponding existence result required in the chore setting.
 
 On the other hand, the lower bound of the goods model survives intact.
 
@@ -157,10 +134,8 @@ value-oracle access.
 \end{theorem}
 \fi
 
-Example~\ref{ex:lowerbound} shows this bound is tight.
-Between the $n-1$ per agent that~\cite{KMSTY24} already gives and the
-$\set{0,1}$ per agent asked for lies a factor of $n$ in the total, exactly
-the gap that~\cite{BKNS22} closed on the goods side.
+Example~\ref{ex:lowerbound} shows this bound is tight. The guarantee of \cite{KMSTY24} is $n-1$ per agent and $n(n-1)/2$ in total, whereas our target is at most one per agent and $n-1$ in total, yielding a linear-factor improvement.
+
 
 \paragraph{Our contribution.}
 We establish the statement above, for every number of agents\ifworking\
@@ -183,7 +158,7 @@ contains the proof.\fi
 The subsidy line for goods is described above. Within it, the dichotomous
 subclass has attracted separate attention: Halpern and Shah~\cite{HS19} settle
 binary additive valuations with a total subsidy of $n-1$, Goko et
-al.~\cite{GIK21} obtain the analogous bound for binary submodular valuations
+al.~\cite{goko2024fair} obtain the analogous bound for binary submodular valuations
 together with a strategy-proof mechanism, and Barman et al.~\cite{BKNS22} subsume
 both by dropping every structural assumption beyond binary marginals. Dichotomous
 preferences are themselves a well-studied restriction in social
@@ -193,39 +168,24 @@ fully polynomial-time approximation scheme for a constant number of agents, and
 Narayan et al.~\cite{NSV21} study the welfare cost of achieving envy-freeness
 with transfers.
 
-The paper closest to the present setting is that of Kawase et
-al.~\cite{KMSTY24}, the only work in the envy-freeness-with-subsidy line that
-admits chores at all. Working with doubly monotone valuations under the two-sided normalisation,
+The work of Kawase et al.~\cite{KMSTY24} is particularly relevant to the present setting because it handles general doubly monotone valuations, and hence includes non-additive chore valuations. Working with doubly monotone valuations under the two-sided normalisation,
 it decouples the two jobs that~\cite{BDNSV20} performed together: rather than
 constructing a specific allocation and showing that it is cheap to subsidise, it
 takes \emph{any} EF1 allocation as input and bounds the subsidy needed to
 convert it, obtaining $n-1$ per agent and $n(n-1)/2$ in total. Since EF1
-allocations are known to exist for doubly monotone valuations, the wider class
-comes along at no cost. That reduction is what makes the present question
-well-posed rather than open-ended, and it is the baseline we are trying to beat.
+allocations are known to exist for doubly monotone valuations, this yields the stated subsidy guarantee throughout that class. This result therefore provides the natural benchmark against which we compare our subsidy bound.
 
-The complementary repair --- no money, weaker fairness notion --- is pursued for
-binary valuations by Bu et al.~\cite{BSY23}, who show that EFX allocations always
+A complementary approach dispenses with subsidies and instead considers approximate notions of envy-freeness.  Bu et al.~\cite{BSY23} show that EFX allocations always
 exist and can be computed in polynomial time for dichotomous goods valuations, thus
-extending the matroid-rank result of Babaioff et al.~\cite{BEF21}. Under binary
-valuations one therefore has a clean dichotomy on the goods side: either pay
-$0$ or $1$ per agent and obtain exact envy-freeness~\cite{BKNS22}, or pay
-nothing and obtain EFX~\cite{BSY23}. This paper establishes the first branch for
+extending the matroid-rank result of Babaioff et al.~\cite{BEF21}. These results provide two complementary guarantees on the goods side: either pay $0$ or $1$ per agent and obtain exact envyfreeness~\cite{BKNS22}, or pay nothing and obtain EFX~\cite{BSY23}. This paper establishes the first branch for
 chores.
 
 \paragraph{The chores side.}
-Work on indivisible chores has largely developed alongside rather than inside
-the subsidy line, and the two have met less often than one might expect. Where
-money has been brought to chores, it has been in the service of
-\emph{proportionality} rather than envy-freeness: the question studied is the
-total subsidy needed to bring every agent down to her proportional share of the
-burden, for which the best bounds under additive disutilities normalised to at
-most $1$ per chore are $n/4$ and then $n/3 - 1/6$, recently obtained together
-with Pareto optimality by Garg et al.~\cite{GSW25}. That is a different
-fairness notion and a different accounting; it does not bound the subsidy needed
-for envy-freeness.
+Subsidies have also been studied in the allocation of indivisible chores, although much of this literature concerns fairness notions
+other than envy-freeness. Subsidies have, in particular, been studied for achieving proportionality under additive costs. For agents with equal entitlements, tight subsidy bounds are known: the optimal total subsidy is $n/4$ when $n$ is even and $(n^2-1)/(4n)$ when $n$ is odd~\cite{wu2025revisiting}. In the more general
+weighted setting, a total subsidy of $n/3-1/6$ is known to suffice~\cite{wu2024tree}, and Garg et al.~\cite{GSW25} obtain this guarantee together with Pareto optimality. These results concern proportionality rather than envy-freeness, and therefore do not directly bound the subsidy required in our setting.
 
-The no-money branch, by contrast, has a direct chore analogue of~\cite{BSY23}.
+Turning to approximate fairness without subsidies, there is a direct chore analogue of~\cite{BSY23}.
 Tao et al.~\cite{TWYZ23} study chores with binary marginals and show that for
 binary \emph{additive} costs an allocation that is simultaneously EFX and Pareto
 optimal always exists and is computable in polynomial time. So on the chores
@@ -236,27 +196,17 @@ The restriction to additive costs there cannot simply be dropped: Lin et
 al.~\cite{LLTZ26} exhibit instances with $18$ agents and $53$ chores, one
 with binary XOS costs and one with binary supermodular costs, in which no
 complete EFX allocation exists at all; the binary submodular case remains
-open. So EFX can fail outright inside the binary-marginal chore domain,
-whereas the allocation constructed below is always EF1, and becomes exactly
-envy-free once at most one unit of subsidy per agent is paid.
-That money is genuinely needed here is not obvious a priori but is
-known: Bhaskar et al.~\cite{BSV21} show that deciding whether an exactly
-envy-free allocation of chores exists is NP-complete already for binary additive
-costs, and give a polynomial-time EF1 algorithm for chores and for doubly
+open. Thus, complete EFX allocations need not exist throughout the binary-marginal chore domain,whereas the allocation constructed below is always EF1, and becomes exactly envy-free once at most one unit of subsidy per agent is paid. Exact envy-freeness without subsidies is not always attainable; indeed, Bhaskar et al.~\cite{BSV21} show that deciding whether an exactly envy-free allocation of chores exists is NP-complete already for binary additive costs, and give a polynomial-time EF1 algorithm for chores and for doubly
 monotone instances.
 
-Where the two lines have met is on the \emph{additive} side, and recently. Lu et
+Recent work has also considered subsidies for additive instances involving both goods and chores. Lu et
 al.~\cite{LMS26} prove the goods-and-chores analogue of~\cite{BDNSV20}: for
 additive utilities in which each item is a good for some agents and a chore for
 others, with every $\abs{v_i(g)} \le 1$, a subsidy of one dollar per agent
 suffices, the bound is tight, and the allocation is computable in polynomial
-time --- hence $n-1$ in total. This settles the additive chore problem
-completely.
+time --- hence $n-1$ in total. In particular, this establishes the optimal subsidy bound for additive chore instances.
 
-It does not settle ours, and the reason is exactly the reason~\cite{BKNS22} was
-not a corollary of~\cite{BDNSV20}. Dichotomous valuations are not additive and
-additive valuations are not dichotomous; the two classes are incomparable. The
-four corners are
+This result does not subsume the present setting, and the reason is exactly the reason~\cite{BKNS22} was not a corollary of~\cite{BDNSV20}. Dichotomous valuations need not be additive, and additive valuations need not be dichotomous; neither class contains the other. The relationship among these results can be summarized as follows:
 
 \begin{center}
 \begin{tabular}{@{}lll@{}}
@@ -271,10 +221,9 @@ dichotomous  & \cite{BKNS22}  & \textbf{this paper} \\
 
 \noindent
 each of the four giving one dollar per agent and $n-1$ in total. Note also
-that~\cite{LMS26} does not displace~\cite{KMSTY24} for the class studied here:
+that~\cite{LMS26} does not subsume~\cite{KMSTY24} for the valuation class considered here:
 for valuations that are dichotomous but not additive, the $n-1$ per agent
-of~\cite{KMSTY24} was the best previously known bound, and it is that bound
-which the present result improves by a factor of $n$.
+of~\cite{KMSTY24} was the best previously known bound, and the present result improves this by a linear factor.
 
 We are not aware of any prior treatment of envy-freeness with subsidy for chores
 under dichotomous costs.

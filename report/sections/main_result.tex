@@ -421,15 +421,13 @@ For every $n$ and every instance $\langle \agents, \items,
 \set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
 exist a complete allocation $\alloc$ and a subsidy vector
 $\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
-that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1.
-Both $\mathcal{A}$ and $p$ are computable in polynomial time given
-value-oracle access.
+that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1. Such an allocation and subsidy vector can be computed in polynomial time given value-oracle access.
 \end{theorem}
 
 \begin{proof}
 Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
 Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{TWYZ23} and retain
-its terminal partial allocation $X$, the residue $R$ with $r = \abs R$, and
+its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, retain also
 the tail strongly connected component $S$ selected at the terminating
 application of rule (R3), all as fixed in \Cref{sec:m-terminal}. The
 statement of Theorem~\ref{thm:m-twyz} alone does not supply $S$.
@@ -444,7 +442,7 @@ solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
 $\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
 
 For the running time, Algorithm~3 of~\cite{TWYZ23} is polynomial and yields
-$X$, $R$ and the tail component $S$ of its terminating (R3) step. Constructing $\alloc$ from \eqref{eq:m-alloc}
+$X$, $R$ and the tail component $S$ of its terminating (R3) step if $r\geq 1$. Constructing $\alloc$ from \eqref{eq:m-alloc}
 takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
 vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
 each. Computing $P$ is a backward reachability search in $G$ from $T$
