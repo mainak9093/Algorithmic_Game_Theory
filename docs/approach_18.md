@@ -154,22 +154,103 @@ Obstruction **A** is exactly the Pareto phenomenon of `PO.tex` in pattern form:
 a bundle two better than the alternatives for two agents at once is what
 efficiency drives you toward and what the one-unit cap cannot fund.
 
-## 6. Next
+## 6. Sharpening: confine the 2-entries to one row
 
-1. **Prove (AVOID).** The margin suggests it is not delicate. A natural first
-   target is avoiding **C** alone — *every bundle is within 1 of some agent's
-   best* — which is already a non-trivial statement about partitions and may
-   have a direct argument.
-2. **Climb harder at (AVOID)** — $m = 5, 6$ and longer runs — before trusting
-   the margin. Two claims have died to climbs in this line already.
+(AVOID) can be replaced by something much more concrete, and the step is a
+*proved* lemma rather than a measurement.
+
+**Every obstruction needs 2-entries in at least two rows.** C needs a whole
+column at $\ge 2$, so all three rows; A needs two rows each carrying two
+entries $\ge2$; B needs two rows each carrying a $2$ in a common column.
+Checked over all 30 obstruction patterns: the fewest rows carrying a $2$ is
+**2**. Hence:
+
+> **Lemma (one row).** If every entry $\hat g_i(j) = 2$ lies in a single row,
+> the allocation dominates no obstruction and is therefore **valid**.
+
+Note a row can hold at most two $2$s, since every row contains a zero. Reading
+the lemma back through the definition of $\hat g$, "all $2$s in row $i$" says
+exactly that agent $i$ has value spread $2$ and every other agent has value
+spread $\le 1$. So the target becomes:
+
+> **(AVOID-1ROW), open.** Every general binary instance with $n=3$ admits a
+> partition into three bundles such that **at least two of the three agents see
+> all three bundles within 1 of each other**, and the third sees them within 2.
+
+**(AVOID-1ROW) $\Rightarrow$ (AVOID) $\Rightarrow$ PS2 for $n=3$.**
+
+### The two-step split this induces
+
+Every obstruction contains a $2$, so an allocation with *all* gaps $\le1$ —
+every agent's value spread at most $1$ — is valid outright. That is step 1, and
+it is nearly the whole problem:
+
+| $m=3$, 6,000 instances | |
+|---|---|
+| **step 1** — some allocation has every value spread $\le1$ | **5,934** (98.9%) |
+| **step 2** — every allocation forces a spread of $2$ | **66** |
+| of those, an obstruction-free allocation exists | **66 of 66** |
+
+So the entire difficulty sits in about 1% of instances, and in those the clean
+allocations carry only one or two $2$-entries, always in a single row — which is
+what suggested the lemma.
+
+### Evidence
+
+| | exists | all such really valid |
+|---|---|---|
+| $m=3$, 3,000 instances | 3,000 | 3,000 |
+| $m=4$, 800 | 800 | 800 |
+| $m=5$, 200 | 200 | 200 |
+
+and under the climb that killed (CANON):
+
+| | climbs | refutations | fewest one-row allocations reached |
+|---|---|---|---|
+| (AVOID-1ROW) $m{=}4$ | 60 × 300 | **0** | 15 of 81 |
+| (AVOID-1ROW) $m{=}5$ | 25 × 200 | **0** | 81 of 243 |
+
+(AVOID) itself was climbed at three sizes, and its margin *grows* with $m$:
+**33 of 81** at $m=4$, **135 of 243** at $m=5$, **639 of 729** at $m=6$ — zero
+refutations throughout.
+
+### Why this reframing may be the useful one
+
+(AVOID-1ROW) is a **simultaneous near-balancing** statement: partition the items
+so that two agents each find the three parts within one of each other. That is
+the shape of a discrepancy or consensus-splitting problem, not a fair-division
+one, and it puts the question in reach of a different toolkit than anything
+tried in approaches 15–17.
+
+Two calibrating facts. Demanding it of *all three* agents is exactly value
+spread $\le1$, which is **false** (forced to $2$ in about 1.1% of $m=3$
+instances). So allowing exactly one agent the slack of $2$ is the *minimal*
+relaxation that can possibly work — which is some evidence that it is the right
+statement rather than an arbitrary weakening.
+
+## 7. Next
+
+1. **Prove (AVOID-1ROW)**, not (AVOID) — §6 makes it the smaller and more
+   concrete of the two, and the step from it to validity is proved.
+   It asks for a partition into three bundles that two of the three agents
+   each see as equal to within one. Discrepancy and consensus-splitting
+   arguments are the natural tools, and none of them has been tried here.
+2. **A useful sub-question**: for which instances is value spread $\le1$
+   unachievable for all three agents at once? That set is about 1% and is the
+   entire hard case; characterising it may be easier than the general claim.
 3. Check whether an explicit rule (rather than mere existence) always produces
-   an obstruction-free allocation; that would make the proof constructive.
+   a one-row allocation; that would make the proof constructive.
+4. Keep climbing before claiming. (AVOID) and (AVOID-1ROW) have withstood the
+   attack that killed (CANON), but so had the SUM potential until the climb was
+   run at the right target.
 
 ### Scripts
 
 `gap_matrix.py` (the reduction and its cross-check), `gap_minimal.py`
 (monotonicity, the minimal patterns, the three classes), `avoid_three.py`
-(soundness and existence), `hunt_avoid.py` (the climb).
+(soundness and existence), `hunt_avoid.py` (the climb at (AVOID)),
+`hard_residue.py` (the two-step split and the hard 1%), `one_row.py` (the
+one-row lemma, (AVOID-1ROW), and its climb).
 
 *A note on method. Two runs in this document reported nonsense before the bug
 was found, both from the same confusion: the gap matrix and the pattern test
