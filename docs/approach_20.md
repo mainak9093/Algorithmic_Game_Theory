@@ -208,10 +208,11 @@ precise is the next step.
 
 ## 7. Next
 
-1. **Prove (L).** The statement to aim at is about suffixes alone: writing
-   $\beta(S)$ for the balanced level of an ordered set $S$ at its least balanced
-   cut, (L) says $\abs{\beta(S) - \beta(S \setminus \set{\text{first}})} \le 1$.
-   No three-block structure is involved.
+1. **Prove (L).** §6 proves Fact 1 and closes the cut-shift route. What is left
+   is a *flatness* claim: between $t^*(S')+1$ and $t^*(S)$ the walk is trapped
+   at $d \le -2$, i.e. $v(P_t) \le v(Q_t) - 2$ throughout that stretch, and the
+   prefix values must not drift across it. That constraint is not yet used, and
+   it is the only thing standing between Fact 1 and (L).
 2. **Finish (E).** §4 proves it for $m \le 5$. What remains is to show the
    same-side configuration — every block of a balanced split at $\le -1$ while
    the whole set is $\ge 2$, or its mirror — cannot arise on the path.
@@ -222,4 +223,7 @@ precise is the next step.
 `path.py` (the balanced path and that it always contains a good cut),
 `path_ivt.py` (Lipschitz behaviour of $\mu$ and $D$; why $\abs D\le1$ is the
 wrong window), `window.py` ((L), (E), and that the window implies a good cut),
-`endpoints.py` (the endpoint classification of §4).
+`endpoints.py` (the endpoint classification of §4), `lemma_L.py` (four candidate
+definitions of the level — LEAST is the only one for which every property
+holds), `shift.py` (the refutation of (SHIFT), and (L) over all suffix pairs),
+`signfact.py` (Fact 1 in its corrected form).
