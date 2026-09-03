@@ -1,9 +1,14 @@
-# Approach 17 — (CANON) refuted, and a descent lemma that proves PS2 for $n=3$
+# Approach 17 — (CANON) refuted, and a descent lemma that would prove PS2 for $n=3$
 
 *Target narrowed to $n = 3$, as PS1 was (approach 12 for $n=3$, approach 13 for
 general $n$). This pass kills approach 16's §7 proposal, identifies a whole
 family of criteria that cannot work and says why, and replaces them with a
 local-search statement that survived the same attack that killed (CANON).*
+
+> **Status in one line.** PS2 for $n=3$ is **not proved**. The *reduction* is
+> proved (§6): a descent lemma would give PS2 for $n=3$ constructively. The
+> descent lemma is machine-verified but open, and §6 isolates what is left to a
+> single statement about two bundles.
 
 ---
 
@@ -36,10 +41,12 @@ replacement scores states by the thing itself rather than a proxy:
 > smaller $\Psi$.
 
 $\Psi$ takes finitely many values and strictly decreases, so iteration
-terminates, and it can only stop where $\max_i \ell(i) \le 1$. **(DESCENT-1)
-proves PS2 for $n=3$ outright** — not (S1), not (S2), the thing itself — and
-constructively. Zero stuck states in ~2,500 tested, and 120 targeted climbs
-failed to dent it.
+terminates, and it can only stop where $\max_i \ell(i) \le 1$. So
+**(DESCENT-1) *would* give PS2 for $n=3$ outright** — not (S1), not (S2), the
+thing itself — and constructively. That implication is proved in §6; the
+premise is not. Zero stuck states in ~2,500 tested, and 120 targeted climbs
+failed to dent it, but that is evidence, not proof, and (CANON) had evidence of
+the same kind.
 
 ---
 
