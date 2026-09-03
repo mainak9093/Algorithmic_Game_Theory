@@ -134,7 +134,79 @@ about partitions of $M$. It is also known to be delicate in the right way: the
 *every-pair* version is false (approach 19 §2, 28 counterexamples at $m=3$), so
 whatever argument settles it must use the freedom to choose which pair.
 
-## 6. Next
+## 6. Progress on (L): one lemma proved, one route closed
+
+### Proved — sign constancy, and which side the level lives on
+
+Along the walk on an ordered set $S$, write $d_t = v(P_t) - v(Q_t)$. Since
+$P_0 = \emptyset$ and $Q_k = \emptyset$,
+
+$$d_0 = -v(S), \qquad d_k = +v(S),$$
+
+and steps satisfy $\abs{d_{t+1}-d_t} \le 2$ as in §3. So $d$ **cannot cross**
+from $\le -2$ to $\ge 2$ without entering $[-1,1]$: before the least balanced
+cut $t^*$, every $d_t$ has the same sign. That pins down which block realises
+the level:
+
+> **Fact 1 (proved).**
+> - $v(S) \ge 2$: $d$ starts at $\le -2$, so $d_{t^*} \in \set{-1,0}$, hence
+>   $v(P) \le v(Q)$ and $\beta(S) = v(P_{t^*})$ — the **prefix**.
+> - $v(S) \le -2$: $d$ starts at $\ge 2$, so $d_{t^*} \in \set{0,1}$ and
+>   $\beta(S) = v(Q_{t^*})$ — the **suffix**.
+> - $\abs{v(S)} \le 1$: $d_0$ is already in $[-1,1]$, so $t^* = 0$ and
+>   $\beta(S) = \min(0, v(S))$.
+
+Verified in the corrected form on **1,485** ordered suffixes at $m=3$ and
+**790,188** at $m=4$ — always, along with the step bound itself.
+
+*Recorded because it cost a run:* the first version of this had the orientation
+backwards, asserting $\beta$ was the suffix value in the main case. The machine
+check failed at 972 of 990, which is what exposed it. The direction matters —
+the prefix case is the useful one, since prefixes of $S$ and of
+$S' = S \setminus \set{s_1}$ differ by exactly one item and so their values are
+within 1.
+
+### Refuted — the cut-shift route
+
+That correspondence suggested a clean finish. Deleting the first element shifts
+the cuts by one, and $P_{j+1}(S) = P'_j(S') \cup \set{s_1}$, so if the least
+balanced cut also shifted by one, $\beta(S)$ and $\beta(S')$ would be values of
+prefixes differing by a single item and (L) would follow at once. The claim to
+check was
+
+> **(SHIFT).** $\abs{\,t^*(S) - 1 - t^*(S')\,} \le 1$.
+
+**It is false.** 962 of 990 at $m=3$, 576,381 of 592,641 at $m=4$, with shifts
+of up to $3$ there and up to $4$ at $m=6,8$. The least balanced cut can move a
+long way when one item is deleted. **This route is closed**, and the write-up
+records it so it is not tried again.
+
+### (L) itself, verified much more strongly
+
+The same sweep tests (L) over *every* pair (suffix, shorter suffix) rather than
+only those on one path:
+
+| | pairs tested | (L) holds | largest $\abs{\beta(S)-\beta(S')}$ |
+|---|---|---|---|
+| $m=3$, exhaustive | 990 | **990** | 1 |
+| $m=4$, exhaustive | **592,641** | **592,641** | 1 |
+| $m=6$, sampled | 7,500 | 7,500 | 1 |
+| $m=8$, sampled | 2,800 | 2,800 | 1 |
+
+So (L) is not a fact about the particular path — it is a property of the
+balanced level as a function of the suffix, and the bound of $1$ is attained,
+so it is tight.
+
+**Where a proof must now come from.** Fact 1 puts $\beta$ on the prefix side in
+the main case, and prefix values move by at most one per cut, so
+$\abs{\beta(S)-\beta(S')} \le \abs{t^*(S)-1-t^*(S')} + 1$. (SHIFT) would have
+bounded that, and does not. What the data says instead is that when the cut
+moves far, the prefix values along the way must be nearly flat — which is
+plausible, because between the two cuts the walk is trapped at $d \le -2$, and
+that constrains how $v(P_t)$ and $v(Q_t)$ can move together. Making that
+precise is the next step.
+
+## 7. Next
 
 1. **Prove (L).** The statement to aim at is about suffixes alone: writing
    $\beta(S)$ for the balanced level of an ordered set $S$ at its least balanced
