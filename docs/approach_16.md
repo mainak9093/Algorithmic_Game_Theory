@@ -1,10 +1,30 @@
 # Approach 16 — A canonical object for PS2, and the residual of (BAL-STEP)
 
+> ## ⚠ CORRECTION — §7's (CANON) is FALSE
+>
+> **The strategic result of this document, (CANON) in §7, has been refuted.**
+> A targeted hill climb found explicit counterexamples at $n{=}3$, $m{=}4$:
+> instances where **every** leximin-optimal welfare maximiser of the
+> spread-$\le 2$ family is invalid. The refutation goes deeper than the
+> tie-break — in 5 of 10 witnesses **no welfare maximiser at all** is valid, so
+> welfare maximisation is the wrong primary criterion, not leximin the wrong
+> secondary one.
+>
+> The 2,000-instance random sample reported in §7 was simply too weak: random
+> sampling finds none of these, only the climb does.
+>
+> **What survives:** (S2) itself is untouched — a valid spread-$\le 2$
+> allocation existed in every witness (14–23 of 54). §§1–6 are unaffected;
+> they were verified by applying each rule and re-testing, not by sampling.
+>
+> See **`approach_17.md`** for the refutation, the reason every
+> profile-based criterion is dead, and the replacement.
+
 *Continues approach 15. That pass reduced (S1) to a single-step lemma
 (BAL-STEP) and proved a fragment of it (§33). This pass finishes the anatomy of
 the residual, adds two new lemmas and a selection rule that between them leave
-nothing uncovered in the chores class, and then finds a **canonical object for
-PS2 itself** which makes the incremental route optional rather than necessary.*
+nothing uncovered in the chores class, and then proposes a canonical object for
+PS2 — the last of which does not survive; see the correction above.*
 
 ---
 
@@ -27,17 +47,17 @@ bundle genuinely fails (12 failures at $n{=}3,m{=}4$), growing an
 **unsubsidised** one never did, and an unsubsidised smallest bundle always
 exists in the chores class.
 
-**Strategic, and the more important half.** The whole incremental apparatus can
-be bypassed. Inside the spread-$\le 2$ family, take the welfare-maximising
-allocations and break ties by **leximin on the cost profile**. That allocation
-was valid in every instance tested, in the *general binary* class — which is
-(S2), and (S2) implies PS2. The tie-break is doing real work: 14 of 1,500
-instances at $m{=}3$ have a welfare maximiser that is *not* valid, so the
-un-tie-broken statement is false and §24's correction is confirmed, but the
-leximin one never failed.
+**Strategic, and REFUTED — see the correction at the top.** The proposal was
+to bypass the incremental apparatus: inside the spread-$\le 2$ family take the
+welfare maximisers and break ties by leximin on the cost profile. It survived
+2,000 random instances at $m{=}3$ and 250 at $m{=}4$, and it is false. A hill
+climb breaks it, and `approach_17.md` shows the failure is not repairable by
+changing the tie-break. Everything in this section should be read as a record
+of what was tried, not as a result.
 
-This replaces "run an algorithm and prove every step is safe" with "write down
-one allocation and prove it works", which is a much smaller target.
+The *ambition* was right and survives into approach 17 — replace "run an
+algorithm and prove every step is safe" with "write down one object and prove
+it works". What was wrong was the object.
 
 ---
 
@@ -191,7 +211,12 @@ named class; it does not transfer for free.
 
 ---
 
-## 7. A canonical object — the strategic result
+## 7. A canonical object — REFUTED, see `approach_17.md`
+
+*Everything in this section is superseded. It is kept because the measurements
+are correct and the failure is informative: the tie-break really is
+non-vacuous, and (S2) really does hold throughout — what is false is that
+welfare maximisation locates a valid allocation.*
 
 The incremental route can be bypassed altogether. Instead of building an
 allocation chore by chore, write one down and prove it works.
@@ -249,7 +274,8 @@ this problem has had.
 
 ## 8. What to prove next, in order
 
-1. **(CANON) at $K = 2$**, general binary. Suppose the leximin-optimal
+1. ~~**(CANON) at $K = 2$**~~ — refuted; superseded by (DESCENT-1) in
+   `approach_17.md`. The original text: suppose the leximin-optimal
    spread-$2$ maximiser has a path $i \to j \to k$ of weight $2$. No positive
    cycle exists, so closing the path into a cycle gives
    $\cost_k(A_i) \ge \cost_k(A_k) + 2$: the terminal agent finds the initial
