@@ -132,20 +132,94 @@ balanced, controls $\abs{v(D_1)-v(D_2)}$ but says nothing relating either to
 $v(C)$, because $v$ is not additive and $v(D)$ does not determine $v(D_1)$ and
 $v(D_2)$.
 
-## 5. Next
+## 5. The three bundles can be taken to be INTERVALS
 
-1. **Extend §1 to three bundles.** Sperner / Tucker on the space of
-   3-partitions, with the step bound of §1 as the "no jump" hypothesis. This is
-   the single most valuable open step: it would turn (BAL-1) from exhaustive
-   evidence into a theorem.
+The two-bundle proof of §1 is really a statement about an *ordered* ground set:
+the walk moves items one at a time, so its partitions are prefix/suffix splits.
+Read that way, §1 says every order admits a prefix cut with the two sides within
+1. The natural three-bundle analogue is to allow **two** cuts — which is exactly
+the discrete shape of necklace splitting, one measure and three parts.
+
+> **(INTERVAL).** For any general binary $v$ and **any** linear order
+> $g_1,\dots,g_m$, there are cuts $0 \le a \le b \le m$ such that the three
+> consecutive blocks
+> $$\set{g_1..g_a},\quad \set{g_{a+1}..g_b},\quad \set{g_{b+1}..g_m}$$
+> have $\max_j v(B_j) - \min_j v(B_j) \le 1$.
+
+**Exhaustively true, and order-free** — not "for some order", for *every* order:
+
+| | valuations | every order has a good cut |
+|---|---|---|
+| $m=3$ | all **495** | **495** |
+| $m=4$ | all **197,547** | **197,547** |
+
+and robust beyond enumeration range:
+
+| | sampled | climbs | refutations | cuts vs partitions |
+|---|---|---|---|---|
+| $m=5$ | 4,000 / 4,000 | 60 × 300 | **0** | 21 vs 243 |
+| $m=6$ | 1,200 / 1,200 | 30 × 250 | **0** | 28 vs 729 |
+| $m=7$ | 300 / 300 | — | — | **36 vs 2,187** |
+
+This is a large structural gain independently of any proof: the search collapses
+from $3^m$ partitions to $\binom{m+2}{2}$ cuts, and the cuts carry a
+**two-parameter lattice structure** — the triangle $\set{(a,b) : 0\le a\le b\le m}$
+— in which moving one cut by one step transfers a single item between adjacent
+blocks. That is precisely the "no jump" hypothesis a Sperner or Tucker argument
+needs, and it is why (INTERVAL) is a better target than (BAL-1) even though it
+is formally stronger.
+
+### The Sperner attempt, and exactly where it breaks
+
+Label each cut by an index attaining the **maximum** block value. The triangle's
+corners are the cuts where one block is everything:
+$P_1 = (m,m)$, $P_2 = (0,m)$, $P_3 = (0,0)$.
+
+**The corner condition holds** — always. At $P_j$ block $j$ is $M$ and the other
+two are empty, so when $v(M) > 0$ the maximum is at $j$ and the corner gets
+label $j$: 148 of 148 at $m=3$, 54,413 of 54,413 at $m=4$.
+
+**The boundary condition fails.** Sperner also needs that on the edge where
+block $j$ is empty, the maximum is attained outside $j$. It is not: 133 of 148
+at $m=3$, 48,439 of 54,413 at $m=4$. The smallest witness is
+
+$$v = (0,\,-1,-1,-1,\,0,0,0,\,+1) \quad\text{by bundle size } 0,1,2,3,$$
+
+singletons worth $-1$, pairs worth $0$, the whole set worth $+1$. On an edge
+where one block is empty, the other two can both be singletons worth $-1$ — so
+the **empty** block, worth $0$, is the strict maximum, and the label points
+inward. Sperner does not apply.
+
+That is a real obstruction, not a bookkeeping slip: a valuation can be negative
+on every small block while positive on the whole set, so "empty" is genuinely
+the best block on part of the boundary. Any labelling used here has to survive
+that.
+
+## 6. Next
+
+1. **Prove (INTERVAL)**, not (BAL-1) — §5 makes it the sharper target, with a
+   two-parameter lattice and a one-item step bound already in place. The
+   labelling must cope with the failure in §5: an *empty* block can be the
+   strict maximum, because a valuation may be negative on every small block and
+   positive on the whole set. Two ways round it are untried — a labelling by
+   argmin with a Tucker-type lemma (the corners then carry the dual condition,
+   label $
+e j$ at $P_j$), or restricting the triangle to cuts with all three
+   blocks non-empty and handling the degenerate edges by the proved two-bundle
+   lemma, which already settles any edge on which one block is empty.
 2. **(TWO-BALANCE) from (BAL-1).** Given (BAL-1) for each agent separately,
    what forces a *common* partition for some pair? The $m=3$ counterexamples to
-   the every-pair form are the data to work from.
-3. Exhaustive (BAL-1) at $m=5$ is out of reach by enumeration, but a climb at
-   it has already found nothing.
+   the every-pair form are the data to work from. (INTERVAL) helps here too:
+   both agents' good cuts live in the same $inom{m+2}{2}$-point triangle, so
+   the question becomes whether two subsets of a small triangle must meet.
+3. Exhaustive (BAL-1) at $m=5$ is out of reach by enumeration, but climbs at
+   both (BAL-1) and (INTERVAL) have found nothing.
 
 ### Scripts
 
 `two_balance.py` (the decomposition and the hard-instance characterisation),
 `balance_lemma.py` ((BAL-1), (BAL-2) in both strengths, and climbs at each),
-`ivt.py` (the step bound, the walk, and exhaustive (BAL-1) at $m=3,4$).
+`ivt.py` (the step bound, the walk, and exhaustive (BAL-1) at $m=3,4$),
+`interval.py` ((INTERVAL), exhaustive and order-free at $m=3,4$),
+`interval_hunt.py` (climbs at (INTERVAL), and the Sperner corner and boundary
+conditions).
