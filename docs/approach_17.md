@@ -7,8 +7,10 @@ local-search statement that survived the same attack that killed (CANON).*
 
 > **Status in one line.** PS2 for $n=3$ is **not proved**. The *reduction* is
 > proved (§6): a descent lemma would give PS2 for $n=3$ constructively. The
-> descent lemma is machine-verified but open, and §6 isolates what is left to a
-> single statement about two bundles.
+> descent lemma is machine-verified but open, §6 isolates what is left to a
+> single statement about two bundles, and §7 records a second refutation — the
+> potential cannot be simplified to a sum — together with the hunts the
+> surviving statements have now withstood.
 
 ---
 
@@ -338,9 +340,8 @@ Evidence and shape:
 - **holds in 387 of 387** states at $n{=}3, m{=}4$ (`pair_lemma.py`);
 - the word *suitable* is necessary — the "every such arc works" form fails,
   345 of 387, so a proof must choose the arc;
-- $\Phi$ may be taken to be the plain **sum** $\sum_i \ell(i)$, not a sorted
-  vector (`potentials.py`, zero stuck states at $n{=}2$ and $n{=}3$), which is
-  the version to attack since it is a single integer;
+- ~~$\Phi$ may be taken to be the plain **sum** $\sum_i \ell(i)$~~ — **refuted,
+  see §7.** The sum version is false; the potential must stay a sorted vector;
 - in case (A) the pair is $\set{A_1,A_2}$ with *both* agents preferring $A_2$
   to $A_1$ by at least $2$ — $w(1,2)\ge2$ and $w(2,1)\le-2$ — so the pair is
   lopsided in a way both agents agree on. That symmetry is the most promising
@@ -353,7 +354,101 @@ transfer to (PAIR).
 
 ---
 
-## 7. Reproducing
+## 7. Second pass — the harder hunts, and one more refutation
+
+§6 closed with a caveat: (PAIR) had been checked but not hill-climbed. Running
+that hunt cost a claim and clarified two others.
+
+### (DESCENT-SUM) is false — the potential must stay a sorted vector
+
+§6 offered a simplification: take $\Phi = \sum_i \ell(i)$, a single integer,
+rather than the sorted vector, on the strength of `potentials.py` finding zero
+stuck states at $n{=}2$ and $n{=}3$. That was random sampling again, and again
+it was not enough. A climb against the sum found **two partitions with
+$\max_i \ell = 2$ from which no one-item move decreases it**, re-verified in
+`verify_stuck.py` with the envy-graph routines rewritten from the definitions:
+
+| | witness 1 | witness 2 |
+|---|---|---|
+| partition | $(8,2,5)$ | $(4,1,10)$ |
+| $\ell$ at the best assignment | $(0,0,2)$ | $(0,0,2)$ |
+| one-item moves that descend, **SUM** | **0 of 8** | **0 of 8** |
+| one-item moves that descend, **SORTED** | 4 of 8 | 1 of 8 |
+| two-item moves that descend | 4 of 24 | 11 of 24 |
+| valid allocations in the instance | 31 of 81 | 25 of 81 |
+| distance to the nearest valid allocation | **1 item** | **1 item** |
+
+The last two rows give the reason outright. A valid allocation sits *one item
+away*, and the sum still refuses to descend, because
+
+$$\ell = (0,0,2) \ \text{sums to } 2, \qquad \ell = (1,1,1) \ \text{sums to } 3 .$$
+
+**The sum rises on the way to a solution.** Concentrating all the envy on one
+agent is cheap by that measure and useless; spreading it to one unit each is
+dearer and is exactly the goal. Lexicographic order on the downward-sorted
+vector ranks $(1,1,1) < (2,0,0)$ and gets this right, which is why the original
+$\Psi$ survives where its simplification does not.
+
+PS2 is untouched: both instances have 31 and 25 valid allocations of 81.
+
+### (PAIR) and (DESCENT-1) survive the same attack
+
+Re-run against the sorted potential at the same strength that broke the sum:
+
+| statement | potential | climbs | refutations | tightest reached |
+|---|---|---|---|---|
+| (DESCENT-1) | SORTED | 120 × 300 | 0 | scarcest bad state had 2 improving neighbours |
+| (DESCENT-SUM) | SUM | 150 × 400 | **4** | — |
+| (PAIR) | SORTED | 90 × 350 | 0 | scarcest had 1 suitable arc |
+| (PAIR) at $m{=}5$ | SORTED | 30 × 150 | 0 | scarcest had 1 suitable arc |
+
+(PAIR) reaches 1 where (DESCENT-1) reaches 2, so it is the tighter of the two
+and the likelier to fall next.
+
+### The arc-shrinking route to (PAIR) is dead
+
+The natural proof of (PAIR) is to shrink the offending arc. Moving $g$ from
+$A_2$ to $A_1$ changes the gap $w = v(A_2) - v(A_1)$ by
+$-[v(g \mid A_2 - g) + v(g \mid A_1)]$, and moving $h$ the other way by
+$+[v(h \mid A_2) + v(h \mid A_1 - h)]$, so the gap falls by at least one exactly
+when one of those brackets has the right sign. That is a statement about a
+*single* valuation and two disjoint sets, so it can be settled exhaustively —
+and it is false at the gap Lemma 2 actually delivers:
+
+| hypothesis | $m=3$ | $m=4$ |
+|---|---|---|
+| gap $\ge 1$ | 24 violations | 44,496 violations |
+| **gap $\ge 2$** — what Lemma 2 gives | 0 | **48 violations** |
+| gap $\ge 3$ | 0 | 0 |
+
+The $m{=}4$ witness is a saturating valuation — $0,0,-1,-2,-2$ by bundle size —
+with $A_1$ everything and $A_2$ empty. Moving any one item leaves a triple
+still worth $-2$ against a singleton worth $0$: **the gap stays at 2**. Only
+moving two items closes it. Since Lemma 2 delivers gap exactly $2$ and never
+more, no proof of (PAIR) can run through shrinking the arc.
+
+### But the descent survives at exactly that structure
+
+`probe_gap2.py` builds instances *around* the obstruction — agent 1 pinned to
+the saturating valuation, agents 2 and 3 ranging over the class, 3,000
+instances:
+
+| | |
+|---|---|
+| states with $\max_i \ell \ge 2$ | 1,824 |
+| of those, carrying an arc of weight exactly $-2$ | 1,722 |
+| (PAIR) failures | **0** |
+| (DESCENT-1) failures | **0** |
+
+So the descent works *through the aggregate*, not through the offending arc:
+even where the arc provably cannot be shrunk by one move, some move still
+lowers $\Psi$ — by rebalancing the other agents' longest paths. Any proof of
+(PAIR) has to account for the whole vector at once, which is the same lesson
+as §3's diagonal obstruction in a different guise.
+
+---
+
+## 8. Reproducing
 
 New scripts, in `updates_general_binary/update_1/`.
 
@@ -369,6 +464,10 @@ New scripts, in `updates_general_binary/update_1/`.
 | `potentials.py [n] [m] [trials]` | which potential admits the descent; the plain SUM suffices |
 | `case_split.py [m] [trials]` | that Lemma 1's split is exhaustive, and which move settles each case |
 | `pair_lemma.py [m] [trials]` | Lemma 2's forced arc, and (PAIR) in both strengths |
+| `hunt_pair.py [m] [climbs] [steps]` | the climb against (PAIR); refutes the SUM potential, survives on SORTED |
+| `verify_stuck.py` | independent re-check of the two (DESCENT-SUM) witnesses, routines rewritten from the definitions |
+| `transfer_lemma.py [m]` / `transfer2.py [m]` | the arc-shrinking lemma, one- and two-sided, swept over the gap threshold |
+| `probe_gap2.py [m] [trials]` | (PAIR) and (DESCENT-1) at the structure that breaks arc-shrinking |
 
 A note on method, earned the hard way this pass: in this class **a claim
 supported only by uniform random sampling is not supported**. (CANON) passed
