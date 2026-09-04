@@ -1,0 +1,229 @@
+% ---------------------------------------------------------------------------
+% Standalone section: why the dichotomous goods result of BKNS22 does not
+% transfer to chores. Part A is an explicit counterexample to the invariant
+% their algorithm runs on; Part B is the obstruction to the size-shift
+% transform. Uses only macros already in preamble.tex (\items, \agents,
+% \alloc, \bundle, \cost, \subsidy, \optsubsidy, \edgew, \pathw, \set, \abs,
+% \Z, \Mset). Drop into sections/ and \input it wherever it is wanted.
+% ---------------------------------------------------------------------------
+
+\section{Why the dichotomous goods result does not transfer}
+\label{sec:whynotbkns}
+
+There are two natural routes from~\cite{BKNS22} to the chores setting: mirror
+the algorithm, or mirror the model through the size shift. Both fail, and this
+section exhibits the obstruction in each case.
+
+\subsection{The invariant the goods algorithm runs on}
+
+The algorithm of~\cite{BKNS22} allocates one good per iteration and maintains
+inductively an envy-free solution $(\alloc^t, \subsidy^t)$ in which $\alloc^t$
+is a partial envy-freeable allocation and $\subsidy^t \in \set{0,1}^n$. Its two
+cases --- assign the good to an agent of maximum subsidy for whom its marginal
+is $1$, possibly after a welfare-preserving reassignment of the bundles; or
+otherwise invoke their sink subroutine --- are both instances of a single
+inductive step. Written for costs, that step is:
+
+\begin{quote}
+$(\star)$\; Let $X = (X_1,\dots,X_n)$ be an envy-freeable partial allocation
+whose minimum subsidy satisfies $\optsubsidy \in \set{0,1}^n$, and let $g$ be
+an unallocated chore. Then there is an index $s$ and a permutation $\sigma$
+such that the allocation obtained by adding $g$ to $X_s$ and reassigning the
+resulting bundles by $\sigma$ is envy-freeable with minimum subsidy again in
+$\set{0,1}^n$.
+\end{quote}
+
+Statement $(\star)$ is what makes the induction go through, and it is
+quantified over all bundles and all reassignments, so it does not depend on any
+tie-breaking rule. For goods it is a theorem. For chores it is false.
+
+\subsection{A counterexample to \texorpdfstring{$(\star)$}{the inductive step}}
+
+\begin{example}
+\label{ex:bkns-stuck}
+Let $n = 3$ and $\items = \set{a,b,c}$. All three cost functions depend only on
+the size of the bundle:
+\[
+  \cost_1(S) \;=\; \cost_2(S) \;=\; \min\bigl(\abs S,\,2\bigr),
+  \qquad
+  \cost_3(S) \;=\; \max\bigl(0,\ \abs S - 1\bigr).
+\]
+Every marginal is $0$ or $1$ and $\cost_i(\emptyset) = 0$, so this is a
+negative dichotomous instance. By bundle size the costs are
+\[
+  \cost_1, \cost_2 : 0,\,1,\,2,\,2, \qquad \cost_3 : 0,\,0,\,1,\,2 .
+\]
+Agents $1$ and $2$ absorb only the third chore; agent $3$ absorbs the first.
+\end{example}
+
+\begin{proposition}
+\label{prop:bkns-stuck}
+In the instance of Example~\ref{ex:bkns-stuck}, consider
+\[
+  X \;=\; \bigl(\emptyset,\ \emptyset,\ \set{a,b}\bigr).
+\]
+Then:
+\begin{enumerate}
+\item[(i)] $X$ is envy-freeable with minimum subsidy $\optsubsidy = (0,0,1)$;
+\item[(ii)] $X$ is reachable by two applications of $(\star)$ from the empty
+  allocation;
+\item[(iii)] for every $s \in \agents$ and every permutation $\sigma$, the
+  allocation obtained by adding $c$ to $X_s$ and reassigning by $\sigma$ has
+  minimum subsidy at least $2$ for some agent, or is not envy-freeable.
+\end{enumerate}
+Hence $(\star)$ fails.
+\end{proposition}
+
+\begin{proof}
+(i) The arc weights $\edgew{X}(i,j) = \cost_i(X_i) - \cost_i(X_j)$ are
+\[
+  \edgew{X}(1,\cdot) = (0,\,0,\,-2), \qquad
+  \edgew{X}(2,\cdot) = (0,\,0,\,-2), \qquad
+  \edgew{X}(3,\cdot) = (1,\,1,\,0),
+\]
+using $\cost_1(\set{a,b}) = \cost_2(\set{a,b}) = 2$ and
+$\cost_3(\set{a,b}) = 1$. No cycle has positive weight, so $X$ is
+envy-freeable by Theorem~\ref{thm:hs-characterisation}; the heaviest path
+leaving agent $3$ has weight $1$ and those leaving agents $1$ and $2$ have
+weight $0$, so $\optsubsidy = (0,0,1)$ by
+Theorem~\ref{thm:hs-minsubsidy}.
+
+(ii) Assign $a$ to agent $3$: since $\cost_3(\set a) = 0$, all three bundles
+are valued $0$ by everyone and the subsidy is $\mathbf 0$. Assign $b$ to agent
+$3$: this gives $X$, with subsidy $(0,0,1)$ by (i). Both steps are instances of
+$(\star)$.
+
+(iii) The three bundle multisets obtainable by adding $c$ are
+$\set{\set c, \emptyset, \set{a,b}}$ --- twice, from $s=1$ and $s=2$ --- and
+$\set{\emptyset,\emptyset,\set{a,b,c}}$. For the first, the six assignments
+give minimum subsidies
+\[
+  (1,0,2),\quad (0,1,2),\quad (0,2,1),\quad (2,0,1),
+\]
+and the two remaining assignments are not envy-freeable. For the second, the
+bundle $\set{a,b,c}$ costs $2$ to whoever holds it while the other two bundles
+are empty, so its holder has an arc of weight $2$ to each of them, and the
+minimum subsidy is $2$ for that agent. In every case some agent requires
+subsidy $2$.
+\end{proof}
+
+\begin{remark}
+\label{rem:bkns-notthm}
+Proposition~\ref{prop:bkns-stuck} is a statement about the inductive step, not
+about the guarantee. The instance of Example~\ref{ex:bkns-stuck} does admit an
+envy-free solution with subsidy in $\set{0,1}^3$: the allocation
+$(\set a, \set b, \set c)$ gives every agent cost $1$ and is envy-free with
+$\subsidy = \mathbf 0$. What fails is that the target allocation is not
+reachable from $X$ by adding one chore; the two chores already placed on agent
+$3$ must be taken back. Any proof for chores must therefore be free to undo
+earlier assignments, which is exactly what an inductive step of the
+form~$(\star)$ forbids.
+\end{remark}
+
+\begin{remark}
+\label{rem:bkns-maxsub}
+The mismatch is visible in the rule itself. In~\cite{BKNS22} the good is given
+to an agent of \emph{maximum} subsidy, and their sink subroutine likewise only
+ever considers agents in $\Mset(\subsidy)$. Under the sign flip this is the
+wrong set: a chore given to an agent of maximum subsidy raises that agent's
+subsidy further. In Example~\ref{ex:bkns-stuck} at the state $X$ we have
+$\Mset(\optsubsidy) = \set 3$, and assigning $c$ to agent $3$ yields subsidy
+$(0,0,2)$, so the only admissible recipient is inadmissible.
+\end{remark}
+
+\subsection{The size shift does not transfer the guarantee either}
+
+The second route replaces the instance rather than the algorithm.
+
+\begin{definition}[Size shift]
+\label{def:sizeshift}
+For a cost function $\cost : 2^{\items} \to \Z_{\ge 0}$ put
+$\widetilde{v}(S) := \abs{S} - \cost(S)$.
+\end{definition}
+
+\begin{lemma}
+\label{lem:ss-bijection}
+$\cost$ is a dichotomous cost function if and only if $\widetilde{v}$ is a
+dichotomous valuation, and the map is an involution.
+\end{lemma}
+
+\begin{proof}
+$\widetilde{v}(\emptyset) = 0$, and for $g \notin S$,
+$\widetilde{v}(S \cup \set g) - \widetilde{v}(S) = 1 - \bigl(\cost(S \cup \set g) - \cost(S)\bigr)$,
+so one marginal lies in $\set{0,1}$ exactly when the other does. Applying the
+definition twice returns $\cost$.
+\end{proof}
+
+The classes therefore correspond exactly. The envy graphs do not.
+
+\begin{lemma}[Arc-weight identity]
+\label{lem:ss-arc}
+For every allocation $\alloc$ and all $i,j \in \agents$,
+\[
+  \edgew{\alloc}^{\,\widetilde{v}}(i,j)
+  \;=\; \bigl(\abs{\bundle j} - \abs{\bundle i}\bigr)
+      \;+\; \edgew{\alloc}^{\,\cost}(i,j),
+\]
+where $\edgew{\alloc}^{\,\cost}(i,j) = \cost_i(\bundle i) - \cost_i(\bundle j)$
+and $\edgew{\alloc}^{\,\widetilde{v}}(i,j) = \widetilde{v}_i(\bundle j) - \widetilde{v}_i(\bundle i)$.
+\end{lemma}
+
+\begin{proof}
+Substitute Definition~\ref{def:sizeshift} into
+$\widetilde{v}_i(\bundle j) - \widetilde{v}_i(\bundle i)$ and regroup.
+\end{proof}
+
+\begin{corollary}
+\label{cor:ss-equalcard}
+The two envy graphs on $\alloc$ agree arc by arc if and only if all bundles
+have equal cardinality, in which case the two minimum subsidy vectors agree.
+\end{corollary}
+
+\begin{proposition}
+\label{prop:ss-subsidy}
+Let $\alloc$ be envy-freeable for both instances and let
+$\widetilde{d}_{\alloc}(i,j)$ denote the heaviest $i \to j$ path in the shifted
+envy graph. Then
+$\pathw{\alloc}^{\,\cost}(i) = \max_{j} \bigl[\widetilde{d}_{\alloc}(i,j) + \abs{\bundle i} - \abs{\bundle j}\bigr]$.
+Consequently, if $\widetilde{\subsidy}$ certifies envy-freeness of $\alloc$ for
+$\widetilde{v}$ and $q_i := \widetilde{\subsidy}_i + \abs{\bundle i}$, then
+$\optsubsidy_i \le q_i - \min_j q_j$.
+\end{proposition}
+
+\begin{proof}
+Summing Lemma~\ref{lem:ss-arc} along a directed path from $i$ to $j$, the
+correction terms telescope to $\abs{\bundle i} - \abs{\bundle j}$, which gives
+the identity; the empty path is the case $j = i$. Envy-freeness gives
+$\widetilde{d}_{\alloc}(i,j) \le \widetilde{\subsidy}_i - \widetilde{\subsidy}_j$,
+whence each bracket is at most $q_i - q_j$.
+\end{proof}
+
+So the bound inherited on the chores side is governed by
+$q_i = \widetilde{\subsidy}_i + \abs{\bundle i}$, and the conclusion
+$\optsubsidy \in \set{0,1}^n$ follows only if $q$ has spread at most $1$. The
+theorem of~\cite{BKNS22} constrains $\widetilde{\subsidy}$ and says nothing
+about $\abs{\bundle 1},\dots,\abs{\bundle n}$; the allocation it produces is
+not guaranteed balanced, and by the example in its own concluding section is
+not guaranteed to be EF1.
+
+\begin{example}
+\label{ex:ss-fail}
+Let $n = 2$, $\items = \set{a,b,c}$ and
+$\cost_1(S) = \cost_2(S) = \max(0, \abs S - 1)$, whose shift is the
+unit-demand valuation $\widetilde{v}_i(S) = \min(\abs S, 1)$. For
+$\alloc = (\set{a,b,c}, \emptyset)$ the shifted instance has minimum subsidy
+$(0,1)$, inside the bound of~\cite{BKNS22}, while
+$\edgew{\alloc}^{\,\cost}(1,2) = \cost_1(\bundle1) - \cost_1(\bundle2) = 2$ and
+the chores instance has minimum subsidy $(2,0)$. The two are reconciled by
+Lemma~\ref{lem:ss-arc}: here $\abs{\bundle2} - \abs{\bundle1} = -3$, and
+$q = (3,1)$ has spread $2$.
+\end{example}
+
+\begin{remark}
+Neither example contradicts the main theorem. Example~\ref{ex:bkns-stuck} shows
+that the inductive step of~\cite{BKNS22} has no chores analogue, and
+Example~\ref{ex:ss-fail} that the correspondence of
+Lemma~\ref{lem:ss-bijection} does not carry the guarantee allocation by
+allocation. By Corollary~\ref{cor:ss-equalcard} any argument that does carry it
+must control bundle cardinalities, which is what neither route supplies.
+\end{remark}
