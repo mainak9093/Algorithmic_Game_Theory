@@ -1,5 +1,5 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{TWYZ25}
+\begin{thebibliography}{CKM{\etalchar{+}}19}
 
 \bibitem[BCE{\etalchar{+}}16]{BCE16}
 Felix Brandt, Vincent Conitzer, Ulle Endriss, J{\'e}r{\^o}me Lang, and Ariel~D. Procaccia.
@@ -47,6 +47,11 @@ Ioannis Caragiannis and Stavros Ioannidis.
 \newblock Computing envy-freeable allocations with limited subsidies.
 \newblock In {\em Workshop on Internet and Network Economics (WINE)}, 2021.
 
+\bibitem[CKM{\etalchar{+}}19]{CKMPSW19}
+Ioannis Caragiannis, David Kurokawa, Herv{\'e} Moulin, Ariel~D. Procaccia, Nisarg Shah, and Junxing Wang.
+\newblock The unreasonable fairness of maximum nash welfare.
+\newblock {\em ACM Transactions on Economics and Computation}, 7(3):12:1--12:32, 2019.
+
 \bibitem[End17]{End17}
 Ulle Endriss.
 \newblock {\em Trends in Computational Social Choice}.
@@ -91,11 +96,6 @@ Richard~J. Lipton, Evangelos Markakis, Elchanan Mossel, and Amin Saberi.
 Xinhang Lu, Simon Mackenzie, and Mashbat Suzuki.
 \newblock Optimal subsidy bounds for goods and chores: One dollar each suffices, 2026.
 \newblock arXiv:2607.10089.
-
-\bibitem[Mas87]{Mas87}
-Eric~S. Maskin.
-\newblock On the fair allocation of indivisible goods.
-\newblock In G.~Feiwel, editor, {\em Arrow and the Foundations of the Theory of Economic Policy}, pages 341--349. MacMillan, 1987.
 
 \bibitem[NSV21]{NSV21}
 Vishnu~V. Narayan, Mashbat Suzuki, and Adrian Vetta.

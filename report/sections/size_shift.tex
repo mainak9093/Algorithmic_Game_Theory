@@ -1,0 +1,231 @@
+% ---------------------------------------------------------------------------
+% Standalone section: why the dichotomous goods result does not transfer to
+% chores along the size shift. Uses only macros already defined in
+% preamble.tex (\items, \agents, \alloc, \bundle, \cost, \subsidy,
+% \optsubsidy, \edgew, \pathw, \set, \abs, \Z). Drop the file into
+% sections/ and \input it wherever it is wanted.
+% ---------------------------------------------------------------------------
+
+\section{Why the dichotomous goods result does not transfer}
+\label{sec:sizeshift}
+
+The negative dichotomous class is carried onto the dichotomous class
+of~\cite{BKNS22} by a single bijection, so it is natural to ask whether the
+guarantee of that paper transfers directly. It does not. This section makes the
+obstruction precise: the bijection preserves the valuation class but not the
+envy graph, and the discrepancy is exactly the difference in bundle
+cardinalities.
+
+Throughout, $\cost_i : 2^{\items} \to \Z_{\ge 0}$ are dichotomous cost
+functions, i.e.\ $\cost_i(\emptyset) = 0$ and
+$\cost_i(S \cup \set{g}) - \cost_i(S) \in \set{0,1}$ for all $S$ and
+$g \notin S$.
+
+\subsection{The size shift}
+
+\begin{definition}[Size shift]
+\label{def:sizeshift}
+For a cost function $\cost : 2^{\items} \to \Z_{\ge 0}$ define
+$\widetilde{v} : 2^{\items} \to \Z$ by
+\[
+  \widetilde{v}(S) \;:=\; \abs{S} - \cost(S).
+\]
+\end{definition}
+
+\begin{lemma}[The shift is a bijection of the two classes]
+\label{lem:ss-bijection}
+$\cost$ is a dichotomous cost function if and only if $\widetilde{v}$ is a
+dichotomous valuation, i.e.\ $\widetilde{v}(\emptyset) = 0$ and every marginal
+$\widetilde{v}(S \cup \set{g}) - \widetilde{v}(S)$ lies in $\set{0,1}$.
+Moreover the map $\cost \mapsto \widetilde{v}$ is an involution.
+\end{lemma}
+
+\begin{proof}
+$\widetilde{v}(\emptyset) = 0 - \cost(\emptyset) = 0$. For $g \notin S$,
+\[
+  \widetilde{v}(S \cup \set{g}) - \widetilde{v}(S)
+  \;=\; \bigl(\abs{S}+1-\cost(S \cup \set{g})\bigr) - \bigl(\abs{S}-\cost(S)\bigr)
+  \;=\; 1 - \bigl(\cost(S \cup \set{g}) - \cost(S)\bigr),
+\]
+so the marginal of $\widetilde{v}$ lies in $\set{0,1}$ exactly when that of
+$\cost$ does. Applying the definition twice returns
+$\abs{S} - (\abs{S} - \cost(S)) = \cost(S)$.
+\end{proof}
+
+\subsection{The shift does not preserve the envy graph}
+
+For a complete allocation $\alloc = (\bundle1,\dots,\bundle n)$ write
+$\edgew{\alloc}^{\,\cost}(i,j) = \cost_i(\bundle i) - \cost_i(\bundle j)$ for
+the arc weights in cost form, and
+$\edgew{\alloc}^{\,\widetilde{v}}(i,j) = \widetilde{v}_i(\bundle j) - \widetilde{v}_i(\bundle i)$
+for those of the shifted instance.
+
+\begin{lemma}[Arc-weight identity]
+\label{lem:ss-arc}
+For every allocation $\alloc$ and all $i,j \in \agents$,
+\[
+  \edgew{\alloc}^{\,\widetilde{v}}(i,j)
+  \;=\; \bigl(\abs{\bundle j} - \abs{\bundle i}\bigr)
+      \;+\; \edgew{\alloc}^{\,\cost}(i,j).
+\]
+\end{lemma}
+
+\begin{proof}
+By Definition~\ref{def:sizeshift},
+\[
+  \edgew{\alloc}^{\,\widetilde{v}}(i,j)
+  = \widetilde{v}_i(\bundle j) - \widetilde{v}_i(\bundle i)
+  = \bigl(\abs{\bundle j} - \cost_i(\bundle j)\bigr)
+    - \bigl(\abs{\bundle i} - \cost_i(\bundle i)\bigr),
+\]
+and regrouping gives
+$\bigl(\abs{\bundle j} - \abs{\bundle i}\bigr) + \bigl(\cost_i(\bundle i) - \cost_i(\bundle j)\bigr)$.
+\end{proof}
+
+\begin{corollary}
+\label{cor:ss-equalcard}
+The two envy graphs on $\alloc$ coincide arc by arc if and only if
+$\abs{\bundle 1} = \dots = \abs{\bundle n}$. In that case $\alloc$ is
+envy-freeable for $\cost$ if and only if it is envy-freeable for
+$\widetilde{v}$, and the two minimum subsidy vectors agree.
+\end{corollary}
+
+\begin{proof}
+Immediate from Lemma~\ref{lem:ss-arc}: the correction term
+$\abs{\bundle j} - \abs{\bundle i}$ vanishes for all $i,j$ exactly when all
+bundles have equal cardinality. Identical arc weights give identical cycles and
+identical longest paths, and by
+Theorems~\ref{thm:hs-characterisation} and~\ref{thm:hs-minsubsidy} both envy-freeability
+and the minimum subsidy are read off the arc weights alone.
+\end{proof}
+
+Away from equal cardinalities the two minimum subsidies are related, but not
+equal. Write $\widetilde{d}_{\alloc}(i,j)$ for the maximum weight of a directed
+$i \to j$ path in the shifted envy graph.
+
+\begin{proposition}
+\label{prop:ss-subsidy}
+Let $\alloc$ be envy-freeable for both instances. Then for every $i \in \agents$,
+\[
+  \pathw{\alloc}^{\,\cost}(i)
+  \;=\; \max_{j \in \agents}\;
+        \Bigl[\, \widetilde{d}_{\alloc}(i,j)
+              + \abs{\bundle i} - \abs{\bundle j} \,\Bigr].
+\]
+Consequently, if $\widetilde{\subsidy}$ is any subsidy vector certifying
+envy-freeness of $\alloc$ for $\widetilde{v}$ and we set
+$q_i := \widetilde{\subsidy}_i + \abs{\bundle i}$, then
+\[
+  \optsubsidy_i \;=\; \pathw{\alloc}^{\,\cost}(i)
+  \;\le\; q_i - \min_{j \in \agents} q_j .
+\]
+\end{proposition}
+
+\begin{proof}
+Sum the identity of Lemma~\ref{lem:ss-arc} along a directed path
+$i = j_0 \to j_1 \to \dots \to j_k = j$. The correction terms telescope to
+$\abs{\bundle{j}} - \abs{\bundle{i}}$, so the weight of the path in cost form
+equals its weight in the shifted instance plus
+$\abs{\bundle i} - \abs{\bundle j}$. Taking the maximum over $j$ and over paths
+ending at $j$ gives the stated identity, since
+$\pathw{\alloc}^{\,\cost}(i)$ is the maximum weight of a path leaving $i$ and
+the empty path is the case $j=i$.
+
+For the inequality, envy-freeness of $(\alloc,\widetilde{\subsidy})$ gives
+$\widetilde{d}_{\alloc}(i,j) \le \widetilde{\subsidy}_i - \widetilde{\subsidy}_j$
+for all $i,j$, whence
+$\widetilde{d}_{\alloc}(i,j) + \abs{\bundle i} - \abs{\bundle j} \le q_i - q_j$.
+Taking maxima over $j$ and applying
+Theorem~\ref{thm:hs-minsubsidy} gives the claim.
+\end{proof}
+
+\subsection{What a transfer would require}
+
+Proposition~\ref{prop:ss-subsidy} isolates the quantity that a transfer must
+control. The guarantee of~\cite{BKNS22} produces, for the shifted instance, an
+allocation with $\widetilde{\subsidy} \in \set{0,1}^n$; it asserts nothing about
+$\abs{\bundle 1},\dots,\abs{\bundle n}$. The bound inherited on the chores side
+is therefore governed not by $\widetilde{\subsidy}$ but by
+$q_i = \widetilde{\subsidy}_i + \abs{\bundle i}$, and the per-agent conclusion
+$\optsubsidy \in \set{0,1}^n$ follows only if $q$ has spread at most $1$.
+
+\begin{proposition}
+\label{prop:ss-target}
+Suppose every dichotomous instance admits an allocation $\alloc$ and a
+certifying subsidy vector $\widetilde{\subsidy}$ for which
+$q_i = \widetilde{\subsidy}_i + \abs{\bundle i}$ satisfies
+$\max_i q_i - \min_i q_i \le 1$. Then every negative dichotomous instance
+admits an envy-free solution with subsidy in $\set{0,1}^n$.
+\end{proposition}
+
+\begin{proof}
+Given costs $\cost_i$, apply the hypothesis to the shifted instance
+$\widetilde{v}_i$, which is dichotomous by Lemma~\ref{lem:ss-bijection}, and
+take the resulting $\alloc$. By Proposition~\ref{prop:ss-subsidy},
+$\optsubsidy_i \le q_i - \min_j q_j \le 1$ for every $i$, and
+$\optsubsidy_i \ge 0$ always.
+\end{proof}
+
+The hypothesis of Proposition~\ref{prop:ss-target} is strictly stronger than the
+theorem of~\cite{BKNS22}, which constrains $\widetilde{\subsidy}$ alone, and it
+is not supplied by that theorem: the allocation constructed there is not
+guaranteed to be balanced, and indeed is not guaranteed to be EF1.
+
+\subsection{The transfer fails on an explicit instance}
+
+The following witness shows that the guarantee is not inherited allocation by
+allocation, already for two agents and three chores with identical cost
+functions.
+
+\begin{example}
+\label{ex:ss-fail}
+Let $n = 2$, $\items = \set{a,b,c}$, and let both agents have
+\[
+  \cost_1(S) \;=\; \cost_2(S) \;=\; \max\bigl(0,\ \abs{S}-1\bigr).
+\]
+Every marginal is $0$ (from $\emptyset$ to a singleton) or $1$ (otherwise), so
+this is a negative dichotomous instance. Its size shift is
+\[
+  \widetilde{v}_1(S) \;=\; \widetilde{v}_2(S)
+  \;=\; \abs{S} - \max\bigl(0,\abs{S}-1\bigr) \;=\; \min\bigl(\abs{S},1\bigr),
+\]
+the unit-demand dichotomous valuation. Consider
+\[
+  \alloc \;=\; \bigl(\set{a,b,c},\ \emptyset\bigr).
+\]
+
+\emph{In the shifted goods instance.} We have
+$\widetilde{v}_1(\bundle1) = 1$ and $\widetilde{v}_1(\bundle2) = 0$, so agent
+$1$ does not envy agent $2$; and $\widetilde{v}_2(\bundle2) = 0$ with
+$\widetilde{v}_2(\bundle1) = 1$, so agent $2$ envies agent $1$ by exactly $1$.
+The allocation is envy-freeable and its minimum subsidy vector is
+$\widetilde{\optsubsidy} = (0,1)$, consistent with the bound
+of~\cite{BKNS22}.
+
+\emph{In the chores instance.} We have $\cost_1(\bundle1) = 2$ and
+$\cost_1(\bundle2) = 0$, so
+\[
+  \edgew{\alloc}^{\,\cost}(1,2) \;=\; \cost_1(\bundle1) - \cost_1(\bundle2) \;=\; 2 ,
+\]
+while $\edgew{\alloc}^{\,\cost}(2,1) = -2$. The allocation is envy-freeable, and
+its minimum subsidy vector is $\optsubsidy = (2,0)$, which violates the
+per-agent bound.
+\end{example}
+
+The two computations are reconciled by Lemma~\ref{lem:ss-arc}: here
+$\abs{\bundle2} - \abs{\bundle1} = -3$, so
+$\edgew{\alloc}^{\,\widetilde{v}}(1,2) = -3 + 2 = -1$, and in the notation of
+Proposition~\ref{prop:ss-subsidy}, $q = (0 + 3,\ 1 + 0) = (3,1)$ has spread
+$2$. The shifted instance is unaffected by the imbalance because the
+correction absorbs it; the chores instance is not.
+
+\begin{remark}
+\label{rem:ss-scope}
+Example~\ref{ex:ss-fail} does not contradict the main theorem. It shows that a
+particular allocation, admissible on the goods side, is inadmissible on the
+chores side, so the correspondence of Lemma~\ref{lem:ss-bijection} cannot by
+itself carry the guarantee across; a separate argument is required to select the
+allocation. By Corollary~\ref{cor:ss-equalcard} any such argument must control
+bundle cardinalities, which is exactly the content that the theorem
+of~\cite{BKNS22} does not provide.
+\end{remark}

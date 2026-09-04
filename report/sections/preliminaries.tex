@@ -206,7 +206,7 @@ $P$ is $\edgew{\alloc}(P) = \sum_{(i,j) \in P} \edgew{\alloc}(i,j)$, and
 $\pathw{\alloc}(i)$ denotes the maximum weight of any path in
 $\envygraph{\alloc}$ starting at $i$, the empty path of weight $0$ included.
 
-The two results below are the engine of the entire subsidy line. Both are stated
+The following two results underpin much of the literature on subsidies for envy-freeness. Both are stated
 by Halpern and Shah~\cite{HS19} for additive valuations, but their proofs use
 only the arc weights and permutations of the bundles --- neither additivity nor
 monotonicity nor any sign condition on $v_i$ enters --- and~\cite{BKNS22} invokes
@@ -240,13 +240,11 @@ an all-pairs longest-path computation on $\envygraph{\alloc}$.
 \end{theorem}
 
 Condition~(ii) of Theorem~\ref{thm:hs-characterisation} has the standing consequence
-that an envy-freeable allocation can always be manufactured from an arbitrary
+that an envy-freeable allocation can always be obtained from an arbitrary
 one: fix the bundles and reassign them according to a maximum-weight perfect
-matching between agents and bundles. What is at issue is never the existence of
-an envy-freeable allocation, only the size of the subsidy that
-Theorem~\ref{thm:hs-minsubsidy} then charges for it.
+matching between agents and bundles. The central question is therefore not the existence of an envy-freeable allocation, but the amount of subsidy guaranteed by Theorem~\ref{thm:hs-minsubsidy}.
 
-Specialising to our model gives the following, which we use throughout.
+Specialising in our model gives the following, which we use throughout.
 
 \begin{observation}[Integrality]
 \label{obs:integrality}
@@ -272,10 +270,9 @@ Observation~\ref{obs:integrality} is what makes the target statement --- a subsi
 $\set{0,1}^n$ --- a statement about a \emph{bound} rather than about rounding:
 once $\optsubsidy$ is known to be integral, showing $\optsubsidy_i \le 1$ for
 every $i$ is the same as showing $\optsubsidy \in \set{0,1}^n$. The same
-observation underlies the corresponding step in~\cite{BKNS22}, where the arc
-weights of a dichotomous instance are likewise integers.
+observation underlies the corresponding step in~\cite{BKNS22}, where the arc weights of a dichotomous instance are likewise integers.
 
-A second normalisation costs nothing and removes a clause from the target.
+The following observation further simplifies the target guarantee.
 
 \begin{proposition}[Some agent is always unpaid]
 \label{prop:zero-coordinate}

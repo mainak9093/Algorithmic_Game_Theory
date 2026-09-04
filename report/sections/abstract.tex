@@ -9,15 +9,14 @@ We show that the same optimal guarantee holds for chores, under no structural as
 \) such that $(\mathcal{A},p)$ is envy-free. Moreover, the allocation $\mathcal{A}$ is EF1 even before subsidies are paid. The bound is
 tight, and the allocation and subsidies can be computed in polynomial time in the value-oracle model.
 
-Our algorithm starts from an envy-free partial allocation produced by the algorithm of Tao et al.~\cite{TWYZ23}, assigns the remaining chores to distinct agents in a terminal strongly connected component, and determines the subsidised agents through a backward closure in the associated equality
-graph.
+Our algorithm starts from an envy-free partial allocation produced by the algorithm of Tao et al.~\cite{TWYZ23}, assigns the remaining chores to distinct agents in a tail strongly connected component selected at termination, and determines the subsidised agents through a backward closure in the associated equality graph.
 \end{abstract}
 
 
 % We study the problem of allocating indivisible \emph{chores} among agents in a
 % fair manner, with subsidies. Envy-free allocations of indivisible items are not
 % guaranteed to exist, but envy-freeness can be achieved by additionally providing
-% some subsidy to the agents; in the chores setting this subsidy is naturally read
+% some subsidy to the agents; in the chores setting th is subsidy is naturally read
 % as compensation paid to the agents who absorb the workload. We study the subsidy
 % required under \emph{negative dichotomous} valuations, i.e., among agents whose
 % marginal disutility for any chore is either zero or one:
