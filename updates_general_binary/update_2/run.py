@@ -17,8 +17,9 @@ PERM = list(itertools.permutations(range(N)))
 
 
 def cost(i, S):
+    # agent 1 is the absorbing one: the first chore is free for her.
     k = bin(S).count("1")
-    return min(k, 2) if i in (0, 1) else max(0, k - 1)
+    return max(0, k - 1) if i == 0 else min(k, 2)
 
 
 def show(S):
@@ -42,16 +43,16 @@ def subsidy(X):
 
 
 def main():
-    print("costs by bundle size:  agent1, agent2 : %s     agent3 : %s"
+    print("costs by bundle size:  agent1 : %s     agents 2,3 : %s"
           % ([cost(0, (1 << k) - 1) for k in range(M + 1)],
-             [cost(2, (1 << k) - 1) for k in range(M + 1)]))
+             [cost(1, (1 << k) - 1) for k in range(M + 1)]))
     print()
     X = (0, 0, 0)
     p = subsidy(X)
     print("start           %s   subsidy %s   M(p)=%s"
           % ([show(x) for x in X], p,
              [i + 1 for i in range(N) if p[i] == max(p)]))
-    for g, who in ((0, 2), (1, 2)):
+    for g, who in ((0, 0), (1, 0)):
         X = tuple(X[t] | ((1 << g) if t == who else 0) for t in range(N))
         p = subsidy(X)
         print("give %s to agent %d  %s   subsidy %s   M(p)=%s"

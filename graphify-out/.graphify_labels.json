@@ -178,6 +178,7 @@
   "176": "gap_minimal.py",
   "177": "run.py",
   "178": "worked_example.py",
+  "179": "interval.py",
   "180": "bounded_excursion.py",
   "181": "is_envy_freeable",
   "182": "path_ivt.py",
@@ -188,6 +189,5 @@
   "189": "window.py",
   "191": "endpoints.py",
   "192": "update_18/potentials.py",
-  "193": "ivt.py",
   "194": "minsum_stress.py"
 }

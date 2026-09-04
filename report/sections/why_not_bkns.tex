@@ -12,9 +12,9 @@
 Three agents $\agents = \set{1,2,3}$ and three chores $\items = \set{a,b,c}$.
 Each cost function depends only on the size of the bundle:
 \[
-  \cost_1(S) \;=\; \cost_2(S) \;=\; \min\bigl(\abs S,\,2\bigr),
+  \cost_1(S) \;=\; \max\bigl(0,\ \abs S - 1\bigr),
   \qquad
-  \cost_3(S) \;=\; \max\bigl(0,\ \abs S - 1\bigr).
+  \cost_2(S) \;=\; \cost_3(S) \;=\; \min\bigl(\abs S,\,2\bigr).
 \]
 Every marginal is $0$ or $1$ and $\cost_i(\emptyset) = 0$, so the instance is
 negative dichotomous.
@@ -23,8 +23,8 @@ negative dichotomous.
 \begin{tabular}{c|cccc}
 $\abs S$ & $0$ & $1$ & $2$ & $3$ \\
 \hline
-$\cost_1(S) = \cost_2(S)$ & $0$ & $1$ & $2$ & $2$ \\
-$\cost_3(S)$ & $0$ & $0$ & $1$ & $2$ \\
+$\cost_1(S)$ & $0$ & $0$ & $1$ & $2$ \\
+$\cost_2(S) = \cost_3(S)$ & $0$ & $1$ & $2$ & $2$ \\
 \end{tabular}
 \end{center}
 
@@ -44,8 +44,8 @@ iteration goes to FINDSINK, which assigns the item to an agent of
 step & allocation & $\optsubsidy$ & $\Mset(\optsubsidy)$ \\
 \hline
 start & $(\emptyset,\ \emptyset,\ \emptyset)$ & $(0,0,0)$ & $\set{1,2,3}$ \\
-$a$ to agent $3$ & $(\emptyset,\ \emptyset,\ \set{a})$ & $(0,0,0)$ & $\set{1,2,3}$ \\
-$b$ to agent $3$ & $(\emptyset,\ \emptyset,\ \set{a,b})$ & $(0,0,1)$ & $\set{3}$ \\
+$a$ to agent $1$ & $(\set{a},\ \emptyset,\ \emptyset)$ & $(0,0,0)$ & $\set{1,2,3}$ \\
+$b$ to agent $1$ & $(\set{a,b},\ \emptyset,\ \emptyset)$ & $(1,0,0)$ & $\set{1}$ \\
 \end{tabular}
 \end{center}
 
@@ -54,17 +54,17 @@ and the resulting allocation is envy-freeable with subsidies in $\set{0,1}^3$.
 
 \subsection{The last chore}
 
-At this point $\Mset(\optsubsidy) = \set 3$, so FINDSINK must give $c$ to agent
-$3$. It cannot. Nor can any other agent, and nor does reassigning the bundles
+At this point $\Mset(\optsubsidy) = \set 1$, so FINDSINK must give $c$ to agent
+$1$. It cannot. Nor can any other agent, and nor does reassigning the bundles
 help:
 
 \begin{center}
 \begin{tabular}{lll}
 $c$ added to & resulting bundles & least $\optsubsidy$ over all reassignments \\
 \hline
-agent $1$'s bundle & $\set{c},\ \emptyset,\ \set{a,b}$ & $(1,0,2)$ \\
-agent $2$'s bundle & $\emptyset,\ \set{c},\ \set{a,b}$ & $(0,1,2)$ \\
-agent $3$'s bundle & $\emptyset,\ \emptyset,\ \set{a,b,c}$ & $(0,0,2)$ \\
+agent $1$'s bundle & $\set{a,b,c},\ \emptyset,\ \emptyset$ & $(2,0,0)$ \\
+agent $2$'s bundle & $\set{a,b},\ \set{c},\ \emptyset$ & $(2,1,0)$ \\
+agent $3$'s bundle & $\set{a,b},\ \emptyset,\ \set{c}$ & $(2,0,1)$ \\
 \end{tabular}
 \end{center}
 
@@ -75,4 +75,4 @@ Every option requires a subsidy of $2$. The algorithm is stuck.
 The allocation $(\set a,\ \set b,\ \set c)$ gives every agent cost $1$ and is
 envy-free with $\subsidy = \mathbf 0$. What fails is the one-item-at-a-time
 construction: reaching it requires taking back the two chores already placed on
-agent $3$.
+agent $1$.

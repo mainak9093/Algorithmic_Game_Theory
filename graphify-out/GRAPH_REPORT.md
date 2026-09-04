@@ -1,7 +1,7 @@
 # Graph Report - Algorithmic_Game_Theory  (2026-09-04)
 
 ## Corpus Check
-- 286 files · ~444,086 words
+- 286 files · ~444,099 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
@@ -10,7 +10,7 @@
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `b5e953ba`
+- Built from commit: `696094a2`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
@@ -191,6 +191,7 @@
 - gap_minimal.py
 - run.py
 - worked_example.py
+- interval.py
 - bounded_excursion.py
 - is_envy_freeable
 - path_ivt.py
@@ -201,7 +202,6 @@
 - window.py
 - endpoints.py
 - update_18/potentials.py
-- ivt.py
 - minsum_stress.py
 
 ## God Nodes (most connected - your core abstractions)
@@ -791,7 +791,7 @@ Nodes (10): ghat(), good_multiset(), main(), pattern_valid(), perfect_matching()
 
 ### Community 147 - "enumerate_general_binary"
 Cohesion: 0.19
-Nodes (12): enumerate_general_binary(), Every general binary valuation on m items, as a tuple indexed by mask., all_parts(), intervals(), main(), A necklace-splitting idea: can the three bundles be taken to be INTERVALS? The…, Every cut of the given order into three consecutive blocks., spread3() (+4 more)
+Nodes (12): enumerate_general_binary(), Every general binary valuation on m items, as a tuple indexed by mask., main(), max_jump(), parts3(), A discrete intermediate-value argument, and exhaustive tests of (BAL-1). PROVED…, Move items one at a time from B1 to B2; does |d| <= 1 ever hold?, walk_lands() (+4 more)
 
 ### Community 148 - "shift.py"
 Cohesion: 0.47
@@ -905,6 +905,10 @@ Nodes (5): cost(), main(), The run: BKNS's algorithm, sign-flipped, on the 3-age
 Cohesion: 0.53
 Nodes (5): allocations(), bundle(), c(), main(), The incompatibility witness, written out inequality by inequality, so that…
 
+### Community 179 - "interval.py"
+Cohesion: 0.43
+Nodes (6): all_parts(), intervals(), main(), A necklace-splitting idea: can the three bundles be taken to be INTERVALS? The…, Every cut of the given order into three consecutive blocks., spread3()
+
 ### Community 180 - "bounded_excursion.py"
 Cohesion: 0.27
 Nodes (11): all_partial(), allocated(), analyse(), main(), min_subsidy(), pool_for(), Approach 15: testing the bounded-excursion conjecture directly. The conjecture…, (E1, E2) for this instance at width K. (+3 more)
@@ -945,10 +949,6 @@ Nodes (6): blocks(), classify(), Dpath(), main(), random_gb(), Does (W) follow f
 Cohesion: 0.32
 Nodes (7): main(), psi(), Which lexicographic potential makes the local-search lemma true?…, Canonical min-cost reassignment; return (ell, total cost)., For each potential, count partitions with max ell >= 2 and no improving move., state(), test()
 
-### Community 193 - "ivt.py"
-Cohesion: 0.43
-Nodes (6): main(), max_jump(), parts3(), A discrete intermediate-value argument, and exhaustive tests of (BAL-1). PROVED…, Move items one at a time from B1 to B2; does |d| <= 1 ever hold?, walk_lands()
-
 ### Community 194 - "minsum_stress.py"
 Cohesion: 0.50
 Nodes (4): analyse(), main(), Stress the min-total-spread rule before believing it. spread_rule.py produced a…, Minimisers of total spread and of binding count; are they all good?
@@ -963,7 +963,7 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **Why does `rec()` connect `guidedR3.py` to `structural.py`, `targetG_adv.py`, `update_2/gb_valuations.py`, `n2proof_check.py`, `routeA.py`, `ruleD_adv.py`, `sizeshift_cex.py`, `layers.py`, `enumerate_general_binary`, `targetGbal.py`, `algo1.py`, `layer_hunt.py`?**
   _High betweenness centrality (0.197) - this node is a cross-community bridge._
-- **Why does `enumerate_general_binary()` connect `enumerate_general_binary` to `guidedR3.py`, `gwm_refutation.py`, `test_balance_invariant.py`, `steering_plus.py`, `bal_step.py`, `shift.py`, `walk`, `masks_by_popcount`, `enumerate_class`, `forced_states.py`, `lemma_L.py`, `bounded_excursion.py`, `is_envy_freeable`, `path_ivt.py`, `reachability.py`, `path.py`, `window.py`, `endpoints.py`, `ivt.py`, `steering_rule.py`, `test_decomposition.py`, `probe_gap2.py`, `bundles_from_assignment`, `invariant_battery.py`, `test_mixed_insertion.py`, `analyse_safe.py`, `existence_spread.py`, `excursion_depth.py`, `canonical_allocation.py`?**
+- **Why does `enumerate_general_binary()` connect `enumerate_general_binary` to `guidedR3.py`, `gwm_refutation.py`, `test_balance_invariant.py`, `steering_plus.py`, `bal_step.py`, `shift.py`, `walk`, `masks_by_popcount`, `enumerate_class`, `forced_states.py`, `lemma_L.py`, `interval.py`, `bounded_excursion.py`, `is_envy_freeable`, `path_ivt.py`, `reachability.py`, `path.py`, `window.py`, `endpoints.py`, `steering_rule.py`, `test_decomposition.py`, `probe_gap2.py`, `bundles_from_assignment`, `invariant_battery.py`, `test_mixed_insertion.py`, `analyse_safe.py`, `existence_spread.py`, `excursion_depth.py`, `canonical_allocation.py`?**
   _High betweenness centrality (0.159) - this node is a cross-community bridge._
 - **Why does `M()` connect `M` to `verify_counterexample.py`, `verify_stuck.py`, `verify_bridge_loss.py`, `minimal_stuck.py`, `witness.py`, `run.py`, `worked_example.py`, `test_decomposition.py`, `verify_ins_failure.py`, `check_f5.py`, `mswcex.py`, `checkD.py`, `routeA_cex.py`, `peel3.py`, `peel_sweep.py`, `verify_incompatibility.py`?**
   _High betweenness centrality (0.078) - this node is a cross-community bridge._
