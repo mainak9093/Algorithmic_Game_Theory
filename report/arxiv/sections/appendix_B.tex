@@ -37,17 +37,17 @@ subsidy is $\optsubsidy_i = \max\set{0,\ \cost(\bundle i) - \cost(\bundle j)}$.
 The eight complete allocations are therefore as follows.
 
 \begin{center}
-\begin{tabular}{llccc c}
-$\bundle1$ & $\bundle2$ & costs & $\optsubsidy$ & $\optsubsidy \in \set{0,1}^2$ & Pareto optimal \\
+\begin{tabular}{llccccl}
+$\bundle1$ & $\bundle2$ & costs & $\optsubsidy$ & $\optsubsidy \le \mathbf 1$ & PO & dominated by \\
 \hline
-$\set{a,b,c}$ & $\emptyset$ & $(2,0)$ & $(2,0)$ & \textbf{no} & \textbf{yes} \\
-$\set{a,b}$ & $\set{c}$ & $(2,1)$ & $(1,0)$ & yes & no \\
-$\set{a,c}$ & $\set{b}$ & $(2,1)$ & $(1,0)$ & yes & no \\
-$\set{b,c}$ & $\set{a}$ & $(2,1)$ & $(1,0)$ & yes & no \\
-$\set{a}$ & $\set{b,c}$ & $(1,2)$ & $(0,1)$ & yes & no \\
-$\set{b}$ & $\set{a,c}$ & $(1,2)$ & $(0,1)$ & yes & no \\
-$\set{c}$ & $\set{a,b}$ & $(1,2)$ & $(0,1)$ & yes & no \\
-$\emptyset$ & $\set{a,b,c}$ & $(0,2)$ & $(0,2)$ & \textbf{no} & \textbf{yes} \\
+$\set{a,b,c}$ & $\emptyset$ & $(2,0)$ & $(2,0)$ & \textbf{no} & \textbf{yes} & --- \\
+$\set{a,b}$ & $\set{c}$ & $(2,1)$ & $(1,0)$ & yes & no & $(\set{a,b,c},\ \emptyset)$ \\
+$\set{a,c}$ & $\set{b}$ & $(2,1)$ & $(1,0)$ & yes & no & $(\set{a,b,c},\ \emptyset)$ \\
+$\set{b,c}$ & $\set{a}$ & $(2,1)$ & $(1,0)$ & yes & no & $(\set{a,b,c},\ \emptyset)$ \\
+$\set{a}$ & $\set{b,c}$ & $(1,2)$ & $(0,1)$ & yes & no & $(\emptyset,\ \set{a,b,c})$ \\
+$\set{b}$ & $\set{a,c}$ & $(1,2)$ & $(0,1)$ & yes & no & $(\emptyset,\ \set{a,b,c})$ \\
+$\set{c}$ & $\set{a,b}$ & $(1,2)$ & $(0,1)$ & yes & no & $(\emptyset,\ \set{a,b,c})$ \\
+$\emptyset$ & $\set{a,b,c}$ & $(0,2)$ & $(0,2)$ & \textbf{no} & \textbf{yes} & --- \\
 \end{tabular}
 \end{center}
 
