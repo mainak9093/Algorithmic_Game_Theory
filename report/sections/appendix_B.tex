@@ -1,0 +1,69 @@
+% ---------------------------------------------------------------------------
+% Appendix B: unit subsidies and Pareto optimality cannot be had together.
+% Uses only macros already defined in preamble.tex.
+% ---------------------------------------------------------------------------
+
+\section{Unit subsidies are incompatible with Pareto optimality}
+\label{app:pareto-sec}
+
+Recall that, in cost form, a complete allocation $\allocB$ \emph{Pareto
+dominates} a complete allocation $\alloc$ if
+$\cost_i(\allocB_i) \le \cost_i(\bundle i)$ for every $i \in \agents$, with
+strict inequality for at least one, and that $\alloc$ is \emph{Pareto optimal}
+if no complete allocation dominates it. The quantifier ranges over complete
+allocations: for chores, withholding an item weakly benefits every agent, so
+allowing incomplete allocations would leave no allocation Pareto optimal.
+
+\begin{example}[Unit subsidies and Pareto optimality are incompatible]
+\label{app:pareto}
+Consider two agents $\agents = \set{1,2}$ and three chores
+$\items = \set{a,b,c}$, with both agents sharing the cost function
+\[
+  \cost_1(S) = \cost_2(S) = \min\set{\abs S,\ 2},
+  \qquad\text{that is}\qquad
+  \begin{array}{c|cccc}
+    \abs S & 0 & 1 & 2 & 3 \\
+    \hline
+    \cost_i(S) & 0 & 1 & 2 & 2
+  \end{array}
+\]
+Every marginal cost belongs to $\set{0,1}$, so this is a dichotomous cost
+function; it is not additive, since $\cost_i(\set{a,b,c}) = 2 \ne 3$.
+
+Because the two agents share one cost function, envy-freeness of
+$(\alloc,\subsidy)$ reads $\cost(\bundle1) - \subsidy_1 = \cost(\bundle2) - \subsidy_2$,
+so the subsidy difference is pinned to the cost difference and the minimal
+subsidy is $\optsubsidy_i = \max\set{0,\ \cost(\bundle i) - \cost(\bundle j)}$.
+The eight complete allocations are therefore as follows.
+
+\begin{center}
+\begin{tabular}{llccc c}
+$\bundle1$ & $\bundle2$ & costs & $\optsubsidy$ & $\optsubsidy \in \set{0,1}^2$ & Pareto optimal \\
+\hline
+$\set{a,b,c}$ & $\emptyset$ & $(2,0)$ & $(2,0)$ & \textbf{no} & \textbf{yes} \\
+$\set{a,b}$ & $\set{c}$ & $(2,1)$ & $(1,0)$ & yes & no \\
+$\set{a,c}$ & $\set{b}$ & $(2,1)$ & $(1,0)$ & yes & no \\
+$\set{b,c}$ & $\set{a}$ & $(2,1)$ & $(1,0)$ & yes & no \\
+$\set{a}$ & $\set{b,c}$ & $(1,2)$ & $(0,1)$ & yes & no \\
+$\set{b}$ & $\set{a,c}$ & $(1,2)$ & $(0,1)$ & yes & no \\
+$\set{c}$ & $\set{a,b}$ & $(1,2)$ & $(0,1)$ & yes & no \\
+$\emptyset$ & $\set{a,b,c}$ & $(0,2)$ & $(0,2)$ & \textbf{no} & \textbf{yes} \\
+\end{tabular}
+\end{center}
+
+No allocation is both Pareto optimal and envy-free with a subsidy of at most
+one per agent.
+\end{example}
+
+The two columns fail for the same reason. The cost function saturates at
+$\abs S = 2$, so the third chore is free to an agent who already holds two:
+concentrating all three chores on one agent costs $2$ in total, whereas every
+split costs $3$, which is why exactly the two concentrated allocations are
+Pareto optimal and every split is dominated by one of them. But that same
+saturation makes the loaded agent's cost exceed the empty agent's by $2$, so
+each concentrated allocation needs a subsidy of $2$.
+
+Consequently the unit-subsidy guarantee of Theorem~\ref{thm:m-main} cannot be
+strengthened to deliver a Pareto optimal allocation, and enforcing it costs
+efficiency: on this instance the cheapest admissible allocation has total cost
+$3$ against $2$ for the cheapest Pareto optimal one.

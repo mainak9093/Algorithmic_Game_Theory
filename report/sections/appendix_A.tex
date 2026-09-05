@@ -1,0 +1,99 @@
+% ---------------------------------------------------------------------------
+% Appendix A: a BKNS-type incremental construction that fails for chores.
+% Uses only macros already defined in preamble.tex.
+% ---------------------------------------------------------------------------
+
+\section{Failure of a BKNS-type incremental construction}
+\label{app:extension-failure-sec}
+
+\begin{example}[Failure of a BKNS-type incremental extension~\cite{BKNS22}]
+\label{app:extension-failure}
+Consider three agents $\agents = \set{1,2,3}$ and three chores
+$\items = \set{a,b,c}$. We work in cost form, writing $\cost_i = -v_i$ for
+agent $i$'s non-negative cost function. Thus an allocation
+$\alloc = (\bundle1,\dots,\bundle n)$ together with a subsidy vector
+$\subsidy = (\subsidy_1,\dots,\subsidy_n)$ is envy-free if and only if
+\[
+  \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
+  \qquad \text{for all } i,j \in \agents .
+\]
+
+The cost functions depend only on bundle size:
+\[
+  \cost_1(S) = \max\set{0,\ \abs S - 1},
+  \qquad
+  \cost_2(S) = \cost_3(S) = \min\set{\abs S,\ 2}.
+\]
+Thus
+\[
+  \begin{array}{c|cccc}
+    \abs S & 0 & 1 & 2 & 3 \\
+    \hline
+    \cost_1(S) & 0 & 0 & 1 & 2 \\
+    \cost_2(S) = \cost_3(S) & 0 & 1 & 2 & 2
+  \end{array}
+\]
+Every marginal cost belongs to $\set{0,1}$, so these are dichotomous cost
+functions.
+
+Consider the following two steps of an incremental construction.
+\begin{center}
+\begin{tabular}{llcc}
+step & allocation & $\optsubsidy$ & $\Mset(\optsubsidy)$ \\
+\hline
+start & $(\emptyset,\ \emptyset,\ \emptyset)$ & $(0,0,0)$ & $\set{1,2,3}$ \\
+$a$ to agent $1$ & $(\set{a},\ \emptyset,\ \emptyset)$ & $(0,0,0)$ & $\set{1,2,3}$ \\
+$b$ to agent $1$ & $(\set{a,b},\ \emptyset,\ \emptyset)$ & $(1,0,0)$ & $\set{1}$ \\
+\end{tabular}
+\end{center}
+Both steps are legal: at each one the recipient lies in $\Mset(\optsubsidy)$
+and the resulting allocation is envy-freeable with subsidies in $\set{0,1}^3$.
+
+Now $c$ is currently unallocated and the partial allocation is
+\[
+  X_1 = \set{a,b}, \qquad X_2 = X_3 = \emptyset ,
+\]
+whose pointwise-minimal subsidy vector is $\optsubsidy = (1,0,0)$. Indeed,
+agent $1$ has cost $1$ for her own bundle and cost $0$ for either empty bundle,
+so she requires one unit of subsidy; agents $2$ and $3$ have no envy, since
+they have cost $0$ for their own empty bundles and cost $2$ for $X_1$.
+
+We claim that the remaining chore $c$ cannot be inserted so that the resulting
+allocation admits an envy-free subsidy vector in $\set{0,1}^3$, even if the
+existing bundles $\set{a,b}, \emptyset, \emptyset$ may first be permuted among
+the agents.
+
+If $c$ is added to the two-chore bundle, the resulting bundle sizes are
+$(3,0,0)$. Every agent evaluates a three-chore bundle at cost $2$ and an empty
+bundle at cost $0$. Hence the agent receiving the three-chore bundle requires a
+subsidy at least two units larger than that of an agent receiving an empty
+bundle, and no subsidy vector in $\set{0,1}^3$ can make the resulting
+allocation envy-free.
+
+It remains to consider the case in which $c$ is added to an empty bundle. The
+resulting bundle sizes are $(2,1,0)$, up to permutation. If an agent in
+$\set{2,3}$ receives the two-chore bundle, she evaluates it at cost $2$ and the
+empty bundle at cost $0$, again requiring a subsidy difference of at least two.
+
+Therefore the only remaining possibility is that agent $1$ receives the
+two-chore bundle. Let $i \in \set{2,3}$ receive the singleton and let $j$
+receive the empty bundle. Envy-freeness for agent $1$ with respect to $i$
+requires $1 - \subsidy_1 \le 0 - \subsidy_i$, and hence
+\[
+  \subsidy_1 \;\ge\; \subsidy_i + 1 .
+\]
+Envy-freeness for agent $i$ with respect to $j$ requires
+$1 - \subsidy_i \le -\subsidy_j$, and hence
+\[
+  \subsidy_i \;\ge\; \subsidy_j + 1 .
+\]
+Combining the two inequalities gives $\subsidy_1 \ge \subsidy_j + 2$, which is
+impossible for $\subsidy \in \set{0,1}^3$. Hence no assignment of the
+additional chore $c$, even after an arbitrary permutation of the previously
+allocated bundles, preserves the unit-subsidy guarantee.
+
+Notice that this is an obstruction to the incremental construction, not to the
+instance itself. The complete allocation $(\set a, \set b, \set c)$ is
+envy-free without subsidies: agent $1$ evaluates every singleton at cost $0$,
+while agents $2$ and $3$ evaluate every singleton at cost $1$.
+\end{example}
