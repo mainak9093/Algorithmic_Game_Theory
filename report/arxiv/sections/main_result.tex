@@ -36,27 +36,33 @@ For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
 marginal, and for a partial allocation $X$ write
 $R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its
-\emph{residue}. Recall that as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(
-  \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
-\)
+\emph{residue}.
+% Superseded by Observation~\ref{obs:m-gap} below, which states the same
+% integrality gap and additionally the monotonicity of $\cost_i$ used in
+% \Cref{sec:m-completion}.
+% Recall that as  $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(
+%   \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
+% \)
 
-% \begin{observation}
-% \label{obs:m-gap}
-% For every $i \in \agents$ and all $S,T \subseteq \items$,
-% \[
-%   \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
-% \]
-% Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
-% \end{observation}
+\begin{observation}
+\label{obs:m-gap}
+For every $i \in \agents$ and all $S,T \subseteq \items$,
+\[
+  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+\]
+Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+\end{observation}
 
-% \begin{proof}
-% By Observation~\ref{obs:integrality} every $\cost_i$ is integer valued, so a
-% strict inequality between two of its values is a gap of at least $1$. For
-% monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
-% $\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
-% \set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
-% Definition~\ref{def:dichcost}, hence non-negative.
-% \end{proof}
+\begin{proof}
+Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
+$\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
+Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
+strict inequality between two of its values is a gap of at least $1$. For
+monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+Definition~\ref{def:dichcost}, hence non-negative.
+\end{proof}
 
 % --------------------------------------------------------------------------
 \subsection{The terminal state of the partial-allocation algorithm}
@@ -70,31 +76,33 @@ envy-free in the sense of \eqref{eq:m-pef} and satisfies
 $\abs{R(X)} \le n-1$.
 \end{theorem}
 
-The proof of the results in this paper uses not only the statement of Theorem~\ref{thm:m-twyz} but also the state in which the algorithm of~\cite{tao2025existence} halts, so we record that algorithm. It maintains a partial allocation $X = (X_1,\dots,X_n)$, envy-free
-throughout, together with the \emph{equality graph}
-\begin{equation}
-\label{eq:m-graph}
-  G = (\agents, E),
-  \qquad
-  (i,j) \in E \iff i \ne j \ \text{ and } \ \cost_i(X_i) = \cost_i(X_j),
-\end{equation}
-and repeats the following three rules in the stated order, halting only when
-none applies.
-\begin{enumerate}
-  \item[(R1)] If some $e \in R(X)$ and some $i \in \agents$ satisfy
-        $\cost_i(e \mid X_i) = 0$, assign $e$ to $i$.
-  \item[(R2)] If some $e \in R(X)$ and some arc $(i,j) \in E$ lying on a
-        directed cycle of $G$ satisfy $\cost_i(e \mid X_j) = 0$, rotate the
-        bundles along that cycle and assign $e$ to $i$.
-  \item[(R3)] Otherwise select a strongly connected component $S$ of $G$ with
-        no arc of $E$ leaving $S$; such a component exists by
-        \Cref{obs:tailscc}. If $\abs{R(X)} \ge \abs S$, assign one
-        residual chore to each agent of $S$; otherwise halt.
-\end{enumerate}
-The loop runs while $R(X) \ne \emptyset$, so the only exit with
-$R(X) \ne \emptyset$ is the final clause of (R3).
+% Superseded by the revised statement of the algorithm immediately below.
+% Kept for reference; do not compile both -- they share \label{eq:m-graph}.
+% The proof of the results in this paper uses not only the statement of Theorem~\ref{thm:m-twyz} but also the state in which the algorithm of~\cite{tao2025existence} halts, so we record that algorithm. It maintains a partial allocation $X = (X_1,\dots,X_n)$, envy-free
+% throughout, together with the \emph{equality graph}
+% \begin{equation}
+% \label{eq:m-graph}
+%   G = (\agents, E),
+%   \qquad
+%   (i,j) \in E \iff i \ne j \ \text{ and } \ \cost_i(X_i) = \cost_i(X_j),
+% \end{equation}
+% and repeats the following three rules in the stated order, halting only when
+% none applies.
+% \begin{enumerate}
+%   \item[(R1)] If some $e \in R(X)$ and some $i \in \agents$ satisfy
+%         $\cost_i(e \mid X_i) = 0$, assign $e$ to $i$.
+%   \item[(R2)] If some $e \in R(X)$ and some arc $(i,j) \in E$ lying on a
+%         directed cycle of $G$ satisfy $\cost_i(e \mid X_j) = 0$, rotate the
+%         bundles along that cycle and assign $e$ to $i$.
+%   \item[(R3)] Otherwise select a strongly connected component $S$ of $G$ with
+%         no arc of $E$ leaving $S$; such a component exists by
+%         \Cref{obs:tailscc}. If $\abs{R(X)} \ge \abs S$, assign one
+%         residual chore to each agent of $S$; otherwise halt.
+% \end{enumerate}
+% The loop runs while $R(X) \ne \emptyset$, so the only exit with
+% $R(X) \ne \emptyset$ is the final clause of (R3).
 
-{\color{blue}The proof of our main result uses not only the statement of Theorem~\ref{thm:m-twyz}, but also structural properties of the terminal state of the algorithm of~\cite{tao2025existence}. We therefore recall the relevant part of that algorithm. It maintains an envy-free partial allocation $X=(X_1,\dots,X_n)$ together with the \emph{equality graph}
+The proof of our main result uses not only the statement of Theorem~\ref{thm:m-twyz}, but also structural properties of the terminal state of the algorithm of~\cite{tao2025existence}. We therefore recall the relevant part of that algorithm. It maintains an envy-free partial allocation $X=(X_1,\dots,X_n)$ together with the \emph{equality graph}
 \begin{equation}
 \label{eq:m-graph}
   G=(\agents,E),
@@ -120,7 +128,7 @@ While $R(X)\ne\emptyset$, the algorithm considers the following rules in the sta
         the agents of $S$, one chore per agent; if
         $\abs{R(X)}<\abs S$, halt.
 \end{enumerate}
-Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and the algorithm terminates through the final clause of (R3).}
+Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and the algorithm terminates through the final clause of (R3).
 
 
 For the remainder of this section fix the following data: let $X$ be the
