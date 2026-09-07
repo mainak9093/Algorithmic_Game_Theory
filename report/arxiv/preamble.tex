@@ -19,7 +19,7 @@
 \usepackage{newpxtext}
 \usepackage{microtype}
 \usepackage{authblk}
-
+\usepackage{amsthm}
 % ---------- mathematics ---------------------------------------------------
 % Order matters: amsmath must be loaded before newpxmath.
 \usepackage{amsmath,amssymb,amsthm,mathtools}
@@ -58,19 +58,20 @@
 % ==========================================================================
 \theoremstyle{plain}
 \newtheorem{theorem}{Theorem}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{observation}[theorem]{Observation}
-\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{conjecture}{Conjecture}
 \newtheorem{claim}{Claim}             % separate counter, as in R3
 
 % Examples and remarks carry running argument rather than a statement, so
 % they are set upright.  They keep the shared counter.
 \theoremstyle{definition}
-\newtheorem{example}[theorem]{Example}
-\newtheorem{remark}[theorem]{Remark}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
 \theoremstyle{plain}
 
 % NOTE.  cleveref cannot tell these environments apart --- they share the

@@ -1,5 +1,10 @@
 \newcommand{\etalchar}[1]{$^{#1}$}
-\begin{thebibliography}{CKM{\etalchar{+}}19}
+\begin{thebibliography}{KMS{\etalchar{+}}25b}
+
+\bibitem[ARSW17]{aziz2017algorithms}
+Haris Aziz, Gerhard Rauchecker, Guido Schryen, and Toby Walsh.
+\newblock Algorithms for max-min share fair allocation of indivisible chores.
+\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, volume~31, 2017.
 
 \bibitem[BCE{\etalchar{+}}16]{BCE16}
 Felix Brandt, Vincent Conitzer, Ulle Endriss, J{\'e}r{\^o}me Lang, and Ariel~D. Procaccia.
@@ -11,10 +16,10 @@ Johannes Brustle, Jack Dippel, Vishnu~V. Narayan, Mashbat Suzuki, and Adrian Vet
 \newblock One dollar each eliminates envy.
 \newblock In {\em Proceedings of the 21st ACM Conference on Economics and Computation (EC)}, pages 23--39, 2020.
 
-\bibitem[BEF21]{BEF21}
-Moshe Babaioff, Tomer Ezra, and Uriel Feige.
-\newblock Fair and truthful mechanisms for dichotomous valuations.
-\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, volume~35. AAAI, 2021.
+\bibitem[BJG09]{BJG09}
+J{\o}rgen Bang-Jensen and Gregory Gutin.
+\newblock {\em Digraphs: Theory, Algorithms and Applications}.
+\newblock Springer Monographs in Mathematics. Springer, 2nd edition, 2009.
 
 \bibitem[BKNS22]{BKNS22}
 Siddharth Barman, Anand Krishna, Y.~Narahari, and Soumyarup Sadhukhan.
@@ -22,30 +27,20 @@ Siddharth Barman, Anand Krishna, Y.~Narahari, and Soumyarup Sadhukhan.
 \newblock In {\em Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}, pages 60--66, 2022.
 \newblock arXiv:2201.07419.
 
-\bibitem[BMS05]{BMS05}
-Anna Bogomolnaia, Herv{\'e} Moulin, and Richard Stong.
-\newblock Collective choice under dichotomous preferences.
-\newblock {\em Journal of Economic Theory}, 122(2):165--184, 2005.
+\bibitem[BSV20]{bhaskar2020approximate}
+Umang Bhaskar, AR~Sricharan, and Rohit Vaish.
+\newblock On approximate envy-freeness for indivisible chores and mixed resources.
+\newblock {\em arXiv preprint arXiv:2012.06788}, 2020.
 
 \bibitem[BSV21]{BSV21}
 Umang Bhaskar, A.~R. Sricharan, and Rohit Vaish.
 \newblock On approximate envy-freeness for indivisible chores and mixed resources.
 \newblock In {\em Approximation, Randomization, and Combinatorial Optimization (APPROX/RANDOM)}, LIPIcs, 2021.
 
-\bibitem[BSY23]{BSY23}
-Xiaolin Bu, Jiaxin Song, and Ziqi Yu.
-\newblock {EFX} allocations exist for binary valuations.
-\newblock In {\em Frontiers of Algorithmics -- 17th International Joint Conference, IJTCS-FAW 2023}, volume 13933 of {\em Lecture Notes in Computer Science}, pages 252--262. Springer, 2023.
-
 \bibitem[Bud11]{Bud11}
 Eric Budish.
 \newblock The combinatorial assignment problem: Approximate competitive equilibrium from equal incomes.
 \newblock {\em Journal of Political Economy}, 119(6):1061--1103, 2011.
-
-\bibitem[CI21]{CI21}
-Ioannis Caragiannis and Stavros Ioannidis.
-\newblock Computing envy-freeable allocations with limited subsidies.
-\newblock In {\em Workshop on Internet and Network Economics (WINE)}, 2021.
 
 \bibitem[CKM{\etalchar{+}}19]{CKMPSW19}
 Ioannis Caragiannis, David Kurokawa, Herv{\'e} Moulin, Ariel~D. Procaccia, Nisarg Shah, and Junxing Wang.
@@ -76,7 +71,12 @@ Daniel Halpern and Nisarg Shah.
 \newblock Fair division with subsidy.
 \newblock In {\em Proceedings of the 12th International Symposium on Algorithmic Game Theory (SAGT)}, volume 11801 of {\em Lecture Notes in Computer Science}, pages 374--389. Springer, 2019.
 
-\bibitem[KMS{\etalchar{+}}25]{KMSTY24}
+\bibitem[KMS{\etalchar{+}}25a]{kawase2025towards}
+Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, and Makoto Yokoo.
+\newblock Towards optimal subsidy bounds for envy-freeable allocations.
+\newblock {\em Artificial Intelligence}, page 104406, 2025.
+
+\bibitem[KMS{\etalchar{+}}25b]{KMSTY24}
 Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, and Makoto Yokoo.
 \newblock Towards optimal subsidy bounds for envy-freeable allocations.
 \newblock {\em Artificial Intelligence}, 348:104406, 2025.
@@ -97,16 +97,15 @@ Xinhang Lu, Simon Mackenzie, and Mashbat Suzuki.
 \newblock Optimal subsidy bounds for goods and chores: One dollar each suffices, 2026.
 \newblock arXiv:2607.10089.
 
-\bibitem[NSV21]{NSV21}
-Vishnu~V. Narayan, Mashbat Suzuki, and Adrian Vetta.
-\newblock Two birds with one stone: Fairness and welfare via transfers.
-\newblock In {\em International Symposium on Algorithmic Game Theory (SAGT)}, pages 376--390. Springer, 2021.
+\bibitem[SCD23]{sun2023fairness}
+Ankang Sun, Bo~Chen, and Xuan~Vinh Doan.
+\newblock Fairness criteria for allocating indivisible chores: connections and efficiencies: A. sun et al.
+\newblock {\em Autonomous Agents and Multi-Agent Systems}, 37(2):39, 2023.
 
-\bibitem[TWYZ25]{TWYZ23}
+\bibitem[TWYZ25]{tao2025existence}
 Biaoshuai Tao, Xiaowei Wu, Ziqi Yu, and Shengwei Zhou.
-\newblock On the existence of {EFX} (and pareto-optimal) allocations for binary chores.
+\newblock On the existence of efx (and pareto-optimal) allocations for binary chores.
 \newblock {\em Theoretical Computer Science}, 1042:115248, 2025.
-\newblock Preliminary version: arXiv:2308.12177.
 
 \bibitem[Var74]{Var74}
 Hal Varian.

@@ -1,63 +1,68 @@
 \section{Unit Subsidies for Negative Dichotomous Valuations}
 \label{sec:main}
 
-This section proves the main theorem: for every number of agents $n$ and every
+This section proves the main theorem: for any number of agents $n$ and every
 negative dichotomous instance there is an allocation admitting an envy-free
-solution with a subsidy of $0$ or $1$ per agent, at most $n-1$ in total,
-computable in polynomial time. Beyond Definition~\ref{def:dichcost} nothing is
-assumed of the cost functions --- not additivity, not submodularity, not any
-relation between different agents' cost functions --- and the number of chores
-is unrestricted.
+solution with a subsidy of $0$ or $1$ per agent, at most $n-1$ in total, computable in polynomial time. 
 
-The argument takes as input an envy-free \emph{partial} allocation produced by
-the algorithm of Tao, Wu, Yu and Zhou~\cite{TWYZ23}, and completes it. That
-algorithm, its Theorem~5.1, and the three update rules recorded in
-\Cref{sec:m-terminal} are due to~\cite{TWYZ23} and are restated here for
-reference; the completion of \Cref{sec:m-completion} onwards, and every lemma
-and theorem after Lemma~\ref{lem:m-terminal}, are ours.
+% Beyond Definition~\ref{def:dichcost} nothing is
+% assumed of the cost functions --- not additivity, not submodularity, not any
+% relation between different agents' cost functions --- and the number of chores
+% is unrestricted.
+
+Our argument starts from an envy-free \emph{partial} allocation produced by the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence}, and then completes this partial allocation. We recall in \Cref{sec:m-terminal} the relevant terminal-state properties of their algorithm, including Theorem~5.1 and the three update rules used in its construction. These ingredients are due to Tao et al.~\cite{tao2025existence}. The completion procedure introduced in \Cref{sec:m-completion}, together with the subsequent lemmas and theorems, constitutes our contribution.
+
+
+% The argument takes as input an envy-free \emph{partial} allocation produced by the algorithm of Tao, Wu, Yu and Zhou~\cite{tao2025existence}, and completes it. That
+% algorithm, its Theorem~5.1, and the three update rules recorded in
+% \Cref{sec:m-terminal} are due to~\cite{tao2025existence} and are restated here for
+% reference; the completion of \Cref{sec:m-completion} onwards, and every lemma
+% and theorem after Lemma~\ref{lem:m-terminal}, are ours.
 
 We work in cost form throughout, so an envy-free solution
-(Definition~\ref{def:efsolution}) is the requirement
+(Definition~\ref{def:efsolution}) is the requirement $(\mathcal{A},p)$ such that
 \begin{equation}
 \label{eq:m-ef}
   \cost_i(\bundle i) - \subsidy_i \;\le\; \cost_i(\bundle j) - \subsidy_j
   \qquad \text{for all } i,j \in \agents ,
 \end{equation}
-and a partial allocation is envy-free (Definition~\ref{def:ef}) when
+and a partial allocation $X$ is envy-free (Definition~\ref{def:ef}) when
 \begin{equation}
 \label{eq:m-pef}
-  \cost_i(\bundle i) \;\le\; \cost_i(\bundle j)
+  \cost_i(X_i) \;\le\; \cost_i(X_j)
   \qquad \text{for all } i,j \in \agents .
 \end{equation}
 For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
-marginal, and for a partial allocation $\alloc$ write
-$R(\alloc) := \items \setminus \bigcup_{i \in \agents} \bundle i$ for its
-\emph{residue}.
+marginal, and for a partial allocation $X$ write
+$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its
+\emph{residue}. Recall that as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(
+  \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
+\)
 
-\begin{observation}
-\label{obs:m-gap}
-For every $i \in \agents$ and all $S,T \subseteq \items$,
-\[
-  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
-\]
-Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
-\end{observation}
+% \begin{observation}
+% \label{obs:m-gap}
+% For every $i \in \agents$ and all $S,T \subseteq \items$,
+% \[
+%   \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+% \]
+% Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+% \end{observation}
 
-\begin{proof}
-By Observation~\ref{obs:integrality} every $\cost_i$ is integer valued, so a
-strict inequality between two of its values is a gap of at least $1$. For
-monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
-$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
-\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
-Definition~\ref{def:dichcost}, hence non-negative.
-\end{proof}
+% \begin{proof}
+% By Observation~\ref{obs:integrality} every $\cost_i$ is integer valued, so a
+% strict inequality between two of its values is a gap of at least $1$. For
+% monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+% $\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+% \set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+% Definition~\ref{def:dichcost}, hence non-negative.
+% \end{proof}
 
 % --------------------------------------------------------------------------
 \subsection{The terminal state of the partial-allocation algorithm}
 \label{sec:m-terminal}
 
-\begin{theorem}[\cite{TWYZ23}, Theorem~5.1]
+\begin{theorem}[\cite{tao2025existence}, Theorem~5.1]
 \label{thm:m-twyz}
 For every $n$ and all dichotomous cost functions $\cost_1,\dots,\cost_n$ there
 is a polynomial-time algorithm returning a partial allocation $X$ that is
@@ -65,9 +70,7 @@ envy-free in the sense of \eqref{eq:m-pef} and satisfies
 $\abs{R(X)} \le n-1$.
 \end{theorem}
 
-The proof below uses not only the statement of Theorem~\ref{thm:m-twyz} but the
-state in which the algorithm of~\cite{TWYZ23} halts, so we record that
-algorithm. It maintains a partial allocation $X = (X_1,\dots,X_n)$, envy-free
+The proof of the results in this paper uses not only the statement of Theorem~\ref{thm:m-twyz} but also the state in which the algorithm of~\cite{tao2025existence} halts, so we record that algorithm. It maintains a partial allocation $X = (X_1,\dots,X_n)$, envy-free
 throughout, together with the \emph{equality graph}
 \begin{equation}
 \label{eq:m-graph}
@@ -84,15 +87,45 @@ none applies.
         directed cycle of $G$ satisfy $\cost_i(e \mid X_j) = 0$, rotate the
         bundles along that cycle and assign $e$ to $i$.
   \item[(R3)] Otherwise select a strongly connected component $S$ of $G$ with
-        no arc of $E$ leaving $S$. If $\abs{R(X)} \ge \abs S$, assign one
+        no arc of $E$ leaving $S$; such a component exists by
+        \Cref{obs:tailscc}. If $\abs{R(X)} \ge \abs S$, assign one
         residual chore to each agent of $S$; otherwise halt.
 \end{enumerate}
 The loop runs while $R(X) \ne \emptyset$, so the only exit with
 $R(X) \ne \emptyset$ is the final clause of (R3).
 
+{\color{blue}The proof of our main result uses not only the statement of Theorem~\ref{thm:m-twyz}, but also structural properties of the terminal state of the algorithm of~\cite{tao2025existence}. We therefore recall the relevant part of that algorithm. It maintains an envy-free partial allocation $X=(X_1,\dots,X_n)$ together with the \emph{equality graph}
+\begin{equation}
+\label{eq:m-graph}
+  G=(\agents,E),
+  \qquad
+  (i,j)\in E
+  \iff
+  i\ne j \ \text{ and }\ \cost_i(X_i)=\cost_i(X_j).
+\end{equation}
+While $R(X)\ne\emptyset$, the algorithm considers the following rules in the stated order.
+\begin{enumerate}
+  \item[(R1)] If there exist $e\in R(X)$ and $i\in\agents$ such that
+        $\cost_i(e\mid X_i)=0$, assign $e$ to $i$.
+
+  \item[(R2)] Otherwise, if there exist $e\in R(X)$ and an arc
+        $(i,j)\in E$ lying on a directed cycle of $G$ such that
+        $\cost_i(e\mid X_j)=0$, rotate the bundles along that cycle
+        and assign $e$ to $i$.
+
+  \item[(R3)] Otherwise, select a strongly connected component
+        $S$ of $G$ with no outgoing arc; such a component exists by
+        \Cref{obs:tailscc}. If
+        $\abs{R(X)}\geq\abs S$, assign distinct residual chores to
+        the agents of $S$, one chore per agent; if
+        $\abs{R(X)}<\abs S$, halt.
+\end{enumerate}
+Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and the algorithm terminates through the final clause of (R3).}
+
+
 For the remainder of this section fix the following data: let $X$ be the
 partial allocation at which the algorithm halts, let $R := R(X)$ and
-$r := \abs R$, and, when $r \ge 1$, let $S$ be the component selected by (R3)
+$r := \abs R$, and, when $r \ge 1$, let $S$ be the tail strongly connected component (\Cref{def:scc}) selected by (R3)
 at the halting step, with $G$ and $E$ as in \eqref{eq:m-graph} evaluated at
 that state.
 
@@ -173,7 +206,7 @@ $\agents$ is finite and $P$ only grows. Define
 
 The complete procedure is summarised in
 Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is Algorithm~3 of
-\cite{TWYZ23}; our contribution is the completion and subsidy construction in the subsequent lines.
+\cite{tao2025existence}; our contribution is the completion and subsidy construction in the subsequent lines.
 
 \begin{algorithm}[H]
 \caption{EF1 allocation with at most one unit of subsidy per agent for negative dichotomous valuations}
@@ -186,7 +219,7 @@ subsidy vector $p\in\{0,1\}^n$ such that $(\mathcal{A},p)$ is envy-free and
 $\sum_{i\in N}p_i\le n-1$.
 
 \State Set $c_i=-v_i$ for every $i\in N$.
-\State Run Algorithm~3 of \cite{TWYZ23} on $\{c_i\}_{i\in N}$.
+\State Run Algorithm~3 of \cite{tao2025existence} on $\{c_i\}_{i\in N}$.
 \State Let $X=(X_1,\ldots,X_n)$ be its terminal partial allocation and
       let $R=M\setminus\bigcup_{i\in N}X_i$.
 
@@ -194,7 +227,7 @@ $\sum_{i\in N}p_i\le n-1$.
     \State \Return $(X,\mathbf{0})$.
 \EndIf
 
-\State Let $S$ be the tail strongly connected component selected at the
+\State Let $S$ be the tail strongly connected component (\Cref{def:scc}) selected at the
       terminating application of Rule (R3).
 \State Write $R=\{e_1,\ldots,e_r\}$.
 \State Choose arbitrary distinct agents
@@ -263,19 +296,7 @@ Let $i \in S$, let $t \in T$ and let $e \in R$. Then
 \end{lemma}
 
 \begin{proof}
-Note $t \in T \subseteq S$. Envy-freeness \eqref{eq:m-pef} gives
-$\cost_i(X_i) \le \cost_i(X_t)$.
-
-If $\cost_i(X_i) < \cost_i(X_t)$, then $\cost_i(X_t) \ge \cost_i(X_i) + 1$ by
-Observation~\ref{obs:m-gap}, and $\cost_i(X_t \cup \set e) \ge \cost_i(X_t)$ by
-monotonicity, again Observation~\ref{obs:m-gap}.
-
-Otherwise $\cost_i(X_i) = \cost_i(X_t)$. If $i = t$ then
-$\cost_i(X_t \cup \set e) = \cost_i(X_i) + \cost_i(e \mid X_i) = \cost_i(X_i)+1$
-by Lemma~\ref{lem:m-terminal}(b). If $i \ne t$ then $(i,t) \in E$ by
-\eqref{eq:m-graph}, with $i,t \in S$, so $\cost_i(e \mid X_t) = 1$ by
-Lemma~\ref{lem:m-terminal}(c) and therefore
-$\cost_i(X_t \cup \set e) = \cost_i(X_t) + 1 = \cost_i(X_i) + 1$.
+Note that $t \in T \subseteq S$. Envy-freeness \eqref{eq:m-pef} gives $\cost_i(X_i) \le \cost_i(X_t)$. If $\cost_i(X_i) < \cost_i(X_t)$, then $\cost_i(X_i)+1 \le \cost_i(X_t)$, and $\cost_i(X_t \cup \set e) \ge \cost_i(X_t)$ by monotonicity of $\cost_i$. Otherwise $\cost_i(X_i) = \cost_i(X_t)$. If $i = t$ then $\cost_i(X_t \cup \set e) = \cost_i(X_i) + \cost_i(e \mid X_i) = \cost_i(X_i)+1$ by Lemma~\ref{lem:m-terminal}(b). If $i \ne t$ then $(i,t) \in E$ by \eqref{eq:m-graph}, with $i,t \in S$, so $\cost_i(e \mid X_t) = 1$ by Lemma~\ref{lem:m-terminal}(c) and therefore $\cost_i(X_t \cup \set e) = \cost_i(X_t) + 1 = \cost_i(X_i) + 1$.
 \end{proof}
 
 % --------------------------------------------------------------------------
@@ -426,7 +447,7 @@ that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\ma
 
 \begin{proof}
 Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
-Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{TWYZ23} and retain
+Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{tao2025existence} and retain
 its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, retain also
 the tail strongly connected component $S$ selected at the terminating
 application of rule (R3), all as fixed in \Cref{sec:m-terminal}. The
@@ -441,7 +462,7 @@ Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
 solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
 $\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
 
-For the running time, Algorithm~3 of~\cite{TWYZ23} is polynomial and yields
+For the running time, Algorithm~3 of~\cite{tao2025existence} is polynomial and yields
 $X$, $R$ and the tail component $S$ of its terminating (R3) step if $r\geq 1$. Constructing $\alloc$ from \eqref{eq:m-alloc}
 takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
 vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
@@ -450,20 +471,64 @@ restricted to vertices outside $S$, which takes $O(n^2)$ time. Hence the work
 after Theorem~\ref{thm:m-twyz} is polynomial, and so is the whole procedure.
 \end{proof}
 
-By Example~\ref{ex:lowerbound} the bound of Theorem~\ref{thm:m-main} is tight:
-there are instances on which every complete allocation requires total subsidy
+As discussed earlier, the bound of Theorem~\ref{thm:m-main} is tight: there are instances on which every complete allocation requires total subsidy
 at least $n-1$.
 
-\begin{remark}
-\label{rem:m-scope}
-Theorem~\ref{thm:m-main} uses Theorem~\ref{thm:m-twyz} together with the four
-properties of its halting state recorded in Lemma~\ref{lem:m-terminal}, which
-are read off the rules (R1)--(R3) of~\cite{TWYZ23} restated in
-\Cref{sec:m-terminal}; the statement of Theorem~\ref{thm:m-twyz} alone does not
-supply them. Envy-freeness is verified directly from \eqref{eq:m-ef} in
-Theorem~\ref{thm:m-completion}, so the argument does not invoke
-Theorem~\ref{thm:hs-characterisation} or Theorem~\ref{thm:hs-minsubsidy}, and
-the subsidy exhibited need not be the pointwise-minimal one. Part (a) of
-Lemma~\ref{lem:m-terminal} is used only in Lemma~\ref{lem:m-budget}: the
-conclusion of Theorem~\ref{thm:m-completion} holds whenever $r \le \abs S$.
-\end{remark}
+\subsection{Pareto optimality and subsidies}
+
+In this section, we show that the unit-subsidy guarantee need not be compatible with Pareto optimality of the underlying allocation. We evaluate Pareto optimality with respect to the allocation of chores, without taking subsidies into account. Formally, a complete allocation $\allocB$ \emph{Pareto dominates} a complete allocation $\alloc$ if
+\[
+\cost_i(\allocB_i)\leq \cost_i(\bundle i)
+\qquad\text{for every }i\in\agents,
+\]
+with strict inequality for at least one agent. An allocation is \emph{Pareto optimal} if it is not Pareto dominated by another complete allocation.
+
+\begin{proposition}\label{prop_1}
+There exist negative dichotomous instances, even with two agents and identical binary submodular cost functions, for which no Pareto-optimal allocation admits an envy-free subsidy vector in $\{0,1\}^n$.
+\end{proposition}
+
+\begin{proof}
+Consider two agents $\agents=\set{1,2}$ and three chores $\items=\set{a,b,c}$. Both agents have the same cost function
+\[
+\cost_1(S)=\cost_2(S)=\min\{\abs S,2\}.
+\]
+Every marginal cost belongs to $\{0,1\}$, so the cost function is dichotomous. Moreover, it is submodular, since $k\mapsto\min\{k,2\}$ is a nondecreasing concave function of cardinality. The function is not additive, since
+\[
+\cost_i(\set{a,b,c})=2<3
+ =\sum_{g\in\set{a,b,c}}\cost_i(\set g).
+\]
+
+Since the agents have identical costs, every complete allocation has, up to symmetry, one of two bundle-size profiles.
+
+First, consider a concentrated allocation with bundle sizes $(3,0)$. The corresponding cost profile is $(2,0)$. This allocation is Pareto optimal. Indeed, every allocation in which both agents receive a nonempty bundle has bundle sizes $(2,1)$ and therefore cost profile $(2,1)$, which does not improve the loaded agent and strictly worsens the other agent.
+
+However, a concentrated allocation cannot be made envy-free with unit subsidies. If agent $1$ receives all three chores, envy-freeness requires
+\[
+2-p_1\leq -p_2,
+\]
+and hence
+\[
+p_1-p_2\geq 2.
+\]
+Thus, no subsidy vector in $\{0,1\}^2$ suffices. The case in which agent $2$ receives all three chores is symmetric.
+
+Now consider any split allocation, whose bundle sizes are $(2,1)$ up to symmetry. Its cost profile is $(2,1)$, so it can be made envy-free with subsidies $(1,0)$, up to symmetry. Nevertheless, it is not Pareto optimal: if the agent holding two chores is instead given the third chore as well, the cost profile changes from $(2,1)$ to $(2,0)$. The first agent's cost remains unchanged, while the second agent's cost strictly decreases.
+
+Hence, every Pareto-optimal allocation requires a subsidy of at least two for one agent, whereas every allocation admitting unit subsidies is Pareto dominated. Therefore, no allocation is simultaneously Pareto optimal and envy-free with subsidies in $\{0,1\}^2$.
+\end{proof}
+
+Thus, unlike the unit-subsidy guarantee of Theorem~\ref{thm:m-main}, Pareto optimality cannot be added to the conclusion without weakening the subsidy bound. 
+
+% \begin{remark}
+% \label{rem:m-scope}
+% Theorem~\ref{thm:m-main} uses Theorem~\ref{thm:m-twyz} together with the four
+% properties of its halting state recorded in Lemma~\ref{lem:m-terminal}, which
+% are read off the rules (R1)--(R3) of~\cite{tao2025existence} restated in
+% \Cref{sec:m-terminal}; the statement of Theorem~\ref{thm:m-twyz} alone does not
+% supply them. Envy-freeness is verified directly from \eqref{eq:m-ef} in
+% Theorem~\ref{thm:m-completion}, so the argument does not invoke
+% Theorem~\ref{thm:hs-characterisation} or Theorem~\ref{thm:hs-minsubsidy}, and
+% the subsidy exhibited need not be the pointwise-minimal one. Part (a) of
+% Lemma~\ref{lem:m-terminal} is used only in Lemma~\ref{lem:m-budget}: the
+% conclusion of Theorem~\ref{thm:m-completion} holds whenever $r \le \abs S$.
+% \end{remark}
