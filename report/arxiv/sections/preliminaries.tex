@@ -147,48 +147,10 @@ We use the valuation and cost representations interchangeably, according to whic
 \subsection{The Envy Graph and the Halpern--Shah Characterisation}
 \label{sec:envygraph}
 
-We first fix the directed-graph terminology used below for the envy graph and,
-in \Cref{sec:m-terminal}, for the equality graph of the partial-allocation
-algorithm.
-
-\begin{definition}[Strongly connected component; tail component]
-\label{def:scc}
-Let $G = (V,E)$ be a finite directed graph. Two vertices $u,v \in V$ are
-\emph{strongly connected} if $G$ contains a directed path from $u$ to $v$ and a
-directed path from $v$ to $u$. This relation is an equivalence relation on $V$,
-and its equivalence classes are the \emph{strongly connected components} of $G$.
-A strongly connected component $S$ is a \emph{tail component} (equivalently, a
-\emph{sink component}) if no arc of $E$ leaves it, that is, if there is no arc
-$(i,j) \in E$ with $i \in S$ and $j \in V \setminus S$.
-\end{definition}
-
-Being an equivalence relation, strong connectivity partitions $V$; hence every
-vertex of $G$ lies in exactly one strongly connected component, and $G$ has at
-least one such component whenever $V \ne \emptyset$. Tail components exist as
-well.
-
-\begin{observation}
-\label{obs:tailscc}
-Every finite directed graph $G = (V,E)$ with $V \ne \emptyset$ has at least one
-tail strongly connected component.
-\end{observation}
-
-\begin{proof}
-The \emph{condensation} of $G$ is the directed graph whose vertices are the
-strongly connected components of $G$, with an arc from $S$ to $S'$ whenever
-$S \ne S'$ and some arc of $E$ runs from a vertex of $S$ to a vertex of $S'$.
-The condensation is acyclic: a directed cycle through two distinct components
-would place every vertex on it in a single component, contradicting their
-distinctness~\cite[Ch.~1]{BJG09}. Since $V \ne \emptyset$, the condensation has
-at least one vertex, and a finite acyclic directed graph on a non-empty vertex
-set has a vertex of out-degree $0$ --- follow arcs from any vertex, never
-repeating one, and the walk must terminate. A component with out-degree $0$ in
-the condensation has no arc of $E$ leaving it, so it is a tail component.
-\end{proof}
 
 
 For an allocation $\alloc$, the \emph{envy graph} $\envygraph{\alloc}$ is the
-complete weighted directed graph on vertex set $\agents$ in which the arc
+complete weighted directed graph on the vertex set $\agents$ in which the arc
 $(i,j)$ carries weight
 \[
   \edgew{\alloc}(i,j) \;:=\; v_i(\bundle{j}) - v_i(\bundle{i})

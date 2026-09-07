@@ -35,8 +35,19 @@ and a partial allocation $X$ is envy-free (Definition~\ref{def:ef}) when
 For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
 marginal, and for a partial allocation $X$ write
-$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its
-\emph{residue}.
+$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its \emph{residue}. Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
+\)
+
+To describe the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence} and our completion procedure, we use the following standard graph-theoretic notions.
+
+\begin{definition}[Strongly connected component and tail component]
+\label{def:scc}
+Let $G=(V,E)$ be a finite directed graph. Two vertices \(u,v\in V\) are \emph{strongly connected} if either \(u=v\), or there is a directed path from \(u\) to \(v\) and a directed path from \(v\) to \(u\). Strong connectivity is an equivalence relation on $V$, and its equivalence classes are the \emph{strongly connected components} of $G$.
+
+A strongly connected component $S$ is a \emph{tail component} (or \emph{sink component}) if no arc leaves $S$; that is, there is no $(i,j)\in E$ with $i\in S$ and $j\in V\setminus S$.
+\end{definition}
+
+Every finite non-empty directed graph has at least one tail strongly connected component. Indeed, contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
 % Superseded by Observation~\ref{obs:m-gap} below, which states the same
 % integrality gap and additionally the monotonicity of $\cost_i$ used in
 % \Cref{sec:m-completion}.
@@ -44,25 +55,25 @@ $R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its
 %   \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
 % \)
 
-\begin{observation}
-\label{obs:m-gap}
-For every $i \in \agents$ and all $S,T \subseteq \items$,
-\[
-  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
-\]
-Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
-\end{observation}
+% % \begin{observation}
+% % \label{obs:m-gap}
+% % For every $i \in \agents$ and all $S,T \subseteq \items$,
+% % \[
+% %   \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+% % \]
+% % Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+% % \end{observation}
 
-\begin{proof}
-Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
-$\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
-Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
-strict inequality between two of its values is a gap of at least $1$. For
-monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
-$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
-\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
-Definition~\ref{def:dichcost}, hence non-negative.
-\end{proof}
+% \begin{proof}
+% Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
+% $\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
+% Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
+% strict inequality between two of its values is a gap of at least $1$. For
+% monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+% $\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+% \set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+% Definition~\ref{def:dichcost}, hence non-negative.
+% \end{proof}
 
 % --------------------------------------------------------------------------
 \subsection{The terminal state of the partial-allocation algorithm}
@@ -121,21 +132,29 @@ While $R(X)\ne\emptyset$, the algorithm considers the following rules in the sta
         $\cost_i(e\mid X_j)=0$, rotate the bundles along that cycle
         and assign $e$ to $i$.
 
-  \item[(R3)] Otherwise, select a strongly connected component
-        $S$ of $G$ with no outgoing arc; such a component exists by
-        \Cref{obs:tailscc}. If
-        $\abs{R(X)}\geq\abs S$, assign distinct residual chores to
-        the agents of $S$, one chore per agent; if
-        $\abs{R(X)}<\abs S$, halt.
+ \item[(R3)] Otherwise, if there exists a tail strongly connected
+      component $S$ of $G$ such that
+      \[
+          \abs{R(X)}\geq \abs S,
+      \] select such a component and assign distinct residual chores to the agents of $S$, one chore per agent. If no such tail strongly
+      connected component exists, halt.
 \end{enumerate}
-Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and the algorithm terminates through the final clause of (R3).
+Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and
+\[
+    \abs{R(X)}<\abs S
+\]
+for every tail strongly connected component $S$ of the terminal equality graph.
 
 
-For the remainder of this section fix the following data: let $X$ be the
-partial allocation at which the algorithm halts, let $R := R(X)$ and
-$r := \abs R$, and, when $r \ge 1$, let $S$ be the tail strongly connected component (\Cref{def:scc}) selected by (R3)
-at the halting step, with $G$ and $E$ as in \eqref{eq:m-graph} evaluated at
-that state.
+For the remainder of this section, let $X$ denote the terminal partial allocation of the algorithm, and write
+\[
+    R:=R(X), \qquad r:=\abs R.
+\]
+Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$, fix an arbitrary tail strongly connected component $S$ of $G$. Such a component exists by \Cref{def:scc}, and the terminal condition of \textnormal{(R3)} ensures that
+\(
+    r<\abs S.
+\)
+
 
 \begin{lemma}
 \label{lem:m-terminal}
@@ -152,9 +171,13 @@ Suppose $r \ge 1$. Then
 \end{lemma}
 
 \begin{proof}
-Since $r \ge 1$, the algorithm halted at the final clause of (R3); hence
-neither (R1) nor (R2) applied at the halting state, and $\abs R < \abs S$,
-which is (a).
+(a) Since $r\geq 1$, the algorithm terminates with a nonempty residue. Hence neither \textnormal{(R1)} nor \textnormal{(R2)} is applicable at the terminal state. Moreover, by the terminal condition of
+\textnormal{(R3)},
+\[
+    r<\abs C
+\]
+for every tail strongly connected component $C$ of $G$. Since $S$ is a tail strongly connected component, this gives $r<\abs S$, proving
+(a).
 
 (b) If $\cost_i(e \mid X_i) = 0$ for some $i \in \agents$ and some $e \in R$,
 rule (R1) would apply. Marginals lie in $\set{0,1}$ by
@@ -235,8 +258,8 @@ $\sum_{i\in N}p_i\le n-1$.
     \State \Return $(X,\mathbf{0})$.
 \EndIf
 
-\State Let $S$ be the tail strongly connected component (\Cref{def:scc}) selected at the
-      terminating application of Rule (R3).
+\State Let $S$ be an arbitrary tail strongly connected component of the terminal equality graph $G$. \Comment{$r<|S|$ by the terminal condition of (R3)}
+
 \State Write $R=\{e_1,\ldots,e_r\}$.
 \State Choose arbitrary distinct agents
       $T=\{t_1,\ldots,t_r\}\subseteq S$.
@@ -456,10 +479,8 @@ that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\ma
 \begin{proof}
 Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
 Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{tao2025existence} and retain
-its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, retain also
-the tail strongly connected component $S$ selected at the terminating
-application of rule (R3), all as fixed in \Cref{sec:m-terminal}. The
-statement of Theorem~\ref{thm:m-twyz} alone does not supply $S$.
+its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, construct the terminal equality graph $G$ and fix an arbitrary tail strongly connected component $S$ of $G$, as in
+\Cref{sec:m-terminal}.
 
 If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
 $(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$. Since every envy-free allocation is EF1, $X$ is also EF1.
@@ -470,8 +491,7 @@ Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
 solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
 $\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
 
-For the running time, Algorithm~3 of~\cite{tao2025existence} is polynomial and yields
-$X$, $R$ and the tail component $S$ of its terminating (R3) step if $r\geq 1$. Constructing $\alloc$ from \eqref{eq:m-alloc}
+For the running time, if $r\geq 1$, a tail strongly connected component $S$ of the terminal equality graph can be found in polynomial time by computing its strongly connected components and selecting one with no outgoing arc. Constructing $\alloc$ from \eqref{eq:m-alloc}
 takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
 vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
 each. Computing $P$ is a backward reachability search in $G$ from $T$
