@@ -35,8 +35,9 @@ and a partial allocation $X$ is envy-free (Definition~\ref{def:ef}) when
 For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
 marginal, and for a partial allocation $X$ write
-$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its \emph{residue}. Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
-\)
+$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its \emph{residue}.
+% Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
+% \)
 
 To describe the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence} and our completion procedure, we use the following standard graph-theoretic notions.
 
@@ -47,7 +48,14 @@ Let $G=(V,E)$ be a finite directed graph. Two vertices \(u,v\in V\) are \emph{st
 A strongly connected component $S$ is a \emph{tail component} (or \emph{sink component}) if no arc leaves $S$; that is, there is no $(i,j)\in E$ with $i\in S$ and $j\in V\setminus S$.
 \end{definition}
 
-Every finite non-empty directed graph has at least one tail strongly connected component. Indeed, contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
+\begin{observation}
+\label{obs:tailscc}
+Every finite non-empty directed graph has at least one tail strongly connected component.
+\end{observation}
+
+\begin{proof}
+Contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
+\end{proof}
 % Superseded by Observation~\ref{obs:m-gap} below, which states the same
 % integrality gap and additionally the monotonicity of $\cost_i$ used in
 % \Cref{sec:m-completion}.
@@ -55,25 +63,25 @@ Every finite non-empty directed graph has at least one tail strongly connected c
 %   \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
 % \)
 
-% % \begin{observation}
-% % \label{obs:m-gap}
-% % For every $i \in \agents$ and all $S,T \subseteq \items$,
-% % \[
-% %   \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
-% % \]
-% % Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
-% % \end{observation}
+\begin{observation}
+\label{obs:m-gap}
+For every $i \in \agents$ and all $S,T \subseteq \items$,
+\[
+  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+\]
+Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+\end{observation}
 
-% \begin{proof}
-% Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
-% $\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
-% Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
-% strict inequality between two of its values is a gap of at least $1$. For
-% monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
-% $\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
-% \set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
-% Definition~\ref{def:dichcost}, hence non-negative.
-% \end{proof}
+\begin{proof}
+Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
+$\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
+Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
+strict inequality between two of its values is a gap of at least $1$. For
+monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+Definition~\ref{def:dichcost}, hence non-negative.
+\end{proof}
 
 % --------------------------------------------------------------------------
 \subsection{The terminal state of the partial-allocation algorithm}
@@ -150,7 +158,7 @@ For the remainder of this section, let $X$ denote the terminal partial allocatio
 \[
     R:=R(X), \qquad r:=\abs R.
 \]
-Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$, fix an arbitrary tail strongly connected component $S$ of $G$. Such a component exists by \Cref{def:scc}, and the terminal condition of \textnormal{(R3)} ensures that
+Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$, fix an arbitrary tail strongly connected component $S$ of $G$. Such a component exists by \Cref{obs:tailscc}, and the terminal condition of \textnormal{(R3)} ensures that
 \(
     r<\abs S.
 \)
@@ -258,9 +266,11 @@ $\sum_{i\in N}p_i\le n-1$.
     \State \Return $(X,\mathbf{0})$.
 \EndIf
 
-\State Let $S$ be an arbitrary tail strongly connected component of the terminal equality graph $G$. \Comment{$r<|S|$ by the terminal condition of (R3)}
+\State Construct the equality graph $G=(N,E)$ on the agents, where
+\Statex \qquad $(i,j)\in E \iff i\neq j$ and $c_i(X_i)=c_i(X_j)$.
 
 \State Write $R=\{e_1,\ldots,e_r\}$.
+\State Let $S$ be an arbitrary tail strongly connected component of the terminal equality graph $G$. \Comment{$r<|S|$ by the terminal condition of (R3)}
 \State Choose arbitrary distinct agents
       $T=\{t_1,\ldots,t_r\}\subseteq S$.
       \Comment{$r<|S|$ by Lemma~\ref{lem:m-terminal}(a)}
@@ -271,9 +281,6 @@ $\sum_{i\in N}p_i\le n-1$.
 \For{$i\in N\setminus T$}
     \State $A_i\gets X_i$.
 \EndFor
-
-\State Construct the equality graph $G=(N,E)$ on the agents, where
-\Statex \qquad $(i,j)\in E \iff i\neq j$ and $c_i(X_i)=c_i(X_j)$.
 
 \State Initialise $P\gets T$.
 \While{there exist $i\in N\setminus S$ and $j\in P$
