@@ -36,8 +36,8 @@ For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
 marginal, and for a partial allocation $X$ write
 $R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its \emph{residue}.
-% Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
-% \)
+ Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
+ \)
 
 To describe the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence} and our completion procedure, we use the following standard graph-theoretic notions.
 
@@ -48,14 +48,24 @@ Let $G=(V,E)$ be a finite directed graph. Two vertices \(u,v\in V\) are \emph{st
 A strongly connected component $S$ is a \emph{tail component} (or \emph{sink component}) if no arc leaves $S$; that is, there is no $(i,j)\in E$ with $i\in S$ and $j\in V\setminus S$.
 \end{definition}
 
-\begin{observation}
-\label{obs:tailscc}
-Every finite non-empty directed graph has at least one tail strongly connected component.
-\end{observation}
+The following standard graph-theoretic fact will be used repeatedly.
 
-\begin{proof}
-Contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
-\end{proof}
+\begin{lemma}[\cite{BJG09}]
+\label{lem:tail-scc-exists}
+Every finite non-empty directed graph has at least one tail strongly connected component.
+\end{lemma}
+
+
+% Every finite non-empty directed graph has at least one tail strongly connected component. Indeed, contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
+
+% \begin{observation}
+% \label{obs:tailscc}
+% Every finite non-empty directed graph has at least one tail strongly connected component.
+% \end{observation}
+
+% \begin{proof}
+% Contracting each strongly connected component to a single vertex yields the condensation graph, which is a finite directed acyclic graph and therefore has a sink.
+% \end{proof}
 % Superseded by Observation~\ref{obs:m-gap} below, which states the same
 % integrality gap and additionally the monotonicity of $\cost_i$ used in
 % \Cref{sec:m-completion}.
@@ -63,25 +73,25 @@ Contracting each strongly connected component to a single vertex yields the cond
 %   \cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
 % \)
 
-\begin{observation}
-\label{obs:m-gap}
-For every $i \in \agents$ and all $S,T \subseteq \items$,
-\[
-  \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
-\]
-Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
-\end{observation}
+% \begin{observation}
+% \label{obs:m-gap}
+% For every $i \in \agents$ and all $S,T \subseteq \items$,
+% \[
+%   \cost_i(S) < \cost_i(T) \quad\Longrightarrow\quad \cost_i(S) \le \cost_i(T) - 1 .
+% \]
+% Moreover $\cost_i(S) \le \cost_i(T)$ whenever $S \subseteq T$.
+% \end{observation}
 
-\begin{proof}
-Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
-$\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
-Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
-strict inequality between two of its values is a gap of at least $1$. For
-monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
-$\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
-\set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
-Definition~\ref{def:dichcost}, hence non-negative.
-\end{proof}
+% \begin{proof}
+% Telescoping from $\cost_i(\emptyset) = 0$ along any ordering of $S$ writes
+% $\cost_i(S)$ as a sum of marginals, each lying in $\set{0,1}$ by
+% Definition~\ref{def:dichcost}; hence every $\cost_i$ is integer valued, and a
+% strict inequality between two of its values is a gap of at least $1$. For
+% monotonicity, enumerate $T \setminus S = \set{f_1,\dots,f_q}$ and telescope:
+% $\cost_i(T) - \cost_i(S) = \sum_{u=1}^{q} \cost_i\bigl(f_u \mid S \cup
+% \set{f_1,\dots,f_{u-1}}\bigr)$, a sum of terms in $\set{0,1}$ by
+% Definition~\ref{def:dichcost}, hence non-negative.
+% \end{proof}
 
 % --------------------------------------------------------------------------
 \subsection{The terminal state of the partial-allocation algorithm}
@@ -158,7 +168,10 @@ For the remainder of this section, let $X$ denote the terminal partial allocatio
 \[
     R:=R(X), \qquad r:=\abs R.
 \]
-Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$, fix an arbitrary tail strongly connected component $S$ of $G$. Such a component exists by \Cref{obs:tailscc}, and the terminal condition of \textnormal{(R3)} ensures that
+Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$,
+fix an arbitrary tail strongly connected component $S$ of $G$, whose
+existence follows from \Cref{lem:tail-scc-exists}. By the terminal
+condition of \textnormal{(R3)},
 \(
     r<\abs S.
 \)
@@ -168,84 +181,105 @@ Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined i
 \label{lem:m-terminal}
 Suppose $r \ge 1$. Then
 \begin{enumerate}
-  \item[(a)] $r < \abs S$;
-  \item[(b)] $\cost_i(e \mid X_i) = 1$ for every $i \in \agents$ and every
+  \item[(i)] $\cost_i(e \mid X_i) = 1$ for every $i \in \agents$ and every
         $e \in R$;
-  \item[(c)] $\cost_i(e \mid X_j) = 1$ for every arc $(i,j) \in E$ with
+  \item[(ii)] $\cost_i(e \mid X_j) = 1$ for every arc $(i,j) \in E$ with
         $i,j \in S$ and every $e \in R$;
-  \item[(d)] $\cost_i(X_i) < \cost_i(X_j)$ for every $i \in S$ and every
+  \item[(iii)] $\cost_i(X_i) < \cost_i(X_j)$ for every $i \in S$ and every
         $j \in \agents \setminus S$.
 \end{enumerate}
 \end{lemma}
 
 \begin{proof}
-(a) Since $r\geq 1$, the algorithm terminates with a nonempty residue. Hence neither \textnormal{(R1)} nor \textnormal{(R2)} is applicable at the terminal state. Moreover, by the terminal condition of
-\textnormal{(R3)},
+Since $r\geq 1$, the algorithm terminates with nonempty residue.
+Therefore, neither \textnormal{(R1)} nor \textnormal{(R2)} is applicable
+at the terminal state.
+
+(i) If $\cost_i(e\mid X_i)=0$ for some $i\in\agents$ and $e\in R$,
+then \textnormal{(R1)} would be applicable. Since every marginal cost
+belongs to $\set{0,1}$ by Definition~\ref{def:dichcost}, it follows that
 \[
-    r<\abs C
+    \cost_i(e\mid X_i)=1.
 \]
-for every tail strongly connected component $C$ of $G$. Since $S$ is a tail strongly connected component, this gives $r<\abs S$, proving
-(a).
 
-(b) If $\cost_i(e \mid X_i) = 0$ for some $i \in \agents$ and some $e \in R$,
-rule (R1) would apply. Marginals lie in $\set{0,1}$ by
-Definition~\ref{def:dichcost}, so the value is $1$.
+(ii) Let $(i,j)\in E$ with $i,j\in S$. Since $S$ is strongly connected,
+there is a directed path from $j$ to $i$. Choosing such a path with no
+repeated vertices and appending the arc $(i,j)$ yields a directed cycle
+containing $(i,j)$. If $\cost_i(e\mid X_j)=0$ for some $e\in R$, then
+\textnormal{(R2)} would be applicable to this arc and chore. Hence
+$\cost_i(e\mid X_j)\neq 0$, and therefore
+\[
+    \cost_i(e\mid X_j)=1.
+\]
 
-(c) Let $(i,j) \in E$ with $i,j \in S$. Since $S$ is strongly connected there
-is a directed path in $G$ from $j$ to $i$; taking one with no repeated vertex
-and appending the arc $(i,j)$ yields a directed cycle of $G$ through $(i,j)$.
-If $\cost_i(e \mid X_j) = 0$ for some $e \in R$, rule (R2) would apply to that
-arc and that cycle. Hence the marginal is not $0$, so it is $1$.
-
-(d) Let $i \in S$ and $j \in \agents \setminus S$. No arc of $E$ leaves $S$, so
-$(i,j) \notin E$, i.e.\ $\cost_i(X_i) \ne \cost_i(X_j)$ by \eqref{eq:m-graph}.
-Envy-freeness \eqref{eq:m-pef} gives $\cost_i(X_i) \le \cost_i(X_j)$, so the
-inequality is strict.
+(iii) Let $i\in S$ and $j\in\agents\setminus S$. Since $S$ is a tail
+strongly connected component, no arc leaves $S$; in particular,
+$(i,j)\notin E$. By~\eqref{eq:m-graph},
+\[
+    \cost_i(X_i)\neq \cost_i(X_j).
+\]
+On the other hand, envy-freeness of $X$, as expressed in
+\eqref{eq:m-pef}, gives
+\[
+    \cost_i(X_i)\leq \cost_i(X_j).
+\]
+The inequality must therefore be strict.
 \end{proof}
-
 % --------------------------------------------------------------------------
 \subsection{The completion}
 \label{sec:m-completion}
-
-Assume $r \ge 1$ and write $R = \set{e_1,\dots,e_r}$. By
-Lemma~\ref{lem:m-terminal}(a), $r < \abs S$, so we may fix $r$ distinct agents
-\[
-  T = \set{t_1,\dots,t_r} \subseteq S ,
-\]
-chosen arbitrarily. Define $\alloc = (A_1,\dots,A_n)$ by
+Assume $r\geq 1$ and write
+\(
+    R=\set{e_1,\dots,e_r}.
+\) Since $r<\abs S$, we may choose $r$ distinct agents
+\(
+    T=\set{t_1,\dots,t_r}\subseteq S
+\)
+arbitrarily. Define the allocation $\alloc=(A_1,\dots,A_n)$ by
 \begin{equation}
 \label{eq:m-alloc}
   A_i :=
   \begin{cases}
-    X_{t_k} \cup \set{e_k}, & i = t_k \ \ (1 \le k \le r),\\[2pt]
-    X_i, & i \in \agents \setminus T .
+    X_{t_k}\cup\set{e_k}, & i=t_k \quad (1\leq k\leq r),\\[2pt]
+    X_i, & i\in\agents\setminus T.
   \end{cases}
 \end{equation}
-The $t_k$ are distinct and each chore of $R$ is used exactly once, so the
-bundles of $\alloc$ are pairwise disjoint and cover $\items$: $\alloc$ is a
-complete allocation. Members of $T$ are called \emph{recipients}.
+Since the agents $t_1,\dots,t_r$ are distinct and each chore in $R$
+is assigned exactly once, the bundles in $\alloc$ remain pairwise
+disjoint and their union is $\items$. Hence, $\alloc$ is a complete
+allocation. We refer to the agents in $T$ as the \emph{recipients}.
+
+We next construct a subsidy vector $\subsidy\in\set{0,1}^n$ and show
+that $(\alloc,\subsidy)$ is envy-free. The following definition
+specifies the set of agents who receive one unit of subsidy.
 
 \begin{definition}[Subsidy set]
 \label{def:m-P}
-Let $P \subseteq \agents$ be the smallest set satisfying
+Let $P\subseteq\agents$ be the smallest set satisfying
 \begin{enumerate}
-  \item[(P1)] $T \subseteq P$; and
-  \item[(P2)] if $i \in \agents \setminus S$ and $(i,j) \in E$ for some
-        $j \in P$, then $i \in P$.
+  \item[(P1)] $T\subseteq P$; and
+  \item[(P2)] if $i\in\agents\setminus S$ and $(i,j)\in E$ for some
+        $j\in P$, then $i\in P$.
 \end{enumerate}
-Equivalently, $P$ is obtained by initialising $P := T$ and repeatedly adjoining
-any $i \in \agents \setminus S$ having an arc of $E$ into the current set,
-until no further agent can be adjoined; the process terminates because
-$\agents$ is finite and $P$ only grows. Define
+Equivalently, initialise $P:=T$ and repeatedly add any agent
+$i\in\agents\setminus S$ for which $(i,j)\in E$ for some $j$ already
+in $P$. Continue until no further agents can be added. Since $\agents$
+is finite and the set $P$ only grows, this procedure terminates.
+Define
 \begin{equation}
 \label{eq:m-subsidy}
-  \subsidy_i := \begin{cases} 1, & i \in P,\\ 0, & i \in \agents \setminus P.\end{cases}
+  \subsidy_i :=
+  \begin{cases}
+    1, & i\in P,\\
+    0, & i\in\agents\setminus P.
+  \end{cases}
 \end{equation}
 \end{definition}
 
 The complete procedure is summarised in
-Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is Algorithm~3 of
-\cite{tao2025existence}; our contribution is the completion and subsidy construction in the subsequent lines.
+Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is
+Algorithm~3 of~\cite{tao2025existence}; the completion and subsidy
+construction in the subsequent lines constitute our contribution.
 
 \begin{algorithm}[H]
 \caption{EF1 allocation with at most one unit of subsidy per agent for negative dichotomous valuations}
@@ -296,47 +330,64 @@ $\sum_{i\in N}p_i\le n-1$.
 \State \Return $(\mathcal{A},p)$.
 \end{algorithmic}
 \end{algorithm}
+
+
 \begin{lemma}
 \label{lem:m-Pstructure}
-$P \setminus T \subseteq \agents \setminus S$: every agent of $P$ that is not a
-recipient lies outside $S$.
+$P\cap S=T$. Equivalently,
+\[P\setminus T\subseteq \agents\setminus S.
+\]
+Thus, every subsidised agent in $S$ is a recipient.
 \end{lemma}
 
 \begin{proof}
-Let $P_0 := T$ and let $P_{u+1}$ be $P_u$ together with every
-$i \in \agents \setminus S$ having an arc of $E$ into $P_u$, so that
-$P = \bigcup_{u \ge 0} P_u$. We show $P_u \setminus T \subseteq \agents
-\setminus S$ by induction on $u$. For $u = 0$ the set $P_0 \setminus T$ is
-empty. For the step, every agent adjoined in passing from $P_u$ to $P_{u+1}$
-lies in $\agents \setminus S$ by construction.
+Since $T\subseteq P$ by \textnormal{(P1)} and $T\subseteq S$, we have $T\subseteq P\cap S$. Suppose, for contradiction, that there exists $i\in (P\cap S)\setminus T$. Consider
+\[
+    P':=P\setminus\set{i}.
+\]
+Since $i\notin T$, the set $P'$ still satisfies \textnormal{(P1)}. We claim that $P'$ also satisfies \textnormal{(P2)}. Let $k\in\agents\setminus S$ and suppose that $(k,j)\in E$ for some $j\in P'$. Since $P'\subseteq P$ and $P$ satisfies \textnormal{(P2)}, we have $k\in P$. Moreover, $k\neq i$, because $k\notin S$ whereas $i\in S$. Hence $k\in P'$.
+
+Thus, $P'$ satisfies both \textnormal{(P1)} and \textnormal{(P2)}, contradicting the minimality of $P$. Therefore $P\cap S=T$.
 \end{proof}
 
-\begin{lemma}
-\label{lem:m-budget}
-$\subsidy \in \set{0,1}^n$ and $\sum_{i \in \agents} \subsidy_i = \abs P \le n-1$.
-\end{lemma}
 
-\begin{proof}
-That $\subsidy \in \set{0,1}^n$ with $\sum_i \subsidy_i = \abs P$ is immediate
-from \eqref{eq:m-subsidy}. By Lemma~\ref{lem:m-Pstructure},
-$P \subseteq T \cup (\agents \setminus S)$, and this union is disjoint because
-$T \subseteq S$; hence
-$\abs P \le \abs T + \abs{\agents \setminus S} = r + n - \abs S$. By
-Lemma~\ref{lem:m-terminal}(a), $r \le \abs S - 1$, so $\abs P \le n-1$.
-\end{proof}
+By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover, $\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in $S\setminus T$ lies outside $P$ and hence receives zero subsidy. Therefore,
+\[
+    \sum_{i\in\agents}\subsidy_i\leq n-1.
+\]
+
 
 \begin{lemma}
 \label{lem:m-expensive}
-Let $i \in S$, let $t \in T$ and let $e \in R$. Then
+Let $i\in S$, $t\in T$, and $e\in R$. Then
 \[
-  \cost_i\bigl(X_t \cup \set e\bigr) \;\ge\; \cost_i(X_i) + 1 .
+    \cost_i(X_t\cup\set e)\geq \cost_i(X_i)+1.
 \]
 \end{lemma}
 
 \begin{proof}
-Note that $t \in T \subseteq S$. Envy-freeness \eqref{eq:m-pef} gives $\cost_i(X_i) \le \cost_i(X_t)$. If $\cost_i(X_i) < \cost_i(X_t)$, then $\cost_i(X_i)+1 \le \cost_i(X_t)$, and $\cost_i(X_t \cup \set e) \ge \cost_i(X_t)$ by monotonicity of $\cost_i$. Otherwise $\cost_i(X_i) = \cost_i(X_t)$. If $i = t$ then $\cost_i(X_t \cup \set e) = \cost_i(X_i) + \cost_i(e \mid X_i) = \cost_i(X_i)+1$ by Lemma~\ref{lem:m-terminal}(b). If $i \ne t$ then $(i,t) \in E$ by \eqref{eq:m-graph}, with $i,t \in S$, so $\cost_i(e \mid X_t) = 1$ by Lemma~\ref{lem:m-terminal}(c) and therefore $\cost_i(X_t \cup \set e) = \cost_i(X_t) + 1 = \cost_i(X_i) + 1$.
+Since $X$ is envy-free,
+\( \cost_i(X_i)\leq \cost_i(X_t).
+\)
+If the inequality is strict, integrality of the cost functions gives
+\( \cost_i(X_t)\geq \cost_i(X_i)+1,
+\) and the desired inequality follows from monotonicity of $\cost_i$. Suppose instead that
+\(
+    \cost_i(X_i)=\cost_i(X_t).
+\) If $i=t$, then Lemma~\ref{lem:m-terminal}(i) gives
+\[
+    \cost_i(e\mid X_i)=1.
+\]
+If $i\neq t$, then $(i,t)\in E$ by \eqref{eq:m-graph}; since
+$i,t\in S$, Lemma~\ref{lem:m-terminal}(ii) gives
+\[
+    \cost_i(e\mid X_t)=1.
+\]
+In either case,
+\[
+    \cost_i(X_t\cup\set e)=\cost_i(X_i)+1.
+\]
 \end{proof}
-
 % --------------------------------------------------------------------------
 \subsection{Envy-freeness of the completion}
 \label{sec:m-ef}
@@ -352,7 +403,7 @@ Then $(\alloc,\subsidy)$ is an envy-free solution.
 Fix $i,j \in \agents$; we verify \eqref{eq:m-ef}, that is
 $\cost_i(A_i) - \subsidy_i \le \cost_i(A_j) - \subsidy_j$. Throughout,
 $X_j \subseteq A_j$ for every $j$ by \eqref{eq:m-alloc}, so by monotonicity
-(Observation~\ref{obs:m-gap}) and \eqref{eq:m-pef},
+ and \eqref{eq:m-pef},
 \begin{equation}
 \label{eq:m-mono}
   \cost_i(A_j) \;\ge\; \cost_i(X_j) \;\ge\; \cost_i(X_i) .
