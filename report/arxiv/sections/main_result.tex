@@ -307,7 +307,7 @@ $\sum_{i\in N}p_i\le n-1$.
 \State Let $S$ be an arbitrary tail strongly connected component of the terminal equality graph $G$. \Comment{$r<|S|$ by the terminal condition of (R3)}
 \State Choose arbitrary distinct agents
       $T=\{t_1,\ldots,t_r\}\subseteq S$.
-      \Comment{$r<|S|$ by Lemma~\ref{lem:m-terminal}(a)}
+      \Comment{possible since $r<|S|$}
 
 \For{$k=1,\ldots,r$}
     \State $A_{t_k}\gets X_{t_k}\cup\{e_k\}$.
@@ -351,10 +351,17 @@ Thus, $P'$ satisfies both \textnormal{(P1)} and \textnormal{(P2)}, contradicting
 \end{proof}
 
 
+\begin{lemma}
+\label{lem:m-budget}
+$\subsidy\in\set{0,1}^n$ and $\sum_{i\in\agents}\subsidy_i\leq n-1$.
+\end{lemma}
+
+\begin{proof}
 By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover, $\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in $S\setminus T$ lies outside $P$ and hence receives zero subsidy. Therefore,
 \[
     \sum_{i\in\agents}\subsidy_i\leq n-1.
 \]
+\end{proof}
 
 
 \begin{lemma}
@@ -415,7 +422,7 @@ $\agents \setminus P$, the following three cases are exhaustive.
 
 \smallskip
 \noindent\textbf{Case 1: $i \in T$.} Then $\subsidy_i = 1$ and, by
-Lemma~\ref{lem:m-terminal}(b), $\cost_i(A_i) = \cost_i(X_i) + \cost_i(e \mid X_i)
+Lemma~\ref{lem:m-terminal}(i), $\cost_i(A_i) = \cost_i(X_i) + \cost_i(e \mid X_i)
 = \cost_i(X_i) + 1$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$. Also
 $i \in T \subseteq S$.
 \begin{itemize}
@@ -425,8 +432,8 @@ $i \in T \subseteq S$.
     $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
   \item[(1b)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$. By
     Lemma~\ref{lem:m-Pstructure}, $j \notin S$; since $i \in S$,
-    Lemma~\ref{lem:m-terminal}(d) gives $\cost_i(X_i) < \cost_i(X_j)$, hence
-    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by Observation~\ref{obs:m-gap}. Hence
+    Lemma~\ref{lem:m-terminal}(iii) gives $\cost_i(X_i) < \cost_i(X_j)$, hence
+    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by integrality of the cost functions. Hence
     $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
   \item[(1c)] $j \in \agents \setminus P$. Then $\subsidy_j = 0$ and
     $A_j = X_j$, so $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$
@@ -454,7 +461,7 @@ and $A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$.
     while $i \notin P$; so $(i,j) \in E$ by \eqref{eq:m-graph}, and $j \in P$,
     so (P2) of Definition~\ref{def:m-P} places $i \in P$ --- contradicting
     $i \notin P$. Hence $\cost_i(X_i) < \cost_i(X_j)$, so
-    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by Observation~\ref{obs:m-gap}, and
+    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by integrality of the cost functions, and
     $\cost_i(A_j) \ge \cost_i(X_j)$ by monotonicity. In either case
     $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
   \item[(3c)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$; we
@@ -462,9 +469,9 @@ and $A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$.
     $\cost_i(X_i) = \cost_i(X_j)$. Then $i \ne j$, since $j \in P$ while
     $i \notin P$; so $(i,j) \in E$, and (P2) places $i \in P$, a contradiction.
     Hence $\cost_i(X_i) < \cost_i(X_j)$. If instead $i \in S$, then $j \notin S$
-    by Lemma~\ref{lem:m-Pstructure}, and Lemma~\ref{lem:m-terminal}(d) gives
+    by Lemma~\ref{lem:m-Pstructure}, and Lemma~\ref{lem:m-terminal}(iii) gives
     $\cost_i(X_i) < \cost_i(X_j)$. In either case
-    Observation~\ref{obs:m-gap} yields $\cost_i(X_j) \ge \cost_i(X_i) + 1$, so
+    integrality of the cost functions yields $\cost_i(X_j) \ge \cost_i(X_i) + 1$, so
     $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
 \end{itemize}
 
