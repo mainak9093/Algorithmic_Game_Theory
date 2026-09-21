@@ -4,7 +4,7 @@
 \bibitem[ARSW17]{aziz2017algorithms}
 Haris Aziz, Gerhard Rauchecker, Guido Schryen, and Toby Walsh.
 \newblock Algorithms for max-min share fair allocation of indivisible chores.
-\newblock In {\em Proceedings of the AAAI Conference on Artificial Intelligence}, volume~31, 2017.
+\newblock In {\em Proceedings of the 31st AAAI Conference on Artificial Intelligence (AAAI)}. AAAI Press, 2017.
 
 \bibitem[BCE{\etalchar{+}}16]{BCE16}
 Felix Brandt, Vincent Conitzer, Ulle Endriss, J{\'e}r{\^o}me Lang, and Ariel~D. Procaccia.
@@ -25,7 +25,7 @@ Siddharth Barman, Anand Krishna, Y.~Narahari, and Soumyarup Sadhukhan.
 \bibitem[BSV21]{BSV21}
 Umang Bhaskar, A.~R. Sricharan, and Rohit Vaish.
 \newblock On approximate envy-freeness for indivisible chores and mixed resources.
-\newblock In {\em Approximation, Randomization, and Combinatorial Optimization (APPROX/RANDOM)}, LIPIcs, 2021.
+\newblock In {\em Approximation, Randomization, and Combinatorial Optimization (APPROX/RANDOM)}, volume 207 of {\em Leibniz International Proceedings in Informatics (LIPIcs)}, pages 1:1--1:23. Schloss Dagstuhl -- Leibniz-Zentrum f{\"u}r Informatik, 2021.
 
 \bibitem[Bud11]{Bud11}
 Eric Budish.
@@ -64,7 +64,7 @@ Daniel Halpern and Nisarg Shah.
 \bibitem[KMS{\etalchar{+}}25]{kawase2025towards}
 Yasushi Kawase, Kazuhisa Makino, Hanna Sumita, Akihisa Tamura, and Makoto Yokoo.
 \newblock Towards optimal subsidy bounds for envy-freeable allocations.
-\newblock {\em Artificial Intelligence}, page 104406, 2025.
+\newblock {\em Artificial Intelligence}, 348:104406, 2025.
 
 \bibitem[LLTZ26]{LLTZ26}
 Zehan Lin, Shengxin Liu, Biaoshuai Tao, and Shengwei Zhou.
@@ -99,7 +99,7 @@ Hal Varian.
 \bibitem[WXZ25]{wu2025revisiting}
 Xiaowei Wu, Quan Xue, and Shengwei Zhou.
 \newblock Revisiting proportional allocation with subsidy: Simplification and improvements.
-\newblock In {\em IJCAI}, pages 4082--4090, 2025.
+\newblock In {\em Proceedings of the 34th International Joint Conference on Artificial Intelligence (IJCAI)}, pages 4082--4090, 2025.
 
 \bibitem[WZ24]{wu2024tree}
 Xiaowei Wu and Shengwei Zhou.

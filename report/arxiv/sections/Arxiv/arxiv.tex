@@ -382,6 +382,15 @@ The following standard graph-theoretic fact will be used repeatedly.
 \begin{lemma} \label{lem:tail-scc-exists} Every finite non-empty directed graph has at least one tail strongly connected component.
 \end{lemma}
 
+\begin{proof}
+Start with any strongly connected component. If it is not a tail
+component, follow an outgoing arc to another strongly connected
+component and repeat. No component can be visited twice, since this
+would make the two components mutually reachable. As there are finitely
+many components, the process terminates at a component with no outgoing
+arc, which is a tail component.
+\end{proof}
+
 
 \subsection{The terminal state of the partial-allocation algorithm}
 \label{sec:m-terminal}
