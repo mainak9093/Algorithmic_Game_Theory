@@ -10,11 +10,11 @@ solution with a subsidy of $0$ or $1$ per agent, at most $n-1$ in total, computa
 % relation between different agents' cost functions --- and the number of chores
 % is unrestricted.
 
-Our argument starts from an envy-free \emph{partial} allocation produced by the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence}, and then completes this partial allocation. We recall in \Cref{sec:m-terminal} the relevant terminal-state properties of their algorithm, including Theorem~5.1 and the three update rules used in its construction. These ingredients are due to Tao et al.~\cite{tao2025existence}. The completion procedure introduced in \Cref{sec:m-completion}, together with the subsequent lemmas and theorems, constitutes our contribution.
+Our argument starts from an envy-free \emph{partial} allocation produced by the algorithm of Tao, Wu, Yu, and Zhou~\cite{tao2025existence}, and then completes this partial allocation. We recall in \Cref{sec:m-terminal} the relevant terminal-state properties of their algorithm, including Theorem~6.1 and the three update rules used in its construction. These ingredients are due to Tao et al.~\cite{tao2025existence}. The completion procedure introduced in \Cref{sec:m-completion}, together with the subsequent lemmas and theorems, constitutes our contribution.
 
 
 % The argument takes as input an envy-free \emph{partial} allocation produced by the algorithm of Tao, Wu, Yu and Zhou~\cite{tao2025existence}, and completes it. That
-% algorithm, its Theorem~5.1, and the three update rules recorded in
+% algorithm, its Theorem~6.1, and the three update rules recorded in
 % \Cref{sec:m-terminal} are due to~\cite{tao2025existence} and are restated here for
 % reference; the completion of \Cref{sec:m-completion} onwards, and every lemma
 % and theorem after Lemma~\ref{lem:m-terminal}, are ours.
@@ -50,7 +50,7 @@ A strongly connected component $S$ is a \emph{tail component} (or \emph{sink com
 
 The following standard graph-theoretic fact will be used repeatedly.
 
-\begin{lemma}[\cite{BJG09}]
+\begin{lemma}
 \label{lem:tail-scc-exists}
 Every finite non-empty directed graph has at least one tail strongly connected component.
 \end{lemma}
@@ -97,7 +97,7 @@ Every finite non-empty directed graph has at least one tail strongly connected c
 \subsection{The terminal state of the partial-allocation algorithm}
 \label{sec:m-terminal}
 
-\begin{theorem}[\cite{tao2025existence}, Theorem~5.1]
+\begin{theorem}[\cite{tao2025existence}, Theorem~6.1]
 \label{thm:m-twyz}
 For every $n$ and all dichotomous cost functions $\cost_1,\dots,\cost_n$ there
 is a polynomial-time algorithm returning a partial allocation $X$ that is
@@ -150,31 +150,20 @@ While $R(X)\ne\emptyset$, the algorithm considers the following rules in the sta
         $\cost_i(e\mid X_j)=0$, rotate the bundles along that cycle
         and assign $e$ to $i$.
 
- \item[(R3)] Otherwise, if there exists a tail strongly connected
-      component $S$ of $G$ such that
-      \[
-          \abs{R(X)}\geq \abs S,
-      \] select such a component and assign distinct residual chores to the agents of $S$, one chore per agent. If no such tail strongly
-      connected component exists, halt.
+ \item[(R3)] Otherwise, select a tail strongly connected component
+$S$ of $G$. If $\abs{R(X)}\geq\abs S$, assign distinct residual
+chores to the agents of $S$, one chore per agent. Otherwise, halt.
 \end{enumerate}
-Consequently, if the algorithm terminates with $R(X)\ne\emptyset$, then neither (R1) nor (R2) is applicable at the terminal state, and
+Consequently, if the algorithm terminates with \(R(X)\neq\emptyset\), then neither (R1) nor (R2) is applicable at the terminal state. Moreover, if \(S\) denotes the tail strongly connected component selected in the terminating application of (R3), then
 \[
-    \abs{R(X)}<\abs S
+    \abs{R(X)}<\abs S.
 \]
-for every tail strongly connected component $S$ of the terminal equality graph.
-
 
 For the remainder of this section, let $X$ denote the terminal partial allocation of the algorithm, and write
 \[
     R:=R(X), \qquad r:=\abs R.
 \]
-Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When $r\geq 1$,
-fix an arbitrary tail strongly connected component $S$ of $G$, whose
-existence follows from \Cref{lem:tail-scc-exists}. By the terminal
-condition of \textnormal{(R3)},
-\(
-    r<\abs S.
-\)
+Unless stated otherwise, let $G=(\agents,E)$ denote the equality graph defined in~\eqref{eq:m-graph} at this terminal state. When \(r\ge1\), let \(S\) be the tail SCC selected at the terminating application of (R3); therefore \(r<|S|\).
 
 
 \begin{lemma}
@@ -278,7 +267,7 @@ Define
 
 The complete procedure is summarised in
 Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is
-Algorithm~3 of~\cite{tao2025existence}; the completion and subsidy
+the partial-allocation algorithm of Tao et al.~\cite{tao2025existence}; the completion and subsidy
 construction in the subsequent lines constitute our contribution.
 
 \begin{algorithm}[H]
@@ -292,19 +281,27 @@ subsidy vector $p\in\{0,1\}^n$ such that $(\mathcal{A},p)$ is envy-free and
 $\sum_{i\in N}p_i\le n-1$.
 
 \State Set $c_i=-v_i$ for every $i\in N$.
-\State Run Algorithm~3 of \cite{tao2025existence} on $\{c_i\}_{i\in N}$.
-\State Let $X=(X_1,\ldots,X_n)$ be its terminal partial allocation and
-      let $R=M\setminus\bigcup_{i\in N}X_i$.
-
-\If{$R=\varnothing$}
-    \State \Return $(X,\mathbf{0})$.
+\State Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence} on $\set{\cost_i}_{i\in\agents}$, retaining the tail strongly connected component selected in the terminating application of  \textnormal{(R3)} if the residue is nonempty.
+\State Let $X=(X_1,\dots,X_n)$ be its terminal partial allocation and let
+\[
+R=\items\setminus\bigcup_{i\in\agents}X_i .
+       \]
+\If{$R=\emptyset$}
+    \State \Return $(X,\mathbf 0)$.
 \EndIf
 
-\State Construct the equality graph $G=(N,E)$ on the agents, where
-\Statex \qquad $(i,j)\in E \iff i\neq j$ and $c_i(X_i)=c_i(X_j)$.
-
+\State Construct the terminal equality graph $G=(\agents,E)$, where
+       \[
+       (i,j)\in E
+       \iff
+       i\neq j
+       \text{ and }
+       \cost_i(X_i)=\cost_i(X_j).
+       \]
 \State Write $R=\{e_1,\ldots,e_r\}$.
-\State Let $S$ be an arbitrary tail strongly connected component of the terminal equality graph $G$. \Comment{$r<|S|$ by the terminal condition of (R3)}
+\State Let $S$ be the tail strongly connected component selected in the
+       terminating application of \textnormal{(R3)}.
+       \Comment{$r<\abs S$}
 \State Choose arbitrary distinct agents
       $T=\{t_1,\ldots,t_r\}\subseteq S$.
       \Comment{possible since $r<|S|$}
@@ -351,17 +348,34 @@ Thus, $P'$ satisfies both \textnormal{(P1)} and \textnormal{(P2)}, contradicting
 \end{proof}
 
 
-\begin{lemma}
-\label{lem:m-budget}
-$\subsidy\in\set{0,1}^n$ and $\sum_{i\in\agents}\subsidy_i\leq n-1$.
-\end{lemma}
+% \begin{lemma}
+% \label{lem:m-budget}
+% $\subsidy\in\set{0,1}^n$ and $\sum_{i\in\agents}\subsidy_i\leq n-1$.
+% \end{lemma}
 
-\begin{proof}
-By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover, $\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in $S\setminus T$ lies outside $P$ and hence receives zero subsidy. Therefore,
-\[
-    \sum_{i\in\agents}\subsidy_i\leq n-1.
-\]
-\end{proof}
+% \begin{proof}
+% By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover, $\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in $S\setminus T$ lies outside $P$ and hence receives zero subsidy. Therefore,
+% \[
+%     \sum_{i\in\agents}\subsidy_i\leq n-1.
+% \]
+% \end{proof}
+
+
+
+
+
+
+By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover,
+$\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since
+Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in
+$S\setminus T$ lies outside $P$ and hence receives zero subsidy.
+Therefore,
+\begin{equation}\label{eq_1}
+  \sum_{i\in\agents}\subsidy_i\leq n-1.  
+\end{equation}
+
+
+
 
 
 \begin{lemma}
@@ -398,220 +412,299 @@ In either case,
 % --------------------------------------------------------------------------
 \subsection{Envy-freeness of the completion}
 \label{sec:m-ef}
-
 \begin{theorem}
 \label{thm:m-completion}
-Let $X$, $R$, $S$ be as in \Cref{sec:m-terminal} with $r \ge 1$, let $\alloc$
-be as in \eqref{eq:m-alloc} and let $\subsidy$ be as in \eqref{eq:m-subsidy}.
-Then $(\alloc,\subsidy)$ is an envy-free solution.
+Let $X$, $R$, and $S$ be as in \Cref{sec:m-terminal} with $r\geq 1$,
+let $\alloc$ be defined by~\eqref{eq:m-alloc}, and let $\subsidy$ be
+defined by~\eqref{eq:m-subsidy}. Then $(\alloc,\subsidy)$ is an
+envy-free solution.
 \end{theorem}
 
 \begin{proof}
-Fix $i,j \in \agents$; we verify \eqref{eq:m-ef}, that is
-$\cost_i(A_i) - \subsidy_i \le \cost_i(A_j) - \subsidy_j$. Throughout,
-$X_j \subseteq A_j$ for every $j$ by \eqref{eq:m-alloc}, so by monotonicity
- and \eqref{eq:m-pef},
+Fix $i\in\agents$. Since $X_j\subseteq A_j$ for every $j\in\agents$,
+monotonicity of $\cost_i$ and envy-freeness of $X$ give
 \begin{equation}
 \label{eq:m-mono}
-  \cost_i(A_j) \;\ge\; \cost_i(X_j) \;\ge\; \cost_i(X_i) .
+    \cost_i(A_j)
+    \geq \cost_i(X_j)
+    \geq \cost_i(X_i)
+    \qquad\text{for every }j\in\agents.
 \end{equation}
-Note also that $T \subseteq P$, so $i \notin P$ implies $i \notin T$ and hence
-$A_i = X_i$; likewise $j \notin P$ implies $A_j = X_j$ and $\subsidy_j = 0$.
-Since $\agents$ is the disjoint union of $T$, $P \setminus T$ and
-$\agents \setminus P$, the following three cases are exhaustive.
+We verify
+\(
+    \cost_i(A_i)-\subsidy_i
+    \leq
+    \cost_i(A_j)-\subsidy_j
+    \)
+for every $j\in\agents$.
 
 \smallskip
-\noindent\textbf{Case 1: $i \in T$.} Then $\subsidy_i = 1$ and, by
-Lemma~\ref{lem:m-terminal}(i), $\cost_i(A_i) = \cost_i(X_i) + \cost_i(e \mid X_i)
-= \cost_i(X_i) + 1$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$. Also
-$i \in T \subseteq S$.
-\begin{itemize}
-  \item[(1a)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set{e}$ for
-    some $e \in R$, so $\cost_i(A_j) \ge \cost_i(X_i) + 1$ by
-    Lemma~\ref{lem:m-expensive}. Hence
-    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
-  \item[(1b)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$. By
-    Lemma~\ref{lem:m-Pstructure}, $j \notin S$; since $i \in S$,
-    Lemma~\ref{lem:m-terminal}(iii) gives $\cost_i(X_i) < \cost_i(X_j)$, hence
-    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by integrality of the cost functions. Hence
-    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
-  \item[(1c)] $j \in \agents \setminus P$. Then $\subsidy_j = 0$ and
-    $A_j = X_j$, so $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$
-    by \eqref{eq:m-pef}.
-\end{itemize}
+\noindent\textbf{Case 1: $i\in T$.}
+Then $\subsidy_i=1$, and if $e\in R$ is the residual chore assigned
+to $i$, Lemma~\ref{lem:m-terminal}(i) gives
+\[
+    \cost_i(A_i)
+    =\cost_i(X_i)+\cost_i(e\mid X_i)
+    =\cost_i(X_i)+1.
+\]
+Hence $\cost_i(A_i)-\subsidy_i=\cost_i(X_i)$. If $j\notin P$, then $j\notin T$, so $A_j=X_j$ and $\subsidy_j=0$. Thus, by envy-freeness of $X$,
+\[
+    \cost_i(A_j)-\subsidy_j
+    =\cost_i(X_j)
+    \geq \cost_i(X_i).
+\] Suppose instead that $j\in P$. If $j\in T$, then Lemma~\ref{lem:m-expensive} gives
+\(
+    \cost_i(A_j)\geq \cost_i(X_i)+1.
+\) If $j\in P\setminus T$, then
+Lemma~\ref{lem:m-Pstructure} implies $j\notin S$. Since $i\in S$, Lemma~\ref{lem:m-terminal}(iii) gives \(\cost_i(X_i)<\cost_i(X_j).\) By integrality, \(
+    \cost_i(A_j)=\cost_i(X_j)\geq \cost_i(X_i)+1.
+\) Thus, in either case, since $\subsidy_j=1$,
+\[
+    \cost_i(A_j)-\subsidy_j\geq \cost_i(X_i).
+\]
 
 \smallskip
-\noindent\textbf{Case 2: $i \in P \setminus T$.} Then $\subsidy_i = 1$ and
-$A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i) - 1$. For every $j$
-we have $\subsidy_j \le 1$ and $\cost_i(A_j) \ge \cost_i(X_i)$ by
-\eqref{eq:m-mono}, hence
-$\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) - 1 = \cost_i(A_i) - \subsidy_i$.
+\noindent\textbf{Case 2: $i\in P\setminus T$.}
+Here $A_i=X_i$ and $\subsidy_i=1$, so
+\(
+    \cost_i(A_i)-\subsidy_i=\cost_i(X_i)-1.
+\) For every $j\in\agents$, \eqref{eq:m-mono} and
+$\subsidy_j\leq 1$ imply
+\[
+    \cost_i(A_j)-\subsidy_j
+    \geq \cost_i(X_i)-1
+    =\cost_i(A_i)-\subsidy_i.
+\]
 
 \smallskip
-\noindent\textbf{Case 3: $i \in \agents \setminus P$.} Then $\subsidy_i = 0$
-and $A_i = X_i$, so $\cost_i(A_i) - \subsidy_i = \cost_i(X_i)$.
-\begin{itemize}
-  \item[(3a)] $j \in \agents \setminus P$. Then $\subsidy_j = 0$ and
-    $A_j = X_j$, so $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) \ge \cost_i(X_i)$
-    by \eqref{eq:m-pef}.
-  \item[(3b)] $j \in T$. Then $\subsidy_j = 1$ and $A_j = X_j \cup \set e$ for
-    some $e \in R$; we claim $\cost_i(A_j) \ge \cost_i(X_i) + 1$. If $i \in S$
-    this is Lemma~\ref{lem:m-expensive}. If $i \notin S$, suppose
-    $\cost_i(X_i) = \cost_i(X_j)$. Then $i \ne j$, since $j \in T \subseteq P$
-    while $i \notin P$; so $(i,j) \in E$ by \eqref{eq:m-graph}, and $j \in P$,
-    so (P2) of Definition~\ref{def:m-P} places $i \in P$ --- contradicting
-    $i \notin P$. Hence $\cost_i(X_i) < \cost_i(X_j)$, so
-    $\cost_i(X_j) \ge \cost_i(X_i) + 1$ by integrality of the cost functions, and
-    $\cost_i(A_j) \ge \cost_i(X_j)$ by monotonicity. In either case
-    $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i)$.
-  \item[(3c)] $j \in P \setminus T$. Then $\subsidy_j = 1$ and $A_j = X_j$; we
-    claim $\cost_i(X_j) \ge \cost_i(X_i) + 1$. If $i \notin S$, suppose
-    $\cost_i(X_i) = \cost_i(X_j)$. Then $i \ne j$, since $j \in P$ while
-    $i \notin P$; so $(i,j) \in E$, and (P2) places $i \in P$, a contradiction.
-    Hence $\cost_i(X_i) < \cost_i(X_j)$. If instead $i \in S$, then $j \notin S$
-    by Lemma~\ref{lem:m-Pstructure}, and Lemma~\ref{lem:m-terminal}(iii) gives
-    $\cost_i(X_i) < \cost_i(X_j)$. In either case
-    integrality of the cost functions yields $\cost_i(X_j) \ge \cost_i(X_i) + 1$, so
-    $\cost_i(A_j) - \subsidy_j = \cost_i(X_j) - 1 \ge \cost_i(X_i)$.
-\end{itemize}
-
-\smallskip
-In every sub-case $\cost_i(A_j) - \subsidy_j \ge \cost_i(X_i) = \cost_i(A_i) -
-\subsidy_i$ in Cases 1 and 3, and the inequality was shown directly in Case 2.
+\noindent\textbf{Case 3: $i\notin P$.}
+Since $T\subseteq P$, we have $i\notin T$, and therefore
+$A_i=X_i$ and $\subsidy_i=0$. Hence
+\(\cost_i(A_i)-\subsidy_i=\cost_i(X_i).
+\) If $j\notin P$, then $A_j=X_j$ and $\subsidy_j=0$, and
+envy-freeness of $X$ gives
+\[
+    \cost_i(A_j)-\subsidy_j
+    =\cost_i(X_j)
+    \geq\cost_i(X_i)=\cost_i(A_i)-\subsidy_i.
+\]
+Now suppose that $j\in P$. We claim that
+\begin{equation}
+\label{eq:m-unpaid-to-paid}
+    \cost_i(A_j)\geq \cost_i(X_i)+1.
+\end{equation}
+If $i\notin S$, envy-freeness of $X$ gives $\cost_i(X_i)\leq\cost_i(X_j)$. Equality would imply $(i,j)\in E$ by~\eqref{eq:m-graph}; since $i\in\agents\setminus S$ and $j\in P$, condition \textnormal{(P2)} would then imply $i\in P$, a contradiction. Hence \(\cost_i(X_i)<\cost_i(X_j), \) and integrality together with monotonicity yield
+\[
+    \cost_i(A_j)\geq\cost_i(X_j)\geq\cost_i(X_i)+1.
+\]
+It remains to consider $i\in S$. If $j\in T$, then
+\eqref{eq:m-unpaid-to-paid} follows from
+Lemma~\ref{lem:m-expensive}. If $j\in P\setminus T$, then
+Lemma~\ref{lem:m-Pstructure} gives $j\notin S$, and
+Lemma~\ref{lem:m-terminal}(iii), together with integrality, gives
+\[
+    \cost_i(A_j)=\cost_i(X_j)\geq\cost_i(X_i)+1.
+\]
+Thus~\eqref{eq:m-unpaid-to-paid} holds in all cases. Since
+$\subsidy_j=1$,
+\[
+    \cost_i(A_j)-\subsidy_j
+    \geq\cost_i(X_i)
+    =\cost_i(A_i)-\subsidy_i.
+\]
+The envy-freeness inequality therefore holds for every pair
+$i,j\in\agents$.
 \end{proof}
 
 \subsection{The EF1 property of the completion}
-\begin{corollary}\label{cor:ef1}
-The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion}
-is EF1 in the sense of Definition~\ref{def:ef1chores}, hence also in the
-sense of Definition~\ref{def:ef1}. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
-$\mathcal{A}$, while for every recipient $t_k\in T$, removing the residual
-chore $e_k$ assigned to $t_k$ eliminates all of $t_k$'s envy.
+
+
+\begin{corollary}
+\label{cor:ef1}
+The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion} is EF1 in the sense of Definition~\ref{def:ef1chores}, and hence also in the sense of Definition~\ref{def:ef1}. More precisely:
+\begin{enumerate}
+    \item [(i)] every non-recipient $i\in N\setminus T$ is envy-free in  $\mathcal{A}$; and
+    \item [(ii)] for every recipient $t_k\in T$,
+    \[
+        c_{t_k}(A_{t_k}\setminus\{e_k\})
+        \leq
+        c_{t_k}(A_j)
+        \qquad\text{for every }j\in N.
+    \]
+\end{enumerate}
 \end{corollary}
 
+% \begin{corollary}\label{cor:ef1}
+% The complete allocation $\mathcal{A}$ constructed in Section~\ref{sec:m-completion}
+% is EF1 in the sense of Definition~\ref{def:ef1chores}, hence also in the
+% sense of Definition~\ref{def:ef1}. More precisely, every non-recipient $i\in N\setminus T$ is envy-free in
+% $\mathcal{A}$, while for every recipient $t_k\in T$, removing the residual
+% chore $e_k$ assigned to $t_k$ eliminates all of $t_k$'s envy.
+% \end{corollary}
+
 \begin{proof}
-Recall that the partial allocation
-$X=(X_1,\ldots,X_n)$ is envy-free, and that
-$X_j\subseteq A_j$ for every $j\in N$. First, let $i\in N\setminus T$. Then $A_i=X_i$. Hence, for every
-$j\in N$, envy-freeness of $X$ and monotonicity of $c_i$ give
+Recall that the partial allocation $X=(X_1,\ldots,X_n)$ is envy-free and that $X_j\subseteq A_j$ for every $j\in N$. Let first $i\in N\setminus T$. Then $A_i=X_i$. Hence, for every $j\in N$, envy-freeness of $X$ and monotonicity of $c_i$ give
 \[
-c_i(A_i)
-=
-c_i(X_i)
-\le
-c_i(X_j)
-\le
-c_i(A_j).
+    c_i(A_i)
+    =
+    c_i(X_i)
+    \leq
+    c_i(X_j)
+    \leq
+    c_i(A_j).
 \]
-Thus $i$ does not envy any agent in $\mathcal{A}$. Now let $i=t_k\in T$. By construction,
+Thus, every non-recipient is envy-free in $\mathcal{A}$. Now let $i=t_k\in T$. By construction,
 \[
-A_i=X_i\cup\{e_k\},
-\]
-and hence
-\[
-A_i\setminus\{e_k\}=X_i.
+    A_i=X_i\cup\{e_k\},
+    \qquad\text{and hence}\qquad
+    A_i\setminus\{e_k\}=X_i.
 \]
 Therefore, for every $j\in N$,
 \[
-c_i(A_i\setminus\{e_k\})
-=
-c_i(X_i)
-\le
-c_i(X_j)
-\le
-c_i(A_j),
+    c_i(A_i\setminus\{e_k\})
+    =
+    c_i(X_i)
+    \leq
+    c_i(X_j)
+    \leq
+    c_i(A_j),
 \]
-where the first inequality follows from envy-freeness of $X$ and the
-second from monotonicity.
-
-Thus, for every recipient, removing the single newly assigned chore
-from her own bundle eliminates her envy towards every other agent.
-Consequently, $\mathcal{A}$ is EF1.
-\end{proof}
-% --------------------------------------------------------------------------
+where the two inequalities follow from envy-freeness of $X$ and monotonicity of $c_i$, respectively. Thus, removing the residual chore assigned to a recipient eliminates all of her envy. Consequently, $\mathcal{A}$ is EF1.
+\end{proof}% --------------------------------------------------------------------------
 \subsection{The main theorem}
 \label{sec:m-main}
 
+% \begin{theorem}
+% \label{thm:m-main}
+% For every $n$ and every instance $\langle \agents, \items,
+% \set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
+% exist a complete allocation $\alloc$ and a subsidy vector
+% $\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
+% that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1. Such an allocation and subsidy vector can be computed in polynomial time given value-oracle access.
+% \end{theorem}
+
+% \begin{proof}
+% Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
+% Definition~\ref{def:dichcost}. Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence} and retain
+% its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, construct the terminal equality graph $G$ and fix an arbitrary tail strongly connected component $S$ of $G$, as in
+% \Cref{sec:m-terminal}.
+
+% If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
+% $(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$. Since every envy-free allocation is EF1, $X$ is also EF1.
+
+% If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
+% \Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
+% Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
+% solution, and (\ref{eq_1}) gives $\subsidy \in \set{0,1}^n$ with
+% $\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
+
+% For the running time, if $r\geq 1$, a tail strongly connected component $S$ of the terminal equality graph can be found in polynomial time by computing its strongly connected components and selecting one with no outgoing arc. Constructing $\alloc$ from \eqref{eq:m-alloc}
+% takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
+% vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
+% each. Computing $P$ is a backward reachability search in $G$ from $T$
+% restricted to vertices outside $S$, which takes $O(n^2)$ time. Hence the work
+% after Theorem~\ref{thm:m-twyz} is polynomial, and so is the whole procedure.
+% \end{proof}
+
+% As discussed earlier, the bound of Theorem~\ref{thm:m-main} is tight: there are instances on which every complete allocation requires total subsidy
+% at least $n-1$.
+
+
+
 \begin{theorem}
 \label{thm:m-main}
-For every $n$ and every instance $\langle \agents, \items,
-\set{v_i}_{i \in \agents} \rangle$ with negative dichotomous valuations there
-exist a complete allocation $\alloc$ and a subsidy vector
-$\subsidy \in \set{0,1}^n$ with $\sum_{i \in \agents} \subsidy_i \le n-1$ such
-that $(\alloc,\subsidy)$ is an envy-free solution. Moreover, the allocation $\mathcal{A}$ is EF1. Such an allocation and subsidy vector can be computed in polynomial time given value-oracle access.
+For every instance
+$\langle \agents,\items,\set{v_i}_{i\in\agents}\rangle$
+with negative dichotomous valuations, there exist a complete allocation
+$\alloc$ and a subsidy vector $\subsidy\in\set{0,1}^n$ such that
+\[
+    \sum_{i\in\agents}\subsidy_i\leq n-1
+\]
+and $(\alloc,\subsidy)$ is an envy-free solution. Moreover, $\alloc$ is
+EF1 even before subsidies are paid. Such an allocation and subsidy vector
+can be computed in polynomial time given value-oracle access.
 \end{theorem}
 
 \begin{proof}
-Pass to cost form, $\cost_i = -v_i$, which is dichotomous in the sense of
-Definition~\ref{def:dichcost}. Run Algorithm~3 of~\cite{tao2025existence} and retain
-its terminal partial allocation $X$, the residue $R$ with $r = \abs R$. If $r\geq 1$, construct the terminal equality graph $G$ and fix an arbitrary tail strongly connected component $S$ of $G$, as in
-\Cref{sec:m-terminal}.
+Pass to the cost representation $\cost_i=-v_i$, which is dichotomous in
+the sense of Definition~\ref{def:dichcost}. Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence}, and let $X$ be its terminal partial
+allocation, with residue
+\[
+    R:=R(X), \qquad r:=\abs R.
+\]
 
-If $r = 0$ then $X$ is a complete allocation satisfying \eqref{eq:m-pef}, so
-$(X, \mathbf 0)$ is an envy-free solution with $\sum_i \subsidy_i = 0 \le n-1$. Since every envy-free allocation is EF1, $X$ is also EF1.
+If $r=0$, then $X$ is complete and satisfies~\eqref{eq:m-pef}.
+Hence $(X,\mathbf 0)$ is an envy-free solution. Since every envy-free
+allocation is EF1, $X$ is also EF1.
 
-If $r \ge 1$, construct $T$, $\alloc$ and $\subsidy$ as in
-\Cref{sec:m-completion}. Then $\alloc$ is a complete allocation,
-Theorem~\ref{thm:m-completion} shows $(\alloc,\subsidy)$ is an envy-free
-solution, and Lemma~\ref{lem:m-budget} gives $\subsidy \in \set{0,1}^n$ with
-$\sum_i \subsidy_i \le n-1$. The allocation $\mathcal{A}$ is EF1 by Corollary~\ref{cor:ef1}.
+If $r\geq 1$, let $G=(\agents,E)$ be the terminal equality graph and let $S$ be the tail strongly connected component of $G$ fixed in \Cref{sec:m-terminal}. Construct $T$, $\alloc$, and $\subsidy$ as in \Cref{sec:m-completion}. Then $\alloc$ is complete, Theorem~\ref{thm:m-completion} shows that $(\alloc,\subsidy)$ is envy-free, \eqref{eq:m-subsidy} and \eqref{eq_1} give
+\[
+    \subsidy\in\set{0,1}^n
+    \qquad\text{and}\qquad
+    \sum_{i\in\agents}\subsidy_i\leq n-1,
+\]
+and Corollary~\ref{cor:ef1} shows that $\alloc$ is EF1.
 
-For the running time, if $r\geq 1$, a tail strongly connected component $S$ of the terminal equality graph can be found in polynomial time by computing its strongly connected components and selecting one with no outgoing arc. Constructing $\alloc$ from \eqref{eq:m-alloc}
-takes $r \le n-1$ assignments. The graph $G$ of \eqref{eq:m-graph} has $n$
-vertices and is determined by the $n^2$ values $\cost_i(X_j)$, one oracle call
-each. Computing $P$ is a backward reachability search in $G$ from $T$
-restricted to vertices outside $S$, which takes $O(n^2)$ time. Hence the work
-after Theorem~\ref{thm:m-twyz} is polynomial, and so is the whole procedure.
+It remains to verify polynomial-time computability. The partial-allocation algorithm of Tao et al.~\cite{tao2025existence} runs in polynomial time. If $r\geq 1$, the
+terminal equality graph has $n$ vertices and can be constructed from
+the $n^2$ values $\cost_i(X_j)$, requiring one value-oracle query for
+each pair $(i,j)$. Its strongly connected components can be computed
+in polynomial time, after which a tail component $S$ is obtained by
+selecting one with no outgoing arc. By Theorem~\ref{thm:m-twyz},
+$r\leq n-1$, so constructing $\alloc$ requires at most $n-1$ additional
+assignments. Finally, $P$ can be computed by a backward reachability
+search from $T$, restricted to vertices outside $S$, in $O(n^2)$ time. Hence, the entire procedure runs in polynomial time.
 \end{proof}
 
-As discussed earlier, the bound of Theorem~\ref{thm:m-main} is tight: there are instances on which every complete allocation requires total subsidy
-at least $n-1$.
+As noted in the introduction, the total-subsidy bound in Theorem~\ref{thm:m-main} is tight: there are instances for which every complete envy-free solution requires total subsidy at least \(n-1\).
+
+
 
 \subsection{Pareto optimality and subsidies}
 
-In this section, we show that the unit-subsidy guarantee need not be compatible with Pareto optimality of the underlying allocation. We evaluate Pareto optimality with respect to the allocation of chores, without taking subsidies into account. Formally, a complete allocation $\allocB$ \emph{Pareto dominates} a complete allocation $\alloc$ if
+In this section, we show that the unit-subsidy guarantee need not be compatible with Pareto optimality of the underlying allocation. Pareto optimality is evaluated with respect to the allocation of chores, without taking subsidies into account. Formally, a complete allocation $\allocB$ \emph{Pareto dominates} a complete allocation $\alloc$ if
 \[
-\cost_i(\allocB_i)\leq \cost_i(\bundle i)
-\qquad\text{for every }i\in\agents,
+    \cost_i(\allocB_i)\leq \cost_i(\bundle i)
+    \qquad\text{for every }i\in\agents,
 \]
-with strict inequality for at least one agent. An allocation is \emph{Pareto optimal} if it is not Pareto dominated by another complete allocation.
+with strict inequality for at least one agent. A complete allocation is \emph{Pareto optimal} if it is not Pareto dominated by any other complete allocation.
 
-\begin{proposition}\label{prop_1}
+\begin{proposition}
+\label{prop_1}
 There exist negative dichotomous instances, even with two agents and identical binary submodular cost functions, for which no Pareto-optimal allocation admits an envy-free subsidy vector in $\{0,1\}^n$.
 \end{proposition}
 
 \begin{proof}
 Consider two agents $\agents=\set{1,2}$ and three chores $\items=\set{a,b,c}$. Both agents have the same cost function
 \[
-\cost_1(S)=\cost_2(S)=\min\{\abs S,2\}.
+    \cost_1(S)=\cost_2(S)=\min\{\abs S,2\}.
 \]
-Every marginal cost belongs to $\{0,1\}$, so the cost function is dichotomous. Moreover, it is submodular, since $k\mapsto\min\{k,2\}$ is a nondecreasing concave function of cardinality. The function is not additive, since
+Every marginal cost belongs to $\{0,1\}$, so the cost function is dichotomous. Moreover, it is submodular, since $k\mapsto\min\{k,2\}$ is a nondecreasing concave function of cardinality. It is not additive, since
 \[
-\cost_i(\set{a,b,c})=2<3
- =\sum_{g\in\set{a,b,c}}\cost_i(\set g).
+    \cost_i(\set{a,b,c})=2<3
+    =\sum_{g\in\set{a,b,c}}\cost_i(\set g).
 \]
-
-Since the agents have identical costs, every complete allocation has, up to symmetry, one of two bundle-size profiles.
-
-First, consider a concentrated allocation with bundle sizes $(3,0)$. The corresponding cost profile is $(2,0)$. This allocation is Pareto optimal. Indeed, every allocation in which both agents receive a nonempty bundle has bundle sizes $(2,1)$ and therefore cost profile $(2,1)$, which does not improve the loaded agent and strictly worsens the other agent.
-
-However, a concentrated allocation cannot be made envy-free with unit subsidies. If agent $1$ receives all three chores, envy-freeness requires
+Every complete allocation has, up to symmetry, either bundle-size
+profile $(3,0)$ or $(2,1)$. First, consider the allocation in which agent $1$ receives all three chores. Its cost profile is $(2,0)$. The possible cost profiles of complete allocations are
 \[
-2-p_1\leq -p_2,
+    (2,0),\qquad (2,1),\qquad (1,2),\qquad (0,2),
+\]
+and none of the latter three Pareto dominates $(2,0)$. Hence, the concentrated allocation is Pareto optimal. By symmetry, the allocation in which agent $2$ receives all three chores is also Pareto optimal. However, a concentrated allocation cannot be made envy-free with unit subsidies. If agent $1$ receives all three chores, envy-freeness requires
+\[
+    2-p_1\leq -p_2,
 \]
 and hence
 \[
-p_1-p_2\geq 2.
+    p_1-p_2\geq 2.
 \]
 Thus, no subsidy vector in $\{0,1\}^2$ suffices. The case in which agent $2$ receives all three chores is symmetric.
 
-Now consider any split allocation, whose bundle sizes are $(2,1)$ up to symmetry. Its cost profile is $(2,1)$, so it can be made envy-free with subsidies $(1,0)$, up to symmetry. Nevertheless, it is not Pareto optimal: if the agent holding two chores is instead given the third chore as well, the cost profile changes from $(2,1)$ to $(2,0)$. The first agent's cost remains unchanged, while the second agent's cost strictly decreases.
+Now consider a split allocation, with bundle sizes $(2,1)$ up to symmetry. Its cost profile is $(2,1)$, so it can be made envy-free with subsidies $(1,0)$, up to symmetry. Nevertheless, it is not Pareto optimal. Assigning the remaining chore to the agent who already holds two chores changes the cost profile from $(2,1)$ to $(2,0)$: the cost of that agent remains unchanged, while the other agent's cost strictly decreases.
 
-Hence, every Pareto-optimal allocation requires a subsidy of at least two for one agent, whereas every allocation admitting unit subsidies is Pareto dominated. Therefore, no allocation is simultaneously Pareto optimal and envy-free with subsidies in $\{0,1\}^2$.
+Thus, the Pareto-optimal allocations are precisely the two concentrated allocations, and each requires a subsidy of at least $2$ for the agent receiving all three chores. Conversely, every allocation that admits an envy-free subsidy vector in $\{0,1\}^2$ is Pareto dominated. Therefore, no allocation is simultaneously Pareto optimal and envy-free with subsidies in $\{0,1\}^2$.
 \end{proof}
 
-Thus, unlike the unit-subsidy guarantee of Theorem~\ref{thm:m-main}, Pareto optimality cannot be added to the conclusion without weakening the subsidy bound. 
-
+Thus, the unit-subsidy guarantee of Theorem~\ref{thm:m-main} cannot, in general, be strengthened to require Pareto optimality.
 % \begin{remark}
 % \label{rem:m-scope}
 % Theorem~\ref{thm:m-main} uses Theorem~\ref{thm:m-twyz} together with the four

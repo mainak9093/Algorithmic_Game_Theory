@@ -1,0 +1,150 @@
+\documentclass[11pt]{article}
+\usepackage[letterpaper,margin=1.25in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext}
+\usepackage{microtype}
+\usepackage{authblk}
+\usepackage{amsthm}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{newpxmath}
+
+\usepackage{booktabs}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{float}         
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\floatname{algorithm}{Algorithm}
+
+% ---------- colour & links ------------------------------------------------
+\usepackage{xcolor}
+\definecolor{CiteGreen}{RGB}{0,120,60}
+\definecolor{LinkRed}{RGB}{160,20,20}
+\definecolor{UrlBlue}{RGB}{20,60,170}
+\definecolor{DraftOrange}{RGB}{200,90,0}
+\usepackage[
+  colorlinks=true,
+  citecolor=CiteGreen,
+  linkcolor=LinkRed,
+  urlcolor=UrlBlue,
+  bookmarksnumbered=true
+]{hyperref}
+\usepackage{babel}
+
+\usepackage{cleveref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}
+\newtheorem*{theorem*}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{proposition}{Proposition}
+\newtheorem{corollary}{Corollary}
+\newtheorem{definition}{Definition}
+\newtheorem{observation}{Observation}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{claim}{Claim}            \theoremstyle{definition}
+\newtheorem{example}{Example}
+\newtheorem{remark}{Remark}
+\theoremstyle{plain}
+
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+  \pushQED{\qed}%
+  \normalfont \topsep6\p@\@plus6\p@\relax
+  \trivlist
+  \item[\hskip\labelsep\bfseries #1\@addpunct{}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+
+
+
+% \newcommand{\draftnote}[1]{%
+%   \ifdraft{\color{DraftOrange}\sffamily\small[\,#1\,]}\fi}
+% \newcommand{\todo}[1]{\draftnote{\textbf{TODO:} #1}}
+% \newcommand{\verify}[1]{\draftnote{\textbf{VERIFY:} #1}}
+
+\newcommand{\agents}{N}                       % agent set [n]
+\newcommand{\items}{M}                        % item set, |M| = m
+\newcommand{\alloc}{\mathcal{A}}              % allocation (A_1,...,A_n)
+\newcommand{\allocB}{\mathcal{B}}
+\newcommand{\bundle}[1]{A_{#1}}
+\newcommand{\subsidy}{p}                      % subsidy vector
+\newcommand{\optsubsidy}{p^{*}}               % componentwise-minimum subsidy
+\newcommand{\envygraph}[1]{G_{#1}}            % envy graph
+\newcommand{\edgew}[1]{w_{#1}}                % envy-graph arc weight
+\newcommand{\pathw}[1]{\ell_{#1}}             % max-weight path out of a node
+\newcommand{\SW}{\mathrm{SW}}                 % utilitarian welfare
+\newcommand{\uspread}{\mathrm{uspread}}       % spread of the total-cost function
+\newcommand{\paidsets}{\mathcal{P}}           % admissible paid sets of a state
+\newcommand{\pathwin}{\ell^{\ast}}            % heaviest path ENDING at a node
+\newcommand{\Mset}{\mathrm{M}}        
+\newcommand{\margplus}[3]{\Delta^{+}_{#1}(#2,#3)}
+\newcommand{\margminus}[3]{\Delta^{-}_{#1}(#2,#3)}
+
+
+\newcommand{\cost}{c}
+
+\newcommand{\workprofile}{W}
+
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\argmin}{arg\,min}
+
+
+\usepackage{fancyhdr}
+\setlength{\headheight}{14pt}
+\pagestyle{fancy}
+\lhead{Unit Subsidies for Negative Dichotomous Chores}
+\rhead{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}   
+
+\begin{document}
+
+\makeatletter
+\renewcommand\@makefnmark{\hbox{\@textsuperscript{\normalfont\@thefnmark}}}
+\makeatother
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+
+
+\title{\textsc{}}
+
+\author[]{}
+%\author[]{}
+\affil[]{}
+
+\date{}
+
+
+\begin{abstract}
+\noindent \textbf{Without mathematical notations}
+
+We study the allocation of indivisible chores with subsidies under negative dichotomous valuations, where the marginal disutility of every chore is either zero or one. This is the chore analogue of the dichotomous goods model, for which a subsidy of at most one unit per agent is known to suffice for envy-freeness.
+
+We show that the same optimal guarantee holds for chores under no structural assumption beyond binary marginals. For every instance with negative dichotomous valuations, there exists a complete allocation together with subsidies of either zero or one per agent, with total subsidy at most n minus 1, such that the resulting outcome is envy-free. Moreover, the allocation is EF1 even before subsidies are paid. The subsidy bound is tight, and both the allocation and the subsidies can be computed in polynomial time in the value-oracle model. We further show that the unit-subsidy guarantee cannot, in general, be maintained if Pareto optimality is also required.
+
+Unlike in the corresponding goods setting, a natural incremental extension approach does not work for chores. Our proof instead exploits key properties of an envy-free partial allocation and its associated equality graph to obtain the complete allocation and determine which agents require subsidies.
+
+\vspace{2mm}
+ 
+\noindent \textbf{With mathematical notations}
+
+We study the allocation of indivisible chores with subsidies under negative dichotomous valuations, where the marginal disutility of every chore is either zero or one. This is the chore analogue of the dichotomous goods model, for which a subsidy of at most one unit per agent is known to suffice for envy-freeness.
+
+We show that the same optimal guarantee holds for chores under no structural assumption beyond binary marginals. For every instance with negative dichotomous valuations, there exists a complete allocation $A$ and a subsidy vector $p\in\{0,1\}^n$, with total subsidy at most $n-1$, such that $(A,p)$ is envy-free. Moreover, $A$ is EF1 even before subsidies are paid. The subsidy bound is tight, and both the allocation and the subsidies can be computed in polynomial time in the value-oracle model. We further show that the unit-subsidy guarantee cannot, in general, be maintained if Pareto optimality is also required.
+
+Unlike in the corresponding goods setting, a natural incremental extension approach does not work for chores. Our proof instead exploits key properties of an envy-free partial allocation and its associated equality graph to obtain the complete allocation and determine which agents require subsidies.
+\end{abstract}
+
+% --------------------------------------------------------------------------
+
+
+\end{document}

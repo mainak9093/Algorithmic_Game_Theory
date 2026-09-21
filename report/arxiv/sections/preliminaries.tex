@@ -42,13 +42,9 @@ $v_i(\bundle{i}) + \subsidy_i \ge v_i(\bundle{j}) + \subsidy_j$ for all
 $i, j \in \agents$.
 \end{definition}
 
-An allocation $\alloc$ is \emph{envy-freeable} if some $\subsidy \in \R^n_+$
-makes $(\alloc,\subsidy)$ an envy-free solution; this is a property of the
-allocation alone. Following~\cite{BKNS22} we write
-$\Mset(\subsidy) := \set{i \in \agents \mid \subsidy_i \ge \subsidy_j \text{ for
-all } j \in \agents}$ for the set of maximally subsidised agents.
+An allocation $\alloc$ is \emph{envy-freeable} if some $\subsidy \in \R^n_+$ makes $(\alloc,\subsidy)$ an envy-free solution; this is a property of the allocation alone. 
 
-We will also use the standard relaxation of envy-freeness up to one item (EF1). Since our framework allows chores, we use the two-sided form of EF1, in which one is allowed to remove at most one item from either of the two bundles being compared~\cite{KMSTY24}. Formally:
+We will also use the standard relaxation of envy-freeness up to one item (EF1). Since our framework allows chores, we use the two-sided form of EF1, in which one is allowed to remove at most one item from either of the two bundles being compared~\cite{kawase2025towards}. Formally:
 \begin{definition}[EF1, two-sided form]
 \label{def:ef1}
 An allocation $\alloc$ is \emph{envy-free up to one item} (EF1) iff for all
@@ -59,10 +55,7 @@ $v_i(\bundle{i} \setminus X) \ge v_i(\bundle{j} \setminus X)$.
 
 For an all-goods instance, removing an item from the envious agent's own bundle can only make the comparison harder, so the definition reduces to the usual goods version of EF1, in which one item may be removed from the envied bundle~\cite{HS19}. For an all-chore instance, the situation is reversed: removing a chore from the envied bundle can only make that bundle more attractive. Hence, if an item is removed, it may, without loss, be taken from the envious agent's own bundle.
 
-Every instance in this paper is an all-chore instance, and there
-Definition~\ref{def:ef1} takes a simpler form: the item removed can always
-be taken from the envious agent's own bundle. We record that specialisation,
-since it is the form that the results below establish.
+Every instance in this paper is an all-chore instance, and in this setting, Definition~\ref{def:ef1} takes a simpler form: the item removed can always be taken from the envious agent's own bundle. We record that specialisation, since it is the form that the results below establish.
 
 \begin{definition}[EF1 for chores]
 \label{def:ef1chores}
@@ -75,14 +68,11 @@ $e \in \bundle i$ with
 \]
 \end{definition}
 
-Definition~\ref{def:ef1chores} is exactly Definition~\ref{def:ef1} on an
-all-chore instance. Taking $X = \emptyset$ in the first case and
-$X = \set e \subseteq \bundle i$ in the second gives one direction; for the
-converse, a removed item lying in $\bundle j$ only lowers
-$\cost_i(\bundle j)$'s counterpart on the wrong side of the inequality, so
-nothing is gained by removing from the envied bundle when every item is a
-chore.
-
+Definition~\ref{def:ef1chores} is exactly Definition~\ref{def:ef1} on an all-chore instance. For the converse, if the removed item lies in $A_j$, then
+\[
+    v_i(A_j\setminus\{e\})\geq v_i(A_j),
+\]
+so $v_i(A_i)\geq v_i(A_j\setminus\{e\})$ already implies $v_i(A_i)\geq v_i(A_j)$. Thus, whenever an item needs to be removed, it may be taken from the envious agent's own bundle.
 % --------------------------------------------------------------------------
 
 
