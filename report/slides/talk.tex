@@ -1,0 +1,1202 @@
+% ==========================================================================
+%  talk.tex --- Envy-Free Chore Allocation with Unit Subsidies
+%               under Negative Dichotomous Valuations
+%
+%  A single-sitting talk: every proof in the paper appears here in full.
+%
+%  Compile:  pdflatex talk.tex   (twice, so the frame count settles)
+%
+%  For a printable handout with the incremental reveals flattened, add the
+%  `handout' class option below; 85 overlay pages collapse to 42 slides.
+% ==========================================================================
+\documentclass[11pt,aspectratio=169]{beamer}
+\input{preamble}
+
+\title{Envy-Free Chore Allocation with Unit Subsidies}
+\subtitle{under Negative Dichotomous Valuations}
+\author{Mainak Sarkar \and Soumyarup Sadhukhan}
+\institute{Indian Institute of Technology Kanpur}
+\date{\today}
+
+\begin{document}
+
+% ==========================================================================
+\begin{frame}[plain]
+  \vspace{1.2em}
+  \begin{center}
+    {\color{Slate}\rule{0.86\textwidth}{0.9pt}}\\[0.9em]
+    {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}\\[0.35em]
+    {\large\color{Muted}\insertsubtitle}\\[0.7em]
+    {\color{Slate}\rule{0.86\textwidth}{0.9pt}}\\[1.4em]
+    {\insertauthor}\\[0.3em]
+    {\small\color{Muted}\insertinstitute}\\[1.2em]
+    {\small\color{Muted}\insertdate}
+  \end{center}
+\end{frame}
+
+% ==========================================================================
+\begin{frame}{Outline}
+  \vspace{0.6em}
+  \begin{columns}[T]
+    \begin{column}{0.48\textwidth}
+      \tableofcontents[sections={1-3}]
+    \end{column}
+    \begin{column}{0.48\textwidth}
+      \tableofcontents[sections={4-5}]
+    \end{column}
+  \end{columns}
+\end{frame}
+
+% ==========================================================================
+\section{The problem}
+% ==========================================================================
+
+\begin{frame}{Envy-freeness, and why it fails}
+  We allocate a set $\items$ of $m$ indivisible items among $n$ agents.
+
+  \begin{block}{Envy-freeness \refr{Foley 1967; Varian 1974}}
+    An allocation $\alloc=(\bundle1,\dots,\bundle n)$ is \emph{envy-free} if
+    \[
+      v_i(\bundle i)\;\ge\;v_i(\bundle j)\qquad\text{for all }i,j .
+    \]
+  \end{block}
+
+  \pause
+  \medskip
+  For \emph{indivisible} items this is hopeless in general:
+
+  \begin{center}
+    \emph{two agents, one item that both want.}
+  \end{center}
+
+  Whoever does not receive it envies the one who does.
+
+  \pause
+  \medskip
+  Two standard escapes:
+  \begin{itemize}
+    \item \textbf{Relax} the criterion --- EF1, EFX
+          \refr{Budish 2011; Lipton et al.\ 2004; Caragiannis et al.\ 2019}
+    \item \textbf{Keep} exact envy-freeness, and pay for it. \hl{$\leftarrow$ this talk}
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Envy-freeness with subsidies}
+  Each agent $i$ additionally receives a subsidy $\subsidy_i\ge 0$ from a third party.
+
+  \begin{block}{Envy-free solution}
+    $(\alloc,\subsidy)$ is an \emph{envy-free solution} if
+    \[
+      v_i(\bundle i)+\subsidy_i\;\ge\;v_i(\bundle j)+\subsidy_j
+      \qquad\text{for all }i,j .
+    \]
+  \end{block}
+
+  \medskip
+  Money enters linearly, at the same rate for every agent.
+
+  \pause
+  \medskip
+  The question is not existence --- it is \hl{how much money}.
+
+  \medskip
+  Throughout, each item is worth at most one unit to any agent; some
+  normalisation of this kind is needed before absolute subsidy bounds mean
+  anything.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{What is known --- for goods}
+  \begin{itemize}\itemsep0.75em
+    \item \textbf{Halpern and Shah (2019).}
+          Every instance admits an envy-freeable allocation.
+          For a \emph{given} such allocation, total subsidy $(n-1)m$ may be
+          needed. They conjecture $n-1$ suffices when the allocation may also
+          be chosen.
+
+    \pause
+    \item \textbf{Brustle, Dippel, Narayan, Suzuki, Vetta (2020).}
+          Conjecture proved for \emph{additive} valuations; the allocation is
+          also EF1 and balanced. For general monotone valuations,
+          $2(n-1)$ per agent.
+
+    \pause
+    \item \textbf{Barman, Krishna, Narahari, Sadhukhan (2022).}
+          For \emph{dichotomous} valuations --- every marginal in $\set{0,1}$ ---
+          a much sharper guarantee:
+          \[
+            \subsidy\in\hl{\set{0,1}^n},\qquad \sum_i \subsidy_i\le n-1,
+            \qquad\text{in polynomial time.}
+          \]
+  \end{itemize}
+
+  \pause
+  \medskip
+  The last bound is tight: $n$ agents, one good wanted by all --- the $n-1$
+  agents who miss out each need one unit.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{This talk: chores}
+  Now every item is a \emph{chore} --- receiving one weakly \emph{decreases}
+  utility.
+
+  \begin{block}{Negative dichotomous valuations}
+    For every agent $i$, every $S\subseteq\items$ and every $e\notin S$,
+    \[
+      v_i(S\cup\set e)-v_i(S)\;\in\;\set{-1,0}.
+    \]
+  \end{block}
+
+  \medskip
+  The sign analogue of the dichotomous goods model. \alert{No further
+  structure is assumed} --- valuations need not be additive, submodular, or
+  even subadditive.
+
+  \pause
+  \medskip
+  \textbf{Why binary marginals are natural here.}
+  An extra task either creates a fresh unit of burden, or is absorbed by a
+  commitment already made:
+  \begin{itemize}
+    \item an agent already covering an on-call window absorbs another
+          incident in that window at no extra cost;
+    \item a driver already routed through a district absorbs one more stop.
+  \end{itemize}
+  Whether a chore is costly depends on the rest of the bundle --- hence
+  non-additivity.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Main result}
+  \begin{alertblock}{Theorem}
+    For every instance with negative dichotomous valuations there exist a
+    \emph{complete} allocation $\alloc$ and a subsidy vector
+    $\subsidy\in\set{0,1}^n$ with
+    \[
+      \sum_{i\in\agents}\subsidy_i\;\le\;n-1
+    \]
+    such that $(\alloc,\subsidy)$ is an envy-free solution. Moreover $\alloc$ is
+    \emph{EF1 even before subsidies are paid}, and both are computable in
+    polynomial time in the value-oracle model.
+  \end{alertblock}
+
+  \pause
+  \vspace{-0.2em}
+  \begin{itemize}\itemsep0.1em
+    \item the per-agent bound is \hl{$0$ or $1$} --- not merely $O(1)$;
+    \item the total bound $n-1$ is \hl{tight};
+    \item EF1 is \hl{extra} --- the goods-side construction does not give it.
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Where the result sits}
+  \begin{center}
+    \renewcommand{\arraystretch}{1.5}
+    \begin{tabular}{l >{\centering\arraybackslash}p{0.27\textwidth} >{\centering\arraybackslash}p{0.27\textwidth}}
+      \toprule
+       & \textbf{goods} & \textbf{chores}\\
+      \midrule
+      \textbf{additive}    & Brustle et al.\ 2020 & Lu et al.\ 2026 \\
+      \textbf{dichotomous} & Barman et al.\ 2022  & \hl{\textbf{this work}} \\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \medskip
+  Each cell gives one unit per agent and $n-1$ in total.
+
+  \pause
+  \medskip
+  The two classes are \alert{incomparable}: dichotomous valuations need not be
+  additive, and additive valuations need not be dichotomous. So neither
+  neighbouring cell implies ours.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The benchmark we had to beat}
+  The best previously known bound for our domain is not from the chores
+  literature at all, but from a much more general theorem.
+
+  \medskip
+  \begin{block}{Kawase, Makino, Sumita, Tamura, Yokoo (2025)}
+    For \emph{doubly monotone} valuations with marginals bounded by one in
+    absolute value, any EF1 allocation can be converted into an envy-free
+    solution with
+    \[
+      n-1 \text{ per agent},\qquad n(n-1)/2 \text{ in total}.
+    \]
+  \end{block}
+
+  \medskip
+  Negative dichotomous valuations are a subclass of that domain, so this
+  already gives a bound \emph{independent of $m$}.
+
+  \pause
+  \medskip
+  We improve $n-1$ per agent to \hl{$1$} per agent --- a linear-factor
+  improvement --- and $n(n-1)/2$ to $n-1$ in total.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The total bound $n-1$ is tight}
+  Take $n$ agents, $n-1$ chores, and identical \emph{binary additive} costs:
+  \[
+    v_i(S)=-\abs S\qquad\text{for every agent }i .
+  \]
+
+  \medskip
+  In any complete allocation some agent $h$ receives the empty bundle.
+  Envy-freeness of agent $i$ towards $h$ reads
+  \[
+    -\abs{\bundle i}+\subsidy_i\;\ge\;v_i(\bundle h)+\subsidy_h\;=\;\subsidy_h ,
+  \]
+  hence
+  \[
+    \subsidy_i\;\ge\;\abs{\bundle i}+\subsidy_h\;\ge\;\abs{\bundle i}.
+  \]
+
+  \pause
+  \medskip
+  Summing over all agents,
+  \[
+    \sum_{i\in\agents}\subsidy_i
+    \;\ge\;\sum_{i\in\agents}\abs{\bundle i}
+    \;=\;n-1 .
+  \]
+
+  \medskip
+  So no construction can do better in total. \hfill$\square$
+\end{frame}
+
+% ==========================================================================
+\section{Model}
+% ==========================================================================
+
+\begin{frame}{Model and cost form}
+  $\items$: $m$ indivisible chores. \quad $\agents=[n]$: agents. \quad
+  $v_i:2^{\items}\to\R$ with $v_i(\emptyset)=0$.
+
+  \medskip
+  Algorithms run in the \emph{value-oracle} model: an oracle returns $v_i(S)$
+  for a queried $S$.
+
+  \pause
+  \medskip
+  It is convenient to pass to non-negative \emph{costs}
+  \[
+    \cost_i(S):=-v_i(S).
+  \]
+
+  \begin{block}{Dichotomous cost function}
+    $\cost(\emptyset)=0$ and
+    $\cost(S\cup\set e)-\cost(S)\in\set{0,1}$ for all $S$ and $e\notin S$.
+  \end{block}
+
+  \medskip
+  Negative dichotomous valuations $\leftrightarrow$ dichotomous costs, under
+  $\cost_i=-v_i$. In particular every $\cost_i$ is
+  \hl{non-decreasing} and \hl{integer-valued} --- both used constantly below.
+
+  \medskip
+  Write $\cost_i(e\mid S):=\cost_i(S\cup\set e)-\cost_i(S)\in\set{0,1}$ for a marginal.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Fairness notions, in cost form}
+  \begin{block}{Envy-freeness}
+    $\cost_i(\bundle i)\le\cost_i(\bundle j)$ for all $i,j$.
+  \end{block}
+
+  \begin{block}{Envy-free solution}
+    $\cost_i(\bundle i)-\subsidy_i\;\le\;\cost_i(\bundle j)-\subsidy_j$ for all $i,j$.
+  \end{block}
+
+  \pause
+  \begin{block}{EF1 for chores}
+    A complete $\alloc$ is \emph{EF1} if for all $i,j$ either
+    \[
+      \cost_i(\bundle i)\le\cost_i(\bundle j),
+      \qquad\text{or}\qquad
+      \exists\,e\in\bundle i:\ \cost_i(\bundle i\setminus\set e)\le\cost_i(\bundle j).
+    \]
+  \end{block}
+
+  \smallskip
+  The item removed comes from the \emph{envious agent's own} bundle --- the
+  natural form for chores, and equivalent to the usual two-sided definition on
+  all-chore instances.
+
+  \smallskip
+  A partial allocation $X$ has \emph{residue}
+  $R(X):=\items\setminus\bigcup_i X_i$.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The equality graph}
+  Given a partial allocation $X$, define the \emph{equality graph}
+  $G=(\agents,E)$ on the agents:
+  \[
+    (i,j)\in E
+    \quad\Longleftrightarrow\quad
+    i\ne j\ \text{ and }\ \cost_i(X_i)=\cost_i(X_j).
+  \]
+
+  \medskip
+  An arc $i\to j$ records that agent $i$ is \emph{exactly indifferent} between
+  her own bundle and $j$'s --- she is on the verge of envying $j$.
+
+  \pause
+  \medskip
+  \begin{block}{Strongly connected component; tail component}
+    $u,v$ are \emph{strongly connected} if $u=v$, or each is reachable from the
+    other. The equivalence classes are the \emph{strongly connected
+    components} (SCCs).
+
+    \smallskip
+    An SCC $S$ is a \emph{tail component} if no arc leaves it: there is no
+    $(i,j)\in E$ with $i\in S$ and $j\notin S$.
+  \end{block}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Tail components exist}
+  \begin{block}{Lemma}
+    Every finite non-empty directed graph has at least one tail strongly
+    connected component.
+  \end{block}
+
+  \begin{pf}
+    Start at any SCC. If it is not a tail component, follow an outgoing arc to
+    another SCC and repeat.
+
+    \medskip
+    No SCC can be visited twice: that would make the two components mutually
+    reachable, hence a single component.
+
+    \medskip
+    There are finitely many SCCs, so the walk terminates --- at a component with
+    no outgoing arc, i.e.\ a tail component. \hfill$\square$
+  \end{pf}
+
+  \pause
+  \vspace{-0.2em}
+  \begin{center}
+  \begin{tikzpicture}[>={Stealth[length=1.8mm]},
+      every node/.style={font=\footnotesize},scale=0.9,transform shape]
+    \tikzstyle{ag}=[circle,draw=Slate,thick,minimum size=5.5mm,inner sep=0pt]
+    \node[ag] (a) at (0,0) {$1$};
+    \node[ag] (b) at (1.5,0) {$2$};
+    \node[ag] (c) at (3.6,0) {$3$};
+    \node[ag] (d) at (5.1,0) {$4$};
+    \draw[->,Slate,thick] (a) -- (b);
+    \draw[->,Slate,thick] (b) -- (c);
+    \draw[->,Accent,thick] (c) to[bend left=30] (d);
+    \draw[->,Accent,thick] (d) to[bend left=30] (c);
+    \begin{scope}[on background layer]
+      \node[draw=Accent,dashed,rounded corners,fit=(c)(d),inner sep=2.6mm] (box) {};
+    \end{scope}
+    \node[Accent,anchor=west] at ($(box.east)+(0.25,0)$) {tail SCC $S$};
+  \end{tikzpicture}
+  \end{center}
+\end{frame}
+
+% ==========================================================================
+\section{The construction}
+% ==========================================================================
+
+\begin{frame}{Starting point: an envy-free \emph{partial} allocation}
+  \begin{block}{Theorem \refr{Tao, Wu, Yu, Zhou 2025, Thm.\ 6.1}}
+    For every $n$ and all dichotomous costs $\cost_1,\dots,\cost_n$ there is a
+    polynomial-time algorithm returning a partial allocation $X$ that is
+    envy-free,
+    \[
+      \cost_i(X_i)\le\cost_i(X_j)\quad\text{for all }i,j,
+    \]
+    and leaves $\abs{R(X)}\le n-1$ chores unassigned.
+  \end{block}
+
+  \pause
+  \medskip
+  We need more than the statement --- we need the \hl{state the algorithm halts
+  in}. So we recall its three rules.
+
+  \medskip
+  It maintains $X$ together with the equality graph $G$, and while
+  $R(X)\ne\emptyset$ applies, \emph{in order}:
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The three rules}
+  \begin{block}{}
+    \begin{description}\itemsep0.55em
+      \item[(R1)] If some $e\in R(X)$ and some $i$ have
+            $\cost_i(e\mid X_i)=0$ --- a \emph{free} chore for $i$ ---
+            assign $e$ to $i$.
+
+      \item[(R2)] Otherwise, if some $e\in R(X)$ and some arc $(i,j)\in E$
+            \emph{on a directed cycle} of $G$ have $\cost_i(e\mid X_j)=0$,
+            rotate the bundles along that cycle and assign $e$ to $i$.
+
+      \item[(R3)] Otherwise, select a tail SCC $S$ of $G$.
+            If $\abs{R(X)}\ge\abs S$, hand out distinct residual chores to the
+            agents of $S$, one each. Otherwise \hl{halt}.
+    \end{description}
+  \end{block}
+
+  \pause
+  \medskip
+  So if the algorithm halts with residue left over:
+  \begin{itemize}
+    \item neither (R1) nor (R2) applies at that state, and
+    \item for the tail SCC $S$ selected at the halting step,
+          $\quad\hl{r:=\abs{R(X)}<\abs S}$.
+  \end{itemize}
+
+  \medskip
+  That last inequality is what gives us \emph{room}: more agents in $S$ than
+  chores left to place.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{What the terminal state gives us}
+  Fix $X$ at termination; $R:=R(X)$, $r:=\abs R$, $G$ the equality graph there,
+  and $S$ the tail SCC from the halting step (so $r<\abs S$).
+
+  \begin{block}{Lemma (terminal state)}
+    Suppose $r\ge 1$. Then
+    \begin{enumerate}
+      \item[(i)]   $\cost_i(e\mid X_i)=1$ for every $i\in\agents$, $e\in R$;
+      \item[(ii)]  $\cost_i(e\mid X_j)=1$ for every arc $(i,j)\in E$ with
+                   $i,j\in S$, and every $e\in R$;
+      \item[(iii)] $\cost_i(X_i)<\cost_i(X_j)$ for every $i\in S$,
+                   $j\in\agents\setminus S$.
+    \end{enumerate}
+  \end{block}
+
+  \medskip
+  In words:
+  \begin{itemize}
+    \item (i) no leftover chore is free to anybody;
+    \item (ii) inside $S$, no leftover chore is free even on a neighbour's bundle;
+    \item (iii) agents in $S$ are \emph{strictly} better off than everyone outside $S$.
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Proof of the terminal lemma}
+  Since $r\ge 1$, the algorithm halted with non-empty residue. Hence neither
+  (R1) nor (R2) was applicable.
+
+  \step{(i)}
+  If $\cost_i(e\mid X_i)=0$ for some $i$ and $e\in R$, rule (R1) would apply.
+  Marginals lie in $\set{0,1}$, so $\cost_i(e\mid X_i)=1$.
+
+  \pause
+  \step{(ii)}
+  Let $(i,j)\in E$ with $i,j\in S$. As $S$ is strongly connected there is a
+  directed path $j\rightsquigarrow i$; take one without repeated vertices and
+  append the arc $(i,j)$ --- a directed cycle through $(i,j)$.
+
+  \smallskip
+  If $\cost_i(e\mid X_j)=0$ for some $e\in R$, rule (R2) would apply to that
+  arc and that cycle. So the marginal is not $0$, hence $1$.
+
+  \pause
+  \step{(iii)}
+  Let $i\in S$, $j\notin S$. As $S$ is a \emph{tail} component no arc leaves it,
+  so $(i,j)\notin E$, i.e.
+  \[
+    \cost_i(X_i)\neq\cost_i(X_j).
+  \]
+  Envy-freeness of $X$ gives $\cost_i(X_i)\le\cost_i(X_j)$. The inequality is
+  therefore strict. \hfill$\square$
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The completion}
+  Assume $r\ge1$ and write $R=\set{e_1,\dots,e_r}$.
+
+  \medskip
+  Since $r<\abs S$, we may pick $r$ \emph{distinct} agents
+  \[
+    T=\set{t_1,\dots,t_r}\subseteq S ,
+  \]
+  arbitrarily, and define
+  \[
+    \bundle i:=
+    \begin{cases}
+      X_{t_k}\cup\set{e_k}, & i=t_k\quad(1\le k\le r),\\[2pt]
+      X_i,                  & i\in\agents\setminus T .
+    \end{cases}
+  \]
+
+  \medskip
+  The $t_k$ are distinct and each chore of $R$ is used once, so the bundles stay
+  disjoint and now cover $\items$: \hl{$\alloc$ is complete}.
+
+  \medskip
+  Agents in $T$ are the \emph{recipients} --- each absorbs exactly one leftover
+  chore, and by (i) that costs her exactly $+1$.
+
+  \pause
+  \medskip
+  What remains: decide \emph{who gets paid}, and show one unit each is enough.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Who gets paid: the subsidy set}
+  \begin{block}{Definition (subsidy set)}
+    Let $P\subseteq\agents$ be the \emph{smallest} set with
+    \begin{description}
+      \item[(P1)] $T\subseteq P$; and
+      \item[(P2)] if $i\in\agents\setminus S$ and $(i,j)\in E$ for some $j\in P$,
+                  then $i\in P$.
+    \end{description}
+    Then set $\subsidy_i:=1$ if $i\in P$, and $\subsidy_i:=0$ otherwise.
+  \end{block}
+
+  \smallskip
+  Equivalently: start from $P:=T$ and repeatedly absorb any agent
+  \emph{outside $S$} with an equality arc \emph{into} $P$ --- a
+  \hl{backward closure} in $G$.
+
+  \pause
+  \smallskip
+  \textbf{The intuition.}
+  A recipient's cost rose by one, so she needs a unit. Paying her may make her
+  \emph{neighbours} envious --- exactly those who were indifferent to her, i.e.\
+  those with an equality arc into her. The payment must therefore propagate
+  backwards.
+
+  \smallskip
+  The restriction $i\notin S$ in (P2) stops the closure from swallowing $S$
+  itself --- and that is what keeps the budget below $n$.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The algorithm}
+  \begin{block}{\normalfont\small Step 2 is due to Tao et al.; steps 5--10 are the contribution}
+  \footnotesize
+  \setlength{\leftmargini}{2.1em}
+  \noindent\textbf{Input:} agents $\agents=[n]$, chores $\items$, value oracles
+  $\set{v_i}$.\\
+  \noindent\textbf{Output:} complete $\alloc$ that is EF1, and
+  $\subsidy\in\set{0,1}^n$ with $(\alloc,\subsidy)$ envy-free,
+  $\sum_i\subsidy_i\le n-1$.
+  \vspace{0.35em}
+  \begin{enumerate}\itemsep0.18em
+    \item Set $\cost_i=-v_i$ for every $i$.
+    \item Run the partial-allocation algorithm of Tao et al.\ on
+          $\set{\cost_i}$, keeping the tail SCC selected at the terminating
+          application of (R3) if the residue is non-empty.
+    \item Let $X$ be its terminal partial allocation,
+          $R=\items\setminus\bigcup_i X_i$.
+    \item \textbf{if} $R=\emptyset$ \textbf{then return} $(X,\mathbf 0)$.
+    \item Build the terminal equality graph $G=(\agents,E)$.
+    \item Write $R=\set{e_1,\dots,e_r}$; let $S$ be that tail SCC.
+          \hfill{\color{Muted}$r<\abs S$}
+    \item Choose distinct $T=\set{t_1,\dots,t_r}\subseteq S$.
+    \item $\bundle{t_k}\gets X_{t_k}\cup\set{e_k}$ for $k\le r$;\quad
+          $\bundle i\gets X_i$ for $i\notin T$.
+    \item $P\gets T$;\ \textbf{while} $\exists\,i\in\agents\setminus S,\ j\in P$
+          with $(i,j)\in E$, $i\notin P$:\ $P\gets P\cup\set i$.
+    \item $\subsidy_i\gets\mathbf 1[i\in P]$;\quad \textbf{return}
+          $(\alloc,\subsidy)$.
+  \end{enumerate}
+  \end{block}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The closure does not eat into $S$}
+  \begin{block}{Lemma}
+    $P\cap S=T$. Equivalently $P\setminus T\subseteq\agents\setminus S$:
+    every subsidised agent inside $S$ is a recipient.
+  \end{block}
+
+  \begin{pf}
+    $T\subseteq P$ by (P1) and $T\subseteq S$, so $T\subseteq P\cap S$.
+
+    \medskip
+    Suppose for contradiction some $i\in(P\cap S)\setminus T$, and put
+    $P':=P\setminus\set i$.
+
+    \medskip
+    $P'$ still satisfies (P1), since $i\notin T$.
+
+    \pause
+    \medskip
+    $P'$ also satisfies (P2). Let $k\in\agents\setminus S$ with $(k,j)\in E$ for
+    some $j\in P'$. Since $P'\subseteq P$ and $P$ satisfies (P2), $k\in P$.
+    Moreover $k\ne i$, because $k\notin S$ whereas $i\in S$. Hence $k\in P'$.
+
+    \medskip
+    So $P'$ satisfies both conditions and is strictly smaller than $P$ ---
+    contradicting minimality. \hfill$\square$
+  \end{pf}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The budget}
+  \begin{block}{}
+    $\subsidy\in\set{0,1}^n$ and $\displaystyle\sum_{i\in\agents}\subsidy_i\le n-1$.
+  \end{block}
+
+  \begin{pf}
+    $\subsidy\in\set{0,1}^n$ is immediate from the definition.
+
+    \smallskip
+    We have $\abs T=r<\abs S$, so $S\setminus T\ne\emptyset$.
+
+    \smallskip
+    By the previous lemma $P\cap S=T$, so every agent of $S\setminus T$ lies
+    \emph{outside} $P$ and therefore receives \hl{zero} subsidy.
+
+    \smallskip
+    At least one agent is unpaid, hence
+    \[
+      \sum_{i\in\agents}\subsidy_i\;=\;\abs P\;\le\;n-1 .
+    \]
+    \vspace{-0.6em}
+    \hfill$\square$
+  \end{pf}
+
+  \pause
+  \smallskip
+  The slack came from $r<\abs S$ --- the halting condition of (R3).
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The key lemma}
+  \begin{block}{Lemma}
+    Let $i\in S$, $t\in T$ and $e\in R$. Then
+    \[
+      \cost_i\bigl(X_t\cup\set e\bigr)\;\ge\;\cost_i(X_i)+1 .
+    \]
+  \end{block}
+
+  \medskip
+  That is: to an agent of $S$, \emph{any} recipient's completed bundle looks at
+  least one unit worse than her own.
+
+  \begin{pf}
+    Envy-freeness of $X$ gives $\cost_i(X_i)\le\cost_i(X_t)$.
+
+    \pause
+    \medskip
+    \emph{Strict case.} If $\cost_i(X_i)<\cost_i(X_t)$, integrality gives
+    $\cost_i(X_t)\ge\cost_i(X_i)+1$, and monotonicity gives
+    $\cost_i(X_t\cup\set e)\ge\cost_i(X_t)$. Done.
+
+    \pause
+    \medskip
+    \emph{Equality case.} Suppose $\cost_i(X_i)=\cost_i(X_t)$.
+    \begin{itemize}
+      \item If $i=t$: terminal lemma (i) gives $\cost_i(e\mid X_i)=1$.
+      \item If $i\ne t$: then $(i,t)\in E$, and $i,t\in S$, so terminal
+            lemma (ii) gives $\cost_i(e\mid X_t)=1$.
+    \end{itemize}
+    Either way $\cost_i(X_t\cup\set e)=\cost_i(X_i)+1$. \hfill$\square$
+  \end{pf}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Envy-freeness of the completion}
+  \begin{block}{Theorem}
+    With $\alloc$ and $\subsidy$ as constructed, $(\alloc,\subsidy)$ is an
+    envy-free solution.
+  \end{block}
+
+  \medskip
+  Fix $i$. Since $X_j\subseteq \bundle j$ for every $j$, monotonicity and
+  envy-freeness of $X$ give the standing inequality
+  \[
+    \cost_i(\bundle j)\;\ge\;\cost_i(X_j)\;\ge\;\cost_i(X_i)
+    \qquad\text{for every }j. \tag{$\ast$}
+  \]
+
+  \medskip
+  We must check $\cost_i(\bundle i)-\subsidy_i\le\cost_i(\bundle j)-\subsidy_j$
+  for every $j$. Three cases, according to where $i$ sits:
+  \[
+    \underbrace{i\in T}_{\text{recipient}}\qquad
+    \underbrace{i\in P\setminus T}_{\text{paid, not a recipient}}\qquad
+    \underbrace{i\notin P}_{\text{unpaid}}
+  \]
+  (These are exhaustive: $\agents$ is the disjoint union of $T$, $P\setminus T$
+  and $\agents\setminus P$.)
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Case 1: $i\in T$ is a recipient}
+  Then $\subsidy_i=1$, and if $e\in R$ is the chore she absorbed, terminal
+  lemma (i) gives
+  \[
+    \cost_i(\bundle i)=\cost_i(X_i)+\cost_i(e\mid X_i)=\cost_i(X_i)+1,
+    \qquad\text{so}\qquad
+    \cost_i(\bundle i)-\subsidy_i=\cost_i(X_i).
+  \]
+  So we need $\cost_i(\bundle j)-\subsidy_j\ge\cost_i(X_i)$ for every $j$.
+
+  \pause
+  \step{$j\notin P$}
+  Then $j\notin T$, so $\bundle j=X_j$ and $\subsidy_j=0$. Envy-freeness of $X$:
+  \[
+    \cost_i(\bundle j)-\subsidy_j=\cost_i(X_j)\ge\cost_i(X_i).\ \checkmark
+  \]
+
+  \pause
+  \step{$j\in P$} Here $\subsidy_j=1$, so we need
+  $\cost_i(\bundle j)\ge\cost_i(X_i)+1$.
+  \begin{itemize}
+    \item If $j\in T$: this is exactly the key lemma.
+    \item If $j\in P\setminus T$: then $j\notin S$ by the closure lemma, and
+          $i\in S$, so terminal lemma (iii) gives
+          $\cost_i(X_i)<\cost_i(X_j)$; integrality then gives
+          $\cost_i(\bundle j)=\cost_i(X_j)\ge\cost_i(X_i)+1$.\ \checkmark
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Cases 2 and 3}
+  \step{Case 2: $i\in P\setminus T$}
+  Here $\bundle i=X_i$ and $\subsidy_i=1$, so
+  $\cost_i(\bundle i)-\subsidy_i=\cost_i(X_i)-1$.
+
+  \smallskip
+  For every $j$, the standing inequality $(\ast)$ and $\subsidy_j\le1$ give
+  \[
+    \cost_i(\bundle j)-\subsidy_j\;\ge\;\cost_i(X_i)-1\;=\;\cost_i(\bundle i)-\subsidy_i.\ \checkmark
+  \]
+  (Being paid without taking on extra work is comfortable.)
+
+  \pause
+  \step{Case 3: $i\notin P$}
+  Then $i\notin T$, so $\bundle i=X_i$, $\subsidy_i=0$, and
+  $\cost_i(\bundle i)-\subsidy_i=\cost_i(X_i)$.
+
+  \smallskip
+  If $j\notin P$: $\bundle j=X_j$, $\subsidy_j=0$, and envy-freeness of $X$ closes it.
+
+  \smallskip
+  If $j\in P$, we claim $\cost_i(\bundle j)\ge\cost_i(X_i)+1$:
+  \begin{itemize}
+    \item \emph{$i\notin S$.} Envy-freeness gives $\cost_i(X_i)\le\cost_i(X_j)$.
+          Equality would put $(i,j)\in E$; with $i\notin S$ and $j\in P$,
+          rule (P2) would force $i\in P$ --- contradiction. So the inequality is
+          strict, and integrality with monotonicity gives the claim.
+    \item \emph{$i\in S$.} If $j\in T$ this is the key lemma. If $j\in P\setminus T$
+          then $j\notin S$ by the closure lemma, and terminal lemma (iii) plus
+          integrality give the claim.
+  \end{itemize}
+  Since $\subsidy_j=1$, we get $\cost_i(\bundle j)-\subsidy_j\ge\cost_i(X_i)$.\ \checkmark
+  \hfill$\square$
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{EF1 comes for free}
+  \begin{block}{Corollary}
+    $\alloc$ is EF1 --- before any subsidy is paid. Precisely:
+    \begin{enumerate}
+      \item[(i)] every non-recipient $i\in\agents\setminus T$ is
+                 \emph{envy-free} in $\alloc$;
+      \item[(ii)] every recipient $t_k$ satisfies
+                 $\cost_{t_k}(\bundle{t_k}\setminus\set{e_k})\le\cost_{t_k}(\bundle j)$
+                 for every $j$.
+    \end{enumerate}
+  \end{block}
+
+  \begin{pf}
+    Recall $X$ is envy-free and $X_j\subseteq\bundle j$ for every $j$.
+
+    \medskip
+    \emph{(i)} For $i\notin T$ we have $\bundle i=X_i$, so for every $j$
+    \[
+      \cost_i(\bundle i)=\cost_i(X_i)\le\cost_i(X_j)\le\cost_i(\bundle j),
+    \]
+    using envy-freeness of $X$ and then monotonicity.
+
+    \pause
+    \medskip
+    \emph{(ii)} For $i=t_k$ we have $\bundle i=X_i\cup\set{e_k}$, so
+    $\bundle i\setminus\set{e_k}=X_i$, and the same two steps give
+    \[
+      \cost_i(\bundle i\setminus\set{e_k})=\cost_i(X_i)\le\cost_i(X_j)\le\cost_i(\bundle j).
+    \]
+    Removing the single chore she absorbed erases all her envy. \hfill$\square$
+  \end{pf}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Putting it together}
+  \begin{pf}[Proof of the main theorem]
+    Pass to costs $\cost_i=-v_i$, dichotomous. Run the Tao et al.\ algorithm;
+    let $X$ be its terminal partial allocation, $R$ the residue, $r=\abs R$.
+
+    \medskip
+    \step{$r=0$}
+    $X$ is already complete and envy-free, so $(X,\mathbf 0)$ is an envy-free
+    solution with zero subsidy --- and every envy-free allocation is EF1.
+
+    \pause
+    \step{$r\ge1$}
+    Build $G$, take the tail SCC $S$, and construct $T$, $\alloc$, $\subsidy$.
+    Then
+    \begin{itemize}
+      \item $\alloc$ is complete;
+      \item $(\alloc,\subsidy)$ is envy-free \hfill (envy-freeness theorem)
+      \item $\subsidy\in\set{0,1}^n$, $\sum_i\subsidy_i\le n-1$ \hfill (budget)
+      \item $\alloc$ is EF1 \hfill (corollary)
+    \end{itemize}
+
+    \pause
+    \step{Running time}
+    Tao et al.\ is polynomial. $G$ has $n$ vertices and is read off the $n^2$
+    values $\cost_i(X_j)$ --- one oracle query each. SCCs, hence a tail
+    component, in polynomial time. Completing $\alloc$ costs $r\le n-1$
+    assignments, and $P$ is a backward reachability search in $O(n^2)$.
+    \hfill$\square$
+  \end{pf}
+\end{frame}
+
+% ==========================================================================
+\section{Two limitations}
+% ==========================================================================
+
+\begin{frame}{Why not just mirror the goods construction?}
+  The goods-side algorithm of Barman et al.\ is \emph{incremental}: allocate
+  items one at a time, maintaining the invariant that the partial allocation is
+  envy-freeable with subsidies in $\set{0,1}^n$.
+
+  \medskip
+  The obvious chore analogue: give each new chore to an agent who currently
+  receives \emph{no} subsidy.
+
+  \pause
+  \medskip
+  \begin{alertblock}{This does not work.}
+    There are negative dichotomous instances where a partial allocation admits
+    an envy-free solution with subsidies in $\set{0,1}^n$, yet after one more
+    chore arrives \emph{no} assignment of it preserves the unit-subsidy
+    guarantee --- even if the already-allocated bundles may first be permuted
+    among the agents.
+  \end{alertblock}
+
+  \medskip
+  So the one-item extension principle fails for chores, and a different
+  argument is needed. Here is the witness.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The instance}
+  Three agents $\agents=\set{1,2,3}$, three chores $\items=\set{x,y,z}$.
+  Costs depend only on bundle size:
+  \[
+    \cost_1(S)=\max\set{0,\abs S-1},
+    \qquad
+    \cost_2(S)=\cost_3(S)=\min\set{\abs S,2}.
+  \]
+
+  \begin{center}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{l|cccc}
+      \toprule
+      $\abs S$ & $0$ & $1$ & $2$ & $3$\\
+      \midrule
+      $\cost_1(S)$              & $0$ & $0$ & $1$ & $2$\\
+      $\cost_2(S)=\cost_3(S)$   & $0$ & $1$ & $2$ & $2$\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \medskip
+  Every marginal is $0$ or $1$: these are dichotomous costs. Agent $1$ gets her
+  first chore free; agents $2$ and $3$ saturate at two.
+
+  \pause
+  \medskip
+  Consider the partial allocation
+  \[
+    X_1=\set{x,y},\qquad X_2=X_3=\emptyset,
+  \]
+  with $z$ still unallocated.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The state is legitimately reachable}
+  \[
+    (\emptyset,\emptyset,\emptyset)
+    \;\longrightarrow\;
+    (\set{x},\emptyset,\emptyset)
+    \;\longrightarrow\;
+    (\set{x,y},\emptyset,\emptyset)
+  \]
+  with pointwise-minimal subsidies
+  \[
+    (0,0,0),\qquad (0,0,0),\qquad (1,0,0)
+  \]
+  respectively --- all within $\set{0,1}^3$. So an incremental algorithm can
+  legitimately arrive here.
+
+  \smallskip
+  At $X$: agent $1$ costs her bundle at $1$ and either empty bundle at $0$, so
+  she needs one unit; agents $2,3$ cost their own bundles at $0$ and $X_1$ at
+  $2$, so they have no envy.
+
+  \pause
+  \vspace{-0.2em}
+  \begin{alertblock}{Claim}
+    $z$ cannot be inserted so that the result admits an envy-free subsidy
+    vector in $\set{0,1}^3$ --- even allowing
+    $\set{x,y},\emptyset,\emptyset$ to be permuted among the agents first.
+  \end{alertblock}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The three ways to place $z$}
+  \step{(a) $z$ joins the two-chore bundle}
+  Bundle sizes $(3,0,0)$. Every agent values a three-chore bundle at $2$ and an
+  empty bundle at $0$, so whoever holds it needs a subsidy at least \hl{two}
+  units above an agent holding nothing. Impossible in $\set{0,1}^3$.
+
+  \pause
+  \step{(b) $z$ joins an empty bundle, and an agent of $\set{2,3}$ holds the pair}
+  Bundle sizes $(2,1,0)$. That agent values her pair at $2$ and the empty bundle
+  at $0$ --- again a gap of \hl{two}. Impossible.
+
+  \pause
+  \step{(c) $z$ joins an empty bundle, and agent $1$ holds the pair}
+  The only remaining option. Let $i\in\set{2,3}$ take the singleton and $j$ the
+  empty bundle. Then
+  \[
+    \underbrace{1-\subsidy_1\le 0-\subsidy_i}_{\text{agent }1\text{ vs }i}
+    \;\Longrightarrow\;\subsidy_1\ge\subsidy_i+1,
+    \qquad
+    \underbrace{1-\subsidy_i\le-\subsidy_j}_{\text{agent }i\text{ vs }j}
+    \;\Longrightarrow\;\subsidy_i\ge\subsidy_j+1 .
+  \]
+  Chaining: $\ \subsidy_1\ge\subsidy_j+2$ --- impossible for
+  $\subsidy\in\set{0,1}^3$. \hfill$\square$
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The instance itself is fine}
+  The obstruction is to the \emph{method}, not to the instance.
+
+  \begin{block}{}
+    \centering
+    The complete allocation
+    $\bigl(\set{x},\set{y},\set{z}\bigr)$
+    is envy-free \hl{with no subsidy at all}.
+  \end{block}
+
+  \medskip
+  Indeed agent $1$ values every singleton at cost $0$, and agents $2$ and $3$
+  value every singleton at cost $1$ --- nobody envies anybody.
+
+  \pause
+  \medskip
+  \textbf{What went wrong.} Reaching that allocation from
+  $(\set{x,y},\emptyset,\emptyset)$ requires \emph{taking back} chores already
+  placed on agent $1$. An incremental construction that only ever adds items
+  cannot do it.
+
+  \medskip
+  This is why our proof starts from a \emph{global} object --- the terminal
+  state of the Tao et al.\ algorithm --- rather than building up one chore at a
+  time.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Limitation 2: Pareto optimality}
+  Pareto optimality is judged on the \emph{chore allocation}, ignoring subsidies.
+
+  \medskip
+  $\allocB$ \emph{Pareto dominates} $\alloc$ if
+  $\cost_i(\allocB_i)\le\cost_i(\bundle i)$ for every $i$, strictly for some.
+  $\alloc$ is \emph{Pareto optimal} if nothing dominates it.
+
+  \pause
+  \begin{alertblock}{Proposition}
+    There are negative dichotomous instances --- already with two agents and
+    identical binary \emph{submodular} costs --- in which \emph{no} Pareto-optimal
+    allocation admits an envy-free subsidy vector in $\set{0,1}^n$.
+  \end{alertblock}
+
+  \pause
+  \medskip
+  \textbf{The instance.} Two agents, three chores $\set{a,b,c}$, both with
+  \[
+    \cost_1(S)=\cost_2(S)=\min\set{\abs S,2}.
+  \]
+  Marginals in $\set{0,1}$, so dichotomous. Submodular, since
+  $k\mapsto\min\set{k,2}$ is non-decreasing and concave. Not additive:
+  $\cost_i(\set{a,b,c})=2<3=\sum_{g}\cost_i(\set g)$.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The clash}
+  Up to symmetry every complete allocation has bundle sizes $(3,0)$ or $(2,1)$,
+  giving cost profiles
+  \[
+    (2,0),\qquad(2,1),\qquad(1,2),\qquad(0,2).
+  \]
+
+  \step{The concentrated allocations are Pareto optimal}
+  None of $(2,1)$, $(1,2)$, $(0,2)$ dominates $(2,0)$ --- each either raises some
+  agent's cost or matches it without improving the other. Symmetrically for
+  $(0,2)$.
+
+  \pause
+  \step{But they cannot be paid for}
+  If agent $1$ holds all three chores, envy-freeness needs
+  \[
+    2-\subsidy_1\le-\subsidy_2
+    \quad\Longrightarrow\quad
+    \subsidy_1-\subsidy_2\ge 2 ,
+  \]
+  impossible in $\set{0,1}^2$. Symmetrically for agent $2$.
+
+  \pause
+  \step{And the affordable allocations are dominated}
+  A split $(2,1)$ has profile $(2,1)$ and is envy-free with $(1,0)$ --- but
+  handing the third chore to the agent already holding two moves the profile to
+  $(2,0)$: her cost is unchanged, the other's strictly falls. So it is
+  dominated. \hfill$\square$
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{What the two limitations say}
+  \begin{columns}[T]
+    \begin{column}{0.47\textwidth}
+      \begin{block}{No incremental extension}
+        The goods-side proof technique does not transfer. One must reason about
+        a whole terminal state, not a growing prefix.
+
+        \smallskip
+        {\small A \emph{method} obstruction --- the instance itself was perfectly
+        well behaved.}
+      \end{block}
+    \end{column}
+    \begin{column}{0.47\textwidth}
+      \begin{block}{No free Pareto optimality}
+        The unit-subsidy guarantee cannot be strengthened to demand Pareto
+        optimality of the allocation.
+
+        \smallskip
+        {\small A \emph{statement} obstruction --- it fails already for two agents
+        with identical submodular costs.}
+      \end{block}
+    \end{column}
+  \end{columns}
+
+  \pause
+  \medskip
+  Note the price of insisting on unit subsidies on that instance: the cheapest
+  admissible allocation has total cost $3$, against $2$ for the cheapest
+  Pareto-optimal one.
+
+  \medskip
+  So efficiency and bounded subsidy genuinely pull against each other here.
+\end{frame}
+
+% ==========================================================================
+\section{Summary}
+% ==========================================================================
+
+\begin{frame}{Summary}
+  \begin{block}{Result}
+    Negative dichotomous chores admit a complete allocation $\alloc$ and
+    subsidies $\subsidy\in\set{0,1}^n$ with $\sum_i\subsidy_i\le n-1$ such that
+    $(\alloc,\subsidy)$ is envy-free; $\alloc$ is EF1 before subsidies; all
+    computable in polynomial time.
+  \end{block}
+
+  \smallskip
+  \textbf{The shape of the argument.}
+  \begin{enumerate}\itemsep0.12em
+    \item Take the terminal state of the Tao et al.\ algorithm --- envy-free,
+          at most $n-1$ chores left.
+    \item Its halting condition hands us a tail SCC $S$ with $r<\abs S$:
+          \emph{more agents than leftover chores}.
+    \item Park the leftovers on distinct agents $T\subseteq S$; each pays $+1$.
+    \item Pay $T$, propagating backwards along equality arcs --- never into $S$.
+    \item $S\setminus T\neq\emptyset$ stays unpaid: exactly the $n-1$ budget.
+  \end{enumerate}
+
+  \pause
+  \smallskip
+  \textbf{Two boundaries.} No incremental extension; no free Pareto optimality.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Directions}
+  \begin{itemize}\itemsep0.8em
+    \item \textbf{General binary marginals.}
+          Marginals in $\set{-1,0,1}$ --- goods and chores together, without
+          additivity. Does the unit-subsidy guarantee survive? Open even for
+          $n=3$.
+
+    \item \textbf{Beyond binary.}
+          Marginals in $\set{-k,\dots,0}$: what is the right per-agent bound?
+
+    \item \textbf{Efficiency.}
+          Our Proposition rules out Pareto optimality with unit subsidies. What
+          is the best achievable trade-off --- the least total cost among
+          allocations admitting $\subsidy\in\set{0,1}^n$?
+
+    \item \textbf{Truthfulness.}
+          Goko et al.\ obtain truthfulness for matroidal goods under free
+          disposal. Is anything comparable possible for dichotomous chores?
+  \end{itemize}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}[plain]
+  \vfill
+  \begin{center}
+    {\color{Slate}\rule{0.6\textwidth}{0.9pt}}\\[1.0em]
+    {\LARGE\color{Slate}\bfseries Thank you}\\[0.9em]
+    {\color{Slate}\rule{0.6\textwidth}{0.9pt}}\\[1.4em]
+    {\color{Muted}Questions welcome.}
+  \end{center}
+  \vfill
+\end{frame}
+
+% --------------------------------------------------------------------------
+\appendix
+\begin{frame}[allowframebreaks]{References}
+  \footnotesize
+  \begin{itemize}\itemsep0.45em
+    \item S.~Barman, A.~Krishna, Y.~Narahari, S.~Sadhukhan.
+          \emph{Achieving Envy-Freeness with Limited Subsidies under Dichotomous
+          Valuations.} IJCAI 2022, 60--66.
+    \item U.~Bhaskar, A.~R.~Sricharan, R.~Vaish.
+          \emph{On Approximate Envy-Freeness for Indivisible Chores and Mixed
+          Resources.} APPROX/RANDOM 2021, LIPIcs 207, 1:1--1:23.
+    \item J.~Brustle, J.~Dippel, V.~V.~Narayan, M.~Suzuki, A.~Vetta.
+          \emph{One Dollar Each Eliminates Envy.} ACM EC 2020, 23--39.
+    \item E.~Budish.
+          \emph{The Combinatorial Assignment Problem.}
+          Journal of Political Economy 119(6), 2011.
+    \item H.~Goko, A.~Igarashi, Y.~Kawase, K.~Makino, H.~Sumita, A.~Tamura,
+          Y.~Yokoi, M.~Yokoo.
+          \emph{A Fair and Truthful Mechanism with Limited Subsidy.}
+          Games and Economic Behavior 144, 2024, 49--70.
+    \item D.~Halpern, N.~Shah.
+          \emph{Fair Division with Subsidy.} SAGT 2019, LNCS 11801, 374--389.
+    \item Y.~Kawase, K.~Makino, H.~Sumita, A.~Tamura, M.~Yokoo.
+          \emph{Towards Optimal Subsidy Bounds for Envy-Freeable Allocations.}
+          Artificial Intelligence 348, 2025, 104406.
+    \item Z.~Lin, S.~Liu, B.~Tao, S.~Zhou.
+          \emph{On the Existence of EFX Allocations for Binary XOS and
+          Supermodular Chores.} 2026.
+    \item B.~Tao, X.~Wu, Z.~Yu, S.~Zhou.
+          \emph{On the Existence of EFX (and Pareto-Optimal) Allocations for
+          Binary Chores.} Theoretical Computer Science 1042, 2025, 115248.
+  \end{itemize}
+\end{frame}
+
+\end{document}
