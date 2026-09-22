@@ -73,11 +73,10 @@
 \setbeamercolor{block title alerted}{bg=Accent!12,fg=Accent}
 \setbeamercolor{block body alerted}{bg=Accent!5,fg=Ink}
 
-\setbeamertemplate{theorems}[numbered]
-\theoremstyle{definition}
-\newtheorem{defn}{Definition}
-\newtheorem{prop}[theorem]{Proposition}
-\newtheorem{obs}[theorem]{Observation}
+% The talk uses only `block', `alertblock' and the `pf' environment below.
+% Beamer's theorem machinery is deliberately left untouched and unused --
+% declaring theorem environments here served no purpose and could surface
+% stray "Theorem"/"Corollary" strings on some installations.
 
 % A quieter "Proof." head than beamer's default block.
 \newenvironment{pf}[1][Proof]{%

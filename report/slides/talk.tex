@@ -48,42 +48,15 @@
 \end{frame}
 
 % ==========================================================================
-\section{The problem}
+\section{Setting and result}
 % ==========================================================================
 
-\begin{frame}{Envy-freeness, and why it fails}
-  We allocate a set $\items$ of $m$ indivisible items among $n$ agents.
+\begin{frame}{The setting}
+  $\items$: a set of $m$ indivisible \emph{chores}; $\agents=[n]$: agents,
+  each with $v_i:2^{\items}\to\R$, $v_i(\emptyset)=0$.
 
-  \begin{block}{Envy-freeness \refr{Foley 1967; Varian 1974}}
-    An allocation $\alloc=(\bundle1,\dots,\bundle n)$ is \emph{envy-free} if
-    \[
-      v_i(\bundle i)\;\ge\;v_i(\bundle j)\qquad\text{for all }i,j .
-    \]
-  \end{block}
-
-  \pause
   \medskip
-  For \emph{indivisible} items this is hopeless in general:
-
-  \begin{center}
-    \emph{two agents, one item that both want.}
-  \end{center}
-
-  Whoever does not receive it envies the one who does.
-
-  \pause
-  \medskip
-  Two standard escapes:
-  \begin{itemize}
-    \item \textbf{Relax} the criterion --- EF1, EFX
-          \refr{Budish 2011; Lipton et al.\ 2004; Caragiannis et al.\ 2019}
-    \item \textbf{Keep} exact envy-freeness, and pay for it. \hl{$\leftarrow$ this talk}
-  \end{itemize}
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{Envy-freeness with subsidies}
-  Each agent $i$ additionally receives a subsidy $\subsidy_i\ge 0$ from a third party.
+  Each agent also receives a subsidy $\subsidy_i\ge 0$ from a third party.
 
   \begin{block}{Envy-free solution}
     $(\alloc,\subsidy)$ is an \emph{envy-free solution} if
@@ -94,55 +67,17 @@
   \end{block}
 
   \medskip
-  Money enters linearly, at the same rate for every agent.
-
-  \pause
-  \medskip
-  The question is not existence --- it is \hl{how much money}.
+  Money enters linearly, at the same rate for everyone, and each item is worth
+  at most one unit --- the usual normalisation before absolute subsidy bounds
+  mean anything.
 
   \medskip
-  Throughout, each item is worth at most one unit to any agent; some
-  normalisation of this kind is needed before absolute subsidy bounds mean
-  anything.
+  The question is not existence. It is \hl{how much money}.
 \end{frame}
 
 % --------------------------------------------------------------------------
-\begin{frame}{What is known --- for goods}
-  \begin{itemize}\itemsep0.75em
-    \item \textbf{Halpern and Shah (2019).}
-          Every instance admits an envy-freeable allocation.
-          For a \emph{given} such allocation, total subsidy $(n-1)m$ may be
-          needed. They conjecture $n-1$ suffices when the allocation may also
-          be chosen.
-
-    \pause
-    \item \textbf{Brustle, Dippel, Narayan, Suzuki, Vetta (2020).}
-          Conjecture proved for \emph{additive} valuations; the allocation is
-          also EF1 and balanced. For general monotone valuations,
-          $2(n-1)$ per agent.
-
-    \pause
-    \item \textbf{Barman, Krishna, Narahari, Sadhukhan (2022).}
-          For \emph{dichotomous} valuations --- every marginal in $\set{0,1}$ ---
-          a much sharper guarantee:
-          \[
-            \subsidy\in\hl{\set{0,1}^n},\qquad \sum_i \subsidy_i\le n-1,
-            \qquad\text{in polynomial time.}
-          \]
-  \end{itemize}
-
-  \pause
-  \medskip
-  The last bound is tight: $n$ agents, one good wanted by all --- the $n-1$
-  agents who miss out each need one unit.
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{This talk: chores}
-  Now every item is a \emph{chore} --- receiving one weakly \emph{decreases}
-  utility.
-
-  \begin{block}{Negative dichotomous valuations}
+\begin{frame}{Negative dichotomous valuations}
+  \begin{block}{}
     For every agent $i$, every $S\subseteq\items$ and every $e\notin S$,
     \[
       v_i(S\cup\set e)-v_i(S)\;\in\;\set{-1,0}.
@@ -150,22 +85,23 @@
   \end{block}
 
   \medskip
-  The sign analogue of the dichotomous goods model. \alert{No further
-  structure is assumed} --- valuations need not be additive, submodular, or
-  even subadditive.
+  The sign analogue of the dichotomous goods model. \alert{Nothing further is
+  assumed} --- not additivity, not submodularity, not even subadditivity.
 
   \pause
   \medskip
-  \textbf{Why binary marginals are natural here.}
+  \textbf{Why binary marginals are natural for chores.}
   An extra task either creates a fresh unit of burden, or is absorbed by a
   commitment already made:
-  \begin{itemize}
-    \item an agent already covering an on-call window absorbs another
-          incident in that window at no extra cost;
+  \begin{itemize}\itemsep0.15em
+    \item an agent already covering an on-call window absorbs another incident
+          in that window at no extra cost;
     \item a driver already routed through a district absorbs one more stop.
   \end{itemize}
+
+  \medskip
   Whether a chore is costly depends on the rest of the bundle --- hence
-  non-additivity.
+  non-additivity is the point, not an artefact.
 \end{frame}
 
 % --------------------------------------------------------------------------
@@ -187,60 +123,35 @@
   \begin{itemize}\itemsep0.1em
     \item the per-agent bound is \hl{$0$ or $1$} --- not merely $O(1)$;
     \item the total bound $n-1$ is \hl{tight};
-    \item EF1 is \hl{extra} --- the goods-side construction does not give it.
+    \item EF1 is \hl{extra} --- it is not guaranteed by the goods-side
+          construction.
   \end{itemize}
 \end{frame}
 
 % --------------------------------------------------------------------------
-\begin{frame}{Where the result sits}
-  \begin{center}
-    \renewcommand{\arraystretch}{1.5}
-    \begin{tabular}{l >{\centering\arraybackslash}p{0.27\textwidth} >{\centering\arraybackslash}p{0.27\textwidth}}
-      \toprule
-       & \textbf{goods} & \textbf{chores}\\
-      \midrule
-      \textbf{additive}    & Brustle et al.\ 2020 & Lu et al.\ 2026 \\
-      \textbf{dichotomous} & Barman et al.\ 2022  & \hl{\textbf{this work}} \\
-      \bottomrule
-    \end{tabular}
-  \end{center}
+\begin{frame}{What was already available here}
+  Negative dichotomous valuations are a subclass of the \emph{doubly monotone}
+  valuations, so one bound comes for free.
 
-  \medskip
-  Each cell gives one unit per agent and $n-1$ in total.
-
-  \pause
-  \medskip
-  The two classes are \alert{incomparable}: dichotomous valuations need not be
-  additive, and additive valuations need not be dichotomous. So neither
-  neighbouring cell implies ours.
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The benchmark we had to beat}
-  The best previously known bound for our domain is not from the chores
-  literature at all, but from a much more general theorem.
-
-  \medskip
   \begin{block}{Kawase, Makino, Sumita, Tamura, Yokoo (2025)}
-    For \emph{doubly monotone} valuations with marginals bounded by one in
-    absolute value, any EF1 allocation can be converted into an envy-free
-    solution with
+    For doubly monotone valuations with marginals bounded by one in absolute
+    value, any EF1 allocation converts into an envy-free solution with
     \[
-      n-1 \text{ per agent},\qquad n(n-1)/2 \text{ in total}.
+      n-1\ \text{per agent},\qquad n(n-1)/2\ \text{in total}.
     \]
   \end{block}
 
   \medskip
-  Negative dichotomous valuations are a subclass of that domain, so this
-  already gives a bound \emph{independent of $m$}.
+  That is already independent of $m$ --- and it was the best known here.
 
   \pause
   \medskip
-  We improve $n-1$ per agent to \hl{$1$} per agent --- a linear-factor
-  improvement --- and $n(n-1)/2$ to $n-1$ in total.
+  We sharpen $n-1$ per agent to \hl{$1$}, and $n(n-1)/2$ to \hl{$n-1$} in
+  total: a linear-factor improvement in both.
 \end{frame}
 
 % --------------------------------------------------------------------------
+
 \begin{frame}{The total bound $n-1$ is tight}
   Take $n$ agents, $n-1$ chores, and identical \emph{binary additive} costs:
   \[
@@ -862,7 +773,7 @@
 \end{frame}
 
 % ==========================================================================
-\section{Two limitations}
+\section[No incremental extension]{Why the goods construction does not extend}
 % ==========================================================================
 
 \begin{frame}{Why not just mirror the goods construction?}
@@ -1010,98 +921,6 @@
 \end{frame}
 
 % --------------------------------------------------------------------------
-\begin{frame}{Limitation 2: Pareto optimality}
-  Pareto optimality is judged on the \emph{chore allocation}, ignoring subsidies.
-
-  \medskip
-  $\allocB$ \emph{Pareto dominates} $\alloc$ if
-  $\cost_i(\allocB_i)\le\cost_i(\bundle i)$ for every $i$, strictly for some.
-  $\alloc$ is \emph{Pareto optimal} if nothing dominates it.
-
-  \pause
-  \begin{alertblock}{Proposition}
-    There are negative dichotomous instances --- already with two agents and
-    identical binary \emph{submodular} costs --- in which \emph{no} Pareto-optimal
-    allocation admits an envy-free subsidy vector in $\set{0,1}^n$.
-  \end{alertblock}
-
-  \pause
-  \medskip
-  \textbf{The instance.} Two agents, three chores $\set{a,b,c}$, both with
-  \[
-    \cost_1(S)=\cost_2(S)=\min\set{\abs S,2}.
-  \]
-  Marginals in $\set{0,1}$, so dichotomous. Submodular, since
-  $k\mapsto\min\set{k,2}$ is non-decreasing and concave. Not additive:
-  $\cost_i(\set{a,b,c})=2<3=\sum_{g}\cost_i(\set g)$.
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The clash}
-  Up to symmetry every complete allocation has bundle sizes $(3,0)$ or $(2,1)$,
-  giving cost profiles
-  \[
-    (2,0),\qquad(2,1),\qquad(1,2),\qquad(0,2).
-  \]
-
-  \step{The concentrated allocations are Pareto optimal}
-  None of $(2,1)$, $(1,2)$, $(0,2)$ dominates $(2,0)$ --- each either raises some
-  agent's cost or matches it without improving the other. Symmetrically for
-  $(0,2)$.
-
-  \pause
-  \step{But they cannot be paid for}
-  If agent $1$ holds all three chores, envy-freeness needs
-  \[
-    2-\subsidy_1\le-\subsidy_2
-    \quad\Longrightarrow\quad
-    \subsidy_1-\subsidy_2\ge 2 ,
-  \]
-  impossible in $\set{0,1}^2$. Symmetrically for agent $2$.
-
-  \pause
-  \step{And the affordable allocations are dominated}
-  A split $(2,1)$ has profile $(2,1)$ and is envy-free with $(1,0)$ --- but
-  handing the third chore to the agent already holding two moves the profile to
-  $(2,0)$: her cost is unchanged, the other's strictly falls. So it is
-  dominated. \hfill$\square$
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{What the two limitations say}
-  \begin{columns}[T]
-    \begin{column}{0.47\textwidth}
-      \begin{block}{No incremental extension}
-        The goods-side proof technique does not transfer. One must reason about
-        a whole terminal state, not a growing prefix.
-
-        \smallskip
-        {\small A \emph{method} obstruction --- the instance itself was perfectly
-        well behaved.}
-      \end{block}
-    \end{column}
-    \begin{column}{0.47\textwidth}
-      \begin{block}{No free Pareto optimality}
-        The unit-subsidy guarantee cannot be strengthened to demand Pareto
-        optimality of the allocation.
-
-        \smallskip
-        {\small A \emph{statement} obstruction --- it fails already for two agents
-        with identical submodular costs.}
-      \end{block}
-    \end{column}
-  \end{columns}
-
-  \pause
-  \medskip
-  Note the price of insisting on unit subsidies on that instance: the cheapest
-  admissible allocation has total cost $3$, against $2$ for the cheapest
-  Pareto-optimal one.
-
-  \medskip
-  So efficiency and bounded subsidy genuinely pull against each other here.
-\end{frame}
-
 % ==========================================================================
 \section{Summary}
 % ==========================================================================
@@ -1116,19 +935,20 @@
 
   \smallskip
   \textbf{The shape of the argument.}
-  \begin{enumerate}\itemsep0.12em
-    \item Take the terminal state of the Tao et al.\ algorithm --- envy-free,
-          at most $n-1$ chores left.
-    \item Its halting condition hands us a tail SCC $S$ with $r<\abs S$:
+  \begin{enumerate}\itemsep0.1em
+    \item Terminal state of the Tao et al.\ algorithm: envy-free, $\le n-1$
+          chores left.
+    \item Its halting condition gives a tail SCC $S$ with $r<\abs S$ ---
           \emph{more agents than leftover chores}.
-    \item Park the leftovers on distinct agents $T\subseteq S$; each pays $+1$.
-    \item Pay $T$, propagating backwards along equality arcs --- never into $S$.
+    \item Park the leftovers on distinct $T\subseteq S$; each pays $+1$.
+    \item Pay $T$, propagating backwards along equality arcs, never into $S$.
     \item $S\setminus T\neq\emptyset$ stays unpaid: exactly the $n-1$ budget.
   \end{enumerate}
 
   \pause
   \smallskip
-  \textbf{Two boundaries.} No incremental extension; no free Pareto optimality.
+  \textbf{And a boundary.} The goods-side incremental construction does not
+  transfer --- an obstruction to the method, not to the instances.
 \end{frame}
 
 % --------------------------------------------------------------------------
@@ -1143,9 +963,8 @@
           Marginals in $\set{-k,\dots,0}$: what is the right per-agent bound?
 
     \item \textbf{Efficiency.}
-          Our Proposition rules out Pareto optimality with unit subsidies. What
-          is the best achievable trade-off --- the least total cost among
-          allocations admitting $\subsidy\in\set{0,1}^n$?
+          What is the least total cost achievable among allocations that admit
+          a subsidy vector in $\set{0,1}^n$?
 
     \item \textbf{Truthfulness.}
           Goko et al.\ obtain truthfulness for matroidal goods under free
