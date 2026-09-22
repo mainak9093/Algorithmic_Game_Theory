@@ -4,13 +4,120 @@
 %
 %  A single-sitting talk: every proof in the paper appears here in full.
 %
+%  Self-contained: this is the only file needed.
 %  Compile:  pdflatex talk.tex   (twice, so the frame count settles)
 %
 %  For a printable handout with the incremental reveals flattened, add the
 %  `handout' class option below; 85 overlay pages collapse to 42 slides.
 % ==========================================================================
 \documentclass[11pt,aspectratio=169]{beamer}
-\input{preamble}
+
+% ----- begin inlined preamble ------------------------------------------
+% Kept inside this file on purpose: the talk must compile as a single
+% self-contained .tex, with no sibling files to carry around.
+\usetheme{default}
+\usecolortheme{default}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+\setbeamertemplate{sections/subsections in toc}[circle]
+
+% ---------- fonts ---------------------------------------------------------
+% Palatino body and matching math, as in the paper itself.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{newpxtext}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{newpxmath}
+\usepackage{microtype}
+\usefonttheme{professionalfonts}
+
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds}
+
+% ---------- palette -------------------------------------------------------
+\definecolor{Slate}{RGB}{38,62,94}
+\definecolor{SlateLight}{RGB}{232,238,246}
+\definecolor{Accent}{RGB}{150,40,40}
+\definecolor{Ink}{RGB}{30,30,32}
+\definecolor{Muted}{RGB}{110,116,124}
+
+\setbeamercolor{normal text}{fg=Ink}
+\setbeamercolor{structure}{fg=Slate}
+\setbeamercolor{frametitle}{fg=Slate,bg=}
+\setbeamercolor{title}{fg=Slate}
+\setbeamercolor{section in toc}{fg=Ink}
+\setbeamercolor{alerted text}{fg=Accent}
+
+\setbeamerfont{frametitle}{size=\large,series=\bfseries}
+\setbeamerfont{title}{size=\LARGE,series=\bfseries}
+\setbeamerfont{author}{size=\normalsize}
+
+% Frame title with a thin rule underneath -- enough structure to orient the
+% eye, not enough to compete with the mathematics.
+\setbeamertemplate{frametitle}{%
+  \vspace{0.55em}%
+  \begin{minipage}{\textwidth}
+    \raggedright
+    {\usebeamerfont{frametitle}\usebeamercolor[fg]{frametitle}\insertframetitle}\par
+    \vspace{0.22em}%
+    {\color{Slate}\rule{\textwidth}{0.6pt}}\par
+  \end{minipage}%
+  \vspace{0.15em}%
+}
+
+% Footline: section on the left, frame number on the right.
+\setbeamertemplate{footline}{%
+  \hbox{\begin{beamercolorbox}[wd=\paperwidth,ht=2.4ex,dp=1.2ex,leftskip=1.2em,rightskip=1.2em]{}%
+    {\scriptsize\color{Muted}\insertsection\hfill\insertframenumber/\inserttotalframenumber}%
+  \end{beamercolorbox}}%
+}
+
+% ---------- theorem environments -----------------------------------------
+\setbeamertemplate{blocks}[rounded][shadow=false]
+\setbeamercolor{block title}{bg=SlateLight,fg=Slate}
+\setbeamercolor{block body}{bg=SlateLight!40,fg=Ink}
+\setbeamercolor{block title alerted}{bg=Accent!12,fg=Accent}
+\setbeamercolor{block body alerted}{bg=Accent!5,fg=Ink}
+
+% The talk uses only `block', `alertblock' and the `pf' environment below.
+% Beamer's theorem machinery is deliberately left untouched and unused --
+% declaring theorem environments here served no purpose and could surface
+% stray "Theorem"/"Corollary" strings on some installations.
+
+% A quieter "Proof." head than beamer's default block.
+\newenvironment{pf}[1][Proof]{%
+  \par\vspace{0.2em}\noindent{\color{Slate}\scshape #1.}\ \ignorespaces
+}{\par\vspace{0.2em}}
+
+% Step markers inside multi-part proofs.
+\newcommand{\step}[1]{\medskip\noindent{\color{Slate}\bfseries #1}\quad}
+
+% ---------- project notation (identical to the paper) ---------------------
+\newcommand{\agents}{N}
+\newcommand{\items}{M}
+\newcommand{\alloc}{\mathcal{A}}
+\newcommand{\allocB}{\mathcal{B}}
+\newcommand{\bundle}[1]{A_{#1}}
+\newcommand{\subsidy}{p}
+\newcommand{\optsubsidy}{p^{*}}
+\newcommand{\cost}{c}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\set}[1]{\left\{#1\right\}}
+\newcommand{\abs}[1]{\left\lvert#1\right\rvert}
+
+% Emphasis for the quantity under discussion.
+\newcommand{\hl}[1]{{\color{Accent}#1}}
+\newcommand{\cyc}{\textnormal{(R1)}}
+
+% Reference tags, written out rather than BibTeX'd: a talk needs the names
+% visible on the slide, not a numeral to look up.
+\newcommand{\refr}[1]{{\footnotesize\color{Muted}[#1]}}
+% ----- end inlined preamble --------------------------------------------
 
 \title{Envy-Free Chore Allocation with Unit Subsidies}
 \subtitle{under Negative Dichotomous Valuations}
@@ -42,7 +149,7 @@
       \tableofcontents[sections={1-3}]
     \end{column}
     \begin{column}{0.48\textwidth}
-      \tableofcontents[sections={4-5}]
+      \tableofcontents[sections={4-6}]
     \end{column}
   \end{columns}
 \end{frame}
@@ -773,7 +880,7 @@
 \end{frame}
 
 % ==========================================================================
-\section[No incremental extension]{Why the goods construction does not extend}
+\section{Failure of the goods construction}
 % ==========================================================================
 
 \begin{frame}{Why not just mirror the goods construction?}
@@ -920,6 +1027,78 @@
   time.
 \end{frame}
 
+% ==========================================================================
+\section{Pareto optimality}
+% ==========================================================================
+
+\begin{frame}{A further result on the domain}
+  A separate question about negative dichotomous instances, independent of
+  which algorithm produces the allocation: can one ask for the allocation to be
+  \emph{Pareto optimal} as well?
+
+  \medskip
+  Pareto optimality is judged on the chore allocation alone, ignoring
+  subsidies: $\allocB$ \emph{dominates} $\alloc$ if
+  $\cost_i(\allocB_i)\le\cost_i(\bundle i)$ for every $i$, strictly for some.
+
+  \pause
+  \begin{alertblock}{Proposition}
+    There are negative dichotomous instances --- already with two agents and
+    identical binary \emph{submodular} costs --- in which \emph{no}
+    Pareto-optimal allocation admits an envy-free subsidy vector in
+    $\set{0,1}^n$.
+  \end{alertblock}
+
+  \medskip
+  So on this domain, unit subsidies and Pareto optimality are simply
+  incompatible --- for \emph{any} construction, not just ours.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The instance}
+  Two agents, three chores $\set{a,b,c}$, both with
+  \[
+    \cost_1(S)=\cost_2(S)=\min\set{\abs S,2}.
+  \]
+
+  \medskip
+  Marginals in $\set{0,1}$, so dichotomous. Submodular, since
+  $k\mapsto\min\set{k,2}$ is non-decreasing and concave. Not additive:
+  $\cost_i(\set{a,b,c})=2<3=\sum_{g}\cost_i(\set g)$.
+
+  \pause
+  \medskip
+  Up to symmetry every complete allocation has bundle sizes $(3,0)$ or $(2,1)$,
+  giving cost profiles
+  \[
+    (2,0),\qquad(2,1),\qquad(1,2),\qquad(0,2).
+  \]
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The clash}
+  \step{The concentrated allocations are Pareto optimal}
+  None of $(2,1)$, $(1,2)$, $(0,2)$ dominates $(2,0)$ --- each either raises some
+  agent's cost, or matches it without improving the other. Symmetrically
+  for $(0,2)$.
+
+  \pause
+  \step{But they cannot be paid for}
+  If agent $1$ holds all three chores, envy-freeness needs
+  \[
+    2-\subsidy_1\le-\subsidy_2
+    \quad\Longrightarrow\quad
+    \subsidy_1-\subsidy_2\ge 2 ,
+  \]
+  impossible in $\set{0,1}^2$. Symmetrically for agent $2$.
+
+  \pause
+  \step{And the affordable allocations are dominated}
+  A split $(2,1)$ has profile $(2,1)$ and is envy-free with $(1,0)$ --- but
+  handing the third chore to the agent already holding two moves the profile to
+  $(2,0)$: her cost is unchanged, the other's strictly falls. \hfill$\square$
+\end{frame}
+
 % --------------------------------------------------------------------------
 % ==========================================================================
 \section{Summary}
@@ -947,8 +1126,8 @@
 
   \pause
   \smallskip
-  \textbf{And a boundary.} The goods-side incremental construction does not
-  transfer --- an obstruction to the method, not to the instances.
+  \textbf{Also.} The goods-side incremental construction does not transfer; and
+  on this domain, Pareto optimality and unit subsidies are incompatible.
 \end{frame}
 
 % --------------------------------------------------------------------------
