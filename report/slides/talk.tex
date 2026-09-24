@@ -8,7 +8,7 @@
 %  Compile:  pdflatex talk.tex   (twice, so the frame count settles)
 %
 %  For a printable handout with the incremental reveals flattened, add the
-%  `handout' class option below; 85 overlay pages collapse to 42 slides.
+%  `handout' class option below, which flattens the overlays.
 % ==========================================================================
 \documentclass[11pt,aspectratio=169]{beamer}
 
@@ -332,6 +332,10 @@
     $\cost_i(\bundle i)-\subsidy_i\;\le\;\cost_i(\bundle j)-\subsidy_j$ for all $i,j$.
   \end{block}
 
+  \smallskip
+  An allocation is \emph{envy-freeable} if some non-negative subsidy vector
+  makes it an envy-free solution.
+
   \pause
   \begin{block}{EF1 for chores}
     A complete $\alloc$ is \emph{EF1} if for all $i,j$ either
@@ -343,18 +347,168 @@
   \end{block}
 
   \smallskip
-  The item removed comes from the \emph{envious agent's own} bundle --- the
-  natural form for chores, and equivalent to the usual two-sided definition on
-  all-chore instances.
+  The removed item comes from the \emph{envious agent's own} bundle.
+\end{frame}
 
-  \smallskip
-  A partial allocation $X$ has \emph{residue}
-  $R(X):=\items\setminus\bigcup_i X_i$.
+% ==========================================================================
+\section{Failure of the goods construction}
+% ==========================================================================
+
+\begin{frame}{Why not just mirror the goods construction?}
+  The goods-side algorithm of Barman et al.\ is \emph{incremental}: allocate
+  items one at a time, maintaining the invariant that the partial allocation is
+  envy-freeable with subsidies in $\set{0,1}^n$.
+
+  \medskip
+  The obvious chore analogue: give each new chore to an agent who currently
+  receives \emph{no} subsidy.
+
+  \pause
+  \medskip
+  \begin{alertblock}{This does not work.}
+    There are negative dichotomous instances where a partial allocation admits
+    an envy-free solution with subsidies in $\set{0,1}^n$, yet after one more
+    chore arrives \emph{no} assignment of it preserves the unit-subsidy
+    guarantee --- even if the already-allocated bundles may first be permuted
+    among the agents.
+  \end{alertblock}
+
+  \medskip
+  So the one-item extension principle fails for chores, and a different
+  argument is needed. Here is the witness.
 \end{frame}
 
 % --------------------------------------------------------------------------
+\begin{frame}{The witness instance}
+  Three agents $\agents=\set{1,2,3}$, three chores $\items=\set{x,y,z}$.
+  Costs depend only on bundle size:
+  \[
+    \cost_1(S)=\max\set{0,\abs S-1},
+    \qquad
+    \cost_2(S)=\cost_3(S)=\min\set{\abs S,2}.
+  \]
+
+  \begin{center}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabular}{l|cccc}
+      \toprule
+      $\abs S$ & $0$ & $1$ & $2$ & $3$\\
+      \midrule
+      $\cost_1(S)$              & $0$ & $0$ & $1$ & $2$\\
+      $\cost_2(S)=\cost_3(S)$   & $0$ & $1$ & $2$ & $2$\\
+      \bottomrule
+    \end{tabular}
+  \end{center}
+
+  \medskip
+  Every marginal is $0$ or $1$: these are dichotomous costs. Agent $1$ gets her
+  first chore free; agents $2$ and $3$ saturate at two.
+
+  \pause
+  \medskip
+  Consider the partial allocation
+  \[
+    X_1=\set{x,y},\qquad X_2=X_3=\emptyset,
+  \]
+  with $z$ still unallocated.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The state is legitimately reachable}
+  \[
+    (\emptyset,\emptyset,\emptyset)
+    \;\longrightarrow\;
+    (\set{x},\emptyset,\emptyset)
+    \;\longrightarrow\;
+    (\set{x,y},\emptyset,\emptyset)
+  \]
+  with pointwise-minimal subsidies
+  \[
+    (0,0,0),\qquad (0,0,0),\qquad (1,0,0)
+  \]
+  respectively --- all within $\set{0,1}^3$. So an incremental algorithm can
+  legitimately arrive here.
+
+  \smallskip
+  At $X$: agent $1$ costs her bundle at $1$ and either empty bundle at $0$, so
+  she needs one unit; agents $2,3$ cost their own bundles at $0$ and $X_1$ at
+  $2$, so they have no envy.
+
+  \pause
+  \vspace{-0.2em}
+  \begin{alertblock}{Claim}
+    $z$ cannot be inserted so that the result admits an envy-free subsidy
+    vector in $\set{0,1}^3$ --- even allowing
+    $\set{x,y},\emptyset,\emptyset$ to be permuted among the agents first.
+  \end{alertblock}
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The three ways to place $z$}
+  \step{(a) $z$ joins the two-chore bundle}
+  Bundle sizes $(3,0,0)$. Every agent values a three-chore bundle at $2$ and an
+  empty bundle at $0$, so whoever holds it needs a subsidy at least \hl{two}
+  units above an agent holding nothing. Impossible in $\set{0,1}^3$.
+
+  \pause
+  \step{(b) $z$ joins an empty bundle, and an agent of $\set{2,3}$ holds the pair}
+  Bundle sizes $(2,1,0)$. That agent values her pair at $2$ and the empty bundle
+  at $0$ --- again a gap of \hl{two}. Impossible.
+
+  \pause
+  \step{(c) $z$ joins an empty bundle, and agent $1$ holds the pair}
+  The only remaining option. Let $i\in\set{2,3}$ take the singleton and $j$ the
+  empty bundle. Then
+  \[
+    \underbrace{1-\subsidy_1\le 0-\subsidy_i}_{\text{agent }1\text{ vs }i}
+    \;\Longrightarrow\;\subsidy_1\ge\subsidy_i+1,
+    \qquad
+    \underbrace{1-\subsidy_i\le-\subsidy_j}_{\text{agent }i\text{ vs }j}
+    \;\Longrightarrow\;\subsidy_i\ge\subsidy_j+1 .
+  \]
+  Chaining: $\ \subsidy_1\ge\subsidy_j+2$ --- impossible for
+  $\subsidy\in\set{0,1}^3$. \hfill$\square$
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{The instance itself is fine}
+  The obstruction is to the \emph{method}, not to the instance.
+
+  \begin{block}{}
+    \centering
+    The complete allocation
+    $\bigl(\set{x},\set{y},\set{z}\bigr)$
+    is envy-free \hl{with no subsidy at all}.
+  \end{block}
+
+  \medskip
+  Indeed agent $1$ values every singleton at cost $0$, and agents $2$ and $3$
+  value every singleton at cost $1$ --- nobody envies anybody.
+
+  \pause
+  \medskip
+  \textbf{What went wrong.} Reaching that allocation from
+  $(\set{x,y},\emptyset,\emptyset)$ requires \emph{taking back} chores already
+  placed on agent $1$. An incremental construction that only ever adds items
+  cannot do it.
+
+  \medskip
+  This is why our proof starts from a \emph{global} object --- the terminal
+  state of the Tao et al.\ algorithm --- rather than building up one chore at a
+  time.
+\end{frame}
+
+% ==========================================================================
+\section{The construction}
+% ==========================================================================
+
+% --------------------------------------------------------------------------
 \begin{frame}{The equality graph}
-  Given a partial allocation $X$, define the \emph{equality graph}
+  A partial allocation $X$ has \emph{residue}
+  $R(X):=\items\setminus\bigcup_i X_i$ --- the chores still unassigned.
+
+  \medskip
+  Given $X$, define the \emph{equality graph}
   $G=(\agents,E)$ on the agents:
   \[
     (i,j)\in E
@@ -420,10 +574,6 @@
   \end{tikzpicture}
   \end{center}
 \end{frame}
-
-% ==========================================================================
-\section{The construction}
-% ==========================================================================
 
 \begin{frame}{Starting point: an envy-free \emph{partial} allocation}
   \begin{block}{Theorem \refr{Tao, Wu, Yu, Zhou 2025, Thm.\ 6.1}}
@@ -880,154 +1030,6 @@
 \end{frame}
 
 % ==========================================================================
-\section{Failure of the goods construction}
-% ==========================================================================
-
-\begin{frame}{Why not just mirror the goods construction?}
-  The goods-side algorithm of Barman et al.\ is \emph{incremental}: allocate
-  items one at a time, maintaining the invariant that the partial allocation is
-  envy-freeable with subsidies in $\set{0,1}^n$.
-
-  \medskip
-  The obvious chore analogue: give each new chore to an agent who currently
-  receives \emph{no} subsidy.
-
-  \pause
-  \medskip
-  \begin{alertblock}{This does not work.}
-    There are negative dichotomous instances where a partial allocation admits
-    an envy-free solution with subsidies in $\set{0,1}^n$, yet after one more
-    chore arrives \emph{no} assignment of it preserves the unit-subsidy
-    guarantee --- even if the already-allocated bundles may first be permuted
-    among the agents.
-  \end{alertblock}
-
-  \medskip
-  So the one-item extension principle fails for chores, and a different
-  argument is needed. Here is the witness.
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The instance}
-  Three agents $\agents=\set{1,2,3}$, three chores $\items=\set{x,y,z}$.
-  Costs depend only on bundle size:
-  \[
-    \cost_1(S)=\max\set{0,\abs S-1},
-    \qquad
-    \cost_2(S)=\cost_3(S)=\min\set{\abs S,2}.
-  \]
-
-  \begin{center}
-    \renewcommand{\arraystretch}{1.25}
-    \begin{tabular}{l|cccc}
-      \toprule
-      $\abs S$ & $0$ & $1$ & $2$ & $3$\\
-      \midrule
-      $\cost_1(S)$              & $0$ & $0$ & $1$ & $2$\\
-      $\cost_2(S)=\cost_3(S)$   & $0$ & $1$ & $2$ & $2$\\
-      \bottomrule
-    \end{tabular}
-  \end{center}
-
-  \medskip
-  Every marginal is $0$ or $1$: these are dichotomous costs. Agent $1$ gets her
-  first chore free; agents $2$ and $3$ saturate at two.
-
-  \pause
-  \medskip
-  Consider the partial allocation
-  \[
-    X_1=\set{x,y},\qquad X_2=X_3=\emptyset,
-  \]
-  with $z$ still unallocated.
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The state is legitimately reachable}
-  \[
-    (\emptyset,\emptyset,\emptyset)
-    \;\longrightarrow\;
-    (\set{x},\emptyset,\emptyset)
-    \;\longrightarrow\;
-    (\set{x,y},\emptyset,\emptyset)
-  \]
-  with pointwise-minimal subsidies
-  \[
-    (0,0,0),\qquad (0,0,0),\qquad (1,0,0)
-  \]
-  respectively --- all within $\set{0,1}^3$. So an incremental algorithm can
-  legitimately arrive here.
-
-  \smallskip
-  At $X$: agent $1$ costs her bundle at $1$ and either empty bundle at $0$, so
-  she needs one unit; agents $2,3$ cost their own bundles at $0$ and $X_1$ at
-  $2$, so they have no envy.
-
-  \pause
-  \vspace{-0.2em}
-  \begin{alertblock}{Claim}
-    $z$ cannot be inserted so that the result admits an envy-free subsidy
-    vector in $\set{0,1}^3$ --- even allowing
-    $\set{x,y},\emptyset,\emptyset$ to be permuted among the agents first.
-  \end{alertblock}
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The three ways to place $z$}
-  \step{(a) $z$ joins the two-chore bundle}
-  Bundle sizes $(3,0,0)$. Every agent values a three-chore bundle at $2$ and an
-  empty bundle at $0$, so whoever holds it needs a subsidy at least \hl{two}
-  units above an agent holding nothing. Impossible in $\set{0,1}^3$.
-
-  \pause
-  \step{(b) $z$ joins an empty bundle, and an agent of $\set{2,3}$ holds the pair}
-  Bundle sizes $(2,1,0)$. That agent values her pair at $2$ and the empty bundle
-  at $0$ --- again a gap of \hl{two}. Impossible.
-
-  \pause
-  \step{(c) $z$ joins an empty bundle, and agent $1$ holds the pair}
-  The only remaining option. Let $i\in\set{2,3}$ take the singleton and $j$ the
-  empty bundle. Then
-  \[
-    \underbrace{1-\subsidy_1\le 0-\subsidy_i}_{\text{agent }1\text{ vs }i}
-    \;\Longrightarrow\;\subsidy_1\ge\subsidy_i+1,
-    \qquad
-    \underbrace{1-\subsidy_i\le-\subsidy_j}_{\text{agent }i\text{ vs }j}
-    \;\Longrightarrow\;\subsidy_i\ge\subsidy_j+1 .
-  \]
-  Chaining: $\ \subsidy_1\ge\subsidy_j+2$ --- impossible for
-  $\subsidy\in\set{0,1}^3$. \hfill$\square$
-\end{frame}
-
-% --------------------------------------------------------------------------
-\begin{frame}{The instance itself is fine}
-  The obstruction is to the \emph{method}, not to the instance.
-
-  \begin{block}{}
-    \centering
-    The complete allocation
-    $\bigl(\set{x},\set{y},\set{z}\bigr)$
-    is envy-free \hl{with no subsidy at all}.
-  \end{block}
-
-  \medskip
-  Indeed agent $1$ values every singleton at cost $0$, and agents $2$ and $3$
-  value every singleton at cost $1$ --- nobody envies anybody.
-
-  \pause
-  \medskip
-  \textbf{What went wrong.} Reaching that allocation from
-  $(\set{x,y},\emptyset,\emptyset)$ requires \emph{taking back} chores already
-  placed on agent $1$. An incremental construction that only ever adds items
-  cannot do it.
-
-  \medskip
-  This is why our proof starts from a \emph{global} object --- the terminal
-  state of the Tao et al.\ algorithm --- rather than building up one chore at a
-  time.
-\end{frame}
-
-% ==========================================================================
 \section{Pareto optimality}
 % ==========================================================================
 
@@ -1055,7 +1057,7 @@
 \end{frame}
 
 % --------------------------------------------------------------------------
-\begin{frame}{The instance}
+\begin{frame}{A two-agent instance}
   Two agents, three chores $\set{a,b,c}$, both with
   \[
     \cost_1(S)=\cost_2(S)=\min\set{\abs S,2}.
