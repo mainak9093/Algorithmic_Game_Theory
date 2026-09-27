@@ -14,12 +14,12 @@ Felix Brandt, Vincent Conitzer, Ulle Endriss, J{\'e}r{\^o}me Lang, and Ariel~D. 
 \bibitem[BDN{\etalchar{+}}20]{BDNSV20}
 Johannes Brustle, Jack Dippel, Vishnu~V. Narayan, Mashbat Suzuki, and Adrian Vetta.
 \newblock One dollar each eliminates envy.
-\newblock In {\em Proceedings of the 21st ACM Conference on Economics and Computation (EC)}, pages 23--39, 2020.
+\newblock In {\em Proceedings of the 21st ACM Conference on Economics and Computation (EC)}, pages 23--39. ACM, 2020.
 
 \bibitem[BKNS22]{BKNS22}
 Siddharth Barman, Anand Krishna, Y.~Narahari, and Soumyarup Sadhukhan.
 \newblock Achieving envy-freeness with limited subsidies under dichotomous valuations.
-\newblock In {\em Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}, pages 60--66, 2022.
+\newblock In {\em Proceedings of the 31st International Joint Conference on Artificial Intelligence (IJCAI)}, pages 60--66. International Joint Conferences on Artificial Intelligence Organization, 2022.
 \newblock arXiv:2201.07419.
 
 \bibitem[BSV21]{BSV21}
@@ -74,7 +74,7 @@ Zehan Lin, Shengxin Liu, Biaoshuai Tao, and Shengwei Zhou.
 \bibitem[LMMS04]{LMMS04}
 Richard~J. Lipton, Evangelos Markakis, Elchanan Mossel, and Amin Saberi.
 \newblock On approximately fair allocations of indivisible goods.
-\newblock In {\em Proceedings of the 5th ACM Conference on Electronic Commerce (EC)}, pages 125--131, 2004.
+\newblock In {\em Proceedings of the 5th ACM Conference on Electronic Commerce (EC)}, pages 125--131. ACM, 2004.
 
 \bibitem[LMS26]{LMS26}
 Xinhang Lu, Simon Mackenzie, and Mashbat Suzuki.
@@ -99,7 +99,7 @@ Hal Varian.
 \bibitem[WXZ25]{wu2025revisiting}
 Xiaowei Wu, Quan Xue, and Shengwei Zhou.
 \newblock Revisiting proportional allocation with subsidy: Simplification and improvements.
-\newblock In {\em Proceedings of the 34th International Joint Conference on Artificial Intelligence (IJCAI)}, pages 4082--4090, 2025.
+\newblock In {\em Proceedings of the 34th International Joint Conference on Artificial Intelligence (IJCAI)}, pages 4082--4090. International Joint Conferences on Artificial Intelligence Organization, 2025.
 
 \bibitem[WZ24]{wu2024tree}
 Xiaowei Wu and Shengwei Zhou.

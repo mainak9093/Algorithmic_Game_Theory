@@ -60,6 +60,10 @@ We study the allocation of indivisible chores with subsidies under negative dich
 We show that the same optimal guarantee holds for chores under no structural assumption beyond binary marginals. For every instance with negative dichotomous valuations, there exists a complete allocation $\mathcal{A}$ and a subsidy vector $p\in\{0,1\}^n$ with $\sum_{i\in N} p_i\le n-1$ such that $(\mathcal{A},p)$ is envy-free. Moreover, the allocation $\mathcal{A}$ is EF1 even before subsidies are paid. The subsidy bound is tight, and both the allocation and the subsidies can be computed in polynomial time in the value-oracle model. We further show that the unit-subsidy guarantee cannot, in general, be maintained if Pareto optimality is also required.
 
 Unlike in the corresponding goods setting, a natural incremental extension approach does not work for chores. Our proof instead exploits key properties of an envy-free partial allocation and its associated equality graph to obtain the complete allocation and determine which agents require subsidies.
+
+% We also derive an application of our main result to positive dichotomous goods with \(n-1\) copies of each type: when each agent can receive at most one copy of any type, there exists an allocation that is envy-free with a subsidy vector in \(\{0,1\}^n\) and satisfies an additional one-good augmentation fairness guarantee.
+
+ We also provide an application of our main result to the fair allocation of goods with copies: under positive dichotomous valuations, when there are $n-1$ copies of each good type and each agent can receive at most one copy of any type, we obtain an envy-free allocation with a subsidy vector in $\{0,1\}^n$, where any envy can additionally be eliminated by adding a single missing good type to the envier's bundle.
 \end{abstract}
 
 \keywords{fair division, indivisible chores, envy-freeness, subsidies, negative dichotomous valuations, EF1}
@@ -177,7 +181,12 @@ Our proof follows a different route from the incremental construction of Barman 
 
 Finally, the unit-subsidy guarantee cannot, in general, be strengthened to require Pareto optimality. There are instances with two agents and identical binary submodular costs in which every Pareto-optimal allocation requires a subsidy of at least $2$ for some agent; see Proposition~\ref{prop_1}.
 
-Section~\ref{sec:prelim} introduces the model and the necessary preliminaries. Section~\ref{sec:main} presents the algorithm and proves the main result.
+Our result also yields an application to the fair allocation of \emph{goods with copies}. In this model, several identical copies of each good type may be available, while an agent can receive at most one copy of each type. Such multi-unit allocation problems arise, for example, in course allocation, committee assignment, and the assignment of job interviews~\cite{ortega2020multi}, and have been studied both directly and through more general cardinality or matroid constraints. Gafni et al.~\cite{gafni2023unified} further establish a formal connection between the allocation of goods with copies and the allocation of chores, and use this connection to study approximate envy-freeness notions.
+
+We obtain a new subsidy guarantee in this setting. Specifically, consider $n$ agents with positive dichotomous valuations over good types, and suppose that $n-1$ identical copies of every type are available. We show that there exists a complete allocation, with each agent receiving at most one copy of every type, that can be made envy-free by assigning each agent a subsidy from $\{0,1\}$; moreover, the total subsidy is at most $n-1$. The same allocation enjoys an additional fairness property: whenever an agent envies another agent, there exists a good type received by the envied agent but not by the envier such that adding one copy of this type to the envier's bundle eliminates the envy. To the best of our knowledge, previous work on goods with copies has not considered envy-freeness with subsidies, and hence our result provides a connection between two previously separate directions in fair division.
+
+
+Section~\ref{sec:prelim} introduces the model and the necessary preliminaries. Section~\ref{sec:main} presents the algorithm and proves the main result. Finally, Section~\ref{sec:app} discusses the application to goods with copies.
 
 
 \subsection{Related work}
@@ -449,7 +458,7 @@ Define
 
 The complete procedure is summarised in Algorithm~\ref{alg:main}. The partial-allocation phase in Line~2 is the partial-allocation algorithm of Tao et al.~\cite{tao2025existence}; the completion and subsidy construction in the subsequent lines constitute our contribution.
 
-\begin{algorithm}[H]
+\begin{algorithm}
 \caption{EF1 allocation with at most one unit of subsidy per agent for negative dichotomous valuations}
 \label{alg:main}
 \begin{algorithmic}[1]
@@ -748,6 +757,89 @@ Thus, the Pareto-optimal allocations are precisely the two concentrated allocati
 \end{proof}
 
 Thus, the unit-subsidy guarantee of Theorem~\ref{thm:m-main} cannot, in general, be strengthened to require Pareto optimality.
+
+
+\section{Application to Goods with Copies}\label{sec:app}
+
+We next derive an implication of our main result for the allocation of goods with copies. Consider a set $M$ of good types and $n$ agents. There are $n-1$ identical copies of each type $g\in M$. Copies of the same type are perfect substitutes: an agent derives value from receiving a type, but receiving additional copies of the same type provides no additional value. We consider allocations in which each agent receives at most one copy of any given type.
+
+Thus, the bundle of an agent can be identified with the set of good types represented in her bundle. An allocation can therefore be represented by a collection $B=(B_1,\ldots,B_n)$ of subsets of $M$, where $g\in B_i$ means that agent $i$ receives one copy of type $g$. Since there are $n-1$ copies of every type, completeness requires that every $g\in M$ belong to exactly $n-1$ of the sets $B_i$.
+
+Each agent $i$ has a positive dichotomous valuation $v_i:2^M\to\mathbb{R}_{\geq 0}$ over sets of types, satisfying
+$$
+v_i(S\cup\{g\})-v_i(S)\in\{0,1\}
+$$ for every $S\subseteq M$ and $g\notin S$.
+
+The allocation of goods with multiple copies has been studied in multi-unit assignment and fair division. Ortega~\cite{ortega2020multi} considers multi-unit assignment under additive dichotomous preferences, while Gafni et al.~\cite{gafni2023unified} study fair allocation with copies under additive valuations and establish a close duality with chore allocation. In contrast, our result below allows general positive dichotomous valuations and provides an envy-freeness guarantee using monetary subsidies.
+
+\begin{corollary}
+For every such instance, there exists a complete allocation $B=(B_1,\ldots,B_n)$ and subsidies $p\in \{0,1\}^n$ such that
+
+$$
+\sum_{i\in N}p_i\leq n-1
+$$
+
+and $(B,p)$ is envy-free. Moreover, for every pair of agents $i,j$, if
+
+$$
+v_i(B_i)<v_i(B_j),
+$$
+
+then there exists a type $g\in B_j\setminus B_i$ such that
+
+$$
+v_i(B_i\cup\{g\})\geq v_i(B_j).
+$$
+
+\end{corollary}
+
+\begin{proof}
+For every agent $i$, define a cost function $c_i:2^M\to\mathbb{R}_{\geq 0}$ by
+$$
+c_i(S)=v_i(M)-v_i(M\setminus S).
+$$
+Then, for every $S\subseteq M$ and $g\notin S$,
+$$
+c_i(S\cup\{g\})-c_i(S)
+=
+v_i(M\setminus S)-v_i(M\setminus(S\cup\{g\}))
+\in\{0,1\}.
+$$
+
+Hence, $(c_i)_{i\in N}$ defines a negative dichotomous chore instance. By our main theorem, there exists a complete chore allocation $A=(A_1,\ldots,A_n)$ and subsidies $p\in\{0,1\}^n$, with $\sum_i p_i\leq n-1$, such that $(A,p)$ is envy-free. Moreover, $A$ is EF1.
+
+For every agent $i$, let
+$$
+B_i=M\setminus A_i.
+$$
+Since $(A_1,\ldots,A_n)$ is a partition of $M$, every type $g\in M$ is absent from exactly one set $B_i$. Therefore, $B$ is a complete feasible allocation of the $n-1$ copies of every type. Furthermore, for every $i,j$,
+$$
+c_i(A_j)=v_i(M)-v_i(B_j).
+$$
+Thus, the envy-freeness condition $-c_i(A_i)+p_i\geq -c_i(A_j)+p_j$ is equivalent to
+$$
+v_i(B_i)+p_i\geq v_i(B_j)+p_j.
+$$
+Hence, $(B,p)$ is envy-free with the same subsidies.
+
+Finally, suppose that $i$ envies $j$ in the goods allocation, i.e., $v_i(B_i)<v_i(B_j)$. Since $c_i(A_k)=v_i(M)-v_i(B_k)$ for every $k$, this is equivalent to $c_i(A_i)>c_i(A_j)$. Hence, by EF1 of the chore allocation, there exists some $g\in A_i$ such that
+\[
+c_i(A_i\setminus\{g\})\leq c_i(A_j).
+\]
+Since $g\in A_i$, we have $g\notin B_i$; and since the chore bundles form a partition, $g\in B_j$. Moreover, $M\setminus(A_i\setminus\{g\})=B_i\cup\{g\}$. Therefore,
+$$
+v_i(M)-v_i(B_i\cup\{g\})
+\leq
+v_i(M)-v_i(B_j),
+$$
+which implies
+$$
+v_i(B_i\cup\{g\})\geq v_i(B_j).
+$$
+This proves the claim.
+\end{proof}
+
+The second guarantee can be viewed as an augmentation analogue of EF1: whenever agent $i$ envies agent $j$, the envy can be eliminated by adding to $i$'s bundle one type that is present in $j$'s bundle but absent from $i$'s bundle. Notice that this is stronger than merely requiring that transferring this copy from $j$ to $i$ eliminates envy, since the comparison above is with $j$'s original bundle $B_j$.
 
 
 \appendix
