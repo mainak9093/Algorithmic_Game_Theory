@@ -629,6 +629,63 @@
 \end{frame}
 
 % --------------------------------------------------------------------------
+\begin{frame}{Proof of the theorem: (R1) and (R2)}
+  \textbf{Invariant:} $X$ is envy-free. It holds at the start, when every
+  bundle is empty.
+
+  \medskip
+  \textbf{A sufficient condition.} Suppose a step leaves every agent's own cost
+  unchanged, and every new bundle $X'_l$ contains some old bundle $X_{l'}$.
+  Then envy-freeness survives: for every agent $k$,
+  \[
+    \cost_k(X'_k)\;=\;\cost_k(X_k)\;\le\;\cost_k(X_{l'})\;\le\;\cost_k(X'_l).
+    \tag{$\spadesuit$}
+  \]
+
+  \pause
+  \step{(R1)}
+  $e$ is free for $i$, so $i$'s cost is unchanged, and only $X_i$ grows.
+  $(\spadesuit)$ applies.
+
+  \pause
+  \step{(R2)}
+  Each agent on the cycle takes the bundle her arc points to. The arcs are
+  equality arcs, so nobody's cost changes. Then $e$ is free for $i$ on $X_j$,
+  which she now holds. Again $(\spadesuit)$ applies.
+
+  \medskip
+  So the first two rules place a chore at \hl{zero} cost to its recipient.
+\end{frame}
+
+% --------------------------------------------------------------------------
+\begin{frame}{Proof of the theorem: (R3) and the bound}
+  \step{(R3)}
+  Each $i\in S$ receives one chore; (R1) does not apply, so her cost rises by
+  \hl{exactly one}. Agents outside $S$ keep their costs and see bundles only
+  grow. For $i\in S$ we need $\cost_i(X_i)+1\le\cost_i(X'_j)$ for all $j\ne i$:
+  \begin{itemize}\itemsep0.1em
+    \item $j\notin S$: $S$ is a tail, so $(i,j)\notin E$, hence
+          $\cost_i(X_i)<\cost_i(X_j)=\cost_i(X'_j)$; integrality gives $+1$.
+    \item $j\in S$ and $\cost_i(X_i)<\cost_i(X_j)$: integrality, then
+          monotonicity.
+    \item $j\in S$ and $\cost_i(X_i)=\cost_i(X_j)$: then $(i,j)\in E$ lies
+          inside an SCC, hence on a cycle. As (R2) does not apply, $j$'s new
+          chore costs $i$ exactly $1$ on top of $X_j$.
+  \end{itemize}
+
+  \pause
+  \step{The bound}
+  Every iteration places at least one chore, so there are at most $m$. The loop
+  ends with $R=\emptyset$, or halts in (R3) with $\abs R<\abs S\le n$; either
+  way $\abs R\le n-1$. Each rule is testable in polynomial time, since an arc
+  lies on a cycle iff its ends share an SCC. \hfill$\square$
+
+  \smallskip
+  {\small The same two facts --- $S$ is a tail, and (R2) is inapplicable ---
+  are what our construction exploits at the halting state.}
+\end{frame}
+
+% --------------------------------------------------------------------------
 \begin{frame}{What the terminal state gives us}
   Fix $X$ at termination; $R:=R(X)$, $r:=\abs R$, $G$ the equality graph there,
   and $S$ the tail SCC from the halting step (so $r<\abs S$).
