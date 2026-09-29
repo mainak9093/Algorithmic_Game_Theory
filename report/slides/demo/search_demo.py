@@ -4,8 +4,10 @@ Search for a running example for the algorithm walkthrough in talk.tex.
 
 We want ONE negative dichotomous instance whose run shows every case of
 Algorithm 1: Tao et al.'s rules (R1), (R2) and (R3), a halt with chores left
-over, and our completion with a subsidy set P that genuinely propagates.
-Random instances almost never do this, so we search.
+over, and our completion with a subsidy set P that genuinely propagates --
+and where that propagation is needed: paying T alone would leave the agents
+of the first closure round envious. Random instances almost never do this,
+so we search. The instance in build_demo.py is `python search_demo.py 21`.
 
 Cost family (never shown on the slides, so it only has to be dichotomous):
 agent i splits the chores into "windows" and pays one unit per window her
@@ -212,6 +214,13 @@ def evaluate(I):
         "unique tail at every R3": all(x[-1] == 1 for x in ev if x[0] in ("R3", "HALT")),
         "P beyond T": len(P) > len(T),
         "unpaid outsider": any(i not in S and i not in P for i in range(n)),
+        # the propagation must be visibly needed: every agent of the first
+        # closure round has an equality arc into a recipient t whose leftover
+        # chore is free for her on X_t, so paying T alone would leave her
+        # envious of t (later rounds are then needed automatically)
+        "P round 1 needed": bool(rounds) and all(
+            any((i, t) in E and I.cost(i, A[t]) == I.cost(i, X[t]) for t in T)
+            for i in rounds[0]),
     }
     nice = {
         "two R3 handouts": kinds.count("R3") >= 2,
@@ -245,12 +254,14 @@ def mutate(I, rng):
     return J
 
 
-def search(seed, budget_restarts=60, climb=900):
+# The first example (seed 3) came from search(seed, 60, 900) with
+# n = rng.choice([6, 7]), m = rng.randint(11, 15) and seven hard criteria.
+def search(seed, budget_restarts=80, climb=1200):
     rng = random.Random(seed)
     best = None
     for restart in range(budget_restarts):
-        n = rng.choice([6, 7])
-        m = rng.randint(11, 15)
+        n = 6                                  # was rng.choice([6, 7])
+        m = rng.randint(12, 15)                # was rng.randint(11, 15)
         # rejection-sample a starting point that already halts with leftovers
         for _ in range(4000):
             I = random_inst(rng, n, m)
@@ -271,10 +282,10 @@ def search(seed, budget_restarts=60, climb=900):
         key = (g[0], -len(g[3]["E"]))
         if best is None or key > best[0]:
             best = (key, cur, g)
-            print("restart %2d  n=%d m=%d  score=%d  hard=%d/7  nice=%d/7  |E|=%d"
-                  % (restart, n, m, g[0], sum(g[1].values()), sum(g[2].values()),
-                     len(g[3]["E"])), flush=True)
-        if g[0] == 77:
+            print("restart %2d  n=%d m=%d  score=%d  hard=%d/%d  nice=%d/%d  |E|=%d"
+                  % (restart, n, m, g[0], sum(g[1].values()), len(g[1]),
+                     sum(g[2].values()), len(g[2]), len(g[3]["E"])), flush=True)
+        if g[0] == 10 * len(g[1]) + len(g[2]):          # everything met
             break
     return best
 

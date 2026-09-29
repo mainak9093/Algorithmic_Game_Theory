@@ -4,7 +4,7 @@ Build the algorithm walkthrough frames and splice them into ../talk.tex.
 
     python build_demo.py
 
-The instance below was found by search_demo.py (seed 3). Nothing is drawn by
+The instance below was found by search_demo.py (seed 21). Nothing is drawn by
 hand: the script replays the run, checks it, and only then emits TikZ.
 
 Checks, all of which must pass before anything is written:
@@ -16,7 +16,9 @@ Checks, all of which must pass before anything is written:
   4. the partial allocation stays envy-free after every step (Tao's
      invariant);
   5. the final (A, p) is complete and envy-free, with p in {0,1}^n,
-     sum p <= n - 1, and A is EF1.
+     sum p <= n - 1, and A is EF1;
+  6. every marginal, cost and envy claim in a step's "why" box is recomputed
+     from the cost tables and asserted where the sentence is written.
 
 The frames go into talk.tex between the markers "% BEGIN DEMO" and
 "% END DEMO", placed right after the "The algorithm" frame, so talk.tex
@@ -35,17 +37,34 @@ import search_demo as sd  # noqa: E402
 
 TALK = os.path.normpath(os.path.join(HERE, "..", "talk.tex"))
 
+# Seed 21: every hard and nice criterion of search_demo.evaluate, including a
+# subsidy closure whose first round is needed -- the leftover chore is free for
+# agent 1 on the recipient's bundle, so paying T alone leaves 1 envious.
 INSTANCE = {
-    "n": 6, "m": 15, "K": [5, 6, 6, 4, 6, 6],
-    "grp": [[4, 3, 1, 0, 3, 0, 3, 2, 2, 4, 2, -1, 1, -1, 1],
-            [4, 0, 4, 2, 4, 3, 4, 1, 2, 4, 5, 2, 3, 5, 0],
-            [2, 4, 0, 0, 5, 5, 3, -1, 4, 5, 0, 4, 0, 0, 4],
-            [2, 3, 2, 2, 3, 1, 3, 1, 1, 1, 3, 2, 0, 0, 1],
-            [3, 5, 5, 0, 1, 1, 0, 1, 2, 1, 3, -1, 4, 0, 1],
-            [0, 3, 5, 2, -1, 4, -1, -1, 0, 3, 4, -1, 2, 3, 2]],
-    "a": [1, 1, 0, 0, 0, 0],
-    "b": [2, 2, 3, 2, 2, None],
+    "n": 6, "m": 14, "K": [5, 5, 5, 5, 5, 6],
+    "grp": [[-1, 0, 1, 0, 4, 1, 0, 1, 0, -1, 0, 0, 2, 0],
+            [3, 4, 3, 4, 4, 4, 2, 0, 1, -1, 1, 2, 0, 3],
+            [2, 3, 1, 2, 0, 4, 4, 2, 2, 2, -1, 4, 4, 2],
+            [3, 4, 4, 1, 2, 4, 0, 3, 3, 2, -1, 1, 1, 3],
+            [2, 2, 3, 2, 0, 2, 4, 1, 0, 4, 2, 0, 0, 3],
+            [5, 2, 5, 2, 1, 5, 4, 3, 3, 4, 5, 3, 4, 0]],
+    "a": [0, 0, 0, 0, 0, 1],
+    "b": [3, 2, 4, 3, 4, 3],
 }
+# The first example (seed 3 of the earlier search). Same shape of run, but its
+# closure paid agents that would not have envied anyone: paying T alone was
+# already envy-free there, which undersells why P has to propagate.
+# INSTANCE = {
+#     "n": 6, "m": 15, "K": [5, 6, 6, 4, 6, 6],
+#     "grp": [[4, 3, 1, 0, 3, 0, 3, 2, 2, 4, 2, -1, 1, -1, 1],
+#             [4, 0, 4, 2, 4, 3, 4, 1, 2, 4, 5, 2, 3, 5, 0],
+#             [2, 4, 0, 0, 5, 5, 3, -1, 4, 5, 0, 4, 0, 0, 4],
+#             [2, 3, 2, 2, 3, 1, 3, 1, 1, 1, 3, 2, 0, 0, 1],
+#             [3, 5, 5, 0, 1, 1, 0, 1, 2, 1, 3, -1, 4, 0, 1],
+#             [0, 3, 5, 2, -1, 4, -1, -1, 0, 3, 4, -1, 2, 3, 2]],
+#     "a": [1, 1, 0, 0, 0, 0],
+#     "b": [2, 2, 3, 2, 2, None],
+# }
 
 R1_CHUNK = 5          # consecutive (R1) steps shown per overlay
 
@@ -178,7 +197,7 @@ def build_and_verify():
     assert snaps[-1]["X"] == tuple(X) and snaps[-1]["R"] == frozenset(R)
     verify_final(cs, n, m, A, p)
 
-    return dict(n=n, m=m, ev=ev, snaps=snaps, X=tuple(X), R=sorted(R),
+    return dict(n=n, m=m, cs=cs, ev=ev, snaps=snaps, X=tuple(X), R=sorted(R),
                 S=sorted(S), T=list(T), P=sorted(P), rounds=rounds,
                 E=frozenset(E), A=tuple(A), p=list(p))
 
@@ -191,24 +210,74 @@ def agents(xs):
     return ",".join(str(a + 1) for a in sorted(xs))
 
 
+def listing(xs):
+    """1 / 1 and 2 / 1, 2 and 3 (agents are 1-indexed on the slides)."""
+    xs = [str(a + 1) for a in sorted(xs)]
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
+def none_envious(xs):
+    xs = [str(a + 1) for a in sorted(xs)]
+    if len(xs) == 1:
+        return "does not make %s envious" % xs[0]
+    if len(xs) == 2:
+        return "makes neither %s nor %s envious" % tuple(xs)
+    return "makes none of %s envious" % ", ".join(xs)
+
+
 def ch(e):
     return "e_{%d}" % (e + 1)
+
+
+def bset(S, m):
+    items = [e for e in range(m) if S >> e & 1]
+    if not items:
+        return r"\emptyset"
+    return r"\{" + ",".join(ch(e) for e in items) + r"\}"
+
+
+def mtab(cells, cols=2):
+    """Short formulas in a borderless table, `cols` to a row."""
+    rows = [" & ".join(cells[q:q + cols]) for q in range(0, len(cells), cols)]
+    spec = r"@{\hspace{1em}}".join(["l"] * cols)
+    return (r"\begin{tabular}{@{}%s@{}}" % spec) + r" \\ ".join(rows) + r"\end{tabular}"
 
 
 def overlay(snap, caption, phase, **kw):
     ov = dict(X=snap["X"], R=snap["R"], E=snap["E"], caption=caption,
               phase=phase, node={}, arc={}, chore={}, bundle={}, chip={},
-              badge=None, pvec=None)
+              badge=None, title="", why=[])
     ov.update(kw)
     return ov
 
 
 def storyboard(run):
-    n, ev, snaps = run["n"], run["ev"], run["snaps"]
-    ovs = [overlay(snaps[0],
-                   r"Start: every bundle is empty, so everyone is indifferent "
-                   r"to everything --- the equality graph is complete.",
-                   "tao")]
+    n, m, ev, snaps, cs = run["n"], run["m"], run["ev"], run["snaps"], run["cs"]
+
+    # Each "why" sentence is written next to the assertion that makes it true.
+    def r1_fails(snap):
+        X, R = snap["X"], snap["R"]
+        assert all(marg(cs, i, e, X[i]) == 1 for e in R for i in range(n))
+        return r"(R1) fails: each leftover chore costs every agent $+1$ on her own bundle."
+
+    def r2_fails(snap):
+        X, R, E = snap["X"], snap["R"], snap["E"]
+        assert all(marg(cs, a, e, X[b]) == 1 for e in R for (a, b) in E
+                   if on_cycle(E, a, b, n))
+        return (r"(R2) fails: $c_i(e\mid X_j)=1$ for each leftover $e$ and each "
+                r"arc $i\to j$ on a cycle.")
+
+    s0 = snaps[0]
+    assert all(cs[i][0] == 0 for i in range(n)) and len(s0["E"]) == n * (n - 1)
+    ovs = [overlay(
+        s0, r"Start: every bundle is empty, so everyone is indifferent to "
+            r"everything --- the equality graph is complete.", "tao",
+        title="Reading the graph",
+        why=[r"An arc $i\to j$ means $c_i(X_i)=c_i(X_j)$: agent $i$ is indifferent "
+             r"between her bundle and $j$'s.",
+             r"Every bundle is empty and $c_i(\emptyset)=0$, so all %d arcs are "
+             r"present." % (n * (n - 1)),
+             r"Every step keeps $X$ envy-free: $c_i(X_i)\le c_i(X_j)$ for all $i,j$."])]
     k = 0
     while k < len(ev):
         x = ev[k]
@@ -218,63 +287,167 @@ def storyboard(run):
                 j += 1
             batch = ev[k:j]
             moves = ", ".join(r"$%s\!\to\!%d$" % (ch(b[1]), b[2] + 1) for b in batch)
+            cells = []
+            for q in range(k, j):
+                _, e, i = ev[q]
+                Xi = snaps[q]["X"][i]                  # her bundle just before
+                assert marg(cs, i, e, Xi) == 0
+                cells.append(r"$c_{%d}(%s\mid %s)=0$" % (i + 1, ch(e), bset(Xi, m)))
+            why = [mtab(cells)]                        # the title says "(R1)"
+            if k and ev[k - 1][0] == "R3" and j - k == 1:
+                # (R1) again right after (R3): say what made the chore free
+                _, e, i = x
+                got = [g for g, a in ev[k - 1][2] if a == i]
+                if got:
+                    before = snaps[k - 1]["X"][i]
+                    assert marg(cs, i, e, before) == 1
+                    why.append(r"Free only since (R3) gave her $%s$: before, "
+                               r"$c_{%d}(%s\mid %s)=1$."
+                               % (ch(got[0]), i + 1, ch(e), bset(before, m)))
+            if j == len(ev) or ev[j][0] != "R1":
+                assert not r1_applicable(cs, snaps[j]["X"], snaps[j]["R"], n)
+                why.append(r"Now no leftover chore is free for anyone.")
+            if k == 0:
+                why.append(r"Dashed arcs were just lost: the bundle they point to "
+                           r"grew, and now costs more.")
             ovs.append(overlay(
-                snaps[j], r"\textbf{(R1)} free chores placed: " + moves + ".", "tao",
+                snaps[j], r"\textbf{(R1)} free chore%s placed: "
+                % ("" if len(batch) == 1 else "s") + moves + ".", "tao",
                 node={b[2]: "R1" for b in batch},
-                chore={b[1]: "R1" for b in batch}, badge="R1"))
+                chore={b[1]: "R1" for b in batch}, badge="R1",
+                title="Why (R1) applies", why=why))
             k = j
             continue
         if x[0] == "R2":
             _, e, i, jj, cyc = x
+            s, s1 = snaps[k], snaps[k + 1]
+            X, X1 = s["X"], s1["X"]
             loop = [i] + list(cyc[:-1])            # i -> j -> ... -> back to i
             arcs = {(loop[t], loop[(t + 1) % len(loop)]): "R2" for t in range(len(loop))}
             path = r"\!\to\!".join(str(a + 1) for a in loop + [i])
+            assert marg(cs, i, e, X[jj]) == 0
             ovs.append(overlay(
-                snaps[k],
+                s,
                 r"\textbf{(R2)} no free chore left, but the arc $%d\!\to\!%d$ lies "
                 r"on the cycle $%s$." % (i + 1, jj + 1, path), "tao",
-                node={a: "R2" for a in cyc}, arc=arcs, chip={e: "R2"}, badge="R2"))
+                node={a: "R2" for a in cyc}, arc=arcs, chip={e: "R2"}, badge="R2",
+                title="Why (R2) applies",
+                why=[r1_fails(s),
+                     r"But $c_{%d}(%s\mid X_{%d})=0$: $%s$ is free for %d on top of "
+                     r"%d's bundle," % (i + 1, ch(e), jj + 1, ch(e), i + 1, jj + 1),
+                     r"and $%d\to%d$ lies on a cycle, so a rotation can hand %d's "
+                     r"bundle to %d." % (i + 1, jj + 1, jj + 1, i + 1)]))
+            cells = []
+            for t in range(len(loop)):
+                a, b = loop[t], loop[(t + 1) % len(loop)]
+                assert cs[a][X[b]] == cs[a][X[a]] == cs[a][X1[a]]
+                cells.append(r"$c_{%d}(X_{%d})=c_{%d}(X_{%d})=%d$"
+                             % (a + 1, b + 1, a + 1, a + 1, cs[a][X[a]]))
+            assert X1[i] == X[jj] | (1 << e) and cs[i][X1[i]] == cs[i][X[jj]]
             ovs.append(overlay(
-                snaps[k + 1],
-                r"\textbf{(R2)} each agent on the cycle takes the bundle its arc "
+                s1,
+                r"\textbf{(R2)} each agent on the cycle takes the bundle her arc "
                 r"points to; then agent %d takes $%s$." % (i + 1, ch(e)), "tao",
                 node={a: "R2" for a in cyc}, bundle={a: "R2" for a in cyc},
-                chore={e: "R2"}, badge="R2"))
+                chore={e: "R2"}, badge="R2",
+                title="Why no cost changes",
+                why=[r"Each arc of the cycle is an equality ($X$ = the bundles "
+                     r"before the move):", mtab(cells),
+                     r"so no cost on the cycle changes, and then "
+                     r"$c_{%d}(X_{%d}\cup\{%s\})=c_{%d}(X_{%d})$."
+                     % (i + 1, jj + 1, ch(e), i + 1, jj + 1)]))
             k += 1
             continue
         if x[0] == "R3":
             _, tail, gave, _ = x
-            inner = {(a, b): "R3" for (a, b) in snaps[k]["E"] if a in tail and b in tail}
+            s, s1 = snaps[k], snaps[k + 1]
+            X, X1 = s["X"], s1["X"]
+            out = [j for j in range(n) if j not in tail]
+            assert all(cs[a][X[a]] < cs[a][X[j]] for a in tail for j in out)
+            own = {cs[a][X[a]] for a in tail}
+            low = min(cs[a][X[j]] for a in tail for j in out)
+            if len(own) == 1 and len(tail) == 1:
+                a, v = tail[0], min(own)
+                tl = (r"No arc leaves $\{%d\}$: $c_{%d}(X_{%d})=%d$, and every other "
+                      r"bundle costs her $\ge %d$." % (a + 1, a + 1, a + 1, v, low))
+            elif len(own) == 1:
+                tl = (r"No arc leaves $\{%s\}$: each member has cost %d, and every "
+                      r"outside bundle costs each of them $\ge %d$."
+                      % (agents(tail), min(own), low))
+            else:
+                tl = (r"No arc leaves $\{%s\}$: every outside bundle costs each member "
+                      r"strictly more than her own." % agents(tail))
+            inner = {(a, b): "R3" for (a, b) in s["E"] if a in tail and b in tail}
             ovs.append(overlay(
-                snaps[k],
+                s,
                 r"\textbf{(R3)} no free chore and no rotation: the tail SCC is "
-                r"$\{%s\}$, and $|R| = %d \ge %d$." % (agents(tail), len(snaps[k]["R"]),
+                r"$\{%s\}$, and $|R| = %d \ge %d$." % (agents(tail), len(s["R"]),
                                                         len(tail)),
                 "tao", node={a: "R3" for a in tail}, arc=inner,
-                chip={e: "R3" for e, _ in gave}, badge="R3"))
+                chip={e: "R3" for e, _ in gave}, badge="R3",
+                title="Why (R3) applies", why=[r1_fails(s), r2_fails(s), tl]))
+            cells = []
+            for e, a in gave:
+                assert marg(cs, a, e, X[a]) == 1
+                cells.append(r"$c_{%d}(%s\mid %s)=1$" % (a + 1, ch(e), bset(X[a], m)))
+            if len(tail) == 1:
+                why = [r"Her cost rises by exactly one:", mtab(cells, 1),
+                       r"No envy: every other bundle was strictly dearer to her."]
+            else:
+                why = [r"Each member's cost rises by exactly one:", mtab(cells),
+                       r"Outside bundles were already dearer, and (R2) fails "
+                       r"inside the tail."]
+            added = sorted((a, b) for (a, b) in s1["E"] - s["E"]
+                           if a in tail and b not in tail)
+            for (a, b) in added:
+                assert X1[b] == X[b] and cs[a][X1[a]] == cs[a][X[a]] + 1 == cs[a][X[b]]
+            if added and len(tail) == 1:
+                a = tail[0]
+                why.append(r"New arcs %s: her cost rose to $%d=%s$."
+                           % (", ".join(r"$%d\to%d$" % (a + 1, b + 1) for _, b in added),
+                              cs[a][X1[a]],
+                              "=".join(r"c_{%d}(X_{%d})" % (a + 1, b + 1) for _, b in added)))
+            elif added:
+                a, b = added[0]
+                why.append(r"Bold arcs are new ties, e.g.\ $c_{%d}(X_{%d})=c_{%d}(X_{%d})$."
+                           % (a + 1, a + 1, a + 1, b + 1))
             moves = ", ".join(r"$%s\!\to\!%d$" % (ch(e), a + 1) for e, a in gave)
             ovs.append(overlay(
-                snaps[k + 1],
+                s1,
                 r"\textbf{(R3)} one leftover chore to each member: " + moves + ".",
                 "tao", node={a: "R3" for a in tail},
-                chore={e: "R3" for e, _ in gave}, badge="R3"))
+                chore={e: "R3" for e, _ in gave}, badge="R3",
+                title="Why no envy arises", why=why))
             k += 1
             continue
         # HALT
         _, tail, _ = x
-        inner = {(a, b): "S" for (a, b) in snaps[k]["E"] if a in tail and b in tail}
+        s = snaps[k]
+        r = len(s["R"])
+        left = ",".join(ch(e) for e in sorted(s["R"]))
+        r1_fails(s)
+        r2_fails(s)
+        inner = {(a, b): "S" for (a, b) in s["E"] if a in tail and b in tail}
         ovs.append(overlay(
-            snaps[k],
+            s,
             r"\textbf{Halt.} The tail SCC $S=\{%s\}$ has %d agents, but only "
-            r"$r=%d$ chore%s left." % (agents(tail), len(tail), len(snaps[k]["R"]),
-                                       "" if len(snaps[k]["R"]) == 1 else "s"),
-            "tao", node={a: "S" for a in tail}, arc=inner, chip={e: "S" for e in snaps[k]["R"]},
-            badge="S"))
+            r"$r=%d$ chore%s left." % (agents(tail), len(tail), r, "" if r == 1 else "s"),
+            "tao", node={a: "S" for a in tail}, arc=inner, chip={e: "S" for e in s["R"]},
+            badge="S", title="Why the algorithm halts",
+            why=[(r"(R1), (R2) fail: $%s$ costs everyone $+1$, on her own bundle "
+                  r"and on every cycle arc." % left) if r == 1 else
+                 (r"(R1), (R2) fail: each of $%s$ costs everyone $+1$, on her own "
+                  r"bundle and on every cycle arc." % left),
+                 r"(R3) needs one chore per agent of the tail $S=\{%s\}$: %d chores, "
+                 r"but only $r=%d$." % (agents(tail), len(tail), r),
+                 r"Tao et al.\ stop here: $X$ is envy-free, but $%s$ %s unassigned."
+                 % (left, "is" if r == 1 else "are")]))
         k += 1
 
     # ---- our completion ---------------------------------------------------
     S, T, R, rounds, E = run["S"], run["T"], run["R"], run["rounds"], run["E"]
-    done = dict(X=run["A"], R=frozenset(), E=E)
+    X, A, p = run["X"], run["A"], run["p"]
+    done = dict(X=A, R=frozenset(), E=E)
     sn = {a: "S" for a in S}
     sarcs = {(a, b): "S" for (a, b) in E if a in S and b in S}
 
@@ -282,43 +455,112 @@ def storyboard(run):
     for t in T:
         nodes[t] = "T"
     moves = ", ".join(r"$%s\!\to\!%d$" % (ch(R[q]), T[q] + 1) for q in range(len(T)))
+    why = []
+    for q, t in enumerate(T):
+        e = R[q]
+        assert A[t] == X[t] | (1 << e) and marg(cs, t, e, X[t]) == 1
+        j = min((j for j in range(n) if j != t), key=lambda j: (cs[t][A[j]], j))
+        assert cs[t][A[t]] > cs[t][A[j]] and p[t] == 1
+        why.append(r"$c_{%d}(%s\mid X_{%d})=1$ by lemma (i), so $c_{%d}(A_{%d})=%d>%d="
+                   r"c_{%d}(A_{%d})$: unpaid, %d would envy %d."
+                   % (t + 1, ch(e), t + 1, t + 1, t + 1, cs[t][A[t]], cs[t][A[j]],
+                      t + 1, j + 1, t + 1, j + 1))
+        nb = [s for s in S if s not in T and (s, t) in E]
+        for s in nb:
+            assert marg(cs, s, e, X[t]) == 1 and p[s] == 0
+            assert cs[s][A[s]] <= cs[s][A[t]] - p[t]
+        if nb:
+            why.append(r"Inside $S$, by lemma (ii): $%s=1$, so a unit to %d %s."
+                       % ("=".join(r"c_{%d}(%s\mid X_{%d})" % (s + 1, ch(e), t + 1)
+                                   for s in nb), t + 1, none_envious(nb)))
     ovs.append(overlay(
         done,
         r"\textbf{Our completion.} The leftover chore%s go%s to distinct agents "
         r"$T=\{%s\}\subseteq S$: " % ("" if len(R) == 1 else "s",
                                        "es" if len(R) == 1 else "", agents(T)) + moves + ".",
-        "ours", node=dict(nodes), arc=dict(sarcs), chore={e: "T" for e in R}, badge="T"))
+        "ours", node=dict(nodes), arc=dict(sarcs), chore={e: "T" for e in R}, badge="T",
+        title=("Why agent %d must be paid" % (T[0] + 1)) if len(T) == 1
+        else "Why the recipients must be paid", why=why))
 
     paid = set(T)
     arcs = dict(sarcs)
-    for rd in rounds:
+    for q, rd in enumerate(rounds):
         pull = [(a, b) for (a, b) in E if a in rd and b in paid]
         for a in rd:
             nodes[a] = "PT"
         for pr in pull:
             arcs[pr] = "PT"
         via = ", ".join(r"$%d\!\to\!%d$" % (a + 1, b + 1) for (a, b) in sorted(pull))
-        first = rd is rounds[0]
+        why = []
+        for a in rd:
+            b = min(b for (x, b) in pull if x == a)
+            v = cs[a][X[a]]
+            assert a not in S and cs[a][X[b]] == v and p[a] == 1 and p[b] == 1
+            head = r"Arc $%d\to%d$: $c_{%d}(X_{%d})=c_{%d}(X_{%d})=%d$" % (
+                a + 1, b + 1, a + 1, a + 1, a + 1, b + 1, v)
+            if b in T:
+                e = R[T.index(b)]
+                if cs[a][A[b]] == cs[a][X[b]]:
+                    why.append(head + r", and $%s$ is free for %d on $X_{%d}$." % (
+                        ch(e), a + 1, b + 1))
+                else:
+                    why.append(head + r". (P2) pays %d even though $%s$ costs her "
+                               r"$+1$ on $X_{%d}$." % (a + 1, ch(e), b + 1))
+            else:
+                assert A[b] == X[b]
+                why.append(head + r", and $A_{%d}=X_{%d}$." % (b + 1, b + 1))
+            if cs[a][A[b]] - p[b] < cs[a][A[a]]:
+                why.append(r"Once %d is paid, $c_{%d}(A_{%d})-p_{%d}=%d<%d=c_{%d}(A_{%d})$:"
+                           r" unpaid, %d would envy %d."
+                           % (b + 1, a + 1, b + 1, b + 1, cs[a][A[b]] - p[b], cs[a][A[a]],
+                              a + 1, a + 1, a + 1, b + 1))
+        paid |= set(rd)
+        if q == len(rounds) - 1:
+            assert not any((a, b) in E for a in range(n) if a not in S and a not in paid
+                           for b in paid)
+            why.append(r"No other agent outside $S$ has an arc into $P$: the closure stops.")
+        first = q == 0
         ovs.append(overlay(
             done,
             (r"\textbf{Subsidy set $P$:} " if first else r"\textbf{$P$ grows again:} ")
             + r"agent%s $%s$, outside $S$, %s an equality arc into $P$ (%s), so %s paid."
             % ("" if len(rd) == 1 else "s", agents(rd), "has" if len(rd) == 1 else "have",
-               via, "it is" if len(rd) == 1 else "they are"),
-            "ours", node=dict(nodes), arc=dict(arcs), badge="PT"))
-        paid |= set(rd)
+               via, "she is" if len(rd) == 1 else "they are"),
+            "ours", node=dict(nodes), arc=dict(arcs), badge="PT",
+            title="Why agent%s %s %s paid" % ("" if len(rd) == 1 else "s", listing(rd),
+                                              "is" if len(rd) == 1 else "are"),
+            why=why))
 
-    p = run["p"]
+    P = run["P"]
     unpaid_S = [a for a in S if a not in T]
-    outsiders = [a for a in range(run["n"]) if a not in S and p[a] == 0]
+    outsiders = [a for a in range(n) if a not in S and p[a] == 0]
+    why = [r"$p=(%s)$, and $\sum_i p_i=%d\le n-1=%d$."
+           % (",".join(str(q) for q in p), sum(p), n - 1)]
+    for o in outsiders:
+        assert not any((o, j) in E for j in P)
+        assert all(cs[o][A[o]] <= cs[o][A[j]] - 1 for j in P)
+        why.append(r"Agent %d: no arc into $P$, so $c_{%d}(A_{%d})=%d\le c_{%d}(A_j)-1$ "
+                   r"for every $j\in P$." % (o + 1, o + 1, o + 1, cs[o][A[o]], o + 1))
+    if unpaid_S:
+        for s in unpaid_S:
+            for t, e in zip(T, R):                  # lemma (ii) towards T
+                assert (marg(cs, s, e, X[t]) == 1 if (s, t) in E
+                        else cs[s][X[s]] < cs[s][X[t]])
+            # lemma (iii) towards P \ T
+            assert all(cs[s][X[s]] < cs[s][X[j]] for j in P if j not in S)
+        why.append(r"Agent%s %s in $S\setminus T$: lemma (ii) towards $T$, lemma (iii) "
+                   r"towards $P\setminus T$." % ("" if len(unpaid_S) == 1 else "s",
+                                                  listing(unpaid_S)))
+    why.append(r"Checked: $c_i(A_i)-p_i\le c_i(A_j)-p_j$ for all $i,j$.")
     tail = r"Unpaid: $S\setminus T=\{%s\}$" % agents(unpaid_S)
     if outsiders:
         tail += r" and agent%s $%s$" % ("" if len(outsiders) == 1 else "s", agents(outsiders))
     ovs.append(overlay(
         done,
         r"\textbf{Result.} One unit to each agent of $P$: envy-free, total "
-        r"$%d \le n-1 = %d$. " % (sum(p), run["n"] - 1) + tail + ".",
-        "ours", node=dict(nodes), arc=dict(arcs), badge="p", pvec=p))
+        r"$%d \le n-1 = %d$. " % (sum(p), n - 1) + tail + ".",
+        "ours", node=dict(nodes), arc=dict(arcs), badge="p",
+        title="Why this is envy-free", why=why))
     return ovs
 
 
@@ -327,9 +569,11 @@ def storyboard(run):
 # ==========================================================================
 
 W, H = 13.8, 6.8                    # fixed canvas: no jitter between overlays
-CX, CY, RAD = 4.6, 3.2, 1.8         # the agent polygon
-PANEL = 9.3                         # left edge of the right-hand panel
-CHIPS_PER_ROW = 4
+CX, CY, RAD = 3.62, 3.2, 1.8        # the agent polygon (CX was 4.6 before the why box)
+PANEL = 7.55                        # left edge of the right-hand panel (was 9.3)
+CHIPS_PER_ROW = 8                   # was 4
+CHIP_DX, CHIP_DY = 0.76, 0.54       # chip pitch
+BOX_TOP, BOX_BOT = 3.76, 0.45       # the "why" box
 
 COLOURS = [  # Okabe-Ito, colour-blind safe; one fixed meaning each
     ("OIgreen", "0,158,115"), ("OIpurple", "204,121,167"),
@@ -348,8 +592,9 @@ NODE_STYLE = {
     "T":  r"draw=OIverm, double, double distance=0.9pt, line width=0.9pt, fill=OIverm!32",
     "PT": r"draw=OIsky!75!black, dashed, line width=1.5pt, fill=OIsky!35",
 }
-BADGE_TEXT = {"R1": "(R1)", "R2": "(R2)", "R3": "(R3)", "S": "halt",
-              "T": r"$T$", "PT": r"$P$", "p": r"$p$"}
+# The rule badge is now the coloured title of the "why" box.
+# BADGE_TEXT = {"R1": "(R1)", "R2": "(R2)", "R3": "(R3)", "S": "halt",
+#               "T": r"$T$", "PT": r"$P$", "p": r"$p$"}
 
 
 def pos(k, n):
@@ -422,7 +667,7 @@ def render(ov, prevE, n, m):
     L = []
     L.append(r"\begin{tikzpicture}[>={Stealth[length=1.9mm,width=1.6mm]}, "
              r"agent/.style={circle, minimum size=7.6mm, inner sep=0pt, font=\normalsize\bfseries}, "
-             r"chip/.style={rounded corners=1.5pt, minimum width=9.4mm, minimum height=4.8mm, "
+             r"chip/.style={rounded corners=1.5pt, minimum width=6.8mm, minimum height=4.5mm, "
              r"inner sep=0pt, font=\footnotesize}]")
     L.append(r"\useasboundingbox (0,0) rectangle (%.2f,%.2f);" % (W, H))
     L.append(r"\node[anchor=north west, text width=%.2fcm, font=\small, inner sep=0pt] "
@@ -455,28 +700,39 @@ def render(ov, prevE, n, m):
              % (PANEL, phase))
     L.append(r"\node[anchor=west, font=\footnotesize, text=Muted] at (%.2f,5.25) "
              r"{Leftover chores, $|R|=%d$};" % (PANEL, len(ov["R"])))
+    assert m <= 2 * CHIPS_PER_ROW, "chips would run into the why box"
     for q, e in enumerate(sorted(ov["R"])):
-        cx = PANEL + 0.5 + 1.05 * (q % CHIPS_PER_ROW)
-        cy = 4.72 - 0.6 * (q // CHIPS_PER_ROW)
+        cx = PANEL + 0.34 + CHIP_DX * (q % CHIPS_PER_ROW)
+        cy = 4.74 - CHIP_DY * (q // CHIPS_PER_ROW)
         c = ov["chip"].get(e)
         sty = ("draw=%s, line width=1.2pt, fill=%s!30" % (KEY[c], KEY[c])) if c \
             else "draw=gray!60, fill=gray!8"
         L.append(r"\node[chip, %s] at (%.2f,%.2f) {$%s$};" % (sty, cx, cy, ch(e)))
     if not ov["R"]:
-        L.append(r"\node[anchor=west, font=\footnotesize, text=Muted] at (%.2f,4.72) "
+        L.append(r"\node[anchor=west, font=\footnotesize, text=Muted] at (%.2f,4.74) "
                  r"{none --- every chore is placed};" % PANEL)
 
-    if ov["badge"]:
-        b = ov["badge"]
-        col = KEY.get(b, "Slate")
-        L.append(r"\node[anchor=west, rounded corners=2pt, draw=%s, line width=1pt, "
-                 r"fill=%s!15, font=\small\bfseries, inner sep=3pt] at (%.2f,2.15) {%s};"
-                 % (col, col, PANEL, BADGE_TEXT[b]))
-    if ov["pvec"] is not None:
-        L.append(r"\node[anchor=west, font=\small] at (%.2f,1.45) {$p=(%s)$};"
-                 % (PANEL, ",".join(str(q) for q in ov["pvec"])))
-        L.append(r"\node[anchor=west, font=\small] at (%.2f,0.95) "
-                 r"{$\textstyle\sum_i p_i=%d\le n-1=%d$};" % (PANEL, sum(ov["pvec"]), n - 1))
+    # The "why" box: the marginals and costs behind this step. storyboard()
+    # computes every number in it from the cost tables and asserts it.
+    col = KEY.get(ov["badge"], "Slate")
+    L.append(r"\draw[%s, line width=0.8pt, rounded corners=3pt, fill=%s!6] "
+             r"(%.2f,%.2f) rectangle (%.2f,%.2f);"
+             % (col, col, PANEL, BOX_BOT, W - 0.02, BOX_TOP))
+    # Ragged right, and no line breaks inside a formula or a word: justified
+    # text stretched the spacing around = and < on a 6 cm measure. A formula
+    # that does not fit moves whole to the next line; the fil stretch lets
+    # the short line it leaves behind stand without an underfull warning.
+    body = (r"\raggedright\rightskip=0pt plus 1fil\relpenalty=10000 \binoppenalty=10000 "
+            r"\hyphenpenalty=10000 \exhyphenpenalty=10000 ")
+    body += r"{\footnotesize\bfseries\color{%s!80!black}%s}" % (col, ov["title"])
+    body += "".join(r"\par\vspace{2.5pt}" + w for w in ov["why"])
+    body += r"\par"             # break the last paragraph under these settings too
+    L.append(r"\node[anchor=north west, text width=%.2fcm, font=\scriptsize, "
+             r"inner sep=0pt] at (%.2f,%.2f) {%s};"
+             % (W - PANEL - 0.36, PANEL + 0.17, BOX_TOP - 0.14, body))
+    # (was: a coloured rule badge at (PANEL, 2.15), and on the last overlay the
+    #  vector p at (PANEL, 1.45) and its sum at (PANEL, 0.95); both now live in
+    #  the why box)
 
     # Legend: each entry chained off the previous one, so spacing is even
     # whatever the label widths.
@@ -542,5 +798,6 @@ if __name__ == "__main__":
           "final (A,p) envy-free, p in {0,1}^n, sum p = %d <= %d, EF1"
           % (sum(run["p"]), run["n"] - 1))
     ovs = storyboard(run)
+    print("why boxes: every stated marginal, cost and envy claim asserted")
     splice(frames(run, ovs))
     print("overlays: %d  ->  spliced into %s" % (len(ovs), TALK))
