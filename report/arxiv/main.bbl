@@ -4,7 +4,7 @@
 \bibitem[ACIW19]{aziz2019fair}
 Haris Aziz, Ioannis Caragiannis, Ayumi Igarashi, and Toby Walsh.
 \newblock Fair allocation of indivisible goods and chores.
-\newblock In {\em Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI)}, pages 53--59. IJCAI Organization, 2019.
+\newblock In {\em Proceedings of the Twenty-Eighth International Joint Conference on Artificial Intelligence}, pages 53--59, 2019.
 
 \bibitem[ACIW22]{aziz2022fair}
 Haris Aziz, Ioannis Caragiannis, Ayumi Igarashi, and Toby Walsh.
@@ -52,11 +52,6 @@ Ioannis Caragiannis, David Kurokawa, Herv{\'e} Moulin, Ariel~D. Procaccia, Nisar
 \newblock The unreasonable fairness of maximum nash welfare.
 \newblock {\em ACM Transactions on Economics and Computation}, 7(3):12:1--12:32, 2019.
 
-\bibitem[DS26]{la2026subquadratic}
-Max {Dupr{\'e} la Tour} and Mashbat Suzuki.
-\newblock Subquadratic subsidies for nonnegative or nonpositive valuations, 2026.
-\newblock arXiv:2609.08272.
-
 \bibitem[End17]{End17}
 Ulle Endriss.
 \newblock {\em Trends in Computational Social Choice}.
@@ -100,6 +95,11 @@ Richard~J. Lipton, Evangelos Markakis, Elchanan Mossel, and Amin Saberi.
 Xinhang Lu, Simon Mackenzie, and Mashbat Suzuki.
 \newblock Optimal subsidy bounds for goods and chores: One dollar each suffices, 2026.
 \newblock arXiv:2607.10089.
+
+\bibitem[lTS26]{la2026subquadratic}
+Max~Dupr{\'e} la~Tour and Mashbat Suzuki.
+\newblock Subquadratic subsidies for nonnegative or nonpositive valuations.
+\newblock {\em arXiv preprint arXiv:2609.08272}, 2026.
 
 \bibitem[SCD23]{sun2023fairness}
 Ankang Sun, Bo~Chen, and Xuan~Vinh Doan.
