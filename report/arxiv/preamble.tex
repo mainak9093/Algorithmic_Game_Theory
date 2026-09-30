@@ -74,6 +74,12 @@
 \newtheorem{remark}{Remark}
 \theoremstyle{plain}
 
+% Unnumbered restatement, headed by the number of the result it repeats
+% (used in the appendices):
+%   \renewcommand{\restatedname}{Lemma~\ref{...}}\begin{restated}...\end{restated}
+\newcommand{\restatedname}{}
+\newtheorem*{restated}{\restatedname}
+
 % NOTE.  cleveref cannot tell these environments apart --- they share the
 % `theorem' counter, so \Cref would call every one of them "Theorem".  Refer
 % to them as `Example~\ref{...}', `Remark~\ref{...}' and so on, which is also

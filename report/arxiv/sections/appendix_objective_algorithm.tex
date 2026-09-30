@@ -1,0 +1,47 @@
+%% ==========================================================================
+%%  Appendix C  The algorithm for objective signed dichotomous valuations
+%%  (from the supplementary material of the AAMAS 2027 submission, Section 3)
+%% ==========================================================================
+\section{Algorithm for Objective Signed Dichotomous Valuations}
+\label{app:objective-mixed-alg}
+We first restate the theorem for convenience.
+\renewcommand{\restatedname}{Theorem~\ref{thm:objective-mixed}}
+\begin{restated}
+For every instance with objective signed dichotomous valuations, there exist a complete allocation $\alloc$ and a subsidy vector $p\in\{0,1\}^n$ such that $(\alloc,p)$ is envy-free and
+\[
+\sum_{i\in N} p_i\leq n-1.
+\]
+Moreover, such an allocation and subsidy vector can be computed in
+polynomial time in the value-oracle model.
+\end{restated}
+We next give the complete algorithm underlying Theorem~\ref{thm:objective-mixed}, using Lemma~\ref{lem:goods-extension} as the one-good extension subroutine.
+
+For brevity, let \textsc{ChoreAllocate} denote the polynomial-time procedure developed in Section~\ref{sec:main} (Algorithm~\ref{alg:main}) for negative dichotomous valuations. Given a negative dichotomous chore instance, it returns a complete allocation $\alloc$ and $p\in\{0,1\}^n$ such that $(\alloc,p)$ is envy-free and $\sum_i p_i\le n-1$.
+
+\begin{algorithm}[H]
+\caption{Unit subsidies for objective signed dichotomous valuations}
+\label{alg:objective-mixed}
+\begin{algorithmic}[1]
+\Require Agents $N=[n]$, items $M=G\mathbin{\dot\cup}C$, and value-oracle access to objective signed dichotomous valuations $\{v_i\}_{i\in N}$.
+\Ensure A complete allocation $\alloc$ and $p\in\{0,1\}^n$ such that $(\alloc,p)$ is envy-free and $\sum_{i\in N}p_i\le n-1$.
+
+\State Restrict each $v_i$ to subsets of $C$.
+\State $(\alloc,p)\gets\textsc{ChoreAllocate}(N,C,\{v_i|_C\}_{i\in N})$.
+\State Replace $p$ by the pointwise-minimal subsidy vector supporting $\alloc$.
+
+\For{each $g\in G$}
+    \State Apply the one-good extension procedure of Lemma~\ref{lem:goods-extension} to $(\alloc,p)$ and $g$, obtaining an allocation $\alloc'$ of the currently allocated items together with $g$ and a subsidy vector $p'\in\{0,1\}^n$ such that $(\alloc',p')$ is envy-free.
+    \State $\alloc\gets\alloc'$.
+    \State Replace $p'$ by the pointwise-minimal subsidy vector supporting $\alloc$, and set $p\gets p'$.
+\EndFor
+
+\State \Return $(\alloc,p)$.
+\end{algorithmic}
+\end{algorithm}
+
+The one-good extension in Line~5 is implemented by the \textsc{Extend}/\textsc{FindSink} procedure of Barman et al.~\cite{BKNS22}, whose validity in the present setting is established in the proof of Lemma~\ref{lem:goods-extension} (Appendix~\ref{app:goods-extension}). After every iteration, we take the pointwise-minimal supporting subsidy vector. Since the valuations are integer-valued, this vector is integral, and Lemma~\ref{lem:goods-extension} implies that all its components are at most one. Moreover, pointwise minimality implies that at least one component is zero. Hence, throughout the algorithm
+\[
+p\in\{0,1\}^n
+\qquad\text{and}\qquad
+\sum_{i\in N}p_i\le n-1.
+\]

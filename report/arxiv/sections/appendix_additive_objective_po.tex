@@ -1,0 +1,113 @@
+%% ==========================================================================
+%%  Appendix D  Pareto optimality with unit subsidies, additive objective
+%%  signed dichotomous valuations
+%%  (from the supplementary material of the AAMAS 2027 submission, Section 4)
+%% ==========================================================================
+\section{Pareto Optimality and Unit Subsidies for Additive Objective Signed Dichotomous Valuations}
+\label{app:additive-objective-po}
+\begin{proposition}
+\label{prop:additive-objective-po}
+For every instance with additive objective signed dichotomous valuations, there exist a complete allocation $\alloc$ and a subsidy vector $p\in\{0,1\}^n$ such that $(\alloc,p)$ is envy-free,
+\[
+\sum_{i\in N}p_i\leq n-1,
+\]
+and $\alloc$ is Pareto optimal. Moreover, such an outcome can be computed in polynomial time.
+\end{proposition}
+
+\begin{proof}
+The proof has three steps. First, allocate the goods using Halpern and Shah's binary-additive result, obtaining an envy-freeable allocation with unit subsidies. Next, assign every chore that is costless to some agent to such an agent. Finally, assign each universally costly chore to an agent currently receiving zero subsidy and raise that agent's subsidy from $0$ to $1$; if all subsidies become $1$, subtract one from every subsidy. This preserves envy-freeness and keeps total subsidy at most $n-1$. Since every item is assigned to an agent attaining its maximum possible value, the final allocation is Pareto optimal.
+
+
+We now formally write the details. Let $M=G\mathbin{\dot\cup}C$ be the common partition into goods and chores. Since the valuations are additive, for every agent $i$,
+\[
+v_i(g)\in\{0,1\}\qquad (g\in G)
+\]
+and
+\[
+v_i(c)\in\{0,-1\}\qquad (c\in C).
+\]
+
+We first allocate the goods. Ignore, for the moment, goods that have value zero for every agent, and apply the binary-additive goods result of Halpern and Shah~\cite{HS19} to the remaining goods. Their construction returns a non-wasteful allocation $\alloc^G$ that is envy-freeable and whose minimal subsidies have total at most $n-1$. Moreover, their proof shows that every path in the corresponding weighted envy graph has weight at most one. Since all edge weights are integral, the pointwise-minimal subsidies are integral as well, and hence we may choose
+\[
+p\in\{0,1\}^n,
+\qquad
+\sum_{i\in N}p_i\leq n-1.
+\]
+Goods having value zero for every agent may now be allocated arbitrarily, without affecting either envy-freeness or the subsidy vector.
+
+We next allocate the chores. Partition $C$ into
+\[
+C^0:=\{c\in C:\text{there exists }i\in N\text{ with }v_i(c)=0\}
+\]
+and
+\[
+C^-:=\{c\in C:v_i(c)=-1\text{ for every }i\in N\}.
+\]
+Thus, $C^-$ is the set of universally costly chores.
+
+First, consider a chore $c\in C^0$. Choose an agent $k$ with $v_k(c)=0$ and assign $c$ to $k$. This preserves envy-freeness with the same subsidy vector. Indeed, agent $k$'s value for her own bundle is unchanged, whereas for every agent $i\neq k$,
+\[
+v_i(A_k\cup\{c\})
+=
+v_i(A_k)+v_i(c)
+\leq v_i(A_k).
+\]
+Hence, $k$'s bundle becomes weakly less desirable to every other agent, while all other relevant bundle values remain unchanged. Repeating this operation allocates all chores in $C^0$ while preserving the envy-free solution $(\alloc,p)$.
+
+It remains to allocate the universally costly chores in $C^-$. We maintain the following invariant:
+\begin{equation}\label{eq:additive-mixed-invariant}
+(\alloc,p)\text{ is envy-free},\qquad
+p\in\{0,1\}^n,
+\qquad
+\text{and }p_k=0\text{ for some }k\in N.
+\end{equation}
+The invariant holds initially. In particular, the pointwise-minimal subsidy vector has at least one zero component.
+
+Let $c\in C^-$ be an unallocated chore, and choose an agent $k$ with
+$p_k=0$. Assign $c$ to $k$ and define
+\[
+\widehat p_k:=1,
+\qquad
+\widehat p_i:=p_i\quad(i\neq k).
+\]
+We claim that the resulting solution remains envy-free.
+
+Since $c$ has value $-1$ for every agent,
+\[
+v_k(A_k\cup\{c\})+\widehat p_k
+=
+v_k(A_k)-1+1
+=
+v_k(A_k)+p_k.
+\]
+Thus, agent $k$'s subsidized value for her own bundle is unchanged. Moreover, for every $i\neq k$,
+\[
+v_i(A_k\cup\{c\})+\widehat p_k
+=
+v_i(A_k)-1+1
+=
+v_i(A_k)+p_k.
+\]
+Hence, the subsidized value of $k$'s bundle is unchanged from the viewpoint of every agent. All other bundles and subsidies are unchanged. Consequently, every envy-freeness inequality is exactly the same as before, and the new solution is envy-free.
+
+If $\widehat p$ has a zero component, set $p:=\widehat p$ and continue. Otherwise, if $\widehat p_i=1$ for all $i\in N$, replace it with
+\[
+p_i:=\widehat p_i-1=0 \text{ for all } i\in N.
+\]
+Subtracting the same amount from every agent's subsidy leaves all envy-freeness inequalities unchanged. Thus, the invariant \eqref{eq:additive-mixed-invariant} is restored. Repeating this procedure allocates every chore in $C^-$ and produces a complete allocation $\alloc$ with
+\[
+p\in\{0,1\}^n
+\qquad\text{and}\qquad
+\sum_{i\in N}p_i\leq n-1.
+\]
+
+It remains to prove Pareto optimality. By construction, every good that is valued at one by some agent is assigned to an agent who values it at one; a good valued at zero by every agent may be assigned arbitrarily. Every chore in $C^0$ is assigned to an agent who values it at zero, while every chore in $C^-$ has value $-1$ for every agent regardless of its recipient. Therefore, every item is assigned to an agent attaining the maximum possible value for that item. By additivity,
+\[
+\sum_{i\in N}v_i(A_i)
+=
+\sum_{e\in M}\max_{i\in N}v_i(e),
+\]
+which is the maximum possible utilitarian welfare over all complete allocations. Hence $\alloc$ is Pareto optimal.
+
+Finally, the binary-additive goods allocation and its supporting subsidies can be computed in polynomial time by the construction of Halpern and Shah~\cite{HS19}. The subsequent chore-allocation steps require only identifying a zero-valued recipient for each chore and updating a binary subsidy vector. Hence, the entire construction runs in polynomial time.
+\end{proof}

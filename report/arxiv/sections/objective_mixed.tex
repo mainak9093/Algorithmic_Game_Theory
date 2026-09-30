@@ -1,0 +1,77 @@
+%% ==========================================================================
+%%  4  Unit subsidies for objective signed dichotomous valuations
+%%     (from the AAMAS 2027 submission, Section 4; the proof of
+%%     Lemma~\ref{lem:goods-extension}, the algorithm, and the additive
+%%     Pareto result from its supplementary material are Appendices B--D)
+%% ==========================================================================
+\section{Unit Subsidies for Objective Signed Dichotomous Valuations}
+\label{sec:objective-mixed}
+
+We now consider mixed instances in which every item is commonly classified as a good or a chore. Such common-sign settings are referred to as \emph{objective} goods and chores or \emph{objective valuations} in the fair-division literature \cite{aziz2022fair,bilo2026approximately}. We additionally impose signed binary marginals.
+
+Formally, a valuation profile is \emph{objective signed dichotomous} if the item set admits a common partition
+\[
+M=G\mathbin{\dot\cup}C
+\]such that, for every agent $i\in N$ and every $S\subseteq M$,
+\[
+v_i(S\cup\{g\})-v_i(S)\in\{0,1\}
+\qquad
+\text{for every }g\in G\setminus S,
+\]
+and
+\[
+v_i(S\cup\{c\})-v_i(S)\in\{0,-1\}
+\qquad
+\text{for every }c\in C\setminus S.
+\]
+Thus, every item is commonly regarded as either a good or a chore, although its marginal value may depend on the bundle to which it is added. In particular, the valuations need not be additive, submodular, or subadditive. It is a subclass of doubly monotone valuations in which the classification of items into goods and chores is common across agents.
+
+The key step is to show that the one-good extension argument of Barman et al.~\cite{BKNS22} remains valid even when the already allocated bundles may contain chores.
+
+\begin{lemma}
+\label{lem:goods-extension}
+Let $M'$ be a set of allocated items and let $A=(A_1,\ldots,A_n)$ be a complete allocation of $M'$. Suppose that the valuations are integer-valued and that there exists $p\in\{0,1\}^n$ such that $(A,p)$ is envy-free. Let $g\notin M'$
+satisfy
+\[
+v_i(S\cup\{g\})-v_i(S)\in\{0,1\}
+\]
+for every agent $i$ and every $S\subseteq M'$. Then there exist a complete allocation $A'$ of $M'\cup\{g\}$ and $p'\in\{0,1\}^n$ such that $(A',p')$ is envy-free. Moreover, $(A',p')$ can be computed in polynomial time given value-oracle access.
+\end{lemma}
+
+\begin{proof}
+We give a proof sketch here; the full proof is given in Appendix~\ref{app:goods-extension}. For an allocation $Y$, let $G_Y$ have edge weights $w_Y(i,j):=v_i(Y_j)-v_i(Y_i)$. We use the fact that $Y$ is envy-freeable iff it maximizes welfare over all bundle permutations (equivalently, $G_Y$ has no positive-weight cycle), and that an agent's pointwise-minimal subsidy is the maximum weight of a directed path starting at that agent~\cite{HS19} (Theorems~\ref{thm:hs-characterisation} and~\ref{thm:hs-minsubsidy}). We may replace $p$ by this pointwise-minimal vector, which remains in $\{0,1\}^n$.
+
+Two facts are crucial. If $Y=(Y_1,\ldots,Y_n)$ is envy-freeable and $g$ is assigned to an agent $x$ with marginal value one, the new allocation remains envy-freeable: its welfare rises by one, while any permutation can gain at most one from $g$. Moreover, if $Z$ is obtained by adding $g$ to $Y_x$, then
+\[
+w_Z(x,j)\leq w_Y(x,j),\qquad w_Z(i,x)\leq w_Y(i,x)+1,
+\]
+with all other edges unchanged; hence every simple path gains at most one in weight.
+
+We now use the extendable and non-extendable cases of Barman et al.~\cite{BKNS22}. In the extendable case, after a feasible bundle permutation, $g$ is assigned to a maximally subsidized agent with marginal value one. The two facts above preserve envy-freeability and keep the required subsidies in $\{0,1\}^n$; if the recipient has subsidy one, it can be removed after adding $g$.
+
+In the non-extendable case, we first show that allocating the new good $g$ to any maximally subsidized agent yields an envy-freeable allocation. Accordingly, \textsc{FindSink} starts by assigning $g$ to a maximally subsidized agent. At every round, it computes the pointwise-minimal subsidies for the resulting allocation. If some agent requires a subsidy of two, then $g$ is removed from the previous recipient's bundle and assigned to that agent; otherwise, the procedure stops with the current allocation. The path bound, together with the fact that every original subsidy is at most one, implies that every agent selected in this process is maximally subsidized in the original solution, and hence every tentative allocation considered by \textsc{FindSink} is envy-freeable.
+
+The key point is that no agent can be selected twice. Indeed, if a repetition occurred, the paths associated with the successive selections would yield a zero-weight cycle in $G_A$. Moreover, the argument for the first selection identifies on this cycle an edge entering the initial recipient across which $g$ has marginal value one. Rotating the bundles along this cycle, therefore, preserves welfare and produces an extendable solution, contradicting non-extendability. Hence \textsc{FindSink} terminates within $n$ selections. At termination, the pointwise-minimal subsidies are integral and strictly below two, and thus belong to $\{0,1\}^n$. The procedure is polynomial-time.
+\end{proof}
+
+
+We can now obtain the unit-subsidy guarantee for objective signed dichotomous valuations.
+
+\begin{theorem}
+\label{thm:objective-mixed}
+For every instance with objective signed dichotomous valuations, there exist a complete allocation $A$ and a subsidy vector $p\in\{0,1\}^n$ such that $(A,p)$ is envy-free and
+\[
+\sum_{i\in N} p_i\leq n-1.
+\]
+Moreover, such an allocation and subsidy vector can be computed in polynomial time in the value-oracle model.
+\end{theorem}
+
+\begin{proof}
+Restrict the instance to the chores $C$. By Theorem~\ref{thm:m-main}, we can compute an envy-free solution $(A^C,p^C)$ with $p^C\in\{0,1\}^n$. Starting from this solution, insert the goods in $G$ one at a time using Lemma~\ref{lem:goods-extension}; after all insertions we obtain a complete envy-free solution $(A,p)$ with $p\in\{0,1\}^n$. If every component of $p$ equals one, subtract one from every subsidy; otherwise some component is already zero. Thus, after normalization, $\sum_i p_i\le n-1$. Polynomial-time computability follows from Theorem~\ref{thm:m-main} and Lemma~\ref{lem:goods-extension}.
+\end{proof}
+
+The resulting procedure is stated explicitly as Algorithm~\ref{alg:objective-mixed} in Appendix~\ref{app:objective-mixed-alg}.
+
+The total-subsidy bound in Theorem~\ref{thm:objective-mixed} is tight. Indeed, negative dichotomous chore instances form a subclass of objective signed dichotomous valuations, and the identical binary additive instance with $n$ agents and $n-1$ chores from the introduction already requires a total subsidy of at least $n-1$.
+
+Theorem~\ref{thm:objective-mixed} concerns the subsidy guarantee only. Our construction does not guarantee that the underlying allocation is EF1, since the subsequent goods-allocation procedure of Barman et al.~\cite{BKNS22} does not in general preserve such a guarantee. Pareto optimality also cannot be imposed in general, since Proposition~\ref{prop:po-impossibility} applies to the pure-chore subclass. Under additivity, however, Pareto optimality can be recovered together with the same subsidy bound; see Proposition~\ref{prop:additive-objective-po} in Appendix~\ref{app:additive-objective-po}.

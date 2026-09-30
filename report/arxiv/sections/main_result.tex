@@ -2,7 +2,7 @@
 \label{sec:main}
 
 This section proves the main theorem: for any number of agents $n$ and every
-negative dichotomous instance there is an allocation admitting an envy-free
+negative dichotomous instance, there is an allocation admitting an envy-free
 solution with a subsidy of $0$ or $1$ per agent, at most $n-1$ in total, computable in polynomial time. 
 
 % Beyond Definition~\ref{def:dichcost} nothing is
@@ -35,7 +35,7 @@ and a partial allocation $X$ is envy-free (Definition~\ref{def:ef}) when
 For $S \subseteq \items$ and $e \in \items \setminus S$ write
 $\cost_i(e \mid S) := \cost_i(S \cup \set e) - \cost_i(S) \in \set{0,1}$ for a
 marginal, and for a partial allocation $X$ write
-$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its \emph{residue}.
+$R(X) := \items \setminus \bigcup_{i \in \agents} X_i$ for its unallocated chores.
  Moreover, as $\cost_i$s are integer valued, for all $S,T\subseteq M$, \(\cost_i(S) < \cost_i(T) \implies \cost_i(S) \le \cost_i(T) - 1 .
  \)
 
@@ -180,7 +180,7 @@ Suppose $r \ge 1$. Then
 \end{lemma}
 
 \begin{proof}
-Since $r\geq 1$, the algorithm terminates with nonempty residue.
+Since $r\geq 1$, the algorithm terminates with a nonempty set of unallocated chores.
 Therefore, neither \textnormal{(R1)} nor \textnormal{(R2)} is applicable
 at the terminal state.
 
@@ -217,7 +217,32 @@ The inequality must therefore be strict.
 % --------------------------------------------------------------------------
 \subsection{The completion}
 \label{sec:m-completion}
-Assume $r\geq 1$ and write
+We complete the partial allocation $X$ to $\mathcal{A}$ by allocating the remaining chores to agents in $S$ so that $\mathcal{A}$ becomes envy-freeable with a subsidy vector $p\in\{0,1\}^n$. If $r=0$, then $X$ is already complete. Hence, assume that $r\geq 1$. We first give some intuition for the completion procedure before stating it formally.
+
+The completion cannot be chosen arbitrarily. There are two potential difficulties. First, by Lemma~\ref{lem:m-terminal}(i), every residual chore raises its recipient's own cost by one. Concentrating two such chores on an agent who was tied with another unchanged bundle can therefore require a subsidy difference of two, which is impossible with subsidies in $\{0,1\}^n$. We consequently assign the residual chores to distinct recipients.
+
+Second, even after giving only one residual chore to each recipient, subsidising the recipients alone need not suffice. Suppose that an agent $i$ has an equality edge $(i,t)$ to a recipient $t$, so that
+\[
+c_i(X_i)=c_i(X_t),
+\]
+and that the residual chore $e$ assigned to $t$ has zero marginal cost for $i$ on $X_t$. Paying one unit to $t$ then gives
+\[
+c_i(X_t\cup\{e\})-1
+   =c_i(X_i)-1,
+\]
+so agent $i$ would envy $t$ unless $i$ were subsidised as well. The same phenomenon may then propagate backwards through further equality edges.
+
+The tail component $S$ is precisely what controls this propagation. By Lemma~\ref{lem:m-terminal}(ii), for every equality edge $(i,t)$ with $i,t\in S$ and every residual chore $e$, we have $c_i(e\mid X_t)=1$. Hence, if $t\in S$ receives $e$ and one unit of subsidy, then
+\[
+c_i(X_t\cup\{e\})-1
+   =c_i(X_t)
+   =c_i(X_i).
+\]
+Thus, from the viewpoint of an agent in $S$ who was tied with the recipient, the additional chore exactly offsets the recipient's unit subsidy, so no further subsidy is needed within $S$ for this reason.
+
+Moreover, since $S$ is a tail component, there is no equality edge from an agent in $S$ to an agent outside $S$. Hence, once the backward propagation reaches an agent outside $S$, any further predecessor that it forces into the subsidy set must also lie outside $S$. Consequently, the only subsidised agents in $S$ are the recipients. Since $r<|S|$, assigning the $r$ residual chores to distinct agents in $S$ therefore leaves at least one agent in $S$ unsubsidised.
+
+We now formalize this idea. Assume $r\geq 1$ and write
 \(
     R=\set{e_1,\dots,e_r}.
 \) Since $r<\abs S$, we may choose $r$ distinct agents
@@ -281,7 +306,7 @@ subsidy vector $p\in\{0,1\}^n$ such that $(\mathcal{A},p)$ is envy-free and
 $\sum_{i\in N}p_i\le n-1$.
 
 \State Set $c_i=-v_i$ for every $i\in N$.
-\State Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence} on $\set{\cost_i}_{i\in\agents}$, retaining the tail strongly connected component selected in the terminating application of  \textnormal{(R3)} if the residue is nonempty.
+\State Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence} on $\set{\cost_i}_{i\in\agents}$, retaining the tail strongly connected component selected in the terminating application of  \textnormal{(R3)} if the set of unallocated chores is nonempty.
 \State Let $X=(X_1,\dots,X_n)$ be its terminal partial allocation and let
 \[
 R=\items\setminus\bigcup_{i\in\agents}X_i .
@@ -365,14 +390,27 @@ Thus, $P'$ satisfies both \textnormal{(P1)} and \textnormal{(P2)}, contradicting
 
 
 
-By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover,
-$\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since
-Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in
-$S\setminus T$ lies outside $P$ and hence receives zero subsidy.
-Therefore,
-\begin{equation}\label{eq_1}
-  \sum_{i\in\agents}\subsidy_i\leq n-1.  
+% Budget paragraph before the AAMAS 2027 revision:
+% By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover,
+% $\abs T=r<\abs S$, so $S\setminus T\neq\emptyset$. Since
+% Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, every agent in
+% $S\setminus T$ lies outside $P$ and hence receives zero subsidy.
+% Therefore,
+% \begin{equation}\label{eq_1}
+%   \sum_{i\in\agents}\subsidy_i\leq n-1.
+% \end{equation}
+
+By \eqref{eq:m-subsidy}, $\subsidy\in\set{0,1}^n$. Moreover, Lemma~\ref{lem:m-Pstructure} gives $P\cap S=T$, and hence $P\setminus T\subseteq \agents\setminus S$. Therefore,
+\begin{equation}
+\label{eq_1}
+\sum_{i\in N}p_i
+ = |P|
+ = |T|+|P\setminus T|
+ \le r+n-|S|
+ = n-(|S|-r)
+ \le n-1,
 \end{equation}
+where the last inequality follows from $r<|S|$. Thus, more precisely, the construction leaves at least $|S|-r$ agents unsubsidised.
 
 
 
@@ -628,7 +666,7 @@ can be computed in polynomial time given value-oracle access.
 \begin{proof}
 Pass to the cost representation $\cost_i=-v_i$, which is dichotomous in
 the sense of Definition~\ref{def:dichcost}. Run the partial-allocation algorithm of Tao et al.~\cite{tao2025existence}, and let $X$ be its terminal partial
-allocation, with residue
+allocation, with set of unallocated chores
 \[
     R:=R(X), \qquad r:=\abs R.
 \]
@@ -648,9 +686,13 @@ and Corollary~\ref{cor:ef1} shows that $\alloc$ is EF1.
 It remains to verify polynomial-time computability. The partial-allocation algorithm of Tao et al.~\cite{tao2025existence} runs in polynomial time. If $r\geq 1$, the
 terminal equality graph has $n$ vertices and can be constructed from
 the $n^2$ values $\cost_i(X_j)$, requiring one value-oracle query for
-each pair $(i,j)$. Its strongly connected components can be computed
-in polynomial time, after which a tail component $S$ is obtained by
-selecting one with no outgoing arc. By Theorem~\ref{thm:m-twyz},
+each pair $(i,j)$. The tail component $S$ selected in the terminating application of \textnormal{(R3)} is retained during the partial-allocation phase.
+% Before the AAMAS 2027 revision (any tail component would not do: only the
+% one selected at the halting step is guaranteed to satisfy r < |S|):
+% Its strongly connected components can be computed
+% in polynomial time, after which a tail component $S$ is obtained by
+% selecting one with no outgoing arc.
+By Theorem~\ref{thm:m-twyz},
 $r\leq n-1$, so constructing $\alloc$ requires at most $n-1$ additional
 assignments. Finally, $P$ can be computed by a backward reachability
 search from $T$, restricted to vertices outside $S$, in $O(n^2)$ time. Hence, the entire procedure runs in polynomial time.
@@ -662,15 +704,44 @@ As noted in the introduction, the total-subsidy bound in Theorem~\ref{thm:m-main
 
 \subsection{Pareto optimality and subsidies}
 
-In this section, we show that the unit-subsidy guarantee need not be compatible with Pareto optimality of the underlying allocation. Pareto optimality is evaluated with respect to the allocation of chores, without taking subsidies into account. Formally, a complete allocation $\allocB$ \emph{Pareto dominates} a complete allocation $\alloc$ if
+% Before the AAMAS 2027 revision:
+% In this section, we show that the unit-subsidy guarantee need not be compatible with Pareto optimality of the underlying allocation.
+We next examine whether the unit-subsidy guarantee can be obtained together with Pareto optimality of the underlying allocation. Pareto optimality is evaluated with respect to the allocation of chores, without taking subsidies into account. Formally, a complete allocation $\allocB$ \emph{Pareto dominates} a complete allocation $\alloc$ if
 \[
     \cost_i(\allocB_i)\leq \cost_i(\bundle i)
     \qquad\text{for every }i\in\agents,
 \]
 with strict inequality for at least one agent. A complete allocation is \emph{Pareto optimal} if it is not Pareto dominated by any other complete allocation.
 
+For the binary additive subclass, Pareto optimality is compatible with the unit-subsidy guarantee. This parallels the corresponding phenomenon for binary additive goods, where Halpern and Shah~\cite{HS19} obtain a Pareto-efficient allocation requiring total subsidy at most $n-1$; see also Goko et al.~\cite{goko2024fair} for unit subsidies together with utilitarian optimality in the more general matroidal goods setting. For completeness, we record the simple chore-side observation.
+
 \begin{proposition}
-\label{prop_1}
+\label{prop:additive-po}
+For binary additive costs, there exists a complete allocation $\mathcal A$ and $p\in\{0,1\}^n$ such that $(\mathcal A,p)$ is envy-free, $\sum_{i\in N}p_i\le n-1$, and $\mathcal A$ is Pareto optimal and EF1. Moreover, such an outcome can be computed in polynomial time.
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+U:=\{e\in M:c_i(\{e\})=1\text{ for every }i\in N\}
+\]
+be the universally costly chores. Assign every $e\notin U$ to an agent for whom $c_i(e)=0$. Write $|U|=qn+r$, where $0\le r<n$, and distribute the chores in $U$ so that $r$ agents receive $q+1$ of them and the remaining agents receive $q$.
+
+Set $p_i=1$ for the former $r$ agents and $p_i=0$ for the others. Then $c_i(A_i)-p_i=q$ for every $i$. Moreover, every bundle $A_j$ contains $q+p_j$ universally costly chores, and hence
+\[
+c_i(A_j)-p_j\ge q=c_i(A_i)-p_i
+\]
+for all $i,j$. Thus $(\mathcal A,p)$ is envy-free and $\sum_i p_i=r\le n-1$.
+
+Every chore outside $U$ is allocated at zero cost, whereas every chore in $U$ necessarily contributes one unit of cost under every allocation. Hence $\mathcal A$ minimizes total cost and is therefore Pareto optimal. Finally, an agent receiving $q$ universally costly chores is already envy-free, while an agent receiving $q+1$ becomes envy-free after
+removing one universally costly chore; thus $\mathcal A$ is EF1. The construction clearly requires only polynomially many value queries
+and operations.
+\end{proof}
+
+Thus, in the binary additive domain, Pareto optimality is compatible with the optimal unit-subsidy guarantee. The total-subsidy bound remains tight even under Pareto optimality: in the identical binary additive instance $c_i(S)=|S|$ from the introduction, every complete allocation is Pareto optimal, while every envy-free solution requires total subsidy at least $n-1$. This compatibility, however, breaks down once nonadditivity is allowed, even for identical binary submodular costs.
+
+\begin{proposition}
+\label{prop:po-impossibility}
 There exist negative dichotomous instances, even with two agents and identical binary submodular cost functions, for which no Pareto-optimal allocation admits an envy-free subsidy vector in $\{0,1\}^n$.
 \end{proposition}
 
@@ -699,7 +770,7 @@ and hence
 \]
 Thus, no subsidy vector in $\{0,1\}^2$ suffices. The case in which agent $2$ receives all three chores is symmetric.
 
-Now consider a split allocation, with bundle sizes $(2,1)$ up to symmetry. Its cost profile is $(2,1)$, so it can be made envy-free with subsidies $(1,0)$, up to symmetry. Nevertheless, it is not Pareto optimal. Assigning the remaining chore to the agent who already holds two chores changes the cost profile from $(2,1)$ to $(2,0)$: the cost of that agent remains unchanged, while the other agent's cost strictly decreases.
+Now consider a split allocation, with bundle sizes $(2,1)$ up to symmetry. Its cost profile is $(2,1)$, so it can be made envy-free with subsidies $(1,0)$, up to symmetry. Nevertheless, it is not Pareto optimal. Transferring the singleton chore to the agent holding two chores changes the cost profile from $(2,1)$ to $(2,0)$: the cost of one agent remains unchanged, while the other agent's cost strictly decreases.
 
 Thus, the Pareto-optimal allocations are precisely the two concentrated allocations, and each requires a subsidy of at least $2$ for the agent receiving all three chores. Conversely, every allocation that admits an envy-free subsidy vector in $\{0,1\}^2$ is Pareto dominated. Therefore, no allocation is simultaneously Pareto optimal and envy-free with subsidies in $\{0,1\}^2$.
 \end{proof}
