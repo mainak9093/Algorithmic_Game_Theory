@@ -114,6 +114,13 @@ statement.
 | A single insertion preserves balance iff it grows a minimum-size bundle | **proved** (one line) | `approach_15.md` §31 |
 | **(BAL-STEP)** from a valid balanced allocation, every unallocated item can be inserted into some minimum-size bundle, with a reassignment, landing valid | **open — the current target.** Holds in the strong EVERY-ITEM form in both pure classes (0 failures, ~71,000 balanced states each); with §23 it is **equivalent to all of (S1)** | `approach_15.md` §32 |
 | **Free-insertion lemma**: $v_x(g\mid A_x)\ge 0$ and $v_i(g\mid A_x)\le 0$ for all $i$ $\Rightarrow$ no path weight rises, so $\subsidy$ cannot rise | **proved**; on chores it is exactly [R12]'s rule (R1). First version was wrong and the machine check caught it | `approach_15.md` §33 |
+| Two-sided equality graph (chores to tail SCCs, goods to source SCCs) for objective signed: the literal mirror | **does not mirror** — halts with up to $n+1$ leftover goods; one-shot completion fails 16/2,040; no dead halting state | `approach_21.md` §2–3 |
+| **Goods completion lemma**: leftover goods injected into agents valuing them at $+1$ $\Rightarrow$ unit subsidies by backward closure, no SCC needed | **proved**; machine-checked, 27,934 assignments, objective and doubly monotone | `approach_21.md` §4 |
+| Maximal envy-free extension + structured completion | **0 failures** (824 non-trivial halts of 8,100; adversary found none); leftovers always single-signed and $\le n-1$ | `approach_21.md` §5 |
+| (C1) single-signed + (C2) matchable leftovers at maximal states $\Rightarrow$ unit subsidies for **doubly monotone** dichotomous | **proved conditionally**; (C1), (C2) **open** | `approach_21.md` §6 |
+| **(INS-E)** eligible one-item insertion of a doubly monotone item | **open**; 0 failures in 426,827 states; BKNS covers the extendable part; new "short-by-one" swap needed once | `approach_21.md` §7 |
+| SCC-migration notes (Mainak): §2–§5 | **confirmed** (§2 needs the edge tight; §5 holds for the first good only) | `approach_21.md` §8 |
+| SCC-migration notes: §6 no re-entry | **proof gap** — tight edges can leave $S^\star$ towards paid outsiders | `approach_21.md` §8 |
 
 ## 4. Formal statement of record
 
@@ -157,6 +164,25 @@ and neither extends.
 Open: the **bounded-excursion conjecture** (`approach_15.md` §16), and whether
 Tao-Wu-Yu-Zhou's Algorithm 3 can close an excursion, despite the
 local-to-global sign-flip gap.
+
+## 6. Approach 21 — the two-sided equality graph (2026-10-03)
+
+Recorded in `approach_21.md`; scripts in `updates_general_binary/update_3/`.
+Mainak's idea: chores to tail SCCs as in Tao et al., goods to source SCCs, then
+a one-shot completion. The literal mirror fails — a chore harms its holder
+uniformly, a good harms onlookers by agent-dependent amounts, so the goods
+handout needs a matching and leftover goods are not bounded. But two fixes
+(handouts to any closed set of gainers; a good and a chore together on one
+agent) and halting only at maximality give 0 failures, and the goods half of
+the completion is now a proved lemma that needs no SCC at all.
+
+The payoff is for **doubly monotone** valuations, the next target: nothing in
+the rules or in either completion uses objective signs, so two combinatorial
+conjectures about maximal envy-free partial allocations — (C1) single-signed
+leftovers, (C2) matchable leftover goods — would settle it. Independently, an
+eligibility-restricted version of BKNS's one-item extension (INS-E) never
+failed in 426,827 states and would settle it through the existing two-phase
+architecture.
 
 ---
 

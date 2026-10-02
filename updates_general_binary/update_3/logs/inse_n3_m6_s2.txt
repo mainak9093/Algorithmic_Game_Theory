@@ -1,0 +1,9 @@
+
+n=3 m=6 instances=400 seed=2
+valid states tested       : 25360
+(INS-E)      failures     : 0
+(INS-E-elig) failures     : 0
+
+real	0m1.594s
+user	0m0.000s
+sys	0m0.000s

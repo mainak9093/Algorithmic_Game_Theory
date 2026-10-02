@@ -1,0 +1,9 @@
+
+n=4 m=5 instances=800 seed=52
+hard states                                   : 4359
+  extendable (BKNS Case 1 via package swaps)  : 2063
+  non-extendable                              : 2296
+non-extendable: closure rule works, as is     : 2294
+   ... and it is free insertion (no new payment): 2282
+non-extendable: closure rule works, w/ reassign: 2296
+closure payment computed but NOT envy-free    : 0   (must be 0)

@@ -1,0 +1,10 @@
+--- closure rule fails: elig [0, 2]  p [0, 1, 0, 1]  w-matrix [[0, -1, 0, -1], [1, 0, 1, 0], [0, -1, 0, -1], [1, 0, 0, 0]]  gains of e on X_j [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
+--- closure rule fails: elig [0, 2]  p [0, 1, 0, 1]  w-matrix [[0, -1, 0, -1], [1, 0, 1, 0], [0, -1, 0, -1], [0, 0, 1, 0]]  gains of e on X_j [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
+--- closure rule fails: elig [0, 2]  p [0, 1, 0, 0]  w-matrix [[0, -1, 0, -1], [1, 0, 1, 0], [0, -1, 0, -1], [-1, -1, -1, 0]]  gains of e on X_j [[1, 1, 1, 1], [0, 0, 0, 0], [1, 1, 1, 1], [0, 0, 0, 0]]
+
+n=4 m=6 instances=250 seed=53
+hard states                                   : 5124
+closure rule works, bundles where they are    : 5081
+   ... and it is free insertion (no new payment): 5066
+closure rule works, allowing reassignment     : 5116
+closure payment computed but NOT envy-free    : 0   (must be 0)

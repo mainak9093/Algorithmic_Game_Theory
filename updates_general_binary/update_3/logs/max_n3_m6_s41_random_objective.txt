@@ -1,0 +1,10 @@
+
+n=3 m=6 trials=1500 seed=41 family=random mode=objective
+    1309  complete, no subsidy
+     191  STRUCT ok
+  (leftover chores, leftover goods) at halt: {(0, 1): 93, (0, 2): 24, (1, 0): 65, (2, 0): 9}
+  rule use: {'E1/E2': 8575, 'E3': 61, 'TAIL': 27, 'E4': 8}
+
+real	0m1.604s
+user	0m0.000s
+sys	0m0.015s

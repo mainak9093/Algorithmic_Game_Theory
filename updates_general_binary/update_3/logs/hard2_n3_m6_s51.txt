@@ -1,0 +1,10 @@
+--- closure rule fails: elig [0, 2]  p [0, 1, 0]  w-matrix [[0, -2, 0], [1, 0, 1], [0, -2, 0]]  gains of e on X_j [[1, 1, 1], [-1, -1, -1], [1, 0, 1]]
+
+n=3 m=6 instances=1500 seed=51
+hard states                                   : 17647
+  extendable (BKNS Case 1 via package swaps)  : 5852
+  non-extendable                              : 11795
+non-extendable: closure rule works, as is     : 11790
+   ... and it is free insertion (no new payment): 11781
+non-extendable: closure rule works, w/ reassign: 11794
+closure payment computed but NOT envy-free    : 0   (must be 0)

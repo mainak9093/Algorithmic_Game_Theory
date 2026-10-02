@@ -1,0 +1,10 @@
+
+n=4 m=6 trials=400 seed=49 family=additive mode=doubly
+     363  complete, no subsidy
+      37  STRUCT ok
+  (leftover chores, leftover goods) at halt: {(0, 1): 29, (0, 2): 5, (1, 0): 3}
+  rule use: {'E1/E2': 2293, 'E3': 23, 'E4': 6}
+
+real	0m0.739s
+user	0m0.015s
+sys	0m0.000s

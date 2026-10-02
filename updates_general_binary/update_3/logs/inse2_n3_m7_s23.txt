@@ -1,0 +1,13 @@
+
+n=3 m=7 instances=200 seed=23
+valid states tested       : 36278
+(INS-E)      failures     : 0
+(INS-E-elig) failures     : 0
+solvable with no reassignment (eligible holder): 36097
+hard states (someone paid, every paid agent ineligible): 6773
+   of which solvable (eligible holder)        : 6773
+   of which solvable with an UNPAID eligible holder: 6773
+
+real	0m3.043s
+user	0m0.015s
+sys	0m0.015s

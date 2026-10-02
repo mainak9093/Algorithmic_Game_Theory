@@ -1,0 +1,11 @@
+
+n=3 m=6 trials=3000 seed=12 order=F-ROT-SRC-TAIL family=random
+    2700  complete
+     299  K-SYM ok
+       1  K-SYM unmatchable | any-placement=True, with-reassignment=True
+  leftover goods at halt: {0: 141, 1: 132, 2: 26, 3: 1}
+  rule use: {'F': 15536, 'TAIL': 1276, 'ROT': 505, 'SRC': 112}
+
+real	0m2.023s
+user	0m0.000s
+sys	0m0.000s

@@ -1,0 +1,10 @@
+
+n=4 m=6 trials=1500 seed=15 order=F-ROT-SRC-TAIL family=additive
+    1079  complete
+     421  K-SYM ok
+  leftover goods at halt: {0: 113, 1: 176, 2: 90, 3: 42}
+  rule use: {'F': 7324, 'TAIL': 324, 'ROT': 184, 'SRC': 152}
+
+real	0m1.121s
+user	0m0.015s
+sys	0m0.000s

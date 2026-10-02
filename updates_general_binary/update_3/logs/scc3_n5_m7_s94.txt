@@ -1,0 +1,11 @@
+   S5 case: good #4 inserted, s0 NOT in T; S* strongly connected in H_p: False; s0=4 s1=1 S*=[0, 1, 2, 3, 4] p=[1, 1, 0, 0, 1]
+
+n=5 m=7 instances=1500 seed=94
+  S2 DISAGREE                                             0
+  S2 agree                                                753
+  S5 fails: s1 in S*                                      1
+  branches terminating                                    334
+  extendable                                              587
+  instances with residual chores                          288
+  non-extendable -> FINDSINK                              166
+  selections                                              5

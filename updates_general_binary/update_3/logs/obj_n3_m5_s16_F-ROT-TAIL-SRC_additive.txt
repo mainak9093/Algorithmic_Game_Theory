@@ -1,0 +1,12 @@
+
+n=3 m=5 trials=3000 seed=16 order=F-ROT-TAIL-SRC family=additive
+    2498  complete
+     494  K-SYM ok
+       6  K-SYM fail | any-placement=True, with-reassignment=True
+       2  K-SYM unmatchable | any-placement=True, with-reassignment=True
+  leftover goods at halt: {0: 142, 1: 279, 2: 79, 3: 1, 4: 1}
+  rule use: {'F': 12713, 'TAIL': 900, 'SRC': 204, 'ROT': 114}
+
+real	0m0.962s
+user	0m0.000s
+sys	0m0.015s

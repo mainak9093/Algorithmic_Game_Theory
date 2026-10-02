@@ -1,0 +1,5 @@
+n=3 m=6 instances=3000 seed=63 mode=doubly
+envy-free states with goods-type leftovers : 13596
+admissible tau tested                      : 4543
+explicit payment NOT envy-free              : 0   (must be 0)
+explicit payment over n - |T|               : 0   (must be 0)

@@ -1,0 +1,8 @@
+
+n=4 m=7 instances=3000 seed=82
+  S2 DISAGREE                                             0
+  S2 agree                                                576
+  branches terminating                                    143
+  extendable                                              457
+  instances with residual chores                          576
+  non-extendable -> FINDSINK                              119
