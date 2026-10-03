@@ -1,0 +1,4 @@
+n=4 m=6 trials=1500 seed=102 variant=MAX (pure goods)
+    1229  all goods placed, envy-free, no subsidy
+     271  injection exists -> one-shot completion OK
+  leftover goods at halt: {1: 207, 2: 60, 3: 4}

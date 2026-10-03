@@ -193,6 +193,31 @@ FindSink explored over every choice):
   "$w_A(u,v)<0$" fails as stated. Empirically untested: FindSink made only 23
   selections in ~3,900 non-extendable insertions.
 
+## 8b. Pure goods, allocated before any subsidy (Experiment 8, 2026-10-03)
+
+Mainak's precise question: can **all goods** be placed by source-SCC moves
+(reassignment allowed) **before** any subsidy, leaving a remainder that one
+final subsidy step completes? `goods_only_check.py`, pure dichotomous goods,
+$n=3,4$, $m=6,7$:
+
+- **One good at a time** (envy-free throughout, any envy-free reassignment):
+  **no.** 1,042 of 1,799 halts admit no injection of the leftovers into agents
+  valuing them at $+1$, even after reassignment, so no one-shot completion
+  exists from them; often every good is still unplaced. Smallest witness: two
+  agents, three goods, everyone values every good at 1 (additive). From the
+  empty allocation any single good creates envy and no reassignment helps,
+  so the phase halts with $3>n$ goods left.
+- **With simultaneous handouts** (one good to each agent of a closed set, the
+  mirror of Tao's R3) and pairs: **yes in every test** — 745 halts, at most
+  $n-1$ goods left, always injectable, one-shot completion always $\le 1$.
+
+So the goods phase must be batched, exactly as the chores phase is; the open
+step is (C2) of §6 restricted to goods. It is **proved for $n=2$**: at a
+maximal state with two mutually tied agents every leftover good must be worth
+$+1$ to both agents on both bundles (else a single insertion, possibly after
+swapping the bundles, is envy-free), so two leftovers could be handed out one
+each; hence at most one is left, and it is injectable.
+
 ## 9. Next
 
 1. Prove (C1) and (C2) — statements purely about envy-free partial

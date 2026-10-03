@@ -1,0 +1,5 @@
+n=4 m=6 trials=1500 seed=102 variant=INC (pure goods)
+     801  all goods placed, envy-free, no subsidy
+     482  NO injection, even after reassignment | some completion: True
+     217  injection exists -> one-shot completion OK
+  leftover goods at halt: {1: 76, 2: 57, 3: 41, 4: 58, 5: 121, 6: 346}
