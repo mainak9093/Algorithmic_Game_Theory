@@ -1,0 +1,345 @@
+%% ==========================================================================
+%%  Objective signed dichotomous valuations: unit subsidies.
+%%  Written up from objective_signed_proof_handoff.md (2026-10-03), with the
+%%  gaps in its sketch of the one-good extension closed (see the proof of
+%%  Lemma~\ref{lem:os-extension}). Input by working.tex only.
+%% ==========================================================================
+\section{Objective Signed Dichotomous Valuations}
+\label{sec:objective-signed}
+
+This section extends the chores theorem (Theorem~\ref{thm:g3-main}) to
+instances containing both goods and chores, provided every agent agrees on
+which items are goods and which are chores. The proof is modular: the chores
+are allocated in one shot by Theorem~\ref{thm:g3-main}, and the goods are then
+inserted one at a time by a one-good extension lemma in the style of Barman et
+al.~\cite{BKNS22}, which we show remains valid when the bundles already contain
+chores.
+
+\subsection{The model}
+
+\begin{definition}[Objective signed dichotomous valuations]
+\label{def:os-domain}
+A valuation profile $\set{v_i}_{i\in\agents}$ with $v_i(\emptyset)=0$ is
+\emph{objective signed dichotomous} if the items admit a partition
+$\items=G\mathbin{\dot\cup}C$, common to all agents, such that for every
+$i\in\agents$ and every $S\subseteq\items$,
+\[
+  v_i(S\cup\set g)-v_i(S)\in\set{0,1}\quad(g\in G\setminus S),
+  \qquad
+  v_i(S\cup\set c)-v_i(S)\in\set{0,-1}\quad(c\in C\setminus S).
+\]
+\end{definition}
+
+No further structure is assumed: the valuations need not be additive,
+submodular or subadditive. Every bundle value is an integer, since it is
+obtained from $v_i(\emptyset)=0$ by adding marginals in $\set{-1,0,1}$; hence
+every envy-graph weight is an integer and, by Theorem~\ref{thm:hs-minsubsidy},
+so is every pointwise-minimal subsidy (cf.\ Observation~\ref{obs:integrality}).
+The restriction of $v_i$ to subsets of $C$ is negative dichotomous, so
+$\cost_i:=-v_i|_{2^C}$ is a dichotomous cost function on the chore set $C$.
+
+For an allocation $Y$ of some item set we write
+$\edgew{Y}(i,j)=v_i(Y_j)-v_i(Y_i)$, and for a good $g$ outside the allocated
+items we write
+\[
+  \Delta_i^g(S):=v_i(S\cup\set g)-v_i(S)\in\set{0,1}.
+\]
+For $x\in\agents$, $Y^x$ denotes $Y$ with $g$ added to the bundle of agent $x$.
+A pair $(Y,q)$ is an envy-free solution iff $\edgew{Y}(i,j)\le q_i-q_j$ for all
+$i,j$; summing along a path, every directed path $P$ from $i$ to $j$ then has
+$\edgew{Y}(P)\le q_i-q_j$. For a subsidy vector $q$ put
+$\Mset(q):=\set{i\in\agents: q_i=\max_j q_j}$.
+
+\subsection{Three facts about inserting one good}
+
+Throughout, $g$ is an item that is unallocated in $Y$ and satisfies
+$\Delta_i^g(S)\in\set{0,1}$ for every agent $i$ and every set $S$ of allocated
+items. We use the welfare form of envy-freeability
+(Theorem~\ref{thm:hs-characterisation}): an allocation is envy-freeable iff no
+reassignment of its own bundles raises utilitarian welfare.
+
+\begin{lemma}[Inserting a good]
+\label{lem:os-claims}
+Let $Y$ be an allocation and $x\in\agents$.
+\begin{enumerate}
+  \item[(a)] Arcs not incident to $x$ keep their weight, and
+        \begin{align*}
+          \edgew{Y^x}(x,j)&=\edgew{Y}(x,j)-\Delta_x^g(Y_x)\le\edgew{Y}(x,j),\\
+          \edgew{Y^x}(i,x)&=\edgew{Y}(i,x)+\Delta_i^g(Y_x)\le\edgew{Y}(i,x)+1 .
+        \end{align*}
+        Consequently every simple directed path $P$ satisfies
+        $\edgew{Y^x}(P)\le\edgew{Y}(P)+1$, and equality forces $P$ to contain
+        an arc $(k,x)$ with $\Delta_k^g(Y_x)=1$.
+  \item[(b)] If $Y$ is envy-freeable and $\Delta_x^g(Y_x)=1$, then $Y^x$ is
+        envy-freeable.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(a) Only the bundle of $x$ changes. A simple path enters $x$ at most once, so
+at most one of its arcs rises, and by at most one; arcs leaving $x$ do not
+rise.
+
+(b) $\SW(Y^x)=\SW(Y)+1$. In any reassignment of the bundles of $Y^x$, delete
+$g$ from the bundle containing it; the result is a reassignment of the bundles
+of $Y$, whose welfare is at most $\SW(Y)$, and the agent holding $g$ gained at
+most $1$ from it. So every reassignment of $Y^x$ has welfare at most
+$\SW(Y)+1=\SW(Y^x)$.
+\end{proof}
+
+\begin{lemma}[Reassigning an envy-free solution]
+\label{lem:os-perm}
+Let $(A,p)$ be an envy-free solution and $\sigma$ a permutation of $\agents$
+such that $A_\sigma:=(A_{\sigma(1)},\dots,A_{\sigma(n)})$ is envy-freeable. Then
+$v_i(A_{\sigma(i)})+p_{\sigma(i)}=v_i(A_i)+p_i$ for every $i$, and
+$(A_\sigma,p_\sigma)$ is an envy-free solution.
+\end{lemma}
+
+\begin{proof}
+Envy-freeness gives $v_i(A_i)+p_i\ge v_i(A_{\sigma(i)})+p_{\sigma(i)}$ for
+every $i$. Summing, $\SW(A)\ge\SW(A_\sigma)$; since $A_\sigma$ is envy-freeable
+it maximises welfare over the same bundles, so $\SW(A_\sigma)\ge\SW(A)$. Hence
+every inequality is an equality. Each agent's subsidised value is then
+unchanged, and the packages (bundle with subsidy) are merely permuted, so
+envy-freeness persists.
+\end{proof}
+
+\begin{definition}[Extendable]
+\label{def:os-extendable}
+An envy-free solution $(A,p)$ is \emph{extendable with $g$} if there are a
+permutation $\sigma$ with $A_\sigma$ envy-freeable and an agent $\kappa$ such
+that the package $\kappa$ receives carries maximum subsidy,
+$p_{\sigma(\kappa)}=\max_j p_j$, and $\Delta_\kappa^g(A_{\sigma(\kappa)})=1$.
+\end{definition}
+
+Extendability has a direct reading in the graph of tight arcs. Let
+$H_p=(\agents,E_p)$ with $(i,j)\in E_p$ iff $i\ne j$ and
+$v_i(A_i)+p_i=v_i(A_j)+p_j$.
+
+\begin{proposition}[Extendability in the tight graph]
+\label{prop:os-extendable-graph}
+An envy-free solution $(A,p)$ is extendable with $g$ iff there are agents
+$i,j$ with $j\in\Mset(p)$ and $\Delta_i^g(A_j)=1$ such that either $i=j$, or
+$(i,j)\in E_p$ and $i,j$ lie in the same strongly connected component of $H_p$.
+\end{proposition}
+
+\begin{proof}
+($\Rightarrow$) Take $\sigma,\kappa$ as in Definition~\ref{def:os-extendable}
+and put $i=\kappa$, $j=\sigma(\kappa)$. If $\sigma(\kappa)=\kappa$ we are done.
+Otherwise, by Lemma~\ref{lem:os-perm}, every arc $(u,\sigma(u))$ with
+$\sigma(u)\ne u$ is tight, so the cycle of $\sigma$ through $\kappa$ is a cycle
+of $H_p$ containing $(i,j)$.
+
+($\Leftarrow$) If $i=j$, take $\sigma=\mathrm{id}$. Otherwise choose a simple
+path from $j$ to $i$ in $H_p$; with the arc $(i,j)$ it closes a cycle $C$ of
+tight arcs. Rotate the bundles along $C$, each agent of $C$ taking the bundle
+of its successor. The welfare changes by $\edgew{A}(C)=\sum_{(u,v)\in C}(p_u-p_v)=0$,
+so the rotated allocation is welfare-maximising, hence envy-freeable, and
+agent $i$ receives $A_j$ with $j\in\Mset(p)$ and $\Delta_i^g(A_j)=1$.
+\end{proof}
+
+The case $i=j$ must be included: an agent of $\Mset(p)$ valuing $g$ at $+1$
+on its own bundle needs no reassignment, and corresponds to no arc of $H_p$.
+
+\subsection{The one-good extension lemma}
+
+\begin{lemma}[One-good extension]
+\label{lem:os-extension}
+Let $A$ be a complete allocation of an item set $\items'$, with integer-valued
+valuations, and let $\subsidy\in\set{0,1}^n$ be such that $(A,\subsidy)$ is an
+envy-free solution. Let $g\notin\items'$ satisfy
+$v_i(S\cup\set g)-v_i(S)\in\set{0,1}$ for every agent $i$ and every
+$S\subseteq\items'$. Then there are a complete allocation $A'$ of
+$\items'\cup\set g$ and $\subsidy'\in\set{0,1}^n$ with $(A',\subsidy')$ an
+envy-free solution, and they can be computed in polynomial time given
+value-oracle access.
+\end{lemma}
+
+\begin{proof}
+Replace $\subsidy$ by the pointwise-minimal subsidy $\optsubsidy$ of $A$
+(Theorem~\ref{thm:hs-minsubsidy}). It is integral and satisfies
+$0\le\optsubsidy\le\subsidy$, so it still lies in $\set{0,1}^n$; we rename it
+$\subsidy$. Then $\subsidy_i=\pathw{A}(i)$ is the maximum weight of a directed
+path starting at $i$ in $\envygraph{A}$.
+
+\par\smallskip\noindent\textbf{Case 1: $(A,\subsidy)$ is extendable with $g$.}
+Let $\sigma,\kappa$ witness it, $B:=A_\sigma$ and $q:=\subsidy_\sigma$. By
+Lemma~\ref{lem:os-perm}, $(B,q)$ is an envy-free solution with
+$q\in\set{0,1}^n$, and $q_\kappa=\max_j q_j$. Let $D:=B^\kappa$; it is
+envy-freeable by Lemma~\ref{lem:os-claims}(b).
+
+If $q_\kappa=0$, then $q=\mathbf 0$, so $B$ is envy-free and every path of
+$\envygraph{B}$ has weight at most $0$. By Lemma~\ref{lem:os-claims}(a) every
+simple path of $\envygraph{D}$ has weight at most $1$, so the pointwise-minimal
+subsidy of $D$ lies in $\set{0,1}^n$.
+
+If $q_\kappa=1$, let $\hat q$ agree with $q$ except $\hat q_\kappa=0$. Pairs
+not involving $\kappa$ are unaffected. For $\kappa$ and any $j$,
+\[
+  v_\kappa(D_\kappa)+\hat q_\kappa=v_\kappa(B_\kappa)+1
+  =v_\kappa(B_\kappa)+q_\kappa\ge v_\kappa(B_j)+q_j=v_\kappa(D_j)+\hat q_j ,
+\]
+and for $i\ne\kappa$, using that every marginal of $g$ is at most one,
+\[
+  v_i(D_i)+\hat q_i=v_i(B_i)+q_i\ge v_i(B_\kappa)+1\ge v_i(B_\kappa\cup\set g)
+  =v_i(D_\kappa)+\hat q_\kappa .
+\]
+So $(D,\hat q)$ is an envy-free solution with $\hat q\in\set{0,1}^n$.
+
+\par\smallskip\noindent\textbf{Case 2: $(A,\subsidy)$ is not extendable with $g$.}
+
+\emph{(i) $A^s$ is envy-freeable for every $s\in\Mset(\subsidy)$.} Suppose not.
+By integrality some reassignment of the bundles of $A^s$ has welfare at least
+$\SW(A^s)+1\ge\SW(A)+1$, the last step because $\Delta_s^g(A_s)\ge0$. Deleting
+$g$ gives a reassignment $B=A_\sigma$ of the bundles of $A$, and if $k$ is the
+agent receiving $A_s$ in it, $\SW(B)+\Delta_k^g(A_s)\ge\SW(A)+1$. As $A$ is
+envy-freeable, $\SW(B)\le\SW(A)$, and $\Delta_k^g(A_s)\le1$; so both are tight:
+$B$ maximises welfare and $\Delta_k^g(A_s)=1$. Since $p_{\sigma(k)}=p_s$ is
+maximal, $\sigma$ and $k$ witness extendability, a contradiction.
+
+\emph{The procedure} (\textsc{FindSink}). Choose $s_0\in\Mset(\subsidy)$. Given
+$s_t$, let $\phi^t$ be the pointwise-minimal subsidy of $A^{s_t}$. If
+$\phi^t\le\mathbf 1$, stop and output $(A^{s_t},\phi^t)$. Otherwise choose
+$s_{t+1}$ with $\phi^t_{s_{t+1}}\ge2$.
+
+If $\max_j\subsidy_j=0$, every path of $\envygraph{A}$ has weight at most $0$,
+so by Lemma~\ref{lem:os-claims}(a) $\phi^0\le\mathbf 1$ and the procedure stops
+at once. Assume from now on that $\max_j\subsidy_j=1$.
+
+\emph{(ii) Every selected agent lies in $\Mset(\subsidy)$, so every $A^{s_t}$
+is envy-freeable.} By induction, using (i). If $s_{t+1}\notin\Mset(\subsidy)$
+then $\subsidy_{s_{t+1}}=0$, so every path of $\envygraph{A}$ starting at
+$s_{t+1}$ has weight at most $0$; by Lemma~\ref{lem:os-claims}(a) every simple
+path of $\envygraph{A^{s_t}}$ starting there has weight at most $1$, so
+$\phi^t_{s_{t+1}}\le1$, contradicting the choice of $s_{t+1}$.
+
+\emph{(iii) No agent is selected twice.} Suppose otherwise and consider the
+first repetition; relabel that stretch of the run as $s_0,s_1,\dots,s_T$ with
+$s_T=s_0$ and $s_0,\dots,s_{T-1}$ distinct. All of them lie in
+$\Mset(\subsidy)$, i.e.\ have subsidy $1$. Fix $\tau\in\set{1,\dots,T}$. As
+$\phi^{\tau-1}_{s_\tau}\ge2$ and $A^{s_{\tau-1}}$ is envy-freeable, some simple
+path $Q_\tau$ starting at $s_\tau$ has $\edgew{A^{s_{\tau-1}}}(Q_\tau)\ge2$. On
+the other hand $\edgew{A}(Q_\tau)\le\subsidy_{s_\tau}\le1$. By
+Lemma~\ref{lem:os-claims}(a) both bounds are tight: $\edgew{A}(Q_\tau)=1$, and
+$Q_\tau$ enters $s_{\tau-1}$ by an arc $(k_\tau,s_{\tau-1})$ with
+$\Delta_{k_\tau}^g(A_{s_{\tau-1}})=1$; in particular $s_\tau\ne s_{\tau-1}$,
+since a simple path starting at $s_{\tau-1}$ never enters it. Split $Q_\tau$ at $s_{\tau-1}$ into a
+prefix $P_\tau$ from $s_\tau$ to $s_{\tau-1}$, which ends with that arc, and a
+suffix $R_\tau$. Then $\edgew{A}(R_\tau)\le\subsidy_{s_{\tau-1}}\le1$, so
+$\edgew{A}(P_\tau)\ge0$, while
+$\edgew{A}(P_\tau)\le\subsidy_{s_\tau}-\subsidy_{s_{\tau-1}}=0$. Hence
+$\edgew{A}(P_\tau)=0$, and since every arc satisfies
+$\edgew{A}(u,v)\le\subsidy_u-\subsidy_v$ and these bounds telescope to $0$
+along $P_\tau$, every arc of $P_\tau$ is tight.
+
+The walk $P_T,P_{T-1},\dots,P_1$ starts and ends at $s_0$ and consists of tight
+arcs. A closed walk decomposes into directed cycles, so the arc
+$(k_1,s_0)$, the last arc of $P_1$, lies on a cycle $C$ of tight arcs. By the
+argument of Proposition~\ref{prop:os-extendable-graph}, rotating the bundles
+of $A$ along $C$ preserves welfare and hands $A_{s_0}$ to $k_1$; as
+$s_0\in\Mset(\subsidy)$ and $\Delta_{k_1}^g(A_{s_0})=1$, the solution is
+extendable --- a contradiction.
+
+\emph{(iv) Termination and the bound.} By (iii) the procedure stops after at
+most $n$ selections. At the final $s_t$, $A^{s_t}$ is envy-freeable by (ii)
+and $\phi^t\le\mathbf 1$; $\phi^t$ is integral, so $\phi^t\in\set{0,1}^n$.
+
+\par\smallskip\noindent\textbf{Running time.} Pointwise-minimal subsidies are longest-path values in an
+envy graph without positive cycles, computable in polynomial time from the
+$n^2$ values $v_i(A_j)$. By Proposition~\ref{prop:os-extendable-graph},
+extendability is decided by building $H_\subsidy$, computing its strongly
+connected components, and inspecting the $n^2$ pairs $(i,j)$, using $n^2$
+further oracle calls for the marginals $\Delta_i^g(A_j)$; a witnessing
+rotation is found along a shortest path. \textsc{FindSink} makes at most $n$
+selections, each needing one longest-path computation.
+\end{proof}
+
+The hypotheses of Lemma~\ref{lem:os-extension} restrict only the new item
+$g$; the bundles of $A$ may contain chores. This is the point at which the
+goods phase of Barman et al.~\cite{BKNS22} survives in the mixed setting:
+Lemma~\ref{lem:os-claims} uses only $\Delta^g\in\set{0,1}$, and the rest of the
+argument uses only welfare and integrality.
+
+\subsection{The theorem}
+
+\begin{theorem}[Unit subsidies for objective signed dichotomous valuations]
+\label{thm:os-main}
+For every instance with objective signed dichotomous valuations there are a
+complete allocation $\alloc$ and a subsidy $\subsidy\in\set{0,1}^n$ with
+$\sum_i\subsidy_i\le n-1$ such that $(\alloc,\subsidy)$ is an envy-free
+solution, and both can be computed in polynomial time given value-oracle
+access.
+\end{theorem}
+
+\begin{proof}
+\textbf{Chores.} The costs $\cost_i=-v_i|_{2^C}$ are dichotomous on $C$, so
+Theorem~\ref{thm:g3-main} gives a complete allocation $A^{(0)}$ of $C$ and
+$\subsidy^{(0)}\in\set{0,1}^n$ with $(A^{(0)},\subsidy^{(0)})$ an envy-free
+solution; on subsets of $C$ the costs and $-v_i$ agree, so it is envy-free for
+the original valuations.
+
+\par\smallskip\noindent\textbf{Goods.} Let $G=\set{g_1,\dots,g_k}$. For $t=1,\dots,k$ apply
+Lemma~\ref{lem:os-extension} to $(A^{(t-1)},\subsidy^{(t-1)})$ and $g_t$. Its
+hypotheses hold: the valuations are integer-valued, and by
+Definition~\ref{def:os-domain} every marginal of $g_t$, on every set, lies in
+$\set{0,1}$. It returns a complete allocation $A^{(t)}$ of
+$C\cup\set{g_1,\dots,g_t}$ and $\subsidy^{(t)}\in\set{0,1}^n$ with
+$(A^{(t)},\subsidy^{(t)})$ an envy-free solution. After $k$ steps every item is
+allocated.
+
+\par\smallskip\noindent\textbf{Normalisation.} If every $\subsidy^{(k)}_i$ equals $1$, subtract $1$ from
+each; envy-freeness compares only differences of subsidies, so it is preserved.
+In either case some coordinate is $0$ and $\sum_i\subsidy_i\le n-1$. (If the
+pointwise-minimal subsidy is output at the last step, this case cannot arise,
+by Proposition~\ref{prop:zero-coordinate}.)
+
+\par\smallskip\noindent\textbf{Running time.} Theorem~\ref{thm:g3-main} runs in polynomial time and is
+followed by $\abs G$ applications of Lemma~\ref{lem:os-extension}.
+\end{proof}
+
+\begin{algorithm}[H]
+\caption{Unit subsidies for objective signed dichotomous valuations}
+\label{alg:os}
+\begin{algorithmic}[1]
+\Require Agents $\agents=[n]$, items $\items=G\mathbin{\dot\cup}C$, value
+oracles for objective signed dichotomous $\set{v_i}$.
+\Ensure Complete $\alloc$ and $\subsidy\in\set{0,1}^n$, $(\alloc,\subsidy)$
+envy-free, $\sum_i\subsidy_i\le n-1$.
+\State $(\alloc,\subsidy)\gets$ the algorithm of Theorem~\ref{thm:g3-main} on
+$C$ with costs $\cost_i=-v_i|_{2^C}$.
+\For{each $g\in G$}
+  \State $\subsidy\gets$ the pointwise-minimal subsidy of $\alloc$.
+  \If{$(\alloc,\subsidy)$ is extendable with $g$ (Proposition~\ref{prop:os-extendable-graph})}
+    \State rotate along the witnessing tight cycle; give $g$ to $\kappa$; drop
+    $\kappa$'s subsidy if it is $1$.
+  \Else
+    \State run \textsc{FindSink} from some $s_0\in\Mset(\subsidy)$; place $g$ at
+    the agent where it stops.
+  \EndIf
+\EndFor
+\State $\subsidy\gets$ the pointwise-minimal subsidy of $\alloc$.
+\State \Return $(\alloc,\subsidy)$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{remark}[What the theorem does not say]
+\label{rem:os-scope}
+The allocation of Theorem~\ref{thm:os-main} need not be EF1: the chore phase
+yields an EF1 allocation of $C$, but the goods phase may move bundles and is
+not designed to preserve EF1. Nor can Pareto optimality be added in general,
+since negative dichotomous instances form a subclass and there unit subsidies
+and Pareto optimality are already incompatible for two agents with identical
+binary submodular costs.
+\end{remark}
+
+\begin{remark}[Why the two phases use different structures]
+\label{rem:os-directions}
+Adding an item $e$ to the bundle of $x$ moves the arcs into $x$ by
+$\Delta_i^e(A_x)$ and the arcs out of $x$ by $-\Delta_x^e(A_x)$. For a good the
+danger is on the arcs \emph{into} the recipient, and the goods phase controls
+it through tight cycles entering $\Mset(\subsidy)$ and \textsc{FindSink}; for
+a chore the danger is on the arcs \emph{out of} the recipient, and
+Theorem~\ref{thm:g3-main} controls it with a tail strongly connected component
+and a backward closure. A symmetric source-SCC rule for goods is not needed
+for Theorem~\ref{thm:os-main} (cf.\ \texttt{docs/approach\_21.md}).
+\end{remark}
