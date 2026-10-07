@@ -1,3 +1,21 @@
+## Working rules
+
+1. **Logical proof requests get a logical proof.** When asked to prove a
+   statement, write the proof: definitions, hypotheses, steps, conclusion.
+   Do not substitute a script that checks the statement on random or
+   enumerated instances, and do not treat such a script's passing as a
+   proof or as part of one.
+2. **Counter-example hunting is opt-in.** Write a search script only when
+   asked to look for a counter-example (or asked whether one exists).
+   Unprompted, do not add verification runs, stress tests, or exhaustive
+   checks to a proof task.
+3. **House writing style, for anything submitted or read aloud** (report
+   text, slides, narration, this file, commit messages, chat replies): no
+   semicolons, no em dashes. Use a period, a colon, or two sentences
+   instead. Code syntax (Python semicolons, LaTeX math) is exempt.
+
+---
+
 ## Project state — two independent investigations
 
 **1. CLOSED — negative binary valuations (chores).** Proved for every $n$: an
