@@ -1,0 +1,408 @@
+%% ==========================================================================
+%%  Appendix C  The one-good extension when the bundles contain chores
+%%
+%%  Full check of Lemma~\ref{lem:goods-extension}, moved out of Section 4 on
+%%  2026-10-08 (Section 4 now cites the algorithm of Barman et al. directly).
+%%  Text of arXiv Appendix B (arxiv/sections/appendix_goods_extension.tex) in
+%%  the house style, plus one added sentence in Case 2: s_{tau+1} differs from
+%%  s_tau, so s_0 has a predecessor on Q_1. Lemma 10 of Barman et al. omits the
+%%  same case.
+%% ==========================================================================
+\section{The One-Good Extension when the Bundles Contain Chores}
+\label{app:goods-extension}
+
+This appendix restates the one-good extension argument of Barman et
+al.~\cite{BKNS22} in a self-contained way and checks that each step uses only
+the two facts named in the proof of Lemma~\ref{lem:goods-extension}: the
+valuations are integer valued, and the good being inserted has marginal value in
+$\{0,1\}$ for every agent on every bundle. In particular, no step uses the sign
+of the items already allocated.
+
+\begin{proof}[Proof of Lemma~\ref{lem:goods-extension}]
+For an allocation $Y=(Y_1,\ldots,Y_n)$, let $G_Y$ denote its weighted envy
+graph, with edge weights
+\[
+  w_Y(i,j):=v_i(Y_j)-v_i(Y_i).
+\]
+We use two standard characterizations of envy-freeability~\cite{HS19,BKNS22}
+(Theorems~\ref{thm:hs-characterisation} and~\ref{thm:hs-minsubsidy}). First,
+$Y$ is envy-freeable if and only if it maximizes
+\[
+  \sum_{i\in N}v_i(Y_{\sigma(i)})
+\]
+over all permutations $\sigma$ of its bundles. Equivalently, $G_Y$ contains no
+positive-weight directed cycle. Second, if $Y$ is envy-freeable, then its
+pointwise-minimal supporting subsidy for agent $i$ is the maximum weight of a
+directed path starting at $i$ in $G_Y$.
+
+We may assume without loss of generality that $p$ is the pointwise-minimal
+subsidy vector supporting $A$. Indeed, starting from the subsidy vector in the
+statement, replace it by the pointwise-minimal one. This can only decrease the
+subsidies componentwise. Since the valuations are integer-valued, all edge
+weights in $G_A$, and therefore all pointwise-minimal subsidies, are integers.
+Consequently, the resulting vector still belongs to $\{0,1\}^n$.
+
+We first prove two properties of adding $g$ that will be used throughout the
+proof.
+
+\medskip
+\noindent
+\textbf{Claim 1.}
+Let $Y$ be an envy-freeable allocation of $M'$, and suppose that for some agent
+$x$,
+\[
+  v_x(Y_x\cup\{g\})-v_x(Y_x)=1.
+\]
+Then
+\[
+  Z=(Y_1,\ldots,Y_x\cup\{g\},\ldots,Y_n)
+\]
+is envy-freeable.
+
+\smallskip
+\noindent
+\emph{Proof of Claim 1.}
+Write
+\[
+  \operatorname{SW}(Y):=\sum_{i\in N}v_i(Y_i).
+\]
+Since the marginal value of $g$ for $x$ on $Y_x$ is one,
+\[
+  \operatorname{SW}(Z)=\operatorname{SW}(Y)+1.
+\]
+Consider any permutation $\sigma$ of the bundles of $Z$. Let $a$ be the agent who
+receives the bundle containing $g$ under this permutation. Removing $g$ from that
+bundle leaves a permutation of the bundles of $Y$. Since $Y$ is envy-freeable,
+the welfare of this reassignment is at most $\operatorname{SW}(Y)$. Moreover,
+\[
+  v_a(S\cup\{g\})-v_a(S)\leq 1
+\]
+for every $S\subseteq M'$. Hence
+\[
+  \operatorname{SW}(Z_\sigma)
+  \leq \operatorname{SW}(Y)+1
+  =\operatorname{SW}(Z).
+\]
+Thus $Z$ maximizes welfare over all permutations of its bundles and is therefore
+envy-freeable.
+\hfill$\square$
+
+\medskip
+\noindent
+\textbf{Claim 2.}
+Let $Y$ be an allocation and let
+\[
+  Z=(Y_1,\ldots,Y_x\cup\{g\},\ldots,Y_n).
+\]
+Then
+\[
+  w_Z(i,j)=w_Y(i,j)
+  \qquad
+  \text{for all }i,j\neq x,
+\]
+while
+\[
+  w_Z(x,j)\leq w_Y(x,j)
+  \qquad\text{and}\qquad
+  w_Z(i,x)\leq w_Y(i,x)+1.
+\]
+Consequently, for every simple directed path $P$,
+\begin{equation}\label{eq:ge-S1}
+  w_Z(P)\leq w_Y(P)+1.
+\end{equation}
+
+\smallskip
+\noindent
+\emph{Proof of Claim 2.}
+Only the bundle of $x$ changes. Hence, edges not incident to $x$ are unchanged.
+For every $j\neq x$,
+\[
+\begin{aligned}
+  w_Z(x,j)
+  &=v_x(Y_j)-v_x(Y_x\cup\{g\})\\
+  &=w_Y(x,j)
+    -\bigl(v_x(Y_x\cup\{g\})-v_x(Y_x)\bigr)
+  \leq w_Y(x,j),
+\end{aligned}
+\]
+because the marginal value of $g$ is nonnegative. Similarly, for $i\neq x$,
+\[
+\begin{aligned}
+  w_Z(i,x)
+  &=v_i(Y_x\cup\{g\})-v_i(Y_i)\\
+  &=w_Y(i,x)
+    +\bigl(v_i(Y_x\cup\{g\})-v_i(Y_x)\bigr)
+  \leq w_Y(i,x)+1.
+\end{aligned}
+\]
+A simple path enters $x$ at most once. Its weight can therefore increase by at
+most one, proving \eqref{eq:ge-S1}.
+\hfill$\square$
+
+\medskip
+We now follow the extendable/non-extendable distinction of Barman et
+al.~\cite{BKNS22}. For a subsidy vector $q$, recall that
+\[
+  \Mset(q):=\{i\in N:q_i\geq q_j\text{ for every }j\in N\}.
+\]
+Call $(A,p)$ \emph{extendable with $g$} if there exists a permutation $\sigma$
+such that, writing
+\[
+  B_i:=A_{\sigma(i)}
+  \qquad\text{and}\qquad
+  q_i:=p_{\sigma(i)},
+\]
+the pair $(B,q)$ is envy-free and there is some $\kappa\in \Mset(q)$ satisfying
+\begin{equation}\label{eq:ge-S2}
+  v_\kappa(B_\kappa\cup\{g\})-v_\kappa(B_\kappa)=1.
+\end{equation}
+
+We will also use the following elementary permutation property. If $(A,p)$ is
+envy-free and $B=A_\sigma$ is envy-freeable, then $(B,p_\sigma)$ is envy-free.
+To see this, the envy-freeness of $(A,p)$ gives
+\[
+  v_i(A_i)+p_i
+  \geq
+  v_i(A_{\sigma(i)})+p_{\sigma(i)}
+  \qquad\text{for every }i.
+\]
+Summing these inequalities and using the fact that both $A$ and $B$ are
+envy-freeable shows that equality must hold for every $i$. The envy-freeness
+inequalities for $(B,p_\sigma)$ then follow directly. See Lemma~3 in Barman et
+al.~\cite{BKNS22} for a detailed argument.
+
+\medskip
+\noindent
+\textbf{Case 1: $(A,p)$ is extendable with $g$.}
+
+Let $\sigma$ and $\kappa$ satisfy the above conditions, and define
+\[
+  C=(B_1,\ldots,B_\kappa\cup\{g\},\ldots,B_n).
+\]
+By Claim~1, $C$ is envy-freeable.
+
+It remains to show that $C$ can be supported by subsidies in $\{0,1\}^n$. Since
+$q_\kappa$ is maximal and $q\in\{0,1\}^n$, there are two cases.
+
+If $q_\kappa=0$, then $q_i=0$ for all $i\in N$. Thus, every directed path in
+$G_B$ has weight at most zero. By Claim~2, every directed path in $G_C$ has
+weight at most one. Hence, the pointwise-minimal supporting subsidies for $C$
+are at most one. They are nonnegative integers, so they belong to $\{0,1\}^n$.
+
+Suppose next that $q_\kappa=1$. Define
+\[
+  \widehat q_\kappa:=0,
+  \qquad
+  \widehat q_i:=q_i
+  \quad (i\neq\kappa).
+\]
+We claim that $(C,\widehat q)$ is envy-free. For $i,j\neq\kappa$, nothing changes
+from $(B,q)$. For agent $\kappa$, using \eqref{eq:ge-S2},
+\[
+  v_\kappa(C_\kappa)+\widehat q_\kappa
+  =
+  v_\kappa(B_\kappa)+1
+  =
+  v_\kappa(B_\kappa)+q_\kappa
+  \geq
+  v_\kappa(B_j)+q_j.
+\]
+Finally, for every $i\neq\kappa$,
+\[
+\begin{aligned}
+  v_i(C_i)+\widehat q_i
+  &=v_i(B_i)+q_i\\
+  &\geq v_i(B_\kappa)+q_\kappa\\
+  &=v_i(B_\kappa)+1\\
+  &\geq v_i(B_\kappa\cup\{g\})
+   =v_i(C_\kappa)+\widehat q_\kappa,
+\end{aligned}
+\]
+where the last inequality follows because the marginal value of $g$ is at most
+one. Thus $\widehat q\in\{0,1\}^n$ supports $C$.
+
+Hence, the desired extension exists in the extendable case.
+
+\medskip
+\noindent
+\textbf{Case 2: $(A,p)$ is not extendable with $g$.}
+
+We use the \textsc{FindSink} procedure of Barman et al.~\cite{BKNS22}, and
+verify that its proof remains valid in the present setting.
+
+For $s\in N$, write
+\[
+  X^s:=(A_1,\ldots,A_s\cup\{g\},\ldots,A_n).
+\]
+Start with an arbitrary $s_0\in \Mset(p)$. Whenever $X^{s_\tau}$ is
+envy-freeable, let $\phi^\tau$ denote its pointwise-minimal supporting subsidy
+vector. If every component of $\phi^\tau$ is strictly smaller than $2$,
+terminate. Otherwise, choose an agent $s_{\tau+1}$ with
+\[
+  \phi^\tau_{s_{\tau+1}}\geq2
+\]
+and continue with $X^{s_{\tau+1}}$.
+
+We first establish the following:
+\begin{equation}\label{eq:ge-S3}
+  s_\tau\in \Mset(p)
+  \quad\text{and}\quad
+  X^{s_\tau}\text{ is envy-freeable}
+\end{equation}
+for every agent considered by the procedure.
+
+For $\tau=0$, the first part follows from the choice of $s_0$. Suppose, towards
+a contradiction, that $X^{s_0}$ is not envy-freeable. By the welfare
+characterization, there exists a permutation of its bundles whose welfare is
+strictly larger. Since all valuations are integer-valued, the improvement is at
+least one.
+
+Let $B$ be the corresponding permutation of the bundles of $A$, obtained by
+deleting $g$ from the permuted bundle containing it, and let $k$ be the agent who
+receives the bundle $A_{s_0}$ in $B$. Since the marginal value of $g$ is
+nonnegative,
+\[
+  \operatorname{SW}(X^{s_0})\geq\operatorname{SW}(A).
+\]
+Therefore,
+\begin{equation}\label{eq:ge-S4}
+  \operatorname{SW}(B)
+  +
+  \bigl(v_k(B_k\cup\{g\})-v_k(B_k)\bigr)
+  \geq
+  \operatorname{SW}(A)+1.
+\end{equation}
+On the other hand, $A$ is envy-freeable, and hence
+\[
+  \operatorname{SW}(B)\leq\operatorname{SW}(A).
+\]
+The marginal term in \eqref{eq:ge-S4} is at most one. Consequently, both
+inequalities must be tight:
+\[
+  \operatorname{SW}(B)=\operatorname{SW}(A)
+\]
+and
+\[
+  v_k(B_k\cup\{g\})-v_k(B_k)=1.
+\]
+Thus $B$ is envy-freeable. By the permutation property above, if $q$ is obtained
+by permuting $p$ in the same way, then $(B,q)$ is envy-free. Moreover,
+$B_k=A_{s_0}$ and $s_0\in \Mset(p)$, so $k\in \Mset(q)$. Hence $(A,p)$ is
+extendable with $g$, a contradiction. Therefore $X^{s_0}$ is envy-freeable.
+
+Now suppose \eqref{eq:ge-S3} holds for $s_\tau$ and the procedure selects
+$s_{\tau+1}$ because $\phi^\tau_{s_{\tau+1}}\geq2$. We claim that
+$s_{\tau+1}\in \Mset(p)$. If not, then the maximal subsidy in $p$ is one and
+$p_{s_{\tau+1}}=0$. Since $p$ is pointwise-minimal, every path starting from
+$s_{\tau+1}$ in $G_A$ has weight at most zero. By Claim~2, every path starting
+from $s_{\tau+1}$ in $G_{X^{s_\tau}}$ has weight at most one. Hence
+$\phi^\tau_{s_{\tau+1}}\leq1$, a contradiction. Thus $s_{\tau+1}\in \Mset(p)$.
+The same argument used for $s_0$ then shows that $X^{s_{\tau+1}}$ is
+envy-freeable. This proves \eqref{eq:ge-S3}.
+
+Note also that $s_{\tau+1}\neq s_\tau$. Indeed, a simple path starting at
+$s_\tau$ never enters $s_\tau$, so by Claim~2 its weight in $G_{X^{s_\tau}}$ is at
+most its weight in $G_A$, which is at most $p_{s_\tau}\leq1$. Hence
+$\phi^\tau_{s_\tau}\leq1$, and $s_\tau$ is never selected immediately after
+itself.
+
+It remains to show that the procedure terminates. Suppose otherwise that some
+agent is selected twice. Consider two consecutive occurrences of a repeated agent
+and relabel the corresponding segment as
+\[
+  s_0,s_1,\ldots,s_T,
+  \qquad
+  s_T=s_0,
+\]
+with $s_0,\ldots,s_{T-1}$ distinct. By the preceding paragraph, $T\geq2$.
+
+For every $\tau=1,\ldots,T$, agent $s_\tau$ is selected because its
+pointwise-minimal subsidy for $X^{s_{\tau-1}}$ is at least two. Hence, there
+exists a simple directed path $Q_\tau$ starting at $s_\tau$ in
+$G_{X^{s_{\tau-1}}}$ such that
+\begin{equation}\label{eq:ge-S6}
+  w_{X^{s_{\tau-1}}}(Q_\tau)\geq2.
+\end{equation}
+The path $Q_\tau$ must contain $s_{\tau-1}$. Otherwise, none of its edge weights
+differs from the corresponding edge weights in $G_A$, whereas every path starting
+at $s_\tau$ in $G_A$ has weight at most $1$, contradicting \eqref{eq:ge-S6}.
+
+Let $P_\tau$ be the initial segment of $Q_\tau$ from $s_\tau$ to $s_{\tau-1}$. By
+Claim~2,
+\begin{equation}\label{eq:ge-S7}
+  w_A(Q_\tau)
+  \geq
+  w_{X^{s_{\tau-1}}}(Q_\tau)-1
+  \geq1.
+\end{equation}
+The part of $Q_\tau$ following $P_\tau$ is a path starting at $s_{\tau-1}$ in
+$G_A$, and therefore has weight at most $p_{s_{\tau-1}}\leq1$. It follows from
+\eqref{eq:ge-S7} that
+\begin{equation}\label{eq:ge-S8}
+  w_A(P_\tau)\geq0.
+\end{equation}
+
+Now concatenate the paths $P_T,P_{T-1},\ldots,P_1$. Since $s_T=s_0$, this
+concatenation starts and ends at $s_0$. If some vertex is repeated in the
+concatenation, split the resulting closed sequence of edges at repeated vertices.
+In this way, it can be decomposed into directed cycles of $G_A$. By
+\eqref{eq:ge-S8}, the total weight of the concatenated sequence is nonnegative.
+On the other hand, since $A$ is envy-freeable, $G_A$ contains no positive-weight
+directed cycle. Therefore, every cycle arising in the above decomposition has
+weight at most zero, while their total weight is nonnegative. It follows that the
+total weight is zero, and consequently, every cycle in the decomposition has
+weight zero.
+
+We now derive a contradiction to non-extendability. Since $s_1$ was selected
+after considering $X^{s_0}$, there is a path $Q_1$ satisfying \eqref{eq:ge-S6}.
+Its weight in $G_A$ is at most $p_{s_1}\leq1$, while Claim~2 says that its weight
+can increase by at most one after $g$ is added to $A_{s_0}$. Hence
+\[
+  w_{X^{s_0}}(Q_1)=2,
+  \qquad
+  w_A(Q_1)=1,
+\]
+and the weight of $Q_1$ increases by exactly one. Only an edge entering $s_0$ can
+increase when $g$ is added to $A_{s_0}$. Edges leaving $s_0$ can only decrease.
+Since $s_1\neq s_0$ and $Q_1$ starts at $s_1$ and contains $s_0$, the agent $s_0$
+has a predecessor $k$ on $Q_1$, and
+\begin{equation}\label{eq:ge-S9}
+  v_k(A_{s_0}\cup\{g\})-v_k(A_{s_0})=1.
+\end{equation}
+Since the edge $(k,s_0)$ belongs to $P_1$, it belongs to one of the zero-weight
+directed cycles obtained above. Let $C$ be such a cycle. Cyclically permuting the
+bundles of $A$ along $C$ preserves social welfare, because the change in welfare
+is exactly $w_A(C)=0$. Let $\sigma$ denote the resulting permutation and let
+$B=A_\sigma$. Hence
+\[
+  \operatorname{SW}(B)=\operatorname{SW}(A),
+\]
+so $B$ is envy-freeable. By the permutation property, $(B,p_\sigma)$ is
+envy-free.
+
+Furthermore, the cycle contains $(k,s_0)$, so agent $k$ receives bundle $A_{s_0}$
+in $B$. Thus \eqref{eq:ge-S9} gives
+\[
+  v_k(B_k\cup\{g\})-v_k(B_k)=1.
+\]
+Since $s_0\in \Mset(p)$, agent $k$ belongs to $\Mset(p_\sigma)$. Consequently,
+$\sigma$ and $k$ witness that $(A,p)$ is extendable with $g$, contradicting the
+assumption of Case~2.
+
+Therefore, no agent is selected twice, and the procedure terminates after at most
+$n$ selections. At termination, the current allocation $X^s$ is envy-freeable by
+\eqref{eq:ge-S3}, and every component of its pointwise-minimal subsidy vector is
+strictly smaller than $2$. These subsidies are nonnegative integers, and hence
+they belong to $\{0,1\}^n$. This proves the existence of the desired allocation
+$A'$ and subsidy vector $p'$ in the non-extendable case.
+
+Finally, all steps are polynomial-time. Pointwise-minimal subsidies can be
+computed from maximum-weight paths in an envy-freeable allocation. Extendability
+can be tested by the \textsc{Extend} subroutine of Barman et al.~\cite{BKNS22}:
+for each candidate recipient and most-subsidized bundle, it solves a
+maximum-weight bipartite matching problem. Its correctness uses only the welfare
+characterization of envy-freeability and the values of the existing bundles, and
+is therefore unchanged here. In the non-extendable case, the procedure above
+considers at most $n$ agents. Thus, the entire one-good extension can be carried
+out in polynomial time using value-oracle access.
+\end{proof}

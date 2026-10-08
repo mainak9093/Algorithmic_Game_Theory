@@ -1,0 +1,178 @@
+%% ==========================================================================
+%%  4  Unit subsidies for objective signed dichotomous valuations
+%%
+%%  Content of Section 4 of the arXiv version (arxiv/sections/objective_mixed.tex)
+%%  and its algorithm (arXiv Appendix C), in the house style. The proof of
+%%  Lemma~\ref{lem:goods-extension} cites the algorithm of Barman et al.
+%%  directly (2026-10-08). The step-by-step check that their argument survives
+%%  chores in the bundles is Appendix~\ref{app:goods-extension}.
+%% ==========================================================================
+\section{Unit Subsidies for Objective Signed Dichotomous Valuations}
+\label{sec:objective-mixed}
+
+We now consider mixed instances in which every item is commonly classified as a
+good or a chore. Such common-sign settings are referred to as \emph{objective}
+goods and chores or \emph{objective valuations} in the fair-division
+literature~\cite{aziz2022fair,bilo2026approximately}. We additionally impose
+signed binary marginals.
+
+\begin{definition}[Objective signed dichotomous valuations]
+\label{def:objective-signed}
+A valuation profile $\set{v_i}_{i \in \agents}$ is \emph{objective signed
+dichotomous} if the item set admits a common partition
+$\items = G \mathbin{\dot\cup} C$ such that, for every agent $i \in \agents$ and
+every $S \subseteq \items$,
+\[
+  v_i(S\cup\{g\})-v_i(S)\in\{0,1\}
+  \qquad
+  \text{for every }g\in G\setminus S,
+\]
+and
+\[
+  v_i(S\cup\{c\})-v_i(S)\in\{0,-1\}
+  \qquad
+  \text{for every }c\in C\setminus S.
+\]
+\end{definition}
+
+Thus, every item is commonly regarded as either a good or a chore, although its
+marginal value may depend on the bundle to which it is added. In particular, the
+valuations need not be additive, submodular, or subadditive. The class is a
+subclass of doubly monotone valuations in which the classification of items into
+goods and chores is common across agents. Since $v_i(\emptyset) = 0$ and every
+marginal is an integer, the telescoping argument of
+Observation~\ref{obs:integrality} shows that every such valuation is integer
+valued.
+
+The plan is to allocate the chores by Theorem~\ref{thm:m-main} and then the goods
+by the algorithm of Barman et al.~\cite{BKNS22}. That algorithm is incremental:
+it inserts the goods one at a time, and its only invariant is that the current
+solution is envy-free with subsidies in $\{0,1\}^n$. So it can take over from any
+solution satisfying the invariant, provided its one-good step remains valid when
+the bundles already contain chores. The following lemma records that step.
+
+\begin{lemma}
+\label{lem:goods-extension}
+Let $M'$ be a set of allocated items and let $A=(A_1,\ldots,A_n)$ be a complete
+allocation of $M'$. Suppose that the valuations are integer-valued and that
+there exists $p\in\{0,1\}^n$ such that $(A,p)$ is envy-free. Let $g\notin M'$
+satisfy
+\[
+  v_i(S\cup\{g\})-v_i(S)\in\{0,1\}
+\]
+for every agent $i$ and every $S\subseteq M'$. Then there exist a complete
+allocation $A'$ of $M'\cup\{g\}$ and $p'\in\{0,1\}^n$ such that $(A',p')$ is
+envy-free. Moreover, $(A',p')$ can be computed in polynomial time given
+value-oracle access.
+\end{lemma}
+
+\begin{proof}
+This is one iteration of the algorithm of Barman et al.~\cite{BKNS22}. If
+$(A,p)$ is extendable with $g$, that is, if some permutation of the bundles keeps
+the solution envy-free and gives a maximally subsidised agent a bundle on which
+$g$ has marginal value one, the subroutine \textsc{Extend} finds such a
+permutation and agent, and that agent receives $g$ (Lemmas~7 and~8
+of~\cite{BKNS22}). Otherwise the subroutine \textsc{FindSink} finds a recipient
+for $g$ (Lemmas~9 to~11 of~\cite{BKNS22}). In both cases the pointwise-minimal
+subsidy vector of the new allocation lies in $\{0,1\}^n$, and the step runs in
+polynomial time.
+
+These lemmas are stated for instances in which every item is a good, whereas the
+bundles of $A$ may contain chores. Their proofs, however, use that hypothesis
+only through two facts: the valuations are integer valued, and the good being
+inserted has marginal value in $\{0,1\}$ for every agent on every bundle.
+Monotonicity and dichotomy are invoked only for that good, never for the items
+already allocated. Both facts hold here, so the step applies unchanged.
+Appendix~\ref{app:goods-extension} restates the argument and checks each step
+under these two facts.
+\end{proof}
+
+We can now obtain the unit-subsidy guarantee for objective signed dichotomous
+valuations.
+
+\begin{theorem}
+\label{thm:objective-mixed}
+For every instance with objective signed dichotomous valuations, there exist a
+complete allocation $\alloc$ and a subsidy vector $p\in\{0,1\}^n$ such that
+$(\alloc,p)$ is envy-free and
+\[
+  \sum_{i\in N} p_i\leq n-1.
+\]
+Moreover, such an allocation and subsidy vector can be computed in polynomial
+time in the value-oracle model.
+\end{theorem}
+
+\begin{proof}
+Restrict the instance to the chores $C$. By Theorem~\ref{thm:m-main}, we can
+compute an envy-free solution $(\alloc^C,p^C)$ with $p^C\in\{0,1\}^n$. Starting
+from this solution, insert the goods in $G$ one at a time using
+Lemma~\ref{lem:goods-extension}. After all insertions, we obtain a complete
+envy-free solution $(\alloc,p)$ with $p\in\{0,1\}^n$. If every component of $p$
+equals one, subtract one from every subsidy. Otherwise some component is already
+zero. Thus, after normalization, $\sum_i p_i\le n-1$. Polynomial-time
+computability follows from Theorem~\ref{thm:m-main} and
+Lemma~\ref{lem:goods-extension}.
+\end{proof}
+
+The resulting procedure is stated explicitly as Algorithm~\ref{alg:objective-mixed}.
+For brevity, let \textsc{ChoreAllocate} denote the polynomial-time procedure of
+\Cref{sec:main} (Algorithm~\ref{alg:main}) for negative dichotomous valuations.
+Given a negative dichotomous chore instance, it returns a complete allocation
+$\alloc$ and $p\in\{0,1\}^n$ such that $(\alloc,p)$ is envy-free and
+$\sum_i p_i\le n-1$.
+
+\begin{algorithm}[H]
+\caption{Unit subsidies for objective signed dichotomous valuations}
+\label{alg:objective-mixed}
+\begin{algorithmic}[1]
+\Require Agents $N=[n]$, items $M=G\mathbin{\dot\cup}C$, and value-oracle access
+  to objective signed dichotomous valuations $\{v_i\}_{i\in N}$.
+\Ensure A complete allocation $\alloc$ and $p\in\{0,1\}^n$ such that
+  $(\alloc,p)$ is envy-free and $\sum_{i\in N}p_i\le n-1$.
+
+\State Restrict each $v_i$ to subsets of $C$.
+\State $(\alloc,p)\gets\textsc{ChoreAllocate}(N,C,\{v_i|_C\}_{i\in N})$.
+\State Replace $p$ by the pointwise-minimal subsidy vector supporting $\alloc$.
+
+\For{each $g\in G$}
+    \State Apply the one-good extension procedure of
+      Lemma~\ref{lem:goods-extension} to $(\alloc,p)$ and $g$, obtaining an
+      allocation $\alloc'$ of the currently allocated items together with $g$
+      and a subsidy vector $p'\in\{0,1\}^n$ such that $(\alloc',p')$ is
+      envy-free.
+    \State $\alloc\gets\alloc'$.
+    \State Replace $p'$ by the pointwise-minimal subsidy vector supporting
+      $\alloc$, and set $p\gets p'$.
+\EndFor
+
+\State \Return $(\alloc,p)$.
+\end{algorithmic}
+\end{algorithm}
+
+The one-good extension in Line~5 is implemented by the
+\textsc{Extend}/\textsc{FindSink} procedure of Barman et al.~\cite{BKNS22}, which
+remains valid in the present setting by Lemma~\ref{lem:goods-extension}. After
+every iteration, we take the pointwise-minimal supporting subsidy vector. Since
+the valuations are integer-valued, this vector is integral, and
+Lemma~\ref{lem:goods-extension} implies that all its components are at most one.
+Moreover, pointwise minimality implies that at least one component is zero.
+Hence, throughout the algorithm
+\[
+  p\in\{0,1\}^n
+  \qquad\text{and}\qquad
+  \sum_{i\in N}p_i\le n-1.
+\]
+
+The total-subsidy bound in Theorem~\ref{thm:objective-mixed} is tight. Indeed,
+negative dichotomous chore instances form a subclass of objective signed
+dichotomous valuations, and the identical binary additive instance with $n$
+agents and $n-1$ chores of Example~\ref{ex:lowerbound} already requires a total
+subsidy of at least $n-1$.
+
+Theorem~\ref{thm:objective-mixed} concerns the subsidy guarantee only. Our
+construction does not guarantee that the underlying allocation is EF1, since the
+subsequent goods-allocation procedure of Barman et al.~\cite{BKNS22} does not in
+general preserve such a guarantee. Pareto optimality also cannot be imposed in
+general, since Proposition~\ref{prop:po-impossibility} applies to the pure-chore
+subclass. Under additivity, however, Pareto optimality can be recovered together
+with the same subsidy bound (Proposition~\ref{prop:additive-objective-po}).

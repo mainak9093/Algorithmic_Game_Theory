@@ -112,6 +112,30 @@ allocations is required. \Cref{sec:prelim} fixes the model and records what
 transfers from the goods theory unchanged\ifworking.\else; \Cref{sec:main}
 contains the proof.\fi
 
+% The paragraph below points at Sections 4 to 6, which only main.tex inputs,
+% so it is guarded out of working.pdf.
+\ifworking\else
+\paragraph{Further results.}
+\Cref{sec:objective-mixed} extends the unit-subsidy guarantee to objective
+signed dichotomous valuations, in which every item is a good for every agent or a
+chore for every agent. The chores are allocated first by
+Theorem~\ref{thm:m-main}, and the goods are then inserted one at a time by the
+one-good extension of Barman et al.~\cite{BKNS22}, whose proof remains valid when
+the bundles already contain chores (Theorem~\ref{thm:objective-mixed}).
+\Cref{sec:pareto} shows that unit subsidies are compatible with Pareto
+optimality for binary additive costs, and more generally for additive objective
+signed dichotomous valuations, but not for general negative dichotomous
+valuations, even with two agents and identical binary submodular costs.
+\Cref{sec:goods-first} reverses the order of allocation, which is the order that
+doubly monotone valuations require. Items that are chores for every agent can be
+added to any envy-free solution with unit subsidies at the cost of at most one
+more unit per agent and $n-1$ more in total (Lemma~\ref{lem:universal-chores}).
+This gives a goods-first algorithm for objective signed valuations with at most
+two units per agent and $2(n-1)$ in total, and it reduces the same guarantee for
+doubly monotone dichotomous valuations to a single insertion property, which
+remains open for items that are a good for some agents and a chore for others.
+\fi
+
 \paragraph{Related Work.}
 The subsidy line for goods is described above. Within it, the dichotomous
 subclass has attracted separate attention: Halpern and Shah~\cite{HS19} settle

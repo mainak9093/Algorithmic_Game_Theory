@@ -10,6 +10,8 @@ We show that the same optimal guarantee holds for chores, under no structural as
 tight, and the allocation and subsidies can be computed in polynomial time in the value-oracle model.
 
 Our algorithm starts from an envy-free partial allocation produced by the algorithm of Tao et al.~\cite{TWYZ23}, assigns the remaining chores to distinct agents in a tail strongly connected component selected at termination, and determines the subsidised agents through a backward closure in the associated equality graph.
+
+We extend the guarantee to objective signed dichotomous valuations, in which every item is a good for every agent or a chore for every agent, by showing that the one-good extension argument of Barman et al.\ remains valid when the bundles already contain chores. We show that unit subsidies are compatible with Pareto optimality under additivity but not in general. Finally, chores for every agent can be added to any envy-free solution with unit subsidies at the cost of at most one more unit per agent. This gives a goods-first algorithm with at most two units per agent for objective signed valuations, and reduces the same guarantee for doubly monotone dichotomous valuations to a single insertion property.
 \end{abstract}
 
 

@@ -1,0 +1,440 @@
+%% ==========================================================================
+%%  6  Goods first, and a reduction for doubly monotone valuations
+%%
+%%  New (2026-10-08). Universal chores can be added to any envy-free solution
+%%  with unit subsidies at one more unit per agent. The procedure and the
+%%  proofs mirror Sections 3.1 to 3.4 with every bundle replaced by its package
+%%  (bundle plus subsidy). Gives a goods-first algorithm for objective signed
+%%  valuations (two units per agent) and reduces doubly monotone dichotomous
+%%  valuations to the insertion property (INS).
+%% ==========================================================================
+\section{Goods First, and a Reduction for Doubly Monotone Valuations}
+\label{sec:goods-first}
+
+Theorem~\ref{thm:objective-mixed} allocates the chores first and inserts the
+goods afterwards. That order has no counterpart for doubly monotone valuations,
+in which an item may be a good for some agents and a chore for others: such an
+item cannot be set aside as a chore before it has been tried as a good. This
+section reverses the order. We show that items that are chores for every agent
+can be added at the end to any envy-free solution with unit subsidies, at the
+cost of at most one more unit per agent and $n-1$ more in total
+(Lemma~\ref{lem:universal-chores}). For objective signed dichotomous valuations
+this gives a second, goods-first algorithm with at most two units per agent
+(Theorem~\ref{thm:goods-first}). For doubly monotone dichotomous valuations it
+reduces the same guarantee to a single insertion property for the remaining
+items (Proposition~\ref{prop:dm-reduction}).
+
+\begin{definition}[Doubly monotone dichotomous valuations, universal chores]
+\label{def:dm}
+A valuation profile $\set{v_i}_{i\in\agents}$ is \emph{doubly monotone
+dichotomous} if for every agent $i$ there is a partition
+$\items=G_i\mathbin{\dot\cup}C_i$ such that, for every $S\subseteq\items$,
+\[
+  v_i(S\cup\set g)-v_i(S)\in\set{0,1}
+  \qquad\text{for every }g\in G_i\setminus S,
+\]
+and
+\[
+  v_i(S\cup\set c)-v_i(S)\in\set{0,-1}
+  \qquad\text{for every }c\in C_i\setminus S.
+\]
+An item $e$ is a \emph{universal chore} if
+$v_i(S\cup\set e)-v_i(S)\in\set{0,-1}$ for every agent $i$ and every
+$S\subseteq\items\setminus\set e$.
+\end{definition}
+
+Objective signed dichotomous valuations (Definition~\ref{def:objective-signed})
+are the case $G_i=G$ and $C_i=C$ for every $i$, and there every item of $C$ is a
+universal chore. Doubly monotone dichotomous valuations are integer valued, by the
+telescoping argument of Observation~\ref{obs:integrality}. Hence every envy graph
+has integer arc weights, every pointwise-minimal subsidy vector is integral, and
+Theorems~\ref{thm:hs-characterisation} and~\ref{thm:hs-minsubsidy} and
+Proposition~\ref{prop:zero-coordinate} apply to allocations of any set of items,
+since their proofs use only the arc weights.
+
+% --------------------------------------------------------------------------
+\subsection{Packages and the tie graph}
+\label{sec:gf-ties}
+
+Fix a set $M'\subseteq\items$, an allocation $A=(A_1,\dots,A_n)$ of $M'$ and an
+integral subsidy vector $p$. Call $(A_j,p_j)$ the \emph{package} of agent $j$,
+and write
+\begin{equation}
+\label{eq:gf-U}
+  U_i(j):=v_i(A_j)+p_j
+\end{equation}
+for its value to agent $i$. Then $(A,p)$ is an envy-free solution if and only if
+$U_i(i)\ge U_i(j)$ for all $i,j\in\agents$. All values $U_i(j)$ are integers, so
+in an envy-free solution $U_i(j)\ne U_i(i)$ implies $U_i(j)\le U_i(i)-1$. The
+\emph{tie graph} of $(A,p)$ is
+\begin{equation}
+\label{eq:gf-H}
+  H=(\agents,E),
+  \qquad
+  (i,j)\in E \iff i\ne j\ \text{ and }\ U_i(i)=U_i(j).
+\end{equation}
+It is the equality graph \eqref{eq:m-graph} of \Cref{sec:m-terminal} with every
+bundle replaced by its package. The payments must enter it. If agent $i$ prefers
+$A_i$ to the bundle of a paid agent $j$ by exactly one, then $i$ is indifferent
+between the two packages, and after one more costly chore $i$ would envy the
+package of $j$. In the tie graph this indifference is the arc $(i,j)$.
+
+% --------------------------------------------------------------------------
+\subsection{Allocating the universal chores}
+\label{sec:gf-procedure}
+
+Let $(A,p)$ be an envy-free solution for an allocation $A$ of $M'\subseteq\items$
+with $p\in\set{0,1}^n$, and suppose that every item of $R:=\items\setminus M'$ is
+a universal chore. Starting from $(A,p)$, apply the following rules in the stated
+order while $R\ne\emptyset$, recomputing $H$ after every step and removing from
+$R$ every chore that is assigned. The procedure halts when $R=\emptyset$, or at
+the final clause of (U3).
+\begin{enumerate}
+  \item[(U1)] If some $e\in R$ and some $i\in\agents$ satisfy
+    $v_i(A_i\cup\set e)=v_i(A_i)$, assign $e$ to $i$.
+  \item[(U2)] If some $e\in R$ and some arc $(i,j)\in E$ lying on a directed
+    cycle of $H$ satisfy $v_i(A_j\cup\set e)=v_i(A_j)$, rotate the packages
+    along that cycle, so that every agent on the cycle receives the bundle and
+    the subsidy of the next agent on the cycle, and then assign $e$ to $i$.
+  \item[(U3)] Otherwise select a strongly connected component $S$ of $H$ with no
+    arc of $E$ leaving $S$. If $\abs R\ge\abs S$, assign one chore of $R$ to each
+    agent of $S$, distinct agents receiving distinct chores. Otherwise halt.
+\end{enumerate}
+These are the rules (R1) to (R3) of \Cref{sec:m-terminal}, with the equality
+graph replaced by the tie graph and with rotations that move each subsidy
+together with its bundle.
+
+\begin{lemma}
+\label{lem:gf-step}
+Each application of (U1), (U2) or (U3) assigns at least one chore of $R$ and
+turns $(A,p)$ into an envy-free solution whose subsidy vector is a permutation of
+the previous one. Consequently the procedure halts after at most
+$\abs{\items\setminus M'}$ applications, and throughout it the subsidy vector
+lies in $\set{0,1}^n$ and keeps its sum.
+\end{lemma}
+
+\begin{proof}
+Every rule assigns at least one chore, (U3) assigning $\abs S\ge1$ of them, and
+only (U2) moves subsidies, by a cyclic permutation. It remains to show that each
+step preserves envy-freeness. Write $U'$ for the package values after the step.
+Throughout we use that adding a universal chore to a bundle never raises any
+agent's value for it.
+
+\smallskip\noindent\textbf{(U1).} The package of $i$ keeps its value to $i$,
+because $e$ is free for $i$ on $A_i$, and it is worth at most as much as before to
+every other agent. All other packages are unchanged. Hence
+$U'_k(k)=U_k(k)\ge U_k(j)\ge U'_k(j)$ for all $k,j\in\agents$.
+
+\smallskip\noindent\textbf{(U2).} Let the cycle be
+$i=a_0\to a_1\to\dots\to a_{L-1}\to a_0$, with $a_1=j$. After the step, an agent
+$a_t$ with $t\ne0$ holds the package $(A_{a_{t+1}},p_{a_{t+1}})$, indices taken
+modulo $L$, worth $U_{a_t}(a_{t+1})=U_{a_t}(a_t)$ to $a_t$ because
+$(a_t,a_{t+1})\in E$. Agent $i$ holds $(A_j\cup\set e,p_j)$, worth
+$v_i(A_j\cup\set e)+p_j=v_i(A_j)+p_j=U_i(j)=U_i(i)$ to $i$, because $e$ is free
+for $i$ on $A_j$ and $(i,j)\in E$. Agents off the cycle keep their packages. So
+every agent's own package keeps its value. The packages after the step are those
+before it, except that $(A_j,p_j)$ has become $(A_j\cup\set e,p_j)$, which no
+agent values more. Hence every agent $k$ values every package after the step at
+most $\max_{j\in\agents}U_k(j)=U_k(k)=U'_k(k)$.
+
+\smallskip\noindent\textbf{(U3).} Neither (U1) nor (U2) applies. Agents outside
+$S$ keep their packages, and no package gains value to anyone, so every
+$k\notin S$ satisfies $U'_k(k)=U_k(k)\ge U_k(j)\ge U'_k(j)$ for every $j$. Let
+$i\in S$ and let $e_i$ be the chore assigned to $i$. As (U1) does not apply,
+$e_i$ costs $i$ one unit on $A_i$, so $U'_i(i)=U_i(i)-1$. Let $j\ne i$.
+\begin{itemize}
+  \item If $j\notin S$, then $(i,j)\notin E$ because no arc leaves $S$. So
+    $U_i(j)\le U_i(i)-1$, and $U'_i(j)=U_i(j)\le U'_i(i)$.
+  \item If $j\in S$ and $(i,j)\in E$, then a path from $j$ to $i$ inside $S$
+    closes a directed cycle through $(i,j)$, since $S$ is strongly connected. As
+    (U2) does not apply, the chore $e_j$ assigned to $j$ costs $i$ one unit on
+    $A_j$. So $U'_i(j)=U_i(j)-1=U_i(i)-1=U'_i(i)$.
+  \item If $j\in S$ and $(i,j)\notin E$, then $U_i(j)\le U_i(i)-1$, and
+    $U'_i(j)\le U_i(j)\le U'_i(i)$.
+\end{itemize}
+Thus the solution after the step is envy-free.
+\end{proof}
+
+\begin{lemma}
+\label{lem:gf-terminal}
+Suppose the procedure halts with $R\ne\emptyset$. Let $(A,p)$ be the solution at
+which it halts, with tie graph $H=(\agents,E)$ and package values $U$, let
+$r:=\abs R$, and let $S$ be the component selected by (U3) at the halting step.
+Then the following hold.
+\begin{enumerate}
+  \item[(a)] $r<\abs S$.
+  \item[(b)] $v_i(A_i\cup\set e)=v_i(A_i)-1$ for every $i\in\agents$ and every
+    $e\in R$.
+  \item[(c)] $v_i(A_j\cup\set e)=v_i(A_j)-1$ for every arc $(i,j)\in E$ with
+    $i,j\in S$ and every $e\in R$.
+  \item[(d)] $U_i(j)\le U_i(i)-1$ for every $i\in S$ and every
+    $j\in\agents\setminus S$.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The procedure halts at the final clause of (U3), so neither (U1) nor (U2) applies
+and $\abs R<\abs S$, which is (a). Every chore of $R$ is universal, so its
+marginals lie in $\set{0,-1}$. A marginal $0$ in (b) would let (U1) apply. In
+(c), a path from $j$ to $i$ inside $S$ closes a directed cycle through $(i,j)$,
+so a marginal $0$ would let (U2) apply. For (d), no arc leaves $S$, so
+$U_i(j)\ne U_i(i)$, and envy-freeness gives $U_i(j)\le U_i(i)-1$.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{The completion}
+\label{sec:gf-completion}
+
+Suppose the procedure halts with $R=\set{e_1,\dots,e_r}\ne\emptyset$, and keep the
+notation of Lemma~\ref{lem:gf-terminal}. By its part~(a) we may fix $r$ distinct
+agents $T=\set{t_1,\dots,t_r}\subseteq S$, chosen arbitrarily. Define the complete
+allocation $A^\ast$ by
+\[
+  A^\ast_{t_k}:=A_{t_k}\cup\set{e_k}\quad(1\le k\le r),
+  \qquad
+  A^\ast_i:=A_i\quad(i\notin T).
+\]
+Let $P\subseteq\agents$ be the smallest set such that
+\begin{enumerate}
+  \item[(P1)] $T\subseteq P$, and
+  \item[(P2)] if $i\in\agents\setminus S$ and $(i,j)\in E$ for some $j\in P$,
+    then $i\in P$,
+\end{enumerate}
+and set
+\begin{equation}
+\label{eq:gf-m}
+  m_i:=p_i+\mathbf{1}[i\in P]
+  \qquad (i\in\agents).
+\end{equation}
+These are the recipients and the subsidy set of \Cref{sec:m-completion}, built on
+the tie graph. Every agent added to $P$ by (P2) lies outside $S$, so
+$P\setminus T\subseteq\agents\setminus S$, exactly as in
+Lemma~\ref{lem:m-Pstructure}.
+
+\begin{lemma}
+\label{lem:gf-expensive}
+Let $i\in S$, let $t\in T$ and let $e\in R$. Then
+$v_i(A_t\cup\set e)+p_t\le U_i(i)-1$.
+\end{lemma}
+
+\begin{proof}
+Envy-freeness gives $U_i(t)\le U_i(i)$. If $U_i(t)<U_i(i)$, then
+$U_i(t)\le U_i(i)-1$, and $v_i(A_t\cup\set e)\le v_i(A_t)$ because $e$ is a
+universal chore. Otherwise $U_i(t)=U_i(i)$. If $i=t$, part~(b) of
+Lemma~\ref{lem:gf-terminal} gives $v_i(A_i\cup\set e)+p_i=U_i(i)-1$. If $i\ne t$,
+then $(i,t)\in E$ with $i,t\in S$, and part~(c) gives
+$v_i(A_t\cup\set e)+p_t=U_i(t)-1=U_i(i)-1$.
+\end{proof}
+
+\begin{lemma}[Universal chores at one more unit per agent]
+\label{lem:universal-chores}
+Let $\set{v_i}_{i\in\agents}$ be doubly monotone dichotomous, let $A$ be an
+allocation of a set $M'\subseteq\items$, and let $p\in\set{0,1}^n$ be such that
+$(A,p)$ is an envy-free solution. Suppose that every item of
+$\items\setminus M'$ is a universal chore. Then there are a complete allocation
+$A^\ast$ and a subsidy vector $m\in\set{0,1,2}^n$ such that $(A^\ast,m)$ is an
+envy-free solution and
+\[
+  \sum_{i\in\agents}m_i\le\sum_{i\in\agents}p_i+n-1 .
+\]
+More precisely, $m$ exceeds a permutation of $p$ by a vector in $\set{0,1}^n$.
+Moreover, $(A^\ast,m)$ can be computed in polynomial time given value-oracle
+access.
+\end{lemma}
+
+\begin{proof}
+Run the procedure of \Cref{sec:gf-procedure}. By Lemma~\ref{lem:gf-step} it halts
+at an envy-free solution whose subsidy vector, again written $p$, is a
+permutation of the original one. If it halts with $R=\emptyset$, return this
+solution with $m=p$. Otherwise construct $A^\ast$ and $m$ as in
+\Cref{sec:gf-completion}. The allocation $A^\ast$ is complete, since the $t_k$
+are distinct and every chore of $R$ is used once. The vector $m-p$ is the
+indicator of $P$, so $m\in\set{0,1,2}^n$. Since
+$P\subseteq T\cup(\agents\setminus S)$, $\abs T=r$ and $r\le\abs S-1$ by
+Lemma~\ref{lem:gf-terminal}(a),
+\[
+  \sum_{i\in\agents}m_i=\sum_{i\in\agents}p_i+\abs P
+  \le\sum_{i\in\agents}p_i+r+n-\abs S
+  \le\sum_{i\in\agents}p_i+n-1 .
+\]
+
+It remains to show that $(A^\ast,m)$ is envy-free. Write
+$U^\ast_i(j):=v_i(A^\ast_j)+m_j$. Since $A_j\subseteq A^\ast_j$ and the item
+added to $A_j$, if any, is a universal chore,
+\[
+  U^\ast_i(j)\le U_i(j)+\mathbf{1}[j\in P],
+  \qquad\text{with equality when }j\notin T.
+\]
+Fix $i,j\in\agents$. Since $T\subseteq P$, the following three cases are
+exhaustive.
+
+\smallskip\noindent\textbf{Case 1: $i\in T$.} Then $i\in S$ and $i\in P$, and
+Lemma~\ref{lem:gf-terminal}(b) gives $U^\ast_i(i)=U_i(i)-1+1=U_i(i)$.
+\begin{itemize}
+  \item[(1a)] $j\in T$. Writing $e$ for the chore assigned to $j$,
+    Lemma~\ref{lem:gf-expensive} gives
+    $U^\ast_i(j)=v_i(A_j\cup\set e)+p_j+1\le U_i(i)$.
+  \item[(1b)] $j\in P\setminus T$. Then $j\notin S$, so
+    Lemma~\ref{lem:gf-terminal}(d) gives $U^\ast_i(j)=U_i(j)+1\le U_i(i)$.
+  \item[(1c)] $j\notin P$. Then $U^\ast_i(j)=U_i(j)\le U_i(i)$.
+\end{itemize}
+
+\smallskip\noindent\textbf{Case 2: $i\in P\setminus T$.} Then $A^\ast_i=A_i$, so
+$U^\ast_i(i)=U_i(i)+1\ge U_i(j)+1\ge U^\ast_i(j)$ for every $j$.
+
+\smallskip\noindent\textbf{Case 3: $i\notin P$.} Then $i\notin T$, so
+$U^\ast_i(i)=U_i(i)$.
+\begin{itemize}
+  \item[(3a)] $j\notin P$. Then $U^\ast_i(j)=U_i(j)\le U_i(i)$.
+  \item[(3b)] $j\in P$ and $i\notin S$. If $U_i(j)=U_i(i)$, then $i\ne j$
+    because $j\in P$ and $i\notin P$, so $(i,j)\in E$ and (P2) puts $i$ in $P$,
+    a contradiction. Hence $U_i(j)\le U_i(i)-1$ and
+    $U^\ast_i(j)\le U_i(j)+1\le U_i(i)$.
+  \item[(3c)] $j\in P\setminus T$ and $i\in S$. Then $j\notin S$, so
+    Lemma~\ref{lem:gf-terminal}(d) gives $U^\ast_i(j)=U_i(j)+1\le U_i(i)$.
+  \item[(3d)] $j\in T$ and $i\in S$. Writing $e$ for the chore assigned to $j$,
+    Lemma~\ref{lem:gf-expensive} gives
+    $U^\ast_i(j)=v_i(A_j\cup\set e)+p_j+1\le U_i(i)$.
+\end{itemize}
+In every case $U^\ast_i(i)\ge U^\ast_i(j)$.
+
+For the running time, the tie graph is determined by the $n^2$ values
+$v_i(A_j)$, its strongly connected components and the cycles used by (U2) are
+found by graph search, each rule tests at most $n^2\abs R$ marginals, and by
+Lemma~\ref{lem:gf-step} there are at most $\abs{\items\setminus M'}$ rule
+applications. Computing $P$ is a backward reachability search in $H$.
+\end{proof}
+
+% --------------------------------------------------------------------------
+\subsection{A goods-first algorithm for objective signed valuations}
+\label{sec:gf-objective}
+
+\begin{theorem}
+\label{thm:goods-first}
+For every instance with objective signed dichotomous valuations, the following
+procedure computes, in polynomial time given value-oracle access, a complete
+allocation $\alloc$ and a subsidy vector $m\in\set{0,1,2}^n$ such that
+$(\alloc,m)$ is envy-free and $\sum_{i\in\agents}m_i\le2(n-1)$. Allocate the
+goods $G$ by the algorithm of Barman et al.~\cite{BKNS22}, replace its subsidy
+vector by the pointwise-minimal one, and allocate the chores $C$ by
+Lemma~\ref{lem:universal-chores}.
+\end{theorem}
+
+\begin{proof}
+On subsets of $G$ every $v_i$ has marginals in $\set{0,1}$, so the algorithm
+of~\cite{BKNS22} returns an allocation $A$ of $G$ and $p\in\set{0,1}^n$ with
+$(A,p)$ envy-free. By Theorem~\ref{thm:hs-minsubsidy} the pointwise-minimal
+subsidy vector is at most $p$ componentwise. It is integral, so it lies in
+$\set{0,1}^n$, and by Proposition~\ref{prop:zero-coordinate} it has a zero
+coordinate, so its sum is at most $n-1$. Every chore of $C$ is a universal chore,
+so Lemma~\ref{lem:universal-chores} applies with $M'=G$ and gives
+$m\in\set{0,1,2}^n$ with $\sum_i m_i\le(n-1)+(n-1)$. Both steps run in polynomial
+time.
+\end{proof}
+
+Since the pointwise-minimal subsidy vector of $\alloc$ is at most $m$
+componentwise, it satisfies the same two bounds. Theorem~\ref{thm:goods-first} is
+weaker than Theorem~\ref{thm:objective-mixed}, which pays at most one unit per
+agent. Its interest is the order of allocation, which is the order that
+\Cref{sec:gf-dm} needs.
+
+\begin{remark}[A chore with one unit of money attached]
+\label{rem:gf-couples}
+A tempting alternative completion attaches one unit of subsidy to each residual
+chore and inserts the pair as a single item. The marginal value of the pair formed
+from a chore $e$ is $v_i(S\cup\set e)-v_i(S)+1\in\set{0,1}$ for every agent and
+every bundle, so the pair behaves as a dichotomous good. Formally, replace each
+residual chore $e$ by a new item $\widehat e$, let $\widehat R$ be the set of new
+items, and apply Lemma~\ref{lem:goods-extension} to the valuations
+\[
+  V_i(S):=v_i\bigl((S\setminus\widehat R)\cup\set{e:\widehat e\in S}\bigr)
+  +\abs{S\cap\widehat R}.
+\]
+This variant keeps the total bound. At most $n-1$ pairs are formed, since the
+procedure of \Cref{sec:gf-procedure} halts with $r<\abs S\le n$, and
+Lemma~\ref{lem:goods-extension} keeps the remaining subsidy vector in
+$\set{0,1}^n$, with a zero coordinate after passing to the pointwise-minimal
+vector. So the payments total at most $2(n-1)$. It loses the per-agent bound,
+because the units attached to the pairs accumulate when one agent receives
+several of them, as Example~\ref{ex:gf-couples} shows. The distinct recipients
+of \Cref{sec:gf-completion} prevent exactly this.
+\end{remark}
+
+\begin{example}
+\label{ex:gf-couples}
+Take four agents $x,a,b,d$, goods $g_1,g_2,g_3$ and chores $c_1,c_2$, and give
+every agent the additive valuation $v(S)=\abs{S\cap G}-\abs{S\cap C}$. In the
+algorithm of~\cite{BKNS22} every good is extendable, so it goes to a maximally
+subsidized agent with marginal value one, and the maximally subsidized agents are
+exactly those holding no good. So, up to renaming, the goods phase returns
+$A_x=\emptyset$, $A_a=\set{g_1}$, $A_b=\set{g_2}$ and $A_d=\set{g_3}$, with
+subsidy $1$ for $x$ and $0$ for the others. Every agent values every package at
+$1$, so the tie graph is complete and $S=\agents$. Since $\abs R=2<4$ and every
+chore costs every agent one unit on every bundle, the procedure of
+\Cref{sec:gf-procedure} halts at once.
+
+Each pair $\widehat c_k$ has marginal value $0$ for every agent on every bundle,
+so it is not extendable, and \textsc{FindSink} starts at $x$, the only maximally
+subsidized agent. Giving $\widehat c_1$ to $x$ changes no agent's value for any
+package, so the minimal subsidies stay $(1,0,0,0)$, no agent reaches $2$, and
+\textsc{FindSink} returns $x$. The same happens for $\widehat c_2$. Agent $x$
+ends with $\set{c_1,c_2}$, two attached units and a subsidy of $1$, so $x$ is paid
+$3$. The final allocation forces this, since $v_x(A_a)-v_x(\set{c_1,c_2})=3$, so
+by Theorem~\ref{thm:hs-minsubsidy} no envy-free subsidy vector pays $x$ less than
+$3$. With $n$ agents, $n-1$ such goods and $n-2$ such chores, the same run pays
+$x$ exactly $n-1$.
+
+The completion of \Cref{sec:gf-completion} instead gives $c_1$ and $c_2$ to two
+distinct agents of $S$. For $T=\set{a,b}$ it pays $x$, $a$ and $b$ one unit each,
+and every agent ends with value plus subsidy equal to $1$.
+\end{example}
+
+% --------------------------------------------------------------------------
+\subsection{Doubly monotone valuations}
+\label{sec:gf-dm}
+
+Lemma~\ref{lem:universal-chores} needs nothing from the items allocated before it
+beyond an envy-free solution with unit subsidies. This reduces the two-unit
+guarantee for doubly monotone dichotomous valuations to the following insertion
+property.
+\begin{enumerate}
+  \item[(INS)] For every set $M'\subseteq\items$, every allocation $A$ of $M'$
+    and every $p\in\set{0,1}^n$ such that $(A,p)$ is envy-free, and every item
+    $e\in\items\setminus M'$ that is not a universal chore, there exist an
+    allocation $A'$ of $M'\cup\set e$ and $p'\in\set{0,1}^n$ such that
+    $(A',p')$ is envy-free.
+\end{enumerate}
+
+\begin{proposition}
+\label{prop:dm-reduction}
+Let $\set{v_i}_{i\in\agents}$ be doubly monotone dichotomous and satisfy (INS).
+Then there are a complete allocation $\alloc$ and a subsidy vector
+$m\in\set{0,1,2}^n$ such that $(\alloc,m)$ is envy-free and
+$\sum_{i\in\agents}m_i\le2(n-1)$.
+\end{proposition}
+
+\begin{proof}
+Start from the empty allocation with zero subsidies, which is envy-free. Insert
+the items that are not universal chores one at a time by (INS), each time
+replacing the subsidy vector by the pointwise-minimal one. That vector is
+integral and componentwise at most the vector given by (INS), so it lies in
+$\set{0,1}^n$. When these items are exhausted, the current solution is envy-free,
+its subsidy vector lies in $\set{0,1}^n$ and has sum at most $n-1$ by
+Proposition~\ref{prop:zero-coordinate}, and every unallocated item is a universal
+chore. Lemma~\ref{lem:universal-chores} completes it with $m\in\set{0,1,2}^n$ and
+$\sum_i m_i\le(n-1)+(n-1)$.
+\end{proof}
+
+Lemma~\ref{lem:goods-extension} proves (INS) for every item that is a good for
+every agent, that is, whose marginal value lies in $\set{0,1}$ for every agent and
+every bundle, whatever the current bundles contain. For objective signed
+valuations every item that is not a universal chore is of this kind, so
+Proposition~\ref{prop:dm-reduction} also yields the bound of
+Theorem~\ref{thm:goods-first}. The open case is an item that is a good for some
+agents and a chore for others. The argument behind
+Lemma~\ref{lem:goods-extension} uses at several points that the new item has a
+nonnegative marginal value for the agent receiving it, for instance in Claim~2
+and in the inequality $\operatorname{SW}(X^{s_0})\geq\operatorname{SW}(A)$ of
+Case~2 in Appendix~\ref{app:goods-extension}, and this fails when such an item is
+tentatively given to an agent for whom it is a chore.
+Whether (INS) holds for such items is open.
